@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>connectors</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="idp" href="idp.html" />
+    <link rel="prev" title="connector_groups" href="connector_groups.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zscaler SDK Python
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app_segments.html">app_segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="certificates.html">certificates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connector_groups.html">connector_groups</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">connectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.add_connector_group"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.add_connector_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.bulk_delete_connectors"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.bulk_delete_connectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.delete_connector"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.delete_connector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.delete_connector_group"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.delete_connector_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.get_connector"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.get_connector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.get_connector_group"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.get_connector_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.list_connector_groups"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.list_connector_groups()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.list_connectors"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.list_connectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.update_connector"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.update_connector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zpa.connectors.ConnectorsAPI.update_connector_group"><code class="docutils literal notranslate"><span class="pre">ConnectorsAPI.update_connector_group()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idp.html">idp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspection.html">inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lss.html">lss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="provisioning.html">provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="server_groups.html">server_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servers.html">servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_edges.html">service_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session.html">session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#zscaler.zpa.ZPA"><code class="docutils literal notranslate"><span class="pre">ZPA</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Zscaler SDK Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ZPA</a></li>
+      <li class="breadcrumb-item active">connectors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/zs/zpa/connectors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="connectors">
+<h1>connectors<a class="headerlink" href="#connectors" title="Permalink to this heading"></a></h1>
+<p>The following methods allow for interaction with the ZPA
+ZPA Connector API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zpa.connectors</span></code></p>
+<span class="target" id="module-zscaler.zpa.connectors"><span id="zpa-connectors"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectorsAPI</span></span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.add_connector_group">
+<span class="sig-name descname"><span class="pre">add_connector_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.add_connector_group" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new ZPA App Connector Group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the App Connector Group.</p></li>
+<li><p><strong>latitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The latitude representing the App Connector’s physical location.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the location that the App Connector Group represents.</p></li>
+<li><p><strong>longitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The longitude representing the App Connector’s physical location.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>**connector_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The unique ids for the App Connectors that will be added to this App Connector Group.</p></li>
+<li><p><strong>**city_country</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>The City and Country for where the App Connectors are located. Format is:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;City&gt;,</span> <span class="pre">&lt;Country</span> <span class="pre">Code&gt;</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">Sydney,</span> <span class="pre">AU</span></code></p>
+</p></li>
+<li><p><strong>**country_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ISO&lt;std&gt; Country Code that represents the country where the App Connectors are located.</p></li>
+<li><p><strong>**description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the App Connector Group.</p></li>
+<li><p><strong>**dns_query_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of DNS queries that are enabled for this App Connector Group. Accepted values are:
+<code class="docutils literal notranslate"><span class="pre">IPV4_IPV6</span></code>, <code class="docutils literal notranslate"><span class="pre">IPV4</span></code> and <code class="docutils literal notranslate"><span class="pre">IPV6</span></code></p></li>
+<li><p><strong>**enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Is the App Connector Group enabled? Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>**override_version_profile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Override the local App Connector version according to <code class="docutils literal notranslate"><span class="pre">version_profile</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>**server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The unique ids of the Server Groups that are associated with this App Connector Group</p></li>
+<li><p><strong>**lss_app_connector_group</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – </p></li>
+<li><p><strong>**upgrade_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The day of the week that upgrades will be pushed to the App Connector.</p></li>
+<li><p><strong>**upgrade_time_in_secs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The time of the day that upgrades will be pushed to the App Connector.</p></li>
+<li><p><strong>**version_profile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The version profile to use. This will automatically set <code class="docutils literal notranslate"><span class="pre">override_version_profile</span></code> to True.
+Accepted values are:
+<code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">previous_default</span></code> and <code class="docutils literal notranslate"><span class="pre">new_release</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resource record of the newly created App Connector Group.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add a new ZPA App Connector Group with parameters.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">group</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">add_connector_group</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;New App Connector Group&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">location</span><span class="o">=</span><span class="s2">&quot;Sydney&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">latitude</span><span class="o">=</span><span class="s2">&quot;33.8688&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">longitude</span><span class="o">=</span><span class="s2">&quot;151.2093&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">version_profile</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.bulk_delete_connectors">
+<span class="sig-name descname"><span class="pre">bulk_delete_connectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.bulk_delete_connectors" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes all specified App Connectors from ZPA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connector_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The list of unique ids for the ZPA App Connectors that will be deleted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The status code for the operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">bulk_delete_connectors</span><span class="p">([</span><span class="s1">&#39;111111&#39;</span><span class="p">,</span> <span class="s1">&#39;222222&#39;</span><span class="p">,</span> <span class="s1">&#39;333333&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.delete_connector">
+<span class="sig-name descname"><span class="pre">delete_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.delete_connector" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the specified App Connector from ZPA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique id for the ZPA App Connector that will be deleted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The status code for the operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">delete_connector</span><span class="p">(</span><span class="s1">&#39;999999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.delete_connector_group">
+<span class="sig-name descname"><span class="pre">delete_connector_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.delete_connector_group" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the specified App Connector Group from ZPA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the App Connector Group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The status code for the operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">delete_connector_group</span><span class="p">(</span><span class="s1">&#39;1876541121&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.get_connector">
+<span class="sig-name descname"><span class="pre">get_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.get_connector" title="Permalink to this definition"></a></dt>
+<dd><p>Returns information on the specified App Connector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique id for the ZPA App Connector.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The specified App Connector resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app_connector</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">get_connector</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.get_connector_group">
+<span class="sig-name descname"><span class="pre">get_connector_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.get_connector_group" title="Permalink to this definition"></a></dt>
+<dd><p>Gets information for a specified connector group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the connector group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The connector group resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connector_group</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connector_groups</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.list_connector_groups">
+<span class="sig-name descname"><span class="pre">list_connector_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.list_connector_groups" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of all connector groups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the page size. The default size is 100, but the maximum size is 1000.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to match against a department’s name or comments attributes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all configured connector groups.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connector_groups</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connector_groups</span><span class="o">.</span><span class="n">list_groups</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.list_connectors">
+<span class="sig-name descname"><span class="pre">list_connectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.list_connectors" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of all configured App Connectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Optional keyword args.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the page size. The default size is 100, but the maximum size is 1000.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to match against a department’s name or comments attributes.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List containing all configured ZPA App Connectors.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>List all configured App Connectors:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">connector</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">list_connectors</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">connector</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.update_connector">
+<span class="sig-name descname"><span class="pre">update_connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connector_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.update_connector" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an existing ZPA App Connector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique id of the ZPA App Connector.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>**description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the App Connector.</p></li>
+<li><p><strong>**enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – True if the App Connector is enabled.</p></li>
+<li><p><strong>**name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the App Connector.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated App Connector resource record.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update an App Connector name and disable it.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app_connector</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">update_connector</span><span class="p">(</span><span class="s1">&#39;999999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Updated App Connector Name&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.connectors.ConnectorsAPI.update_connector_group">
+<span class="sig-name descname"><span class="pre">update_connector_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.connectors.ConnectorsAPI.update_connector_group" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an existing ZPA App Connector Group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique id for the App Connector Group in ZPA.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>**connector_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The unique ids for the App Connectors that will be added to this App Connector Group.</p></li>
+<li><p><strong>**city_country</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>The City and Country for where the App Connectors are located. Format is:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;City&gt;,</span> <span class="pre">&lt;Country</span> <span class="pre">Code&gt;</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">Sydney,</span> <span class="pre">AU</span></code></p>
+</p></li>
+<li><p><strong>**country_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ISO&lt;std&gt; Country Code that represents the country where the App Connectors are located.</p></li>
+<li><p><strong>**description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the App Connector Group.</p></li>
+<li><p><strong>**dns_query_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of DNS queries that are enabled for this App Connector Group. Accepted values are:
+<code class="docutils literal notranslate"><span class="pre">IPV4_IPV6</span></code>, <code class="docutils literal notranslate"><span class="pre">IPV4</span></code> and <code class="docutils literal notranslate"><span class="pre">IPV6</span></code></p></li>
+<li><p><strong>**enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Is the App Connector Group enabled? Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>**name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the App Connector Group.</p></li>
+<li><p><strong>**latitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The latitude representing the App Connector’s physical location.</p></li>
+<li><p><strong>**location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the location that the App Connector Group represents.</p></li>
+<li><p><strong>**longitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The longitude representing the App Connector’s physical location.</p></li>
+<li><p><strong>**override_version_profile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Override the local App Connector version according to <code class="docutils literal notranslate"><span class="pre">version_profile</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>**server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The unique ids of the Server Groups that are associated with this App Connector Group</p></li>
+<li><p><strong>**lss_app_connector_group</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – </p></li>
+<li><p><strong>**upgrade_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The day of the week that upgrades will be pushed to the App Connector.</p></li>
+<li><p><strong>**upgrade_time_in_secs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The time of the day that upgrades will be pushed to the App Connector.</p></li>
+<li><p><strong>**version_profile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>The version profile to use. This will automatically set <code class="docutils literal notranslate"><span class="pre">override_version_profile</span></code> to True.
+Accepted values are:</p>
+<p><code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">previous_default</span></code> and <code class="docutils literal notranslate"><span class="pre">new_release</span></code></p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated ZPA App Connector Group resource record.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update the name of an App Connector Group in ZPA, change the version profile to new releases and disable
+the group.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">group</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">connectors</span><span class="o">.</span><span class="n">update_connector_group</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Updated App Connector Group&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">version_profile</span><span class="o">=</span><span class="s2">&quot;new_release&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="connector_groups.html" class="btn btn-neutral float-left" title="connector_groups" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="idp.html" class="btn btn-neutral float-right" title="idp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Zscaler Technology Alliances.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

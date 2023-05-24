@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>session</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ssl_inspection" href="ssl_inspection.html" />
+    <link rel="prev" title="security" href="security.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zscaler SDK Python
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">session</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zscaler.zia.session.AuthenticatedSessionAPI"><code class="docutils literal notranslate"><span class="pre">AuthenticatedSessionAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.session.AuthenticatedSessionAPI.create"><code class="docutils literal notranslate"><span class="pre">AuthenticatedSessionAPI.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.session.AuthenticatedSessionAPI.delete"><code class="docutils literal notranslate"><span class="pre">AuthenticatedSessionAPI.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.session.AuthenticatedSessionAPI.status"><code class="docutils literal notranslate"><span class="pre">AuthenticatedSessionAPI.status()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_filters.html">url_filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vips.html">vips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#zscaler.zia.ZIA"><code class="docutils literal notranslate"><span class="pre">ZIA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Zscaler SDK Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ZIA</a></li>
+      <li class="breadcrumb-item active">session</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/zs/zia/session.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="session">
+<h1>session<a class="headerlink" href="#session" title="Permalink to this heading"></a></h1>
+<p>The following methods allow for interaction with the ZIA Authentication Session API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.session</span></code></p>
+<p>There is no need to manually create or delete a Zscaler SDK Python session, especially if you are using a
+context handler such as <code class="docutils literal notranslate"><span class="pre">with</span></code>. The example below shows correct usage of Zscaler SDK Python to print
+the GRE tunnels configured in ZIA. The authenticated session will be automatically torn down by
+Zscaler SDK Python after all the tunnels have been printed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zscaler.zia</span> <span class="kn">import</span> <span class="n">ZIA</span>
+
+<span class="k">with</span> <span class="n">ZIA</span><span class="p">()</span> <span class="k">as</span> <span class="n">zia</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">tunnel</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">traffic</span><span class="o">.</span><span class="n">list_gre_tunnels</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tunnel</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="module-zscaler.zia.session"><span id="zia-session"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zia.session.AuthenticatedSessionAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AuthenticatedSessionAPI</span></span><a class="headerlink" href="#zscaler.zia.session.AuthenticatedSessionAPI" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.session.AuthenticatedSessionAPI.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.session.AuthenticatedSessionAPI.create" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a ZIA authentication session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ZIA API Key.</p></li>
+<li><p><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Username of admin user for the authentication session.</p></li>
+<li><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Password of the admin user for the authentication session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authenticated session information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;12khsdfh3289&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">username</span><span class="o">=</span><span class="s1">&#39;admin@example.com&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">password</span><span class="o">=</span><span class="s1">&#39;MyInsecurePassword&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.session.AuthenticatedSessionAPI.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.session.AuthenticatedSessionAPI.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Ends an authentication session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The status code of the operation.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.session.AuthenticatedSessionAPI.status">
+<span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.session.AuthenticatedSessionAPI.status" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the status of the authentication session if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Session authentication information.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">zia</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">status</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="security.html" class="btn btn-neutral float-left" title="security" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ssl_inspection.html" class="btn btn-neutral float-right" title="ssl_inspection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Zscaler Technology Alliances.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

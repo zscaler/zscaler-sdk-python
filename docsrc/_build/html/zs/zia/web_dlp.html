@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>web_dlp</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ZPA" href="../zpa/index.html" />
+    <link rel="prev" title="vips" href="vips.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zscaler SDK Python
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session.html">session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_filters.html">url_filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vips.html">vips</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">web_dlp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP"><code class="docutils literal notranslate"><span class="pre">WebDLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.add_rule"><code class="docutils literal notranslate"><span class="pre">WebDLP.add_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.delete_rule"><code class="docutils literal notranslate"><span class="pre">WebDLP.delete_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.get_rule"><code class="docutils literal notranslate"><span class="pre">WebDLP.get_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.list_rules"><code class="docutils literal notranslate"><span class="pre">WebDLP.list_rules()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.list_rules_lite"><code class="docutils literal notranslate"><span class="pre">WebDLP.list_rules_lite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.web_dlp.WebDLP.update_rule"><code class="docutils literal notranslate"><span class="pre">WebDLP.update_rule()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#zscaler.zia.ZIA"><code class="docutils literal notranslate"><span class="pre">ZIA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Zscaler SDK Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ZIA</a></li>
+      <li class="breadcrumb-item active">web_dlp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/zs/zia/web_dlp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="web-dlp">
+<h1>web_dlp<a class="headerlink" href="#web-dlp" title="Permalink to this heading"></a></h1>
+<p>The following methods allow for interaction with the ZIA
+User Management API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.web_dlp</span></code></p>
+<span class="target" id="module-zscaler.zia.web_dlp"><span id="zia-web-dlp"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WebDLP</span></span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.add_rule">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.add_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new DLP policy rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>payload</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dictionary containing the Web DLP Policy rule to be added.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly added Web DLP Policy Rule resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<dl>
+<dt>Payload:</dt><dd><p>Minimum items required in payload:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1"># A number greater than 0.</span>
+    <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;zscaler-sdk-python post.&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;protocols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ANY_RULE&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s2">&quot;ALLOW&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add a Web DLP Policy rule with the minimum required parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;zscaler-sdk-python post.&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;protocols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ANY_RULE&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s2">&quot;ALLOW&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+ <span class="c1"># Add new Web DLP item</span>
+ <span class="nb">print</span><span class="p">(</span><span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.delete_rule">
+<span class="sig-name descname"><span class="pre">delete_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.delete_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique id of the Web DLP Policy Rule that will be deleted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response message from the ZIA API endpoint.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Delete a rule with an id of 9999.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">delete_rule</span><span class="p">(</span><span class="n">rule_id</span><span class="o">=</span><span class="mi">9999</span><span class="p">)</span>
+<span class="gp">... </span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.get_rule">
+<span class="sig-name descname"><span class="pre">get_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.get_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a DLP policy rule, excluding SaaS Security API DLP policy rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique id for the Web DLP rule.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Web DLP Rule resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Get information on a Web DLP item by ID</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">rule_id</span><span class="o">=</span><span class="s1">&#39;9999&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.list_rules">
+<span class="sig-name descname"><span class="pre">list_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.list_rules" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of Web DLP items.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Get a list of all Web DLP Items</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">list_rules</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.list_rules_lite">
+<span class="sig-name descname"><span class="pre">list_rules_lite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.list_rules_lite" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of Web DLP name/ids.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Get Web DLP Lite results</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">list_rules_lite</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.web_dlp.WebDLP.update_rule">
+<span class="sig-name descname"><span class="pre">update_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.web_dlp.WebDLP.update_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Updates a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rule_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – String of ID.</p></li>
+<li><p><strong>payload</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dictionary containing the updated Web DLP Policy Rule.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated Web DLP Policy Rule resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update a Web DLP Policy Rule:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="s1">&#39;9999&#39;</span><span class="p">)</span>
+<span class="n">payload</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;daxm updated name.&quot;</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">web_dlp</span><span class="o">.</span><span class="n">update_rule</span><span class="p">(</span><span class="n">rule_id</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vips.html" class="btn btn-neutral float-left" title="vips" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../zpa/index.html" class="btn btn-neutral float-right" title="ZPA" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Zscaler Technology Alliances.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
