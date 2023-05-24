@@ -19,7 +19,7 @@
 The zscaler-sdk-python library is a SDK framework for interacting with
 Zscaler Private Access (ZPA) and Zscaler Internet Access (ZIA)
 
-Documentation available at https://zscaler-python.readthedocs.io
+Documentation available at https://zscaler-sdk-python.readthedocs.io
 
 """
 
