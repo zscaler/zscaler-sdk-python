@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve pyZscaler
+about: Create a report to help us improve Zscaler SDK Python
 title: "[BUG]: Short title of the bug"
 labels: bug
 assignees: mitchos
