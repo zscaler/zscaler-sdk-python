@@ -83,3 +83,4 @@ local_dev
 
 # vim swap files
 *.swp
+.DS_Store
