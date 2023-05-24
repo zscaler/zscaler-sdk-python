@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>locations</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="labels" href="rule_labels.html" />
+    <link rel="prev" title="firewall" href="firewall.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zscaler SDK Python
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">firewall</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">locations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI"><code class="docutils literal notranslate"><span class="pre">LocationsAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.add_location"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.add_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.delete_location"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.delete_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.get_location"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.get_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.list_locations"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.list_locations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.list_locations_lite"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.list_locations_lite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.list_sub_locations"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.list_sub_locations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.locations.LocationsAPI.update_location"><code class="docutils literal notranslate"><span class="pre">LocationsAPI.update_location()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session.html">session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_filters.html">url_filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vips.html">vips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#zscaler.zia.ZIA"><code class="docutils literal notranslate"><span class="pre">ZIA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Zscaler SDK Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ZIA</a></li>
+      <li class="breadcrumb-item active">locations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/zs/zia/locations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="locations">
+<h1>locations<a class="headerlink" href="#locations" title="Permalink to this heading"></a></h1>
+<p>The following methods allow for interaction with the ZIA
+Location Management API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.locations</span></code></p>
+<span class="target" id="module-zscaler.zia.locations"><span id="zia-locations"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LocationsAPI</span></span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.add_location">
+<span class="sig-name descname"><span class="pre">add_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.add_location" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Location name.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ip_addresses</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – <p>For locations: IP addresses of the egress points that are provisioned in the Zscaler Cloud.
+Each entry is a single IP address (e.g., 238.10.33.9).</p>
+<p>For sub-locations: Egress, internal, or GRE tunnel IP addresses. Each entry is either a single
+IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g., 10.10.33.1-10.10.33.10)).</p>
+</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of whitelisted Proxy ports for the location.</p></li>
+<li><p><strong>vpn_credentials</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – VPN credentials for the location.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The newly created location resource record</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add a new location with an IP address.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;new_location&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">ip_addresses</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;203.0.113.10&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.delete_location">
+<span class="sig-name descname"><span class="pre">delete_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.delete_location" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the location or sub-location for the specified ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>location_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the location or sub-location.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response code for the operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">delete_location</span><span class="p">(</span><span class="s1">&#39;97456691&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.get_location">
+<span class="sig-name descname"><span class="pre">get_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.get_location" title="Permalink to this definition"></a></dt>
+<dd><p>Returns information for the specified location based on the location id or location name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The unique identifier for the location.</p></li>
+<li><p><strong>location_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The unique name for the location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The requested location resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">location</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">get_location</span><span class="p">(</span><span class="s1">&#39;97456691&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">location</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">get_location_name</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;stockholm_office&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.list_locations">
+<span class="sig-name descname"><span class="pre">list_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.list_locations" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>**auth_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.</p></li>
+<li><p><strong>**bw_enforced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether Bandwith Control is being enforced for a location.</p></li>
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**page_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the page size. The default size is 100, but the maximum size is 1000.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to partially match against a location’s name and port attributes.</p></li>
+<li><p><strong>**xff_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of configured locations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>List locations using default settings:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>List locations, limiting to a maximum of 10 items:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations</span><span class="p">(</span><span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>List locations, returning 200 items per page for a maximum of 2 pages:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations</span><span class="p">(</span><span class="n">page_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_pages</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.list_locations_lite">
+<span class="sig-name descname"><span class="pre">list_locations_lite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.list_locations_lite" title="Permalink to this definition"></a></dt>
+<dd><p>Returns only the name and ID of all configured locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>**include_parent_locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Only locations with sub-locations will be included in the response if <cite>True</cite>.</p></li>
+<li><p><strong>**include_sub_locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Sub-locations will be included in the response if <cite>True</cite>.</p></li>
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**page_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the page size. The default size is 100, but the maximum size is 1000.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to partially match against a location’s name and port attributes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of configured locations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>List locations with default settings:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations_lite</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>List locations, limiting to a maximum of 10 items:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations_lite</span><span class="p">(</span><span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>List locations, returning 200 items per page for a maximum of 2 pages:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_locations_lite</span><span class="p">(</span><span class="n">page_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_pages</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.list_sub_locations">
+<span class="sig-name descname"><span class="pre">list_sub_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.list_sub_locations" title="Permalink to this definition"></a></dt>
+<dd><p>Returns sub-location information for the specified location ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the parent location.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>**auth_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.</p></li>
+<li><p><strong>**bw_enforced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether Bandwith Control is being enforced for a location.</p></li>
+<li><p><strong>**enable_firewall</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether Enable Firewall setting is enabled or disabled for a sub-location.</p></li>
+<li><p><strong>**enforce_aup</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether Enforce AUP setting is enabled or disabled for a sub-location.</p></li>
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**page_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the page size. The default size is 100, but the maximum size is 1000.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to partially match against a location’s name and port attributes.</p></li>
+<li><p><strong>**xff_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of sub-locations configured for the parent location.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">sub_location</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list_sub_locations</span><span class="p">(</span><span class="s1">&#39;97456691&#39;</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">sub_location</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.locations.LocationsAPI.update_location">
+<span class="sig-name descname"><span class="pre">update_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.locations.LocationsAPI.update_location" title="Permalink to this definition"></a></dt>
+<dd><p>Update the specified location.</p>
+<p>Note: Changes are not additive and will replace existing values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the location you are updating.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ip_addresses</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of updated ip addresses.</p></li>
+<li><p><strong>ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of whitelisted Proxy ports for the location.</p></li>
+<li><p><strong>vpn_credentials</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – VPN credentials for the location.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated resource record.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update the name of a location:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;97456691&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;updated_location_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Upodate the IP address of a location:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;97456691&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">ip_addresses</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;203.0.113.20&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="firewall.html" class="btn btn-neutral float-left" title="firewall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rule_labels.html" class="btn btn-neutral float-right" title="labels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Zscaler Technology Alliances.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sandbox</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="security" href="security.html" />
+    <link rel="prev" title="labels" href="rule_labels.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zscaler SDK Python
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_labels.html">labels</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sandbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zscaler.zia.sandbox.CloudSandboxAPI"><code class="docutils literal notranslate"><span class="pre">CloudSandboxAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.sandbox.CloudSandboxAPI.__init__"><code class="docutils literal notranslate"><span class="pre">CloudSandboxAPI.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.sandbox.CloudSandboxAPI.get_quota"><code class="docutils literal notranslate"><span class="pre">CloudSandboxAPI.get_quota()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.sandbox.CloudSandboxAPI.get_report"><code class="docutils literal notranslate"><span class="pre">CloudSandboxAPI.get_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zscaler.zia.sandbox.CloudSandboxAPI.submit_file"><code class="docutils literal notranslate"><span class="pre">CloudSandboxAPI.submit_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session.html">session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_filters.html">url_filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vips.html">vips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#zscaler.zia.ZIA"><code class="docutils literal notranslate"><span class="pre">ZIA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Zscaler SDK Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ZIA</a></li>
+      <li class="breadcrumb-item active">sandbox</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/zs/zia/sandbox.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sandbox">
+<h1>sandbox<a class="headerlink" href="#sandbox" title="Permalink to this heading"></a></h1>
+<p>The following methods allow for interaction with the ZIA
+Cloud Sandbox API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.sandbox</span></code></p>
+<span class="target" id="module-zscaler.zia.sandbox"><span id="zia-sandbox"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zia.sandbox.CloudSandboxAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CloudSandboxAPI</span></span><a class="headerlink" href="#zscaler.zia.sandbox.CloudSandboxAPI" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.sandbox.CloudSandboxAPI.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.sandbox.CloudSandboxAPI.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.sandbox.CloudSandboxAPI.get_quota">
+<span class="sig-name descname"><span class="pre">get_quota</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.sandbox.CloudSandboxAPI.get_quota" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the Cloud Sandbox API quota information for the organisation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Cloud Sandbox quota report.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zia</span><span class="o">.</span><span class="n">sandbox</span><span class="o">.</span><span class="n">get_quota</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.sandbox.CloudSandboxAPI.get_report">
+<span class="sig-name descname"><span class="pre">get_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">md5_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'summary'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.sandbox.CloudSandboxAPI.get_report" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the Cloud Sandbox Report for the provided hash.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>md5_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The MD5 hash of the file that was analysed by Cloud Sandbox.</p></li>
+<li><p><strong>report_details</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of report. Accepted values are ‘full’ or ‘summary’. Defaults to ‘summary’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cloud sandbox report.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Get a summary report:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">sandbox</span><span class="o">.</span><span class="n">get_report</span><span class="p">(</span><span class="s1">&#39;8350dED6D39DF158E51D6CFBE36FB012&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get a full report:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">sandbox</span><span class="o">.</span><span class="n">get_report</span><span class="p">(</span><span class="s1">&#39;8350dED6D39DF158E51D6CFBE36FB012&#39;</span><span class="p">,</span> <span class="s1">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.sandbox.CloudSandboxAPI.submit_file">
+<span class="sig-name descname"><span class="pre">submit_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.sandbox.CloudSandboxAPI.submit_file" title="Permalink to this definition"></a></dt>
+<dd><p>Submits a file to the ZIA Advanced Cloud Sandbox for analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The filename that will be submitted for sandbox analysis.</p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Force ZIA to analyse the file even if it has been submitted previously.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Cloud Sandbox submission response information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span class="o">.</span><span class="n">sandbox</span><span class="o">.</span><span class="n">submit_file</span><span class="p">(</span><span class="s1">&#39;malware.exe&#39;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rule_labels.html" class="btn btn-neutral float-left" title="labels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="security.html" class="btn btn-neutral float-right" title="security" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Zscaler Technology Alliances.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
