@@ -123,6 +123,8 @@
 <li><p><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>Action taken when traffic matches rule criteria. Accepted values are:</p>
 <p><cite>ANY</cite>, <cite>NONE</cite>, <cite>BLOCK</cite>, <cite>CAUTION</cite>, <cite>ALLOW</cite> and <cite>ICAP_RESPONSE</cite></p>
 </p></li>
+<li><p><strong>device_trust_levels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of device trust levels for which the rule must be applied. Accepted values are:
+<cite>ANY</cite>, <cite>UNKNOWN_DEVICETRUSTLEVEL</cite>, <cite>LOW_TRUST</cite>, <cite>MEDIUM_TRUST</cite>, and <cite>HIGH_TRUST</cite></p></li>
 <li><p><strong>protocols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The protocol criteria for the rule.</p></li>
 <li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
 </ul>
@@ -133,6 +135,9 @@
 Defaults to <cite>False</cite>.</p></li>
 <li><p><strong>ciparule</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – The CIPA compliance rule is enabled if this is set to <cite>True</cite>. Defaults to <cite>False</cite>.</p></li>
 <li><p><strong>departments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the departments that this rule applies to.</p></li>
+<li><p><strong>devices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the devices that this rule applies to.</p></li>
+<li><p><strong>device_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the device groups that this rule applies to.</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the labels that this rule applies to.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the URL Filtering rule.</p></li>
 <li><p><strong>end_user_notification_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – URL of end user notification page to be displayed when the rule is matched.
 Not applicable if either <code class="docutils literal notranslate"><span class="pre">override_users</span></code> or <code class="docutils literal notranslate"><span class="pre">override_groups</span></code> is specified.</p></li>
@@ -266,11 +271,16 @@ must be set to <cite>True</cite> for this to take effect.</p></li>
 <li><p><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>Action taken when traffic matches rule criteria. Accepted values are:</p>
 <p><cite>ANY</cite>, <cite>NONE</cite>, <cite>BLOCK</cite>, <cite>CAUTION</cite>, <cite>ALLOW</cite> and <cite>ICAP_RESPONSE</cite></p>
 </p></li>
+<li><p><strong>device_trust_levels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of device trust levels for which the rule must be applied. Accepted values are:
+<cite>ANY</cite>, <cite>UNKNOWN_DEVICETRUSTLEVEL</cite>, <cite>LOW_TRUST</cite>, <cite>MEDIUM_TRUST</cite>, and <cite>HIGH_TRUST</cite></p></li>
 <li><p><strong>protocols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The protocol criteria for the rule.</p></li>
 <li><p><strong>block_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – When set to true, a ‘BLOCK’ action triggered by the rule could be overridden.
 Defaults to <cite>False</cite>.</p></li>
 <li><p><strong>ciparule</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – The CIPA compliance rule is enabled if this is set to <cite>True</cite>. Defaults to <cite>False</cite>.</p></li>
 <li><p><strong>departments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the departments that this rule applies to.</p></li>
+<li><p><strong>devices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the devices that this rule applies to.</p></li>
+<li><p><strong>device_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the device groups that this rule applies to.</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the labels that this rule applies to.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the URL Filtering rule.</p></li>
 <li><p><strong>end_user_notification_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – URL of end user notification page to be displayed when the rule is matched.
 Not applicable if either <code class="docutils literal notranslate"><span class="pre">override_users</span></code> or <code class="docutils literal notranslate"><span class="pre">override_groups</span></code> is specified.</p></li>
