@@ -37,6 +37,7 @@ class FirewallPolicyAPI(APIEndpoint):
         "nw_application_groups",
         "nw_services",
         "nw_service_groups",
+        "src_ip_groups",
         "time_windows",
         "users",
     ]
@@ -62,6 +63,9 @@ class FirewallPolicyAPI(APIEndpoint):
         Args:
             name (str): The name of the filter rule. 31 char limit.
             action (str): The action for the filter rule.
+
+            device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
+                `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`, and `HIGH_TRUST`
             **kwargs: Optional keyword args
 
         Keyword Args:
@@ -80,7 +84,6 @@ class FirewallPolicyAPI(APIEndpoint):
             app_service_groups (list): The IDs for the application service groups that this rule applies to.
             departments (list): The IDs for the departments that this rule applies to.
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
-            device_trust_levels (list): The list of device trust levels for which the rule must be applied.
             devices (list): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
             device_groups (list): The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
             groups (list): The IDs for the groups that this rule applies to.
@@ -162,6 +165,7 @@ class FirewallPolicyAPI(APIEndpoint):
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
             src_ips (list): The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.
+            src_ip_groups (list): The IDs for the source IP groups that this rule applies to.
             dest_addresses (list): The destination IP addresses that this rule applies to. Individual IP addresses or
             CIDR ranges accepted.
             dest_ip_categories (list): The IP address categories that this rule applies to.
