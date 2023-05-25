@@ -360,9 +360,7 @@ def test_add_static_ip(zia, static_ips):
         json=static_ips[0],
         status=200,
     )
-    resp = zia.traffic.add_static_ip(
-        ip_address="203.0.113.1", comment="Test", routable_ip=True
-    )
+    resp = zia.traffic.add_static_ip(ip_address="203.0.113.1", comment="Test", routable_ip=True)
     assert isinstance(resp, Box)
     assert resp.id == 1
 
@@ -560,9 +558,7 @@ def test_update_vpn_credentials(zia, vpn_credentials):
         status=200,
         match=[matchers.json_params_matcher(updated_credential)],
     )
-    resp = zia.traffic.update_vpn_credential(
-        "1", comments="Test", pre_shared_key="Test", location_id="2"
-    )
+    resp = zia.traffic.update_vpn_credential("1", comments="Test", pre_shared_key="Test", location_id="2")
 
     assert isinstance(resp, Box)
     assert resp.id == 1

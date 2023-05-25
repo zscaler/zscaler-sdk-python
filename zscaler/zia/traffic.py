@@ -454,9 +454,7 @@ class TrafficForwardingAPI(APIEndpoint):
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next(
-            (vip for vip in vips_list if vip.city != preferred_vip.city)
-        )
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
@@ -511,9 +509,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         return BoxList(Iterator(self._api, "vpnCredentials", **kwargs))
 
-    def add_vpn_credential(
-        self, authentication_type: str, pre_shared_key: str, **kwargs
-    ) -> Box:
+    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str, **kwargs) -> Box:
         """
         Add new VPN credentials.
 
@@ -591,9 +587,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         payload = {"ids": credential_ids}
 
-        return self._post(
-            "vpnCredentials/bulkDelete", json=payload, box=False
-        ).status_code
+        return self._post("vpnCredentials/bulkDelete", json=payload, box=False).status_code
 
     def get_vpn_credential(self, credential_id: str = None, fqdn: str = None) -> Box:
         """
@@ -615,15 +609,9 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         if credential_id and fqdn:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided.")
         elif fqdn:
-            credential = (
-                record
-                for record in self.list_vpn_credentials(search=fqdn)
-                if record.fqdn == fqdn
-            )
+            credential = (record for record in self.list_vpn_credentials(search=fqdn) if record.fqdn == fqdn)
             return next(credential, None)
 
         return self._get(f"vpnCredentials/{credential_id}")

@@ -262,9 +262,7 @@ def test_add_lss_config(zpa, lss_config, lss_log_format, lss_client_types):
 
 
 @responses.activate
-def test_add_lss_config_with_log_stream(
-    zpa, lss_config, lss_log_format, lss_client_types
-):
+def test_add_lss_config_with_log_stream(zpa, lss_config, lss_log_format, lss_client_types):
     modified_config = lss_config["list"][0]
     modified_config["config"]["format"] = "test"
 

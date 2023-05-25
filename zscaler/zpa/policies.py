@@ -149,11 +149,7 @@ class PolicySetsAPI(APIEndpoint):
                 f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
             )
 
-        return BoxList(
-            Iterator(
-                self._api, f"policySet/rules/policyType/{mapped_policy_type}", **kwargs
-            )
-        )
+        return BoxList(Iterator(self._api, f"policySet/rules/policyType/{mapped_policy_type}", **kwargs))
 
     def delete_rule(self, policy_type: str, rule_id: str) -> int:
         """
@@ -437,9 +433,7 @@ class PolicySetsAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self._put(
-            f"policySet/{policy_id}/rule/{rule_id}", json=payload, box=False
-        ).status_code
+        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, box=False).status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
@@ -474,9 +468,7 @@ class PolicySetsAPI(APIEndpoint):
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        resp = self._put(
-            f"policySet/{policy_id}/rule/{rule_id}/reorder/{order}"
-        ).status_code
+        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{order}").status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)

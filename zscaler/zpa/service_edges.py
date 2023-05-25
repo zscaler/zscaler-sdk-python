@@ -95,10 +95,7 @@ class ServiceEdgesAPI(APIEndpoint):
         """
 
         # Set payload to equal existing record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_service_edge(service_edge_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_service_edge(service_edge_id).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -190,9 +187,7 @@ class ServiceEdgesAPI(APIEndpoint):
         """
         return self._get(f"serviceEdgeGroup/{group_id}")
 
-    def add_service_edge_group(
-        self, name: str, latitude: str, longitude: str, location: str, **kwargs
-    ):
+    def add_service_edge_group(self, name: str, latitude: str, longitude: str, location: str, **kwargs):
         """
         Adds a new Service Edge Group to ZPA.
 
@@ -317,10 +312,7 @@ class ServiceEdgesAPI(APIEndpoint):
 
         """
         # Set payload to equal existing record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_service_edge_group(group_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_service_edge_group(group_id).items()}
 
         # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)

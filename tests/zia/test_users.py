@@ -500,9 +500,7 @@ def test_users_get_department(zia, departments):
 
 @responses.activate
 def test_users_delete_user(zia):
-    responses.add(
-        method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204
-    )
+    responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204)
     resp = zia.users.delete_user("1")
     assert resp == 204
 

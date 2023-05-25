@@ -123,15 +123,9 @@ class LocationsAPI(APIEndpoint):
             >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
         if location_id and location_name:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
         elif location_name:
-            location = (
-                record
-                for record in self.list_locations(search=location_name)
-                if record.name == location_name
-            )
+            location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
             return next(location, None)
 
         return self._get(f"locations/{location_id}")
@@ -259,9 +253,7 @@ class LocationsAPI(APIEndpoint):
 
         """
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_location(location_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_location(location_id).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
