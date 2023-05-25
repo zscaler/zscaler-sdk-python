@@ -21,8 +21,6 @@ classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Topic :: Security",
     "Topic :: Software Development :: Libraries :: Python Modules", ]
 include = [
@@ -33,8 +31,9 @@ include = [
 "Bug Tracker" = "https://github.com/zscaler/zscaler-sdk-python/issues"
 
 [tool.poetry.dependencies]
-python = "^2.7 || ^3.5"
-pan-python = "^0.17.0"
+python = "^3.7"
+restfly = "1.4.7"
+python-box = "7.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = {version = "^5.3.2", python = "^3.5"}
@@ -64,5 +63,26 @@ isort = "^4.3.21"
 m2r = "^0.2.1"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 127
+
+[tool.pylint.'MESSAGES CONTROL']
+disable=[
+    "format",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-public-methods",
+    "anomalous-backslash-in-string",
+    "import-error",
+    "redefined-outer-name",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 127
+
+[tool.isort]
+profile = "black"
