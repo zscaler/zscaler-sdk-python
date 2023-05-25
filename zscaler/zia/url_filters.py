@@ -25,13 +25,17 @@ class URLFilteringAPI(APIEndpoint):
     # URL Filtering Policy rule keys that only require an ID to be provided.
     _key_id_list = [
         "departments",
+        "devices",
+        "device_groups",
         "groups",
+        "labels",
         "locations",
         "location_groups",
         "override_users",
         "override_groups",
         "time_windows",
         "users",
+
     ]
 
     def list_rules(self) -> BoxList:
@@ -92,6 +96,9 @@ class URLFilteringAPI(APIEndpoint):
 
                 `ANY`, `NONE`, `BLOCK`, `CAUTION`, `ALLOW` and `ICAP_RESPONSE`
 
+            device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
+                `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`, and `HIGH_TRUST`
+
             protocols (list): The protocol criteria for the rule.
             **kwargs: Optional keyword args.
 
@@ -100,6 +107,9 @@ class URLFilteringAPI(APIEndpoint):
                 Defaults to `False`.
             ciparule (bool): The CIPA compliance rule is enabled if this is set to `True`. Defaults to `False`.
             departments (list): The IDs for the departments that this rule applies to.
+            devices (list): The IDs for the devices that this rule applies to.
+            device_groups (list): The IDs for the device groups that this rule applies to.
+            labels (list): The IDs for the labels that this rule applies to.
             description (str): Additional information about the URL Filtering rule.
             end_user_notification_url (str): URL of end user notification page to be displayed when the rule is matched.
                 Not applicable if either ``override_users`` or ``override_groups`` is specified.
@@ -183,11 +193,17 @@ class URLFilteringAPI(APIEndpoint):
 
                 `ANY`, `NONE`, `BLOCK`, `CAUTION`, `ALLOW` and `ICAP_RESPONSE`
 
+            device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
+                `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`, and `HIGH_TRUST`
+
             protocols (list): The protocol criteria for the rule.
             block_override (bool): When set to true, a 'BLOCK' action triggered by the rule could be overridden.
                 Defaults to `False`.
             ciparule (bool): The CIPA compliance rule is enabled if this is set to `True`. Defaults to `False`.
             departments (list): The IDs for the departments that this rule applies to.
+            devices (list): The IDs for the devices that this rule applies to.
+            device_groups (list): The IDs for the device groups that this rule applies to.
+            labels (list): The IDs for the labels that this rule applies to.
             description (str): Additional information about the URL Filtering rule.
             end_user_notification_url (str): URL of end user notification page to be displayed when the rule is matched.
                 Not applicable if either ``override_users`` or ``override_groups`` is specified.
