@@ -148,23 +148,3 @@ class Iterator(APIIterator):
             # standard 1 sec rate limit on the API endpoints with pagination so
             # we are going to include it here.
             time.sleep(1)
-
-
-# Maps ZCC numeric os_type and registration_type arguments to a human-readable string
-zcc_param_map = {
-    "os": {
-        "ios": 1,
-        "android": 2,
-        "windows": 3,
-        "macos": 4,
-        "linux": 5,
-    },
-    "reg_type": {
-        "all": 0,
-        "registered": 1,
-        "removal_pending": 3,
-        "unregistered": 4,
-        "removed": 5,
-        "quarantined": 6,
-    },
-}

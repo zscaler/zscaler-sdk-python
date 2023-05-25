@@ -30,8 +30,6 @@ by Steve McGrath.
 ## Products
 - Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA)
-- Zscaler Mobile Admin Portal for Zscaler Client Connector (ZCC)
-- Cloud Security Posture Management (CSPM) - (work in progress)
 
 
 ## Installation
