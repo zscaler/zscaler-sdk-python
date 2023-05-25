@@ -47,6 +47,7 @@ class AuthenticatedSessionAPI(APIEndpoint):
         Returns:
             :obj:`Box`: The authenticated session information.
 
+        # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
         Examples:
             >>> zia.session.create(api_key='12khsdfh3289',
             ...    username='admin@example.com',
