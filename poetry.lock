@@ -683,6 +683,33 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "poetry-core"
+version = "1.6.0"
+description = "Poetry PEP 517 Build Backend"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "poetry_core-1.6.0-py3-none-any.whl", hash = "sha256:ff96620579f02ec30ee9f789fa5dfdcddd9ab4ac848394f6f8f2f4e88306b534"},
+    {file = "poetry_core-1.6.0.tar.gz", hash = "sha256:a9c7296a12d6c8e4f8aa50a66ef3c967b2b50fba634da144d358e676fad9989f"},
+]
+
+[[package]]
+name = "poetry2setup"
+version = "1.1.0"
+description = "Convert python-poetry to setup.py"
+category = "dev"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "poetry2setup-1.1.0-py3-none-any.whl", hash = "sha256:aad820a89d94ae88db9f39a4fc57337963a8faf59830f4f93be171852e67a697"},
+    {file = "poetry2setup-1.1.0.tar.gz", hash = "sha256:87591578fc0b68e1716261c5f3ef7ed436cdc0e1174e629a36de4244c245beeb"},
+]
+
+[package.dependencies]
+poetry-core = ">=1.0.0,<2.0.0"
+
+[[package]]
 name = "pre-commit"
 version = "3.0.4"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
@@ -1247,4 +1274,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "e74cd9f12062313a7a7d9406472ec795c5c534e90bc36ed7cea81979605d21ec"
+content-hash = "b02eaf2b07fa550e50dd05c36cd2c11fe11263a9101bdf4e87bddfc494bebcfa"
