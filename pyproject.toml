@@ -31,12 +31,12 @@ include = [
 "Bug Tracker" = "https://github.com/zscaler/zscaler-sdk-python/issues"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 restfly = "1.4.7"
 python-box = "7.0.0"
 
 [tool.poetry.dev-dependencies]
-python = "^3.7"
+python = "^3.8"
 restfly = "1.4.7"
 python-box = "7.0.0"
 sphinx = "6.1.3"
