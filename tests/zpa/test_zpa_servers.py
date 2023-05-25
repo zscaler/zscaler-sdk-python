@@ -118,9 +118,7 @@ def test_add_server(zpa, servers):
             )
         ],
     )
-    resp = zpa.servers.add_server(
-        name="Test", address="1.1.1.1", enabled=True, description="Test"
-    )
+    resp = zpa.servers.add_server(name="Test", address="1.1.1.1", enabled=True, description="Test")
 
     assert isinstance(resp, Box)
     assert resp.id == "1"
@@ -153,9 +151,7 @@ def test_update_server(zpa, servers):
         status=200,
     )
 
-    resp = zpa.servers.update_server(
-        "1", name="Updated Test", app_server_group_ids=["1", "2"]
-    )
+    resp = zpa.servers.update_server("1", name="Updated Test", app_server_group_ids=["1", "2"])
 
     assert isinstance(resp, Box)
     assert resp.id == "1"

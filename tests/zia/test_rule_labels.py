@@ -55,16 +55,10 @@ def test_labels_add_label(zia, labels):
         url="https://zsapi.zscaler.net/api/v1/ruleLabels",
         json=labels[0],
         status=200,
-        match=[
-            matchers.json_params_matcher(
-                {"name": "Test Label A", "description": "Test Label Description"}
-            )
-        ],
+        match=[matchers.json_params_matcher({"name": "Test Label A", "description": "Test Label Description"})],
     )
 
-    resp = zia.labels.add_label(
-        name="Test Label A", description="Test Label Description"
-    )
+    resp = zia.labels.add_label(name="Test Label A", description="Test Label Description")
 
     assert isinstance(resp, dict)
     assert resp.id == 999999

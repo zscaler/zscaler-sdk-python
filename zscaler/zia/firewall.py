@@ -372,10 +372,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
 
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_ip_destination_group(group_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_ip_destination_group(group_id).items()}
 
         # Update payload
         for key, value in kwargs.items():
@@ -442,9 +439,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
 
-    def add_ip_source_group(
-        self, name: str, ip_addresses: list, description: str = None
-    ) -> Box:
+    def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None) -> Box:
         """
         Adds a new IP Source Group.
 
@@ -506,9 +501,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
 
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()}
 
         # Update payload
         for key, value in kwargs.items():
@@ -634,9 +627,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
 
-    def add_network_svc_group(
-        self, name: str, service_ids: list, description: str = None
-    ) -> Box:
+    def add_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
         """
         Adds a new Network Service Group.
 
@@ -664,9 +655,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServiceGroups", json=payload)
 
-    def list_network_services(
-        self, search: str = None, protocol: str = None
-    ) -> BoxList:
+    def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
         Returns a list of all Network Services.
 
@@ -775,9 +764,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 port_range = [{"start": items[2]}]
                 if len(items) == 4:
                     port_range.append({"end": items[3]})
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(
-                    port_range
-                )
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(port_range)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -785,9 +772,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServices", json=payload)
 
-    def update_network_service(
-        self, service_id: str, ports: list = None, **kwargs
-    ) -> Box:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
         """
         Updates the specified Network Service.
 
@@ -830,10 +815,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
 
         """
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_network_service(service_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_network_service(service_id).items()}
 
         # Convert tuple list to dict and add to payload
         if ports is not None:

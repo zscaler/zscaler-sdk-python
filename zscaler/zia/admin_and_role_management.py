@@ -22,9 +22,7 @@ from zscaler.utils import Iterator, snake_to_camel
 
 
 class AdminAndRoleManagementAPI(APIEndpoint):
-    def add_user(
-        self, name: str, login_name: str, email: str, password: str, **kwargs
-    ) -> Box:
+    def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
         """
         Adds a new admin user to ZIA.
 

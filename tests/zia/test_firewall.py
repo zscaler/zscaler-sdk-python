@@ -223,9 +223,7 @@ def test_firewall_add_rule(zia, firewall_rules):
             )
         ],
     )
-    resp = zia.firewall.add_rule(
-        name="Test", action="ALLOW", order="5", state="ENABLED", nw_services=["1", "2"]
-    )
+    resp = zia.firewall.add_rule(name="Test", action="ALLOW", order="5", state="ENABLED", nw_services=["1", "2"])
 
     assert isinstance(resp, Box)
     assert resp.id == 2
@@ -435,9 +433,7 @@ def test_add_ip_source_group(zia, ip_source_groups):
             )
         ],
     )
-    resp = zia.firewall.add_ip_source_group(
-        name="Test 1", ip_addresses=["1.1.1.1", "8.8.8.8"], description="Test"
-    )
+    resp = zia.firewall.add_ip_source_group(name="Test 1", ip_addresses=["1.1.1.1", "8.8.8.8"], description="Test")
 
     assert isinstance(resp, Box)
     assert resp.id == 1
@@ -580,9 +576,7 @@ def test_add_network_svc_group(zia, network_service_groups):
             )
         ],
     )
-    resp = zia.firewall.add_network_svc_group(
-        name="Test 1", description="Test", service_ids=[1, 2]
-    )
+    resp = zia.firewall.add_network_svc_group(name="Test 1", description="Test", service_ids=[1, 2])
 
     assert isinstance(resp, Box)
     assert resp.id == 1

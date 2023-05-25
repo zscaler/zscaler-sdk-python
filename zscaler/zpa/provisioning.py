@@ -102,9 +102,7 @@ class ProvisioningAPI(APIEndpoint):
 
         """
 
-        return self._get(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}"
-        )
+        return self._get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
 
     def add_provisioning_key(
         self,
@@ -212,10 +210,7 @@ class ProvisioningAPI(APIEndpoint):
         """
 
         # Get the provided provisioning key record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():

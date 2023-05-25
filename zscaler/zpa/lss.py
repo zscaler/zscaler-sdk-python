@@ -38,9 +38,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         super().__init__(api)
 
         self.v2_url = api.v2_url
-        self.v2_admin_url = (
-            "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
-        )
+        self.v2_admin_url = "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
 
     def _create_policy(self, conditions: list) -> list:
         """
@@ -58,11 +56,7 @@ class LSSConfigControllerAPI(APIEndpoint):
 
         for condition in conditions:
             # Template for SAML Policy Rule objects
-            if (
-                isinstance(condition, tuple)
-                and len(condition) == 2
-                and condition[0] == "saml"
-            ):
+            if isinstance(condition, tuple) and len(condition) == 2 and condition[0] == "saml":
                 operand = {"operands": [{"objectType": "SAML", "entryValues": []}]}
                 for item in condition[1]:
                     entry_values = {
@@ -76,9 +70,7 @@ class LSSConfigControllerAPI(APIEndpoint):
                     "operands": [
                         {
                             "objectType": condition[0].upper(),
-                            "values": [
-                                self.get_client_types()[item] for item in condition[1]
-                            ],
+                            "values": [self.get_client_types()[item] for item in condition[1]],
                         }
                     ]
                 }
@@ -229,9 +221,7 @@ class LSSConfigControllerAPI(APIEndpoint):
             "private_svc_edge_status",
             "app_connector_status",
         ]:
-            return self._get(f"{self.v2_admin_url}/statusCodes")[
-                self.source_log_map[log_type]
-            ]
+            return self._get(f"{self.v2_admin_url}/statusCodes")[self.source_log_map[log_type]]
         else:
             raise ValueError("Incorrect log_type provided.")
 
@@ -359,9 +349,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         if kwargs.get("log_stream_content"):
             log_stream_content = kwargs.pop("log_stream_content")
         else:
-            log_stream_content = self.get_log_formats()[source_log_type][
-                source_log_format
-            ]
+            log_stream_content = self.get_log_formats()[source_log_type][source_log_format]
 
         payload = {
             "config": {
@@ -373,9 +361,7 @@ class LSSConfigControllerAPI(APIEndpoint):
                 "sourceLogType": source_log_type,
                 "useTls": use_tls,
             },
-            "connectorGroups": [
-                {"id": group_id} for group_id in app_connector_group_ids
-            ],
+            "connectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
         }
 
         # Convert tuple list to dict and add to payload
@@ -479,9 +465,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         elif kwargs.get("source_log_type"):
             source_log_type = self.source_log_map[kwargs.pop("source_log_type")]
             payload["config"]["sourceLogType"] = source_log_type
-            payload["config"]["format"] = self.get_log_formats()[source_log_type][
-                kwargs.pop("source_log_format", "csv")
-            ]
+            payload["config"]["format"] = self.get_log_formats()[source_log_type][kwargs.pop("source_log_format", "csv")]
 
         # Iterate kwargs and update payload for keys that we've renamed.
         for k in list(kwargs):
@@ -505,9 +489,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(
-            f"{self.v2_url}/lssConfig/{lss_config_id}", json=payload
-        ).status_code
+        resp = self._put(f"{self.v2_url}/lssConfig/{lss_config_id}", json=payload).status_code
 
         if resp == 204:
             return self.get_config(lss_config_id)

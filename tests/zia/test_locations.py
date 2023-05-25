@@ -77,9 +77,7 @@ def fixture_sub_locations():
             "otherSubLocation": True,
             "surrogateRefreshTimeInMinutes": 0,
             "staticLocationGroups": [],
-            "dynamiclocationGroups": [
-                {"id": 2, "name": "Corporate User Traffic Group"}
-            ],
+            "dynamiclocationGroups": [{"id": 2, "name": "Corporate User Traffic Group"}],
             "profile": "CORPORATE",
         },
     ]

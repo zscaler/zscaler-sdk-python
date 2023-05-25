@@ -274,22 +274,14 @@ def test_list_custom_controls_params(zpa, custom_controls):
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionControls/custom?search=test&sortdir=DESC&page=1",  # noqa: E501
         json=custom_controls,
-        match=[
-            matchers.query_param_matcher(
-                {"search": "test", "sortdir": "DESC", "page": "1"}
-            )
-        ],
+        match=[matchers.query_param_matcher({"search": "test", "sortdir": "DESC", "page": "1"})],
         status=200,
     )
     responses.add(
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionControls/custom?search=test&sortdir=DESC&page=2",  # noqa: E501
         json=[],
-        match=[
-            matchers.query_param_matcher(
-                {"search": "test", "sortdir": "DESC", "page": "2"}
-            )
-        ],
+        match=[matchers.query_param_matcher({"search": "test", "sortdir": "DESC", "page": "2"})],
         status=200,
     )
     resp = zpa.inspection.list_custom_controls(search="test", sortdir="DESC")
@@ -660,9 +652,7 @@ def test_update_profile_and_controls(zpa):
         ],
     )
 
-    resp = zpa.inspection.update_profile_and_controls(
-        "1", inspection_profile={"id": "1", "name": "test_d"}
-    )
+    resp = zpa.inspection.update_profile_and_controls("1", inspection_profile={"id": "1", "name": "test_d"})
     assert resp == 204
 
 

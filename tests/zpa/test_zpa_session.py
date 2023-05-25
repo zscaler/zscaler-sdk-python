@@ -33,9 +33,7 @@ def test_create_token(zpa, session):
                     "client_secret": "yyy",
                 }
             ),
-            matchers.header_matcher(
-                {"Content-Type": "application/x-www-form-urlencoded"}
-            ),
+            matchers.header_matcher({"Content-Type": "application/x-www-form-urlencoded"}),
         ],
     )
 

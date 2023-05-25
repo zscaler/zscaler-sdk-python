@@ -90,16 +90,10 @@ class ZPA(APISession):
 
     def __init__(self, **kw):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
-        self._client_secret = kw.get(
-            "client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET")
-        )
-        self._customer_id = kw.get(
-            "customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID")
-        )
+        self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
+        self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
         self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
-        self._override_url = kw.get(
-            "override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL")
-        )
+        self._override_url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -115,26 +109,16 @@ class ZPA(APISession):
         elif self._cloud == "beta":
             self.url_base = "https://config.zpabeta.net"
         else:
-            raise ValueError(
-                "Missing Attribute: You must specify either cloud or override_url"
-            )
+            raise ValueError("Missing Attribute: You must specify either cloud or override_url")
 
         # Configure URLs for this API session
         self._url = f"{self.url_base}/mgmtconfig/v1/admin/customers/{self._customer_id}"
-        self.user_config_url = (
-            f"{self.url_base}/userconfig/v1/customers/{self._customer_id}"
-        )
+        self.user_config_url = f"{self.url_base}/userconfig/v1/customers/{self._customer_id}"
         # The v2 URL supports additional API endpoints
-        self.v2_url = (
-            f"{self.url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
-        )
+        self.v2_url = f"{self.url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
 
-        self._auth_token = self.session.create_token(
-            client_id=self._client_id, client_secret=self._client_secret
-        )
-        return self._session.headers.update(
-            {"Authorization": f"Bearer {self._auth_token}"}
-        )
+        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
+        return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
 
     @property
     def app_segments(self):

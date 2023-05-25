@@ -84,13 +84,10 @@ class ZIA(APISession):
         self._password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
         self.env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
         self._url = (
-            kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
-            or f"https://zsapi.{self.env_cloud}.net/api/v1"
+            kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL")) or f"https://zsapi.{self.env_cloud}.net/api/v1"
         )
         self.conv_box = True
-        self.sandbox_token = kw.get(
-            "sandbox_token", os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
-        )
+        self.sandbox_token = kw.get("sandbox_token", os.getenv(f"{self._env_base}_SANDBOX_TOKEN"))
         super(ZIA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> Box:
