@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [ 3.8, 3.9, '3.10' ]
+        python-version: [3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
 
@@ -58,10 +58,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.7
 
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
@@ -76,9 +76,9 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.poetry-cache.outputs.dir }}
-          key: ${{ runner.os }}-poetry-3.8-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-poetry-3.7-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-3.8-
+            ${{ runner.os }}-poetry-3.7-
 
       - name: Install dependencies
         run: poetry install
@@ -95,10 +95,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.7
 
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
@@ -113,27 +113,17 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.poetry-cache.outputs.dir }}
-          key: ${{ runner.os }}-poetry-3.8-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-poetry-3.7-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-3.8-
+            ${{ runner.os }}-poetry-3.7-
 
       - name: Install dependencies
         run: |
+          poetry install
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install pytest-cov
           pip install -r dev_requirements.txt
-          poetry install
-
-      - name: Lint with flake8
-        run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
-        run: |
-          pytest
 
       - name: Create release and publish
         id: release
