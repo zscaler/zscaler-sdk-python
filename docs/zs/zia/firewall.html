@@ -300,6 +300,8 @@ E.g.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the filter rule. 31 char limit.</p></li>
 <li><p><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The action for the filter rule.</p></li>
+<li><p><strong>device_trust_levels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of device trust levels for which the rule must be applied. Accepted values are:
+<cite>ANY</cite>, <cite>UNKNOWN_DEVICETRUSTLEVEL</cite>, <cite>LOW_TRUST</cite>, <cite>MEDIUM_TRUST</cite>, and <cite>HIGH_TRUST</cite></p></li>
 <li><p><strong>**kwargs</strong> – Optional keyword args</p></li>
 </ul>
 </dd>
@@ -320,7 +322,6 @@ E.g.</p>
 <li><p><strong>app_service_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the application service groups that this rule applies to.</p></li>
 <li><p><strong>departments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the departments that this rule applies to.</p></li>
 <li><p><strong>dest_ip_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the destination IP groups that this rule applies to.</p></li>
-<li><p><strong>device_trust_levels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The list of device trust levels for which the rule must be applied.</p></li>
 <li><p><strong>devices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.</p></li>
 <li><p><strong>device_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.</p></li>
 <li><p><strong>groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the groups that this rule applies to.</p></li>
@@ -919,6 +920,7 @@ the existing ports will be overwritten.</p>
 <li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The rule state. Accepted values are ‘ENABLED’ or ‘DISABLED’.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional information about the rule</p></li>
 <li><p><strong>src_ips</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.</p></li>
+<li><p><strong>src_ip_groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IDs for the source IP groups that this rule applies to.</p></li>
 <li><p><strong>dest_addresses</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The destination IP addresses that this rule applies to. Individual IP addresses or</p></li>
 <li><p><strong>accepted.</strong> (<em>CIDR ranges</em>) – </p></li>
 <li><p><strong>dest_ip_categories</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The IP address categories that this rule applies to.</p></li>

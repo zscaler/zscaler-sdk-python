@@ -139,7 +139,7 @@ class ZPA(APISession):
     @property
     def isolation_profile(self):
         """
-        The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profiles>`.
+        The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profile>`.
 
         """
         return IsolationProfileAPI(self)
