@@ -53,7 +53,9 @@ class URLCategoriesAPI(APIEndpoint):
             payload = urls
             return self._post("urlLookup", json=payload)
 
-    def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
+    def list_categories(
+        self, custom_only: bool = False, only_counts: bool = False
+    ) -> BoxList:
         """
         Returns information on URL categories.
 
@@ -114,7 +116,9 @@ class URLCategoriesAPI(APIEndpoint):
         """
         return self._get(f"urlCategories/{category_id}")
 
-    def add_url_category(self, name: str, super_category: str, urls: list, **kwargs) -> Box:
+    def add_url_category(
+        self, name: str, super_category: str, urls: list, **kwargs
+    ) -> Box:
         """
         Adds a new custom URL category.
 
@@ -293,7 +297,9 @@ class URLCategoriesAPI(APIEndpoint):
         payload = convert_keys(self.get_category(category_id))
         payload["urls"] = urls
 
-        return self._put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
+        return self._put(
+            f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload
+        )
 
     def delete_urls_from_category(self, category_id: str, urls: list) -> Box:
         """
@@ -314,9 +320,14 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
         current_config = self.get_category(category_id)
-        payload = {"configuredName": current_config["configured_name"], "urls": urls}  # Required for successful call
+        payload = {
+            "configuredName": current_config["configured_name"],
+            "urls": urls,
+        }  # Required for successful call
 
-        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self._put(
+            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
+        )
 
     def delete_from_category(self, category_id: str, **kwargs):
         """
@@ -359,7 +370,9 @@ class URLCategoriesAPI(APIEndpoint):
         current_config = self.get_category(category_id)
 
         payload = {
-            "configured_name": current_config["configured_name"],  # Required for successful call
+            "configured_name": current_config[
+                "configured_name"
+            ],  # Required for successful call
         }
 
         # Add optional parameters to payload
@@ -369,7 +382,9 @@ class URLCategoriesAPI(APIEndpoint):
         # Convert snake to camelcase
         payload = convert_keys(payload)
 
-        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self._put(
+            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
+        )
 
     def delete_category(self, category_id: str) -> int:
         """

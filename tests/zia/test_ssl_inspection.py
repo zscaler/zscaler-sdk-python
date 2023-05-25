@@ -82,7 +82,14 @@ def test_ssl_inspection_generate_csr(zia):
         ],
     )
     resp = zia.ssl.generate_csr(
-        cert_name="test", cn="test", org="test", dept="test", city="test", state="test", country="test", signature="test"
+        cert_name="test",
+        cn="test",
+        org="test",
+        dept="test",
+        city="test",
+        state="test",
+        country="test",
+        signature="test",
     )
 
     assert isinstance(resp, int)

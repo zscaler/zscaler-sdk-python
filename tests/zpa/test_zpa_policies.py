@@ -207,12 +207,23 @@ def test_add_access_policy_rule(zpa, policies, policy_rules):
                     "name": "Test",
                     "action": "ALLOW",
                     "description": "Test",
-                    "conditions": [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}]}],
+                    "conditions": [
+                        {
+                            "operands": [
+                                {"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}
+                            ]
+                        }
+                    ],
                 }
             )
         ],
     )
-    resp = zpa.policies.add_access_rule(name="Test", action="allow", conditions=[("app_group", "id", "1")], description="Test")
+    resp = zpa.policies.add_access_rule(
+        name="Test",
+        action="allow",
+        conditions=[("app_group", "id", "1")],
+        description="Test",
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == "1"
@@ -239,12 +250,20 @@ def test_add_timeout_policy_rule(zpa, policies, policy_rules):
                     "description": "Test",
                     "reauthTimeout": 172800,
                     "reauthIdleTimeout": 600,
-                    "conditions": [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}]}],
+                    "conditions": [
+                        {
+                            "operands": [
+                                {"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}
+                            ]
+                        }
+                    ],
                 }
             )
         ],
     )
-    resp = zpa.policies.add_timeout_rule(name="Test", conditions=[("app_group", "id", "1")], description="Test")
+    resp = zpa.policies.add_timeout_rule(
+        name="Test", conditions=[("app_group", "id", "1")], description="Test"
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == "1"
@@ -270,13 +289,22 @@ def test_add_client_forwarding_policy_rule(zpa, policies, policy_rules):
                     "name": "Test",
                     "action": "INTERCEPT",
                     "description": "Test",
-                    "conditions": [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}]}],
+                    "conditions": [
+                        {
+                            "operands": [
+                                {"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}
+                            ]
+                        }
+                    ],
                 }
             )
         ],
     )
     resp = zpa.policies.add_client_forwarding_rule(
-        name="Test", action="intercept", conditions=[("app_group", "id", "1")], description="Test"
+        name="Test",
+        action="intercept",
+        conditions=[("app_group", "id", "1")],
+        description="Test",
     )
 
     assert isinstance(resp, Box)
@@ -287,7 +315,9 @@ def test_add_client_forwarding_policy_rule(zpa, policies, policy_rules):
 def test_update_policy_rule(zpa, policies, policy_rules):
     updated_rule = policy_rules["list"][0]
     updated_rule["description"] = "Updated Test"
-    updated_rule["conditions"] = [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "2"}]}]
+    updated_rule["conditions"] = [
+        {"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "2"}]}
+    ]
     responses.add(
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/policyType/ACCESS_POLICY",
@@ -312,7 +342,9 @@ def test_update_policy_rule(zpa, policies, policy_rules):
         json=policies["list"][0],
         status=200,
     )
-    resp = zpa.policies.update_rule("access", "1", description="Updated Test", conditions=[("app_group", "id", "2")])
+    resp = zpa.policies.update_rule(
+        "access", "1", description="Updated Test", conditions=[("app_group", "id", "2")]
+    )
     assert isinstance(resp, Box)
     assert resp.id == "1"
 

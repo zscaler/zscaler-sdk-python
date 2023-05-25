@@ -45,7 +45,14 @@ def fixture_lss_configs():
                 "policyRuleResource": {
                     "conditions": [
                         {"operands": [{"objectType": "IDP", "values": ["1"]}]},
-                        {"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_edge_connector"]}]},
+                        {
+                            "operands": [
+                                {
+                                    "objectType": "CLIENT_TYPE",
+                                    "values": ["zpn_client_type_edge_connector"],
+                                }
+                            ]
+                        },
                         {"operands": [{"objectType": "APP", "values": ["1"]}]},
                         {"operands": [{"objectType": "APP_GROUP", "values": ["1"]}]},
                         {
@@ -255,7 +262,9 @@ def test_add_lss_config(zpa, lss_config, lss_log_format, lss_client_types):
 
 
 @responses.activate
-def test_add_lss_config_with_log_stream(zpa, lss_config, lss_log_format, lss_client_types):
+def test_add_lss_config_with_log_stream(
+    zpa, lss_config, lss_log_format, lss_client_types
+):
     modified_config = lss_config["list"][0]
     modified_config["config"]["format"] = "test"
 

@@ -82,7 +82,9 @@ def test_dlp_update_dict_all(zia, dlp_dicts):
             "nameL10nTag": False,
             "description": "test",
             "phrases": [{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}],
-            "patterns": [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}],
+            "patterns": [
+                {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}
+            ],
         },
         status=200,
         match=[
@@ -95,8 +97,12 @@ def test_dlp_update_dict_all(zia, dlp_dicts):
                     "name": "test_updated",
                     "nameL10nTag": False,
                     "description": "test",
-                    "phrases": [{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}],
-                    "patterns": [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}],
+                    "phrases": [
+                        {"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}
+                    ],
+                    "patterns": [
+                        {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}
+                    ],
                 }
             )
         ],
@@ -140,7 +146,9 @@ def test_dlp_update_dict_any(zia, dlp_dicts):
             "nameL10nTag": False,
             "description": "test",
             "phrases": [{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}],
-            "patterns": [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}],
+            "patterns": [
+                {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}
+            ],
         },
         status=200,
         match=[
@@ -153,8 +161,12 @@ def test_dlp_update_dict_any(zia, dlp_dicts):
                     "name": "test_updated",
                     "nameL10nTag": False,
                     "description": "test",
-                    "phrases": [{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}],
-                    "patterns": [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}],
+                    "phrases": [
+                        {"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test_updated"}
+                    ],
+                    "patterns": [
+                        {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test_updated"}
+                    ],
                 }
             )
         ],

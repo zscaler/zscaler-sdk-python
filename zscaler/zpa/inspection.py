@@ -152,7 +152,9 @@ class InspectionControllerAPI(APIEndpoint):
 
         return self._post("inspectionControls/custom", json=payload)
 
-    def add_profile(self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs):
+    def add_profile(
+        self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs
+    ):
         """
         Adds a ZPA Inspection Profile.
 
@@ -248,12 +250,16 @@ class InspectionControllerAPI(APIEndpoint):
         if kwargs.get("predef_controls"):
             controls = kwargs.pop("predef_controls")
             for control in controls:
-                payload["predefinedControls"].append({"id": control[0], "action": control[1]})
+                payload["predefinedControls"].append(
+                    {"id": control[0], "action": control[1]}
+                )
 
         # Add custom controls if provided
         if kwargs.get("custom_controls"):
             controls = kwargs.pop("custom_controls")
-            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in controls]
+            payload["customControls"] = [
+                {"id": control[0], "action": control[1]} for control in controls
+            ]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -439,7 +445,9 @@ class InspectionControllerAPI(APIEndpoint):
                     print(control_type)
 
         """
-        return self._get("https://config.private.zscaler.com/mgmtconfig/v1/admin/inspectionControls/customControlTypes")
+        return self._get(
+            "https://config.private.zscaler.com/mgmtconfig/v1/admin/inspectionControls/customControlTypes"
+        )
 
     def list_custom_controls(self, **kwargs) -> BoxList:
         """
@@ -638,13 +646,28 @@ class InspectionControllerAPI(APIEndpoint):
         """
         if action == "attach":
             payload = {"version": kwargs.pop("profile_version", "OWASP_CRS/3.3.0")}
-            resp = self._put(f"inspectionProfile/{profile_id}/associateAllPredefinedControls", params=payload)
-            return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
+            resp = self._put(
+                f"inspectionProfile/{profile_id}/associateAllPredefinedControls",
+                params=payload,
+            )
+            return (
+                self.get_profile(profile_id)
+                if resp.status_code == 204
+                else resp.status_code
+            )
         elif action == "detach":
-            resp = self._put(f"inspectionProfile/{profile_id}/deAssociateAllPredefinedControls")
-            return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
+            resp = self._put(
+                f"inspectionProfile/{profile_id}/deAssociateAllPredefinedControls"
+            )
+            return (
+                self.get_profile(profile_id)
+                if resp.status_code == 204
+                else resp.status_code
+            )
         else:
-            raise ValueError("Unknown action provided. Valid actions are 'attach' or 'detach'.")
+            raise ValueError(
+                "Unknown action provided. Valid actions are 'attach' or 'detach'."
+            )
 
     def update_custom_control(self, control_id: str, **kwargs) -> Box:
         """
@@ -746,7 +769,9 @@ class InspectionControllerAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"inspectionControls/custom/{control_id}", json=payload).status_code
+        resp = self._put(
+            f"inspectionControls/custom/{control_id}", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:
@@ -828,18 +853,24 @@ class InspectionControllerAPI(APIEndpoint):
         """
         # Set payload to value of existing record
         payload = self.get_profile(profile_id)
-        payload["predefinedControlsVersion"] = kwargs.get("predef_controls_version", "OWASP_CRS/3.3.0")
+        payload["predefinedControlsVersion"] = kwargs.get(
+            "predef_controls_version", "OWASP_CRS/3.3.0"
+        )
 
         # Extend existing list of default predefined controls if the user supplies more
         if kwargs.get("predef_controls"):
             controls = kwargs.pop("predef_controls")
             for control in controls:
-                payload["predefined_controls"] = [{"id": control[0], "action": control[1]} for control in controls]
+                payload["predefined_controls"] = [
+                    {"id": control[0], "action": control[1]} for control in controls
+                ]
 
         # Add custom controls if provided
         if kwargs.get("custom_controls"):
             controls = kwargs.pop("custom_controls")
-            payload["custom_controls"] = [{"id": control[0], "action": control[1]} for control in controls]
+            payload["custom_controls"] = [
+                {"id": control[0], "action": control[1]} for control in controls
+            ]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -854,7 +885,9 @@ class InspectionControllerAPI(APIEndpoint):
         if resp == 204:
             return self.get_profile(profile_id)
 
-    def update_profile_and_controls(self, profile_id: str, inspection_profile: dict, **kwargs):
+    def update_profile_and_controls(
+        self, profile_id: str, inspection_profile: dict, **kwargs
+    ):
         """
         Updates the inspection profile and controls for the specified ID.
 
@@ -883,4 +916,6 @@ class InspectionControllerAPI(APIEndpoint):
 
         payload = convert_keys(payload)
 
-        return self._patch(f"inspectionProfile/{profile_id}/patch", json=payload).status_code
+        return self._patch(
+            f"inspectionProfile/{profile_id}/patch", json=payload
+        ).status_code

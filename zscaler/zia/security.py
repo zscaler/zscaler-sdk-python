@@ -38,7 +38,9 @@ class SecurityPolicyAPI(APIEndpoint):
         if "whitelist_urls" in self._get("security"):
             return response.whitelist_urls
         else:
-            return BoxList()  # Return empty list so other methods in this class don't break
+            return (
+                BoxList()
+            )  # Return empty list so other methods in this class don't break
 
     def get_blacklist(self) -> BoxList:
         """
@@ -159,7 +161,9 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        resp = self._post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).status_code
+        resp = self._post(
+            "security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:
@@ -219,4 +223,8 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        return self._post("security/advanced/blacklistUrls?action=REMOVE_FROM_LIST", json=payload, box=False).status_code
+        return self._post(
+            "security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
+            json=payload,
+            box=False,
+        ).status_code

@@ -47,4 +47,6 @@ class AuthenticatedSessionAPI(APIEndpoint):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
         }
-        return self._post(f"{self.url_base}/signin", headers=headers, data=payload).access_token
+        return self._post(
+            f"{self.url_base}/signin", headers=headers, data=payload
+        ).access_token

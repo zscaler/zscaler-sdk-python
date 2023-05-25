@@ -89,32 +89,71 @@ def fixture_ip_destination_groups():
 @pytest.fixture(name="ip_source_groups")
 def fixture_ip_source_groups():
     yield [
-        {"id": 1, "name": "Test 1", "ipAddresses": ["1.1.1.1", "8.8.8.8"], "description": "Test"},
-        {"id": 2, "name": "Test 2", "ipAddresses": ["2.2.2.2", "9.9.9.9"], "description": "Test"},
+        {
+            "id": 1,
+            "name": "Test 1",
+            "ipAddresses": ["1.1.1.1", "8.8.8.8"],
+            "description": "Test",
+        },
+        {
+            "id": 2,
+            "name": "Test 2",
+            "ipAddresses": ["2.2.2.2", "9.9.9.9"],
+            "description": "Test",
+        },
     ]
 
 
 @pytest.fixture(name="network_application_groups")
 def fixture_network_application_groups():
     yield [
-        {"id": 1, "name": "Test 1", "networkApplications": ["YAMMER", "OFFICE365"], "description": "Test 1"},
-        {"id": 1, "name": "Test 2", "networkApplications": ["SHAREPOINT_ONLINE", "ONEDRIVE"], "description": "Test 2"},
+        {
+            "id": 1,
+            "name": "Test 1",
+            "networkApplications": ["YAMMER", "OFFICE365"],
+            "description": "Test 1",
+        },
+        {
+            "id": 1,
+            "name": "Test 2",
+            "networkApplications": ["SHAREPOINT_ONLINE", "ONEDRIVE"],
+            "description": "Test 2",
+        },
     ]
 
 
 @pytest.fixture(name="network_applications")
 def fixture_network_applications():
     yield [
-        {"id": "TEST1", "parentCategory": "APP_SERVICE", "description": "TEST1_DESC", "deprecated": False},
-        {"id": "TEST2", "parentCategory": "APP_SERVICE", "description": "TEST2_DESC", "deprecated": True},
+        {
+            "id": "TEST1",
+            "parentCategory": "APP_SERVICE",
+            "description": "TEST1_DESC",
+            "deprecated": False,
+        },
+        {
+            "id": "TEST2",
+            "parentCategory": "APP_SERVICE",
+            "description": "TEST2_DESC",
+            "deprecated": True,
+        },
     ]
 
 
 @pytest.fixture(name="network_service_groups")
 def fixture_network_service_groups():
     yield [
-        {"id": 1, "description": "Test", "name": "Test 1", "services": [{"id": 1, "name": "SSH", "isNameL10nTag": True}]},
-        {"id": 2, "name": "Test 2", "services": [{"id": 2, "name": "TELNET", "isNameL10nTag": True}]},
+        {
+            "id": 1,
+            "description": "Test",
+            "name": "Test 1",
+            "services": [{"id": 1, "name": "SSH", "isNameL10nTag": True}],
+        },
+        {
+            "id": 2,
+            "name": "Test 2",
+            "services": [{"id": 2, "name": "TELNET", "isNameL10nTag": True}],
+        },
     ]
 
 
@@ -184,7 +223,9 @@ def test_firewall_add_rule(zia, firewall_rules):
             )
         ],
     )
-    resp = zia.firewall.add_rule(name="Test", action="ALLOW", order="5", state="ENABLED", nw_services=["1", "2"])
+    resp = zia.firewall.add_rule(
+        name="Test", action="ALLOW", order="5", state="ENABLED", nw_services=["1", "2"]
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == 2
@@ -291,12 +332,20 @@ def test_firewall_add_ip_destination_group(zia, ip_destination_groups):
         status=200,
         match=[
             matchers.json_params_matcher(
-                {"name": "Test 1", "type": "DSTN_FQDN", "addresses": ["www.example.com", "example.com"], "description": "Test"}
+                {
+                    "name": "Test 1",
+                    "type": "DSTN_FQDN",
+                    "addresses": ["www.example.com", "example.com"],
+                    "description": "Test",
+                }
             )
         ],
     )
     resp = zia.firewall.add_ip_destination_group(
-        name="Test 1", type="DSTN_FQDN", addresses=["www.example.com", "example.com"], description="Test"
+        name="Test 1",
+        type="DSTN_FQDN",
+        addresses=["www.example.com", "example.com"],
+        description="Test",
     )
     assert isinstance(resp, Box)
     assert resp.id == 1
@@ -376,9 +425,19 @@ def test_add_ip_source_group(zia, ip_source_groups):
         url="https://zsapi.zscaler.net/api/v1/ipSourceGroups",
         json=ip_source_groups[0],
         status=200,
-        match=[matchers.json_params_matcher({"name": "Test 1", "ipAddresses": ["1.1.1.1", "8.8.8.8"], "description": "Test"})],
+        match=[
+            matchers.json_params_matcher(
+                {
+                    "name": "Test 1",
+                    "ipAddresses": ["1.1.1.1", "8.8.8.8"],
+                    "description": "Test",
+                }
+            )
+        ],
     )
-    resp = zia.firewall.add_ip_source_group(name="Test 1", ip_addresses=["1.1.1.1", "8.8.8.8"], description="Test")
+    resp = zia.firewall.add_ip_source_group(
+        name="Test 1", ip_addresses=["1.1.1.1", "8.8.8.8"], description="Test"
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == 1
@@ -521,7 +580,9 @@ def test_add_network_svc_group(zia, network_service_groups):
             )
         ],
     )
-    resp = zia.firewall.add_network_svc_group(name="Test 1", description="Test", service_ids=[1, 2])
+    resp = zia.firewall.add_network_svc_group(
+        name="Test 1", description="Test", service_ids=[1, 2]
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == 1
@@ -585,7 +646,11 @@ def test_add_network_service(zia, network_services):
             )
         ],
     )
-    resp = zia.firewall.add_network_service(name="TEST", description="Test", ports=[("dest", "tcp", 1, 2), ("dest", "udp", 1)])
+    resp = zia.firewall.add_network_service(
+        name="TEST",
+        description="Test",
+        ports=[("dest", "tcp", 1, 2), ("dest", "udp", 1)],
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == 2
@@ -613,7 +678,10 @@ def test_update_network_service(zia, network_services):
         match=[matchers.json_params_matcher(updated_network_service)],
     )
     resp = zia.firewall.update_network_service(
-        "2", name="TEST", description="Updated Description", ports=[("dest", "tcp", 1, 2), ("dest", "udp", 1, 2)]
+        "2",
+        name="TEST",
+        description="Updated Description",
+        ports=[("dest", "tcp", 1, 2), ("dest", "udp", 1, 2)],
     )
 
     assert isinstance(resp, Box)

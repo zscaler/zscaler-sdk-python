@@ -52,7 +52,11 @@ class CloudSandboxAPI(APIEndpoint):
             "force": int(force),  # convert boolean to int for ZIA
         }
 
-        return self._post(f"https://csbapi.{self.env_cloud}.net/zscsb/submit", params=params, data=data)
+        return self._post(
+            f"https://csbapi.{self.env_cloud}.net/zscsb/submit",
+            params=params,
+            data=data,
+        )
 
     def get_quota(self) -> Box:
         """
