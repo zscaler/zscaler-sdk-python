@@ -31,12 +31,11 @@ by Steve McGrath.
 - Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA)
 
-
 ## Installation
 
 The most recent version can be installed from pypi as per below.
 
-    $ pip install zscaler
+    $ pip install zscaler-sdk-python
 
 ## Usage
 
