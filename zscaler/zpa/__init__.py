@@ -34,6 +34,7 @@ from restfly.session import APISession
 from zscaler import __version__
 from zscaler.zpa.app_segments import AppSegmentsAPI
 from zscaler.zpa.certificates import CertificatesAPI
+from zscaler.zpa.isolation_profile import IsolationProfileAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from zscaler.zpa.connector_groups import ConnectorGroupsAPI
 from zscaler.zpa.connectors import ConnectorsAPI
@@ -134,6 +135,14 @@ class ZPA(APISession):
 
         """
         return CertificatesAPI(self)
+
+    @property
+    def isolation_profile(self):
+        """
+        The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profiles>`.
+
+        """
+        return IsolationProfileAPI(self)
 
     @property
     def cloud_connector_groups(self):
