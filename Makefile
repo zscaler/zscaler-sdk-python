@@ -48,11 +48,11 @@ bandit:
 	bandit -r --ini .bandit
 
 format:
-	isort --recursive --atomic zscaler
+	isort --atomic zscaler
 	black .
 
 check-format:
-	isort --recursive --atomic --check-only zscaler
+	isort --atomic --check-only zscaler
 	black --check .
 
 test:
