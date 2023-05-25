@@ -36,11 +36,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          poetry install
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install pytest-cov
           pip install -r dev_requirements.txt
+          poetry install
 
       - name: Lint with flake8
         run: |
