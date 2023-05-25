@@ -41,6 +41,7 @@ def zia(session):
         json=session,
         status=200,
     )
+    # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
     return ZIA(
         username="test@example.com",
         password="hunter2",

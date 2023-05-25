@@ -22,7 +22,7 @@ from responses import matchers
 
 from tests.conftest import stub_sleep
 
-
+# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
 @pytest.fixture(name="admin_users")
 def fixture_users():
     return [
@@ -41,6 +41,7 @@ def fixture_users():
             "newLocationCreateAllowed": False,
             "disabled": False,
         },
+        # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
         {
             "loginName": "testuserb@example.com",
             "userName": "Test User B",
@@ -66,7 +67,7 @@ def fixture_admin_roles():
         {"id": 2, "rank": 7, "name": "Executive Insights App", "roleType": "EXEC_INSIGHT"},
     ]
 
-
+# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
 @responses.activate
 def test_admin_users_add_user(zia, admin_users):
     responses.add(
@@ -87,7 +88,7 @@ def test_admin_users_add_user(zia, admin_users):
             )
         ],
     )
-
+# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
     resp = zia.admin_and_role_management.add_user(
         name="Test User",
         email="testuser@example.com",
@@ -101,7 +102,7 @@ def test_admin_users_add_user(zia, admin_users):
     assert resp.role.id == 1
     assert resp.admin_scope_type == "ORGANIZATION"
 
-
+# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
 @responses.activate
 def test_admin_users_add_user_with_scope(zia, admin_users):
     responses.add(
@@ -124,7 +125,7 @@ def test_admin_users_add_user_with_scope(zia, admin_users):
             )
         ],
     )
-
+# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
     resp = zia.admin_and_role_management.add_user(
         name="Test User B",
         email="testuserb@example.com",
