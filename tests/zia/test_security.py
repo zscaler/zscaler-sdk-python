@@ -32,7 +32,12 @@ def fixture_whitelist_urls():
 
 @responses.activate
 def test_get_blacklist(zia, blacklist_urls):
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security/advanced", json=blacklist_urls, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security/advanced",
+        json=blacklist_urls,
+        status=200,
+    )
     resp = zia.security.get_blacklist()
 
     assert isinstance(resp, list)
@@ -41,7 +46,12 @@ def test_get_blacklist(zia, blacklist_urls):
 
 @responses.activate
 def test_get_whitelist(zia, whitelist_urls):
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security", json=whitelist_urls, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security",
+        json=whitelist_urls,
+        status=200,
+    )
     resp = zia.security.get_whitelist()
 
     assert isinstance(resp, list)
@@ -50,7 +60,12 @@ def test_get_whitelist(zia, whitelist_urls):
 
 @responses.activate
 def test_get_whitelist_empty(zia, whitelist_urls):
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security", json={}, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security",
+        json={},
+        status=200,
+    )
     resp = zia.security.get_whitelist()
 
     assert isinstance(resp, list)
@@ -87,7 +102,12 @@ def test_replace_whitelist(zia, whitelist_urls):
 
 @responses.activate
 def test_add_urls_to_whitelist(zia, whitelist_urls):
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security", json=whitelist_urls, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security",
+        json=whitelist_urls,
+        status=200,
+    )
 
     whitelist_urls["whitelistUrls"].append("mysite.com")
 
@@ -106,7 +126,12 @@ def test_add_urls_to_whitelist(zia, whitelist_urls):
 
 @responses.activate
 def test_delete_urls_from_whitelist(zia, whitelist_urls):
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security", json=whitelist_urls, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security",
+        json=whitelist_urls,
+        status=200,
+    )
 
     whitelist_urls["whitelistUrls"].pop(0)
 
@@ -134,7 +159,12 @@ def test_add_urls_to_blacklist(zia, blacklist_urls):
         status=204,
         match=[matchers.json_params_matcher({"blacklistUrls": ["mysite.com"]})],
     )
-    responses.add(responses.GET, url="https://zsapi.zscaler.net/api/v1/security/advanced", json=blacklist_urls, status=200)
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/security/advanced",
+        json=blacklist_urls,
+        status=200,
+    )
     resp = zia.security.add_urls_to_blacklist(["mysite.com"])
 
     assert isinstance(resp, list)

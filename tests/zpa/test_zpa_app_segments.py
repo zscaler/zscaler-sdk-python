@@ -51,7 +51,10 @@ def fixture_app_segments():
                 "enabled": True,
                 "passiveHealthEnabled": True,
                 "tcpPortRanges": ["443", "443", "80", "80"],
-                "tcpPortRange": [{"from": "443", "to": "443"}, {"from": "80", "to": "80"}],
+                "tcpPortRange": [
+                    {"from": "443", "to": "443"},
+                    {"from": "80", "to": "80"},
+                ],
                 "doubleEncrypt": False,
                 "configSpace": "DEFAULT",
                 "bypassType": "NEVER",
@@ -84,7 +87,10 @@ def fixture_app_segments():
                 "enabled": True,
                 "passiveHealthEnabled": True,
                 "tcpPortRanges": ["443", "443", "80", "80"],
-                "tcpPortRange": [{"from": "443", "to": "443"}, {"from": "80", "to": "80"}],
+                "tcpPortRange": [
+                    {"from": "443", "to": "443"},
+                    {"from": "80", "to": "80"},
+                ],
                 "doubleEncrypt": False,
                 "configSpace": "DEFAULT",
                 "bypassType": "NEVER",
@@ -220,7 +226,11 @@ def test_update_segment(zpa, app_segments):
         status=200,
     )
     resp = zpa.app_segments.update_segment(
-        "1", name="Test Updated", clientless_app_ids=["1", "2"], tcp_ports=[("80", "81")], udp_ports=[("5000", "5005")]
+        "1",
+        name="Test Updated",
+        clientless_app_ids=["1", "2"],
+        tcp_ports=[("80", "81")],
+        udp_ports=[("5000", "5005")],
     )
 
     assert isinstance(resp, Box)

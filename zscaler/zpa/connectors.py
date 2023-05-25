@@ -97,7 +97,9 @@ class ConnectorsAPI(APIEndpoint):
 
         """
         # Set payload to equal existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_connector(connector_id).items()}
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_connector(connector_id).items()
+        }
 
         # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
@@ -185,7 +187,9 @@ class ConnectorsAPI(APIEndpoint):
         """
         return self._get(f"appConnectorGroup/{group_id}")
 
-    def add_connector_group(self, name: str, latitude: int, location: str, longitude: int, **kwargs) -> Box:
+    def add_connector_group(
+        self, name: str, latitude: int, location: str, longitude: int, **kwargs
+    ) -> Box:
         """
         Adds a new ZPA App Connector Group.
 
@@ -314,7 +318,9 @@ class ConnectorsAPI(APIEndpoint):
         """
 
         # Set payload to equal existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_connector_group(group_id).items()}
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_connector_group(group_id).items()
+        }
 
         # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)

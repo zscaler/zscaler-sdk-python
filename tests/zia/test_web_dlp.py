@@ -39,7 +39,10 @@ def fixture_get_all_rules():
             "action": "ALLOW",
             "state": "ENABLED",
             "external_auditor_email": "danny.douglas@corp.com",
-            "notification_template": {"id": 1152, "name": "End User Allow Notification"},
+            "notification_template": {
+                "id": 1152,
+                "name": "End User Allow Notification",
+            },
             "match_only": True,
             "icap_server": {"id": 1247, "name": "IR"},
             "without_content_inspection": False,
@@ -72,7 +75,10 @@ def fixture_get_all_rules():
             "action": "BLOCK",
             "state": "ENABLED",
             "external_auditor_email": "danny.douglas@corp.com",
-            "notification_template": {"id": 1151, "name": "End User Block Notification"},
+            "notification_template": {
+                "id": 1151,
+                "name": "End User Block Notification",
+            },
             "match_only": False,
             "icap_server": {"id": 1247, "name": "IR"},
             "without_content_inspection": False,
@@ -227,6 +233,10 @@ def test_web_dlp_update_rule(zia, rules):
 
 @responses.activate
 def test_web_dlp_delete_rule(zia):
-    responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/webDlpRules/2669", status=204)
+    responses.add(
+        method="DELETE",
+        url="https://zsapi.zscaler.net/api/v1/webDlpRules/2669",
+        status=204,
+    )
     resp = zia.web_dlp.delete_rule("2669")
     assert resp.status_code == 204

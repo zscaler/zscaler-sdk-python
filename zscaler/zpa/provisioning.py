@@ -68,7 +68,13 @@ class ProvisioningAPI(APIEndpoint):
 
         """
 
-        return BoxList(Iterator(self._api, f"associationType/{simplify_key_type(key_type)}/provisioningKey", **kwargs))
+        return BoxList(
+            Iterator(
+                self._api,
+                f"associationType/{simplify_key_type(key_type)}/provisioningKey",
+                **kwargs,
+            )
+        )
 
     def get_provisioning_key(self, key_id: str, key_type: str) -> Box:
         """
@@ -96,7 +102,9 @@ class ProvisioningAPI(APIEndpoint):
 
         """
 
-        return self._get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        return self._get(
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}"
+        )
 
     def add_provisioning_key(
         self,
@@ -160,7 +168,10 @@ class ProvisioningAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"associationType/{simplify_key_type(key_type)}/provisioningKey", json=payload)
+        return self._post(
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey",
+            json=payload,
+        )
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
         """
@@ -201,13 +212,19 @@ class ProvisioningAPI(APIEndpoint):
         """
 
         # Get the provided provisioning key record
-        payload = {snake_to_camel(k): v for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()}
+        payload = {
+            snake_to_camel(k): v
+            for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()
+        }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", json=payload).status_code
+        resp = self._put(
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
+            json=payload,
+        ).status_code
 
         if resp == 204:
             return self.get_provisioning_key(key_id, key_type=key_type)
@@ -238,4 +255,7 @@ class ProvisioningAPI(APIEndpoint):
 
         """
 
-        return self._delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", box=False).status_code
+        return self._delete(
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
+            box=False,
+        ).status_code

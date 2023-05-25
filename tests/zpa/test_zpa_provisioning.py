@@ -165,7 +165,13 @@ def test_add_connector_provisioning_key(zpa, provisioning_keys):
         status=200,
         match=[
             matchers.json_params_matcher(
-                {"name": "Test", "maxUsage": "2", "enrollmentCertId": "1", "zcomponentId": "1", "enabled": True}
+                {
+                    "name": "Test",
+                    "maxUsage": "2",
+                    "enrollmentCertId": "1",
+                    "zcomponentId": "1",
+                    "enabled": True,
+                }
             )
         ],
     )
@@ -204,7 +210,9 @@ def test_update_connector_provisioning_key(zpa, provisioning_keys):
         json=updated_keys,
         status=200,
     )
-    resp = zpa.provisioning.update_provisioning_key("1", key_type="connector", name="Updated Test")
+    resp = zpa.provisioning.update_provisioning_key(
+        "1", key_type="connector", name="Updated Test"
+    )
     assert isinstance(resp, Box)
     assert resp.id == "1"
     assert resp.name == updated_keys["name"]
@@ -219,7 +227,13 @@ def test_add_service_edge_provisioning_key(zpa, provisioning_keys):
         status=200,
         match=[
             matchers.json_params_matcher(
-                {"name": "Test", "maxUsage": "2", "enrollmentCertId": "1", "zcomponentId": "1", "enabled": True}
+                {
+                    "name": "Test",
+                    "maxUsage": "2",
+                    "enrollmentCertId": "1",
+                    "zcomponentId": "1",
+                    "enabled": True,
+                }
             )
         ],
     )
@@ -258,7 +272,9 @@ def test_update_service_edge_provisioning_key(zpa, provisioning_keys):
         json=updated_keys,
         status=200,
     )
-    resp = zpa.provisioning.update_provisioning_key("1", key_type="service_edge", name="Updated Test")
+    resp = zpa.provisioning.update_provisioning_key(
+        "1", key_type="service_edge", name="Updated Test"
+    )
     assert isinstance(resp, Box)
     assert resp.id == "1"
     assert resp.name == updated_keys["name"]

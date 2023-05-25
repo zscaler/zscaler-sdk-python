@@ -67,7 +67,8 @@ class ConnectorGroupsAPI(APIEndpoint):
 
         """
         warn(
-            "This endpoint is deprecated and will eventually be removed. " "Use zpa.connectors.get_connector_group() instead."
+            "This endpoint is deprecated and will eventually be removed. "
+            "Use zpa.connectors.get_connector_group() instead."
         )
 
         return self._get(f"appConnectorGroup/{group_id}")

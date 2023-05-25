@@ -200,7 +200,14 @@ def test_list_control_types(zpa):
 @responses.activate
 def test_list_custom_control_types(zpa):
     control_types = {
-        "request": ["REQUEST_HEADERS", "REQUEST_COOKIES", "REQUEST_URI", "REQUEST_METHOD", "REQUEST_BODY", "QUERY_STRING"],
+        "request": [
+            "REQUEST_HEADERS",
+            "REQUEST_COOKIES",
+            "REQUEST_URI",
+            "REQUEST_METHOD",
+            "REQUEST_BODY",
+            "QUERY_STRING",
+        ],
         "response": ["RESPONSE_HEADERS", "RESPONSE_BODY"],
     }
 
@@ -217,7 +224,17 @@ def test_list_custom_control_types(zpa):
 
 @responses.activate
 def test_list_custom_http_methods(zpa):
-    methods = ["GET", "HEAD", "POST", "OPTIONS", "PUT", "DELETE", "PATCH", "TRACE", "CONNECT"]
+    methods = [
+        "GET",
+        "HEAD",
+        "POST",
+        "OPTIONS",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "TRACE",
+        "CONNECT",
+    ]
 
     responses.add(
         responses.GET,
@@ -257,14 +274,22 @@ def test_list_custom_controls_params(zpa, custom_controls):
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionControls/custom?search=test&sortdir=DESC&page=1",  # noqa: E501
         json=custom_controls,
-        match=[matchers.query_param_matcher({"search": "test", "sortdir": "DESC", "page": "1"})],
+        match=[
+            matchers.query_param_matcher(
+                {"search": "test", "sortdir": "DESC", "page": "1"}
+            )
+        ],
         status=200,
     )
     responses.add(
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionControls/custom?search=test&sortdir=DESC&page=2",  # noqa: E501
         json=[],
-        match=[matchers.query_param_matcher({"search": "test", "sortdir": "DESC", "page": "2"})],
+        match=[
+            matchers.query_param_matcher(
+                {"search": "test", "sortdir": "DESC", "page": "2"}
+            )
+        ],
         status=200,
     )
     resp = zpa.inspection.list_custom_controls(search="test", sortdir="DESC")
@@ -596,7 +621,10 @@ def test_update_profile(zpa, inspection_profiles):
         status=200,
     )
     resp = zpa.inspection.update_profile(
-        "3", description="updated test", predef_controls=[("10", "PASS")], custom_controls=[("11", "PASS")]
+        "3",
+        description="updated test",
+        predef_controls=[("10", "PASS")],
+        custom_controls=[("11", "PASS")],
     )
     assert isinstance(resp, Box)
     assert resp.description == updated_profile["description"]
@@ -632,7 +660,9 @@ def test_update_profile_and_controls(zpa):
         ],
     )
 
-    resp = zpa.inspection.update_profile_and_controls("1", inspection_profile={"id": "1", "name": "test_d"})
+    resp = zpa.inspection.update_profile_and_controls(
+        "1", inspection_profile={"id": "1", "name": "test_d"}
+    )
     assert resp == 204
 
 

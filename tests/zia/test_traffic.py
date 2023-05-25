@@ -310,7 +310,10 @@ def test_add_gre_tunnel_with_params(zia, gre_tunnels, recommended_vips):
         status=200,
     )
     resp = zia.traffic.add_gre_tunnel(
-        source_ip="203.0.113.1", primary_dest_vip_id="1", secondary_dest_vip_id="2", comment="Test"
+        source_ip="203.0.113.1",
+        primary_dest_vip_id="1",
+        secondary_dest_vip_id="2",
+        comment="Test",
     )
     assert isinstance(resp, Box)
     assert resp.id == 1
@@ -357,7 +360,9 @@ def test_add_static_ip(zia, static_ips):
         json=static_ips[0],
         status=200,
     )
-    resp = zia.traffic.add_static_ip(ip_address="203.0.113.1", comment="Test", routable_ip=True)
+    resp = zia.traffic.add_static_ip(
+        ip_address="203.0.113.1", comment="Test", routable_ip=True
+    )
     assert isinstance(resp, Box)
     assert resp.id == 1
 
@@ -474,7 +479,12 @@ def test_add_vpn_credentials(zia, vpn_credentials):
         json=vpn_credentials[0],
         status=200,
     )
-    resp = zia.traffic.add_vpn_credential(authentication_type="IP", pre_shared_key="Test", location_id="1", comments="Test")
+    resp = zia.traffic.add_vpn_credential(
+        authentication_type="IP",
+        pre_shared_key="Test",
+        location_id="1",
+        comments="Test",
+    )
     assert isinstance(resp, Box)
     assert resp.id == 1
 
@@ -550,7 +560,9 @@ def test_update_vpn_credentials(zia, vpn_credentials):
         status=200,
         match=[matchers.json_params_matcher(updated_credential)],
     )
-    resp = zia.traffic.update_vpn_credential("1", comments="Test", pre_shared_key="Test", location_id="2")
+    resp = zia.traffic.update_vpn_credential(
+        "1", comments="Test", pre_shared_key="Test", location_id="2"
+    )
 
     assert isinstance(resp, Box)
     assert resp.id == 1

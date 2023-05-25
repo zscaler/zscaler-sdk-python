@@ -242,10 +242,14 @@ class AppSegmentsAPI(APIEndpoint):
         payload = convert_keys(self.get_segment(segment_id))
 
         if kwargs.get("tcp_ports"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
+            payload["tcpPortRange"] = [
+                {"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")
+            ]
 
         if kwargs.get("udp_ports"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
+            payload["udpPortRange"] = [
+                {"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")
+            ]
 
         # Reformat keys that we've simplified for our users
         add_id_groups(self.reformat_params, kwargs, payload)

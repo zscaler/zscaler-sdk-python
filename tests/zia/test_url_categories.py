@@ -103,7 +103,10 @@ def test_url_category_lookup(zia):
     lookup_response = [
         {
             "url": "github.com",
-            "url_classifications": ["PROFESSIONAL_SERVICES", "OTHER_INFORMATION_TECHNOLOGY"],
+            "url_classifications": [
+                "PROFESSIONAL_SERVICES",
+                "OTHER_INFORMATION_TECHNOLOGY",
+            ],
             "url_classifications_with_security_alert": [],
         }
     ]
@@ -201,7 +204,10 @@ def test_add_url_category(zia, custom_categories):
         status=200,
     )
     resp = zia.url_categories.add_url_category(
-        name="Test", super_category="TEST", urls=["example.com", "test.example.com"], description="Test"
+        name="Test",
+        super_category="TEST",
+        urls=["example.com", "test.example.com"],
+        description="Test",
     )
     assert isinstance(resp, Box)
     assert resp.configured_name == "Test URL"
@@ -215,7 +221,9 @@ def test_add_tld_category(zia, custom_categories):
         json=custom_categories[1],
         status=200,
     )
-    resp = zia.url_categories.add_tld_category(name="Test", tlds=[".ru", ".tk"], description="Test")
+    resp = zia.url_categories.add_tld_category(
+        name="Test", tlds=[".ru", ".tk"], description="Test"
+    )
     assert isinstance(resp, Box)
     assert resp.configured_name == "Test TLD"
 
@@ -237,7 +245,9 @@ def test_update_url_category(zia, custom_categories):
         status=200,
         match=[matchers.json_params_matcher(updated_category)],
     )
-    resp = zia.url_categories.update_url_category("CUSTOM_02", description="Updated Test")
+    resp = zia.url_categories.update_url_category(
+        "CUSTOM_02", description="Updated Test"
+    )
 
     assert isinstance(resp, Box)
     assert resp.description == updated_category["description"]
@@ -275,7 +285,9 @@ def test_add_urls_to_category(zia, custom_categories):
         status=200,
         match=[matchers.json_params_matcher(received_response)],
     )
-    resp = zia.url_categories.add_urls_to_category("CUSTOM_02", urls=["update.example.com"])
+    resp = zia.url_categories.add_urls_to_category(
+        "CUSTOM_02", urls=["update.example.com"]
+    )
     assert isinstance(resp, Box)
     assert resp.urls == ["test.example.com", "example.com", "update.example.com"]
 
@@ -288,7 +300,10 @@ def test_delete_urls_from_category(zia, custom_categories):
         json=custom_categories[0],
         status=200,
     )
-    received_response = {"configuredName": custom_categories[0]["configuredName"], "urls": ["example.com"]}
+    received_response = {
+        "configuredName": custom_categories[0]["configuredName"],
+        "urls": ["example.com"],
+    }
     responses.add(
         method="PUT",
         url="https://zsapi.zscaler.net/api/v1/urlCategories/CUSTOM_02?action=REMOVE_FROM_LIST",
@@ -311,7 +326,9 @@ def test_delete_urls_from_category(zia, custom_categories):
         status=200,
         match=[matchers.json_params_matcher(received_response)],
     )
-    resp = zia.url_categories.delete_urls_from_category("CUSTOM_02", urls=["example.com"])
+    resp = zia.url_categories.delete_urls_from_category(
+        "CUSTOM_02", urls=["example.com"]
+    )
     assert isinstance(resp, Box)
     assert resp.urls[0] == "test.example.com"
 
@@ -351,7 +368,9 @@ def test_delete_from_category(zia, custom_categories):
         status=200,
         match=[matchers.json_params_matcher(received_response)],
     )
-    resp = zia.url_categories.delete_from_category("CUSTOM_02", urls=["example.com"], db_categorized_urls=["news.com"])
+    resp = zia.url_categories.delete_from_category(
+        "CUSTOM_02", urls=["example.com"], db_categorized_urls=["news.com"]
+    )
     assert isinstance(resp, Box)
     assert resp.urls[0] == "test.example.com"
     assert resp.db_categorized_urls[0] == "cnn.com"

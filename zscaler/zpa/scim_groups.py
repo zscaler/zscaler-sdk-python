@@ -65,7 +65,11 @@ class SCIMGroupsAPI(APIEndpoint):
             ...    pprint(scim_group)
 
         """
-        return BoxList(Iterator(self._api, f"{self.user_config_url}/scimgroup/idpId/{idp_id}", **kwargs))
+        return BoxList(
+            Iterator(
+                self._api, f"{self.user_config_url}/scimgroup/idpId/{idp_id}", **kwargs
+            )
+        )
 
     def get_group(self, group_id: str, **kwargs) -> Box:
         """

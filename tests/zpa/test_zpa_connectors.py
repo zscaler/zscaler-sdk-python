@@ -416,7 +416,11 @@ def test_update_connector_group(zpa, app_connector_groups):
     )
 
     resp = zpa.connectors.update_connector_group(
-        "1", name="Updated Test", connector_ids=["3"], server_group_ids=["3"], version_profile="previous_default"
+        "1",
+        name="Updated Test",
+        connector_ids=["3"],
+        server_group_ids=["3"],
+        version_profile="previous_default",
     )
 
     assert isinstance(resp, Box)

@@ -52,7 +52,9 @@ class CertificatesAPI(APIEndpoint):
             ...    print(cert)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/clientlessCertificate/issued", **kwargs))
+        return BoxList(
+            Iterator(self._api, f"{self.v2_url}/clientlessCertificate/issued", **kwargs)
+        )
 
     def get_browser_access(self, certificate_id: str) -> Box:
         """

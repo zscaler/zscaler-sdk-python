@@ -105,5 +105,9 @@ class SCIMAttributesAPI(APIEndpoint):
 
         """
         return BoxList(
-            Iterator(self._api, f"{self.user_config_url}/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}", **kwargs)
+            Iterator(
+                self._api,
+                f"{self.user_config_url}/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}",
+                **kwargs,
+            )
         )

@@ -35,7 +35,6 @@ class URLFilteringAPI(APIEndpoint):
         "override_groups",
         "time_windows",
         "users",
-
     ]
 
     def list_rules(self) -> BoxList:
@@ -85,7 +84,9 @@ class URLFilteringAPI(APIEndpoint):
         """
         return self._delete(f"urlFilteringRules/{rule_id}", box=False).status_code
 
-    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs) -> Box:
+    def add_rule(
+        self, rank: str, name: str, action: str, protocols: list, **kwargs
+    ) -> Box:
         """
         Adds a new URL Filtering Policy rule.
 

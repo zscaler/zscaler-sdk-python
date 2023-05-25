@@ -77,7 +77,9 @@ class SAMLAttributesAPI(APIEndpoint):
             ...    pprint(saml_attribute)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/samlAttribute/idp/{idp_id}", **kwargs))
+        return BoxList(
+            Iterator(self._api, f"{self.v2_url}/samlAttribute/idp/{idp_id}", **kwargs)
+        )
 
     def get_attribute(self, attribute_id: str) -> Box:
         """

@@ -48,15 +48,17 @@ class DataCenterVIPSAPI(APIEndpoint):
             if continent == "amer":
                 # This return is an edge-case to handle the JSON structure for _americas which is in the format
                 # continent :_americas. All other continents have whitespace, e.g. continent : emea.
-                return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
-                    "continent :_americas"
-                ]
+                return self._get(
+                    f"https://api.config.zscaler.com/{cloud}.net/cenr/json"
+                )[f"{cloud}.net"]["continent :_americas"]
 
-            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
-                f"continent : {continent}"
-            ]
+            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
+                f"{cloud}.net"
+            ][f"continent : {continent}"]
 
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
+            f"{cloud}.net"
+        ]
 
     def list_ca(self, cloud: str) -> BoxList:
         """
@@ -75,7 +77,9 @@ class DataCenterVIPSAPI(APIEndpoint):
             ...    print(ip)
 
         """
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")["ranges"]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")[
+            "ranges"
+        ]
 
     def list_pac(self, cloud: str) -> BoxList:
         """

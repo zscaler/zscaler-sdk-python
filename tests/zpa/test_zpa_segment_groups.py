@@ -53,7 +53,10 @@ def fixture_segment_groups():
                         "bypassType": "NEVER",
                         "configSpace": "DEFAULT",
                         "ipAnchored": False,
-                        "tcpPortRange": [{"from": "80", "to": "80"}, {"from": "443", "to": "443"}],
+                        "tcpPortRange": [
+                            {"from": "80", "to": "80"},
+                            {"from": "443", "to": "443"},
+                        ],
                     }
                 ],
                 "policyMigrated": True,
@@ -85,7 +88,10 @@ def fixture_segment_groups():
                         "bypassType": "NEVER",
                         "configSpace": "DEFAULT",
                         "ipAnchored": False,
-                        "tcpPortRange": [{"from": "80", "to": "80"}, {"from": "443", "to": "443"}],
+                        "tcpPortRange": [
+                            {"from": "80", "to": "80"},
+                            {"from": "443", "to": "443"},
+                        ],
                     }
                 ],
                 "policyMigrated": True,

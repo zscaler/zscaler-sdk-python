@@ -55,10 +55,16 @@ def test_labels_add_label(zia, labels):
         url="https://zsapi.zscaler.net/api/v1/ruleLabels",
         json=labels[0],
         status=200,
-        match=[matchers.json_params_matcher({"name": "Test Label A", "description": "Test Label Description"})],
+        match=[
+            matchers.json_params_matcher(
+                {"name": "Test Label A", "description": "Test Label Description"}
+            )
+        ],
     )
 
-    resp = zia.labels.add_label(name="Test Label A", description="Test Label Description")
+    resp = zia.labels.add_label(
+        name="Test Label A", description="Test Label Description"
+    )
 
     assert isinstance(resp, dict)
     assert resp.id == 999999
@@ -211,6 +217,10 @@ def test_users_update_label(zia, labels):
 
 @responses.activate
 def test_labels_delete_label(zia):
-    responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/ruleLabels/999999", status=204)
+    responses.add(
+        method="DELETE",
+        url="https://zsapi.zscaler.net/api/v1/ruleLabels/999999",
+        status=204,
+    )
     resp = zia.labels.delete_label("999999")
     assert resp == 204
