@@ -14,8 +14,16 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+"""Zscaler SDK for Python
+
+Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+
+Documentation available at https://zscaler-sdk-python.readthedocs.io
+
+"""
 
 __author__ = "Zscaler Inc"
+__email__ = "zscaler-partner-labs@z-bd.com"
 __license__ = "MIT"
 __contributors__ = [
     "William Guilherme",

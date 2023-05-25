@@ -1,3 +1,3 @@
 [bandit]
-targets: panos/
+targets: zscaler/
 skips: B314,B405
