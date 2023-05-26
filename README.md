@@ -11,7 +11,7 @@
 Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 
 ## Quick links
-* [Zscaler SDK Python API Documentation](https://zscaler.readthedocs.io)
+* [Zscaler SDK Python API Documentation](https://zscaler-sdk-python.readthedocs.io)
 
 ## Overview
 Each Zscaler product has separate developer documentation and authentication methods. This SDK simplifies
@@ -66,7 +66,7 @@ for app_segment in zpa.app_segments.list_segments():
 
 ## Documentation
 ### API Documentation
-Zscaler SDK Python's API is fully 100% documented and is hosted at [ReadTheDocs](https://zscaler.readthedocs.io).
+Zscaler SDK Python's API is fully 100% documented and is hosted at [ReadTheDocs](https://zscaler-sdk-python.readthedocs.io).
 
 This documentation should be used when working with Zscaler SDK Python rather than referring to Zscaler's API reference.
 Zscaler SDK Python makes some quality of life improvements to simplify and clarify arguments passed to Zscaler's API.
