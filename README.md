@@ -1,7 +1,6 @@
 # Zscaler SDK Python for the Zscaler API
 
-[![Build Status](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/build.yml/badge.svg)](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/build.yml)
-[![Documentation Status](https://readthedocs.org/projects/zscaler/badge/?version=latest)](https://zscaler.readthedocs.io/?badge=latest)
+[![CI/CD](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/zscaler/zscaler-sdk-python.svg)](https://github.com/zscaler/zscaler-sdk-python)
 [![Code Quality](https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666)](https://www.codacy.com/gh/zscaler/zscaler-sdk-python/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zscaler/zscaler-sdk-python&amp;utm_campaign=Badge_Grade)
 [![PyPI Version](https://img.shields.io/pypi/v/zscaler.svg)](https://pypi.org/project/zscaler-sdk-python)
