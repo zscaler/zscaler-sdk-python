@@ -541,6 +541,92 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"networkApplicationGroups/{group_id}")
 
+    def delete_network_app_group(self, group_id: str) -> int:
+        """
+        Deletes the specified Network Application Group.
+
+        Args:
+            group_id (str): The unique identifier for the Network Application Group.
+
+        Returns:
+            :obj:`int`: The response code for the operation.
+
+        Examples:
+            >>> zia.firewall.delete_network_app_group('762398')
+
+        """
+        return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
+
+    def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
+        """
+        Adds a new Network Application Group.
+
+        Args:
+            name (str): The name of the Network Application Group.
+            description (str): Additional information about the Network Application Group.
+            network_applications (list): A list of Application IDs to add to the group.
+
+        Returns:
+            :obj:`Box`: The newly created Network Application Group resource record.
+
+        Examples:
+            Add a new Network Application Group:
+
+            >>> zia.firewall.add_network_app_group(name='New Network Application Group',
+            ...    network_applications=['SALESFORCE', 'GOOGLEANALYTICS', 'OFFICE365'],
+            ...    description='Additional information about the Network Application Group.')
+
+        """
+
+        payload = {
+            "name": name,
+            "networkApplications": network_applications,
+            "description": description,
+        }
+
+        return self._post("networkApplicationGroups", json=payload)
+
+    def update_network_app_group(self, group_id: str, **kwargs) -> Box:
+        """
+        Update an Network Application Group.
+
+        This method supports updating individual fields in the Network Application Group resource record.
+
+        Args:
+            group_id (str): The unique ID for the Network Application Group to update.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            name (str): The name of the Network Application Group.
+            network_applications (list): The list of applications for the Network Application Group.
+            description (str): Additional information for the Network Application Group.
+
+        Returns:
+            :obj:`Box`: The updated Network Application Group resource record.
+
+        Examples:
+            Update the name of an Network Application Group:
+
+            >>> zia.firewall.update_network_app_group('9032674',
+            ...    name='Updated Network Application Group Name')
+
+            Update the description and applications for a Network Application Group:
+
+            >>> zia.firewall.update_network_app_group('9032674',
+            ...    description='Network Application Group, updated on May 27, 2023'
+            ...    network_applications=['SALESFORCE', 'GOOGLEANALYTICS', 'OFFICE365'])
+
+        """
+
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_network_app_group(group_id).items()}
+
+        # Update payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._put(f"networkServiceGroups/{group_id}", json=payload)
+
     def list_network_apps(self, search: str = None) -> BoxList:
         """
         Returns a list of all predefined Network Applications.
