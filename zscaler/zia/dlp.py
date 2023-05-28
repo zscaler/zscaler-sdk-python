@@ -293,3 +293,43 @@ class DLPAPI(APIEndpoint):
         payload = {"data": pattern}
 
         return self._post("dlpDictionaries/validateDlpPattern", json=payload)
+
+    def list_dlp_engines(self, query: str = None) -> BoxList:
+        """
+        Returns the list of ZIA DLP Engines.
+
+        Args:
+            query (str): A search string used to match against a DLP dictionary's name or description attributes.
+
+        Returns:
+            :obj:`BoxList`: A list containing ZIA DLP Dictionaries.
+
+        Examples:
+            Print all dictionaries
+
+            >>> for dlp engines in zia.dlp.list_dlp_engines():
+            ...    pprint(engine)
+
+            Print engines that match the name or description 'GDPR'
+
+            >>> pprint(zia.dlp.list_dlp_engines('GDPR'))
+
+        """
+        payload = {"search": query}
+        return self._get("dlpEngines", params=payload)
+
+    def get_dlp_engines(self, engine_id: str) -> Box:
+        """
+        Returns the dlp engine details for a given DLP Engine.
+
+        Args:
+            engine_id (str): The unique identifier for the DLP Engine.
+
+        Returns:
+            :obj:`Box`: The DLP Engine resource record.
+
+        Examples:
+            >>> engine = zia.dlp_engines.get_dlp_engines('99999')
+
+        """
+        return self._get(f"dlpEngines/{engine_id}")
