@@ -655,6 +655,34 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServiceGroups", json=payload)
 
+    def update_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
+        """
+        Update a Network Service Group.
+
+        Args:
+            name (str): The name of the Network Service Group.
+            service_ids (list): A list of Network Service IDs to add to the group.
+            description (str): Additional information about the Network Service Group.
+
+        Returns:
+            :obj:`Box`: The updated Network Service Group resource record.
+
+        Examples:
+            Update the name Network Service Group:
+
+            >>> zia.firewall.update_network_svc_group(name='Update Network Service Group',
+            ...    service_ids=['159143', '159144', '159145'],
+            ...    description='Group for the new Network Service.')
+
+        """
+
+        payload = {"name": name, "services": [], "description": description}
+
+        for service_id in service_ids:
+            payload["services"].append({"id": service_id})
+
+        return self._put("networkServiceGroups", json=payload)
+
     def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
         Returns a list of all Network Services.
