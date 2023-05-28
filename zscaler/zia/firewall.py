@@ -655,11 +655,15 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServiceGroups", json=payload)
 
-    def update_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
+    def update_network_svc_group(self, group_id: str, **kwargs) -> Box:
         """
         Update a Network Service Group.
 
         Args:
+            group_id (str): The unique ID of the Network Service Group.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
             name (str): The name of the Network Service Group.
             service_ids (list): A list of Network Service IDs to add to the group.
             description (str): Additional information about the Network Service Group.
@@ -676,12 +680,14 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
 
-        payload = {"name": name, "services": [], "description": description}
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_network_svc_group(group_id).items()}
 
-        for service_id in service_ids:
-            payload["services"].append({"id": service_id})
+        # Update payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
 
-        return self._put("networkServiceGroups", json=payload)
+        return self._put(f"networkServiceGroups/{group_id}", json=payload)
 
     def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
