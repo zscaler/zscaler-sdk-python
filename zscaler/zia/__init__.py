@@ -38,7 +38,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .web_dlp import WebDLP
+from .web_dlp import WebDLPAPI
 
 
 class ZIA(APISession):
@@ -235,4 +235,4 @@ class ZIA(APISession):
         The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
 
         """
-        return WebDLP(self)
+        return WebDLPAPI(self)
