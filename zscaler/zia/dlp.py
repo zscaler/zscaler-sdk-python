@@ -374,6 +374,46 @@ class DLPAPI(APIEndpoint):
         """
         return self._get(f"icapServers/{icap_server_id}")
 
+    def list_dlp_incident_receiver(self, query: str = None) -> BoxList:
+        """
+        Returns the list of ZIA DLP Incident Receiver.
+
+        Args:
+            query (str): A search string used to match against a DLP Incident Receiver's name or description attributes.
+
+        Returns:
+            :obj:`BoxList`: A list containing ZIA DLP Incident Receiver.
+
+        Examples:
+            Print all incident receivers
+
+            >>> for dlp incident receiver in zia.dlp.list_dlp_incident_receiver():
+            ...    pprint(receiver)
+
+            Print Incident Receiver that match the name or description 'ZS_INC_RECEIVER_01'
+
+            >>> pprint(zia.dlp.list_dlp_incident_receiver('ZS_INC_RECEIVER_01'))
+
+        """
+        payload = {"search": query}
+        return self._get("incidentReceiverServers", params=payload)
+
+    def get_dlp_incident_receiver(self, receiver_id: str) -> Box:
+        """
+        Returns the dlp incident receiver details for a given DLP Incident Receiver.
+
+        Args:
+            receiver_id (str): The unique identifier for the DLP Incident Receiver.
+
+        Returns:
+            :obj:`Box`: The DLP Incident Receiver resource record.
+
+        Examples:
+            >>> incident_receiver = zia.dlp.get_dlp_incident_receiver('99999')
+
+        """
+        return self._get(f"incidentReceiverServers/{receiver_id}")
+
     def list_dlp_idm_profiles(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP IDM Profiles.
