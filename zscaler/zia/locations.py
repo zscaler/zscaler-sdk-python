@@ -277,3 +277,43 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
+
+    def list_location_group_lite(self, **kwargs) -> BoxList:
+        """
+        Returns only the name and ID of all configured locations.
+
+        Keyword Args:
+            **include_parent_locations (bool, optional):
+                Only locations with sub-locations will be included in the response if `True`.
+            **include_sub_locations (bool, optional):
+                Sub-locations will be included in the response if `True`.
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
+
+        Returns:
+            :obj:`BoxList`: A list of configured locations.
+
+        Examples:
+            List locations with default settings:
+
+            >>> for location in zia.locations.list_location_group_lite():
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_location_group_lite(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_location_group_lite(page_size=200, max_pages=2):
+            ...    print(location)
+
+        """
+        return BoxList(Iterator(self._api, "locations/groups/lite", **kwargs))
