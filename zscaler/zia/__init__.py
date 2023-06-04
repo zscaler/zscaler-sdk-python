@@ -22,12 +22,20 @@ from restfly.session import APISession
 
 from zscaler import __version__
 
-from .admin_and_role_management import AdminAndRoleManagementAPI
+from .admin_and_role_management import AdminRoleManagementAPI
+from .admin_user import AdminUserAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
-from .dlp import DLPAPI
+from .dlp_dictionary import DLPDictionaryAPI
+from .dlp_engine import DLPEngineAPI
+from .dlp_icap_server import DLPICAPServerAPI
+from .dlp_idm_profile import DLPIDMProfileAPI
+from .dlp_incident_receiver import DLPIncidentReceiverAPI
+from .dlp_notification_template import DLPNotificationTemplateAPI
+from .dlp_web_rule import DLPWebRuleAPI
 from .firewall import FirewallPolicyAPI
 from .labels import RuleLabelsAPI
+from .location_groups import LocationGroupsAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
@@ -38,7 +46,6 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .web_dlp import WebDLP
 
 
 class ZIA(APISession):
@@ -114,7 +121,15 @@ class ZIA(APISession):
         The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
 
         """
-        return AdminAndRoleManagementAPI(self)
+        return AdminRoleManagementAPI(self)
+
+    @property
+    def admin_user(self):
+        """
+        The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_user>`.
+
+        """
+        return AdminUserAPI(self)
 
     @property
     def audit_logs(self):
@@ -132,6 +147,7 @@ class ZIA(APISession):
         """
         return ActivationAPI(self)
 
+    # DLP Resources
     @property
     def dlp(self):
         """
@@ -140,6 +156,69 @@ class ZIA(APISession):
 
         """
         return DLPAPI(self)
+
+    @property
+    def dlp_dictionary(self):
+        """
+        The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp_dictionary>`.
+
+
+        """
+        return DLPDictionaryAPI(self)
+
+    @property
+    def dlp_engine(self):
+        """
+        The interface object for the :ref:`ZIA DLP Engine interface <zia-dlp_engine>`.
+
+
+        """
+        return DLPEngineAPI(self)
+
+    @property
+    def dlp_icap_server(self):
+        """
+        The interface object for the :ref:`ZIA DLP Engine interface <zia-dlp_icap_server>`.
+
+
+        """
+        return DLPICAPServerAPI(self)
+
+    @property
+    def dlp_idm_profile(self):
+        """
+        The interface object for the :ref:`ZIA DLP IDM interface <zia-dlp_idm_profile>`.
+
+
+        """
+        return DLPIDMProfileAPI(self)
+
+    @property
+    def dlp_incident_receiver(self):
+        """
+        The interface object for the :ref:`ZIA DLP Incident Receiver interface <zia-dlp_incident_receiver>`.
+
+
+        """
+        return DLPIncidentReceiverAPI(self)
+
+    @property
+    def dlp_notification_template(self):
+        """
+        The interface object for the :ref:`ZIA DLP Notification Template interface <zia-dlp_notification_template>`.
+
+
+        """
+        return DLPNotificationTemplateAPI(self)
+
+    @property
+    def dlp_web_rule(self):
+        """
+        The interface object for the :ref:`ZIA DLP Web Rule interface <zia-dlp_web_rule>`.
+
+
+        """
+        return DLPWebRuleAPI(self)
 
     @property
     def firewall(self):
@@ -164,6 +243,14 @@ class ZIA(APISession):
 
         """
         return LocationsAPI(self)
+
+    @property
+    def location_groups(self):
+        """
+        The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
+
+        """
+        return LocationGroupsAPI(self)
 
     @property
     def sandbox(self):

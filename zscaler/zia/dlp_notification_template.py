@@ -15,32 +15,26 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import json
+
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from zscaler.utils import Iterator, snake_to_camel
 
-
-class AdminRoleManagementAPI(APIEndpoint):
-    def list_roles(self, **kwargs) -> BoxList:
+class DLPNotificationTemplateAPI(APIEndpoint):
+    def list_templates(self, **kwargs) -> BoxList:
         """
-        Return a list of the configured admin roles in ZIA.
-
-        Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
-            include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
+        Returns a list of DLP Notification Templates.
 
         Returns:
-            :obj:`BoxList`: A list of admin role resource records.
+            :obj:`BoxList`: List of DLP Notification Templates.
 
         Examples:
-            Get a list of all configured admin roles:
-            >>> roles = zia.admin_and_management_roles.list_roles()
+            Get a list of all DLP Notification Templates
+
+            >>> results = zia.dlp_notification_template.list_templates()
+            ... for template in results:
+            ...    print(template)
 
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-
-        return self._get("adminRoles/lite", params=payload)
+        return self._get("dlpNotificationTemplates")

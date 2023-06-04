@@ -21,7 +21,7 @@ from restfly.endpoint import APIEndpoint
 from zscaler.utils import snake_to_camel
 
 
-class DLPAPI(APIEndpoint):
+class DLPDictionaryAPI(APIEndpoint):
     def add_dict(self, name: str, match_type: str, **kwargs) -> Box:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
@@ -57,7 +57,7 @@ class DLPAPI(APIEndpoint):
         Examples:
             Match text found that contains an IPv4 address using patterns:
 
-            >>> zia.dlp.add_dict(name='IPv4 Addresses',
+            >>> zia.dlp_dictionary.add_dict(name='IPv4 Addresses',
             ...                description='Matches IPv4 address pattern.',
             ...                match_type='all',
             ...                patterns=[
@@ -66,7 +66,7 @@ class DLPAPI(APIEndpoint):
 
             Match text found that contains government document caveats using phrases.
 
-            >>> zia.dlp.add_dict(name='Gov Document Caveats',
+            >>> zia.dlp_dictionary.add_dict(name='Gov Document Caveats',
             ...                description='Matches government classification caveats.',
             ...                match_type='any',
             ...                phrases=[
@@ -78,7 +78,7 @@ class DLPAPI(APIEndpoint):
             Match text found that meets the criteria for a Secret Project's document markings using phrases and
             patterns:
 
-            >>> zia.dlp.add_dict(name='Secret Project Documents',
+            >>> zia.dlp_dictionary.add_dict(name='Secret Project Documents',
             ...                description='Matches documents created for the Secret Project.',
             ...                match_type='any',
             ...                phrases=[
@@ -164,12 +164,12 @@ class DLPAPI(APIEndpoint):
         Examples:
             Update the name of a DLP Dictionary:
 
-            >>> zia.dlp.update_dict('3',
+            >>> zia.dlp_dictionary.update_dict('3',
             ...                name='IPv4 and IPv6 Addresses')
 
             Update the description and phrases for a DLP Dictionary.
 
-            >>> zia.dlp.update_dict('4',
+            >>> zia.dlp_dictionary.update_dict('4',
             ...        description='Updated government caveats.'
             ...        phrases=[
             ...                    ('all', 'TOP SECRET'),
@@ -231,12 +231,12 @@ class DLPAPI(APIEndpoint):
         Examples:
             Print all dictionaries
 
-            >>> for dictionary in zia.dlp.list_dicts():
+            >>> for dictionary in zia.dlp_dictionary.list_dicts():
             ...    pprint(dictionary)
 
             Print dictionaries that match the name or description 'GDPR'
 
-            >>> pprint(zia.dlp.list_dicts('GDPR'))
+            >>> pprint(zia.dlp_dictionary.list_dicts('GDPR'))
 
         """
         payload = {"search": query}
@@ -253,7 +253,7 @@ class DLPAPI(APIEndpoint):
             :obj:`Box`: The ZIA DLP Dictionary resource record.
 
         Examples:
-            >>> pprint(zia.dlp.get_dict('3'))
+            >>> pprint(zia.dlp_dictionary.get_dict('3'))
 
         """
 
@@ -270,7 +270,7 @@ class DLPAPI(APIEndpoint):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.dlp.delete_dict('8')
+            >>> zia.dlp_dictionary.delete_dict('8')
 
         """
         return self._delete(f"dlpDictionaries/{dict_id}", box=False).status_code
@@ -293,163 +293,3 @@ class DLPAPI(APIEndpoint):
         payload = {"data": pattern}
 
         return self._post("dlpDictionaries/validateDlpPattern", json=payload)
-
-    def list_dlp_engines(self, query: str = None) -> BoxList:
-        """
-        Returns the list of ZIA DLP Engines.
-
-        Args:
-            query (str): A search string used to match against a DLP Engine's name or description attributes.
-
-        Returns:
-            :obj:`BoxList`: A list containing ZIA DLP Engines.
-
-        Examples:
-            Print all dlp engines
-
-            >>> for dlp engines in zia.dlp.list_dlp_engines():
-            ...    pprint(engine)
-
-            Print engines that match the name or description 'GDPR'
-
-            >>> pprint(zia.dlp.list_dlp_engines('GDPR'))
-
-        """
-        payload = {"search": query}
-        return self._get("dlpEngines", params=payload)
-
-    def get_dlp_engines(self, engine_id: str) -> Box:
-        """
-        Returns the dlp engine details for a given DLP Engine.
-
-        Args:
-            engine_id (str): The unique identifier for the DLP Engine.
-
-        Returns:
-            :obj:`Box`: The DLP Engine resource record.
-
-        Examples:
-            >>> engine = zia.dlp.get_dlp_engines('99999')
-
-        """
-        return self._get(f"dlpEngines/{engine_id}")
-
-    def list_dlp_icap_servers(self, query: str = None) -> BoxList:
-        """
-        Returns the list of ZIA DLP ICAP Servers.
-
-        Args:
-            query (str): A search string used to match against a DLP icap server's name or description attributes.
-
-        Returns:
-            :obj:`BoxList`: A list containing ZIA DLP ICAP Servers.
-
-        Examples:
-            Print all icap servers
-
-            >>> for dlp icap in zia.dlp.list_dlp_icap_servers():
-            ...    pprint(icap)
-
-            Print icaps that match the name or description 'ZS_ICAP'
-
-            >>> pprint(zia.dlp.list_dlp_icap_servers('ZS_ICAP'))
-
-        """
-        payload = {"search": query}
-        return self._get("icapServers", params=payload)
-
-    def get_dlp_icap_servers(self, icap_server_id: str) -> Box:
-        """
-        Returns the dlp icap server details for a given DLP ICAP Server.
-
-        Args:
-            icap_server_id (str): The unique identifier for the DLP ICAP Server.
-
-        Returns:
-            :obj:`Box`: The DLP ICAP Server resource record.
-
-        Examples:
-            >>> icap = zia.dlp.get_dlp_icap_servers('99999')
-
-        """
-        return self._get(f"icapServers/{icap_server_id}")
-
-    def list_dlp_incident_receiver(self, query: str = None) -> BoxList:
-        """
-        Returns the list of ZIA DLP Incident Receiver.
-
-        Args:
-            query (str): A search string used to match against a DLP Incident Receiver's name or description attributes.
-
-        Returns:
-            :obj:`BoxList`: A list containing ZIA DLP Incident Receiver.
-
-        Examples:
-            Print all incident receivers
-
-            >>> for dlp incident receiver in zia.dlp.list_dlp_incident_receiver():
-            ...    pprint(receiver)
-
-            Print Incident Receiver that match the name or description 'ZS_INC_RECEIVER_01'
-
-            >>> pprint(zia.dlp.list_dlp_incident_receiver('ZS_INC_RECEIVER_01'))
-
-        """
-        payload = {"search": query}
-        return self._get("incidentReceiverServers", params=payload)
-
-    def get_dlp_incident_receiver(self, receiver_id: str) -> Box:
-        """
-        Returns the dlp incident receiver details for a given DLP Incident Receiver.
-
-        Args:
-            receiver_id (str): The unique identifier for the DLP Incident Receiver.
-
-        Returns:
-            :obj:`Box`: The DLP Incident Receiver resource record.
-
-        Examples:
-            >>> incident_receiver = zia.dlp.get_dlp_incident_receiver('99999')
-
-        """
-        return self._get(f"incidentReceiverServers/{receiver_id}")
-
-    def list_dlp_idm_profiles(self, query: str = None) -> BoxList:
-        """
-        Returns the list of ZIA DLP IDM Profiles.
-
-        Args:
-            query (str): A search string used to match against a DLP IDM Profile's name or description attributes.
-
-        Returns:
-            :obj:`BoxList`: A list containing ZIA DLP IDM Profiles.
-
-        Examples:
-            Print all idm profiles
-
-            >>> for dlp idm in zia.dlp.list_dlp_idm_profiles():
-            ...    pprint(idm)
-
-            Print IDM profiles that match the name or description 'IDM_PROFILE_TEMPLATE'
-
-            >>> pprint(zia.dlp.list_dlp_idm_profiles('IDM_PROFILE_TEMPLATE'))
-
-        """
-        payload = {"search": query}
-        return self._get("idmprofile", params=payload)
-
-    def get_dlp_idm_profiles(self, profile_id: str) -> Box:
-        """
-        Returns the dlp idmp profile details for a given DLP IDM Profile.
-
-        Args:
-            icap_server_id (str): The unique identifier for the DLP IDM Profile.
-
-        Returns:
-            :obj:`Box`: The DLP IDM Profile resource record.
-
-        Examples:
-            >>> idm = zia.dlp.get_dlp_idm_profiles('99999')
-
-        """
-        return self._get(f"idmprofile/{profile_id}")
