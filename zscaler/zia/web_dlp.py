@@ -23,7 +23,7 @@ from restfly.endpoint import APIEndpoint
 from zscaler.utils import snake_to_camel
 
 
-class WebDLP(APIEndpoint):
+class WebDLPAPI(APIEndpoint):
     # Web DLP rule keys that only require an ID to be provided.
     _key_id_list = [
         "auditor",

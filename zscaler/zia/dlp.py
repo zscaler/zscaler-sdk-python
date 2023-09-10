@@ -294,6 +294,102 @@ class DLPAPI(APIEndpoint):
 
         return self._post("dlpDictionaries/validateDlpPattern", json=payload)
 
+    def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, description=None) -> Box:
+        """
+        Adds a new dlp engine.
+        ...
+        """
+
+        payload = {
+            "name": name,
+        }
+
+        if engine_expression is not None:
+            payload["engineExpression"] = engine_expression
+
+        if custom_dlp_engine is not None:
+            payload["customDlpEngine"] = custom_dlp_engine
+
+        if description is not None:
+            payload["description"] = description
+
+        # Convert the payload keys to camelCase
+        camel_payload = {snake_to_camel(key): value for key, value in payload.items()}
+
+        # Temporarily print the camelCase payload to check it
+        print(camel_payload)
+
+        return self._post("dlpEngines", json=camel_payload)
+
+    def update_dlp_engine(self, engine_id: str, **kwargs) -> Box:
+        """
+        Updates an existing dlp engine.
+
+        Args:
+            engine_id (str): The unique ID for the dlp engine that is being updated.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            name (str): The order of the rule, defaults to adding rule to bottom of list.
+            description (str): The admin rank of the rule.
+            engine_expression (str, optional):
+                The logical expression that defines a DLP engine by combining DLP dictionaries using logical operators, namely All (AND), Any (OR), Exclude (NOT), and Sum (the total number of content matches).
+            custom_dlp_engine (bool, optional):
+                Indicates whether this is a custom DLP engine. If this value is set to true, the engine is custom.
+            description (str, optional):
+                The DLP engine description.
+
+        Returns:
+            :obj:`Box`: The updated dlp engine resource record.
+
+        Examples:
+            Update the dlp engine:
+
+            >>> zia.dlp.add_dlp_engine(name='new_dlp_engine',
+            ...    description='TT#1965432122'
+                   engine_expression="((D63.S > 1))"
+                   custom_dlp_engine=False)
+
+            Update a rule to enable custom dlp engine:
+
+            >>> zia.dlp.add_dlp_engine('976597',
+            ...    custom_dlp_engine=True,
+                   engine_expression="((D63.S > 1))"
+            ...    description="TT#1965232866")
+
+        """
+
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()}
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            if key in self._key_id_list:
+                payload[snake_to_camel(key)] = []
+                for item in value:
+                    payload[snake_to_camel(key)].append({"id": item})
+            else:
+                payload[snake_to_camel(key)] = value
+
+        return self._put(f"dlpEngines/{engine_id}", json=payload)
+
+    def delete_dlp_engine(self, engine_id: str) -> int:
+        """
+        Deletes the specified dlp engine.
+
+        Args:
+            engine_id (str): The unique identifier for the dlp engine.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.dlp.delete_dlp_engine('278454')
+
+        """
+
+        return self._delete(f"dlpEngines/{engine_id}", box=False).status_code
+
     def list_dlp_engines(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP Engines.
