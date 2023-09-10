@@ -494,6 +494,42 @@ class LocationsAPI(APIEndpoint):
         params = {"page": page, "pageSize": page_size, "search": group_name}
         return self._get("locations/groups", params=params)
 
+    def list_location_groups_lite(self, **kwargs) -> BoxList:
+        """
+        Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
+
+        Args:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            groupType (str): The location group's type (i.e., Static or Dynamic).
+
+        Returns:
+            :obj:`BoxList`: A list of location group resource records.
+
+        Examples:
+            Get a list of all configured location groups:
+            >>> location = zia.locations.list_location_groups_lite()
+        """
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        return self._get("locations/groups/lite", params=payload)
+
+    def get_location_group_lite_by_id(self, group_id: int) -> Box:
+        """
+        Return specific location groups (lite version) by their ID where only name and ID is returned in ZIA.
+
+        Args:
+            group_id (int): The ID of the location group.
+
+        Returns:
+            :obj:`Box`: A location group resource record.
+
+        Examples:
+            Get a specific location group by its ID:
+            >>> location = zia.locations.get_location_group_lite_by_id(24326827)
+        """
+        return self._get(f"locations/groups/lite/{group_id}")
+
     def get_location_group_lite_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> BoxList:
         """
         Return specific location groups (lite version) by their name where only name and ID is returned in ZIA.
