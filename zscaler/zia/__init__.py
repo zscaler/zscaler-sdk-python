@@ -25,7 +25,7 @@ from zscaler import __version__
 from .admin_and_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
-from .device_groups import DeviceGroupsAPI
+from .device import DeviceAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
 from .labels import RuleLabelsAPI
@@ -159,12 +159,12 @@ class ZIA(APISession):
         return RuleLabelsAPI(self)
 
     @property
-    def device_groups(self):
+    def device(self):
         """
-        The interface object for the :ref:`ZIA Rule Labels interface <zia-labels>`.
+        The interface object for the :ref:`ZIA device interface <zia-device>`.
 
         """
-        return DeviceGroupsAPI(self)
+        return DeviceAPI(self)
 
     @property
     def locations(self):
