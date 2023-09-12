@@ -20,8 +20,31 @@ import json
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
+from zscaler.utils import snake_to_camel
 
-class WebDLP(APIEndpoint):
+
+class WebDLPAPI(APIEndpoint):
+    # Web DLP rule keys that only require an ID to be provided.
+    _key_id_list = [
+        "auditor",
+        "dlp_engines",
+        "departments",
+        "devices",
+        "device_groups",
+        "groups",
+        "icap_server",
+        "excluded_groups",
+        "excluded_departments",
+        "excluded_users",
+        "labels",
+        "locations",
+        "location_groups",
+        "notification_template",
+        "time_windows",
+        "users",
+        "url_categories",
+    ]
+
     def list_rules(self, **kwargs) -> BoxList:
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
@@ -75,64 +98,150 @@ class WebDLP(APIEndpoint):
         """
         return self._get("webDlpRules/lite")
 
-    def add_rule(self, payload: json) -> Box:
+    def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
-        Adds a new DLP policy rule.
+         Adds a new DLP policy rule.
 
-        Args:
-            payload (dict): Dictionary containing the Web DLP Policy rule to be added.
+         Args:
+             name (str): The name of the filter rule. 31 char limit.
+             action (str): The action for the filter rule.
 
-        Returns:
-            :obj:`Box`: The newly added Web DLP Policy Rule resource record.
+        Keyword Args:
+             order (str): The order of the rule, defaults to adding rule to bottom of list.
+             rank (str): The admin rank of the rule.
+             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+             auditor (list): The IDs for the auditors that this rule applies to.
+             cloud_applications (list): The IDs for the cloud applications that this rule applies to.
+             description (str): Additional information about the rule
+             departments (list): The IDs for the departments that this rule applies to.
+             dlp_engines (list): The IDs for the DLP engines that this rule applies to.
+             excluded_groups (list): The IDs for the excluded groups that this rule applies to.
+             excluded_departments (list): The IDs for the excluded departments that this rule applies to.
+             excluded_users (list): The IDs for the excluded users that this rule applies to.
+             file_types (list): The list of file types for which the DLP policy rule must be applied.
+             groups (list): The IDs for the groups that this rule applies to.
+             icap_server (list): The IDs for the icap server that this rule applies to.
+             labels (list): The IDs for the labels that this rule applies to.
+             locations (list): The IDs for the locations that this rule applies to.
+             location_groups (list): The IDs for the location groups that this rule applies to.
+             notification_template (list): The IDs for the notification template that this rule applies to.
+             time_windows (list): The IDs for the time windows that this rule applies to.
+             users (list): The IDs for the users that this rule applies to.
+             url_categories (list): The IDs for the URL categories the rule applies to.
+             external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
+             dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
+             min_size (str): The minimum file size (in KB) used for evaluation of the DLP policy rule.
+             match_only (bool): The minimum file size (in KB) used for evaluation of the DLP policy rule.
+             ocr_enabled (bool): A true value denotes that Zscaler DLP engines are allowed to use optical character recognition (OCR) to scan image files such as BITMAP, JPEG, PNG, and TIFF file types. A false value indicates that OCR scanning is disabled.
+             without_content_inspection (bool): Indicates a DLP policy rule without content inspection, when the value is set to true.
+             zcc_notifications_enabled (bool): If this field is set to true, Zscaler Client Connector notification is enabled for the block action triggered by the web DLP rule.
 
-        Payload:
-            Minimum items required in payload::
+         Returns:
+             :obj:`Box`: The new dlp web rule resource record.
 
-                payload = {
-                    'order': 1, # A number greater than 0.
-                    'rank': 0,
-                    'name': "zscaler-sdk-python post.",
-                    'protocols': ["ANY_RULE"],
-                    'action': "ALLOW",
-                }
+         Examples:
+             Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
 
-        Examples:
-            Add a Web DLP Policy rule with the minimum required parameters::
+             >>> zia.web_dlp.add_rule(rank='7',
+             ...    file_types=['BITMAP', 'JPEG', 'PNG'],
+             ...    name='ALLOW_ANY_TO_GOOG-DNS',
+             ...    action='ALLOW'
+             ...    description='TT#1965432122')
 
-                payload = {
-                    'order': 1,
-                    'rank': 0,
-                    'name': "zscaler-sdk-python post.",
-                    'protocols': ["ANY_RULE"],
-                    'action': "ALLOW",
-                }
+             Add a rule to block all traffic to Quad9 DNS for all users in Finance Group and send an ICMP error:
 
-                 # Add new Web DLP item
-                 print(zia.web_dlp.add_rule(payload=payload))
+             >>> zia.web_dlp.add_rule(rank='7',
+             ...    file_types=['BITMAP', 'JPEG', 'PNG'],
+             ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS',
+             ...    action='BLOCK_ICMP'
+             ...    groups=['95016183']
+             ...    description='TT#1965432122')
 
         """
+        payload = {
+            "name": name,
+            "action": action,
+            "order": kwargs.pop("order", len(self.list_rules())),
+        }
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            if key in self._key_id_list:
+                payload[snake_to_camel(key)] = []
+                for item in value:
+                    payload[snake_to_camel(key)].append({"id": item})
+            else:
+                payload[snake_to_camel(key)] = value
+
         return self._post("webDlpRules", json=payload)
 
-    def update_rule(self, rule_id: str, payload: dict) -> Box:
+    def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
-        Updates a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
+        Updates an existing DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
         Args:
             rule_id (str): String of ID.
-            payload (dict): Dictionary containing the updated Web DLP Policy Rule.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            order (str): The order of the rule, defaults to adding rule to bottom of list.
+            rank (str): The admin rank of the rule.
+            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+            auditor (list): The IDs for the auditors that this rule applies to.
+            cloud_applications (list): The IDs for the cloud applications that this rule applies to.
+            description (str): Additional information about the rule
+            departments (list): The IDs for the departments that this rule applies to.
+            dlp_engines (list): The IDs for the DLP engines that this rule applies to.
+            excluded_groups (list): The IDs for the excluded groups that this rule applies to.
+            excluded_departments (list): The IDs for the excluded departments that this rule applies to.
+            excluded_users (list): The IDs for the excluded users that this rule applies to.
+            file_types (list): The list of file types for which the DLP policy rule must be applied.
+            groups (list): The IDs for the groups that this rule applies to.
+            icap_server (list): The IDs for the icap server that this rule applies to.
+            labels (list): The IDs for the labels that this rule applies to.
+            locations (list): The IDs for the locations that this rule applies to.
+            location_groups (list): The IDs for the location groups that this rule applies to.
+            notification_template (list): The IDs for the notification template that this rule applies to.
+            time_windows (list): The IDs for the time windows that this rule applies to.
+            users (list): The IDs for the users that this rule applies to.
+            url_categories (list): The IDs for the URL categories the rule applies to.
+            external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
+            dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
+            min_size (str): The minimum file size (in KB) used for evaluation of the DLP policy rule.
+            match_only (bool): The minimum file size (in KB) used for evaluation of the DLP policy rule.
+            ocr_enabled (bool): A true value denotes that Zscaler DLP engines are allowed to use optical character recognition (OCR) to scan image files such as BITMAP, JPEG, PNG, and TIFF file types. A false value indicates that OCR scanning is disabled.
+            without_content_inspection (bool): Indicates a DLP policy rule without content inspection, when the value is set to true.
+            zcc_notifications_enabled (bool): If this field is set to true, Zscaler Client Connector notification is enabled for the block action triggered by the web DLP rule.
 
         Returns:
-            :obj:`Box`: The updated Web DLP Policy Rule resource record.
+            :obj:`Box`: The updated web dlp rule resource record.
 
         Examples:
             Update a Web DLP Policy Rule::
 
-                 payload = zia.web_dlp.get_rule('9999')
-                 payload['name'] = "daxm updated name."
-                 results = zia.web_dlp.update_rule(rule_id=9999, payload=payload)
-                 print(results)
+                >>> zia.web_dlp.get_rule('9999')
+                ... name="updated name."
+                ... description="updated name."
+
+            Update a web dlp policy rule to update description:
+
+            >>> zia.web_dlp.update_rule('976597',
+            ...    description="TT#1965232866")
 
         """
+
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_rule(rule_id).items()}
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            if key in self._key_id_list:
+                payload[snake_to_camel(key)] = []
+                for item in value:
+                    payload[snake_to_camel(key)].append({"id": item})
+            else:
+                payload[snake_to_camel(key)] = value
+
         return self._put(f"webDlpRules/{rule_id}", json=payload)
 
     def delete_rule(self, rule_id: str) -> Box:
@@ -153,4 +262,4 @@ class WebDLP(APIEndpoint):
 
 
         """
-        return self._delete(f"webDlpRules/{rule_id}")
+        return self._delete(f"webDlpRules/{rule_id}", box=False).status_code

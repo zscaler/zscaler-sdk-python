@@ -524,6 +524,21 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {"search": search}
         return self._get("networkApplicationGroups", params=payload)
 
+    def list_network_app_groups(self, search: str = None) -> BoxList:
+        """
+        Returns a list of all Network Application Groups.
+
+        Returns:
+            :obj:`BoxList`: The list of Network Application Group resource records.
+
+        Examples:
+            >>> for group in zia.firewall.list_network_app_groups():
+            ...    pprint(group)
+
+        """
+        payload = {"search": search}
+        return self._get("networkApplicationGroups", params=payload)
+
     def get_network_app_group(self, group_id: str) -> Box:
         """
         Returns information for the specified Network Application Group.
@@ -555,7 +570,8 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_app_group('762398')
 
         """
-        return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
+        return self._delete(f"networkApplicationGroups/{group_id}", box=False).status_code
+      
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
@@ -677,8 +693,9 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
 
-        payload = {"search": search}
-
+        payload = {}
+        if search:
+            payload["search"] = search
         return self._get("networkServiceGroups", params=payload)
 
     def get_network_svc_group(self, group_id: str) -> Box:
@@ -740,6 +757,40 @@ class FirewallPolicyAPI(APIEndpoint):
             payload["services"].append({"id": service_id})
 
         return self._post("networkServiceGroups", json=payload)
+
+    def update_network_svc_group(self, group_id: str, **kwargs) -> Box:
+        """
+        Update a Network Service Group.
+
+        Args:
+            group_id (str): The unique ID of the Network Service Group.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            name (str): The name of the Network Service Group.
+            service_ids (list): A list of Network Service IDs to add to the group.
+            description (str): Additional information about the Network Service Group.
+
+        Returns:
+            :obj:`Box`: The updated Network Service Group resource record.
+
+        Examples:
+            Update the name Network Service Group:
+
+            >>> zia.firewall.update_network_svc_group(name='Update Network Service Group',
+            ...    service_ids=['159143', '159144', '159145'],
+            ...    description='Group for the new Network Service.')
+
+        """
+
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_network_svc_group(group_id).items()}
+
+        # Update payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._put(f"networkServiceGroups/{group_id}", json=payload)
 
     def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """

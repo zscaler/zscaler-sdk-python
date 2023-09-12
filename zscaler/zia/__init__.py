@@ -25,6 +25,7 @@ from zscaler import __version__
 from .admin_and_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
+from .device import DeviceAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
 from .labels import RuleLabelsAPI
@@ -38,7 +39,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .web_dlp import WebDLP
+from .web_dlp import WebDLPAPI
 
 
 class ZIA(APISession):
@@ -158,6 +159,14 @@ class ZIA(APISession):
         return RuleLabelsAPI(self)
 
     @property
+    def device(self):
+        """
+        The interface object for the :ref:`ZIA device interface <zia-device>`.
+
+        """
+        return DeviceAPI(self)
+
+    @property
     def locations(self):
         """
         The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
@@ -235,4 +244,4 @@ class ZIA(APISession):
         The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
 
         """
-        return WebDLP(self)
+        return WebDLPAPI(self)
