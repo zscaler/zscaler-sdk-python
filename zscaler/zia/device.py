@@ -19,7 +19,7 @@ from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 
-class DeviceGroupsAPI(APIEndpoint):
+class DeviceAPI(APIEndpoint):
     def list_device_groups(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA Device Groups.
@@ -67,3 +67,20 @@ class DeviceGroupsAPI(APIEndpoint):
         """
         payload = {"search": query}
         return self._get("deviceGroups/devices", params=payload)
+
+    def list_device_lite(self) -> BoxList:
+        """
+        Returns the list of devices that includes device ID, name, and owner name.
+
+        Returns:
+            :obj:`BoxList`: List of Device/ids.
+
+        Examples:
+            Get Device Lite results
+
+            >>> results = zia.device.list_device_lite()
+            ... for item in results:
+            ...    print(item)
+
+        """
+        return self._get("deviceGroups/devices/lite")
