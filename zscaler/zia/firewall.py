@@ -591,8 +591,9 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
 
-        payload = {"search": search}
-
+        payload = {}
+        if search:
+            payload["search"] = search
         return self._get("networkServiceGroups", params=payload)
 
     def get_network_svc_group(self, group_id: str) -> Box:
