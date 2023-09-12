@@ -67,3 +67,20 @@ class DeviceGroupsAPI(APIEndpoint):
         """
         payload = {"search": query}
         return self._get("deviceGroups/devices", params=payload)
+
+    def list_device_group_lite(self) -> BoxList:
+        """
+        Returns the list of devices that includes device ID, name, and owner name.
+
+        Returns:
+            :obj:`BoxList`: List of Device/ids.
+
+        Examples:
+            Get Device Lite results
+
+            >>> results = zia.device_groups.list_device_group_lite()
+            ... for item in results:
+            ...    print(item)
+
+        """
+        return self._get("deviceGroups/devices/lite")
