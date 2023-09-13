@@ -24,6 +24,7 @@ from zscaler import __version__
 
 from .admin_and_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
+from .authentication_settings import AuthenticationSettingsAPI
 from .config import ActivationAPI
 from .device import DeviceAPI
 from .dlp import DLPAPI
@@ -189,6 +190,14 @@ class ZIA(APISession):
 
         """
         return SecurityPolicyAPI(self)
+
+    @property
+    def authentication_settings(self):
+        """
+        The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-auth-settings>`.
+
+        """
+        return AuthenticationSettingsAPI(self)
 
     @property
     def ssl(self):
