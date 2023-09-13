@@ -31,7 +31,7 @@ class AuthenticationSettingsAPI(APIEndpoint):
             >>> for url in zia.authentication_settings.get_exempted_urls():
             ...    pprint(url)
         """
-        response = self._get("security/advanced/blacklistUrls")
+        response = self._get("authSettings/exemptedUrls")
 
         # Ensure the correct attribute key is used in the response check.
         if "urls" in response:
@@ -41,25 +41,31 @@ class AuthenticationSettingsAPI(APIEndpoint):
 
     def add_urls_to_exempt_list(self, url_list: list) -> BoxList:
         """
-        Adds the provided URLs to the exemption list.
+        Adds the provided URLs to the exempt list.
 
         Args:
             url_list (:obj:`list` of :obj:`str`):
                 The list of URLs to be added.
 
         Returns:
-            :obj:`BoxList`: The updated exemption list.
-
-        Examples:
-            >>> zia.authentication_settings.add_urls_to_exempt_list(['example.com'])
+            :obj:`BoxList`: The complete and updated exempt list.
 
         """
-        payload = {"urls": url_list}
-        resp = self._post("authSettings/exemptedUrls?action=ADD_TO_LIST", json=payload).status_code
 
-        # Return the updated exemption list if the addition was successful.
-        if resp == 204:
-            return self.get_exempted_urls()
+        payload = {"urls": url_list}
+
+        resp = self._post("authSettings/exemptedUrls?action=ADD_TO_LIST", json=payload)
+
+        # Check if the response object has a 'status_code' attribute before accessing it
+        if hasattr(resp, "status_code"):
+            if resp.status_code == 204:
+                return self.get_exempted_urls()
+        else:
+            # Handle case where resp is a Box object
+            if "urls" in resp:
+                return resp.urls
+            else:
+                return BoxList()  # Return empty list if no URLs are present
 
     def delete_urls_from_exempt_list(self, url_list: list) -> BoxList:
         """
