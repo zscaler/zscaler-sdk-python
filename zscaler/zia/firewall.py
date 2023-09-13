@@ -571,6 +571,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         return self._delete(f"networkApplicationGroups/{group_id}", box=False).status_code
+      
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
