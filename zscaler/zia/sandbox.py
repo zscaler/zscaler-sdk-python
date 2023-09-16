@@ -58,6 +58,33 @@ class CloudSandboxAPI(APIEndpoint):
             data=data,
         )
 
+    def submit_file_for_inspection(self, file: str) -> Box:
+        """
+        Submits raw or archive files to Zscaler service for out-of-band file inspection.
+
+        Args:
+            file (str): The filename that will be submitted for inspection.
+
+        Returns:
+            :obj:`Box`: The Cloud Sandbox inspection response information.
+
+        Examples:
+            Submit a file in the current directory called sample.zip for inspection.
+
+            >>> zia.sandbox.submit_file_for_inspection('sample.zip')
+
+        """
+        with open(file, "rb") as f:
+            data = f.read()
+
+        params = {"api_token": self.sandbox_token}
+
+        return self._post(
+            f"https://csbapi.{self.env_cloud}.net/zscsb/discan",
+            params=params,
+            data=data,
+        )
+
     def get_quota(self) -> Box:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
