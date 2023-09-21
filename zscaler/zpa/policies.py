@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
 
 
 class PolicySetsAPI(APIEndpoint):
@@ -28,6 +28,11 @@ class PolicySetsAPI(APIEndpoint):
         "client_forwarding": "CLIENT_FORWARDING_POLICY",
         "siem": "SIEM_POLICY",
     }
+
+    reformat_params = [
+        ("app_server_group_ids", "appServerGroups"),
+        ("app_connector_group_ids", "appConnectorGroups"),
+    ]
 
     @staticmethod
     def _create_conditions(conditions: list):
@@ -180,7 +185,9 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
 
-    def add_access_rule(self, name: str, action: str, **kwargs) -> Box:
+    def add_access_rule(
+        self, name: str, action: str, app_connector_group_ids: list, app_server_group_ids: list, **kwargs
+    ) -> Box:
         """
         Add a new Access Policy rule.
 
@@ -216,7 +223,10 @@ class PolicySetsAPI(APIEndpoint):
                 A custom message.
             description (str):
                 A description for the rule.
-
+            app_connector_group_ids (:obj:`list` of :obj:`str`):
+                A list of application connector IDs that will be attached to the access policy rule.
+            app_server_group_ids (:obj:`list` of :obj:`str`):
+                A list of application server group IDs that will be attached to the access policy rule.
         Returns:
             :obj:`Box`: The resource record of the newly created access policy rule.
 
@@ -227,7 +237,11 @@ class PolicySetsAPI(APIEndpoint):
             "name": name,
             "action": action.upper(),
             "conditions": self._create_conditions(kwargs.pop("conditions", [])),
+            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
+            "appServerGroups": [{"id": group_id} for group_id in app_server_group_ids],
         }
+
+        add_id_groups(self.reformat_params, kwargs, payload)
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("access").id
@@ -359,7 +373,9 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._post(f"policySet/{policy_id}/rule", json=payload)
 
-    def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
+    def update_rule(
+        self, policy_type: str, rule_id: str, app_connector_group_ids: list, app_server_group_ids: list, **kwargs
+    ) -> Box:
         """
         Update an existing policy rule.
 
@@ -407,7 +423,10 @@ class PolicySetsAPI(APIEndpoint):
                 The re-authentication idle timeout value in seconds.
             re_auth_timeout (int):
                 The re-authentication timeout value in seconds.
-
+            app_connector_group_ids (:obj:`list` of :obj:`str`):
+                A list of application connector IDs that will be attached to the access policy rule.
+            app_server_group_ids (:obj:`list` of :obj:`str`):
+                A list of application server group IDs that will be attached to the access policy rule.
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
 
@@ -425,6 +444,12 @@ class PolicySetsAPI(APIEndpoint):
         policy_id = self.get_policy(policy_type).id
 
         payload = convert_keys(self.get_rule(policy_type, rule_id))
+
+        # Update kwargs with app_connector_group_ids and app_server_group_ids for processing with add_id_groups
+        kwargs["app_connector_group_ids"] = app_connector_group_ids
+        kwargs["app_server_group_ids"] = app_server_group_ids
+
+        add_id_groups(self.reformat_params, kwargs, payload)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
