@@ -35,17 +35,17 @@ class PolicySetsAPI(APIEndpoint):
         Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
 
         Args:
-            conditions (list): List of condition tuples.
+            conditions (list): List of condition dicts or tuples.
 
         Returns:
             :obj:`dict`: The conditions template.
 
         """
-
         template = []
 
         for condition in conditions:
             if isinstance(condition, tuple) and len(condition) == 3:
+                # Previous tuple logic
                 operand = {
                     "operands": [
                         {
@@ -56,6 +56,30 @@ class PolicySetsAPI(APIEndpoint):
                     ]
                 }
                 template.append(operand)
+            elif isinstance(condition, dict):
+                # New dictionary logic based on Go code schema
+                condition_template = {}
+
+                # Extracting keys from the condition dictionary
+                for key in ["id", "negated", "operator"]:
+                    if key in condition:
+                        condition_template[key] = condition[key]
+
+                # Handling the operands
+                operands = condition.get("operands", [])
+                condition_template["operands"] = []
+
+                for operand in operands:
+                    operand_template = {}
+
+                    # Extracting keys from the operand dictionary
+                    for operand_key in ["id", "idp_id", "name", "lhs", "rhs", "objectType"]:
+                        if operand_key in operand:
+                            operand_template[operand_key] = operand[operand_key]
+
+                    condition_template["operands"].append(operand_template)
+
+                template.append(condition_template)
 
         return template
 
