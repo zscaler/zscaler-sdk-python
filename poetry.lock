@@ -75,7 +75,7 @@ files = [
 
 [package.dependencies]
 colorama = {version = ">=0.3.9", markers = "platform_system == \"Windows\""}
-GitPython = ">=3.1.32"
+GitPython = ">=3.1.35"
 PyYAML = ">=5.3.1"
 rich = "*"
 stevedore = ">=1.20.0"
@@ -343,7 +343,7 @@ smmap = ">=3.0.1,<6"
 
 [[package]]
 name = "gitpython"
-version = "3.1.31"
+version = "3.1.35"
 description = "GitPython is a Python library used to interact with Git repositories"
 category = "dev"
 optional = false
