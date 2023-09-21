@@ -75,7 +75,7 @@ files = [
 
 [package.dependencies]
 colorama = {version = ">=0.3.9", markers = "platform_system == \"Windows\""}
-GitPython = ">=1.0.1"
+GitPython = ">=3.1.32"
 PyYAML = ">=5.3.1"
 rich = "*"
 stevedore = ">=1.20.0"
