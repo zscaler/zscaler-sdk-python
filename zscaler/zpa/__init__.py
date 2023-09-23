@@ -27,8 +27,12 @@ __author__ = "Zscaler Inc."
 __email__ = "zscaler-partner-labs@z-bd.com"
 __version__ = "1.0.0"
 
+import json
 import os
+from urllib.parse import parse_qs, urlparse, urlunparse
 
+from cachetools import TTLCache
+from restfly.errors import APIError
 from restfly.session import APISession
 
 from zscaler import __version__
@@ -54,6 +58,20 @@ from zscaler.zpa.servers import AppServersAPI
 from zscaler.zpa.service_edges import ServiceEdgesAPI
 from zscaler.zpa.session import AuthenticatedSessionAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
+
+
+class RetryableError(APIError):  # 412 Response
+    retryable = False
+
+    def __init__(self, response, **kwargs):
+        super(APIError, self).__init__(response, **kwargs)
+        if response.status_code == 429:
+            self.set_retryable(True)
+        elif response.status_code == 200 and not response.text is None and response.text != "":
+            d = json.JSONDecoder().decode(response.text)
+            id = d.get("id", "N/A")
+            if id in ["non.restricted.entity.authorization.failed", "bad.request", "db.simultaneous.request"]:
+                self.set_retryable(True)
 
 
 class ZPA(APISession):
@@ -87,6 +105,8 @@ class ZPA(APISession):
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZPA"
     _url = "https://config.private.zscaler.com"
+    cache = TTLCache(maxsize=100, ttl=600)
+    _error_map = {429: RetryableError, 400: RetryableError}
 
     def __init__(self, **kw):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
@@ -95,7 +115,35 @@ class ZPA(APISession):
         self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
         self._override_url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
         self.conv_box = True
-        super(ZPA, self).__init__(**kw)
+        # NOTE: APISession is using retry-after header if exist as the time to wait before retrying, otherwise it fallbacks to retries*backoff
+        super(ZPA, self).__init__(**kw, retries=10, backoff=1)
+
+    def _retry_request(self, response, retries, **kwargs):
+        print(f"retrying N# {retries}")
+        return super()._retry_request(response, retries, **kwargs)
+
+    def _req(self, method, path, **kwargs):
+        if method == "GET" and path in self.cache:
+            result = self.cache[path]
+            print(f"served from cache {path}:{result}")
+            return result
+        else:
+            parsed_url = urlparse(path)
+            cleaned_path = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, "", "", ""))
+            # Delete similar keys from cache
+            for key in list(self.cache.keys()):
+                if key.startswith(cleaned_path):
+                    print(f"removing from cache:{cleaned_path}")
+                    try:
+                        self.cache.pop(key)
+                    except Exception as e:
+                        print(f"removing from cache failed:{e}")
+        # we should retry on bad request errors as well (in some cases)
+        result = super()._req(method, path, **kwargs)
+        if method == "GET":
+            self.cache[path] = result
+        print(f"method: '{method}', path: '{path}', result: '{result}'")
+        return result
 
     def _build_session(self, **kwargs) -> None:
         """Creates a ZPA API authenticated session."""
