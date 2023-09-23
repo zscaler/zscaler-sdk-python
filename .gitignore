@@ -84,3 +84,4 @@ local_dev
 # vim swap files
 *.swp
 .DS_Store
+install_package.sh
