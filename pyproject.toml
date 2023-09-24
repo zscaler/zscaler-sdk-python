@@ -10,7 +10,7 @@ documentation = "https://zscaler-sdk-python.readthedocs.io/"
 homepage = "https://github.com/zscaler/zscaler-sdk-python"
 repository = "https://github.com/zscaler/zscaler-sdk-python"
 packages = [
-    { include = "zscaler" }
+    { include = "zscaler/*" }
 ]
 classifiers = [
     "Environment :: Console",
