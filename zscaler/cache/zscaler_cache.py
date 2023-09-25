@@ -12,7 +12,8 @@ class ZPACache(Cache):
 
     def __new__(cls, *args, **kwargs):
         if not isinstance(cls._instance, cls):
-            cls._instance = super(ZPACache, cls).__new__(cls, *args, **kwargs)
+            # cls._instance = super(ZPACache, cls).__new__(cls, *args, **kwargs)
+            cls._instance = super(ZPACache, cls).__new__(cls)
             # Initialize any variables here if required
             cls._instance._store = {}
             cls._instance._time_to_live = args[0] if args else None
