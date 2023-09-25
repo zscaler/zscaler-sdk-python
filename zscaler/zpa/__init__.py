@@ -110,8 +110,9 @@ class ZPA(APISession):
             i.e. http:// or https://.
     """
 
+    user_agent_obj = UserAgent()
     _vendor = "Zscaler"
-    _product = "Zscaler Private Access"
+    _product = user_agent_obj.get_user_agent_string
     _build = __version__
     _box = True
     _box_attrs = {"camel_killer_box": True}
@@ -147,7 +148,13 @@ class ZPA(APISession):
         else:
             self.cache = kw.get("cache")
 
-        super(ZPA, self).__init__(**kw)
+        # super(ZPA, self).__init__(**kw)
+        super().__init__(**kw)
+
+        # Update the User-Agent header to the desired format
+        current_user_agent = self._session.headers["User-Agent"]
+        new_user_agent = self.user_agent_obj.strip_unwanted_parts(current_user_agent)
+        self._session.headers["User-Agent"] = new_user_agent
 
         # Add rate limiter instance
         # 20 times in a 10 second interval for a GET call.
@@ -202,10 +209,15 @@ class ZPA(APISession):
 
             # Record that we're about to make a request
             self.rate_limiter.record_request(method)
+            # Log request headers for troubleshooting
+            self.logger.debug(f"Sending {method} request to {path} with headers: {self._session.headers}")
 
             try:
+                self.logger.debug(f"Request Headers: {self._session.headers}")
                 # Actual API call
                 response = super(ZPA, self).request(method, path, **kwargs)
+                # Log response headers for troubleshooting
+                self.logger.debug(f"Received response from {method} request to {path} with headers: {response.headers}")
 
                 # If _handle_retry returns True, we need to retry. If not, we break the loop.
                 if not self._handle_retry(response, attempts):
@@ -259,7 +271,7 @@ class ZPA(APISession):
         super(ZPA, self)._build_session(**kwargs)
 
         # Configure URL base for this API session based on the cloud environment
-        self.url_base = ZPA_BASE_URLS.get(self._cloud, ZPA_BASE_URLS["PRODUCTION"])  # default to PRODUCTION if not found
+        self.url_base = ZPA_BASE_URLS.get(self._cloud, ZPA_BASE_URLS["PRODUCTION"])
 
         # If a specific cloud environment is required but not found in ZPA_BASE_URLS
         if self._cloud not in ZPA_BASE_URLS:
@@ -273,28 +285,29 @@ class ZPA(APISession):
         self.user_config_url = f"{self.url_base}/userconfig/v1/customers/{self._customer_id}"
         self.v2_url = f"{self.url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
 
-        # Check if the token is expired or about to expire, and refresh if needed
+        # If the token is None or expired, fetch a new token
         if is_token_expired(self._auth_token):
             self.logger.warning("The provided or fetched token was already expired. Refreshing...")
             try:
                 self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
-            except Exception as e:  # Catch specific exceptions related to token fetching if known
+                self._token_fetch_time = time.time()  # assuming the fetch time is now
+            except Exception as e:
                 raise TokenRefreshError(f"Failed to refresh the expired token: {str(e)}")
-            self._token_fetch_time = time.time()  # assuming the fetch time is now
 
-        # Proactively refresh the token if it's about to expire
-        if token_is_about_to_expire(self._token_fetch_time):
+        # If the token is about to expire, refresh it proactively
+        elif token_is_about_to_expire(self._token_fetch_time):
             self.logger.info("Token is about to expire, refreshing...")
             try:
                 self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
+                self._token_fetch_time = time.time()  # update the fetch time
             except Exception as e:
                 raise TokenRefreshError(f"Failed to refresh the token that's about to expire: {str(e)}")
-            self._token_fetch_time = time.time()  # update the fetch time
 
         # Update the session headers with the new or refreshed token
         try:
             self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
-            self._session.headers.update({"User-Agent": self.user_agent})
+            if hasattr(self, "user_agent"):
+                self._session.headers.update({"User-Agent": self.user_agent})
         except Exception as e:
             raise HeaderUpdateError(f"Failed to update session headers: {str(e)}")
 

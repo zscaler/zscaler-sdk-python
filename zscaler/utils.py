@@ -113,6 +113,11 @@ def token_is_about_to_expire(token_fetch_time):
 
 
 def is_token_expired(token_string):
+    # If token string is None or empty, consider it expired
+    if not token_string:
+        logger.warning("Token string is None or empty. Requesting a new token.")
+        return True
+
     try:
         # Split the token into its parts
         parts = token_string.split(".")
