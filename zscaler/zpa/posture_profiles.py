@@ -19,6 +19,7 @@ from box import Box, BoxList
 from restfly import APISession
 from restfly.endpoint import APIEndpoint
 
+from zscaler import utils
 from zscaler.utils import Iterator
 
 
@@ -69,3 +70,42 @@ class PostureProfilesAPI(APIEndpoint):
         """
 
         return self._get(f"posture/{profile_id}")
+
+    def get_udid_by_profile_name(self, search_name: str, **kwargs) -> str:
+        """
+        Searches for a posture profile by name and returns its posture_udid.
+
+        Args:
+            search_name (str): The name of the posture profile to search for.
+
+        Keyword Args:
+            **kwargs: Additional keyword arguments to pass to the list_profiles method.
+
+        Returns:
+            str: The posture_udid of the found posture profile, or None if not found.
+        """
+        profiles = self.list_profiles(**kwargs)
+        for profile in profiles:
+            clean_profile_name = utils.remove_cloud_suffix(profile.get("name"))
+            if clean_profile_name == search_name or profile.get("name") == search_name:
+                return profile.get("posture_udid")
+        return None
+
+    def get_name_by_posture_udid(self, search_udid: str, **kwargs) -> str:
+        """
+        Searches for a posture profile by posture_udid and returns its name.
+
+        Args:
+            search_udid (str): The posture_udid of the posture profile to search for.
+
+        Keyword Args:
+            **kwargs: Additional keyword arguments to pass to the list_profiles method.
+
+        Returns:
+            str: The name of the found posture profile, or None if not found.
+        """
+        profiles = self.list_profiles(**kwargs)
+        for profile in profiles:
+            if profile.get("posture_udid") == search_udid:
+                return profile.get("name")
+        return None

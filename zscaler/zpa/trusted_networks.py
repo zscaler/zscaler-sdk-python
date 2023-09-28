@@ -15,6 +15,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+from typing import Union
+
 from box import Box, BoxList
 from restfly import APISession
 from restfly.endpoint import APIEndpoint
@@ -69,3 +71,46 @@ class TrustedNetworksAPI(APIEndpoint):
         """
 
         return self._get(f"network/{network_id}")
+
+    def get_by_network_id(self, network_id: str, **kwargs) -> Union[Box, None]:
+        """
+        Returns the trusted network based on the networkId.
+
+        Args:
+            network_id (str): The unique Network ID for the network ID.
+
+        Keyword Args:
+            **max_items (int): The maximum number of items to request before stopping iteration.
+            **max_pages (int): The maximum number of pages to request before stopping iteration.
+            **pagesize (int): Specifies the page size. The default size is 100, but the maximum size is 500.
+            **search (str, optional): The search string used to match against features and fields.
+
+        Returns:
+            Union[Box, None]: The resource record for the trusted networks.
+        """
+
+        page = 0
+        page_size = kwargs.get("pagesize", 100)  # default page size changed to 100
+        max_pages = kwargs.get("max_pages", None)
+
+        while True:
+            params = {
+                "pagesize": page_size,
+                "page": page,
+                "search": network_id,  # use the search parameter if supported
+                **kwargs,
+            }
+            networks = self.list_networks(**params)
+
+            if not networks:
+                break  # exit if no more networks
+
+            for network in networks:
+                if network.get("networkId") == network_id:
+                    return Box(network)
+
+            page += 1
+            if max_pages and page >= max_pages:
+                break
+
+        return None

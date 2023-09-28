@@ -14,21 +14,26 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-"""Zscaler SDK for Python
+from box import Box, BoxList
+from restfly import APISession
+from restfly.endpoint import APIEndpoint
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 
-Documentation available at https://zscaler-sdk-python.readthedocs.io
+class PlatformsAPI(APIEndpoint):
+    def list_platforms(self) -> Box:
+        """
+        Returns a list of ZPA Access Policy supported Platforms.
 
-"""
+        Returns:
+            :obj:`BoxList`: A list containing the ZPA Access Policy supported Platforms.
 
-__author__ = "Zscaler Inc"
-__email__ = "zscaler-partner-labs@z-bd.com"
-__license__ = "MIT"
-__contributors__ = [
-    "William Guilherme",
-]
-__version__ = "1.0.0"
+        Examples:
+            Iterate over the ZPA Access Policy supported Platforms and print each one:
 
-from zscaler.zia import ZIA  # noqa
-from zscaler.zpa import ZPA  # noqa
+            .. code-block:: python
+
+                for platform in zpa.platforms.list_platforms():
+                    print(platform)
+
+        """
+        return self._get("platform")
