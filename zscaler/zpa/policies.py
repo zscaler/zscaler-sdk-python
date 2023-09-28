@@ -26,6 +26,8 @@ class PolicySetsAPI(APIEndpoint):
         "access": "ACCESS_POLICY",
         "timeout": "TIMEOUT_POLICY",
         "client_forwarding": "CLIENT_FORWARDING_POLICY",
+        "isolation": "ISOLATION_POLICY",
+        "inspection": "INSPECTION_POLICY",
         "siem": "SIEM_POLICY",
     }
 
@@ -98,6 +100,8 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``access`` - returns the Access Policy
                  |  ``timeout`` - returns the Timeout Policy
                  |  ``client_forwarding`` - returns the Client Forwarding Policy
+                 |  ``isolation`` - returns the Isolation Policy
+                 |  ``inspection`` - returns the Inspection Policy
                  |  ``siem`` - returns the SIEM Policy
 
         Returns:
@@ -416,6 +420,124 @@ class PolicySetsAPI(APIEndpoint):
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("client_forwarding").id
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._post(f"policySet/{policy_id}/rule", json=payload)
+
+    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
+        """
+        Add a new Isolation Policy rule.
+
+        See the
+        `ZPA Isolation Policy API reference <https://help.zscaler.com/zpa/configuring-isolation-policies-using-api>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            name (str):
+                The name of the new rule.
+            action (str):
+                The action for the policy. Accepted values are:
+
+                |  ``isolate``
+                |  ``bypass_isolate``
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`. If you are adding multiple values for the same object type then you will need
+                a new entry for each value.
+                E.g.
+
+                .. code-block:: python
+
+                    [('app', 'id', '926196382959075416'),
+                    ('app', 'id', '926196382959075417'),
+                    ('app_group', 'id', '926196382959075332),
+                    ('client_type', 'zpn_client_type_exporter')]
+            zpn_isolation_profile_id (str):
+                The isolation profile ID associated with the rule
+            description (str):
+                A description for the rule.
+
+        Returns:
+            :obj:`Box`: The resource record of the newly created Client Isolation Policy rule.
+
+        """
+
+        # Initialise the payload
+        payload = {
+            "name": name,
+            "action": action.upper(),
+            "zpnIsolationProfileId": zpn_isolation_profile_id,
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
+        }
+
+        # Get the policy id of the provided policy type for the URL.
+        policy_id = self.get_policy("isolation").id
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._post(f"policySet/{policy_id}/rule", json=payload)
+
+    def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
+        """
+        Add a new AppProtection Policy rule.
+
+        See the
+        `ZPA AppProtection Policy API reference <https://help.zscaler.com/zpa/configuring-appprotection-policies-using-api>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            name (str):
+                The name of the new rule.
+            action (str):
+                The action for the policy. Accepted values are:
+
+                |  ``inspect``
+                |  ``bypass_inspect``
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`. If you are adding multiple values for the same object type then you will need
+                a new entry for each value.
+                E.g.
+
+                .. code-block:: python
+
+                    [('app', 'id', '926196382959075416'),
+                    ('app', 'id', '926196382959075417'),
+                    ('app_group', 'id', '926196382959075332),
+                    ('client_type', 'zpn_client_type_exporter')]
+            zpn_inspection_profile_id (str):
+                The AppProtection profile ID associated with the rule
+            description (str):
+                A description for the rule.
+
+        Returns:
+            :obj:`Box`: The resource record of the newly created Client Inspection Policy rule.
+
+        """
+
+        # Initialise the payload
+        payload = {
+            "name": name,
+            "action": action.upper(),
+            "zpnInspectionProfileId": zpn_inspection_profile_id,
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
+        }
+
+        # Get the policy id of the provided policy type for the URL.
+        policy_id = self.get_policy("inspection").id
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
