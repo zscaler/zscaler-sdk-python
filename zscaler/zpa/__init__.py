@@ -123,7 +123,7 @@ class ZPA(APISession):
 
     def __init__(self, **kw):
         self.logger_name = UserAgent().get_user_agent_string  # Derive logger name from the user agent string.
-        setup_logging(log_level=logging.DEBUG, logger_name=self.logger_name)
+        setup_logging(logger_name=self.logger_name)
         self.logger = logging.getLogger(self.logger_name)  # Initialize the logger with the derived name.
 
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
@@ -200,6 +200,7 @@ class ZPA(APISession):
         if method == "GET" and self.cache.contains(cache_key):
             self.logger.debug(f"Serving from cache for key: {cache_key}")
             cached_data = self.cache.get(cache_key)
+            self.logger.debug(f"Cache retrieved for key {cache_key}: {cached_data}")  # log cache retrieval
             # Assuming you want to return the cached data directly
             return cached_data
 
@@ -257,6 +258,7 @@ class ZPA(APISession):
         if method == "GET" and response.status_code == 200:
             try:
                 parsed_response = response.json()
+                self.logger.debug(f"Adding to cache with key {cache_key}: {parsed_response}")  # log cache addition
                 self.cache.add(cache_key, parsed_response)
             except ValueError:
                 self.logger.warning("Failed to parse JSON response, not caching.")
