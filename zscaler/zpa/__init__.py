@@ -60,6 +60,7 @@ from zscaler.user_agent import UserAgent
 from zscaler.utils import is_token_expired, token_is_about_to_expire
 from zscaler.zpa.app_segments import AppSegmentsAPI
 from zscaler.zpa.certificates import CertificatesAPI
+from zscaler.zpa.client_types import ClientTypesAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from zscaler.zpa.connector_groups import ConnectorGroupsAPI
 from zscaler.zpa.connectors import ConnectorsAPI
@@ -68,6 +69,7 @@ from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation_profile import IsolationProfileAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
+from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.provisioning import ProvisioningAPI
@@ -326,6 +328,22 @@ class ZPA(APISession):
 
         """
         return CertificatesAPI(self)
+
+    @property
+    def platforms(self):
+        """
+        The interface object for the :ref:`ZPA Access Policy platform interface <zpa-platforms>`.
+
+        """
+        return PlatformsAPI(self)
+
+    @property
+    def client_types(self):
+        """
+        The interface object for the :ref:`ZPA Access Policy client types interface <zpa-client_types>`.
+
+        """
+        return ClientTypesAPI(self)
 
     @property
     def isolation_profile(self):

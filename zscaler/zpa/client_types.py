@@ -14,21 +14,28 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-"""Zscaler SDK for Python
+from box import Box, BoxList
+from restfly import APISession
+from restfly.endpoint import APIEndpoint
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+from zscaler.utils import Iterator
 
-Documentation available at https://zscaler-sdk-python.readthedocs.io
 
-"""
+class ClientTypesAPI(APIEndpoint):
+    def list_client_types(self) -> Box:
+        """
+        Returns a list of ZPA Access Policy supported Client Types.
 
-__author__ = "Zscaler Inc"
-__email__ = "zscaler-partner-labs@z-bd.com"
-__license__ = "MIT"
-__contributors__ = [
-    "William Guilherme",
-]
-__version__ = "1.0.0"
+        Returns:
+            :obj:`BoxList`: A list containing the ZPA Access Policy supported Client Types.
 
-from zscaler.zia import ZIA  # noqa
-from zscaler.zpa import ZPA  # noqa
+        Examples:
+            Iterate over the ZPA Access Policy supported Client Types and print each one:
+
+            .. code-block:: python
+
+                for client_type in zpa.client_types.list_client_types():
+                    print(client_type)
+
+        """
+        return self._get("clientTypes")
