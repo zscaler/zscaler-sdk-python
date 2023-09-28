@@ -147,6 +147,28 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._get(f"policySet/{policy_id}/rule/{rule_id}")
 
+    def get_rule_by_name(self, policy_type: str, rule_name: str) -> Box:
+        """
+        Returns the specified policy rule by its name.
+
+        Args:
+            policy_type (str): The type of policy to be returned.
+                Accepted values are: ``access``, ``timeout``, ``client_forwarding``, ``siem``
+            rule_name (str): The name of the policy rule.
+
+        Returns:
+            :obj:`Box`: The resource record for the requested rule.
+
+        Examples:
+            >>> policy_rule = zpa.policies.get_rule_by_name(policy_type='access', rule_name='MyRule')
+
+        """
+        all_rules = self.list_rules(policy_type)
+        for rule in all_rules:
+            if rule.name == rule_name:
+                return rule
+        return None
+
     def list_rules(self, policy_type: str, **kwargs) -> BoxList:
         """
         Returns policy rules for a given policy type.
@@ -210,7 +232,7 @@ class PolicySetsAPI(APIEndpoint):
         return self._delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
 
     def add_access_rule(
-        self, name: str, action: str, app_connector_group_ids: list, app_server_group_ids: list, **kwargs
+        self, name: str, action: str, app_connector_group_ids: list = [], app_server_group_ids: list = [], **kwargs
     ) -> Box:
         """
         Add a new Access Policy rule.
@@ -261,9 +283,13 @@ class PolicySetsAPI(APIEndpoint):
             "name": name,
             "action": action.upper(),
             "conditions": self._create_conditions(kwargs.pop("conditions", [])),
-            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
-            "appServerGroups": [{"id": group_id} for group_id in app_server_group_ids],
         }
+
+        if app_connector_group_ids:
+            payload["appConnectorGroups"] = [{"id": group_id} for group_id in app_connector_group_ids]
+
+        if app_server_group_ids:
+            payload["appServerGroups"] = [{"id": group_id} for group_id in app_server_group_ids]
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
@@ -477,7 +503,7 @@ class PolicySetsAPI(APIEndpoint):
             return self.get_rule(policy_type, rule_id)
 
     def update_access_rule(
-        self, policy_type: str, rule_id: str, app_connector_group_ids: list, app_server_group_ids: list, **kwargs
+        self, policy_type: str, rule_id: str, app_connector_group_ids: list = None, app_server_group_ids: list = None, **kwargs
     ) -> Box:
         """
         Update an existing policy rule.
@@ -486,63 +512,28 @@ class PolicySetsAPI(APIEndpoint):
 
         Args:
             policy_type (str):
-                The policy type. Accepted values are:
-
-                 |  ``access``
-                 |  ``timeout``
-                 |  ``client_forwarding``
+                ...
             rule_id (str):
-                The unique identifier for the rule to be updated.
+                ...
             **kwargs:
-                Optional keyword args.
+                ...
 
         Keyword Args:
-            action (str):
-                The action for the policy. Accepted values are:
-
-                |  ``allow``
-                |  ``deny``
-                |  ``intercept``
-                |  ``intercept_accessible``
-                |  ``bypass``
-            conditions (list):
-                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
-                E.g.
-
-                .. code-block:: python
-
-                    [('app', 'id', '926196382959075416'),
-                    ('app', 'id', '926196382959075417'),
-                    ('app_group', 'id', '926196382959075332),
-                    ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'b15e4cad-fa6e-8182-9fc3-8125ee6a65e1', True)]
-            custom_msg (str):
-                A custom message.
-            description (str):
-                A description for the rule.
-            re_auth_idle_timeout (int):
-                The re-authentication idle timeout value in seconds.
-            re_auth_timeout (int):
-                The re-authentication timeout value in seconds.
+            ...
             app_connector_group_ids (:obj:`list` of :obj:`str`):
-                A list of application connector IDs that will be attached to the access policy rule.
+                A list of application connector IDs that will be attached to the access policy rule. Defaults to an empty list.
             app_server_group_ids (:obj:`list` of :obj:`str`):
-                A list of application server group IDs that will be attached to the access policy rule.
+                A list of application server group IDs that will be attached to the access policy rule. Defaults to an empty list.
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
 
         Examples:
-            Updates the name only for an Access Policy rule:
-
-            >>> zpa.policies.update_rule('access', '99999', name='new_rule_name')
-
-            Updates the action only for a Client Forwarding Policy rule:
-
-            >>> zpa.policies.update_rule('client_forwarding', '888888', action='BYPASS')
-
+            ...
         """
+        # Handle default values for app_connector_group_ids and app_server_group_ids
+        app_connector_group_ids = app_connector_group_ids or []
+        app_server_group_ids = app_server_group_ids or []
+
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
