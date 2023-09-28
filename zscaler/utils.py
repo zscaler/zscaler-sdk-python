@@ -18,6 +18,7 @@
 import base64
 import json
 import logging
+import re
 import time
 
 from box import Box, BoxList
@@ -157,6 +158,21 @@ def pick_version_profile(kwargs: list, payload: list):
             payload["versionProfileId"] = 1
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
+
+
+def remove_cloud_suffix(str_name: str) -> str:
+    """
+    Removes appended cloud name (e.g. "(zscalerthree.net)") from the string.
+
+    Args:
+        str_name (str): The string from which to remove the cloud name.
+
+    Returns:
+        str: The string without the cloud name.
+    """
+    reg = re.compile(r"(.*)\s+\([a-zA-Z0-9\-_\.]*\)\s*$")
+    res = reg.sub(r"\1", str_name)
+    return res.strip()
 
 
 class Iterator(APIIterator):
