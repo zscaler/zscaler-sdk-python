@@ -132,7 +132,8 @@ class ZPA(APISession):
 
         # Step 2: Add an additional attribute for environment
         self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD", "PRODUCTION")).upper()  # Default to PRODUCTION
-        if self._cloud not in ZPA_BASE_URLS:
+
+        if self._cloud and self._cloud not in ZPA_BASE_URLS:
             raise APIClientError(
                 f"Invalid cloud environment: {self._cloud}. Allowed values: {', '.join(ZPA_BASE_URLS.keys())}"
             )
@@ -142,9 +143,12 @@ class ZPA(APISession):
 
         # Cache setup
         cache_enabled = os.getenv("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+        default_ttl = int(os.getenv("ZSCALER_CLIENT_CACHE_TTL", 600))  # Default to 600 seconds (10 minutes)
+        default_tti = int(os.getenv("ZSCALER_CLIENT_CACHE_TTI", 480))  # Default to 480 seconds (8 minutes)
+
         if kw.get("cache") is None:
             if cache_enabled:
-                self.cache = ZPACache(ttl=3600, tti=1800)
+                self.cache = ZPACache(ttl=default_ttl, tti=default_tti)
             else:
                 self.cache = NoOpCache()
         else:
