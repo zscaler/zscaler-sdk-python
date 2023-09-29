@@ -1,15 +1,14 @@
+from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 
-class Cache:
+class Cache(ABC):
     """
     This is the ABSTRACT class that defines a Cache object for the ZPA Client
     """
 
-    def __init__(self):
-        pass
-
-    def get(self, key):
+    @abstractmethod
+    def get(self, key: str):
         """
         A method which retrieves the desired value from the cache.
 
@@ -20,9 +19,10 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def contains(self, key):
+    @abstractmethod
+    def contains(self, key: str) -> bool:
         """
         A method which checks if the cache contains the desired value.
 
@@ -33,9 +33,10 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def add(self, key, value):
+    @abstractmethod
+    def add(self, key: str, value) -> None:
         """
         A method which adds a key-value pair to the cache.
 
@@ -47,9 +48,10 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def delete(self, key):
+    @abstractmethod
+    def delete(self, key: str) -> None:
         """
         A method which deletes a key-value pair from the cache.
 
@@ -60,9 +62,10 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def clear(self):
+    @abstractmethod
+    def clear(self) -> None:
         """
         A method used to empty the cache.
 
@@ -70,9 +73,10 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def clear_by_prefix(self, prefix):
+    @abstractmethod
+    def clear_by_prefix(self, prefix: str) -> None:
         """
         Clear cache entries by their URL prefix.
 
@@ -83,9 +87,9 @@ class Cache:
             NotImplementedError: If the subclass inheriting this class
             has not implemented this function
         """
-        raise NotImplementedError
+        pass
 
-    def create_key(self, request):
+    def create_key(self, request: str) -> str:
         """
         A method used to create a unique key for an entry in the cache.
         Used with URLs that requests fire at.

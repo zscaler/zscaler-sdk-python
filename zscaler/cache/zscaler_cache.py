@@ -1,90 +1,101 @@
 import logging
+import os
 import threading
 import time
+from http.client import HTTPResponse
+from io import BytesIO
 
-from zscaler.cache.cache import Cache
+from cachetools import TTLCache
 
-logger = logging.getLogger("zscaler-sdk-python")
+# Setup logger for this module
+logger = logging.getLogger("zscaler-cache")  # Changed logger name to avoid conflicts
+logger.setLevel(logging.DEBUG)  # This can be adjusted programmatically or using environment variables
 
 
-class ZPACache(Cache):
+class ZPACache:
     _instance = None  # Singleton instance
+    _lock = threading.Lock()
 
-    def __new__(cls, *args, **kwargs):
-        if not isinstance(cls._instance, cls):
-            # cls._instance = super(ZPACache, cls).__new__(cls, *args, **kwargs)
-            cls._instance = super(ZPACache, cls).__new__(cls)
-            # Initialize any variables here if required
-            cls._instance._store = {}
-            cls._instance._time_to_live = args[0] if args else None
-            cls._instance._time_to_idle = args[1] if args else None
-
-            # Add a thread lock for thread-safe operations
-            cls._instance._lock = threading.Lock()
-
+    def __new__(cls):
+        with cls._lock:
+            if not isinstance(cls._instance, cls):
+                cls._instance = super(ZPACache, cls).__new__(cls)
+                cache_enabled = os.getenv("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+                cls._instance.default_ttl = int(
+                    os.getenv("ZSCALER_CLIENT_CACHE_TTL", 600)
+                )  # Default to 600 seconds (10 minutes)
+                cls._instance.default_tti = int(
+                    os.getenv("ZSCALER_CLIENT_CACHE_TTI", 480)
+                )  # Default to 480 seconds (8 minutes)
+                if cache_enabled:
+                    cls._instance._cache = TTLCache(maxsize=100, ttl=cls._instance.default_ttl)
+                    logger.info("Cache is enabled with TTL: {}".format(cls._instance.default_ttl))
+                else:
+                    cls._instance._cache = None  # Cache is disabled
+                    logger.info("Cache is disabled")
         return cls._instance
 
-    def __init__(self, ttl, tti):
-        # We're deliberately not calling super() here because we don't want
-        # to overwrite any variables on repeated instantiation.
+    def __init__(self):
         pass
 
     def get(self, key):
         with self._lock:
-            now = self._get_current_time()
-            if self.contains(key):
-                entry = self._store[key]
-                entry["tti"] = now + self._time_to_idle
-                self._clean_cache()
-                logger.info(f'Got value from cache for key "{key}".')
-                logger.debug(f'Cached value for key {key}: {entry["value"]}')
-                return entry["value"]
+            if self._cache is not None:
+                try:
+                    entry = self._cache[key]  # Accessing an expired item will raise a `KeyError`
+                    logger.debug(f"Cache hit for key: {key}")
 
-            self._clean_cache()
-            return None
+                    # Construct a new HTTPResponse object
+                    resp = HTTPResponse(BytesIO(entry["content"]))
+                    resp.status = entry["status_code"]
+                    resp.reason = entry["reason"]
+                    resp.headers = entry["headers"]
+                    resp.msg = entry["msg"]
+                    resp.fp = BytesIO(entry["content"])  # You may need to set the file pointer with the content again
+                    logger.debug(f"Getting from cache with key: {key}")
+                    resp.begin()  # Consider whether this is necessary based on your use case
+                    return resp
+                except KeyError:
+                    logger.debug(f"Cache miss for key: {key}")
+                    return None
+                except Exception as e:
+                    logger.error(f"Unexpected error while retrieving from cache: {e}")
+                    return None
 
-    def contains(self, key):
+    def add(self, key, response):
         with self._lock:
-            return key in self._store and self._is_valid_entry(self._store[key])
-
-    def add(self, key: str, value: tuple):
-        with self._lock:
-            if type(key) == str:  # Modified this check to be more flexible
-                now = self._get_current_time()
-                self._store[key] = {"value": value, "tti": now + self._time_to_idle, "ttl": now + self._time_to_live}
-                logger.info(f'Added to cache value for key "{key}".')
-                logger.debug(f"Cached value for key {key}: {value}.")
-            self._clean_cache()
+            if self._cache is not None:
+                entry = {
+                    "content": response.read(),  # Assuming response has a read method returning bytes
+                    "status_code": response.status,
+                    "reason": response.reason,
+                    "headers": dict(response.getheaders()),  # Assuming response has getheaders method
+                    "msg": response.msg
+                    # 'timestamp' is not needed as TTLCache handles expiration internally
+                }
+                logger.debug(f"Adding item to cache with key: {key}")
+            else:
+                logger.debug("Cache is None, when trying to add key: {key}")
+                response.fp = BytesIO(entry["content"])  # Set the file pointer back after reading
+                self._cache[key] = entry
+                logger.debug(f"Adding item to cache with key: {key}")
 
     def delete(self, key):
         with self._lock:
-            if key in self._store:
-                del self._store[key]
-                logger.info(f'Removed value from cache for key "{key}".')
+            if self._cache is not None and key in self._cache:
+                logger.debug(f"Deleting item from cache with key: {key}")
+                del self._cache[key]
 
     def clear(self):
         with self._lock:
-            self._store.clear()
-            logger.info("Cleared the cache.")
-
-    def _clean_cache(self):
-        expired = []
-        for key in self._store.keys():
-            if not self._is_valid_entry(self._store[key]):
-                expired.append(key)
-        for expired_key in expired:
-            self.delete(expired_key)
-
-    def _is_valid_entry(self, entry):
-        now = self._get_current_time()
-        timers = [entry["tti"], entry["ttl"]]
-        return not any(timer <= now for timer in timers)
-
-    def _get_current_time(self):
-        return time.time()
+            if self._cache is not None:
+                logger.debug("Clearing all items from cache")
+                self._cache.clear()
 
     def clear_by_prefix(self, prefix):
         with self._lock:
-            keys_to_delete = [k for k in self._store if k.startswith(prefix)]
-            for key in keys_to_delete:
-                self.delete(key)
+            if self._cache is not None:
+                logger.debug(f"Clearing cache items with prefix: {prefix}")
+                keys_to_delete = [k for k in list(self._cache.keys()) if k.startswith(prefix)]
+                for key in keys_to_delete:
+                    del self._cache[key]

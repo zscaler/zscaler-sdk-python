@@ -154,6 +154,11 @@ class ZPA(APISession):
         else:
             self.cache = kw.get("cache")
 
+        # Add these debug statements here
+        self.logger.debug(f"Cache Enabled: {cache_enabled}")
+        self.logger.debug(f"Default TTL: {default_ttl}")
+        self.logger.debug(f"Default TTI: {default_tti}")
+        self.logger.debug(f"Cache Instance: {type(self.cache)}")
         # super(ZPA, self).__init__(**kw)
         super().__init__(**kw)
 
@@ -196,17 +201,21 @@ class ZPA(APISession):
         """Override the request method to integrate caching, rate limiting, and retries."""
         cache_key = self.cache.create_key(path)
 
-        # Check cache before making the request
+        # Add this debug statement here
+        self.logger.debug(f"Generated Cache Key: {cache_key}")
+
+        # Check cache before making the request for GET methods
         if method == "GET" and self.cache.contains(cache_key):
             self.logger.debug(f"Serving from cache for key: {cache_key}")
             cached_data = self.cache.get(cache_key)
-            # Assuming you want to return the cached data directly
+            # Assume you want to return the cached data directly (you might need to wrap it into a Response-like object)
             return cached_data
 
-        # For non-GET requests, clear the cache before making the request
-        if method != "GET":
-            key_prefix = cache_key.split("?")[0]
-            self.logger.info(f"Non-GET request detected. Clearing cache entries with prefix: {key_prefix}")
+        # For non-GET requests, consider invalidating related cache entries
+        if method in ["PUT", "PATCH", "DELETE"]:
+            self.cache.delete(cache_key)
+            key_prefix = cache_key.split("?")[0]  # If cache keys are URLs, adjust if not
+            self.logger.info(f"{method} request detected. Invalidating cache entries with prefix: {key_prefix}")
             self.cache.clear_by_prefix(key_prefix)
 
         attempts = 0

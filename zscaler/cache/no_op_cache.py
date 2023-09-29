@@ -11,59 +11,57 @@ logger = logging.getLogger("zscaler-sdk-python")
 
 class NoOpCache(Cache):
     """
-    This is a disabled Cache Class where no operations occur
-    in the cache.
-    Implementing the zscaler.cache.cache.Cache abstract class.
+    This class represents a no-operation (NoOp) cache.
+    It implements the Cache interface but does not actually store any data.
+    It is useful for testing and debugging scenarios.
     """
-
-    def __init__(self):
-        super()
 
     def get(self, key):
         """
-        Nothing is returned.
+        Simulates retrieval of key from the cache.
 
-        Arguments:
-            key {str} -- Key to look for
+        Args:
+            key (str): Key to look for.
 
         Returns:
-            None -- No op cache doesn't contain any data to return
+            None: Always returns None since no data is stored in the cache.
         """
-        logging.debug("Serving from cache.")
+        logger.debug("NoOpCache in use. No data retrieved from cache for key: %s", key)
         return None
 
     def contains(self, key):
         """
-        False is returned
+        Always returns False since no data is stored in the cache.
 
-        Arguments:
-            key {str} -- Key to look for
+        Args:
+            key (str): Key to check for existence in cache.
 
         Returns:
-            False -- No data to return so key can never be in cache
+            bool: Always returns False.
         """
         return False
 
     def add(self, key, value):
         """
-        This is a void method.
+        Simulates adding a key-value pair to the cache.
 
-        Arguments:
-            key {str} -- Key in pair
-            value {str} -- Val in pair
+        Args:
+            key (str): Key to add to the cache.
+            value (Any): Value to associate with the key.
         """
-        logging.warning("Saving to cache.")
+        logger.debug("NoOpCache in use. Not adding key-value pair to cache: %s - %s", key, value)
 
     def delete(self, key):
-        """This is a void method. No need to delete anything not contained.
-
-        Arguments:
-            key {str} -- Key to delete
         """
-        pass
+        Simulates deletion of key from the cache.
+
+        Args:
+            key (str): Key to delete from the cache.
+        """
+        logger.debug("NoOpCache in use. No key deleted from cache: %s", key)
 
     def clear(self):
         """
-        This is a void method. No need to clear when nothing's stored.
+        Simulates clearing the cache.
         """
-        pass
+        logger.debug("NoOpCache in use. Cache cleared (no actual operation performed).")
