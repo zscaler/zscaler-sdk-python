@@ -679,14 +679,14 @@ class PolicySetsAPI(APIEndpoint):
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
 
-    def reorder_rule(self, policy_type: str, rule_id: str, order: str) -> Box:
+    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str) -> Box:
         """
         Change the order of an existing policy rule.
 
         Args:
             rule_id (str):
                 The unique id of the rule that will be reordered.
-            order (str):
+            rule_order (str):
                 The new order for the rule.
             policy_type (str):
                 The policy type. Accepted values are:
@@ -703,13 +703,13 @@ class PolicySetsAPI(APIEndpoint):
 
             >>> zpa.policies.reorder_rule(policy_type='access',
             ...    rule_id='88888',
-            ...    order='2')
+            ...    rule_order='2')
 
         """
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{order}").status_code
+        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}").status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
