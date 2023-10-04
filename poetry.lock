@@ -928,13 +928,13 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.0.6"
+version = "2.0.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "urllib3-2.0.6-py3-none-any.whl", hash = "sha256:7a7c7003b000adf9e7ca2a377c9688bbc54ed41b985789ed576570342a375cd2"},
-    {file = "urllib3-2.0.6.tar.gz", hash = "sha256:b19e1a85d206b56d7df1d5e683df4a7725252a964e3993648dd0fb5a1c157564"},
+    {file = "urllib3-2.0.0-py3-none-any.whl", hash = "sha256:8f7f917bc6ff1c021c4b7b677229c455a7612878748581f6de39fd45e4fa21ae"},
+    {file = "urllib3-2.0.0.tar.gz", hash = "sha256:da21131828d290d6331d0d93a18f062ead1ec4fe0cfebbcefc95ee5368f7188a"},
 ]
 
 [package.extras]
@@ -981,4 +981,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "4d587813333c6ae13d89bfb5d706fd757f0b4fa91061a3c40a55d8cdbfbee5f3"
+content-hash = "2711bf13e8d41f91e333ca074b69de64a2b42d721b764f29a84309c6a50492a8"
