@@ -59,6 +59,7 @@ from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import is_token_expired, token_is_about_to_expire
 from zscaler.zpa.app_segments import AppSegmentsAPI
+from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.certificates import CertificatesAPI
 from zscaler.zpa.client_types import ClientTypesAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
@@ -326,6 +327,14 @@ class ZPA(APISession):
 
         """
         return AppSegmentsAPI(self)
+
+    @property
+    def app_segments_pra(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_pra>`.
+
+        """
+        return AppSegmentsPRAAPI(self)
 
     @property
     def certificates(self):

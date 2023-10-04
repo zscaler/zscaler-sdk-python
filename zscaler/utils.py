@@ -42,6 +42,16 @@ def snake_to_camel(name: str):
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 
 
+def recursive_snake_to_camel(data):
+    """Recursively convert dictionary keys from snake_case to camelCase."""
+    if isinstance(data, dict):
+        return {snake_to_camel(key): recursive_snake_to_camel(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [recursive_snake_to_camel(item) for item in data]
+    else:
+        return data
+
+
 def chunker(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):
