@@ -18,17 +18,22 @@
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from zscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
+from zscaler.utils import (
+    Iterator,
+    add_id_groups,
+    convert_keys,
+    recursive_snake_to_camel,
+    snake_to_camel,
+)
 
 
-class AppSegmentsAPI(APIEndpoint):
+class AppSegmentsPRAAPI(APIEndpoint):
     # Params that need reformatting
     reformat_params = [
-        ("clientless_app_ids", "clientlessApps"),
         ("server_group_ids", "serverGroups"),
     ]
 
-    def list_segments(self, **kwargs) -> BoxList:
+    def list_segments_pra(self, **kwargs) -> BoxList:
         """
         Retrieve all configured application segments.
 
@@ -41,7 +46,7 @@ class AppSegmentsAPI(APIEndpoint):
         """
         return BoxList(Iterator(self._api, "application", **kwargs))
 
-    def get_segment(self, segment_id: str) -> Box:
+    def get_segment_pra(self, segment_id: str) -> Box:
         """
         Get information for an application segment.
 
@@ -58,7 +63,7 @@ class AppSegmentsAPI(APIEndpoint):
         """
         return self._get(f"application/{segment_id}")
 
-    def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
+    def delete_segment_pra(self, segment_id: str, force_delete: bool = False) -> int:
         """
         Delete an application segment.
 
@@ -85,7 +90,7 @@ class AppSegmentsAPI(APIEndpoint):
 
         return self._delete(f"application/{segment_id}", params=payload).status_code
 
-    def add_segment(
+    def add_segment_pra(
         self,
         name: str,
         domain_names: list,
@@ -93,6 +98,7 @@ class AppSegmentsAPI(APIEndpoint):
         server_group_ids: list,
         tcp_ports: list = None,
         udp_ports: list = None,
+        common_apps_dto: dict = None,
         **kwargs,
     ) -> Box:
         """
@@ -117,8 +123,6 @@ class AppSegmentsAPI(APIEndpoint):
         Keyword Args:
             bypass_type (str):
                 The type of bypass for the Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            clientless_app_ids (:obj:`list`):
-                List of unique IDs for clientless apps to associate with this Application Segment.
             config_space (str):
                 The config space for this Application Segment. Accepted values are `DEFAULT` and `SIEM`.
             default_idle_timeout (int):
@@ -165,18 +169,28 @@ class AppSegmentsAPI(APIEndpoint):
             "tcpPortRanges": tcp_ports,
             "udpPortRanges": udp_ports,
             "segmentGroupId": segment_group_id,
+            "commonAppsDto": common_apps_dto if common_apps_dto else None,
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
         }
 
+        # Process common_apps_dto if it's provided
+        if common_apps_dto:
+            camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)
+            payload["commonAppsDto"] = camel_common_apps_dto
+
         add_id_groups(self.reformat_params, kwargs, payload)
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            if value is not None:
+                payload[snake_to_camel(key)] = value
 
-        return self._post("application", json=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
+        return self._post("application", json=camel_payload)
 
-    def update_segment(self, segment_id: str, **kwargs) -> Box:
+    def update_segment_pra(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
         """
         Update an application segment.
 
@@ -189,8 +203,6 @@ class AppSegmentsAPI(APIEndpoint):
         Keyword Args:
             bypass_type (str):
                 The type of bypass for the Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            clientless_app_ids (:obj:`list`):
-                List of unique IDs for clientless apps to associate with this Application Segment.
             config_space (str):
                 The config space for this Application Segment. Accepted values are `DEFAULT` and `SIEM`.
             default_idle_timeout (int):
@@ -230,6 +242,7 @@ class AppSegmentsAPI(APIEndpoint):
             icmp_access_type (str):
                 Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
 
+
         Returns:
             :obj:`Box`: The updated application segment resource record.
 
@@ -240,26 +253,29 @@ class AppSegmentsAPI(APIEndpoint):
             ...    name='new_app_name',
 
         """
-
-        # Set payload to value of existing record and recursively convert nested dict keys from snake_case
-        # to camelCase.
-        payload = convert_keys(self.get_segment(segment_id))
-
+        # Set payload to value of existing record and recursively convert nested dict keys from snake_case to camelCase.
+        payload = convert_keys(self.get_segment_pra(segment_id))
         if kwargs.get("tcp_ports"):
             payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
-
         if kwargs.get("udp_ports"):
             payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
 
-        # Reformat keys that we've simplified for our users
-        add_id_groups(self.reformat_params, kwargs, payload)
+        if common_apps_dto:
+            camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)  # use the recursive function
+            payload["commonAppsDto"] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
 
-        # Add optional parameters to payload
+        # Convert other keys in payload
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            if value is not None:
+                payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"application/{segment_id}", json=payload).status_code
+        add_id_groups(self.reformat_params, kwargs, payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                payload[snake_to_camel(key)] = value
 
-        # Return the object if it was updated successfully
+        # Convert the payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)  # use the recursive function
+        resp = self._put(f"application/{segment_id}", json=camel_payload).status_code
         if resp == 204:
-            return self.get_segment(segment_id)
+            return self.get_segment_pra(segment_id)
