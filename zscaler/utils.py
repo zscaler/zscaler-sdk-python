@@ -100,6 +100,37 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     return
 
 
+def transform_clientless_apps(clientless_app_ids):
+    transformed_apps = []
+    for app in clientless_app_ids:
+        # Transform each attribute in app as needed by your API
+        transformed_apps.append(
+            {
+                "name": app["name"],
+                "applicationProtocol": app["application_protocol"],
+                "applicationPort": app["application_port"],
+                "certificateId": app["certificate_id"],
+                "trustUntrustedCert": app["trust_untrusted_cert"],
+                "enabled": app["enabled"],
+                "domain": app["domain"],
+            }
+        )
+    return transformed_apps
+
+
+def format_clientless_apps(clientless_apps):
+    # Implement this function to format clientless_apps as needed for the update request
+    # This is just a placeholder example
+    formatted_apps = []
+    for app in clientless_apps:
+        formatted_app = {
+            "id": app["id"],  # use the correct key
+            # Add other necessary attributes and format them as needed
+        }
+        formatted_apps.append(formatted_app)
+    return formatted_apps
+
+
 def obfuscate_api_key(seed: list):
     now = int(time.time() * 1000)
     n = str(now)[-6:]
@@ -188,7 +219,7 @@ def remove_cloud_suffix(str_name: str) -> str:
 class Iterator(APIIterator):
     """Iterator class."""
 
-    page_size = 100
+    page_size = 500
 
     def __init__(self, api, path: str = "", **kw):
         """Initialize Iterator class."""
