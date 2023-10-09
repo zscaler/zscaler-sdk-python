@@ -18,7 +18,14 @@
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from zscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
+from zscaler.utils import (
+    Iterator,
+    add_id_groups,
+    convert_keys,
+    format_clientless_apps,
+    snake_to_camel,
+    transform_clientless_apps,
+)
 
 
 class AppSegmentsAPI(APIEndpoint):
@@ -168,6 +175,11 @@ class AppSegmentsAPI(APIEndpoint):
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
         }
 
+        # Handle clientless_app_ids separately
+        if "clientless_app_ids" in kwargs:
+            clientless_apps = kwargs.pop("clientless_app_ids")
+            payload["clientlessApps"] = transform_clientless_apps(clientless_apps)
+
         add_id_groups(self.reformat_params, kwargs, payload)
 
         # Add optional parameters to payload
@@ -241,8 +253,7 @@ class AppSegmentsAPI(APIEndpoint):
 
         """
 
-        # Set payload to value of existing record and recursively convert nested dict keys from snake_case
-        # to camelCase.
+        # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_segment(segment_id))
 
         if kwargs.get("tcp_ports"):
@@ -251,15 +262,19 @@ class AppSegmentsAPI(APIEndpoint):
         if kwargs.get("udp_ports"):
             payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
 
-        # Reformat keys that we've simplified for our users
+        # Handle the clientless_app_ids directly within this function without a separate helper
+        if kwargs.get("clientless_app_ids"):
+            # Here you would implement any necessary formatting directly
+            formatted_clientless_apps = [{"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")]
+            payload["clientlessApps"] = formatted_clientless_apps  # use the correct key expected by your API
+
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add optional parameters to payload
+        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         resp = self._put(f"application/{segment_id}", json=payload).status_code
 
-        # Return the object if it was updated successfully
         if resp == 204:
             return self.get_segment(segment_id)

@@ -15,6 +15,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint, APISession
 
@@ -90,3 +93,42 @@ class SCIMGroupsAPI(APIEndpoint):
         """
 
         return self._get(f"{self.user_config_url}/scimgroup/{group_id}")
+
+    def search_group(self, idp_id: str, group_name: str, **kwargs) -> dict:
+        """
+        Searches and returns the SCIM group with the specified name for the given IdP.
+        """
+        # Assuming the API supports setting a max item count
+        page_size = kwargs.get("pagesize", 500)  # Adjust the page size as needed
+
+        with ThreadPoolExecutor() as executor:
+            loop = asyncio.get_event_loop()
+            # Ensure that idp_id is the numeric ID, and search parameter is the group_name.
+            pages = loop.run_until_complete(self._get_pages(executor, idp_id, group_name, page_size))
+
+        for page in pages:
+            for group in page.get("list", []):
+                if group.get("name") == group_name:
+                    return group  # Return the found group immediately
+        return None  # Return None if the group wasn't found
+
+    async def _get_pages(self, executor, idp_id, search, page_size):
+        loop = asyncio.get_event_loop()
+        futures = [
+            loop.run_in_executor(executor, self._get_page, idp_id, page_number, search, page_size)
+            for page_number in range(1, self._get_total_pages(idp_id, page_size) + 1)
+        ]
+        return await asyncio.gather(*futures)
+
+    def _get_page(self, idp_id, page_number, search, page_size):
+        params = {"page": page_number, "search": search, "pagesize": page_size}  # Ensure this is being set correctly
+        url = f"{self.user_config_url}/scimgroup/idpId/{idp_id}"
+        # Print or log the URL and params for debugging
+        print(f"URL: {url}, Params: {params}")
+        return self._api.get(url, params=params)
+
+    def _get_total_pages(self, idp_id, page_size):
+        # Implement logic to get total pages, possibly by making a request to get total count of groups and dividing by page_size.
+        # This is a placeholder; adjust it as necessary.
+        total_groups = 1000  # Replace this with actual logic to get total group count
+        return (total_groups // page_size) + (total_groups % page_size > 0)

@@ -22,7 +22,7 @@ from zscaler.utils import Iterator, snake_to_camel
 
 
 class AppServersAPI(APIEndpoint):
-    def add_server(self, name: str, address: str, enabled: bool = False, **kwargs) -> Box:
+    def add_server(self, name: str, address: str, enabled: bool = True, **kwargs) -> Box:
         """
         Add a new application server.
 
@@ -32,7 +32,7 @@ class AppServersAPI(APIEndpoint):
             address (str):
                 The IP address of the server.
             enabled (bool):
-                 Enable the server. Defaults to False.
+                 Enable the server. Defaults to True.
             **kwargs:
                 Optional keyword args.
 
