@@ -39,6 +39,7 @@ from zscaler.cache.zscaler_cache import ZPACache
 from zscaler.constants import (
     BACKOFF_BASE_DURATION,
     BACKOFF_FACTOR,
+    MAX_RATE_LIMIT_RETRIES,
     MAX_RETRIES,
     RETRIABLE_STATUS_CODES,
     ZPA_BASE_URLS,
@@ -170,14 +171,19 @@ class ZPA(APISession):
         self.rate_limiter = RateLimiter(get_limit=20, post_put_delete_limit=10, get_freq=10, post_put_delete_freq=10)
 
     def _handle_rate_limiting(self, method):
-        """Handle rate limiting checks and sleeps."""
-        should_wait, duration = self.rate_limiter.wait(method)
-        if should_wait:
-            self.logger.warning(f"Rate limit might be exceeded. Waiting for {duration} seconds.")
-            time.sleep(duration)
-            # If after sleeping, rate limits are still exceeded, raise an exception
-            if self.rate_limiter.is_exceeded(method):
-                raise RateLimitExceededError(f"Rate limit exceeded for {method} method.")
+        """Handle rate limiting checks and sleeps with exponential backoff."""
+        attempts = 0
+        while attempts < MAX_RATE_LIMIT_RETRIES:
+            should_wait, duration = self.rate_limiter.wait(method)
+            if should_wait:
+                wait_time = duration * (2**attempts)
+                self.logger.warning(f"Rate limit might be exceeded. Waiting for {wait_time} seconds.")
+                time.sleep(wait_time)
+                attempts += 1
+            else:
+                break
+        if attempts == MAX_RATE_LIMIT_RETRIES:
+            raise RateLimitExceededError(f"Rate limit exceeded for {method} method after exponential backoff.")
 
     def _handle_retry(self, response, attempts):
         """Handle retry based on the response status and exponential backoff."""

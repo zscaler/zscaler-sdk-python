@@ -39,8 +39,8 @@ class RateLimiter:
                 sleep_duration = self.get_freq - (time.time() - self.get_timestamps[0])
             else:
                 sleep_duration = self.post_put_delete_freq - (time.time() - self.post_put_delete_timestamps[0])
-
-            time.sleep(sleep_duration)
+                return True, sleep_duration
+            return False, 0
 
     def record_request(self, method):
         current_time = time.time()
