@@ -122,10 +122,14 @@ class ZPA(APISession):
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZPA"
     _url = "https://config.private.zscaler.com"
+    # Add rate limiter instance
+    # 20 times in a 10 second interval for a GET call.
+    # 10 times in a 10 second interval for any POST/PUT/DELETE call.
+    rate_limiter = RateLimiter(get_limit=20, post_put_delete_limit=10, get_freq=10, post_put_delete_freq=10)
 
     def __init__(self, **kw):
         self.logger_name = UserAgent().get_user_agent_string  # Derive logger name from the user agent string.
-        setup_logging(logger_name=self.logger_name)
+        setup_logging(log_level=logging.DEBUG, logger_name=self.logger_name)
         self.logger = logging.getLogger(self.logger_name)  # Initialize the logger with the derived name.
 
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
@@ -134,27 +138,13 @@ class ZPA(APISession):
 
         # Step 2: Add an additional attribute for environment
         self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD", "PRODUCTION")).upper()  # Default to PRODUCTION
-
-        if self._cloud and self._cloud not in ZPA_BASE_URLS:
+        if self._cloud not in ZPA_BASE_URLS:
             raise APIClientError(
                 f"Invalid cloud environment: {self._cloud}. Allowed values: {', '.join(ZPA_BASE_URLS.keys())}"
             )
 
         self._override_url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
         self.conv_box = True
-
-        # Cache setup
-        cache_enabled = os.getenv("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        default_ttl = int(os.getenv("ZSCALER_CLIENT_CACHE_TTL", 600))  # Default to 600 seconds (10 minutes)
-        default_tti = int(os.getenv("ZSCALER_CLIENT_CACHE_TTI", 480))  # Default to 480 seconds (8 minutes)
-
-        if kw.get("cache") is None:
-            if cache_enabled:
-                self.cache = ZPACache(ttl=default_ttl, tti=default_tti)
-            else:
-                self.cache = NoOpCache()
-        else:
-            self.cache = kw.get("cache")
 
         # super(ZPA, self).__init__(**kw)
         super().__init__(**kw)
@@ -164,20 +154,9 @@ class ZPA(APISession):
         new_user_agent = self.user_agent_obj.strip_unwanted_parts(current_user_agent)
         self._session.headers["User-Agent"] = new_user_agent
 
-        # Add rate limiter instance
-        # 20 times in a 10 second interval for a GET call.
-        # 10 times in a 10 second interval for any POST/PUT/DELETE call.
-        self.rate_limiter = RateLimiter(get_limit=20, post_put_delete_limit=10, get_freq=10, post_put_delete_freq=10)
-
     def _handle_rate_limiting(self, method):
         """Handle rate limiting checks and sleeps."""
-        should_wait, duration = self.rate_limiter.wait(method)
-        if should_wait:
-            self.logger.warning(f"Rate limit might be exceeded. Waiting for {duration} seconds.")
-            time.sleep(duration)
-            # If after sleeping, rate limits are still exceeded, raise an exception
-            if self.rate_limiter.is_exceeded(method):
-                raise RateLimitExceededError(f"Rate limit exceeded for {method} method.")
+        self.rate_limiter.wait(method)
 
     def _handle_retry(self, response, attempts):
         """Handle retry based on the response status and exponential backoff."""
@@ -194,23 +173,8 @@ class ZPA(APISession):
             return True  # indicate that a retry is needed
         return False  # indicate that no retry is needed
 
-    def request(self, method, path, **kwargs):
-        """Override the request method to integrate caching, rate limiting, and retries."""
-        cache_key = self.cache.create_key(path)
-
-        # Check cache before making the request
-        if method == "GET" and self.cache.contains(cache_key):
-            self.logger.debug(f"Serving from cache for key: {cache_key}")
-            cached_data = self.cache.get(cache_key)
-            self.logger.debug(f"Cache retrieved for key {cache_key}: {cached_data}")  # log cache retrieval
-            # Assuming you want to return the cached data directly
-            return cached_data
-
-        # For non-GET requests, clear the cache before making the request
-        if method != "GET":
-            key_prefix = cache_key.split("?")[0]
-            self.logger.info(f"Non-GET request detected. Clearing cache entries with prefix: {key_prefix}")
-            self.cache.clear_by_prefix(key_prefix)
+    def _req(self, method, path, **kwargs):
+        """Override the request method to integrate rate limiting, and retries."""
 
         attempts = 0
         while attempts < MAX_RETRIES:
@@ -224,15 +188,16 @@ class ZPA(APISession):
             try:
                 self.logger.debug(f"Request Headers: {self._session.headers}")
                 # Actual API call
-                response = super(ZPA, self).request(method, path, **kwargs)
+                response = super(ZPA, self)._req(method, path, **kwargs)
                 # Log response headers for troubleshooting
-                self.logger.debug(f"Received response from {method} request to {path} with headers: {response.headers}")
+                self.logger.debug(
+                    f"Received response from {method} request to {path} with headers: {response.get('headers','')}"
+                )
+                if response.get("status_code", 200) >= 400:
+                    # If _handle_retry returns True, we need to retry. If not, we break the loop.
+                    if not self._handle_retry(response, attempts):
+                        break
 
-                # If _handle_retry returns True, we need to retry. If not, we break the loop.
-                if not self._handle_retry(response, attempts):
-                    break
-
-                if response.status_code >= 400:
                     if 400 <= response.status_code < 500:
                         raise ZPAAPIError(response.url, response, response.json())
                     else:
@@ -256,22 +221,15 @@ class ZPA(APISession):
             finally:
                 attempts += 1
 
-        # Cache the response if it's a successful GET request
-        if method == "GET" and response.status_code == 200:
-            try:
-                parsed_response = response.json()
-                self.logger.debug(f"Adding to cache with key {cache_key}: {parsed_response}")  # log cache addition
-                self.cache.add(cache_key, parsed_response)
-            except ValueError:
-                self.logger.warning("Failed to parse JSON response, not caching.")
-
         # Log detailed request and response information
         try:
-            response_data = response.json()
+            response_data = response
         except ValueError:
             response_data = response.text
 
-        self.logger.info(f"Calling: {method} {path}. Status code: {response.status_code}. Response data: {response_data}")
+        self.logger.info(
+            f"Calling: {method} {path}. Status code: {response.get('status_code', 200)}. Response data: {response_data}"
+        )
 
         return response
 
@@ -279,7 +237,6 @@ class ZPA(APISession):
         # Initialize _auth_token before calling the superclass's _build_session
         self._auth_token = None
         super(ZPA, self)._build_session(**kwargs)
-
         # Configure URL base for this API session based on the cloud environment
         self.url_base = ZPA_BASE_URLS.get(self._cloud, ZPA_BASE_URLS["PRODUCTION"])
 
@@ -302,7 +259,7 @@ class ZPA(APISession):
                 self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
                 self._token_fetch_time = time.time()  # assuming the fetch time is now
             except Exception as e:
-                raise TokenRefreshError(f"Failed to refresh the expired token: {str(e)}")
+                raise TokenRefreshError(f"Failed to refresh the expired token: {e}")
 
         # If the token is about to expire, refresh it proactively
         elif token_is_about_to_expire(self._token_fetch_time):
