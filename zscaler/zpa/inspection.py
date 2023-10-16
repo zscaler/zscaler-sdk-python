@@ -24,31 +24,20 @@ from zscaler.utils import Iterator, convert_keys, snake_to_camel
 class InspectionControllerAPI(APIEndpoint):
     @staticmethod
     def _create_rule(rule: dict) -> dict:
-        """
-        Creates a rule template for the ZPA Inspection Control API when adding or updating a custom control.
-
-        Args:
-            rule (dict): Custom Control rule.
-
-        Returns:
-            :obj:`dict`: The Custom Control Rule template.
-
-        """
-
         rule_set = {
-            "names": rule["names"],
             "type": rule["type"],
             "conditions": [],
         }
+        if "names" in rule:
+            rule_set["names"] = rule["names"]
         for condition in rule["conditions"]:
             rule_set["conditions"].append(
                 {
-                    "lhs": condition[0],
-                    "op": condition[1],
-                    "rhs": condition[2],
+                    "lhs": condition["lhs"],
+                    "op": condition["op"],
+                    "rhs": condition["rhs"],
                 }
             )
-
         return rule_set
 
     def add_custom_control(
@@ -64,70 +53,19 @@ class InspectionControllerAPI(APIEndpoint):
         Adds a new ZPA Inspection Custom Control.
 
         Args:
-            name (str):
-                The name of the custom control.
-            default_action (str):
-                The default action to take for matches against this custom control. Valid options are:
-
-                - ``PASS``
-                - ``BLOCK``
-                - ``REDIRECT``
-            severity (str):
-                The severity for events that match this custom control. Valid options are:
-
-                - ``CRITICAL``
-                - ``ERROR``
-                - ``WARNING``
-                - ``INFO``
-            type (str):
-                The type of HTTP message this control matches. Valid options are:
-
-                - ``REQUEST``
-                - ``RESPONSE``
-            rules (list):
-                A list of Inspection Control rule objects, with each object using the format::
-
-                    {
-                        "names": ["name1", "name2"],
-                        "type": "rule_type",
-                        "conditions": [
-                            ("LHS", "OP", "RHS"),
-                            ("LHS", "OP", "RHS"),
-                        ],
-                    }
+            name (str): The name of the custom control.
+            default_action (str): The default action to take for matches against this custom control.
+            severity (str): The severity for events that match this custom control.
+            type (str): The type of HTTP message this control matches.
+            rules (list): A list of Inspection Control rule objects.
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            **description (str):
-                Additional information about the custom control.
-            **paranoia_level (int):
-                The paranoia level for the custom control.
+            description (str): Additional information about the custom control.
+            paranoia_level (int): The paranoia level for the custom control.
 
         Returns:
             :obj:`Box`: The newly created custom Inspection Control resource record.
-
-        Examples:
-            Create a new custom Inspection Control with the minimum required parameters
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.add_custom_control(
-                        "test8",
-                        severity="INFO",
-                        description="test descr",
-                        paranoia_level="3",
-                        type="REQUEST",
-                        default_action="BLOCK",
-                        rules=[
-                            {
-                                "names": ["test"],
-                                "type": "REQUEST_HEADERS",
-                                "conditions": [("SIZE", "GE", "10"), ("VALUE", "CONTAINS", "test")],
-                            }
-                        ],
-                    )
-                )
 
         """
 
@@ -139,18 +77,22 @@ class InspectionControllerAPI(APIEndpoint):
             "type": type,
         }
 
-        # Use the create_rule method to restructure the Inspection Control rule and add to the payload.
+        # Use the _create_rule method to restructure the Inspection Control rule and add to the payload.
         for rule in rules:
             payload["rules"].append(self._create_rule(rule))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[key] = value
+            if key == "paranoia_level":
+                payload["paranoiaLevel"] = int(value)
+            elif key == "description":
+                payload["description"] = value
+            # Add other optional parameters if necessary
 
-        # Convert snake to camelcase
-        payload = convert_keys(payload)
+            # Convert snake to camelcase
+            payload = convert_keys(payload)
 
-        return self._post("inspectionControls/custom", json=payload)
+            return self._post("inspectionControls/custom", json=payload)
 
     def add_profile(self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs):
         """
