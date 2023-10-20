@@ -15,6 +15,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import urllib.parse
+
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
@@ -76,6 +78,10 @@ class InspectionControllerAPI(APIEndpoint):
             "rules": [],
             "type": type,
         }
+
+        # Handle default_action_value
+        if "default_action_value" in kwargs:
+            payload["defaultActionValue"] = kwargs["default_action_value"]
 
         # Use the _create_rule method to restructure the Inspection Control rule and add to the payload.
         for rule in rules:
@@ -497,6 +503,71 @@ class InspectionControllerAPI(APIEndpoint):
 
         return self._get("inspectionControls/predefined", params=payload)
 
+    def get_predef_control_by_name(self, name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
+        """
+        Returns the specified predefined ZPA Inspection Control by its name.
+
+        Args:
+            name (str):
+                The name of the predefined ZPA Inspection Control to be returned.
+            version (str):
+                The version of the predefined control to return.
+
+        Returns:
+            :obj:`Box`: The ZPA Inspection Predefined Control resource record.
+
+        Examples:
+            Print the ZPA Inspection Predefined Control with the name `Failed to parse request body`:
+
+            .. code-block:: python
+
+                print(zpa.inspection.get_predef_control_by_name("Failed to parse request body", "OWASP_CRS/3.3.0"))
+
+        """
+        # Use the list_predef_controls method to get all controls
+        all_controls = self.list_predef_controls(version)
+
+        # Iterate through the controls to find the one with the desired name
+        for control_group in all_controls:
+            for control in control_group.get("predefined_inspection_controls", []):
+                if control["name"] == name:
+                    return control
+
+        # If we reach here, the control was not found
+        raise ValueError(f"No predefined control named '{name}' found")
+
+    def get_predef_control_group_by_name(self, group_name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
+        """
+        Returns the specified predefined ZPA Inspection Control Group by its name.
+
+        Args:
+            group_name (str):
+                The name of the predefined ZPA Inspection Control Group to be returned.
+            version (str):
+                The version of the predefined control to return.
+
+        Returns:
+            :obj:`Box`: The ZPA Inspection Predefined Control Group resource record.
+
+        Examples:
+            Print the ZPA Inspection Predefined Control Group with the name `Preprocessors`:
+
+            .. code-block:: python
+
+                print(zpa.inspection.get_predef_control_group_by_name("Preprocessors", "OWASP_CRS/3.3.0"))
+
+        """
+        # Use the list_predef_controls method to get all control groups
+        all_control_groups = self.list_predef_controls(version)
+
+        # Iterate through the control groups to find the one with the desired name
+        for control_group in all_control_groups:
+            if control_group["control_group"] == group_name:
+                return control_group
+
+        # If we reach here, the control group was not found
+        raise ValueError(f"No predefined control group named '{group_name}' found")
+
     def list_profiles(self, **kwargs) -> BoxList:
         """
         Returns the list of ZPA Inspection Profiles.
@@ -689,7 +760,12 @@ class InspectionControllerAPI(APIEndpoint):
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            payload_key = snake_to_camel(key)
+            payload[payload_key] = value
+
+            # Special handling for default_action_value
+            if key == "default_action_value":
+                payload["defaultActionValue"] = value
 
         resp = self._put(f"inspectionControls/custom/{control_id}", json=payload).status_code
 
