@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup
-
-packages = ["zscaler", "zscaler.zia", "zscaler.zpa"]
+from setuptools import find_packages, setup
 
 package_data = {"": ["*"]}
 
@@ -17,7 +15,7 @@ setup_kwargs = {
     "maintainer": "None",
     "maintainer_email": "None",
     "url": "https://github.com/zscaler/zscaler-sdk-python",
-    "packages": packages,
+    "packages": find_packages(),
     "package_data": package_data,
     "install_requires": install_requires,
     "python_requires": ">=3.8,<4.0",
