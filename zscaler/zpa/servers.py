@@ -16,12 +16,16 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class AppServersAPI(APIEndpoint):
+class AppServersAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def add_server(self, name: str, address: str, enabled: bool = True, **kwargs) -> Box:
         """
         Add a new application server.
@@ -62,7 +66,12 @@ class AppServersAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("server", json=payload)
+        response = self.rest.post("/server", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_server(response.get("id"))
 
     def list_servers(self, **kwargs) -> BoxList:
         """
@@ -84,7 +93,11 @@ class AppServersAPI(APIEndpoint):
         Examples:
             >>> servers = zpa.servers.list_servers()
         """
-        return BoxList(Iterator(self._api, "server", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/server",
+            data_key_name="list",
+        )
+        return list
 
     def get_server(self, server_id: str) -> Box:
         """
@@ -101,7 +114,19 @@ class AppServersAPI(APIEndpoint):
             >>> server = zpa.servers.get_server('99999')
 
         """
-        return self._get(f"server/{server_id}")
+        response = self.rest.get("/server/%s" % (server_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
+    def get_server_by_name(self, name):
+        apps = self.list_servers()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def delete_server(self, server_id: str) -> int:
         """
@@ -119,7 +144,7 @@ class AppServersAPI(APIEndpoint):
             >>> zpa.servers.delete_server('99999')
 
         """
-        return self._delete(f"server/{server_id}", box=False).status_code
+        return self.rest.delete(f"server/{server_id}").status_code
 
     def update_server(self, server_id: str, **kwargs) -> Box:
         """
@@ -170,7 +195,7 @@ class AppServersAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"server/{server_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"server/{server_id}", json=payload, box=False).status_code
 
         if resp == 204:
             return self.get_server(server_id)

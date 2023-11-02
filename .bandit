@@ -1,3 +1,0 @@
-[bandit]
-targets: zscaler/
-skips: B314,B405

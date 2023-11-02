@@ -1,71 +1,32 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-"""Zscaler SDK for Python
-
-The zscaler-sdk-python library is a SDK framework for interacting with
-Zscaler Private Access (ZPA) and Zscaler Internet Access (ZIA)
-
-Documentation available at https://zscaler-sdk-python.readthedocs.io
-
-"""
-
-__author__ = "Zscaler Inc."
-__email__ = "zscaler-partner-labs@z-bd.com"
-__version__ = "1.0.0"
-
+import json
 import logging
 import os
 import time
+import urllib.parse
+from time import sleep
 
-from restfly.session import APISession
+import requests
+from box import BoxList
 
-from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZPACache
-from zscaler.constants import (
-    BACKOFF_BASE_DURATION,
-    BACKOFF_FACTOR,
-    MAX_RETRIES,
-    RETRIABLE_STATUS_CODES,
-    ZPA_BASE_URLS,
-)
-from zscaler.errors.http_error import HTTPError
-from zscaler.errors.zscaler_api_error import ZPAAPIError
-from zscaler.exceptions.exceptions import (
-    APIClientError,
-    BadRequestError,
-    HeaderUpdateError,
-    InvalidCloudEnvironmentError,
-    RateLimitExceededError,
-    RetryLimitExceededError,
-    TokenRefreshError,
-)
-from zscaler.logger import setup_logging
+from zscaler.constants import ZPA_BASE_URLS
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
-from zscaler.utils import is_token_expired, token_is_about_to_expire
-from zscaler.zpa.app_segments import AppSegmentsAPI
+from zscaler.utils import (
+    convert_keys_to_snake,
+    format_json_response,
+    is_token_expired,
+    retry_with_backoff,
+)
+from zscaler.zpa.app_segments import ApplicationSegmentAPI
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.certificates import CertificatesAPI
+from zscaler.zpa.client import ZPAClient
 from zscaler.zpa.client_types import ClientTypesAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
-from zscaler.zpa.connector_groups import ConnectorGroupsAPI
-from zscaler.zpa.connectors import ConnectorsAPI
+from zscaler.zpa.connectors import AppConnectorControllerAPI
 from zscaler.zpa.idp import IDPControllerAPI
 from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation_profile import IsolationProfileAPI
@@ -73,253 +34,305 @@ from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
-from zscaler.zpa.posture_profiles import PostureProfilesAPI
-from zscaler.zpa.provisioning import ProvisioningAPI
+from zscaler.zpa.posture_profile import PostureProfilesAPI
+from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
-from zscaler.zpa.scim_attributes import SCIMAttributesAPI
+from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
 from zscaler.zpa.scim_groups import SCIMGroupsAPI
 from zscaler.zpa.segment_groups import SegmentGroupsAPI
 from zscaler.zpa.server_groups import ServerGroupsAPI
 from zscaler.zpa.servers import AppServersAPI
 from zscaler.zpa.service_edges import ServiceEdgesAPI
-from zscaler.zpa.session import AuthenticatedSessionAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 
+# Setup the logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-class ZPA(APISession):
-    """A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.
 
-    The ZPA object stores the session token and simplifies access to API interfaces within ZPA.
+class ZPAClientHelper(ZPAClient):
+    """
+    Client helper for ZPA operations.
 
     Attributes:
-        client_id (str): The ZPA API client ID generated from the ZPA console.
-        client_secret (str): The ZPA API client secret generated from the ZPA console.
-        customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
-        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
-
-            * ``production``
-            * ``beta``
-            * ``gov``
-            * ``govus``
-            * ``preview``
-            * ``qa``
-            * ``qa2``
-
-            Defaults to ``production``.
-        override_url (str):
-            If supplied, this attribute can be used to override the production URL that is derived
-            from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
-            (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
-            attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
-            i.e. http:// or https://.
+    - client_id (str): The client ID.
+    - client_secret (str): The client secret.
+    - customer_id (str): The customer ID.
+    - cloud (str): The cloud endpoint to be used.
+    - timeout (int): Request timeout duration in seconds.
+    - cache (object): Cache object to be used.
+    - baseurl (str): Base URL for API requests.
+    - access_token (str): Access token for API requests.
+    - headers (dict): Headers for API requests.
     """
 
-    user_agent_obj = UserAgent()
-    _vendor = "Zscaler"
-    _product = user_agent_obj.get_user_agent_string
-    _build = __version__
-    _box = True
-    _box_attrs = {"camel_killer_box": True}
-    _env_base = "ZPA"
-    _url = "https://config.private.zscaler.com"
+    def __init__(self, client_id, client_secret, customer_id, cloud, timeout=240, cache=None):
+        """
+        Initialize ZPAClientHelper.
 
-    def __init__(self, **kw):
-        self.logger_name = UserAgent().get_user_agent_string  # Derive logger name from the user agent string.
-        setup_logging(logger_name=self.logger_name)
-        self.logger = logging.getLogger(self.logger_name)  # Initialize the logger with the derived name.
+        Parameters:
+        - client_id (str): The client ID.
+        - client_secret (str): The client secret.
+        - customer_id (str): The customer ID.
+        - cloud (str): The cloud endpoint to be used.
+        - cache (object, optional): Cache object. Defaults to None.
+        """
 
-        self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
-        self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
-        self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
+        # Initialize rate limiter
+        # You may want to adjust these parameters as per your rate limit configuration
+        self.rate_limiter = RateLimiter(
+            get_limit=10,  # Adjust as per actual limit
+            post_put_delete_limit=5,  # Adjust as per actual limit
+            get_freq=1,  # Adjust as per actual frequency (in seconds)
+            post_put_delete_freq=1,  # Adjust as per actual frequency (in seconds)
+        )
 
-        # Step 2: Add an additional attribute for environment
-        self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD", "PRODUCTION")).upper()  # Default to PRODUCTION
-
-        if self._cloud and self._cloud not in ZPA_BASE_URLS:
-            raise APIClientError(
-                f"Invalid cloud environment: {self._cloud}. Allowed values: {', '.join(ZPA_BASE_URLS.keys())}"
+        # Validate cloud value
+        if cloud not in ZPA_BASE_URLS:
+            valid_clouds = ", ".join(ZPA_BASE_URLS.keys())
+            raise ValueError(
+                f"The provided ZPA_CLOUD value '{cloud}' is not supported. "
+                f"Please use one of the following supported values: {valid_clouds}"
             )
 
-        self._override_url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
-        self.conv_box = True
+        # Continue with existing initialization...
+        # Select the appropriate URL
+        self.baseurl = ZPA_BASE_URLS.get(cloud, ZPA_BASE_URLS["PRODUCTION"])
+
+        self.timeout = timeout
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.customer_id = customer_id
+        self.cloud = cloud
+        self.url = f"{self.baseurl}/mgmtconfig/v1/admin/customers/{customer_id}"
+        self.user_config_url = f"{self.baseurl}/userconfig/v1/customers/{customer_id}"
+        self.v2_url = f"{self.baseurl}/mgmtconfig/v2/admin/customers/{customer_id}"
 
         # Cache setup
-        cache_enabled = os.getenv("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        default_ttl = int(os.getenv("ZSCALER_CLIENT_CACHE_TTL", 600))  # Default to 600 seconds (10 minutes)
-        default_tti = int(os.getenv("ZSCALER_CLIENT_CACHE_TTI", 480))  # Default to 480 seconds (8 minutes)
-
-        if kw.get("cache") is None:
+        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+        if cache is None:
             if cache_enabled:
-                self.cache = ZPACache(ttl=default_ttl, tti=default_tti)
+                self.cache = ZPACache(ttl=3600, tti=1800)
             else:
                 self.cache = NoOpCache()
         else:
-            self.cache = kw.get("cache")
+            self.cache = cache
 
-        # super(ZPA, self).__init__(**kw)
-        super().__init__(**kw)
+        # Initialize user-agent
+        ua = UserAgent()
+        self.user_agent = ua.get_user_agent_string()
+        self.refreshToken()
 
-        # Update the User-Agent header to the desired format
-        current_user_agent = self._session.headers["User-Agent"]
-        new_user_agent = self.user_agent_obj.strip_unwanted_parts(current_user_agent)
-        self._session.headers["User-Agent"] = new_user_agent
+    def refreshToken(self):
+        # login
+        response = self.login()
+        if response is None or response.status_code > 299 or not response.json():
+            logger.error("Failed to login using provided credentials, response: %s", response)
+            raise Exception("Failed to login using provided credentials.")
+        self.access_token = response.json().get("access_token")
+        self.headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": f"Bearer {self.access_token}",
+            "User-Agent": self.user_agent,
+        }
 
-        # Add rate limiter instance
-        # 20 times in a 10 second interval for a GET call.
-        # 10 times in a 10 second interval for any POST/PUT/DELETE call.
-        self.rate_limiter = RateLimiter(get_limit=20, post_put_delete_limit=10, get_freq=10, post_put_delete_freq=10)
+    @retry_with_backoff(retries=5)
+    def login(self):
+        """Log in to the ZPA API and set the access token for subsequent requests."""
+        data = urllib.parse.urlencode({"client_id": self.client_id, "client_secret": self.client_secret})
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+            "User-Agent": self.user_agent,
+        }
+        try:
+            url = f"{self.baseurl}/signin"
+            resp = requests.post(url, data=data, headers=headers, timeout=self.timeout)
+            # Avoid logging all data from the response, focus on the status and a summary instead
+            logger.info("Login attempt with status: %d", resp.status_code)
+            return resp
+        except Exception as e:
+            logger.error("Login failed due to an exception: %s", str(e))
+            return None
 
-    def _handle_rate_limiting(self, method):
-        """Handle rate limiting checks and sleeps."""
-        should_wait, duration = self.rate_limiter.wait(method)
-        if should_wait:
-            self.logger.warning(f"Rate limit might be exceeded. Waiting for {duration} seconds.")
-            time.sleep(duration)
-            # If after sleeping, rate limits are still exceeded, raise an exception
-            if self.rate_limiter.is_exceeded(method):
-                raise RateLimitExceededError(f"Rate limit exceeded for {method} method.")
+    def send(self, method, path, data=None, fail_safe=False):
+        """
+        Send a request to the ZPA API.
 
-    def _handle_retry(self, response, attempts):
-        """Handle retry based on the response status and exponential backoff."""
-        if response.status_code in RETRIABLE_STATUS_CODES:
-            if response.status_code == 429:
-                # If there's a 'Retry-After' header, respect it. Otherwise, default backoff.
-                sleep_time = int(response.headers.get("Retry-After", BACKOFF_FACTOR**attempts))
-            else:
-                # For other errors, use exponential backoff
-                sleep_time = BACKOFF_FACTOR**attempts
+        Parameters:
+        - method (str): The HTTP method.
+        - path (str): API endpoint path.
+        - data (dict, optional): Request payload. Defaults to None.
+        - fail_safe (bool, optional): Log an error and continue on failure. Defaults to False.
 
-            self.logger.warning(f"Encountered {response.status_code} status. Retrying in {sleep_time} seconds.")
-            time.sleep(sleep_time)
-            return True  # indicate that a retry is needed
-        return False  # indicate that no retry is needed
+        Returns:
+        - Response: Response object from the request.
+        """
+        url = f"{self.url}/{path.lstrip('/')}"
 
-    def request(self, method, path, **kwargs):
-        """Override the request method to integrate caching, rate limiting, and retries."""
-        cache_key = self.cache.create_key(path)
+        # Update headers to include the user agent
+        headers_with_user_agent = self.headers.copy()
+        headers_with_user_agent["User-Agent"] = self.user_agent
 
-        # Check cache before making the request
+        # Check cache before sending request
+        cache_key = self.cache.create_key(url)
         if method == "GET" and self.cache.contains(cache_key):
-            self.logger.debug(f"Serving from cache for key: {cache_key}")
-            cached_data = self.cache.get(cache_key)
-            self.logger.debug(f"Cache retrieved for key {cache_key}: {cached_data}")  # log cache retrieval
-            # Assuming you want to return the cached data directly
-            return cached_data
-
-        # For non-GET requests, clear the cache before making the request
-        if method != "GET":
-            key_prefix = cache_key.split("?")[0]
-            self.logger.info(f"Non-GET request detected. Clearing cache entries with prefix: {key_prefix}")
-            self.cache.clear_by_prefix(key_prefix)
+            return self.cache.get(cache_key)
 
         attempts = 0
-        while attempts < MAX_RETRIES:
-            self._handle_rate_limiting(method)
-
-            # Record that we're about to make a request
-            self.rate_limiter.record_request(method)
-            # Log request headers for troubleshooting
-            self.logger.debug(f"Sending {method} request to {path} with headers: {self._session.headers}")
-
+        while attempts < 5:  # Trying a maximum of 5 times
             try:
-                self.logger.debug(f"Request Headers: {self._session.headers}")
-                # Actual API call
-                response = super(ZPA, self).request(method, path, **kwargs)
-                # Log response headers for troubleshooting
-                self.logger.debug(f"Received response from {method} request to {path} with headers: {response.headers}")
+                # If the token is None or expired, fetch a new token
+                if is_token_expired(self.access_token):
+                    self.logger.warning("The provided or fetched token was already expired. Refreshing...")
+                    self.refreshToken()
+                resp = requests.request(method, url, json=data, headers=headers_with_user_agent, timeout=self.timeout)
 
-                # If _handle_retry returns True, we need to retry. If not, we break the loop.
-                if not self._handle_retry(response, attempts):
-                    break
-
-                if response.status_code >= 400:
-                    if 400 <= response.status_code < 500:
-                        raise ZPAAPIError(response.url, response, response.json())
-                    else:
-                        raise HTTPError(response.url, response, response.text)
-
-            except (ConnectionError, TimeoutError):
-                if attempts == MAX_RETRIES - 1:
-                    self.logger.error(f"Failed to send {method} request to {path} after {MAX_RETRIES} attempts.")
-                    raise RetryLimitExceededError(f"Max retries reached for {method} request to {path}")
+                if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
+                    sleep_time = int(
+                        resp.headers.get("Retry-After", 2)
+                    )  # Default to 60 seconds if 'Retry-After' header is missing
+                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
+                    sleep(sleep_time)
+                    attempts += 1
+                    continue
                 else:
-                    self.logger.warning(f"Failed to send {method} request to {path}. Retrying...")
-                    sleep_duration = BACKOFF_BASE_DURATION ** (
-                        attempts + 1
-                    )  # Calculate sleep duration based on the number of attempts
-                    time.sleep(sleep_duration)
+                    break
+            except requests.RequestException as e:
+                if attempts == 4:  # If it's the last attempt, raise the exception
+                    logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
+                    raise e
+                else:
+                    logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
+                    attempts += 1
+                    sleep(5)  # Sleep for 5 seconds before retrying
 
-            except RateLimitExceededError:
-                self.logger.error("Rate limit exceeded. Please try again later.")
-                raise
+        # If Non-GET call, clear the
+        if method != "GET":
+            self.cache.delete(cache_key)
 
-            finally:
-                attempts += 1
-
+        if resp.status_code == 400 and fail_safe:
+            error_msg = f"Operation failed. API response code: {resp.status_code}"
+            logger.error(error_msg)
+            raise Exception(error_msg)
+        # Detailed logging for request and response
+        try:
+            response_data = resp.json()
+        except ValueError:  # Using ValueError for JSON decoding errors
+            response_data = resp.text
+        logger.info(
+            "Calling: %s %s. Status code: %d. Request data: %s, Response data: %s",
+            method,
+            url,
+            resp.status_code,
+            json.dumps(data),
+            json.dumps(response_data),
+        )
         # Cache the response if it's a successful GET request
-        if method == "GET" and response.status_code == 200:
-            try:
-                parsed_response = response.json()
-                self.logger.debug(f"Adding to cache with key {cache_key}: {parsed_response}")  # log cache addition
-                self.cache.add(cache_key, parsed_response)
-            except ValueError:
-                self.logger.warning("Failed to parse JSON response, not caching.")
+        if method == "GET" and resp.status_code == 200:
+            self.cache.add(cache_key, resp)
+        return resp
 
-        # Log detailed request and response information
-        try:
-            response_data = response.json()
-        except ValueError:
-            response_data = response.text
+    def get(self, path, data=None, fail_safe=False):
+        """
+        Send a GET request to the ZPA API.
 
-        self.logger.info(f"Calling: {method} {path}. Status code: {response.status_code}. Response data: {response_data}")
+        Parameters:
+        - path (str): API endpoint path.
+        - data (dict, optional): Request payload. Defaults to None.
+        - fail_safe (bool, optional): Log an error and continue on failure. Defaults to False.
 
-        return response
+        Returns:
+        - Response: Response object from the request.
+        """
 
-    def _build_session(self, **kwargs) -> None:
-        # Initialize _auth_token before calling the superclass's _build_session
-        self._auth_token = None
-        super(ZPA, self)._build_session(**kwargs)
+        # Use rate limiter before making a request
+        should_wait, delay = self.rate_limiter.wait("GET")
+        if should_wait:
+            time.sleep(delay)
 
-        # Configure URL base for this API session based on the cloud environment
-        self.url_base = ZPA_BASE_URLS.get(self._cloud, ZPA_BASE_URLS["PRODUCTION"])
+        # Now proceed with sending the request
+        resp = self.send("GET", path, data, fail_safe)
+        formatted_resp = format_json_response(resp, box_attrs=dict())
+        return formatted_resp
 
-        # If a specific cloud environment is required but not found in ZPA_BASE_URLS
-        if self._cloud not in ZPA_BASE_URLS:
-            raise InvalidCloudEnvironmentError(self._cloud)
+    def put(self, path, data=None):
+        should_wait, delay = self.rate_limiter.wait("PUT")
+        if should_wait:
+            time.sleep(delay)
+        resp = self.send("PUT", path, data)
+        formatted_resp = format_json_response(resp, box_attrs=dict())
+        return formatted_resp
 
-        if self._override_url:
-            self.url_base = self._override_url
+    def post(self, path, data=None):
+        should_wait, delay = self.rate_limiter.wait("POST")
+        if should_wait:
+            time.sleep(delay)
+        resp = self.send("POST", path, data)
+        formatted_resp = format_json_response(resp, box_attrs=dict())
+        return formatted_resp
 
-        # Configure URLs for this API session
-        self._url = f"{self.url_base}/mgmtconfig/v1/admin/customers/{self._customer_id}"
-        self.user_config_url = f"{self.url_base}/userconfig/v1/customers/{self._customer_id}"
-        self.v2_url = f"{self.url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
+    def delete(self, path, data=None):
+        should_wait, delay = self.rate_limiter.wait("DELETE")
+        if should_wait:
+            time.sleep(delay)
+        return self.send("DELETE", path, data)
 
-        # If the token is None or expired, fetch a new token
-        if is_token_expired(self._auth_token):
-            self.logger.warning("The provided or fetched token was already expired. Refreshing...")
-            try:
-                self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
-                self._token_fetch_time = time.time()  # assuming the fetch time is now
-            except Exception as e:
-                raise TokenRefreshError(f"Failed to refresh the expired token: {str(e)}")
+    ERROR_MESSAGES = {
+        "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+        "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
+        "EMPTY_RESULTS": "No results found for page {page}.",
+    }
 
-        # If the token is about to expire, refresh it proactively
-        elif token_is_about_to_expire(self._token_fetch_time):
-            self.logger.info("Token is about to expire, refreshing...")
-            try:
-                self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
-                self._token_fetch_time = time.time()  # update the fetch time
-            except Exception as e:
-                raise TokenRefreshError(f"Failed to refresh the token that's about to expire: {str(e)}")
+    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=500, expected_status_code=200):
+        """
+        Fetch paginated data from the ZPA API.
+        ...
 
-        # Update the session headers with the new or refreshed token
-        try:
-            self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
-            if hasattr(self, "user_agent"):
-                self._session.headers.update({"User-Agent": self.user_agent})
-        except Exception as e:
-            raise HeaderUpdateError(f"Failed to update session headers: {str(e)}")
+        Returns:
+        - list: List of fetched items.
+        - str: Error message, if any occurred.
+        """
+
+        page = 1
+        ret_data = []
+        error_message = None
+
+        while True:
+            required_url = f"{path}?page={page}&pagesize={data_per_page}"
+            should_wait, delay = self.rate_limiter.wait("GET")
+            if should_wait:
+                time.sleep(delay)
+
+            # Now proceed with sending the request
+            response = self.send("GET", required_url)
+
+            if response.status_code != expected_status_code:
+                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                logger.error(error_message)
+                break
+
+            data = response.json().get(data_key_name)
+
+            if data is None:
+                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
+                logger.error(error_message)
+                break
+
+            if not data:  # Checks for empty data
+                logger.info(self.ERROR_MESSAGES["EMPTY_RESULTS"].format(page=page))
+                break
+
+            ret_data.extend(convert_keys_to_snake(data))
+
+            # Check for more pages
+            if response.json().get("totalPages") is None or int(response.json().get("totalPages")) <= page + 1:
+                break
+
+            page += 1
+
+        return BoxList(ret_data), error_message
 
     @property
     def app_segments(self):
@@ -327,7 +340,7 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA Application Segments interface <zpa-app_segments>`.
 
         """
-        return AppSegmentsAPI(self)
+        return ApplicationSegmentAPI(self)
 
     @property
     def app_segments_pra(self):
@@ -386,20 +399,12 @@ class ZPA(APISession):
         return CloudConnectorGroupsAPI(self)
 
     @property
-    def connector_groups(self):
-        """
-        The interface object for the :ref:`ZPA Connector Groups interface <zpa-connector_groups>`.
-
-        """
-        return ConnectorGroupsAPI(self)
-
-    @property
     def connectors(self):
         """
         The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
 
         """
-        return ConnectorsAPI(self)
+        return AppConnectorControllerAPI(self)
 
     @property
     def idp(self):
@@ -455,7 +460,7 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA Provisioning interface <zpa-provisioning>`.
 
         """
-        return ProvisioningAPI(self)
+        return ProvisioningKeyAPI(self)
 
     @property
     def saml_attributes(self):
@@ -471,7 +476,7 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA SCIM Attributes interface <zpa-scim_attributes>`.
 
         """
-        return SCIMAttributesAPI(self)
+        return ScimAttributeHeaderAPI(self)
 
     @property
     def scim_groups(self):
@@ -512,15 +517,6 @@ class ZPA(APISession):
 
         """
         return ServiceEdgesAPI(self)
-
-    @property
-    def session(self):
-        """
-        The interface object for the :ref:`ZPA Session API calls <zpa-session>`.
-
-        """
-
-        return AuthenticatedSessionAPI(self)
 
     @property
     def trusted_networks(self):

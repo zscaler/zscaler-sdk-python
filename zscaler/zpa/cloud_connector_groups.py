@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class CloudConnectorGroupsAPI(APIEndpoint):
+class CloudConnectorGroupsAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured cloud connector groups.
@@ -44,7 +47,11 @@ class CloudConnectorGroupsAPI(APIEndpoint):
             ...    pprint(cloud_connector_group)
 
         """
-        return BoxList(Iterator(self._api, "cloudConnectorGroup", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/cloudConnectorGroup",
+            data_key_name="list",
+        )
+        return list
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -61,5 +68,9 @@ class CloudConnectorGroupsAPI(APIEndpoint):
             >>> pprint(zpa.cloud_connector_groups.get_group('99999'))
 
         """
-
-        return self._get(f"cloudConnectorGroup/{group_id}")
+        response = self.rest.get("/cloudConnectorGroup/%s" % (group_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response

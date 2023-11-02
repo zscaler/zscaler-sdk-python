@@ -14,14 +14,15 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+from box import Box
 
-from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class ClientTypesAPI(APIEndpoint):
+class ClientTypesAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_client_types(self) -> Box:
         """
         Returns a list of ZPA Access Policy supported Client Types.
@@ -38,4 +39,8 @@ class ClientTypesAPI(APIEndpoint):
                     print(client_type)
 
         """
-        return self._get("clientTypes")
+        list, _ = self.rest.get_paginated_data(
+            path="/clientTypes",
+            data_key_name="list",
+        )
+        return list

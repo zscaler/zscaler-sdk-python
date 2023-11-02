@@ -16,14 +16,13 @@
 
 
 from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
 
 from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class IDPControllerAPI(APIEndpoint):
-    def __init__(self, api: APISession):
+class IDPControllerAPI:
+    def __init__(self, api: ZPAClient):
         super().__init__(api)
 
         self.v2_url = api.v2_url

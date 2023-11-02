@@ -16,13 +16,13 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint, APISession
 
 from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class SCIMAttributesAPI(APIEndpoint):
-    def __init__(self, api: APISession):
+class ScimAttributeHeaderAPI:
+    def __init__(self, api: ZPAClient):
         super().__init__(api)
         self.user_config_url = api.user_config_url
 

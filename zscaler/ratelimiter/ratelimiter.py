@@ -1,50 +1,37 @@
+import threading
 import time
-from collections import deque
 
 
 class RateLimiter:
     def __init__(self, get_limit, post_put_delete_limit, get_freq, post_put_delete_freq):
+        self.lock = threading.Lock()
+        self.get_requests = []
+        self.post_put_delete_requests = []
         self.get_limit = get_limit
         self.post_put_delete_limit = post_put_delete_limit
         self.get_freq = get_freq
         self.post_put_delete_freq = post_put_delete_freq
 
-        self.get_timestamps = deque(maxlen=self.get_limit)
-        self.post_put_delete_timestamps = deque(maxlen=self.post_put_delete_limit)
-
-    def _should_wait(self, method):
-        current_time = time.time()
-
-        if method == "GET":
-            timestamps = self.get_timestamps
-            limit = self.get_limit
-            freq = self.get_freq
-        else:
-            timestamps = self.post_put_delete_timestamps
-            limit = self.post_put_delete_limit
-            freq = self.post_put_delete_freq
-
-        # Check if we've hit the rate limit
-        if len(timestamps) < limit:
-            return False
-
-        time_elapsed = current_time - timestamps[0]
-        if time_elapsed < freq:
-            return True
-        return False
-
     def wait(self, method):
-        if self._should_wait(method):
+        with self.lock:
+            now = time.time()
+
             if method == "GET":
-                sleep_duration = self.get_freq - (time.time() - self.get_timestamps[0])
-            else:
-                sleep_duration = self.post_put_delete_freq - (time.time() - self.post_put_delete_timestamps[0])
+                if len(self.get_requests) >= self.get_limit:
+                    oldest_request = self.get_requests[0]
+                    if now - oldest_request < self.get_freq:
+                        d = self.get_freq - (now - oldest_request)
+                        return True, d
+                    self.get_requests.pop(0)
+                self.get_requests.append(now)
 
-            time.sleep(sleep_duration)
+            elif method in ["POST", "PUT", "DELETE"]:
+                if len(self.post_put_delete_requests) >= self.post_put_delete_limit:
+                    oldest_request = self.post_put_delete_requests[0]
+                    if now - oldest_request < self.post_put_delete_freq:
+                        d = self.post_put_delete_freq - (now - oldest_request)
+                        return True, d
+                    self.post_put_delete_requests.pop(0)
+                self.post_put_delete_requests.append(now)
 
-    def record_request(self, method):
-        current_time = time.time()
-        if method == "GET":
-            self.get_timestamps.append(current_time)
-        else:
-            self.post_put_delete_timestamps.append(current_time)
+            return False, 0

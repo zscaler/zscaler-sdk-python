@@ -14,26 +14,26 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import (
-    Iterator,
     add_id_groups,
     convert_keys,
-    format_clientless_apps,
     snake_to_camel,
     transform_clientless_apps,
 )
+from zscaler.zpa.client import ZPAClient
 
 
-class AppSegmentsAPI(APIEndpoint):
-    # Params that need reformatting
+class ApplicationSegmentAPI:
     reformat_params = [
         ("clientless_app_ids", "clientlessApps"),
         ("server_group_ids", "serverGroups"),
     ]
+
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_segments(self, **kwargs) -> BoxList:
         """
@@ -46,7 +46,11 @@ class AppSegmentsAPI(APIEndpoint):
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        return BoxList(Iterator(self._api, "application", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/application",
+            data_key_name="list",
+        )
+        return list
 
     def get_segment(self, segment_id: str) -> Box:
         """
@@ -63,7 +67,19 @@ class AppSegmentsAPI(APIEndpoint):
             >>> app_segment = zpa.app_segments.details('99999')
 
         """
-        return self._get(f"application/{segment_id}")
+        response = self.rest.get("/application/%s" % (segment_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
+    def get_segment_by_name(self, name):
+        apps = self.list_segments()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
         """
@@ -88,9 +104,11 @@ class AppSegmentsAPI(APIEndpoint):
             >>> zpa.app_segments.delete('88888', force_delete=True)
 
         """
-        payload = {"forceDelete": force_delete}
-
-        return self._delete(f"application/{segment_id}", params=payload).status_code
+        query = ""
+        if force_delete:
+            query = "forceDelete=true"
+        response = self.rest.delete("/application/%s?%s" % (segment_id, query))
+        return response.status_code
 
     def add_segment(
         self,
@@ -98,8 +116,8 @@ class AppSegmentsAPI(APIEndpoint):
         domain_names: list,
         segment_group_id: str,
         server_group_ids: list,
-        tcp_ports: list = None,
-        udp_ports: list = None,
+        tcp_port_ranges: list = None,
+        udp_port_ranges: list = None,
         **kwargs,
     ) -> Box:
         """
@@ -108,9 +126,9 @@ class AppSegmentsAPI(APIEndpoint):
         Args:
             segment_group_id (str):
                 The unique identifer for the segment group this application segment belongs to.
-            udp_ports (:obj:`list` of :obj:`str`):
+            udp_port_ranges (:obj:`list` of :obj:`str`):
                 List of udp port range pairs, e.g. ['35000', '35000'] for port 35000.
-            tcp_ports (:obj:`list` of :obj:`str`):
+            tcp_port_ranges (:obj:`list` of :obj:`str`):
                 List of tcp port range pairs, e.g. ['22', '22'] for port 22-22, ['80', '100'] for 80-100.
             domain_names (:obj:`list` of :obj:`str`):
                 List of domain names or IP addresses for the application segment.
@@ -160,7 +178,7 @@ class AppSegmentsAPI(APIEndpoint):
             >>> zpa.app_segments.add_segment('new_app_segment',
             ...    domain_names=['example.com'],
             ...    segment_group_id='99999',
-            ...    tcp_ports=['8080', '8085'],
+            ...    tcp_port_ranges=['8080', '8085'],
             ...    server_group_ids=['99999', '88888'])
 
         """
@@ -169,8 +187,8 @@ class AppSegmentsAPI(APIEndpoint):
         payload = {
             "name": name,
             "domainNames": domain_names,
-            "tcpPortRanges": tcp_ports,
-            "udpPortRanges": udp_ports,
+            "tcpPortRanges": tcp_port_ranges,
+            "udpPortRanges": udp_port_ranges,
             "segmentGroupId": segment_group_id,
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
         }
@@ -186,7 +204,12 @@ class AppSegmentsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("application", json=payload)
+        response = self.rest.post("/application", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_segment(response.get("id"))
 
     def update_segment(self, segment_id: str, **kwargs) -> Box:
         """
@@ -233,10 +256,10 @@ class AppSegmentsAPI(APIEndpoint):
                 The unique identifer for the segment group this application segment belongs to.
             server_group_ids (:obj:`list` of :obj:`str`):
                 The list of server group IDs that belong to this application segment.
-            tcp_ports (:obj:`list` of :obj:`tuple`):
+            tcp_port_ranges (:obj:`list` of :obj:`tuple`):
                 List of TCP port ranges specified as a tuple pair, e.g. for ports 21-23, 8080-8085 and 443:
                      [(21, 23), (8080, 8085), (443, 443)]
-            udp_ports (:obj:`list` of :obj:`tuple`):
+            udp_port_ranges (:obj:`list` of :obj:`tuple`):
                 List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
                      [(34000, 35000), (36000, 36000)]
             icmp_access_type (str):
@@ -256,11 +279,11 @@ class AppSegmentsAPI(APIEndpoint):
         # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_segment(segment_id))
 
-        if kwargs.get("tcp_ports"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
+        if kwargs.get("tcp_port_ranges"):
+            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_port_ranges")]
 
-        if kwargs.get("udp_ports"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
+        if kwargs.get("udp_port_ranges"):
+            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
 
         # Handle the clientless_app_ids directly within this function without a separate helper
         if kwargs.get("clientless_app_ids"):
@@ -274,7 +297,29 @@ class AppSegmentsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"application/{segment_id}", json=payload).status_code
+        response = self.rest.put(
+            "/application/%s" % (segment_id),
+            data=payload,
+        )
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_segment(segment_id)
 
-        if resp == 204:
-            return self.get_segment(segment_id)
+    def detach_from_segment_group(self, app_id, seg_group_id):
+        seg_group = self.rest.get("/segmentGroup/%s" % (seg_group_id))
+        if isinstance(seg_group, Response):
+            status_code = seg_group.status_code
+            if status_code > 299:
+                return None
+        apps = seg_group.get("applications", [])
+        addaptedApps = []
+        for app in apps:
+            if app.get("id") != app_id:
+                addaptedApps.append(app)
+        seg_group["applications"] = addaptedApps
+        self.rest.put(
+            "/segmentGroup/%s" % (seg_group_id),
+            data=seg_group,
+        )

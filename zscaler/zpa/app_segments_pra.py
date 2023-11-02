@@ -14,24 +14,26 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import (
-    Iterator,
     add_id_groups,
     convert_keys,
     recursive_snake_to_camel,
     snake_to_camel,
 )
+from zscaler.zpa.client import ZPAClient
 
 
-class AppSegmentsPRAAPI(APIEndpoint):
+class AppSegmentsPRAAPI:
     # Params that need reformatting
     reformat_params = [
         ("server_group_ids", "serverGroups"),
     ]
+
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_segments_pra(self, **kwargs) -> BoxList:
         """
@@ -44,7 +46,11 @@ class AppSegmentsPRAAPI(APIEndpoint):
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        return BoxList(Iterator(self._api, "application", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/application",
+            data_key_name="list",
+        )
+        return list
 
     def get_segment_pra(self, segment_id: str) -> Box:
         """
@@ -61,7 +67,12 @@ class AppSegmentsPRAAPI(APIEndpoint):
             >>> app_segment = zpa.app_segments.details('99999')
 
         """
-        return self._get(f"application/{segment_id}")
+        response = self.rest.get("/application/%s" % (segment_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def delete_segment_pra(self, segment_id: str, force_delete: bool = False) -> int:
         """
@@ -86,9 +97,11 @@ class AppSegmentsPRAAPI(APIEndpoint):
             >>> zpa.app_segments.delete('88888', force_delete=True)
 
         """
-        payload = {"forceDelete": force_delete}
-
-        return self._delete(f"application/{segment_id}", params=payload).status_code
+        query = ""
+        if force_delete:
+            query = "forceDelete=true"
+        response = self.rest.delete("/application/%s?%s" % (segment_id, query))
+        return response.status_code
 
     def add_segment_pra(
         self,
@@ -188,7 +201,12 @@ class AppSegmentsPRAAPI(APIEndpoint):
         for key, value in kwargs.items():
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
-        return self._post("application", json=camel_payload)
+        response = self.rest.post("/application", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_segment(response.get("id"))
 
     def update_segment_pra(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
         """
@@ -274,8 +292,12 @@ class AppSegmentsPRAAPI(APIEndpoint):
             if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        # Convert the payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)  # use the recursive function
-        resp = self._put(f"application/{segment_id}", json=camel_payload).status_code
-        if resp == 204:
-            return self.get_segment_pra(segment_id)
+        response = self.rest.put(
+            "/application/%s" % (segment_id),
+            data=payload,
+        )
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_segment(segment_id)

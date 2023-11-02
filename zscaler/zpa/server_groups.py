@@ -15,17 +15,20 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
 
-from zscaler.utils import Iterator, add_id_groups, snake_to_camel
+from zscaler.utils import add_id_groups, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class ServerGroupsAPI(APIEndpoint):
+class ServerGroupsAPI:
     reformat_params = [
         ("application_ids", "applications"),
         ("server_ids", "servers"),
         ("app_connector_group_ids", "appConnectorGroups"),
     ]
+
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_groups(self, **kwargs) -> BoxList:
         """
@@ -49,7 +52,11 @@ class ServerGroupsAPI(APIEndpoint):
             ...    pprint(server_group)
 
         """
-        return BoxList(Iterator(self._api, "serverGroup", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/serverGroup",
+            data_key_name="list",
+        )
+        return list
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -67,7 +74,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f"serverGroup/{group_id}")
+        return self.rest.get(f"serverGroup/{group_id}")
 
     def delete_group(self, group_id: str) -> int:
         """
@@ -84,7 +91,7 @@ class ServerGroupsAPI(APIEndpoint):
             >>> zpa.server_groups.delete_group('99999')
 
         """
-        return self._delete(f"serverGroup/{group_id}").status_code
+        return self.rest.delete(f"serverGroup/{group_id}").status_code
 
     def add_group(self, app_connector_group_ids: list, name: str, **kwargs) -> Box:
         """
@@ -141,7 +148,7 @@ class ServerGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("serverGroup", json=payload)
+        return self.rest.post("serverGroup", json=payload)
 
     def update_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -189,7 +196,7 @@ class ServerGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"serverGroup/{group_id}", json=payload, box=False).status_code
 
         if resp == 204:
             return self.get_group(group_id)
