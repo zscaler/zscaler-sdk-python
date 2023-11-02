@@ -27,7 +27,7 @@ from zscaler.utils import (
 )
 
 
-class AppSegmentsInspectionAPI(APIEndpoint):
+class AppSegmentsInspectionAPI:
     # Params that need reformatting
     reformat_params = [
         ("server_group_ids", "serverGroups"),

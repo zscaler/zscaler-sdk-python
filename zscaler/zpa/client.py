@@ -14,29 +14,27 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box
 
-from zscaler.zpa.client import ZPAClient
+class ZPAClient:
+    def __init__():
+        pass
 
+    def get(self, path: str, data=None, fail_safe: bool = False):
+        pass
 
-class PlatformsAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
+    def get_paginated_data(
+        self, path: str = None, data_key_name: str = None, data_per_page: int = 500, expected_status_code=200
+    ):
+        pass
 
-    def list_platforms(self) -> Box:
-        """
-        Returns a list of ZPA Access Policy supported Platforms.
+    def put(self, path: str, data=None):
+        pass
 
-        Returns:
-            :obj:`BoxList`: A list containing the ZPA Access Policy supported Platforms.
+    def patch(self, path: str, data=None):
+        pass
 
-        Examples:
-            Iterate over the ZPA Access Policy supported Platforms and print each one:
+    def post(self, path: str, data=None):
+        pass
 
-            .. code-block:: python
-
-                for platform in zpa.platforms.list_platforms():
-                    print(platform)
-
-        """
-        return self._get("platform")
+    def delete(self, path: str, data=None):
+        pass

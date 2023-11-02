@@ -16,9 +16,9 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
 
 from zscaler.utils import Iterator, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
 def simplify_key_type(key_type):
@@ -31,7 +31,10 @@ def simplify_key_type(key_type):
         raise ValueError("Unexpected key type.")
 
 
-class ProvisioningAPI(APIEndpoint):
+class ProvisioningKeyAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_provisioning_keys(self, key_type: str, **kwargs) -> BoxList:
         """
         Returns a list of all configured provisioning keys that match the specified ``key_type``.

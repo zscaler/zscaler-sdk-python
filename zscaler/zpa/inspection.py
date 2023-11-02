@@ -18,12 +18,16 @@
 import urllib.parse
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class InspectionControllerAPI(APIEndpoint):
+class InspectionControllerAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     @staticmethod
     def _create_rule(rule: dict) -> dict:
         rule_set = {
@@ -98,7 +102,12 @@ class InspectionControllerAPI(APIEndpoint):
             # Convert snake to camelcase
             payload = convert_keys(payload)
 
-            return self._post("inspectionControls/custom", json=payload)
+        response = self.rest.post("/inspectionControls/custom", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_custom_control(response.get("id"))
 
     def add_profile(self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs):
         """
@@ -209,7 +218,12 @@ class InspectionControllerAPI(APIEndpoint):
 
         payload = convert_keys(payload)
 
-        return self._post("inspectionProfile", json=payload)
+        response = self.rest.post("/inspectionProfile", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_profile(response.get("id"))
 
     def delete_custom_control(self, control_id: str) -> int:
         """
@@ -230,7 +244,7 @@ class InspectionControllerAPI(APIEndpoint):
                 zpa.inspection.delete_custom_control("99999")
 
         """
-        return self._delete(f"inspectionControls/custom/{control_id}").status_code
+        return self.rest.delete(f"inspectionControls/custom/{control_id}").status_code
 
     def delete_profile(self, profile_id: str):
         """
@@ -251,7 +265,7 @@ class InspectionControllerAPI(APIEndpoint):
                 zpa.inspection.delete_profile("999999")
 
         """
-        return self._delete(f"inspectionProfile/{profile_id}").status_code
+        return self.rest.delete(f"inspectionProfile/{profile_id}").status_code
 
     def get_custom_control(self, control_id: str) -> Box:
         """
@@ -272,7 +286,12 @@ class InspectionControllerAPI(APIEndpoint):
                 print(zpa.inspection.get_custom_control("99999"))
 
         """
-        return self._get(f"inspectionControls/custom/{control_id}")
+        response = self.rest.get("/inspectionControls/custom/%s" % (control_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def get_predef_control(self, control_id: str):
         """
@@ -293,7 +312,12 @@ class InspectionControllerAPI(APIEndpoint):
                 print(zpa.inspection.get_predef_control("99999"))
 
         """
-        return self._get(f"inspectionControls/predefined/{control_id}")
+        response = self.rest.get("/inspectionControls/predefined/%s" % (control_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def get_profile(self, profile_id: str) -> Box:
         """
@@ -314,7 +338,12 @@ class InspectionControllerAPI(APIEndpoint):
                 print(zpa.inspection.get_profile("99999"))
 
         """
-        return self._get(f"inspectionProfile/{profile_id}")
+        response = self.rest.get("/inspectionProfile/%s" % (profile_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def list_control_action_types(self) -> Box:
         """
@@ -332,7 +361,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(action_type)
 
         """
-        return self._get("inspectionControls/actionTypes")
+        return self.rest.get("inspectionControls/actionTypes")
 
     def list_control_severity_types(self) -> BoxList:
         """
@@ -350,7 +379,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(severity)
 
         """
-        return self._get("inspectionControls/severityTypes")
+        return self.rest.get("inspectionControls/severityTypes")
 
     def list_control_types(self) -> BoxList:
         """
@@ -368,7 +397,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(control_type)
 
         """
-        return self._get("inspectionControls/controlTypes")
+        return self.rest.get("inspectionControls/controlTypes")
 
     def list_custom_control_types(self) -> BoxList:
         """
@@ -387,7 +416,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(control_type)
 
         """
-        return self._get("https://config.private.zscaler.com/mgmtconfig/v1/admin/inspectionControls/customControlTypes")
+        return self.rest.get("https://config.private.zscaler.com/mgmtconfig/v1/admin/inspectionControls/customControlTypes")
 
     def list_custom_controls(self, **kwargs) -> BoxList:
         """
@@ -419,7 +448,11 @@ class InspectionControllerAPI(APIEndpoint):
                     print(control)
 
         """
-        return BoxList(Iterator(self._api, "inspectionControls/custom", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/inspectionControls/custom",
+            data_key_name="list",
+        )
+        return list
 
     def list_custom_http_methods(self) -> BoxList:
         """
@@ -438,7 +471,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(method)
 
         """
-        return self._get("inspectionControls/custom/httpMethods")
+        return self.rest.get("inspectionControls/custom/httpMethods")
 
     def list_predef_control_versions(self) -> BoxList:
         """
@@ -454,7 +487,7 @@ class InspectionControllerAPI(APIEndpoint):
                     print(version)
 
         """
-        return self._get("inspectionControls/predefined/versions")
+        return self.rest.get("inspectionControls/predefined/versions")
 
     def list_predef_controls(self, version: str, **kwargs) -> BoxList:
         """
@@ -501,7 +534,7 @@ class InspectionControllerAPI(APIEndpoint):
         # Convert snake to camelcase
         payload = convert_keys(payload)
 
-        return self._get("inspectionControls/predefined", params=payload)
+        return self.rest.get("inspectionControls/predefined", params=payload)
 
     def get_predef_control_by_name(self, name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
         """
@@ -594,7 +627,11 @@ class InspectionControllerAPI(APIEndpoint):
                     print(profile)
 
         """
-        return BoxList(Iterator(self._api, "inspectionProfile", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/inspectionProfile",
+            data_key_name="list",
+        )
+        return list
 
     def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> Box:
         """
@@ -651,13 +688,13 @@ class InspectionControllerAPI(APIEndpoint):
         """
         if action == "attach":
             payload = {"version": kwargs.pop("profile_version", "OWASP_CRS/3.3.0")}
-            resp = self._put(
+            resp = self.rest.put(
                 f"inspectionProfile/{profile_id}/associateAllPredefinedControls",
                 params=payload,
             )
             return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
         elif action == "detach":
-            resp = self._put(f"inspectionProfile/{profile_id}/deAssociateAllPredefinedControls")
+            resp = self.rest.put(f"inspectionProfile/{profile_id}/deAssociateAllPredefinedControls")
             return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
         else:
             raise ValueError("Unknown action provided. Valid actions are 'attach' or 'detach'.")
@@ -767,7 +804,7 @@ class InspectionControllerAPI(APIEndpoint):
             if key == "default_action_value":
                 payload["defaultActionValue"] = value
 
-        resp = self._put(f"inspectionControls/custom/{control_id}", json=payload).status_code
+        resp = self.rest.put(f"inspectionControls/custom/{control_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:
@@ -869,7 +906,7 @@ class InspectionControllerAPI(APIEndpoint):
         # Convert from snake case to camel case
         payload = convert_keys(payload)
 
-        resp = self._put(f"inspectionProfile/{profile_id}", json=payload).status_code
+        resp = self.rest.put(f"inspectionProfile/{profile_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:
@@ -904,4 +941,4 @@ class InspectionControllerAPI(APIEndpoint):
 
         payload = convert_keys(payload)
 
-        return self._patch(f"inspectionProfile/{profile_id}/patch", json=payload).status_code
+        return self.rest.patch(f"inspectionProfile/{profile_id}/patch", json=payload).status_code

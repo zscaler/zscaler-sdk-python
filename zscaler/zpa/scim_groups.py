@@ -19,13 +19,13 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint, APISession
 
 from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class SCIMGroupsAPI(APIEndpoint):
-    def __init__(self, api: APISession):
+class SCIMGroupsAPI:
+    def __init__(self, api: ZPAClient):
         super().__init__(api)
         self.user_config_url = api.user_config_url
 

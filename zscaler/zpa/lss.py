@@ -16,13 +16,12 @@
 
 
 from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
 
 from zscaler.utils import Iterator, convert_keys, keys_exists, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class LSSConfigControllerAPI(APIEndpoint):
+class LSSConfigControllerAPI:
     source_log_map = {
         "app_connector_metrics": "zpn_ast_comprehensive_stats",
         "app_connector_status": "zpn_ast_auth_log",
@@ -34,7 +33,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         "web_inspection": "zpn_waf_http_exchanges_log",
     }
 
-    def __init__(self, api: APISession):
+    def __init__(self, api: ZPAClient):
         super().__init__(api)
 
         self.v2_url = api.v2_url

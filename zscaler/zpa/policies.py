@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
 
 from zscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class PolicySetsAPI(APIEndpoint):
+class PolicySetsAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     POLICY_MAP = {
         "access": "ACCESS_POLICY",
         "timeout": "TIMEOUT_POLICY",

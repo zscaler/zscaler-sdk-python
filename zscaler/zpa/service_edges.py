@@ -16,17 +16,21 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import Iterator, add_id_groups, pick_version_profile, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class ServiceEdgesAPI(APIEndpoint):
+class ServiceEdgesAPI:
     # Parameter names that will be reformatted to be compatible with ZPAs API
     reformat_params = [
         ("service_edge_ids", "serviceEdges"),
         ("trusted_network_ids", "trustedNetworks"),
     ]
+
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_service_edges(self, **kwargs) -> BoxList:
         """
@@ -53,7 +57,11 @@ class ServiceEdgesAPI(APIEndpoint):
             ...    print(service_edge)
 
         """
-        return BoxList(Iterator(self._api, "serviceEdge", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/serviceEdge",
+            data_key_name="list",
+        )
+        return list
 
     def get_service_edge(self, service_edge_id: str) -> Box:
         """
@@ -69,7 +77,12 @@ class ServiceEdgesAPI(APIEndpoint):
             >>> service_edge = zpa.service_edges.get_service_edge('999999')
 
         """
-        return self._get(f"serviceEdge/{service_edge_id}")
+        response = self.rest.get("/serviceEdge/%s" % (service_edge_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def update_service_edge(self, service_edge_id: str, **kwargs) -> Box:
         """
@@ -101,7 +114,11 @@ class ServiceEdgesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"serviceEdge/{service_edge_id}", json=payload).status_code
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        resp = self.rest.put(f"serviceEdge/{service_edge_id}", json=payload, box=False).status_code
 
         if resp == 204:
             return self.get_service_edge(service_edge_id)
@@ -120,7 +137,7 @@ class ServiceEdgesAPI(APIEndpoint):
             >>> zpa.service_edges.delete_service_edge('99999')
 
         """
-        return self._delete(f"serviceEdge/{service_edge_id}").status_code
+        return self.rest.delete(f"serviceEdge/{service_edge_id}").status_code
 
     def bulk_delete_service_edges(self, service_edge_ids: list) -> int:
         """
@@ -169,7 +186,11 @@ class ServiceEdgesAPI(APIEndpoint):
             ...    print(group)
 
         """
-        return BoxList(Iterator(self._api, "serviceEdgeGroup", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/serviceEdgeGroup",
+            data_key_name="list",
+        )
+        return list
 
     def get_service_edge_group(self, group_id: str) -> Box:
         """
@@ -185,7 +206,12 @@ class ServiceEdgesAPI(APIEndpoint):
             >>> group = zpa.service_edges.get_service_edge_group("99999")
 
         """
-        return self._get(f"serviceEdgeGroup/{group_id}")
+        response = self.rest.get("/serviceEdgeGroup/%s" % (group_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def add_service_edge_group(self, name: str, latitude: str, longitude: str, location: str, **kwargs):
         """
@@ -253,7 +279,12 @@ class ServiceEdgesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("serviceEdgeGroup", json=payload)
+        response = self.rest.post("/serviceEdgeGroup", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_service_edge_group(response.get("id"))
 
     def update_service_edge_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -322,10 +353,19 @@ class ServiceEdgesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"serviceEdgeGroup/{group_id}", json=payload).status_code
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
 
-        if resp == 204:
-            return self.get_service_edge_group(group_id)
+        response = self.rest.put(
+            "/serviceEdgeGroup/%s" % (group_id),
+            data=payload,
+        )
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_service_edge_group(group_id)
 
     def delete_service_edge_group(self, service_edge_group_id: str) -> int:
         """
@@ -341,4 +381,4 @@ class ServiceEdgesAPI(APIEndpoint):
             >>> zpa.service_edges.delete_service_edge_group("99999")
 
         """
-        return self._delete(f"serviceEdgeGroup/{service_edge_group_id}").status_code
+        return self.rest.delete(f"serviceEdgeGroup/{service_edge_group_id}").status_code
