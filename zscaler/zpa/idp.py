@@ -16,16 +16,13 @@
 
 
 from box import Box, BoxList
-
-from zscaler.utils import Iterator
+from requests import Response
 from zscaler.zpa.client import ZPAClient
 
 
 class IDPControllerAPI:
-    def __init__(self, api: ZPAClient):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_idps(self, **kwargs) -> BoxList:
         """
@@ -51,7 +48,15 @@ class IDPControllerAPI:
             ...    pprint(idp)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/idp", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/idp", data_key_name="list", **kwargs)
+        return list
+
+    def get_idp_by_name(self, name):
+        idps = self.list_idps()
+        for idp in idps:
+            if idp.get("name") == name:
+                return idp
+        return None
 
     def get_idp(self, idp_id: str) -> Box:
         """
@@ -69,4 +74,9 @@ class IDPControllerAPI:
 
         """
 
-        return self._get(f"idp/{idp_id}")
+        response = self.rest.get("/idp/%s" % (idp_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
