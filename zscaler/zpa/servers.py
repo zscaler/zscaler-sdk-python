@@ -26,6 +26,58 @@ class AppServersAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
 
+    def list_servers(self, **kwargs) -> BoxList:
+        """
+        Returns all configured servers.
+
+        Keyword Args:
+            **max_items (int):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
+            **search (str, optional):
+                The search string used to match against features and fields.
+
+        Returns:
+            :obj:`BoxList`: List of all configured servers.
+
+        Examples:
+            >>> servers = zpa.servers.list_servers()
+        """
+        list, _ = self.rest.get_paginated_data(path="/server", data_key_name="list", **kwargs, api_version="v1")
+        return list
+
+    def get_server(self, server_id: str) -> Box:
+        """
+        Gets information on the specified server.
+
+        Args:
+            server_id (str):
+                The unique identifier for the server.
+
+        Returns:
+            :obj:`Box`: The resource record for the server.
+
+        Examples:
+            >>> server = zpa.servers.get_server('99999')
+
+        """
+        response = self.rest.get("/server/%s" % (server_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
+    def get_server_by_name(self, name):
+        apps = self.list_servers()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
+
     def add_server(self, name: str, address: str, enabled: bool = True, **kwargs) -> Box:
         """
         Add a new application server.
@@ -72,79 +124,6 @@ class AppServersAPI:
             if status_code > 299:
                 return None
         return self.get_server(response.get("id"))
-
-    def list_servers(self, **kwargs) -> BoxList:
-        """
-        Returns all configured servers.
-
-        Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
-
-        Returns:
-            :obj:`BoxList`: List of all configured servers.
-
-        Examples:
-            >>> servers = zpa.servers.list_servers()
-        """
-        list, _ = self.rest.get_paginated_data(
-            path="/server",
-            data_key_name="list",
-        )
-        return list
-
-    def get_server(self, server_id: str) -> Box:
-        """
-        Gets information on the specified server.
-
-        Args:
-            server_id (str):
-                The unique identifier for the server.
-
-        Returns:
-            :obj:`Box`: The resource record for the server.
-
-        Examples:
-            >>> server = zpa.servers.get_server('99999')
-
-        """
-        response = self.rest.get("/server/%s" % (server_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
-
-    def get_server_by_name(self, name):
-        apps = self.list_servers()
-        for app in apps:
-            if app.get("name") == name:
-                return app
-        return None
-
-    def delete_server(self, server_id: str) -> int:
-        """
-        Delete the specified server.
-
-        The server must not be assigned to any Server Groups or the operation will fail.
-
-        Args:
-            server_id (str): The unique identifier for the server to be deleted.
-
-        Returns:
-            :obj:`int`: The response code for the operation.
-
-        Examples:
-            >>> zpa.servers.delete_server('99999')
-
-        """
-        return self.rest.delete(f"server/{server_id}").status_code
 
     def update_server(self, server_id: str, **kwargs) -> Box:
         """
@@ -199,3 +178,22 @@ class AppServersAPI:
 
         if resp == 204:
             return self.get_server(server_id)
+
+    def delete_server(self, server_id: str) -> int:
+        """
+        Delete the specified server.
+
+        The server must not be assigned to any Server Groups or the operation will fail.
+
+        Args:
+            server_id (str): The unique identifier for the server to be deleted.
+
+        Returns:
+            :obj:`int`: The response code for the operation.
+
+        Examples:
+            >>> zpa.servers.delete_server('99999')
+
+        """
+        return self.rest.delete(f"server/{server_id}").status_code
+
