@@ -380,3 +380,39 @@ def is_token_expired(token_string):
     except Exception as e:
         logger.error(f"Error checking token expiration: {str(e)}")
         return True
+
+
+def dump_request(logger, url: str, method: str, data, headers, request_uuid: str):
+    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
+    # Log the request details before sending the request
+    request_data = {
+        "url": url,
+        "method": method,
+        "request_body": json.dumps(data),
+        "uuid": str(request_uuid),
+        "request_headers": json.dumps(request_headers_filtered),
+    }
+    logger.info("Request details: %s", json.dumps(request_data))
+
+
+def dump_response(logger, url: str, method: str, resp, request_uuid: str, start_time, from_cache: bool = None):
+    # Calculate the duration in seconds
+    end_time = time.time()
+    duration_seconds = end_time - start_time
+    # Convert the duration to milliseconds
+    duration_ms = duration_seconds * 1000
+    # Convert the headers to a regular dictionary
+    response_headers_dict = dict(resp.headers)
+    # Log the response details after receiving the response
+    response_data = {
+        "url": url,
+        "method": method,
+        "response_body": resp.text,
+        "duration": str(duration_ms) + "ms",
+        "response_headers": json.dumps(response_headers_dict),
+        "uuid": str(request_uuid),
+    }
+    if from_cache:
+        logger.info("Response details from cache: %s", json.dumps(response_data))
+    else:
+        logger.info("Response details: %s", json.dumps(response_data))

@@ -201,12 +201,7 @@ class ApplicationSegmentAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/application", data=payload)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_segment(response.get("id"))
+        return self.rest.post("application", data=payload)
 
     def update_segment(self, segment_id: str, **kwargs) -> Box:
         """
@@ -294,15 +289,11 @@ class ApplicationSegmentAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(
-            "/application/%s" % (segment_id),
-            data=payload,
-        )
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_segment(segment_id)
+        resp = self.rest.put(f"application/{segment_id}", data=payload).status_code
+
+        # Return the object if it was updated successfully
+        if resp == 204:
+            return self.get_segment(segment_id)
 
     def detach_from_segment_group(self, app_id, seg_group_id):
         seg_group = self.rest.get("/segmentGroup/%s" % (seg_group_id))

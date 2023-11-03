@@ -19,7 +19,16 @@ class ZPAClient:
     def __init__():
         pass
 
-    def get(self, path: str, data=None, fail_safe: bool = False, api_version: str = None):
+    def get(self, path: str, data=None, params=None, fail_safe: bool = False, api_version: str = None):
+        """
+        Send a GET request to the ZPA API.
+        Parameters:
+        - path (str): API endpoint path.
+        - data (str): the request body.
+        - params (dict): the query params
+        - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
+        """
+        pass
         pass
 
     def get_paginated_data(
@@ -36,46 +45,51 @@ class ZPAClient:
         - path (str): API endpoint path.
         - data_key_name (str): list field key.
         - data_per_page: the page size
+        - params (dict): the query params
         - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
         """
         pass
 
-    def put(self, path: str, data=None, api_version: str = None):
+    def put(self, path: str, data=None, params=None, api_version: str = None):
         """
         Send a PUT request to the ZPA API.
         Parameters:
         - path (str): API endpoint path.
         - data (str): the request body.
+        - params (dict): the query params
         - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
         """
         pass
 
-    def patch(self, path: str, data=None, api_version: str = None):
+    def patch(self, path: str, data=None, params=None, api_version: str = None):
         """
         Send a PATCH request to the ZPA API.
         Parameters:
         - path (str): API endpoint path.
         - data (str): the request body.
+        - params (dict): the query params
         - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
         """
         pass
 
-    def post(self, path: str, data=None, api_version: str = None):
+    def post(self, path: str, data=None, params=None, api_version: str = None):
         """
         Send a POST request to the ZPA API.
         Parameters:
         - path (str): API endpoint path.
         - data (str): the request body.
+        - params (dict): the query params
         - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
         """
         pass
 
-    def delete(self, path: str, data=None, api_version: str = None):
+    def delete(self, path: str, data=None, params=None, api_version: str = None):
         """
         Send a DELETE request to the ZPA API.
         Parameters:
         - path (str): API endpoint path.
         - data (str): the request body.
+        - params (dict): the query params
         - api_version (str): the api version, availbale values: v1, v2 or userconfig_v1
         """
         pass
