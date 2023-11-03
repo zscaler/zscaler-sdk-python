@@ -16,8 +16,8 @@
 
 
 from box import Box, BoxList
-
-from zscaler.utils import Iterator, snake_to_camel
+from requests import Response
+from zscaler.utils import snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
 
@@ -70,14 +70,8 @@ class ProvisioningKeyAPI:
             ...    print(key)
 
         """
-
-        return BoxList(
-            Iterator(
-                self._api,
-                f"associationType/{simplify_key_type(key_type)}/provisioningKey",
-                **kwargs,
-            )
-        )
+        list, _ = self.rest.get_paginated_data(path=f"/associationType/{simplify_key_type(key_type)}/provisioningKey", data_key_name="list", **kwargs)
+        return list
 
     def get_provisioning_key(self, key_id: str, key_type: str) -> Box:
         """
@@ -104,8 +98,12 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-
-        return self._get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        response = self.rest.get(f"/associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def add_provisioning_key(
         self,
@@ -169,10 +167,12 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey",
-            json=payload,
-        )
+        response = self.rest.post(f"/associationType/{simplify_key_type(key_type)}/provisioningKey", data=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
         """
@@ -219,13 +219,16 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(
+        response = self.rest.put(
             f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            json=payload,
-        ).status_code
+            data=payload,
+        )
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_provisioning_key(key_id, key_type=key_type)
 
-        if resp == 204:
-            return self.get_provisioning_key(key_id, key_type=key_type)
 
     def delete_provisioning_key(self, key_id: str, key_type: str) -> int:
         """
@@ -252,8 +255,7 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-
-        return self._delete(
+        return self.rest.delete(
             f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
             box=False,
         ).status_code

@@ -156,7 +156,7 @@ class ZPAClientHelper(ZPAClient):
             logger.error("Login failed due to an exception: %s", str(e))
             return None
 
-    def send(self, method, path, data=None, fail_safe=False):
+    def send(self, method, path, data=None, fail_safe=False, api_version: str = None):
         """
         Send a request to the ZPA API.
 
@@ -169,7 +169,15 @@ class ZPAClientHelper(ZPAClient):
         Returns:
         - Response: Response object from the request.
         """
-        url = f"{self.url}/{path.lstrip('/')}"
+        api = self.url
+        if api_version is None:
+            api = self.url
+        elif api_version == "v2":
+            api = self.v2_url
+        elif api_version == "userconfig_v1":
+            api = self.user_config_url
+
+        url = f"{api}/{path.lstrip('/')}"
 
         # Update headers to include the user agent
         headers_with_user_agent = self.headers.copy()
@@ -234,7 +242,7 @@ class ZPAClientHelper(ZPAClient):
             self.cache.add(cache_key, resp)
         return resp
 
-    def get(self, path, data=None, fail_safe=False):
+    def get(self, path, data=None, fail_safe=False, api_version: str = None):
         """
         Send a GET request to the ZPA API.
 
@@ -253,31 +261,31 @@ class ZPAClientHelper(ZPAClient):
             time.sleep(delay)
 
         # Now proceed with sending the request
-        resp = self.send("GET", path, data, fail_safe)
+        resp = self.send("GET", path, data, fail_safe, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def put(self, path, data=None):
+    def put(self, path, data=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("PUT")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("PUT", path, data)
+        resp = self.send("PUT", path, data, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def post(self, path, data=None):
+    def post(self, path, data=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("POST", path, data)
+        resp = self.send("POST", path, data, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def delete(self, path, data=None):
+    def delete(self, path, data=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("DELETE")
         if should_wait:
             time.sleep(delay)
-        return self.send("DELETE", path, data)
+        return self.send("DELETE", path, data, api_version=api_version)
 
     ERROR_MESSAGES = {
         "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
@@ -285,7 +293,9 @@ class ZPAClientHelper(ZPAClient):
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
 
-    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=500, expected_status_code=200):
+    def get_paginated_data(
+        self, path=None, data_key_name=None, data_per_page=500, expected_status_code=200, api_version: str = None
+    ):
         """
         Fetch paginated data from the ZPA API.
         ...
@@ -306,7 +316,7 @@ class ZPAClientHelper(ZPAClient):
                 time.sleep(delay)
 
             # Now proceed with sending the request
-            response = self.send("GET", required_url)
+            response = self.send("GET", required_url, api_version=api_version)
 
             if response.status_code != expected_status_code:
                 error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)

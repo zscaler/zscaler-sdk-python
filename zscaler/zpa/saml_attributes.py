@@ -16,16 +16,12 @@
 
 
 from box import Box, BoxList
-
-from zscaler.utils import Iterator
 from zscaler.zpa.client import ZPAClient
 
 
 class SAMLAttributesAPI:
-    def __init__(self, api: ZPAClient):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_attributes(self, **kwargs) -> BoxList:
         """
@@ -49,7 +45,8 @@ class SAMLAttributesAPI:
             ...    pprint(saml_attribute)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/samlAttribute", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/samlAttribute", data_key_name="list", **kwargs, api_version="v2")
+        return list
 
     def list_attributes_by_idp(self, idp_id: str, **kwargs) -> BoxList:
         """
@@ -76,7 +73,8 @@ class SAMLAttributesAPI:
             ...    pprint(saml_attribute)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/samlAttribute/idp/{idp_id}", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/samlAttribute/idp/{idp_id}", data_key_name="list", **kwargs, api_version="v2")
+        return list
 
     def get_attribute(self, attribute_id: str) -> Box:
         """
@@ -94,4 +92,4 @@ class SAMLAttributesAPI:
 
         """
 
-        return self._get(f"samlAttribute/{attribute_id}")
+        return self.rest.get(f"samlAttribute/{attribute_id}")

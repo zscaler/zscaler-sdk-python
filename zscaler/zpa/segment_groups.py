@@ -22,10 +22,7 @@ class SegmentGroupsAPI:
             ...    pprint(segment_group)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/segmentGroup",
-            data_key_name="list",
-        )
+        list, _ = self.rest.get_paginated_data(path="/segmentGroup", data_key_name="list", **kwargs, api_version="v1")
         return list
 
     def get_group(self, group_id: str) -> Box:
@@ -43,7 +40,7 @@ class SegmentGroupsAPI:
             >>> pprint(zpa.segment_groups.get_group('99999'))
 
         """
-        response = self.rest.get("/segmentGroup/%s" % (group_id))
+        response = self.rest.get("f/segmentGroup/%s" % (group_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -167,7 +164,7 @@ class SegmentGroupsAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(
-            "/segmentGroup/%s" % (group_id),
+            f"/segmentGroup/%s" % (group_id),
             data=payload,
         )
         if isinstance(response, Response):
