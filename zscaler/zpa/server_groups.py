@@ -52,10 +52,7 @@ class ServerGroupsAPI:
             ...    pprint(server_group)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/serverGroup",
-            data_key_name="list",
-        )
+        list, _ = self.rest.get_paginated_data(path="/serverGroup", data_key_name="list", **kwargs, api_version="v1")
         return list
 
     def get_group(self, group_id: str) -> Box:
@@ -76,22 +73,13 @@ class ServerGroupsAPI:
 
         return self.rest.get(f"serverGroup/{group_id}")
 
-    def delete_group(self, group_id: str) -> int:
-        """
-        Deletes the specified server group.
+    def get_server_group_by_name(self, name):
+        groups = self.list_groups()
+        for group in groups:
+            if group.get("name") == name:
+                return group
+        return None
 
-        Args:
-            group_id (str):
-                The unique id for the server group to be deleted.
-
-        Returns:
-            :obj:`int`: The response code for the operation.
-
-        Examples:
-            >>> zpa.server_groups.delete_group('99999')
-
-        """
-        return self.rest.delete(f"serverGroup/{group_id}").status_code
 
     def add_group(self, app_connector_group_ids: list, name: str, **kwargs) -> Box:
         """
@@ -200,3 +188,20 @@ class ServerGroupsAPI:
 
         if resp == 204:
             return self.get_group(group_id)
+
+    def delete_group(self, group_id: str) -> int:
+        """
+        Deletes the specified server group.
+
+        Args:
+            group_id (str):
+                The unique id for the server group to be deleted.
+
+        Returns:
+            :obj:`int`: The response code for the operation.
+
+        Examples:
+            >>> zpa.server_groups.delete_group('99999')
+
+        """
+        return self.rest.delete(f"serverGroup/{group_id}").status_code

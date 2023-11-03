@@ -15,12 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
-
 from box import Box, BoxList
-
-from zscaler.utils import Iterator
 from zscaler.zpa.client import ZPAClient
 
 
@@ -67,7 +62,9 @@ class SCIMGroupsAPI:
             ...    pprint(scim_group)
 
         """
-        list, _ = self.rest.get_paginated_data(path=f"/scimgroup/idpId/{idp_id}", data_key_name="list", **kwargs, api_version="userconfig_v1")
+        list, _ = self.rest.get_paginated_data(
+            path=f"/scimgroup/idpId/{idp_id}", data_key_name="list", **kwargs, api_version="userconfig_v1"
+        )
         return list
 
     def get_group(self, group_id: str, **kwargs) -> Box:
@@ -101,25 +98,22 @@ class SCIMGroupsAPI:
         page_size = kwargs.get("pagesize", 500)  # Adjust the page size as needed
 
         # Calculate the total pages using a synchronous call
-        total_pages = self._get_total_pages(idp_id, page_size)
+        total_pages = 1
+        page_number = 1
 
         # Loop over each page to search for the group
-        for page_number in range(1, total_pages + 1):
+        while True:
             page = self._get_page(idp_id, page_number, group_name, page_size)
+            total_pages = int(page.get("total_pages", "0"))
             for group in page.get("list", []):
                 if group.get("name") == group_name:
                     return group  # Return the found group immediately
-
+            if page_number >= total_pages:
+                break
+            page_number = page_number + 1
         return None  # Return None if the group wasn't found
 
     def _get_page(self, idp_id, page_number, search, page_size):
         params = {"page": page_number, "search": search, "pagesize": page_size}
-        response, _ = self.rest.get(path=f"/scimgroup/idpId/{idp_id}", params=params, api_version="userconfig_v1")
-        return response
-
-    def _get_total_pages(self, idp_id, page_size):
-        # Replace the logic below with a call to the API to get the total number of groups if available
-        # For now, using a placeholder value
-        total_groups_response, _ = self.rest.get(path=f"/scimgroup/idpId/{idp_id}/count", api_version="userconfig_v1")
-        total_groups = total_groups_response.get("total_count", 1000)  # Replace with actual key from response
-        return (total_groups // page_size) + (total_groups % page_size > 0)
+        page = self.rest.get(path=f"/scimgroup/idpId/{idp_id}", params=params, api_version="userconfig_v1")
+        return page
