@@ -7,7 +7,6 @@ from . import ZPAClient
 class MachineGroupsAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
-        self.customer_id = client.customer_id
 
     def list_groups(self, **kwargs) -> BoxList:
         """
@@ -31,10 +30,7 @@ class MachineGroupsAPI:
             ...    pprint(machine_group)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            base_url="/mgmtconfig/v1/admin/customers/%s/machineGroup" % (self.customer_id),
-            data_key_name="list",
-        )
+        list, _ = self.rest.get_paginated_data(path="/machineGroup", data_key_name="list", **kwargs)
         return list
 
     def get_group(self, group_id: str) -> Box:
@@ -52,7 +48,7 @@ class MachineGroupsAPI:
             >>> pprint(zpa.machine_groups.get_group('99999'))
 
         """
-        response = self.rest.get("/mgmtconfig/v1/admin/customers/%s/machineGroup/%s" % (self.customer_id, group_id))
+        response = self.rest.get("/machineGroup/%s" % (group_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:

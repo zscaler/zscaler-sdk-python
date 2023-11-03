@@ -16,15 +16,12 @@
 
 
 from box import Box, BoxList
-
-from zscaler.utils import Iterator
 from zscaler.zpa.client import ZPAClient
 
 
 class ScimAttributeHeaderAPI:
-    def __init__(self, api: ZPAClient):
-        super().__init__(api)
-        self.user_config_url = api.user_config_url
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_attributes_by_idp(self, idp_id: str, **kwargs) -> BoxList:
         """
@@ -52,7 +49,8 @@ class ScimAttributeHeaderAPI:
             ...    pprint(scim_attribute)
 
         """
-        return BoxList(Iterator(self._api, f"idp/{idp_id}/scimattribute", **kwargs))
+        list, _ = self.rest.get_paginated_data(path=f"/idp/{idp_id}/scimattribute", data_key_name="list", **kwargs, api_version="v1")
+        return list
 
     def get_attribute(self, idp_id: str, attribute_id: str) -> Box:
         """
@@ -72,8 +70,9 @@ class ScimAttributeHeaderAPI:
             ...    scim_attribute_id="88888"))
 
         """
+        list, _ = self.rest.get(path=f"/idp/{idp_id}/scimattribute/{attribute_id}", data_key_name="list", api_version="v1")
+        return list
 
-        return self._get(f"idp/{idp_id}/scimattribute/{attribute_id}")
 
     def get_values(self, idp_id: str, attribute_id: str, **kwargs) -> BoxList:
         """
@@ -104,10 +103,6 @@ class ScimAttributeHeaderAPI:
             >>> pprint(zpa.scim_attributes.get_values('99999', '88888'))
 
         """
-        return BoxList(
-            Iterator(
-                self._api,
-                f"{self.user_config_url}/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}",
-                **kwargs,
-            )
-        )
+        list, _ = self.rest.get_paginated_data(path=f"/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}", data_key_name="list", **kwargs, api_version="userconfig_v1")
+        return list
+
