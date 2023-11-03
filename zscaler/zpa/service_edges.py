@@ -292,12 +292,14 @@ class ServiceEdgesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/serviceEdgeGroup", data=payload)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_service_edge_group(response.get("id"))
+        return self.rest.post("serviceEdgeGroup", data=payload)
+
+        # response = self.rest.post("/serviceEdgeGroup", data=payload)
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code > 299:
+        #         return None
+        # return self.get_service_edge_group(response.get("id"))
 
 
     def update_service_edge_group(self, group_id: str, **kwargs) -> Box:
@@ -371,17 +373,22 @@ class ServiceEdgesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(
-            "/serviceEdgeGroup/%s" % (group_id),
-            data=payload,
-        )
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_service_edge_group(group_id)
+        resp = self.rest.put(f"serviceEdgeGroup/{group_id}", data=payload).status_code
 
-    def delete_service_edge_group(self, group_id: str) -> int:
+        if resp == 204:
+            return self.get_service_edge_group(group_id)
+
+        # response = self.rest.put(
+        #     "/serviceEdgeGroup/%s" % (group_id),
+        #     data=payload,
+        # )
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code > 299:
+        #         return None
+        # return self.get_service_edge_group(group_id)
+
+    def delete_service_edge_group(self, service_edge_group_id: str) -> int:
         """
         Deletes the specified Service Edge Group from ZPA.
 
@@ -395,4 +402,4 @@ class ServiceEdgesAPI:
             >>> zpa.service_edges.delete_service_edge_group("99999")
 
         """
-        return self.rest.delete(f"serviceEdgeGroup/{group_id}").status_code
+        return self.rest.delete(f"serviceEdgeGroup/{service_edge_group_id}").status_code

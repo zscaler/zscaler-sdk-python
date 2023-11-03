@@ -148,7 +148,7 @@ class ServerGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post("serverGroup", json=payload)
+        return self.rest.post("serverGroup", data=payload)
 
     def update_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -196,7 +196,7 @@ class ServerGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"serverGroup/{group_id}", data=payload).status_code
 
         if resp == 204:
             return self.get_group(group_id)

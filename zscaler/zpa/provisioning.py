@@ -98,12 +98,14 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-        response = self.rest.get(f"/associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+
+        # response = self.rest.get(f"/associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code != 200:
+        #         return None
+        # return response
 
     def add_provisioning_key(
         self,
@@ -167,11 +169,7 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"/associationType/{simplify_key_type(key_type)}/provisioningKey", data=payload)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
+        return self.rest.post(f"associationType/{simplify_key_type(key_type)}/provisioningKey", data=payload)
 
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
@@ -219,16 +217,10 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            data=payload,
-        )
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_provisioning_key(key_id, key_type=key_type)
+        resp = self.rest.put(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", data=payload).status_code
 
+        if resp == 204:
+            return self.get_provisioning_key(key_id, key_type=key_type)
 
     def delete_provisioning_key(self, key_id: str, key_type: str) -> int:
         """
@@ -255,7 +247,4 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-        return self.rest.delete(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            box=False,
-        ).status_code
+        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}").status_code
