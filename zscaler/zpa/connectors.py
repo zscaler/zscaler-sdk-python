@@ -41,7 +41,7 @@ class AppConnectorControllerAPI:
             ...    print(connector)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/connector", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(path=f"/connector", data_key_name="list", **kwargs, api_version="v1")
         return list
 
     def get_connector(self, connector_id: str) -> Box:
@@ -107,14 +107,14 @@ class AppConnectorControllerAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(
-            "/connector/%s" % (connector_id),
+            f"/connector/%s" % (connector_id),
             data=payload,
         )
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code > 299:
                 return None
-        return self.get_segment(connector_id)
+        return self.get_connector(connector_id)
 
     def delete_connector(self, connector_id: str) -> int:
         """
@@ -272,7 +272,7 @@ class AppConnectorControllerAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/appConnectorGroup", data=payload)
+        response = self.rest.post(f"/appConnectorGroup", data=payload)
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code > 299:
