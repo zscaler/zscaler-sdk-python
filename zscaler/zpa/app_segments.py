@@ -46,10 +46,7 @@ class ApplicationSegmentAPI:
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/application",
-            data_key_name="list",
-        )
+        list, _ = self.rest.get_paginated_data(path="/application", data_key_name="list", **kwargs)
         return list
 
     def get_segment(self, segment_id: str) -> Box:

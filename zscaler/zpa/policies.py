@@ -126,7 +126,7 @@ class PolicySetsAPI:
                 f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
             )
 
-        return self._get(f"policySet/policyType/{mapped_policy_type}")
+        return self.rest.get(f"policySet/policyType/{mapped_policy_type}")
 
     def get_rule(self, policy_type: str, rule_id: str) -> Box:
         """
@@ -152,7 +152,7 @@ class PolicySetsAPI:
         # Get the policy id for the supplied policy_type
         policy_id = self.get_policy(policy_type).id
 
-        return self._get(f"policySet/{policy_id}/rule/{rule_id}")
+        return self.rest.get(f"policySet/{policy_id}/rule/{rule_id}")
 
     def get_rule_by_name(self, policy_type: str, rule_name: str) -> Box:
         """
@@ -206,8 +206,8 @@ class PolicySetsAPI:
                 f"Incorrect policy type provided: {policy_type}\n "
                 f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
             )
-
-        return BoxList(Iterator(self._api, f"policySet/rules/policyType/{mapped_policy_type}", **kwargs))
+        list, _ = self.rest.get_paginated_data(path=f"policySet/rules/policyType/{mapped_policy_type}", data_key_name="list", **kwargs)
+        return list
 
     def delete_rule(self, policy_type: str, rule_id: str) -> int:
         """
@@ -236,7 +236,7 @@ class PolicySetsAPI:
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        return self._delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
+        return self.rest.delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
 
     def add_access_rule(
         self, name: str, action: str, app_connector_group_ids: list = [], app_server_group_ids: list = [], **kwargs
@@ -307,7 +307,7 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"policySet/{policy_id}/rule", json=payload)
+        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
 
     def add_timeout_rule(self, name: str, **kwargs) -> Box:
         """
@@ -368,7 +368,7 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"policySet/{_policy_id}/rule", json=payload)
+        return self.rest.post(f"policySet/{_policy_id}/rule", data=payload)
 
     def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -428,7 +428,7 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"policySet/{policy_id}/rule", json=payload)
+        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
 
     def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
         """
@@ -487,7 +487,7 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"policySet/{policy_id}/rule", json=payload)
+        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
 
     def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
         """
@@ -546,7 +546,7 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(f"policySet/{policy_id}/rule", json=payload)
+        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
 
     def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
         """
@@ -622,7 +622,7 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", data=payload).status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
@@ -677,7 +677,7 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", data=payload).status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
