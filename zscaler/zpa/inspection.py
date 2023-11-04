@@ -15,12 +15,12 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import urllib.parse
+from requests.utils import quote
 
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
 
@@ -523,18 +523,26 @@ class InspectionControllerAPI:
                     print(control)
 
         """
-        payload = {
-            "version": version,
-        }
+        # Encode the version parameter to be URL safe
+        encoded_version = quote(version, safe='')
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[key] = value
+        # Construct the full URL with version query param
+        url = f"/inspectionControls/predefined?version={encoded_version}"
 
-        # Convert snake to camelcase
-        payload = convert_keys(payload)
+        # If you have additional query parameters, add them to the URL
+        if kwargs:
+            additional_params = "&".join(f"{key}={quote(str(value))}" for key, value in kwargs.items())
+            url += f"&{additional_params}"
 
-        return self.rest.get("inspectionControls/predefined", params=payload)
+        # Make the GET request
+        response = self.rest.get(url)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                # Handle error or return None based on your API handling
+                return None
+        return response
+
 
     def get_predef_control_by_name(self, name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
         """
