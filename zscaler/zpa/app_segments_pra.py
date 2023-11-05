@@ -46,10 +46,7 @@ class AppSegmentsPRAAPI:
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/application",
-            data_key_name="list",
-        )
+        list, _ = self.rest.get_paginated_data(path="/application", data_key_name="list", **kwargs)
         return list
 
     def get_segment_pra(self, segment_id: str) -> Box:
@@ -67,12 +64,15 @@ class AppSegmentsPRAAPI:
             >>> app_segment = zpa.app_segments.details('99999')
 
         """
-        response = self.rest.get("/application/%s" % (segment_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        return self.rest.get(f"application/{segment_id}")
+
+
+    def get_segment_pra_by_name(self, name):
+        apps = self.list_segments_pra()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def delete_segment_pra(self, segment_id: str, force_delete: bool = False) -> int:
         """
@@ -109,8 +109,8 @@ class AppSegmentsPRAAPI:
         domain_names: list,
         segment_group_id: str,
         server_group_ids: list,
-        tcp_ports: list = None,
-        udp_ports: list = None,
+        tcp_port_ranges: list = None,
+        udp_port_ranges: list = None,
         common_apps_dto: dict = None,
         **kwargs,
     ) -> Box:
@@ -179,8 +179,8 @@ class AppSegmentsPRAAPI:
         payload = {
             "name": name,
             "domainNames": domain_names,
-            "tcpPortRanges": tcp_ports,
-            "udpPortRanges": udp_ports,
+            "tcpPortRanges": tcp_port_ranges,
+            "udpPortRanges": udp_port_ranges,
             "segmentGroupId": segment_group_id,
             "commonAppsDto": common_apps_dto if common_apps_dto else None,
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
@@ -201,12 +201,25 @@ class AppSegmentsPRAAPI:
         for key, value in kwargs.items():
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
-        response = self.rest.post("/application", data=payload)
+
+        response = self.rest.post("application", data=camel_payload)
         if isinstance(response, Response):
             status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_segment(response.get("id"))
+            if 200 <= status_code < 300:
+                # Successfully created, now get the ID and retrieve the segment
+                segment_id = response.json().get("id")
+                if segment_id:
+                    # Retrieve the newly created segment details
+                    return self.get_segment_pra(segment_id)
+                else:
+                    raise ValueError("Creation was successful but the segment ID was not returned.")
+            else:
+                # Handle error response
+                error_message = response.json().get("message", "Unknown error occurred.")
+                raise Exception(f"API call failed with status {status_code}: {error_message}")
+        else:
+            # Handle unexpected response type
+            raise TypeError("Expected a Response object, but got a different type.")
 
     def update_segment_pra(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
         """
@@ -273,31 +286,26 @@ class AppSegmentsPRAAPI:
         """
         # Set payload to value of existing record and recursively convert nested dict keys from snake_case to camelCase.
         payload = convert_keys(self.get_segment_pra(segment_id))
-        if kwargs.get("tcp_ports"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
-        if kwargs.get("udp_ports"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
+
+        if kwargs.get("tcp_port_ranges"):
+            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_port_ranges")]
+
+        if kwargs.get("udp_port_ranges"):
+            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
 
         if common_apps_dto:
             camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)  # use the recursive function
             payload["commonAppsDto"] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
 
         # Convert other keys in payload
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
-
         add_id_groups(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(
-            "/application/%s" % (segment_id),
-            data=payload,
-        )
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_segment(segment_id)
+        # Add remaining optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        resp = self.rest.put(f"application/{segment_id}", data=payload).status_code
+
+        # Return the object if it was updated successfully
+        if resp == 204:
+            return self.get_segment_pra(segment_id)
