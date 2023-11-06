@@ -102,12 +102,20 @@ class InspectionControllerAPI:
             # Convert snake to camelcase
             payload = convert_keys(payload)
 
-        response = self.rest.post("/inspectionControls/custom", data=payload)
+        response = self.rest.post("inspectionControls/custom", json=payload)
         if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_custom_control(response.get("id"))
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+        # response = self.rest.post("/inspectionControls/custom", json=payload)
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code > 299:
+        #         return None
+        # return self.get_custom_control(response.get("id"))
 
     def add_profile(self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs):
         """
@@ -218,12 +226,20 @@ class InspectionControllerAPI:
 
         payload = convert_keys(payload)
 
-        response = self.rest.post("/inspectionProfile", data=payload)
+        response = self.rest.post("inspectionProfile", json=payload)
         if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_profile(response.get("id"))
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+        # response = self.rest.post("/inspectionProfile", json=payload)
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code > 299:
+        #         return None
+        # return self.get_profile(response.get("id"))
 
     def delete_custom_control(self, control_id: str) -> int:
         """
@@ -312,7 +328,7 @@ class InspectionControllerAPI:
                 print(zpa.inspection.get_predef_control("99999"))
 
         """
-        response = self.rest.get("/inspectionControls/predefined/%s" % (control_id))
+        response = self.rest.get(f"/inspectionControls/predefined/%s" % (control_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -338,7 +354,7 @@ class InspectionControllerAPI:
                 print(zpa.inspection.get_profile("99999"))
 
         """
-        response = self.rest.get("/inspectionProfile/%s" % (profile_id))
+        response = self.rest.get(f"/inspectionProfile/%s" % (profile_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -815,7 +831,7 @@ class InspectionControllerAPI:
         resp = self.rest.put(f"inspectionControls/custom/{control_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
-        if resp == 204:
+        if not isinstance(resp, Response):
             return self.get_custom_control(control_id)
 
     def update_profile(self, profile_id: str, **kwargs):
@@ -917,7 +933,7 @@ class InspectionControllerAPI:
         resp = self.rest.put(f"inspectionProfile/{profile_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
-        if resp == 204:
+        if not isinstance(resp, Response):
             return self.get_profile(profile_id)
 
     def update_profile_and_controls(self, profile_id: str, inspection_profile: dict, **kwargs):
@@ -949,4 +965,8 @@ class InspectionControllerAPI:
 
         payload = convert_keys(payload)
 
-        return self.rest.patch(f"inspectionProfile/{profile_id}/patch", json=payload).status_code
+        resp = self.rest.put(f"inspectionProfile/{profile_id}/patch", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_profile(profile_id)

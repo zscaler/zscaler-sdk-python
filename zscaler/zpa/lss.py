@@ -395,7 +395,7 @@ class LSSConfigControllerAPI:
         if kwargs.get("policy_rules"):
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
-                "name": kwargs.get("policy_name", "placeholder"),
+                "name": kwargs.get("policy_name", "SIEM_POLICY"),
             }
 
         # Add Session Status Codes to filter if provided
@@ -406,8 +406,13 @@ class LSSConfigControllerAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # return payload
-        return self.rest.post(f"/lssConfig", api_version="v2", data=payload)
+        response = self.rest.post(f"/lssConfig", api_version="v2", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_lss_config(self, lss_config_id: str, **kwargs):
         """
@@ -478,10 +483,7 @@ class LSSConfigControllerAPI:
                         ("saml", [("attribute_id", "11111")]),
                     ],
                     source_log_type="user_status")
-
-
         """
-
         # Set payload to value of existing record
         payload = convert_keys(self.get_config(lss_config_id))
 
@@ -506,7 +508,7 @@ class LSSConfigControllerAPI:
             if keys_exists(payload, "policyRuleResource", "name"):
                 policy_name = payload["policyRuleResource"]["name"]
             else:
-                policy_name = "placeholder"
+                policy_name = "SIEM_POLICY"
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
                 "name": kwargs.pop("policy_name", policy_name),
@@ -515,10 +517,13 @@ class LSSConfigControllerAPI:
         # Add additional provided parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
-        resp = self.rest.put(f"/lssConfig/{lss_config_id}", api_version="v2", data=payload).status_code
 
-        if resp == 204:
+        resp = self.rest.put(f"/lssConfig/{lss_config_id}", api_version="v2", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_config(lss_config_id)
+
 
     def delete_lss_config(self, lss_id: str) -> int:
         """

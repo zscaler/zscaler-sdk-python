@@ -100,13 +100,6 @@ class ProvisioningKeyAPI:
         """
         return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
 
-        # response = self.rest.get(f"/associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
-        # if isinstance(response, Response):
-        #     status_code = response.status_code
-        #     if status_code != 200:
-        #         return None
-        # return response
-
     def add_provisioning_key(
         self,
         key_type: str,
@@ -169,8 +162,13 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"associationType/{simplify_key_type(key_type)}/provisioningKey", data=payload)
-
+        response = self.rest.post(f"associationType/{simplify_key_type(key_type)}/provisioningKey", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
         """
@@ -217,9 +215,10 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", data=payload).status_code
+        resp = self.rest.put(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_provisioning_key(key_id, key_type=key_type)
 
     def delete_provisioning_key(self, key_id: str, key_type: str) -> int:

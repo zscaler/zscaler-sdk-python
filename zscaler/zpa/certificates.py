@@ -116,7 +116,7 @@ class CertificatesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/certificate", data=payload)
+        response = self.rest.post("/certificate", json=payload)
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code > 299:

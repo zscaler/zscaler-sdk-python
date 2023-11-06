@@ -15,7 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from box import Box, BoxList
-
+from requests import Response
 from zscaler.utils import add_id_groups, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
@@ -136,7 +136,13 @@ class ServerGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post("serverGroup", data=payload)
+        response = self.rest.post("serverGroup", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -184,10 +190,12 @@ class ServerGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"serverGroup/{group_id}", data=payload).status_code
+        resp = self.rest.put(f"serverGroup/{group_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_group(group_id)
+
 
     def delete_group(self, group_id: str) -> int:
         """
