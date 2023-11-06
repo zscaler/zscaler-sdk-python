@@ -202,24 +202,13 @@ class AppSegmentsPRAAPI:
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("application", data=camel_payload)
+        response = self.rest.post("application", json=camel_payload)
         if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            if 200 <= status_code < 300:
-                # Successfully created, now get the ID and retrieve the segment
-                segment_id = response.json().get("id")
-                if segment_id:
-                    # Retrieve the newly created segment details
-                    return self.get_segment_pra(segment_id)
-                else:
-                    raise ValueError("Creation was successful but the segment ID was not returned.")
-            else:
-                # Handle error response
-                error_message = response.json().get("message", "Unknown error occurred.")
-                raise Exception(f"API call failed with status {status_code}: {error_message}")
-        else:
-            # Handle unexpected response type
-            raise TypeError("Expected a Response object, but got a different type.")
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_segment_pra(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
         """
@@ -304,8 +293,8 @@ class AppSegmentsPRAAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"application/{segment_id}", data=payload).status_code
+        resp = self.rest.put(f"application/{segment_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
-        if resp == 204:
+        if not isinstance(resp, Response):
             return self.get_segment_pra(segment_id)

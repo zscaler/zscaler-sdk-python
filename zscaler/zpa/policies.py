@@ -16,8 +16,8 @@
 
 
 from box import Box, BoxList
-
-from zscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
+from requests import Response
+from zscaler.utils import add_id_groups, convert_keys, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
 
@@ -307,7 +307,13 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def add_timeout_rule(self, name: str, **kwargs) -> Box:
         """
@@ -358,7 +364,7 @@ class PolicySetsAPI:
         }
 
         # Get the policy id of the provided policy type for the URL.
-        _policy_id = self.get_policy("timeout").id
+        policy_id = self.get_policy("timeout").id
 
         # Use specified timeouts or default to UI values
         payload["reauthTimeout"] = kwargs.get("re_auth_timeout", 172800)
@@ -368,7 +374,14 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"policySet/{_policy_id}/rule", data=payload)
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
 
     def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -428,7 +441,13 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
         """
@@ -487,7 +506,13 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
         """
@@ -546,7 +571,13 @@ class PolicySetsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.post(f"policySet/{policy_id}/rule", data=payload)
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
         """
@@ -622,9 +653,10 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", data=payload).status_code
+        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_rule(policy_type, rule_id)
 
     def update_access_rule(
@@ -677,10 +709,12 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", data=payload).status_code
+        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_rule(policy_type, rule_id)
+
 
     def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str) -> Box:
         """

@@ -22,6 +22,7 @@ from zscaler.utils import (
     convert_keys,
     snake_to_camel,
     transform_clientless_apps,
+    recursive_snake_to_camel
 )
 from zscaler.zpa.client import ZPAClient
 
@@ -195,13 +196,29 @@ class ApplicationSegmentAPI:
             clientless_apps = kwargs.pop("clientless_app_ids")
             payload["clientlessApps"] = transform_clientless_apps(clientless_apps)
 
+        # add_id_groups(self.reformat_params, kwargs, payload)
+
+        # # Add optional parameters to payload
+        # for key, value in kwargs.items():
+        #     payload[snake_to_camel(key)] = value
         add_id_groups(self.reformat_params, kwargs, payload)
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            if value is not None:
+                payload[snake_to_camel(key)] = value
 
-        return self.rest.post("application", data=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
+
+        response = self.rest.post("application", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_segment(self, segment_id: str, **kwargs) -> Box:
         """
@@ -267,7 +284,6 @@ class ApplicationSegmentAPI:
             ...    name='new_app_name',
 
         """
-
         # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_segment(segment_id))
 
@@ -283,16 +299,17 @@ class ApplicationSegmentAPI:
             formatted_clientless_apps = [{"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")]
             payload["clientlessApps"] = formatted_clientless_apps  # use the correct key expected by your API
 
+        # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)
 
         # Add remaining optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"application/{segment_id}", data=payload).status_code
+        resp = self.rest.put(f"application/{segment_id}", json=payload).status_code
 
         # Return the object if it was updated successfully
-        if resp == 204:
+        if not isinstance(resp, Response):
             return self.get_segment(segment_id)
 
     def detach_from_segment_group(self, app_id, seg_group_id):
@@ -309,5 +326,5 @@ class ApplicationSegmentAPI:
         seg_group["applications"] = addaptedApps
         self.rest.put(
             "/segmentGroup/%s" % (seg_group_id),
-            data=seg_group,
+            json=seg_group,
         )

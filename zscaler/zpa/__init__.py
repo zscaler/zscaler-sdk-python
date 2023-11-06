@@ -162,14 +162,14 @@ class ZPAClientHelper(ZPAClient):
             logger.error("Login failed due to an exception: %s", str(e))
             return None
 
-    def send(self, method, path, data=None, params=None, api_version: str = None):
+    def send(self, method, path, json=None, params=None, api_version: str = None):
         """
         Send a request to the ZPA API.
 
         Parameters:
         - method (str): The HTTP method.
         - path (str): API endpoint path.
-        - data (dict, optional): Request payload. Defaults to None.
+        - json (dict, optional): Request payload. Defaults to None.
         Returns:
         - Response: Response object from the request.
         """
@@ -188,7 +188,7 @@ class ZPAClientHelper(ZPAClient):
         headers_with_user_agent["User-Agent"] = self.user_agent
         # Generate a unique UUID for this request
         request_uuid = uuid.uuid4()
-        dump_request(logger, url, method, data, headers_with_user_agent, request_uuid)
+        dump_request(logger, url, method, json, headers_with_user_agent, request_uuid)
         # Check cache before sending request
         cache_key = self.cache.create_key(url)
         if method == "GET" and self.cache.contains(cache_key):
@@ -211,7 +211,7 @@ class ZPAClientHelper(ZPAClient):
                 if is_token_expired(self.access_token):
                     self.logger.warning("The provided or fetched token was already expired. Refreshing...")
                     self.refreshToken()
-                resp = requests.request(method, url, json=data, headers=headers_with_user_agent, timeout=self.timeout)
+                resp = requests.request(method, url, json=json, headers=headers_with_user_agent, timeout=self.timeout)
                 dump_response(
                     logger=logger, url=url, method=method, resp=resp, request_uuid=request_uuid, start_time=start_time
                 )
@@ -263,7 +263,7 @@ class ZPAClientHelper(ZPAClient):
             self.cache.add(cache_key, resp)
         return resp
 
-    def get(self, path, data=None, params=None, api_version: str = None):
+    def get(self, path, json=None, params=None, api_version: str = None):
         """
         Send a GET request to the ZPA API.
 
@@ -280,31 +280,31 @@ class ZPAClientHelper(ZPAClient):
             time.sleep(delay)
 
         # Now proceed with sending the request
-        resp = self.send("GET", path, data, params, api_version=api_version)
+        resp = self.send("GET", path, json, params, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def put(self, path, data=None, params=None, api_version: str = None):
+    def put(self, path, json=None, params=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("PUT")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("PUT", path, data, params, api_version=api_version)
+        resp = self.send("PUT", path, json, params, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def post(self, path, data=None, params=None, api_version: str = None):
+    def post(self, path, json=None, params=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("POST", path, data, params, api_version=api_version)
+        resp = self.send("POST", path, json, params, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def delete(self, path, data=None, params=None, api_version: str = None):
+    def delete(self, path, json=None, params=None, api_version: str = None):
         should_wait, delay = self.rate_limiter.wait("DELETE")
         if should_wait:
             time.sleep(delay)
-        return self.send("DELETE", path, data, params, api_version=api_version)
+        return self.send("DELETE", path, json, params, api_version=api_version)
 
     ERROR_MESSAGES = {
         "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
