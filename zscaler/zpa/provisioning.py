@@ -16,9 +16,9 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
-
-from zscaler.utils import Iterator, snake_to_camel
+from requests import Response
+from zscaler.utils import snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
 def simplify_key_type(key_type):
@@ -31,7 +31,10 @@ def simplify_key_type(key_type):
         raise ValueError("Unexpected key type.")
 
 
-class ProvisioningAPI(APIEndpoint):
+class ProvisioningKeyAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_provisioning_keys(self, key_type: str, **kwargs) -> BoxList:
         """
         Returns a list of all configured provisioning keys that match the specified ``key_type``.
@@ -67,14 +70,8 @@ class ProvisioningAPI(APIEndpoint):
             ...    print(key)
 
         """
-
-        return BoxList(
-            Iterator(
-                self._api,
-                f"associationType/{simplify_key_type(key_type)}/provisioningKey",
-                **kwargs,
-            )
-        )
+        list, _ = self.rest.get_paginated_data(path=f"/associationType/{simplify_key_type(key_type)}/provisioningKey", data_key_name="list", **kwargs)
+        return list
 
     def get_provisioning_key(self, key_id: str, key_type: str) -> Box:
         """
@@ -101,8 +98,7 @@ class ProvisioningAPI(APIEndpoint):
             ...    key_type="service_edge")
 
         """
-
-        return self._get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
 
     def add_provisioning_key(
         self,
@@ -166,10 +162,13 @@ class ProvisioningAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey",
-            json=payload,
-        )
+        response = self.rest.post(f"associationType/{simplify_key_type(key_type)}/provisioningKey", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
         """
@@ -216,12 +215,10 @@ class ProvisioningAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            json=payload,
-        ).status_code
+        resp = self.rest.put(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_provisioning_key(key_id, key_type=key_type)
 
     def delete_provisioning_key(self, key_id: str, key_type: str) -> int:
@@ -249,8 +246,4 @@ class ProvisioningAPI(APIEndpoint):
             ...    key_type="service_edge")
 
         """
-
-        return self._delete(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            box=False,
-        ).status_code
+        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}").status_code

@@ -1,6 +1,3 @@
-from zscaler.constants import ZPA_BASE_URLS
-
-
 # Zscaler Private Access specific exceptions
 class RateLimitExceededError(Exception):
     """Raised when the API rate limit is exceeded."""

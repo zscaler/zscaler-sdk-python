@@ -16,13 +16,13 @@
 
 
 from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+from requests import Response
+import requests
+from zscaler.utils import convert_keys, keys_exists, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
-from zscaler.utils import Iterator, convert_keys, keys_exists, snake_to_camel
 
-
-class LSSConfigControllerAPI(APIEndpoint):
+class LSSConfigControllerAPI:
     source_log_map = {
         "app_connector_metrics": "zpn_ast_comprehensive_stats",
         "app_connector_status": "zpn_ast_auth_log",
@@ -34,10 +34,9 @@ class LSSConfigControllerAPI(APIEndpoint):
         "web_inspection": "zpn_waf_http_exchanges_log",
     }
 
-    def __init__(self, api: APISession):
-        super().__init__(api)
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
-        self.v2_url = api.v2_url
         self.v2_admin_url = "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
 
     def _create_policy(self, conditions: list) -> list:
@@ -114,8 +113,14 @@ class LSSConfigControllerAPI(APIEndpoint):
         # Example after:
         # {'web_browser': 'zpn_client_type_exporter'}
 
-        resp = self._get(f"{self.v2_admin_url}/clientTypes")
-        reverse_map = {v.lower().replace(" ", "_"): k for k, v in resp.items()}
+        response = requests.get(f"{self.v2_admin_url}/clientTypes", headers=self.rest.headers)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            response.raise_for_status()
+
+        reverse_map = {v.lower().replace(" ", "_"): k for k, v in response.items()}
         return Box(reverse_map)
 
     def list_configs(self, **kwargs) -> BoxList:
@@ -141,7 +146,8 @@ class LSSConfigControllerAPI(APIEndpoint):
             >>> for lss_config in zpa.lss.list_configs():
             ...    print(config)
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/lssConfig", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/lssConfig", data_key_name="list", **kwargs, api_version="v2")
+        return list
 
     def get_config(self, lss_id: str) -> Box:
         """
@@ -160,7 +166,13 @@ class LSSConfigControllerAPI(APIEndpoint):
             >>> print(zpa.lss.get_config('99999'))
 
         """
-        return self._get(f"{self.v2_url}/lssConfig/{lss_id}")
+        response = self.rest.get("/lssConfig/%s" % (lss_id), api_version="v2")
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
 
     def get_log_formats(self) -> Box:
         """
@@ -177,7 +189,12 @@ class LSSConfigControllerAPI(APIEndpoint):
             ...    print(item)
 
         """
-        return self._get(f"{self.v2_admin_url}/logType/formats")
+        response = requests.get(f"{self.v2_admin_url}/logType/formats", headers=self.rest.headers)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            response.raise_for_status()
 
     def get_status_codes(self, log_type: str = "all") -> Box:
         """
@@ -213,17 +230,27 @@ class LSSConfigControllerAPI(APIEndpoint):
             ...    print(item)
 
         """
-        if log_type == "all":
-            return self._get(f"{self.v2_admin_url}/statusCodes")
-        elif log_type in [
-            "user_activity",
-            "user_status",
-            "private_svc_edge_status",
-            "app_connector_status",
-        ]:
-            return self._get(f"{self.v2_admin_url}/statusCodes")[self.source_log_map[log_type]]
+        path = "/statusCodes"
+        if log_type != "all":
+            if log_type in [
+                "user_activity",
+                "user_status",
+                "private_svc_edge_status",
+                "app_connector_status",
+            ]:
+                path = f"{path}/{self.source_log_map[log_type]}"
+            else:
+                raise ValueError("Incorrect log_type provided.")
+
+        full_url = f"{self.v2_admin_url}{path}"
+        response = requests.get(full_url, headers=self.rest.headers)
+
+        if response.status_code == 200:
+            # Assuming that the response is a JSON object that needs to be converted to a Box
+            response_data = Box(response.json())
+            return response_data if log_type == "all" else response_data[log_type]
         else:
-            raise ValueError("Incorrect log_type provided.")
+            response.raise_for_status()
 
     def add_lss_config(
         self,
@@ -368,7 +395,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         if kwargs.get("policy_rules"):
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
-                "name": kwargs.get("policy_name", "placeholder"),
+                "name": kwargs.get("policy_name", "SIEM_POLICY"),
             }
 
         # Add Session Status Codes to filter if provided
@@ -379,8 +406,13 @@ class LSSConfigControllerAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # return payload
-        return self._post(f"{self.v2_url}/lssConfig", json=payload)
+        response = self.rest.post(f"/lssConfig", api_version="v2", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_lss_config(self, lss_config_id: str, **kwargs):
         """
@@ -451,10 +483,7 @@ class LSSConfigControllerAPI(APIEndpoint):
                         ("saml", [("attribute_id", "11111")]),
                     ],
                     source_log_type="user_status")
-
-
         """
-
         # Set payload to value of existing record
         payload = convert_keys(self.get_config(lss_config_id))
 
@@ -479,7 +508,7 @@ class LSSConfigControllerAPI(APIEndpoint):
             if keys_exists(payload, "policyRuleResource", "name"):
                 policy_name = payload["policyRuleResource"]["name"]
             else:
-                policy_name = "placeholder"
+                policy_name = "SIEM_POLICY"
             payload["policyRuleResource"] = {
                 "conditions": self._create_policy(kwargs.pop("policy_rules")),
                 "name": kwargs.pop("policy_name", policy_name),
@@ -489,10 +518,12 @@ class LSSConfigControllerAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"{self.v2_url}/lssConfig/{lss_config_id}", json=payload).status_code
+        resp = self.rest.put(f"/lssConfig/{lss_config_id}", api_version="v2", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_config(lss_config_id)
+
 
     def delete_lss_config(self, lss_id: str) -> int:
         """
@@ -511,4 +542,5 @@ class LSSConfigControllerAPI(APIEndpoint):
             >>> zpa.lss.delete_config('99999')
 
         """
-        return self._delete(f"{self.v2_url}/lssConfig/{lss_id}").status_code
+        return self.rest.delete(f"/lssConfig/{lss_id}", api_version="v2").status_code
+

@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler.utils import Iterator
+from zscaler.zpa.client import ZPAClient
 
 
-class IsolationProfileAPI(APIEndpoint):
+class IsolationProfileAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_profiles(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured isolation profiles.
@@ -44,7 +47,15 @@ class IsolationProfileAPI(APIEndpoint):
             ...    pprint(isolation_profiles)
 
         """
-        return BoxList(Iterator(self._api, "isolation/profiles", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/isolation/profiles", data_key_name="list", **kwargs)
+        return list
+
+    def get_profile_by_name(self, name):
+        profiles = self.list_profiles()
+        for profile in profiles:
+            if profile.get("name") == name:
+                return profile
+        return None
 
     def get_profile(self, profile_id: str) -> Box:
         """
@@ -61,5 +72,9 @@ class IsolationProfileAPI(APIEndpoint):
             >>> pprint(zpa.isolation_profiles.get_profile('99999'))
 
         """
-
-        return self._get(f"isolation/profiles/{profile_id}")
+        response = self.rest.get("/isolation/profiles/%s" % (profile_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response

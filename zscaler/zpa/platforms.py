@@ -14,12 +14,15 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+from box import Box
+
+from zscaler.zpa.client import ZPAClient
 
 
-class PlatformsAPI(APIEndpoint):
+class PlatformsAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_platforms(self) -> Box:
         """
         Returns a list of ZPA Access Policy supported Platforms.

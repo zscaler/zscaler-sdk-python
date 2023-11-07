@@ -5,9 +5,6 @@ from zscaler.cache.cache import Cache
 # Setting up the logger
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Get the custom logger you've defined in logger.py
-logger = logging.getLogger("zscaler-sdk-python")
-
 
 class NoOpCache(Cache):
     """

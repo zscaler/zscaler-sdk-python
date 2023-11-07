@@ -14,17 +14,51 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
 import base64
 import json
 import logging
+import random
 import re
 import time
+from typing import Any, Dict, List, Optional
 
 from box import Box, BoxList
+from requests import Response
 from restfly import APIIterator
 
+from zscaler.constants import RETRYABLE_STATUS_CODES
+
 logger = logging.getLogger("zscaler-sdk-python")
+
+
+# Recursive function to convert all keys and nested keys from camel case
+# to snake case.
+def convert_keys_to_snake(data):
+    if isinstance(data, (list, BoxList)):
+        return [convert_keys_to_snake(inner_dict) for inner_dict in data]
+    elif isinstance(data, (dict, Box)):
+        new_dict = {}
+        for k in data.keys():
+            v = data[k]
+            new_key = camel_to_snake(k)
+            new_dict[new_key] = convert_keys_to_snake(v) if isinstance(v, (dict, list)) else v
+        return new_dict
+    else:
+        return data
+
+
+def camel_to_snake(name: str):
+    """Converts Python camelCase to Zscaler's lower snake_case."""
+    # Edge-cases where camelCase is breaking
+    edge_cases = {
+        "routableIP": "routable_ip",
+        "isNameL10nTag": "is_name_l10n_tag",
+        "nameL10nTag": "name_l10n_tag",
+        "surrogateIP": "surrogate_ip",
+        "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
+        "isIncompleteDRConfig": "is_incomplete_dr_config",
+    }
+    return edge_cases.get(name, re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower())
 
 
 def snake_to_camel(name: str):
@@ -38,6 +72,7 @@ def snake_to_camel(name: str):
         "name_l10n_tag": "nameL10nTag",
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
+        "is_incomplete_dr_config": "isIncompleteDRConfig",
     }
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 
@@ -142,46 +177,61 @@ def obfuscate_api_key(seed: list):
     return {"timestamp": now, "key": key}
 
 
-# ZPA Token refresh and caching logic
-def token_is_about_to_expire(token_fetch_time):
-    """Check if the token is about to expire using the timestamp."""
-    token_life_seconds = 3600
-    buffer_time = 10
+def format_json_response(
+    response: Response,
+    box_attrs: Optional[Dict] = None,
+    conv_json: bool = True,
+    conv_box: bool = True,
+):
+    """
+    A simple utility to handle formatting the response object into either a
+    Box object or a Python native object from the JSON response.  The function
+    will prefer box over python native if both flags are set to true.  If none
+    of the flags are true, or if the content-type header reports as something
+    other than "applicagion/json", then the response object is instead
+    returned.
 
-    # Check if the time since the token was fetched + buffer exceeds the token's life
-    if (time.time() - token_fetch_time) > (token_life_seconds - buffer_time):
-        return True
-    return False
+    Args:
+        response:
+            The response object that will be checked against.
+        box_attrs:
+            The optional box attributed to pass as part of instantiation.
+        conv_json:
+            A flag handling if we should run the JSON conversion to python
+            native datatypes.
+        conv_box:
+            A flaghandling if we should convert the data to a Box object.
 
-
-def is_token_expired(token_string):
-    # If token string is None or empty, consider it expired
-    if not token_string:
-        logger.warning("Token string is None or empty. Requesting a new token.")
-        return True
-
-    try:
-        # Split the token into its parts
-        parts = token_string.split(".")
-        if len(parts) != 3:
-            return True
-
-        # Decode the payload
-        payload_bytes = base64.urlsafe_b64decode(parts[1] + "==")  # Padding might be needed
-        payload = json.loads(payload_bytes)
-
-        # Check expiration time
-        if "exp" in payload:
-            # Deduct 10 seconds to account for any possible latency or clock skew
-            expiration_time = payload["exp"] - 10
-            if time.time() > expiration_time:
-                return True
-
-        return False
-
-    except Exception as e:
-        logger.error(f"Error checking token expiration: {str(e)}")
-        return True
+    Returns:
+        box.Box:
+            If the conv_box flag is True, and the response is a single object,
+            then the response is a Box obj.
+        box.BoxList:
+            If the conv_box flag is True, and the response is a list of
+            objects, then the response is a BoxList obj.
+        dict:
+            If the conv_json flag is True and the  conv_box is False, and the
+            response is a single object, then the response is a dict obj.
+        list:
+            If the conv_json flag is True and conv_box is False, and the
+            response is a list of objects, then the response is a list obj.
+        requests.Response:
+            If neither flag is True, or if the response isn't JSON data, then
+            a response object is returned (pass-through).
+    """
+    if response.status_code > 299:
+        return response
+    content_type = response.headers.get("content-type", "application/json")
+    if (conv_json or conv_box) and "application/json" in content_type.lower() and len(response.text) > 0:  # noqa: E124
+        if conv_box:
+            data = convert_keys_to_snake(response.json())
+            if isinstance(data, list):
+                return BoxList(data, **box_attrs)
+            elif isinstance(data, dict):
+                return Box(data, **box_attrs)
+        elif conv_json:
+            return convert_keys_to_snake(response.json())
+    return response
 
 
 def pick_version_profile(kwargs: list, payload: list):
@@ -252,3 +302,117 @@ class Iterator(APIIterator):
             # standard 1 sec rate limit on the API endpoints with pagination so
             # we are going to include it here.
             time.sleep(1)
+
+
+def should_retry(status_code):
+    """Determine if a given status code should be retried."""
+    return status_code in RETRYABLE_STATUS_CODES
+
+
+def retry_with_backoff(method_type="GET", retries=5, backoff_in_seconds=0.5):
+    """
+    Decorator to retry a function in case of an unsuccessful response.
+
+    Parameters:
+    - method_type (str): The HTTP method. Defaults to "GET".
+    - retries (int): Number of retries before giving up. Defaults to 5.
+    - backoff_in_seconds (float): Initial wait time (in seconds) before retry. Defaults to 0.5.
+
+    Returns:
+    - function: Decorated function with retry and backoff logic.
+    """
+
+    if method_type != "GET":
+        retries = min(retries, 3)  # more conservative retry count for non-GET
+
+    def decorator(f):
+        def wrapper(*args, **kwargs):
+            x = 0
+            while True:
+                resp = f(*args, **kwargs)
+
+                # Check if it's a successful status code, 400, or if it shouldn't be retried
+                if 299 >= resp.status_code >= 200 or resp.status_code == 400 or not should_retry(resp.status_code):
+                    return resp
+
+                if x == retries:
+                    try:
+                        error_msg = resp.json()
+                    except Exception as e:
+                        error_msg = str(e)
+                    raise Exception(f"Reached max retries. Response: {error_msg}")
+                else:
+                    sleep = backoff_in_seconds * 2**x + random.uniform(0, 1)
+                    logger.info("Args: %s, retrying after %d seconds...", str(args), sleep)
+                    time.sleep(sleep)
+                    x += 1
+
+        return wrapper
+
+    return decorator
+
+
+def is_token_expired(token_string):
+    # If token string is None or empty, consider it expired
+    if not token_string:
+        logger.warning("Token string is None or empty. Requesting a new token.")
+        return True
+
+    try:
+        # Split the token into its parts
+        parts = token_string.split(".")
+        if len(parts) != 3:
+            return True
+
+        # Decode the payload
+        payload_bytes = base64.urlsafe_b64decode(parts[1] + "==")  # Padding might be needed
+        payload = json.loads(payload_bytes)
+
+        # Check expiration time
+        if "exp" in payload:
+            # Deduct 10 seconds to account for any possible latency or clock skew
+            expiration_time = payload["exp"] - 10
+            if time.time() > expiration_time:
+                return True
+
+        return False
+
+    except Exception as e:
+        logger.error(f"Error checking token expiration: {str(e)}")
+        return True
+
+
+def dump_request(logger, url: str, method: str, data, headers, request_uuid: str):
+    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
+    # Log the request details before sending the request
+    request_data = {
+        "url": url,
+        "method": method,
+        "request_body": json.dumps(data),
+        "uuid": str(request_uuid),
+        "request_headers": json.dumps(request_headers_filtered),
+    }
+    logger.info("Request details: %s", json.dumps(request_data))
+
+
+def dump_response(logger, url: str, method: str, resp, request_uuid: str, start_time, from_cache: bool = None):
+    # Calculate the duration in seconds
+    end_time = time.time()
+    duration_seconds = end_time - start_time
+    # Convert the duration to milliseconds
+    duration_ms = duration_seconds * 1000
+    # Convert the headers to a regular dictionary
+    response_headers_dict = dict(resp.headers)
+    # Log the response details after receiving the response
+    response_data = {
+        "url": url,
+        "method": method,
+        "response_body": resp.text,
+        "duration": str(duration_ms) + "ms",
+        "response_headers": json.dumps(response_headers_dict),
+        "uuid": str(request_uuid),
+    }
+    if from_cache:
+        logger.info("Response details from cache: %s", json.dumps(response_data))
+    else:
+        logger.info("Response details: %s", json.dumps(response_data))
