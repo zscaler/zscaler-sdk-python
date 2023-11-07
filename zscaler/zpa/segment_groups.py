@@ -1,27 +1,14 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
+from . import ZPAClient
 
 
-class SegmentGroupsAPI(APIEndpoint):
+class SegmentGroupsAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
     def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured segment groups.
@@ -34,7 +21,8 @@ class SegmentGroupsAPI(APIEndpoint):
             ...    pprint(segment_group)
 
         """
-        return BoxList(Iterator(self._api, "segmentGroup", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/segmentGroup", data_key_name="list", **kwargs, api_version="v1")
+        return list
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -51,25 +39,14 @@ class SegmentGroupsAPI(APIEndpoint):
             >>> pprint(zpa.segment_groups.get_group('99999'))
 
         """
+        return self.rest.get(f"segmentGroup/{group_id}")
 
-        return self._get(f"segmentGroup/{group_id}")
-
-    def delete_group(self, group_id: str) -> int:
-        """
-        Deletes the specified segment group.
-
-        Args:
-            group_id (str):
-                The unique identifier for the segment group to be deleted.
-
-        Returns:
-            :obj:`int`: The response code for the operation.
-
-        Examples:
-            >>> zpa.segment_groups.delete_group('99999')
-
-        """
-        return self._delete(f"segmentGroup/{group_id}").status_code
+    def get_segment_group_by_name(self, name):
+        apps = self.list_groups()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def add_group(self, name: str, enabled: bool = True, **kwargs) -> Box:
         """
@@ -114,7 +91,13 @@ class SegmentGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("segmentGroup", json=payload)
+        response = self.rest.post("segmentGroup", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -158,9 +141,25 @@ class SegmentGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # ZPA doesn't return the updated resource so let's check our response
-        # was okay and then return the resource, else return None.
-        resp = self._put(f"segmentGroup/{group_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_group(group_id)
+
+    def delete_group(self, group_id: str) -> int:
+        """
+        Deletes the specified segment group.
+
+        Args:
+            group_id (str):
+                The unique identifier for the segment group to be deleted.
+
+        Returns:
+            :obj:`int`: The response code for the operation.
+
+        Examples:
+            >>> zpa.segment_groups.delete_group('99999')
+
+        """
+        return self.rest.delete(f"segmentGroup/{group_id}").status_code

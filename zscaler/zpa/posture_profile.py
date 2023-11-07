@@ -1,57 +1,38 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
 from box import Box, BoxList
-from restfly import APISession
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler import utils
-from zscaler.utils import Iterator
+from zscaler.utils import remove_cloud_suffix
+
+from . import ZPAClient
 
 
-class PostureProfilesAPI(APIEndpoint):
-    def __init__(self, api: APISession):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
+class PostureProfilesAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_profiles(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured posture profiles.
 
         Keyword Args:
-            **max_items (int):
+            max_items (int):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int):
+            max_pages (int):
                 The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
+            pagesize (int):
                 Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
+            search (str, optional):
                 The search string used to match against features and fields.
 
         Returns:
-            :obj:`BoxList`: A list of all configured posture profiles.
+            BoxList: A list of all configured posture profiles.
 
         Examples:
             >>> for posture_profile in zpa.posture_profiles.list_profiles():
             ...    pprint(posture_profile)
-
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/posture", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/posture", data_key_name="list", **kwargs, api_version="v2")
+        return list
 
     def get_profile(self, profile_id: str) -> Box:
         """
@@ -68,8 +49,12 @@ class PostureProfilesAPI(APIEndpoint):
             >>> pprint(zpa.posture_profiles.get_profile('99999'))
 
         """
-
-        return self._get(f"posture/{profile_id}")
+        response = self.rest.get("/posture/%s" % (profile_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def get_udid_by_profile_name(self, search_name: str, **kwargs) -> str:
         """
@@ -86,7 +71,7 @@ class PostureProfilesAPI(APIEndpoint):
         """
         profiles = self.list_profiles(**kwargs)
         for profile in profiles:
-            clean_profile_name = utils.remove_cloud_suffix(profile.get("name"))
+            clean_profile_name = remove_cloud_suffix(profile.get("name"))
             if clean_profile_name == search_name or profile.get("name") == search_name:
                 return profile.get("posture_udid")
         return None

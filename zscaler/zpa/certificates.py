@@ -16,16 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint, APISession
+from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class CertificatesAPI(APIEndpoint):
-    def __init__(self, api: APISession):
-        super().__init__(api)
-
-        self.v2_url = api.v2_url
+class CertificatesAPI:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_issued_certificates(self, **kwargs) -> BoxList:
         """
@@ -52,7 +51,8 @@ class CertificatesAPI(APIEndpoint):
             ...    print(cert)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/clientlessCertificate/issued", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/clientlessCertificate/issued", data_key_name="list", **kwargs, api_version="v2")
+        return list
 
     def list_all_certificates(self, **kwargs) -> BoxList:
         """
@@ -79,7 +79,8 @@ class CertificatesAPI(APIEndpoint):
             ...    print(cert)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/certificate", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/certificate", data_key_name="list", **kwargs, api_version="v1")
+        return list
 
     def add_certificate(self, name: str, cert_blob: str, **kwargs) -> Box:
         """
@@ -115,7 +116,12 @@ class CertificatesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("certificate", json=payload)
+        response = self.rest.post("/certificate", json=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code > 299:
+                return None
+        return self.get_certificate(response.get("id"))
 
     def get_certificate(self, certificate_id: str) -> Box:
         """
@@ -133,7 +139,12 @@ class CertificatesAPI(APIEndpoint):
             >>> ba_certificate = zpa.certificates.get_browser_access('99999')
 
         """
-        return self._get(f"clientlessCertificate/{certificate_id}")
+        response = self.rest.get("/clientlessCertificate/%s" % (certificate_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def delete_certificate(self, certificate_id: str) -> Box:
         """
@@ -167,7 +178,8 @@ class CertificatesAPI(APIEndpoint):
             enrolment_cert = zpa.certificates.get_enrolment('99999999')
 
         """
-        return self._get(f"enrollmentCert/{certificate_id}")
+        response = self.rest.get("/enrollmentCert/%s?%s" % (certificate_id))
+        return response.status_code
 
     def list_enrolment(self, **kwargs) -> BoxList:
         """
@@ -194,4 +206,6 @@ class CertificatesAPI(APIEndpoint):
             ...    print(cert)
 
         """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/enrollmentCert", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2")
+        return list
+

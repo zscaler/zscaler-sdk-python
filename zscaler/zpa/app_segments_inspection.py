@@ -16,24 +16,26 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import (
-    Iterator,
     add_id_groups,
     convert_keys,
     recursive_snake_to_camel,
     snake_to_camel,
 )
+from zscaler.zpa.client import ZPAClient
 
-
-class AppSegmentsInspectionAPI(APIEndpoint):
+class AppSegmentsInspectionAPI:
     # Params that need reformatting
     reformat_params = [
         ("server_group_ids", "serverGroups"),
     ]
 
-    def list_segments_inspection(self, **kwargs) -> BoxList:
+    def __init__(self, client: ZPAClient):
+        self.rest = client
+
+    def list_segment_inspection(self, **kwargs) -> BoxList:
         """
         Retrieve all configured AppProtection application segments.
 
@@ -44,7 +46,8 @@ class AppSegmentsInspectionAPI(APIEndpoint):
             >>> app_segments = zpa.app_segments_inspection.list_segments_inspection()
 
         """
-        return BoxList(Iterator(self._api, "application", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/application", data_key_name="list", **kwargs)
+        return list
 
     def get_segment_inspection(self, segment_id: str) -> Box:
         """
@@ -61,7 +64,14 @@ class AppSegmentsInspectionAPI(APIEndpoint):
             >>> app_segment = zpa.app_segments_inspection.details('99999')
 
         """
-        return self._get(f"application/{segment_id}")
+        return self.rest.get(f"application/{segment_id}")
+
+    def get_segment_inspection_by_name(self, name):
+        apps = self.list_segment_inspection()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def delete_segment_inspection(self, segment_id: str, force_delete: bool = False) -> int:
         """
@@ -86,9 +96,11 @@ class AppSegmentsInspectionAPI(APIEndpoint):
             >>> zpa.app_segments_inspection.delete('88888', force_delete=True)
 
         """
-        payload = {"forceDelete": force_delete}
-
-        return self._delete(f"application/{segment_id}", params=payload).status_code
+        query = ""
+        if force_delete:
+            query = "forceDelete=true"
+        response = self.rest.delete("/application/%s?%s" % (segment_id, query))
+        return response.status_code
 
     def add_segment_inspection(
         self,
@@ -96,8 +108,8 @@ class AppSegmentsInspectionAPI(APIEndpoint):
         domain_names: list,
         segment_group_id: str,
         server_group_ids: list,
-        tcp_ports: list = None,
-        udp_ports: list = None,
+        tcp_port_ranges: list = None,
+        udp_port_ranges: list = None,
         common_apps_dto: dict = None,
         **kwargs,
     ) -> Box:
@@ -166,8 +178,8 @@ class AppSegmentsInspectionAPI(APIEndpoint):
         payload = {
             "name": name,
             "domainNames": domain_names,
-            "tcpPortRanges": tcp_ports,
-            "udpPortRanges": udp_ports,
+            "tcpPortRanges": tcp_port_ranges,
+            "udpPortRanges": udp_port_ranges,
             "segmentGroupId": segment_group_id,
             "commonAppsDto": common_apps_dto if common_apps_dto else None,
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
@@ -188,7 +200,14 @@ class AppSegmentsInspectionAPI(APIEndpoint):
         for key, value in kwargs.items():
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
-        return self._post("application", json=camel_payload)
+
+        response = self.rest.post("application", json=camel_payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_segment_inspection(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
         """
@@ -255,27 +274,26 @@ class AppSegmentsInspectionAPI(APIEndpoint):
         """
         # Set payload to value of existing record and recursively convert nested dict keys from snake_case to camelCase.
         payload = convert_keys(self.get_segment_inspection(segment_id))
-        if kwargs.get("tcp_ports"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
-        if kwargs.get("udp_ports"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
+
+        if kwargs.get("tcp_port_ranges"):
+            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_port_ranges")]
+
+        if kwargs.get("udp_port_ranges"):
+            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
 
         if common_apps_dto:
             camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)  # use the recursive function
             payload["commonAppsDto"] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
 
         # Convert other keys in payload
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
-
         add_id_groups(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
 
-        # Convert the payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)  # use the recursive function
-        resp = self._put(f"application/{segment_id}", json=camel_payload).status_code
-        if resp == 204:
+        # Add remaining optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        resp = self.rest.put(f"application/{segment_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_segment_inspection(segment_id)

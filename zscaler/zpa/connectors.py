@@ -1,31 +1,18 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
-from zscaler.utils import Iterator, add_id_groups, pick_version_profile, snake_to_camel
+from zscaler.utils import add_id_groups, pick_version_profile, snake_to_camel
+from zscaler.zpa.client import ZPAClient
 
 
-class ConnectorsAPI(APIEndpoint):
+class AppConnectorControllerAPI:
     reformat_params = [
         ("connector_ids", "connectors"),
         ("server_group_ids", "serverGroups"),
     ]
+
+    def __init__(self, client: ZPAClient):
+        self.rest = client
 
     def list_connectors(self, **kwargs) -> BoxList:
         """
@@ -54,7 +41,8 @@ class ConnectorsAPI(APIEndpoint):
             ...    print(connector)
 
         """
-        return BoxList(Iterator(self._api, "connector", **kwargs))
+        list, _ = self.rest.get_paginated_data(path=f"/connector", data_key_name="list", **kwargs, api_version="v1")
+        return list
 
     def get_connector(self, connector_id: str) -> Box:
         """
@@ -70,7 +58,19 @@ class ConnectorsAPI(APIEndpoint):
             >>> app_connector = zpa.connectors.get_connector('99999')
 
         """
-        return self._get(f"connector/{connector_id}")
+        response = self.rest.get(f"/connector/%s" % (connector_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
+    def get_connector_by_name(self, name):
+        apps = self.list_connectors()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
 
     def update_connector(self, connector_id: str, **kwargs):
         """
@@ -106,9 +106,8 @@ class ConnectorsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"connector/{connector_id}", json=payload).status_code
-
-        if resp == 204:
+        resp = self.rest.put(f"/connector/%s" % (connector_id),json=payload).status_code
+        if not isinstance(resp, Response):
             return self.get_connector(connector_id)
 
     def delete_connector(self, connector_id: str) -> int:
@@ -125,7 +124,7 @@ class ConnectorsAPI(APIEndpoint):
             >>> zpa.connectors.delete_connector('999999')
 
         """
-        return self._delete(f"connector/{connector_id}", box=False).status_code
+        return self.rest.delete(f"connector/{connector_id}").status_code
 
     def bulk_delete_connectors(self, connector_ids: list) -> int:
         """
@@ -142,7 +141,7 @@ class ConnectorsAPI(APIEndpoint):
 
         """
         payload = {"ids": connector_ids}
-        return self._post("connector/bulkDelete", json=payload, box=False).status_code
+        return self.rest.post("connector/bulkDelete", json=payload).status_code
 
     def list_connector_groups(self, **kwargs) -> BoxList:
         """
@@ -162,10 +161,11 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`BoxList`: List of all configured connector groups.
 
         Examples:
-            >>> connector_groups = zpa.connector_groups.list_groups()
+            >>> connector_groups = zpa.connectors.list_connector_groups()
 
         """
-        return BoxList(Iterator(self._api, "appConnectorGroup", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/appConnectorGroup", data_key_name="list", **kwargs, api_version="v1")
+        return list
 
     def get_connector_group(self, group_id: str) -> Box:
         """
@@ -180,10 +180,22 @@ class ConnectorsAPI(APIEndpoint):
                 The connector group resource record.
 
         Examples:
-            >>> connector_group = zpa.connector_groups.get_group('99999')
+            >>> connector_group = zpa.connectors.get_connector_group('99999')
 
         """
-        return self._get(f"appConnectorGroup/{group_id}")
+        response = self.rest.get(f"/appConnectorGroup/%s" % (group_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
+    def get_connector_group_by_name(self, name):
+        groups = self.list_groups()
+        for group in groups:
+            if group.get("name") == name:
+                return group
+        return None
 
     def add_connector_group(self, name: str, latitude: int, location: str, longitude: int, **kwargs) -> Box:
         """
@@ -254,7 +266,14 @@ class ConnectorsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("appConnectorGroup", json=payload)
+        response = self.rest.post("appConnectorGroup", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
 
     def update_connector_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -324,9 +343,10 @@ class ConnectorsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"appConnectorGroup/{group_id}", json=payload).status_code
+        resp = self.rest.put(f"appConnectorGroup/{group_id}", json=payload).status_code
 
-        if resp == 204:
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
             return self.get_connector_group(group_id)
 
     def delete_connector_group(self, group_id: str) -> int:
@@ -343,4 +363,4 @@ class ConnectorsAPI(APIEndpoint):
             >>> zpa.connectors.delete_connector_group('1876541121')
 
         """
-        return self._delete(f"appConnectorGroup/{group_id}").status_code
+        return self.rest.delete(f"appConnectorGroup/{group_id}").status_code
