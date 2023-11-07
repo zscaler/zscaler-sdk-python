@@ -22,12 +22,13 @@ from zscaler.utils import (
     dump_request,
     dump_response,
 )
+from zscaler.zpa.client import ZPAClient
 from zscaler.zpa.app_segments import ApplicationSegmentAPI
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.certificates import CertificatesAPI
-from zscaler.zpa.client import ZPAClient
 from zscaler.zpa.client_types import ClientTypesAPI
+from zscaler.zpa.cbi_profile import CBIProfileAPIControllerAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from zscaler.zpa.connectors import AppConnectorControllerAPI
 from zscaler.zpa.idp import IDPControllerAPI
@@ -181,6 +182,8 @@ class ZPAClientHelper(ZPAClient):
             api = self.v2_url
         elif api_version == "userconfig_v1":
             api = self.user_config_url
+        elif api_version == "cbiconfig_v1":
+            api = self.cbi_url
 
         url = f"{api}/{path.lstrip('/')}"
         start_time = time.time()
@@ -419,6 +422,14 @@ class ZPAClientHelper(ZPAClient):
 
         """
         return IsolationProfileAPI(self)
+
+    @property
+    def cbi_profile(self):
+        """
+        The interface object for the :ref:`ZPA Cloud Browser Isolation External Profile interface <zpa-cbi_profile>`.
+
+        """
+        return CBIProfileAPIControllerAPI(self)
 
     @property
     def cloud_connector_groups(self):
