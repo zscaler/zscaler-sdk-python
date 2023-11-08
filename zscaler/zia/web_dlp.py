@@ -18,12 +18,12 @@
 import json
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import snake_to_camel
 
 
-class WebDLPAPI(APIEndpoint):
+class WebDLPAPI:
     # Web DLP rule keys that only require an ID to be provided.
     _key_id_list = [
         "auditor",
@@ -44,8 +44,11 @@ class WebDLPAPI(APIEndpoint):
         "users",
         "url_categories",
     ]
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
     def list_rules(self, **kwargs) -> BoxList:
+
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
 

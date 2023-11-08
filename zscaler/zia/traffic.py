@@ -16,12 +16,16 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import Iterator, convert_keys, snake_to_camel
 
 
-class TrafficForwardingAPI(APIEndpoint):
+class TrafficForwardingAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def list_gre_tunnels(self, **kwargs) -> BoxList:
         """
         Returns the list of all configured GRE tunnels.

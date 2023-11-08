@@ -16,10 +16,14 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class DataCenterVIPSAPI(APIEndpoint):
+class DataCenterVIPSAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def list_public_se(self, cloud: str, continent: str = None) -> Box:
         """
         Returns a list of the Zscaler Public Service Edge information for the specified cloud.

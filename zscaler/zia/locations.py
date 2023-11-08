@@ -16,12 +16,16 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import Iterator, snake_to_camel
 
 
-class LocationsAPI(APIEndpoint):
+class LocationsAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def list_locations(self, **kwargs) -> BoxList:
         """
         Returns a list of locations.

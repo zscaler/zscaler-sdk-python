@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
-
+from requests import Response
 from zscaler.utils import snake_to_camel
+from zscaler.zia import ZIAClient
 
+class DLPAPI:
 
-class DLPAPI(APIEndpoint):
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def add_dict(self, name: str, match_type: str, **kwargs) -> Box:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
@@ -126,7 +129,10 @@ class DLPAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("dlpDictionaries", json=payload)
+        response = self.rest.post(path="dlpDictionaries", json=payload)
+        if isinstance(response, Response):
+            return None
+        return response
 
     def update_dict(self, dict_id: str, **kwargs) -> Box:
         """
@@ -178,7 +184,6 @@ class DLPAPI(APIEndpoint):
             ...                ])
 
         """
-
         # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_dict(dict_id).items()}
 
@@ -216,7 +221,9 @@ class DLPAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"dlpDictionaries/{dict_id}", json=payload)
+        response = self.rest.put("/dlpDictionaries/%s" % (dict_id), json=payload)
+        if not isinstance(response, Response):
+            return self.get_dict(dict_id)
 
     def list_dicts(self, query: str = None) -> BoxList:
         """
@@ -240,7 +247,10 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("dlpDictionaries", params=payload)
+        list = self.rest.get(path="/dlpDictionaries", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_dict(self, dict_id: str) -> Box:
         """
@@ -256,8 +266,10 @@ class DLPAPI(APIEndpoint):
             >>> pprint(zia.dlp.get_dict('3'))
 
         """
-
-        return self._get(f"dlpDictionaries/{dict_id}")
+        response = self.rest.get("/dlpDictionaries/%s" % (dict_id))
+        if isinstance(response, Response):
+            return None
+        return response
 
     def delete_dict(self, dict_id: str) -> int:
         """
@@ -273,7 +285,8 @@ class DLPAPI(APIEndpoint):
             >>> zia.dlp.delete_dict('8')
 
         """
-        return self._delete(f"dlpDictionaries/{dict_id}", box=False).status_code
+        response = self.rest.delete("/dlpDictionaries/%s" % (dict_id))
+        return response.status_code
 
     def validate_dict(self, pattern: str) -> Box:
         """
@@ -292,8 +305,12 @@ class DLPAPI(APIEndpoint):
         """
         payload = {"data": pattern}
 
-        return self._post("dlpDictionaries/validateDlpPattern", json=payload)
+        response = self.rest.post(path="dlpDictionaries/validateDlpPattern", json=payload)
+        if isinstance(response, Response):
+            return None
+        return response
 
+    # TODO: implemnt the remaining
     def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, description=None) -> Box:
         """
         Adds a new dlp engine.
@@ -315,11 +332,10 @@ class DLPAPI(APIEndpoint):
 
         # Convert the payload keys to camelCase
         camel_payload = {snake_to_camel(key): value for key, value in payload.items()}
-
-        # Temporarily print the camelCase payload to check it
-        print(camel_payload)
-
-        return self._post("dlpEngines", json=camel_payload)
+        response = self.rest.post(path="/dlpEngines", json=camel_payload)
+        if isinstance(response, Response):
+            return None
+        return response
 
     def update_dlp_engine(self, engine_id: str, **kwargs) -> Box:
         """
@@ -370,8 +386,9 @@ class DLPAPI(APIEndpoint):
                     payload[snake_to_camel(key)].append({"id": item})
             else:
                 payload[snake_to_camel(key)] = value
-
-        return self._put(f"dlpEngines/{engine_id}", json=payload)
+        response = self.rest.put("/dlpEngines/%s" % (engine_id), json=payload)
+        if not isinstance(response, Response):
+            return self.get_dlp_engines(engine_id)
 
     def delete_dlp_engine(self, engine_id: str) -> int:
         """
@@ -387,8 +404,8 @@ class DLPAPI(APIEndpoint):
             >>> zia.dlp.delete_dlp_engine('278454')
 
         """
-
-        return self._delete(f"dlpEngines/{engine_id}", box=False).status_code
+        response = self.rest.delete("/dlpEngines/%s" % (engine_id))
+        return response.status_code
 
     def list_dlp_engines(self, query: str = None) -> BoxList:
         """
@@ -412,7 +429,10 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("dlpEngines", params=payload)
+        list = self.rest.get(path="/dlpEngines", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_dlp_engines(self, engine_id: str) -> Box:
         """
@@ -428,7 +448,10 @@ class DLPAPI(APIEndpoint):
             >>> engine = zia.dlp.get_dlp_engines('99999')
 
         """
-        return self._get(f"dlpEngines/{engine_id}")
+        response = self.rest.get("/dlpEngines/%s" % (engine_id))
+        if isinstance(response, Response):
+            return None
+        return response
 
     def list_dlp_icap_servers(self, query: str = None) -> BoxList:
         """
@@ -452,7 +475,10 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("icapServers", params=payload)
+        list = self.rest.get(path="/icapServers", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_dlp_icap_servers(self, icap_server_id: str) -> Box:
         """
@@ -468,7 +494,10 @@ class DLPAPI(APIEndpoint):
             >>> icap = zia.dlp.get_dlp_icap_servers('99999')
 
         """
-        return self._get(f"icapServers/{icap_server_id}")
+        response = self.rest.get("/icapServers/%s" % (icap_server_id))
+        if isinstance(response, Response):
+            return None
+        return response
 
     def list_dlp_incident_receiver(self, query: str = None) -> BoxList:
         """
@@ -492,7 +521,10 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("incidentReceiverServers", params=payload)
+        list = self.rest.get(path="/incidentReceiverServers", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_dlp_incident_receiver(self, receiver_id: str) -> Box:
         """
@@ -508,7 +540,10 @@ class DLPAPI(APIEndpoint):
             >>> incident_receiver = zia.dlp.get_dlp_incident_receiver('99999')
 
         """
-        return self._get(f"incidentReceiverServers/{receiver_id}")
+        response = self.rest.get("/incidentReceiverServers/%s" % (receiver_id))
+        if isinstance(response, Response):
+            return None
+        return response
 
     def list_dlp_idm_profiles(self, query: str = None) -> BoxList:
         """
@@ -532,7 +567,10 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("idmprofile", params=payload)
+        list = self.rest.get(path="/idmprofile", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_dlp_idm_profiles(self, profile_id: str) -> Box:
         """
@@ -548,4 +586,7 @@ class DLPAPI(APIEndpoint):
             >>> idm = zia.dlp.get_dlp_idm_profiles('99999')
 
         """
-        return self._get(f"idmprofile/{profile_id}")
+        response = self.rest.get("/idmprofile/%s" % (profile_id))
+        if isinstance(response, Response):
+            return None
+        return response

@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
-
+from requests import Response
 from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.zia import ZIAClient
 
 
-class RuleLabelsAPI(APIEndpoint):
+class RuleLabelsAPI:
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def list_labels(self, **kwargs) -> BoxList:
         """
         Returns the list of ZIA Rule Labels.
@@ -54,7 +57,10 @@ class RuleLabelsAPI(APIEndpoint):
             ...    print(label)
 
         """
-        return BoxList(Iterator(self._api, "ruleLabels", **kwargs))
+        list = self.rest.get(path="/ruleLabels", **kwargs)
+        if isinstance(list, Response):
+            return None
+        return list
 
     def get_label(self, label_id: str) -> Box:
         """
@@ -70,7 +76,12 @@ class RuleLabelsAPI(APIEndpoint):
             >>> label = zia.labels.get_label('99999')
 
         """
-        return self._get(f"ruleLabels/{label_id}")
+        response = self.rest.get("/ruleLabels/%s" % (label_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def add_label(self, name: str, **kwargs) -> Box:
         """
@@ -104,7 +115,27 @@ class RuleLabelsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("ruleLabels", json=payload)
+        response = self.rest.post("ruleLabels", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+        # response = self.rest.post("/ruleLabels", json=payload)
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code > 299:
+        #         return None
+        # return self.get_label(response.get("id"))
+
+
+        # response = self.rest.post(path="/ruleLabels", json=payload)
+        # if isinstance(response, Response):
+        #     return None
+        # return response
+
 
     def update_label(self, label_id: str, **kwargs):
         """
@@ -140,7 +171,12 @@ class RuleLabelsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"ruleLabels/{label_id}", json=payload)
+        resp = self.rest.put(f"ruleLabels/{label_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_label(label_id)
+
 
     def delete_label(self, label_id):
         """
@@ -156,5 +192,4 @@ class RuleLabelsAPI(APIEndpoint):
             >>> user = zia.labels.delete_label('99999')
 
         """
-
-        return self._delete(f"ruleLabels/{label_id}", box=False).status_code
+        return self.rest.delete(f"ruleLabels/{label_id}").status_code
