@@ -30,5 +30,5 @@ __contributors__ = [
 ]
 __version__ = "1.0.0"
 
-from zscaler.zia import ZIA  # noqa
+from zscaler.zia import ZIAClientHelper  # noqa
 from zscaler.zpa import ZPAClientHelper  # noqa

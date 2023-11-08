@@ -1,9 +1,43 @@
-# Zscaler Private Access specific exceptions
+import json
+
+# Zscaler Base Exceptions
+class ZscalerBaseException(Exception):
+    def __init__(self, url, response, response_body):
+        self.status = response.status_code
+        self.url = url
+        self.response_body = json.dumps(response_body)
+        self.message = f"ZSCALER HTTP {url} {self.status} {self.response_body}"
+
+    def __repr__(self):
+        return str({"message": self.message})
+    def __str__(self):
+        return self.message
+
+
+class HTTPException(ZscalerBaseException):
+    pass
+
+
+class ZscalerAPIException(ZscalerBaseException):
+    pass
+
+# Zscaler Private Access specific exceptions (Potential Future Use)
+class ZpaBaseException(Exception):
+    pass
+
+
+class HTTPException(ZpaBaseException):
+    pass
+
+
+class ZpaAPIException(ZpaBaseException):
+    pass
+
+
 class RateLimitExceededError(Exception):
     """Raised when the API rate limit is exceeded."""
 
     pass
-
 
 class RetryLimitExceededError(Exception):
     """Raised when the maximum number of retries is exceeded."""

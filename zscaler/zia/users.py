@@ -16,16 +16,19 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import Iterator, convert_keys, snake_to_camel
 
 
-class UserManagementAPI(APIEndpoint):
+class UserManagementAPI:
     """
     The methods within this section use the ZIA User Management API and are accessed via ``ZIA.users``.
 
     """
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
     def list_departments(self, **kwargs) -> BoxList:
         """

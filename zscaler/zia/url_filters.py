@@ -16,12 +16,12 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import snake_to_camel
 
 
-class URLFilteringAPI(APIEndpoint):
+class URLFilteringAPI:
     # URL Filtering Policy rule keys that only require an ID to be provided.
     _key_id_list = [
         "departments",
@@ -36,6 +36,9 @@ class URLFilteringAPI(APIEndpoint):
         "time_windows",
         "users",
     ]
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
     def list_rules(self) -> BoxList:
         """

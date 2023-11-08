@@ -1,12 +1,12 @@
+from zscaler.cache.cache import Cache
 import logging
 import time
-
-from zscaler.cache.cache import Cache
+from urllib.parse import urlparse, urlencode, parse_qs
 
 logger = logging.getLogger("zscaler-sdk-python")
 
 
-class ZPACache(Cache):
+class ZscalerCache(Cache):
     """
     This is a base class implementing a Cache using TTL and TTI.
     Implementing the zscaler.cache.cache.Cache abstract class.
@@ -97,9 +97,12 @@ class ZPACache(Cache):
             # Delete entry
             del self._store[key]
             logger.info(f'Removed value from cache for key "{key}".')
+        url_object = urlparse(key)
+        base_url = f"{url_object.netloc}{url_object.path}"
         for other_key in self._store.keys():
-            # If not valid, delete
-            if not self._is_valid_entry(self._store[other_key]) and other_key.startswith(key):
+            other_url_object = urlparse(other_key)
+            other_base_url = f"{other_url_object.netloc}{other_url_object.path}"
+            if not self._is_valid_entry(self._store[other_key]) and other_base_url.startswith(base_url):
                 del self._store[other_key]
                 logger.info(f'Removed also value from cache for key "{other_key}".')
 

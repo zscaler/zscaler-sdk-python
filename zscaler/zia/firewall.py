@@ -16,12 +16,10 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
-
 from zscaler.utils import snake_to_camel
+from zscaler.zia import ZIAClient
 
-
-class FirewallPolicyAPI(APIEndpoint):
+class FirewallPolicyAPI:
     # Firewall filter rule keys that only require an ID to be provided.
     _key_id_list = [
         "app_services",
@@ -42,6 +40,9 @@ class FirewallPolicyAPI(APIEndpoint):
         "users",
     ]
 
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def list_rules(self) -> BoxList:
         """
         Returns a list of all firewall filter rules.
@@ -54,7 +55,7 @@ class FirewallPolicyAPI(APIEndpoint):
             ...    pprint(rule)
 
         """
-        return self._get("firewallFilteringRules")
+        return self.rest.get("firewallFilteringRules")
 
     def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -133,7 +134,7 @@ class FirewallPolicyAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("firewallFilteringRules", json=payload)
+        return self.rest.post("firewallFilteringRules", json=payload)
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -149,7 +150,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_rule('431233'))
 
         """
-        return self._get(f"firewallFilteringRules/{rule_id}")
+        return self.rest.get(f"firewallFilteringRules/{rule_id}")
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
@@ -219,7 +220,7 @@ class FirewallPolicyAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._put(f"firewallFilteringRules/{rule_id}", json=payload)
+        return self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
 
     def delete_rule(self, rule_id: str) -> int:
         """
@@ -236,7 +237,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
 
-        return self._delete(f"firewallFilteringRules/{rule_id}", box=False).status_code
+        return self.rest.delete(f"firewallFilteringRules/{rule_id}", box=False).status_code
 
     def list_ip_destination_groups(self, exclude_type: str = None) -> BoxList:
         """
@@ -257,7 +258,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"excludeType": exclude_type}
 
-        return self._get("ipDestinationGroups", params=payload)
+        return self.rest.get("ipDestinationGroups", params=payload)
 
     def get_ip_destination_group(self, group_id: str) -> Box:
         """
@@ -273,7 +274,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_ip_destination_group('287342'))
 
         """
-        return self._get(f"ipDestinationGroups/{group_id}")
+        return self.rest.get(f"ipDestinationGroups/{group_id}")
 
     def delete_ip_destination_group(self, group_id: str) -> int:
         """
@@ -289,7 +290,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_ip_destination_group('287342')
 
         """
-        return self._delete(f"ipDestinationGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"ipDestinationGroups/{group_id}", box=False).status_code
 
     def add_ip_destination_group(self, name: str, **kwargs) -> Box:
         """
@@ -337,7 +338,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("ipDestinationGroups", json=payload)
+        return self.rest.post("ipDestinationGroups", json=payload)
 
     def update_ip_destination_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -378,7 +379,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"ipDestinationGroups/{group_id}", json=payload)
+        return self.rest.put(f"ipDestinationGroups/{group_id}", json=payload)
 
     def list_ip_source_groups(self, search: str = None) -> BoxList:
         """
@@ -405,7 +406,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"search": search}
 
-        return self._get("ipSourceGroups", params=payload)
+        return self.rest.get("ipSourceGroups", params=payload)
 
     def get_ip_source_group(self, group_id: str) -> Box:
         """
@@ -421,7 +422,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_ip_source_group('762398')
 
         """
-        return self._get(f"ipSourceGroups/{group_id}")
+        return self.rest.get(f"ipSourceGroups/{group_id}")
 
     def delete_ip_source_group(self, group_id: str) -> int:
         """
@@ -437,7 +438,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_ip_source_group('762398')
 
         """
-        return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"ipSourceGroups/{group_id}", box=False).status_code
 
     def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None) -> Box:
         """
@@ -466,7 +467,7 @@ class FirewallPolicyAPI(APIEndpoint):
             "description": description,
         }
 
-        return self._post("ipSourceGroups", json=payload)
+        return self.rest.post("ipSourceGroups", json=payload)
 
     def update_ip_source_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -507,7 +508,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"ipSourceGroups/{group_id}", json=payload)
+        return self.rest.put(f"ipSourceGroups/{group_id}", json=payload)
 
     def list_network_app_groups(self, search: str = None) -> BoxList:
         """
@@ -522,7 +523,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplicationGroups", params=payload)
+        return self.rest.get("networkApplicationGroups", params=payload)
 
     def list_network_app_groups(self, search: str = None) -> BoxList:
         """
@@ -537,7 +538,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplicationGroups", params=payload)
+        return self.rest.get("networkApplicationGroups", params=payload)
 
     def get_network_app_group(self, group_id: str) -> Box:
         """
@@ -554,7 +555,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_app_group('762398'))
 
         """
-        return self._get(f"networkApplicationGroups/{group_id}")
+        return self.rest.get(f"networkApplicationGroups/{group_id}")
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -570,8 +571,8 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_app_group('762398')
 
         """
-        return self._delete(f"networkApplicationGroups/{group_id}", box=False).status_code
-      
+        return self.rest.delete(f"networkApplicationGroups/{group_id}", box=False).status_code
+
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
@@ -600,7 +601,7 @@ class FirewallPolicyAPI(APIEndpoint):
             "description": description,
         }
 
-        return self._post("networkApplicationGroups", json=payload)
+        return self.rest.post("networkApplicationGroups", json=payload)
 
     def update_network_app_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -641,7 +642,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServiceGroups/{group_id}", json=payload)
+        return self.rest.put(f"networkServiceGroups/{group_id}", json=payload)
 
     def list_network_apps(self, search: str = None) -> BoxList:
         """
@@ -659,7 +660,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplications", params=payload)
+        return self.rest.get("networkApplications", params=payload)
 
     def get_network_app(self, app_id: str) -> Box:
         """
@@ -675,7 +676,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_app('762398'))
 
         """
-        return self._get(f"networkApplications/{app_id}")
+        return self.rest.get(f"networkApplications/{app_id}")
 
     def list_network_svc_groups(self, search: str = None) -> BoxList:
         """
@@ -696,7 +697,7 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {}
         if search:
             payload["search"] = search
-        return self._get("networkServiceGroups", params=payload)
+        return self.rest.get("networkServiceGroups", params=payload)
 
     def get_network_svc_group(self, group_id: str) -> Box:
         """
@@ -712,7 +713,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_svc_group('762398'))
 
         """
-        return self._get(f"networkServiceGroups/{group_id}")
+        return self.rest.get(f"networkServiceGroups/{group_id}")
 
     def delete_network_svc_group(self, group_id: str) -> int:
         """
@@ -728,7 +729,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_svc_group('762398')
 
         """
-        return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"networkServiceGroups/{group_id}", box=False).status_code
 
     def add_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
         """
@@ -756,7 +757,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for service_id in service_ids:
             payload["services"].append({"id": service_id})
 
-        return self._post("networkServiceGroups", json=payload)
+        return self.rest.post("networkServiceGroups", json=payload)
 
     def update_network_svc_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -790,7 +791,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServiceGroups/{group_id}", json=payload)
+        return self.rest.put(f"networkServiceGroups/{group_id}", json=payload)
 
     def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
@@ -812,7 +813,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search, "protocol": protocol}
-        return self._get("networkServices", params=payload)
+        return self.rest.get("networkServices", params=payload)
 
     def get_network_service(self, service_id: str) -> Box:
         """
@@ -828,7 +829,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_service('762398'))
 
         """
-        return self._get(f"networkServices/{service_id}")
+        return self.rest.get(f"networkServices/{service_id}")
 
     def delete_network_service(self, service_id: str) -> int:
         """
@@ -844,7 +845,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_service('762398')
 
         """
-        return self._delete(f"networkServices/{service_id}", box=False).status_code
+        return self.rest.delete(f"networkServices/{service_id}", box=False).status_code
 
     def add_network_service(self, name: str, ports: list = None, **kwargs) -> Box:
         """
@@ -907,7 +908,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("networkServices", json=payload)
+        return self.rest.post("networkServices", json=payload)
 
     def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
         """
@@ -968,4 +969,4 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServices/{service_id}", json=payload)
+        return self.rest.put(f"networkServices/{service_id}", json=payload)

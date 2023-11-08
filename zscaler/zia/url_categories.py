@@ -18,12 +18,16 @@
 import time
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 from zscaler.utils import chunker, convert_keys, snake_to_camel
 
 
-class URLCategoriesAPI(APIEndpoint):
+class URLCategoriesAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def lookup(self, urls: list) -> BoxList:
         """
         Lookup the category for the provided URLs.

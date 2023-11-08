@@ -16,10 +16,14 @@
 
 
 from box import BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class SecurityPolicyAPI(APIEndpoint):
+class SecurityPolicyAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def get_whitelist(self) -> BoxList:
         """
         Returns a list of whitelisted URLs.

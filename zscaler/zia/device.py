@@ -16,10 +16,14 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
+
+class DeviceAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
 
-class DeviceAPI(APIEndpoint):
     def list_device_groups(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA Device Groups.
