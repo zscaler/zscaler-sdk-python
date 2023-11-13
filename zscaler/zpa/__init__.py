@@ -198,8 +198,8 @@ class ZPAClientHelper(ZPAClient):
             dump_response(
                 logger=logger,
                 url=url,
-                params=params,
                 method=method,
+                params=params,
                 resp=resp,
                 request_uuid=request_uuid,
                 start_time=start_time,

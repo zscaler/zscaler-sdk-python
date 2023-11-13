@@ -87,7 +87,7 @@ class AuthenticationSettingsAPI:
 
         """
         payload = {"urls": url_list}
-        resp = self.rest.post("authSettings/exemptedUrls?action=REMOVE_FROM_LIST", json=payload).status_code
+        resp = self.rest.post("authSettings/exemptedUrls?action=REMOVE_FROM_LIST", json=payload)
 
         # Return the updated exemption list if the removal was successful.
         if resp == 204:

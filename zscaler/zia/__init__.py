@@ -8,6 +8,7 @@ import uuid
 from time import sleep
 import requests
 from box import Box, BoxList
+from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.errors.http_error import ZscalerAPIError, HTTPError
 from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
@@ -80,16 +81,32 @@ class ZIAClientHelper(ZIAClient):
 
     """
 
-    def __init__(self, api_key, username, password, cloud, timeout=240, cache=None, fail_safe=False):
-        self.api_key = api_key
-        self.username = username
-        self.password = password
-        self.env_cloud = cloud
+    _vendor = "Zscaler"
+    _product = "Zscaler Internet Access"
+    _build = __version__
+    _env_base = "ZIA"
+    url = "https://zsapi.zscaler.net/api/v1"
+    env_cloud = "zscaler"
+
+    def __init__(self, cloud, timeout=240, cache=None, fail_safe=False, **kw):
+
+        self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
+        self.username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
+        self.password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
+        # The 'cloud' parameter should have precedence over environment variables
+        self.env_cloud = cloud or kw.get('cloud') or os.getenv(f"{self._env_base}_CLOUD")
+        if not self.env_cloud:
+            raise ValueError(f"The cloud environment must be set via the 'cloud' argument or the {self._env_base}_CLOUD environment variable.")
+
+        # URL construction
         if cloud == "zspreview":
             self.url = f"https://admin.{self.env_cloud}.net/api/v1"
         else:
-            self.url = f"https://zsapi.{self.env_cloud}.net/api/v1"
+            # Use override URL if provided, else construct the URL
+            self.url = kw.get('override_url') or os.getenv(f"{self._env_base}_OVERRIDE_URL") or f"https://zsapi.{self.env_cloud}.net/api/v1"
+
         self.conv_box = True
+        self.sandbox_token = kw.get('sandbox_token') or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
@@ -153,7 +170,8 @@ class ZIAClientHelper(ZIAClient):
         """
         Creates a ZIA authentication session.
         """
-        api_obf = obfuscate_api_key(self.api_key)
+        api_key_chars = list(self.api_key)
+        api_obf = obfuscate_api_key(api_key_chars)
 
         payload = {
             "apiKey": api_obf["key"],
@@ -199,6 +217,7 @@ class ZIAClientHelper(ZIAClient):
                 logger=logger,
                 url=url,
                 method=method,
+                params=params,
                 resp=resp,
                 request_uuid=request_uuid,
                 start_time=start_time,
@@ -223,7 +242,7 @@ class ZIAClientHelper(ZIAClient):
                     cookies={"JSESSIONID": self.session_id},
                 )
                 dump_response(
-                    logger=logger, url=url, method=method, resp=resp, request_uuid=request_uuid, start_time=start_time
+                    logger=logger, url=url, params=params, method=method, resp=resp, request_uuid=request_uuid, start_time=start_time
                 )
                 if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
                     sleep_time = int(

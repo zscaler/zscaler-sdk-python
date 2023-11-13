@@ -56,6 +56,9 @@ def camel_to_snake(name: str):
         "nameL10nTag": "name_l10n_tag",
         "surrogateIP": "surrogate_ip",
         "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
+        "capturePCAP": "capture_pcap",
+        "startIPAddress": "start_ip_address",
+        "endIPAddress": "end_ip_address",
         "isIncompleteDRConfig": "is_incomplete_dr_config",
     }
     return edge_cases.get(name, re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower())
@@ -396,7 +399,7 @@ def dump_request(logger, url: str, method: str, json, params, headers, request_u
     logger.info("Request details: %s", jsonp.dumps(request_data))
 
 
-def dump_response(logger, url: str, method: str, resp, request_uuid: str, start_time, from_cache: bool = None):
+def dump_response(logger, url: str, method: str, resp, params, request_uuid: str, start_time, from_cache: bool = None):
     # Calculate the duration in seconds
     end_time = time.time()
     duration_seconds = end_time - start_time
@@ -409,6 +412,7 @@ def dump_response(logger, url: str, method: str, resp, request_uuid: str, start_
         "url": url,
         "method": method,
         "response_body": resp.text,
+        "params": jsonp.dumps(params),
         "duration": f"{duration_ms:.2f}ms",
         "response_headers": jsonp.dumps(response_headers_dict),
         "uuid": str(request_uuid),

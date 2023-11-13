@@ -16,9 +16,9 @@
 
 
 from box import Box, BoxList
+from requests import Response
 from zscaler.zia import ZIAClient
-
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.utils import convert_keys, snake_to_camel
 
 
 class TrafficForwardingAPI:
@@ -58,7 +58,8 @@ class TrafficForwardingAPI:
             ...    print(tunnel)
 
         """
-        return BoxList(Iterator(self._api, "greTunnels", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/greTunnels", data_key_name="list", **kwargs)
+        return list
 
     def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
@@ -75,7 +76,7 @@ class TrafficForwardingAPI:
             >>> gre_tunnel = zia.traffic.get_gre_tunnel('967134')
 
         """
-        return self._get(f"greTunnels/{tunnel_id}")
+        return self.rest.get(f"greTunnels/{tunnel_id}")
 
     def list_gre_ranges(self, **kwargs) -> BoxList:
         """
@@ -96,9 +97,40 @@ class TrafficForwardingAPI:
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
 
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        # payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        return self._get("greTunnels/availableInternalIpRanges", params=payload)
+        valid_params = ["internalIpRange", "staticIp", "limit"]
+        query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
+
+        response = self.rest.get("greTunnels/availableInternalIpRanges", params=query_params)
+        if isinstance(response, Response):
+            return None
+        return response
+
+    def list_region_geo_coordinates(self, **kwargs):
+        """
+        Returns a list of regions based on geographic coordinates.
+
+        Keyword Args:
+            **latitude (float, optional):
+                Latitude to search for.
+            **longitude (float, optional):
+                Longitude to search for.
+
+        Returns:
+            The raw response from the API.
+
+        Examples:
+            >>> regions = zia.traffic.list_region_geo_coordinates(latitude=41.0, longitude=117.0)
+            >>> print(regions)
+
+        """
+
+        valid_params = ["latitude", "longitude"]
+        query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
+
+        response = self.rest.get("region/byGeoCoordinates", params=query_params)
+        return response
 
     def add_gre_tunnel(
         self,
@@ -154,22 +186,98 @@ class TrafficForwardingAPI:
         """
 
         # If primary/secondary VIPs not provided, add the closest diverse VIPs
-        if primary_dest_vip_id is None and secondary_dest_vip_id is None:
-            recommended_vips = self.get_closest_diverse_vip_ids(source_ip)
-            primary_dest_vip_id = recommended_vips[0]
-            secondary_dest_vip_id = recommended_vips[1]
+        # Extract IDs from list if provided as such
+        primary_vip_id = primary_dest_vip_id[0] if isinstance(primary_dest_vip_id, list) else primary_dest_vip_id
+        secondary_vip_id = secondary_dest_vip_id[0] if isinstance(secondary_dest_vip_id, list) else secondary_dest_vip_id
 
         payload = {
             "sourceIp": source_ip,
-            "primaryDestVip": {"id": primary_dest_vip_id},
-            "secondaryDestVip": {"id": secondary_dest_vip_id},
+            "primaryDestVip": {"id": primary_vip_id},
+            "secondaryDestVip": {"id": secondary_vip_id},
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("greTunnels", json=payload)
+        response = self.rest.post("greTunnels", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+    def update_gre_tunnel(
+        self,
+        tunnel_id: int,
+        source_ip: str = None,
+        primary_dest_vip_id: str = None,
+        secondary_dest_vip_id: str = None,
+        **kwargs,
+    ) -> Box:
+        """
+        Update an existing GRE tunnel.
+
+        Args:
+            tunnel_id (int): Unique identifier of the GRE tunnel to be updated.
+            source_ip (str): The source IP address of the GRE tunnel.
+            primary_dest_vip_id (str): The unique identifier for the primary destination VIP of the GRE tunnel.
+            secondary_dest_vip_id (str): The unique identifier for the secondary destination VIP of the GRE tunnel.
+
+        Keyword Args:
+            Additional parameters such as 'comment', 'ip_unnumbered', etc.
+
+        Returns:
+            Box: Updated GRE tunnel object.
+        """
+
+        if tunnel_id is None:
+            raise ValueError("tunnel_id is a required parameter for updating a GRE tunnel.")
+
+        # Extract IDs from list if provided as such
+        primary_vip_id = primary_dest_vip_id[0] if isinstance(primary_dest_vip_id, list) else primary_dest_vip_id
+        secondary_vip_id = secondary_dest_vip_id[0] if isinstance(secondary_dest_vip_id, list) else secondary_dest_vip_id
+
+        payload = {}
+        if source_ip:
+            payload["sourceIp"] = source_ip
+        if primary_vip_id:
+            payload["primaryDestVip"] = {"id": primary_vip_id}
+        if secondary_vip_id:
+            payload["secondaryDestVip"] = {"id": secondary_vip_id}
+
+        # Add additional optional parameters
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        response = self.rest.put(f"greTunnels/{tunnel_id}", json=payload)
+
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_gre_tunnel(tunnel_id)
+
+
+    def delete_gre_tunnel(self, tunnel_id: str) -> int:
+        """
+        Delete the specified static IP.
+
+        Args:
+            static_ip_id (str):
+                The unique identifier for the static IP.
+
+        Returns:
+            :obj:`int`: The response code for the operation.
+
+        Examples:
+            >>> zia.traffic.delete_gre_tunnel('972494')
+
+        """
+
+        return self.rest.delete(f"greTunnels/{tunnel_id}").status_code
 
     def list_static_ips(self, **kwargs) -> BoxList:
         """
@@ -208,8 +316,13 @@ class TrafficForwardingAPI:
             ...    print(ip_address)
 
         """
+        valid_params = ["availableForGreTunnel", "ipAddress"]
+        query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
 
-        return BoxList(Iterator(self._api, "staticIP", **kwargs))
+        response = self.rest.get("/staticIP", params=query_params)
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_static_ip(self, static_ip_id: str) -> Box:
         """
@@ -226,7 +339,7 @@ class TrafficForwardingAPI:
             >>> static_ip = zia.traffic.get_static_ip('967134')
 
         """
-        return self._get(f"staticIP/{static_ip_id}")
+        return self.rest.get(f"staticIP/{static_ip_id}")
 
     def add_static_ip(self, ip_address: str, **kwargs) -> Box:
         """
@@ -271,7 +384,13 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("staticIP", json=payload)
+        response = self.rest.post("staticIP", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def check_static_ip(self, ip_address: str) -> int:
         """
@@ -292,7 +411,7 @@ class TrafficForwardingAPI:
             "ipAddress": ip_address,
         }
 
-        return self._post("staticIP/validate", json=payload, box=False).status_code
+        return self.rest.post("staticIP/validate", json=payload).status_code
 
     def update_static_ip(self, static_ip_id: str, **kwargs) -> Box:
         """
@@ -334,7 +453,11 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"staticIP/{static_ip_id}", json=payload)
+        response = self.rest.put(f"staticIP/{static_ip_id}", json=payload)
+
+        # Return the object if it was updated successfully
+        if not isinstance(response, Response):
+            return self.get_static_ip(static_ip_id)
 
     def delete_static_ip(self, static_ip_id: str) -> int:
         """
@@ -352,7 +475,7 @@ class TrafficForwardingAPI:
 
         """
 
-        return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
+        return self.rest.delete(f"staticIP/{static_ip_id}").status_code
 
     def list_vips(self, **kwargs) -> BoxList:
         """
@@ -393,7 +516,10 @@ class TrafficForwardingAPI:
             ...    print(vip)
 
         """
-        return BoxList(Iterator(self._api, "vips", **kwargs))
+        response = self.rest.get("/vips", **kwargs)
+        if isinstance(response, Response):
+            return None
+        return response
 
     def list_vips_recommended(self, source_ip: str, **kwargs) -> BoxList:
         """
@@ -437,7 +563,10 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._get("vips/recommendedList", params=payload)
+        response = self.rest.get("vips/recommendedList", params=payload, **kwargs)
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
         """
@@ -465,53 +594,41 @@ class TrafficForwardingAPI:
 
     def list_vpn_credentials(self, **kwargs) -> BoxList:
         """
-        Returns the list of all configured VPN credentials.
+        Returns the list of all configured VPN credentials with optional filtering.
 
         Args:
             **kwargs:
                 Optional keyword search filters.
 
         Keyword Args:
-            **include_only_without_location (bool, optional):
+            search (str, optional):
+                The search string used to match against a VPN credential's attributes.
+            type (str, optional):
+                Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH).
+            include_only_without_location (bool, optional):
                 Include VPN credential only if not associated to any location.
-            **location_id (int, optional):
+            location_id (int, optional):
                 Gets the VPN credentials for the specified location ID.
-
-                **NOTE**: Included for completeness as per documentation, but the ZIA API does not respond with
-                filtered results.
-            **max_items (int, optional):
+            managedBy (int, optional):
+                Gets the VPN credentials managed by the given partner.
+            max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
+            max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-            **search (str, optional):
-                The search string used to match against a VPN credential's commonName, fqdn, ipAddress,
-                comments, or locationName
-            **type (str, optional):
-                Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH)
 
         Returns:
             :obj:`BoxList`: List containing the VPN credential resource records.
-
-        Examples:
-            List VPN credentials using default settings:
-
-            >>> for credential in zia.traffic.list_vpn_credentials:
-            ...    pprint(credential)
-
-            List VPN credentials, limiting to a maximum of 10 items:
-
-            >>> for credential in zia.traffic.list_vpn_credentials(max_items=10):
-            ...    print(credential)
-
-            List VPN credentials, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
-            ...    print(credential)
-
         """
-        return BoxList(Iterator(self._api, "vpnCredentials", **kwargs))
+        valid_params = ["search", "type", "include_only_without_location", "location_id", "managedBy"]
+        query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
+
+        response = self.rest.get("/vpnCredentials", params=query_params)
+        if isinstance(response, Response):
+            return None
+        return response
+
 
     def add_vpn_credential(self, authentication_type: str, pre_shared_key: str, **kwargs) -> Box:
         """
@@ -571,7 +688,13 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("vpnCredentials", json=payload)
+        response = self.rest.post("vpnCredentials", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def bulk_delete_vpn_credentials(self, credential_ids: list) -> int:
         """
@@ -591,7 +714,13 @@ class TrafficForwardingAPI:
 
         payload = {"ids": credential_ids}
 
-        return self._post("vpnCredentials/bulkDelete", json=payload, box=False).status_code
+        response = self.rest.post("vpnCredentials/bulkDelete", json=payload).status_code
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def get_vpn_credential(self, credential_id: str = None, fqdn: str = None) -> Box:
         """
@@ -618,7 +747,7 @@ class TrafficForwardingAPI:
             credential = (record for record in self.list_vpn_credentials(search=fqdn) if record.fqdn == fqdn)
             return next(credential, None)
 
-        return self._get(f"vpnCredentials/{credential_id}")
+        return self.rest.get(f"vpnCredentials/{credential_id}")
 
     def update_vpn_credential(self, credential_id: str, **kwargs) -> Box:
         """
@@ -664,7 +793,16 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"vpnCredentials/{credential_id}", json=payload)
+        resp = self.rest.put(f"vpnCredentials/{credential_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_vpn_credential(credential_id)
+
+        # response = self.rest.put(f"vpnCredentials/{credential_id}", json=payload)
+        # if isinstance(response, Response) and response.ok:
+        #     return self.get_vpn_credential(credential_id)
+        # return Box()
 
     def delete_vpn_credential(self, credential_id: str) -> int:
         """
@@ -681,4 +819,4 @@ class TrafficForwardingAPI:
             >>> zia.traffic.delete_vpn_credential('97679391')
 
         """
-        return self._delete(f"vpnCredentials/{credential_id}", box=False).status_code
+        return self.rest.delete(f"vpnCredentials/{credential_id}").status_code
