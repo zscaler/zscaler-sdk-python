@@ -332,9 +332,13 @@ class DLPAPI:
 
         # Convert the payload keys to camelCase
         camel_payload = {snake_to_camel(key): value for key, value in payload.items()}
-        response = self.rest.post(path="/dlpEngines", json=camel_payload)
+
+        response = self.rest.post("dlpEngines", json=camel_payload)
         if isinstance(response, Response):
-            return None
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_dlp_engine(self, engine_id: str, **kwargs) -> Box:
@@ -386,6 +390,7 @@ class DLPAPI:
                     payload[snake_to_camel(key)].append({"id": item})
             else:
                 payload[snake_to_camel(key)] = value
+
         response = self.rest.put("/dlpEngines/%s" % (engine_id), json=payload)
         if not isinstance(response, Response):
             return self.get_dlp_engines(engine_id)
@@ -454,10 +459,10 @@ class DLPAPI:
         return response
 
     def get_dlp_engine_by_name(self, name):
-        apps = self.get_dlp_engines()
-        for app in apps:
-            if app.get("name") == name:
-                return app
+        engines = self.get_dlp_engines()
+        for engine in engines:
+            if engine.get("name") == name:
+                return engine
         return None
 
     def list_dlp_icap_servers(self, query: str = None) -> BoxList:
