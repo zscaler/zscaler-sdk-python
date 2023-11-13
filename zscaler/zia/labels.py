@@ -123,19 +123,6 @@ class RuleLabelsAPI:
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-        # response = self.rest.post("/ruleLabels", json=payload)
-        # if isinstance(response, Response):
-        #     status_code = response.status_code
-        #     if status_code > 299:
-        #         return None
-        # return self.get_label(response.get("id"))
-
-
-        # response = self.rest.post(path="/ruleLabels", json=payload)
-        # if isinstance(response, Response):
-        #     return None
-        # return response
-
 
     def update_label(self, label_id: str, **kwargs):
         """
@@ -171,12 +158,11 @@ class RuleLabelsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"ruleLabels/{label_id}", json=payload).status_code
+        resp = self.rest.put(f"ruleLabels/{label_id}", json=payload)
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_label(label_id)
-
 
     def delete_label(self, label_id):
         """

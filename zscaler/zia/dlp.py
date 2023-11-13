@@ -453,6 +453,13 @@ class DLPAPI:
             return None
         return response
 
+    def get_dlp_engine_by_name(self, name):
+        apps = self.get_dlp_engines()
+        for app in apps:
+            if app.get("name") == name:
+                return app
+        return None
+
     def list_dlp_icap_servers(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP ICAP Servers.
