@@ -25,7 +25,7 @@ class DLPAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def add_dict(self, name: str, match_type: str, **kwargs) -> Box:
+    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> Box:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
@@ -96,42 +96,22 @@ class DLPAPI:
 
         payload = {
             "name": name,
-            "dictionaryType": "PATTERNS_AND_PHRASES",
+            "customPhraseMatchType": custom_phrase_match_type,
+            "dictionaryType": dictionary_type
         }
 
-        # Simplify Zscaler's required values for our users.
-        if match_type == "all":
-            payload["customPhraseMatchType"] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
-        elif match_type == "any":
-            payload["customPhraseMatchType"] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
-        else:
-            raise ValueError
-
-        if kwargs.get("patterns"):
-            for pattern in kwargs.pop("patterns"):
-                payload.setdefault("patterns", []).append(
-                    {
-                        "action": f"PATTERN_COUNT_TYPE_{pattern[0].upper()}",
-                        "pattern": pattern[1],
-                    }
-                )
-
-        if kwargs.get("phrases"):
-            for phrase in kwargs.pop("phrases"):
-                payload.setdefault("phrases", []).append(
-                    {
-                        "action": f"PHRASE_COUNT_TYPE_{phrase[0].upper()}",
-                        "phrase": phrase[1],
-                    }
-                )
-
-        # Update payload
+        # Process additional keyword arguments
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            # Convert the key to camelCase and assign the value
+            camel_key = snake_to_camel(key)
+            payload[camel_key] = value
 
-        response = self.rest.post(path="dlpDictionaries", json=payload)
+        response = self.rest.post("dlpDictionaries", json=payload)
         if isinstance(response, Response):
-            return None
+            # Handle non-successful status codes
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+
         return response
 
     def update_dict(self, dict_id: str, **kwargs) -> Box:
@@ -184,46 +164,31 @@ class DLPAPI:
             ...                ])
 
         """
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_dict(dict_id).items()}
+        # Fetch the existing dictionary details
+        existing_dict = self.get_dict(dict_id)
 
-        if kwargs.get("match_type"):
-            match_type = kwargs.pop("match_type")
-            if match_type == "all":
-                payload["customPhraseMatchType"] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
-            elif match_type == "any":
-                payload["customPhraseMatchType"] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
-            else:
-                raise ValueError
+        # Construct the payload for update
+        payload = {
+            "id": dict_id,
+            "name": existing_dict.get("name"),
+            "customPhraseMatchType": existing_dict.get("customPhraseMatchType"),
+            "dictionaryType": existing_dict.get("dictionaryType")
+        }
 
-        # If patterns or phrases provided, overwrite existing values
-        if kwargs.get("patterns"):
-            payload["patterns"] = []
-            for pattern in kwargs.pop("patterns"):
-                payload.setdefault("patterns", []).append(
-                    {
-                        "action": f"PATTERN_COUNT_TYPE_{pattern[0].upper()}",
-                        "pattern": pattern[1],
-                    }
-                )
-
-        if kwargs.get("phrases"):
-            payload["phrases"] = []
-            for phrase in kwargs.pop("phrases"):
-                payload["phrases"].append(
-                    {
-                        "action": f"PHRASE_COUNT_TYPE_{phrase[0].upper()}",
-                        "phrase": phrase[1],
-                    }
-                )
-
-        # Update payload
+        # Process additional keyword arguments
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            # Convert the key to camelCase and assign the value
+            camel_key = snake_to_camel(key)
+            payload[camel_key] = value
 
-        response = self.rest.put("/dlpDictionaries/%s" % (dict_id), json=payload)
-        if not isinstance(response, Response):
-            return self.get_dict(dict_id)
+        response = self.rest.put(f"/dlpDictionaries/{dict_id}", json=payload)
+        if isinstance(response, Response):
+            # Handle non-successful status codes
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_dict(dict_id)
 
     def list_dicts(self, query: str = None) -> BoxList:
         """
@@ -433,11 +398,10 @@ class DLPAPI:
             >>> pprint(zia.dlp.list_dlp_engines('GDPR'))
 
         """
-        payload = {"search": query}
-        list = self.rest.get(path="/dlpEngines", params=payload)
-        if isinstance(list, Response):
+        response = self.rest.get("/dlpEngines")
+        if isinstance(response, Response):
             return None
-        return list
+        return response
 
     def get_dlp_engines(self, engine_id: str) -> Box:
         """

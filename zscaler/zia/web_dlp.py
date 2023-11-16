@@ -15,13 +15,11 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import json
-
 from box import Box, BoxList
-from zscaler.zia import ZIAClient
-
+from requests import Response
 from zscaler.utils import snake_to_camel
 
+from zscaler.zia import ZIAClient
 
 class WebDLPAPI:
     # Web DLP rule keys that only require an ID to be provided.
@@ -63,7 +61,10 @@ class WebDLPAPI:
             ...    print(item)
 
         """
-        return self._get("webDlpRules")
+        response = self.rest.get("/webDlpRules")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -82,7 +83,8 @@ class WebDLPAPI:
             ... print(results)
 
         """
-        return self._get(f"webDlpRules/{rule_id}")
+        return self.rest.get(f"webDlpRules/{rule_id}")
+
 
     def list_rules_lite(self) -> BoxList:
         """
@@ -99,7 +101,10 @@ class WebDLPAPI:
             ...    print(item)
 
         """
-        return self._get("webDlpRules/lite")
+        response = self.rest.get("webDlpRules/lite")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -161,6 +166,10 @@ class WebDLPAPI:
              ...    description='TT#1965432122')
 
         """
+        # Convert rule_state to API format if present
+        if 'rule_state' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('rule_state') else "DISABLED"
+
         payload = {
             "name": name,
             "action": action,
@@ -176,7 +185,14 @@ class WebDLPAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("webDlpRules", json=payload)
+        response = self.rest.post("webDlpRules", json=payload)
+
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
@@ -233,19 +249,23 @@ class WebDLPAPI:
 
         """
 
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_rule(rule_id).items()}
+        existing_data = self.get_rule(rule_id)
 
-        # Add optional parameters to payload
+        # Convert rule_state to API format if present in kwargs
+        if 'rule_state' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('rule_state') else "DISABLED"
+
+        # Merge existing data with new data from kwargs
+        payload = {snake_to_camel(k): v for k, v in existing_data.items()}
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
-                payload[snake_to_camel(key)] = value
+            # Override the existing data with new data
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f"webDlpRules/{rule_id}", json=payload)
+        response = self.rest.put(f"webDlpRules/{rule_id}", json=payload)
+        if isinstance(response, Response) and response.ok:
+            return self.get_rule(rule_id)
+        return Box()
+
 
     def delete_rule(self, rule_id: str) -> Box:
         """
@@ -265,4 +285,5 @@ class WebDLPAPI:
 
 
         """
-        return self._delete(f"webDlpRules/{rule_id}", box=False).status_code
+        response = self.rest.delete(f"webDlpRules/{rule_id}")
+        return response.status_code if isinstance(response, Response) else None
