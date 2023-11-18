@@ -262,9 +262,12 @@ class WebDLPAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"webDlpRules/{rule_id}", json=payload)
-        if isinstance(response, Response) and response.ok:
-            return self.get_rule(rule_id)
-        return Box()
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_rule(rule_id)
 
 
     def delete_rule(self, rule_id: str) -> Box:

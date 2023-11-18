@@ -56,7 +56,6 @@ def camel_to_snake(name: str):
         "nameL10nTag": "name_l10n_tag",
         "surrogateIP": "surrogate_ip",
         "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
-        "capturePCAP": "capture_pcap",
         "startIPAddress": "start_ip_address",
         "endIPAddress": "end_ip_address",
         "isIncompleteDRConfig": "is_incomplete_dr_config",

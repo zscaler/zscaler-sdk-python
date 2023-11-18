@@ -275,7 +275,7 @@ class DLPAPI:
             return None
         return response
 
-    # TODO: implemnt the remaining
+    # TODO: implement the remaining
     def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, description=None) -> Box:
         """
         Adds a new dlp engine.
@@ -566,3 +566,170 @@ class DLPAPI:
         if isinstance(response, Response):
             return None
         return response
+
+    def list_dlp_templates(self, query: str = None) -> BoxList:
+        """
+        Returns the list of ZIA DLP Notification Templates.
+
+        Args:
+            query (str): A search string used to match against a DLP Engine's name or description attributes.
+
+        Returns:
+            :obj:`BoxList`: A list containing ZIA DLP Engines.
+
+        Examples:
+            Print all dlp templates
+
+            >>> for dlp templates in zia.dlp.list_dlp_templates():
+            ...    pprint(engine)
+
+            Print templates that match the name or description 'Standard_Template'
+
+            >>> pprint(zia.dlp.list_dlp_templates('Standard_Template'))
+
+        """
+        payload = {"search": query}
+        response = self.rest.get("/dlpNotificationTemplates", params=payload)
+        if isinstance(response, Response):
+            return None
+        return response
+
+    def get_dlp_templates(self, template_id: str) -> Box:
+        """
+        Returns the dlp notification template details for a given DLP template.
+
+        Args:
+            template_id (int): The unique identifer for the DLP notification template.
+
+        Returns:
+            :obj:`Box`: The DLP template resource record.
+
+        Examples:
+            >>> template = zia.dlp.get_dlp_templates('99999')
+
+        """
+        response = self.rest.get("/dlpNotificationTemplates/%s" % (template_id))
+        if isinstance(response, Response):
+            return None
+        return response
+
+
+    def add_dlp_template(self, name: str, subject: str, **kwargs) -> Box:
+        """
+        Adds a new DLP notification template to ZIA.
+
+        Args:
+            name (str): The name of the DLP notification template.
+            subject (str): The subject line displayed within the DLP notification email.
+
+        Keyword Args:
+            attach_content (bool): If true, the content in violation is attached to the DLP notification email.
+            plain_text_message (str): Template for the plain text UTF-8 message body displayed in the DLP notification email.
+            html_message (str): Template for the HTML message body displayed in the DLP notification email.
+
+        Returns:
+            :obj:`Box`: The newly created DLP Notification Template resource record.
+
+        Examples:
+            Create a new DLP Notification Template:
+
+            >>> zia.dlp.add_dlp_template(name="New DLP Template",
+            ...                         subject="Alert: DLP Violation Detected",
+            ...                         attach_content=True,
+            ...                         plain_text_message="Text message content",
+            ...                         html_message="<html><body>HTML message content</body></html>")
+        """
+
+        payload = {
+            "name": name,
+            "subject": subject,
+        }
+
+        # Process additional keyword arguments
+        for key, value in kwargs.items():
+            # Convert the key to camelCase and assign the value
+            camel_key = snake_to_camel(key)
+            payload[camel_key] = value
+
+        response = self.rest.post("dlpNotificationTemplates", json=payload)
+        if isinstance(response, Response):
+            # Handle non-successful status codes
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+
+        return response
+
+    def update_dlp_template(self, template_id: str, **kwargs) -> Box:
+        """
+        Updates the specified DLP Notification Template.
+
+        Args:
+            template_id (str): The unique identifier for the DLP notification template.
+
+        Keyword Args:
+            name (str): The new name of the DLP notification template.
+            subject (str): The new subject line for the DLP notification email.
+            attach_content (bool): If true, updates the setting for attaching content in violation.
+            plain_text_message (str): New template for the plain text UTF-8 message body.
+            html_message (str): New template for the HTML message body.
+            tls_enabled (bool): If true, enables TLS for the notification template.
+
+        Returns:
+            :obj:`Box`: The updated DLP Notification Template resource record.
+
+        Examples:
+            Update the name of a DLP Notification Template:
+
+            >>> zia.dlp.update_dlp_template(template_id=4370,,
+            ...                tls_enabled=True)
+
+            Update the description and phrases for a DLP Dictionary.
+
+            >>> zia.dlp.update_dlp_template(template_id=4370,
+            ...        name='Standard DLP Template',
+            ...        tls_enabled=False,
+            ...        attach_content=False)
+        """
+
+        # Fetch the existing template details
+        existing_template = self.get_dlp_templates(template_id)
+        if not existing_template:
+            raise ValueError("Template not found with the provided ID")
+
+        # Construct the payload for update
+        payload = {snake_to_camel(key): kwargs.get(key, existing_template.get(snake_to_camel(key))) for key in kwargs}
+
+        # Ensure mandatory fields are included
+        mandatory_fields = ["plainTextMessage", "htmlMessage"]
+        for field in mandatory_fields:
+            if field not in payload:
+                payload[field] = existing_template.get(field)
+
+        # Add the template ID
+        payload["id"] = template_id
+
+        # Make the API call
+        response = self.rest.put(f"/dlpNotificationTemplates/{template_id}", json=payload)
+        if isinstance(response, Response) and response.status_code != 200:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_dlp_templates(template_id)
+
+
+    def delete_dlp_template(self, template_id: str) -> int:
+        """
+        Deletes the DLP Notification Template that matches the specified Template id.
+
+        Args:
+            template_id (str): The unique id for the DLP Notification Template.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.dlp.delete_dlp_template(template_id=4370)
+
+        """
+        response = self.rest.delete("/dlpNotificationTemplates/%s" % (template_id))
+        return response.status_code

@@ -19,6 +19,10 @@ from box import Box, BoxList
 from requests import Response
 from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class FirewallPolicyAPI:
     # Firewall filter rule keys that only require an ID to be provided.
@@ -217,6 +221,7 @@ class FirewallPolicyAPI:
 
         """
 
+        # Fetch existing data - consider whether all fields should be merged or only specific ones
         existing_data = self.get_rule(rule_id)
 
         # Convert rule_state to API format if present in kwargs
@@ -230,9 +235,12 @@ class FirewallPolicyAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
-        if isinstance(response, Response) and response.ok:
-            return self.get_rule(rule_id)
-        return Box()
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_rule(rule_id)
 
     def delete_rule(self, rule_id: str) -> int:
         """
