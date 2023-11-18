@@ -191,7 +191,7 @@ class ZIAClientHelper(ZIAClient):
 
     def send(self, method, path, json=None, params=None):
         """
-        Send a request to the ZPA API.
+        Send a request to the ZIA API.
 
         Parameters:
         - method (str): The HTTP method.
@@ -294,7 +294,7 @@ class ZIAClientHelper(ZIAClient):
 
     def get(self, path, json=None, params=None):
         """
-        Send a GET request to the ZPA API.
+        Send a GET request to the ZIA API.
 
         Parameters:
         - path (str): API endpoint path.
@@ -343,7 +343,7 @@ class ZIAClientHelper(ZIAClient):
 
     def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
         """
-        Fetch paginated data from the ZPA API.
+        Fetch paginated data from the ZIA API.
         ...
 
         Returns:
