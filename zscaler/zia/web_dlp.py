@@ -17,30 +17,32 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import snake_to_camel
+from zscaler.utils import (
+    snake_to_camel,
+    transform_common_id_fields,
+    recursive_snake_to_camel,
+    convert_keys
+)
 
 from zscaler.zia import ZIAClient
 
 class WebDLPAPI:
     # Web DLP rule keys that only require an ID to be provided.
-    _key_id_list = [
-        "auditor",
-        "dlp_engines",
-        "departments",
-        "devices",
-        "device_groups",
-        "groups",
-        "icap_server",
-        "excluded_groups",
-        "excluded_departments",
-        "excluded_users",
-        "labels",
-        "locations",
-        "location_groups",
-        "notification_template",
-        "time_windows",
-        "users",
-        "url_categories",
+    reformat_params = [
+        ("auditor", "auditor"),
+        ("dlp_engines", "dlpEngines"),
+        ("departments", "departments"),
+        ("excluded_departments", "excludedDepartments"),
+        ("excluded_groups", "excludedGroups"),
+        ("excluded_users", "excludedUsers"),
+        ("groups", "groups"),
+        ("labels", "labels"),
+        ("locations", "locations"),
+        ("location_groups", "locationGroups"),
+        ("notification_template", "notificationTemplate"),
+        ("time_windows", "timeWindows"),
+        ("users", "users"),
+        ("url_categories", "urlCategories"),
     ]
     def __init__(self, client: ZIAClient):
         self.rest = client
@@ -118,23 +120,23 @@ class WebDLPAPI:
              order (str): The order of the rule, defaults to adding rule to bottom of list.
              rank (str): The admin rank of the rule.
              state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-             auditor (list): The IDs for the auditors that this rule applies to.
+             auditor (:obj:`list` of :obj:`int`): The IDs for the auditors that this rule applies to.
              cloud_applications (list): The IDs for the cloud applications that this rule applies to.
              description (str): Additional information about the rule
-             departments (list): The IDs for the departments that this rule applies to.
-             dlp_engines (list): The IDs for the DLP engines that this rule applies to.
-             excluded_groups (list): The IDs for the excluded groups that this rule applies to.
-             excluded_departments (list): The IDs for the excluded departments that this rule applies to.
-             excluded_users (list): The IDs for the excluded users that this rule applies to.
+             departments (:obj:`list` of :obj:`int`):  The IDs for the departments that this rule applies to.
+             dlp_engines (:obj:`list` of :obj:`int`):  The IDs for the DLP engines that this rule applies to.
+             excluded_groups (:obj:`list` of :obj:`int`):  The IDs for the excluded groups that this rule applies to.
+             excluded_departments (:obj:`list` of :obj:`int`): The IDs for the excluded departments that this rule applies to.
+             excluded_users (:obj:`list` of :obj:`int`):  The IDs for the excluded users that this rule applies to.
              file_types (list): The list of file types for which the DLP policy rule must be applied.
-             groups (list): The IDs for the groups that this rule applies to.
-             icap_server (list): The IDs for the icap server that this rule applies to.
-             labels (list): The IDs for the labels that this rule applies to.
-             locations (list): The IDs for the locations that this rule applies to.
-             location_groups (list): The IDs for the location groups that this rule applies to.
-             notification_template (list): The IDs for the notification template that this rule applies to.
-             time_windows (list): The IDs for the time windows that this rule applies to.
-             users (list): The IDs for the users that this rule applies to.
+             groups (:obj:`list` of :obj:`int`):  The IDs for the groups that this rule applies to.
+             icap_server (:obj:`list` of :obj:`int`):  The IDs for the icap server that this rule applies to.
+             labels (:obj:`list` of :obj:`int`):  The IDs for the labels that this rule applies to.
+             locations (:obj:`list` of :obj:`int`):  The IDs for the locations that this rule applies to.
+             location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
+             notification_template (:obj:`list` of :obj:`int`):  The IDs for the notification template that this rule applies to.
+             time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
+             users (:obj:`list` of :obj:`int`):  The IDs for the users that this rule applies to.
              url_categories (list): The IDs for the URL categories the rule applies to.
              external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
              dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
@@ -166,9 +168,9 @@ class WebDLPAPI:
              ...    description='TT#1965432122')
 
         """
-        # Convert rule_state to API format if present
-        if 'rule_state' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('rule_state') else "DISABLED"
+        # Convert enabled to API format if present
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
 
         payload = {
             "name": name,
@@ -176,19 +178,21 @@ class WebDLPAPI:
             "order": kwargs.pop("order", len(self.list_rules())),
         }
 
-        # Add optional parameters to payload
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
+            if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("webDlpRules", json=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
 
+        # Send POST request to create the rule
+        response = self.rest.post("webDlpRules", json=payload)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
@@ -249,16 +253,18 @@ class WebDLPAPI:
 
         """
 
-        existing_data = self.get_rule(rule_id)
+        # Set payload to value of existing record and convert nested dict keys.
+        payload = convert_keys(self.get_rule(rule_id))
 
-        # Convert rule_state to API format if present in kwargs
-        if 'rule_state' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('rule_state') else "DISABLED"
+        # Convert enabled to API format if present in kwargs
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
 
-        # Merge existing data with new data from kwargs
-        payload = {snake_to_camel(k): v for k, v in existing_data.items()}
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
+
+        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
-            # Override the existing data with new data
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"webDlpRules/{rule_id}", json=payload)
@@ -288,5 +294,4 @@ class WebDLPAPI:
 
 
         """
-        response = self.rest.delete(f"webDlpRules/{rule_id}")
-        return response.status_code if isinstance(response, Response) else None
+        return self.rest.delete(f"webDlpRules/{rule_id}").status_code
