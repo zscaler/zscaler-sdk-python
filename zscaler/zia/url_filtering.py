@@ -16,25 +16,25 @@
 
 
 from box import Box, BoxList
+from requests import Response
 from zscaler.zia import ZIAClient
-
-from zscaler.utils import snake_to_camel
+from zscaler.utils import snake_to_camel, transform_common_id_fields, recursive_snake_to_camel, convert_keys
 
 
 class URLFilteringAPI:
     # URL Filtering Policy rule keys that only require an ID to be provided.
-    _key_id_list = [
-        "departments",
-        "devices",
-        "device_groups",
-        "groups",
-        "labels",
-        "locations",
-        "location_groups",
-        "override_users",
-        "override_groups",
-        "time_windows",
-        "users",
+    reformat_params = [
+        ("departments", "departments"),
+        ("devices", "devices"),
+        ("device_groups", "deviceGroups"),
+        ("groups", "groups"),
+        ("labels", "labels"),
+        ("locations", "locations"),
+        ("location_groups", "locationGroups"),
+        ("override_users", "overrideUsers"),
+        ("override_groups", "overrideGroups"),
+        ("time_windows", "timeWindows"),
+        ("users", "users"),
     ]
 
     def __init__(self, client: ZIAClient):
@@ -52,7 +52,10 @@ class URLFilteringAPI:
             ...    pprint(rule)
 
         """
-        return self._get("urlFilteringRules")
+        response = self.rest.get("urlFilteringRules")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -69,25 +72,18 @@ class URLFilteringAPI:
 
         """
 
-        return self._get(f"urlFilteringRules/{rule_id}")
+        return self.rest.get(f"urlFilteringRules/{rule_id}")
 
-    def delete_rule(self, rule_id: str) -> int:
-        """
-        Deletes the specified URL Filtering Policy rule.
-
-        Args:
-            rule_id (str): The unique ID for the URL Filtering Policy rule.
-
-        Returns:
-            :obj:`int`: The status code for the operation.
-
-        Examples:
-            >>> zia.url_filters.delete_rule('977463')
-
-        """
-        return self._delete(f"urlFilteringRules/{rule_id}", box=False).status_code
-
-    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs) -> Box:
+    def add_rule(
+        self,
+        rank: str,
+        name: str,
+        action: str,
+        protocols: list,
+        # override_users: list,
+        # override_groups: list,
+        **kwargs
+    ) -> Box:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -121,9 +117,9 @@ class URLFilteringAPI:
             location_groups (list): The IDs for the location groups that this rule applies to.
             order (str): Order of execution of rule with respect to other URL Filtering rules. Defaults to placing rule
                 at the bottom of the list.
-            override_users (list): The IDs of users that this rule can be overridden for.
+            override_users (:obj:`list` of :obj:`int`): The IDs of users that this rule can be overridden for.
                 Only applies if ``block_override`` is True, ``action`` is `BLOCK` and ``override_groups`` is not set.
-            override_group (list): The IDs of groups that this rule can be overridden for.
+            override_groups (:obj:`list` of :obj:`int`): The IDs of groups that this rule can be overridden for.
                 Only applies if ``block_override`` is True and ``action`` is `BLOCK`.
             request_methods (list): The request methods that this rule will apply to. If not specified, the rule will
                 apply to all methods.
@@ -161,7 +157,11 @@ class URLFilteringAPI:
             ...    url_categories=["SOCIAL_NETWORKING"])
 
         """
+        # Convert enabled to API format if present
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
 
+        # Initialize the payload with required parameters
         payload = {
             "rank": rank,
             "name": name,
@@ -170,16 +170,26 @@ class URLFilteringAPI:
             "order": kwargs.pop("order", len(self.list_rules())),
         }
 
-        # Add optional parameters to payload
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
+            if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("urlFilteringRules", json=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
+
+        # Send POST request to create the rule
+        response = self.rest.post("urlFilteringRules", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
@@ -215,9 +225,11 @@ class URLFilteringAPI:
             location_groups (list): The IDs for the location groups that this rule applies to.
             order (str): Order of execution of rule with respect to other URL Filtering rules. Defaults to placing rule
                 at the bottom of the list.
-            override_users (list): The IDs of users that this rule can be overridden for.
+            override_users (:obj:`list` of :obj:`int`):
+                The IDs of users that this rule can be overridden for.
                 Only applies if ``block_override`` is True, ``action`` is `BLOCK` and ``override_groups`` is not set.
-            override_group (list): The IDs of groups that this rule can be overridden for.
+            override_groups (:obj:`list` of :obj:`int`):
+                The IDs of groups that this rule can be overridden for.
                 Only applies if ``block_override`` is True and ``action`` is `BLOCK`.
             request_methods (list): The request methods that this rule will apply to. If not specified, the rule will
                 apply to all methods.
@@ -249,17 +261,40 @@ class URLFilteringAPI:
             ...    action="ALLOW")
 
         """
+        # Set payload to value of existing record and convert nested dict keys.
+        payload = convert_keys(self.get_rule(rule_id))
 
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_rule(rule_id).items()}
+        # Convert enabled to API format if present in kwargs
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
 
-        # Add optional parameters to payload
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
+
+        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
-                payload[snake_to_camel(key)] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f"urlFilteringRules/{rule_id}", json=payload)
+        response = self.rest.put(f"urlFilteringRules/{rule_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_rule(rule_id)
+
+    def delete_rule(self, rule_id: str) -> int:
+        """
+        Deletes the specified URL Filtering Policy rule.
+
+        Args:
+            rule_id (str): The unique ID for the URL Filtering Policy rule.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.url_filters.delete_rule('977463')
+
+        """
+        return self.rest.delete(f"urlFilteringRules/{rule_id}").status_code

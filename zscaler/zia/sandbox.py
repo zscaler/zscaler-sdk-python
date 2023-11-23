@@ -24,8 +24,8 @@ class CloudSandboxAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-        # self.sandbox_token = api.sandbox_token
-        # self.env_cloud = api.env_cloud
+        self.sandbox_token = client.sandbox_token
+        self.env_cloud = client.env_cloud
 
     def submit_file(self, file: str, force: bool = False) -> Box:
         """
@@ -55,7 +55,7 @@ class CloudSandboxAPI:
         return self.rest.post(
             f"https://csbapi.{self.env_cloud}.net/zscsb/submit",
             params=params,
-            data=data,
+            json=data,
         )
 
     def submit_file_for_inspection(self, file: str) -> Box:
@@ -82,7 +82,7 @@ class CloudSandboxAPI:
         return self.rest.post(
             f"https://csbapi.{self.env_cloud}.net/zscsb/discan",
             params=params,
-            data=data,
+            param=data,
         )
 
     def get_quota(self) -> Box:
