@@ -216,10 +216,10 @@ class LocationsAPI:
 
         response = self.rest.post("locations", json=payload)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
-            status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def list_sub_locations(self, location_id: str, **kwargs) -> BoxList:
@@ -433,9 +433,12 @@ class LocationsAPI:
             payload["displayTimeUnit"] = "MINUTE"
 
         response = self.rest.put(f"locations/{location_id}", json=payload)
-        if isinstance(response, Response) and response.ok:
-            return self.get_location(location_id)
-        return Box()
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_location(location_id)
 
     def delete_location(self, location_id: str) -> int:
         """
@@ -452,8 +455,7 @@ class LocationsAPI:
             >>> zia.locations.delete_location('97456691')
 
         """
-        response = self.rest.delete(f"locations/{location_id}")
-        return response.status_code if isinstance(response, Response) else None
+        return self.rest.delete(f"locations/{location_id}").status_code
 
     def list_location_groups(self, **kwargs) -> BoxList:
         """
