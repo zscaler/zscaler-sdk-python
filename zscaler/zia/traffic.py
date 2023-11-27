@@ -454,10 +454,12 @@ class TrafficForwardingAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"staticIP/{static_ip_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-        # Return the object if it was updated successfully
-        if not isinstance(response, Response):
-            return self.get_static_ip(static_ip_id)
+        # Return the updated object
+        return self.get_static_ip(static_ip_id)
 
     def delete_static_ip(self, static_ip_id: str) -> int:
         """
@@ -624,9 +626,7 @@ class TrafficForwardingAPI:
         valid_params = ["search", "type", "include_only_without_location", "location_id", "managedBy"]
         query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
 
-        response = self.rest.get("/vpnCredentials", params=query_params)
-        if isinstance(response, Response):
-            return None
+        response = self.rest.get("vpnCredentials", params=query_params)
         return response
 
 
@@ -793,16 +793,13 @@ class TrafficForwardingAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"vpnCredentials/{credential_id}", json=payload).status_code
+        response = self.rest.put(f"vpnCredentials/{credential_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-        # Return the object if it was updated successfully
-        if not isinstance(resp, Response):
-            return self.get_vpn_credential(credential_id)
-
-        # response = self.rest.put(f"vpnCredentials/{credential_id}", json=payload)
-        # if isinstance(response, Response) and response.ok:
-        #     return self.get_vpn_credential(credential_id)
-        # return Box()
+        # Return the updated object
+        return self.get_vpn_credential(credential_id)
 
     def delete_vpn_credential(self, credential_id: str) -> int:
         """

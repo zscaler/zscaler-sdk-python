@@ -18,6 +18,7 @@
 import time
 
 from box import Box, BoxList
+from requests import Response
 from zscaler.zia import ZIAClient
 
 from zscaler.utils import chunker, convert_keys, snake_to_camel
@@ -55,7 +56,7 @@ class URLCategoriesAPI:
 
         else:
             payload = urls
-            return self._post("urlLookup", json=payload)
+            return self.rest.post("urlLookup", json=payload)
 
     def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
         """
@@ -85,7 +86,7 @@ class URLCategoriesAPI:
             "includeOnlyUrlKeywordCounts": only_counts,
         }
 
-        return self._get("urlCategories", params=payload)
+        return self.rest.get("urlCategories", params=payload)
 
     def get_quota(self) -> Box:
         """
@@ -99,7 +100,7 @@ class URLCategoriesAPI:
 
         """
 
-        return self._get("urlCategories/urlQuota")
+        return self.rest.get("urlCategories/urlQuota")
 
     def get_category(self, category_id: str) -> Box:
         """
@@ -116,9 +117,9 @@ class URLCategoriesAPI:
             >>> zia.url_categories.get_category('ALCOHOL_TOBACCO')
 
         """
-        return self._get(f"urlCategories/{category_id}")
+        return self.rest.get(f"urlCategories/{category_id}")
 
-    def add_url_category(self, name: str, super_category: str, urls: list, **kwargs) -> Box:
+    def add_url_category(self, configured_name: str, super_category: str, urls: list, **kwargs) -> Box:
         """
         Adds a new custom URL category.
 
@@ -172,7 +173,7 @@ class URLCategoriesAPI:
         payload = {
             "type": "URL_CATEGORY",
             "superCategory": super_category,
-            "configuredName": name,
+            "configuredName": configured_name,
             "urls": urls,
         }
 
@@ -180,7 +181,13 @@ class URLCategoriesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("urlCategories", json=payload)
+        response = self.rest.post("urlCategories", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def add_tld_category(self, name: str, tlds: list, **kwargs) -> Box:
         """
@@ -221,7 +228,13 @@ class URLCategoriesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("urlCategories", json=payload)
+        response = self.rest.post("urlCategories", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_url_category(self, category_id: str, **kwargs) -> Box:
         """
@@ -273,7 +286,13 @@ class URLCategoriesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"urlCategories/{category_id}", json=payload)
+        response = self.rest.put(f"urlCategories/{category_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_category(category_id)
 
     def add_urls_to_category(self, category_id: str, urls: list) -> Box:
         """
@@ -297,7 +316,10 @@ class URLCategoriesAPI:
         payload = convert_keys(self.get_category(category_id))
         payload["urls"] = urls
 
-        return self._put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
+        response = self.rest.put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def delete_urls_from_category(self, category_id: str, urls: list) -> Box:
         """
@@ -323,7 +345,7 @@ class URLCategoriesAPI:
             "urls": urls,
         }  # Required for successful call
 
-        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self.rest.put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
     def delete_from_category(self, category_id: str, **kwargs):
         """
@@ -376,7 +398,7 @@ class URLCategoriesAPI:
         # Convert snake to camelcase
         payload = convert_keys(payload)
 
-        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self.rest.put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
     def delete_category(self, category_id: str) -> int:
         """
@@ -393,5 +415,4 @@ class URLCategoriesAPI:
             >>> zia.url_categories.delete_category('CUSTOM_01')
 
         """
-
-        return self._delete(f"urlCategories/{category_id}", box=False).status_code
+        return self.rest.delete(f"urlCategories/{category_id}").status_code
