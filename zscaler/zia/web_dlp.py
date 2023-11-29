@@ -47,7 +47,7 @@ class WebDLPAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_rules(self, **kwargs) -> BoxList:
+    def list_rules(self) -> BoxList:
 
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.

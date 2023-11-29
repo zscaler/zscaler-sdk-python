@@ -16,6 +16,7 @@
 
 
 from box import Box
+from requests import Response
 from zscaler.zia import ZIAClient
 
 
@@ -138,6 +139,21 @@ class CloudSandboxAPI:
         return self.rest.get("behavioralAnalysisAdvancedSettings")
 
 
+    def get_file_hash_count(self) -> Box:
+        """
+        Returns the used and unused quota for blocking MD5 file hashes with Sandbox.
+
+        Returns:
+            :obj:`Box`: The used and unused quota for blocking MD5 file hashes with Sandbox.
+
+        Examples:
+            >>> pprint(zia.sandbox.get_file_hash_count())
+
+        """
+        return self.rest.get("/behavioralAnalysisAdvancedSettings/fileHashCount")
+
+
+
     def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> Box:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
@@ -151,14 +167,43 @@ class CloudSandboxAPI:
 
         Examples:
             >>> zia.sandbox.add_hash_to_custom_list(['42914d6d213a20a2684064be5c80ffa9', 'c0202cf6aeab8437c638533d14563d35'])
-            >>> zia.sandbox.add_hash_to_custom_list([])  # Clear the list
 
         """
 
         payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
 
         # Update the custom list with the provided hashes
-        self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
+        response = self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-        # Return the most up-to-date list after the update
+        # Return the updated object
+        return self.get_behavioral_analysis()
+
+    def erase_hash_to_custom_list(self) -> Box:
+        """
+        Updates the custom list of MD5 file hashes that are blocked by Sandbox.
+
+        Args:
+            file_hashes_to_be_blocked (:obj:`list` of :obj:`str`):
+                The list of MD5 Hashes to be added. Pass an empty list to clear the blocklist.
+
+        Returns:
+            :obj:`Box`: The updated custom list of MD5 Hashes.
+
+        Examples:
+            >>> zia.sandbox.erase_hash_to_custom_list()  # Clear the list
+
+        """
+
+        payload = {"fileHashesToBeBlocked": []}
+
+        # Update the custom list with the provided hashes
+        response = self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
         return self.get_behavioral_analysis()
