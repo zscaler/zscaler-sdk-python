@@ -26,7 +26,7 @@ class AdminAndRoleManagementAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_users(self, **kwargs) -> BoxList:
+    def list_users(self, query: str = None) -> BoxList:
         """
         Returns a list of admin users.
 
@@ -49,30 +49,9 @@ class AdminAndRoleManagementAPI:
             >>> users = zia.admin_and_role_management.list_users(search='login_name')
 
         """
-        return BoxList(Iterator(self._api, "adminUsers", **kwargs))
+        payload = {"search": query}
+        return self.rest.get("adminUsers", params=payload)
 
-    def list_roles(self, **kwargs) -> BoxList:
-        """
-        Return a list of the configured admin roles in ZIA.
-
-        Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
-            include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
-
-        Returns:
-            :obj:`BoxList`: A list of admin role resource records.
-
-        Examples:
-            Get a list of all configured admin roles:
-            >>> roles = zia.admin_and_management_roles.list_roles()
-
-        """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-
-        return self.rest.get("adminRoles/lite", params=payload)
 
     def get_user(self, user_id: str) -> Box:
         """
@@ -88,8 +67,12 @@ class AdminAndRoleManagementAPI:
             >>> print(zia.admin_and_role_management.get_user('987321202'))
 
         """
-        admin_user = next(user for user in self.list_users() if user.id == int(user_id))
-        return admin_user
+        response = self.rest.get("/adminUsers/%s" % (user_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
         """
@@ -301,3 +284,42 @@ class AdminAndRoleManagementAPI:
         """
         response = self.rest.delete(f"/adminUsers/%s" % (user_id))
         return response.status_code
+
+    def list_roles(self, **kwargs) -> BoxList:
+        """
+        Return a list of the configured admin roles in ZIA.
+
+        Args:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
+            include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
+
+        Returns:
+            :obj:`BoxList`: A list of admin role resource records.
+
+        Examples:
+            Get a list of all configured admin roles:
+            >>> roles = zia.admin_and_management_roles.list_roles()
+
+        """
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        return self.rest.get("adminRoles/lite", params=payload)
+
+    def get_role(self, role_id: str) -> Box:
+        """
+        Returns information on the specified admin user id.
+
+        Args:
+            user_id (str): The unique id of the admin user.
+
+        Returns:
+            :obj:`Box`: The admin user resource record.
+
+        Examples:
+            >>> print(zia.admin_and_role_management.get_user('987321202'))
+
+        """
+        admin_role = next(user for user in self.list_roles() if user.id == int(role_id))
+        return admin_role

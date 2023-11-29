@@ -16,10 +16,10 @@
 
 
 from box import Box, BoxList
+from requests import Response
 from zscaler.zia import ZIAClient
 
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
-
+from zscaler.utils import convert_keys, snake_to_camel
 
 class UserManagementAPI:
     """
@@ -57,7 +57,7 @@ class UserManagementAPI:
 
             List departments, limiting to a maximum of 10 items:
 
-            >>> for department in zia.users.list_departments(max_items=10):
+            >>> for department in zia.users.list_departments():
             ...    print(department)
 
             List departments, returning 200 items per page for a maximum of 2 pages:
@@ -65,7 +65,8 @@ class UserManagementAPI:
             >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
             ...    print(department)
         """
-        return BoxList(Iterator(self._api, "departments", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/departments", data_key_name="list", **kwargs)
+        return list
 
     def get_department(self, department_id: str) -> Box:
         """
@@ -81,7 +82,7 @@ class UserManagementAPI:
             >>> department = zia.users.get_department('99999')
 
         """
-        return self._get(f"departments/{department_id}")
+        return self.rest.get(f"departments/{department_id}")
 
     def list_groups(self, **kwargs) -> BoxList:
         """
@@ -117,7 +118,8 @@ class UserManagementAPI:
             ...    print(group)
 
         """
-        return BoxList(Iterator(self._api, "groups", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/groups", data_key_name="list", **kwargs)
+        return list
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -133,7 +135,7 @@ class UserManagementAPI:
             >>> user_group = zia.users.get_group('99999')
 
         """
-        return self._get(f"groups/{group_id}")
+        return self.rest.get(f"groups/{group_id}")
 
     def list_users(self, **kwargs) -> BoxList:
         """
@@ -173,7 +175,8 @@ class UserManagementAPI:
             ...    print(user)
 
         """
-        return BoxList(Iterator(self._api, "users", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/users", data_key_name="list", **kwargs)
+        return list
 
     def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
         """
@@ -226,12 +229,19 @@ class UserManagementAPI:
             "groups": groups,
             "department": department,
         }
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[key] = value
 
-        return self._post("users", json=payload)
+        response = self.rest.post("users", json=payload)
+        if isinstance(response, Response):
+            if response.status_code != 200:
+                try:
+                    response_data = response.json()
+                except ValueError:  # If response is not in JSON format
+                    response_data = response.text  # Use raw response
+                raise Exception(f"API call failed with status {response.status_code}: {response_data}")
+        return response
+
 
     def bulk_delete_users(self, user_ids: list) -> Box:
         """
@@ -250,7 +260,14 @@ class UserManagementAPI:
 
         payload = {"ids": user_ids}
 
-        return self._post("users/bulkDelete", json=payload)
+        response = self.rest.post("users/bulkDelete", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
 
     def get_user(self, user_id: str = None, email: str = None) -> Box:
         """
@@ -277,7 +294,7 @@ class UserManagementAPI:
             user = (record for record in self.list_users(search=email) if record.email == email)
             return next(user, None)
 
-        return self._get(f"users/{user_id}")
+        return self.rest.get(f"users/{user_id}")
 
     def update_user(
         self,
@@ -339,7 +356,14 @@ class UserManagementAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"users/{user_id}", json=payload)
+        response = self.rest.put(f"users/{user_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_user(user_id)
+
 
     def delete_user(self, user_id: str) -> int:
         """
@@ -355,4 +379,4 @@ class UserManagementAPI:
             >>> user = zia.users.delete_user('99999')
 
         """
-        return self._delete(f"users/{user_id}", box=False).status_code
+        return self.rest.delete(f"users/{user_id}").status_code
