@@ -44,6 +44,7 @@ from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.users import UserManagementAPI
 from zscaler.zia.vips import DataCenterVIPSAPI
 from zscaler.zia.web_dlp import WebDLPAPI
+from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 
 # Setup the logger
 logging.basicConfig(level=logging.INFO)
@@ -550,3 +551,12 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return WebDLPAPI(self)
+
+    @property
+    def zpa_gateway(self):
+        """
+        The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
+
+        """
+        return ZPAGatewayAPI(self)
+
