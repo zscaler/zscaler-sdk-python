@@ -16,12 +16,15 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
+from zscaler.utils import snake_to_camel
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.zia import ZIAClient
+class LocationsAPI:
 
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
-class LocationsAPI(APIEndpoint):
     def list_locations(self, **kwargs) -> BoxList:
         """
         Returns a list of locations.
@@ -62,7 +65,36 @@ class LocationsAPI(APIEndpoint):
             ...    print(location)
 
         """
-        return BoxList(Iterator(self._api, "locations", **kwargs))
+        response = self.rest.get("/locations")
+        if isinstance(response, Response):
+            return None
+        return response
+
+    def get_location(self, location_id: str = None, location_name: str = None) -> Box:
+        """
+        Returns information for the specified location based on the location id or location name.
+
+        Args:
+            location_id (str, optional):
+                The unique identifier for the location.
+            location_name (str, optional):
+                The unique name for the location.
+
+        Returns:
+            :obj:`Box`: The requested location resource record.
+
+        Examples:
+            >>> location = zia.locations.get_location('97456691')
+
+            >>> location = zia.locations.get_location_name(name='stockholm_office')
+        """
+        if location_id and location_name:
+            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
+        elif location_name:
+            location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
+            return next(location, None)
+
+        return self.rest.get(f"locations/{location_id}")
 
     def add_location(self, name: str, **kwargs) -> Box:
         """
@@ -182,33 +214,13 @@ class LocationsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("locations", json=payload)
-
-    def get_location(self, location_id: str = None, location_name: str = None) -> Box:
-        """
-        Returns information for the specified location based on the location id or location name.
-
-        Args:
-            location_id (str, optional):
-                The unique identifier for the location.
-            location_name (str, optional):
-                The unique name for the location.
-
-        Returns:
-            :obj:`Box`: The requested location resource record.
-
-        Examples:
-            >>> location = zia.locations.get_location('97456691')
-
-            >>> location = zia.locations.get_location_name(name='stockholm_office')
-        """
-        if location_id and location_name:
-            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
-        elif location_name:
-            location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
-            return next(location, None)
-
-        return self._get(f"locations/{location_id}")
+        response = self.rest.post("locations", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def list_sub_locations(self, location_id: str, **kwargs) -> BoxList:
         """
@@ -248,7 +260,7 @@ class LocationsAPI(APIEndpoint):
             ...    pprint(sub_location)
 
         """
-        return BoxList(Iterator(self._api, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
+        return self.rest.get(f"locations/{location_id}/sublocations", max_pages=1, **kwargs)
 
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
@@ -288,7 +300,7 @@ class LocationsAPI(APIEndpoint):
             ...    print(location)
 
         """
-        return BoxList(Iterator(self._api, "locations/lite", **kwargs))
+        return self.rest.get("locations/lite", **kwargs)
 
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
@@ -420,7 +432,13 @@ class LocationsAPI(APIEndpoint):
         if not payload.get("displayTimeUnit"):
             payload["displayTimeUnit"] = "MINUTE"
 
-        return self._put(f"locations/{location_id}", json=payload)
+        response = self.rest.put(f"locations/{location_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_location(location_id)
 
     def delete_location(self, location_id: str) -> int:
         """
@@ -437,7 +455,7 @@ class LocationsAPI(APIEndpoint):
             >>> zia.locations.delete_location('97456691')
 
         """
-        return self._delete(f"locations/{location_id}", box=False).status_code
+        return self.rest.delete(f"locations/{location_id}").status_code
 
     def list_location_groups(self, **kwargs) -> BoxList:
         """
@@ -457,7 +475,7 @@ class LocationsAPI(APIEndpoint):
             >>> location = zia.locations.list_location_groups()
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-        return self._get("locations/groups", params=payload)
+        return self.rest.get("locations/groups", json=payload)
 
     def get_location_group_by_id(self, group_id: int) -> Box:
         """
@@ -473,7 +491,7 @@ class LocationsAPI(APIEndpoint):
             Get a specific location group by its ID:
             >>> location = zia.locations.get_location_group_by_id(24326827)
         """
-        return self._get(f"locations/groups/{group_id}")
+        return self.rest.get(f"locations/groups/{group_id}")
 
     def get_location_group_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> Box:
         """
@@ -492,7 +510,7 @@ class LocationsAPI(APIEndpoint):
             >>> location = zia.locations.get_location_group_by_name("Unassigned Locations")
         """
         params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self._get("locations/groups", params=params)
+        return self.rest.get("locations/groups", json=params)
 
     def list_location_groups_lite(self, **kwargs) -> BoxList:
         """
@@ -512,7 +530,7 @@ class LocationsAPI(APIEndpoint):
             >>> location = zia.locations.list_location_groups_lite()
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-        return self._get("locations/groups/lite", params=payload)
+        return self.rest.get("locations/groups/lite", json=payload)
 
     def get_location_group_lite_by_id(self, group_id: int) -> Box:
         """
@@ -528,7 +546,7 @@ class LocationsAPI(APIEndpoint):
             Get a specific location group by its ID:
             >>> location = zia.locations.get_location_group_lite_by_id(24326827)
         """
-        return self._get(f"locations/groups/lite/{group_id}")
+        return self.rest.get(f"locations/groups/lite/{group_id}")
 
     def get_location_group_lite_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> BoxList:
         """
@@ -547,4 +565,4 @@ class LocationsAPI(APIEndpoint):
             >>> locations = zia.locations.get_location_group_lite_by_name("Unassigned Locations")
         """
         params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self._get("locations/groups/lite", params=params)
+        return self.rest.get("locations/groups/lite", json=params)

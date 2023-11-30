@@ -16,10 +16,14 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
+
+class DeviceAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
 
-class DeviceAPI(APIEndpoint):
     def list_device_groups(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA Device Groups.
@@ -42,7 +46,7 @@ class DeviceAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("deviceGroups", params=payload)
+        return self.rest.get("deviceGroups", params=payload)
 
     def list_devices(self, query: str = None) -> BoxList:
         """
@@ -66,7 +70,7 @@ class DeviceAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("deviceGroups/devices", params=payload)
+        return self.rest.get("deviceGroups/devices", params=payload)
 
     def list_device_lite(self) -> BoxList:
         """
@@ -83,4 +87,4 @@ class DeviceAPI(APIEndpoint):
             ...    print(item)
 
         """
-        return self._get("deviceGroups/devices/lite")
+        return self.rest.get("deviceGroups/devices/lite")

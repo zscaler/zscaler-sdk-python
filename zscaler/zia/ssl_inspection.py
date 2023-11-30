@@ -16,10 +16,14 @@
 
 
 from box import Box
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class SSLInspectionAPI(APIEndpoint):
+class SSLInspectionAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def get_csr(self) -> str:
         """
         Downloads a CSR after it has been generated.

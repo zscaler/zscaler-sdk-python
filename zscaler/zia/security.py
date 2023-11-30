@@ -16,10 +16,14 @@
 
 
 from box import BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class SecurityPolicyAPI(APIEndpoint):
+class SecurityPolicyAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def get_whitelist(self) -> BoxList:
         """
         Returns a list of whitelisted URLs.
@@ -32,7 +36,7 @@ class SecurityPolicyAPI(APIEndpoint):
             ...    pprint(url)
 
         """
-        response = self._get("security")
+        response = self.rest.get("security")
 
         # ZIA removes the whitelistUrls key from the JSON response when it's empty.
         if "whitelist_urls" in self._get("security"):
@@ -53,7 +57,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         """
 
-        return self._get("security/advanced").blacklist_urls
+        return self.rest.get("security/advanced").blacklist_urls
 
     def erase_whitelist(self) -> int:
         """
@@ -68,7 +72,7 @@ class SecurityPolicyAPI(APIEndpoint):
         """
         payload = {"whitelistUrls": []}
 
-        return self._put("security", json=payload).status_code
+        return self.rest.put("security", json=payload).status_code
 
     def replace_whitelist(self, url_list: list) -> BoxList:
         """
@@ -88,7 +92,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"whitelistUrls": url_list}
 
-        return self._put("security", json=payload).whitelist_urls
+        return self.rest.put("security", json=payload).whitelist_urls
 
     def add_urls_to_whitelist(self, url_list: list) -> BoxList:
         """
@@ -114,7 +118,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"whitelistUrls": whitelist}
 
-        return self._put("security", json=payload).whitelist_urls
+        return self.rest.put("security", json=payload).whitelist_urls
 
     def delete_urls_from_whitelist(self, url_list: list) -> BoxList:
         """
@@ -139,7 +143,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"whitelistUrls": whitelist}
 
-        return self._put("security", json=payload).whitelist_urls
+        return self.rest.put("security", json=payload).whitelist_urls
 
     def add_urls_to_blacklist(self, url_list: list) -> BoxList:
         """
@@ -159,7 +163,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        resp = self._post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).status_code
+        resp = self.rest.post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:
@@ -183,7 +187,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        return self._put("security/advanced", json=payload).blacklist_urls
+        return self.rest.put("security/advanced", json=payload).blacklist_urls
 
     def erase_blacklist(self) -> int:
         """
@@ -199,7 +203,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": []}
 
-        return self._put("security/advanced", json=payload, box=False).status_code
+        return self.rest.put("security/advanced", json=payload, box=False).status_code
 
     def delete_urls_from_blacklist(self, url_list: list) -> int:
         """
@@ -219,8 +223,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        return self._post(
+        return self.rest.post(
             "security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
             json=payload,
-            box=False,
         ).status_code

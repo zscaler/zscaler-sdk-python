@@ -174,7 +174,7 @@ class AppServersAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"server/{server_id}", json=payload, box=False).status_code
+        resp = self.rest.put(f"server/{server_id}", json=payload).status_code
 
         if resp == 204:
             return self.get_server(server_id)

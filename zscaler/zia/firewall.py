@@ -16,31 +16,44 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
+from zscaler.utils import (
+    snake_to_camel,
+    transform_common_id_fields,
+    recursive_snake_to_camel,
+    convert_keys
+)
+from zscaler.zia import ZIAClient
+import logging
 
-from zscaler.utils import snake_to_camel
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
-
-class FirewallPolicyAPI(APIEndpoint):
+class FirewallPolicyAPI:
     # Firewall filter rule keys that only require an ID to be provided.
-    _key_id_list = [
-        "app_services",
-        "app_service_groups",
-        "departments",
-        "dest_ip_groups",
-        "devices",
-        "device_groups",
-        "groups",
-        "labels",
-        "locations",
-        "location_groups",
-        "nw_application_groups",
-        "nw_services",
-        "nw_service_groups",
-        "src_ip_groups",
-        "time_windows",
-        "users",
+    reformat_params = [
+        ("app_services", "appServices"),
+        ("app_service_groups", "appServiceGroups"),
+        ("departments", "departments"),
+        ("devices", "devices"),
+        ("device_groups", "deviceGroups"),
+        ("dest_ip_groups", "destIpGroups"),
+        ("dest_ipv6_groups", "destIpv6Groups"),
+        ("groups", "groups"),
+        ("labels", "labels"),
+        ("locations", "locations"),
+        ("location_groups", "locationGroups"),
+        ("nw_application_groups", "nwApplicationGroups"),
+        ("nw_service_groups", "nwServiceGroups"),
+        ("src_ip_groups", "srcIpGroups"),
+        ("src_ipv6_groups", "srcIpv6Groups"),
+        ("time_windows", "timeWindows"),
+        ("users", "users"),
     ]
+
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
     def list_rules(self) -> BoxList:
         """
@@ -54,7 +67,26 @@ class FirewallPolicyAPI(APIEndpoint):
             ...    pprint(rule)
 
         """
-        return self._get("firewallFilteringRules")
+        response = self.rest.get("/firewallFilteringRules")
+        if isinstance(response, Response):
+            return None
+        return response
+
+    def get_rule(self, rule_id: str) -> Box:
+        """
+        Returns information for the specified firewall filter rule.
+
+        Args:
+            rule_id (str): The unique identifier for the firewall filter rule.
+
+        Returns:
+            :obj:`Box`: The resource record for the firewall filter rule.
+
+        Examples:
+            >>> pprint(zia.firewall.get_rule('431233'))
+
+        """
+        return self.rest.get(f"firewallFilteringRules/{rule_id}")
 
     def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -81,20 +113,20 @@ class FirewallPolicyAPI(APIEndpoint):
             enable_full_logging (bool): Enables full logging if True.
             nw_applications (list): The network service applications that this rule applies to.
             app_services (list): The IDs for the application services that this rule applies to.
-            app_service_groups (list): The IDs for the application service groups that this rule applies to.
-            departments (list): The IDs for the departments that this rule applies to.
-            dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
-            devices (list): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
-            device_groups (list): The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
-            groups (list): The IDs for the groups that this rule applies to.
-            labels (list): The IDs for the labels that this rule applies to.
-            locations (list): The IDs for the locations that this rule applies to.
-            location_groups (list): The IDs for the location groups that this rule applies to.
-            nw_application_groups (list): The IDs for the network application groups that this rule applies to.
-            nw_services (list): The IDs for the network services that this rule applies to.
-            nw_service_groups (list): The IDs for the network service groups that this rule applies to.
-            time_windows (list): The IDs for the time windows that this rule applies to.
-            users (list): The IDs for the users that this rule applies to.
+            app_service_groups (:obj:`list` of :obj:`int`): The IDs for the application service groups that this rule applies to.
+            departments (:obj:`list` of :obj:`int`): The IDs for the departments that this rule applies to.
+            dest_ip_groups (:obj:`list` of :obj:`int`): The IDs for the destination IP groups that this rule applies to.
+            devices (:obj:`list` of :obj:`int`): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
+            device_groups (:obj:`list` of :obj:`int`):The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
+            groups (:obj:`list` of :obj:`int`): The IDs for the groups that this rule applies to.
+            labels (:obj:`list` of :obj:`int`): The IDs for the labels that this rule applies to.
+            locations (:obj:`list` of :obj:`int`): The IDs for the locations that this rule applies to.
+            location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
+            nw_application_groups (:obj:`list` of :obj:`int`): The IDs for the network application groups that this rule applies to.
+            nw_services (:obj:`list` of :obj:`int`): The IDs for the network services that this rule applies to.
+            nw_service_groups (:obj:`list` of :obj:`int`):The IDs for the network service groups that this rule applies to.
+            time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
+            users (:obj:`list` of :obj:`int`): The IDs for the users that this rule applies to.
 
         Returns:
             :obj:`Box`: The new firewall filter rule resource record.
@@ -118,38 +150,36 @@ class FirewallPolicyAPI(APIEndpoint):
             ...    description='TT#1965432122')
 
         """
+        # Convert enabled to API format if present
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+
         payload = {
             "name": name,
             "action": action,
             "order": kwargs.pop("order", len(self.list_rules())),
         }
 
-        # Add optional parameters to payload
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
+            if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("firewallFilteringRules", json=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
 
-    def get_rule(self, rule_id: str) -> Box:
-        """
-        Returns information for the specified firewall filter rule.
-
-        Args:
-            rule_id (str): The unique identifier for the firewall filter rule.
-
-        Returns:
-            :obj:`Box`: The resource record for the firewall filter rule.
-
-        Examples:
-            >>> pprint(zia.firewall.get_rule('431233'))
-
-        """
-        return self._get(f"firewallFilteringRules/{rule_id}")
+        # Send POST request to create the rule
+        response = self.rest.post("firewallFilteringRules", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
@@ -165,7 +195,6 @@ class FirewallPolicyAPI(APIEndpoint):
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
             src_ips (list): The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.
-            src_ip_groups (list): The IDs for the source IP groups that this rule applies to.
             dest_addresses (list): The destination IP addresses that this rule applies to. Individual IP addresses or
             CIDR ranges accepted.
             dest_ip_categories (list): The IP address categories that this rule applies to.
@@ -176,9 +205,6 @@ class FirewallPolicyAPI(APIEndpoint):
             app_service_groups (list): The IDs for the application service groups that this rule applies to.
             departments (list): The IDs for the departments that this rule applies to.
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
-            device_trust_levels (list): The list of device trust levels for which the rule must be applied.
-            devices (list): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
-            device_groups (list): The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
             groups (list): The IDs for the groups that this rule applies to.
             labels (list): The IDs for the labels that this rule applies to.
             locations (list): The IDs for the locations that this rule applies to.
@@ -207,19 +233,27 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
 
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_rule(rule_id).items()}
+        # Set payload to value of existing record and convert nested dict keys.
+        payload = convert_keys(self.get_rule(rule_id))
 
-        # Add optional parameters to payload
+        # Convert enabled to API format if present in kwargs
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
+
+        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
-                payload[snake_to_camel(key)] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f"firewallFilteringRules/{rule_id}", json=payload)
+        response = self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_rule(rule_id)
 
     def delete_rule(self, rule_id: str) -> int:
         """
@@ -235,8 +269,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_rule('278454')
 
         """
-
-        return self._delete(f"firewallFilteringRules/{rule_id}", box=False).status_code
+        return self.rest.delete(f"firewallFilteringRules/{rule_id}").status_code
 
     def list_ip_destination_groups(self, exclude_type: str = None) -> BoxList:
         """
@@ -257,7 +290,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"excludeType": exclude_type}
 
-        return self._get("ipDestinationGroups", params=payload)
+        return self.rest.get("ipDestinationGroups", params=payload)
 
     def get_ip_destination_group(self, group_id: str) -> Box:
         """
@@ -273,7 +306,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_ip_destination_group('287342'))
 
         """
-        return self._get(f"ipDestinationGroups/{group_id}")
+        return self.rest.get(f"ipDestinationGroups/{group_id}")
 
     def delete_ip_destination_group(self, group_id: str) -> int:
         """
@@ -289,7 +322,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_ip_destination_group('287342')
 
         """
-        return self._delete(f"ipDestinationGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"ipDestinationGroups/{group_id}").status_code
 
     def add_ip_destination_group(self, name: str, **kwargs) -> Box:
         """
@@ -337,7 +370,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("ipDestinationGroups", json=payload)
+        return self.rest.post("ipDestinationGroups", json=payload)
 
     def update_ip_destination_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -378,7 +411,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"ipDestinationGroups/{group_id}", json=payload)
+        return self.rest.put(f"ipDestinationGroups/{group_id}", json=payload)
 
     def list_ip_source_groups(self, search: str = None) -> BoxList:
         """
@@ -405,7 +438,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"search": search}
 
-        return self._get("ipSourceGroups", params=payload)
+        return self.rest.get("ipSourceGroups", json=payload)
 
     def get_ip_source_group(self, group_id: str) -> Box:
         """
@@ -421,7 +454,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_ip_source_group('762398')
 
         """
-        return self._get(f"ipSourceGroups/{group_id}")
+        return self.rest.get(f"ipSourceGroups/{group_id}")
 
     def delete_ip_source_group(self, group_id: str) -> int:
         """
@@ -437,7 +470,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_ip_source_group('762398')
 
         """
-        return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"ipSourceGroups/{group_id}").status_code
 
     def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None) -> Box:
         """
@@ -466,7 +499,7 @@ class FirewallPolicyAPI(APIEndpoint):
             "description": description,
         }
 
-        return self._post("ipSourceGroups", json=payload)
+        return self.rest.post("ipSourceGroups", json=payload)
 
     def update_ip_source_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -507,7 +540,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"ipSourceGroups/{group_id}", json=payload)
+        return self.rest.put(f"ipSourceGroups/{group_id}", json=payload)
 
     def list_network_app_groups(self, search: str = None) -> BoxList:
         """
@@ -522,22 +555,13 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplicationGroups", params=payload)
+        list = self.rest.get(path="/networkApplicationGroups", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
 
-    def list_network_app_groups(self, search: str = None) -> BoxList:
-        """
-        Returns a list of all Network Application Groups.
-
-        Returns:
-            :obj:`BoxList`: The list of Network Application Group resource records.
-
-        Examples:
-            >>> for group in zia.firewall.list_network_app_groups():
-            ...    pprint(group)
-
-        """
-        payload = {"search": search}
-        return self._get("networkApplicationGroups", params=payload)
+        # payload = {"search": search}
+        # return self.rest.get("networkApplicationGroups", params=payload)
 
     def get_network_app_group(self, group_id: str) -> Box:
         """
@@ -549,12 +573,31 @@ class FirewallPolicyAPI(APIEndpoint):
 
         Returns:
             :obj:`Box`: The Network Application Group resource record.
-
-        Examples:
-            >>> pprint(zia.firewall.get_network_app_group('762398'))
-
         """
-        return self._get(f"networkApplicationGroups/{group_id}")
+        response = self.rest.get(f"networkApplicationGroups/{group_id}")
+
+        # If 'response' is a Box, it should contain the response data directly
+        # If 'response' is an HTTP response, it should have a 'status_code' attribute
+        if hasattr(response, 'status_code'):
+            # Check if the response is successful and the content is not empty
+            if response.status_code == 200 and response.content:
+                # Convert to Box for consistent return type
+                return Box(response.json())
+            else:
+                # Handle non-200 responses
+                response.raise_for_status()
+        else:
+            # Assume 'response' is a Box and contains the desired data
+            if 'ok' in response and response.ok:
+                # 'response' is a Box with the expected data
+                return response
+            else:
+                # Handle cases where the response Box does not contain the expected data
+                # For example, you might want to check for an 'error' or 'message' field
+                # and raise an exception or handle the situation as needed
+                # Example: raise ValueError("Failed to retrieve the network application group.")
+                return Box()  # An empty Box indicates no data was found or an error occurred.
+
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -570,8 +613,8 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_app_group('762398')
 
         """
-        return self._delete(f"networkApplicationGroups/{group_id}", box=False).status_code
-      
+        return self.rest.delete(f"networkApplicationGroups/{group_id}").status_code
+
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
@@ -600,7 +643,15 @@ class FirewallPolicyAPI(APIEndpoint):
             "description": description,
         }
 
-        return self._post("networkApplicationGroups", json=payload)
+        response = self.rest.post("networkApplicationGroups", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+        # return self.rest.post("networkApplicationGroups", json=payload)
 
     def update_network_app_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -641,7 +692,12 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServiceGroups/{group_id}", json=payload)
+        resp = self.rest.put(f"networkApplicationGroups/{group_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_network_app_group(group_id)
+
 
     def list_network_apps(self, search: str = None) -> BoxList:
         """
@@ -659,7 +715,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplications", params=payload)
+        return self.rest.get("networkApplications", params=payload)
 
     def get_network_app(self, app_id: str) -> Box:
         """
@@ -675,7 +731,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_app('762398'))
 
         """
-        return self._get(f"networkApplications/{app_id}")
+        return self.rest.get(f"networkApplications/{app_id}")
 
     def list_network_svc_groups(self, search: str = None) -> BoxList:
         """
@@ -696,7 +752,7 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {}
         if search:
             payload["search"] = search
-        return self._get("networkServiceGroups", params=payload)
+        return self.rest.get("networkServiceGroups", params=payload)
 
     def get_network_svc_group(self, group_id: str) -> Box:
         """
@@ -712,7 +768,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_svc_group('762398'))
 
         """
-        return self._get(f"networkServiceGroups/{group_id}")
+        return self.rest.get(f"networkServiceGroups/{group_id}")
 
     def delete_network_svc_group(self, group_id: str) -> int:
         """
@@ -728,7 +784,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_svc_group('762398')
 
         """
-        return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
+        return self.rest.delete(f"networkServiceGroups/{group_id}").status_code
 
     def add_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
         """
@@ -756,7 +812,7 @@ class FirewallPolicyAPI(APIEndpoint):
         for service_id in service_ids:
             payload["services"].append({"id": service_id})
 
-        return self._post("networkServiceGroups", json=payload)
+        return self.rest.post("networkServiceGroups", json=payload)
 
     def update_network_svc_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -790,7 +846,13 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServiceGroups/{group_id}", json=payload)
+        # return self.rest.put(f"networkServiceGroups/{group_id}", json=payload)
+
+        resp = self.rest.put(f"networkServiceGroups/{group_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_network_svc_group(group_id)
 
     def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
@@ -812,7 +874,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search, "protocol": protocol}
-        return self._get("networkServices", params=payload)
+        return self.rest.get("networkServices", params=payload)
 
     def get_network_service(self, service_id: str) -> Box:
         """
@@ -828,7 +890,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> pprint(zia.firewall.get_network_service('762398'))
 
         """
-        return self._get(f"networkServices/{service_id}")
+        return self.rest.get(f"networkServices/{service_id}")
 
     def delete_network_service(self, service_id: str) -> int:
         """
@@ -844,7 +906,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_service('762398')
 
         """
-        return self._delete(f"networkServices/{service_id}", box=False).status_code
+        return self.rest.delete(f"networkServices/{service_id}").status_code
 
     def add_network_service(self, name: str, ports: list = None, **kwargs) -> Box:
         """
@@ -907,7 +969,13 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post("networkServices", json=payload)
+        response = self.rest.post("networkServices", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
         """
@@ -968,4 +1036,48 @@ class FirewallPolicyAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"networkServices/{service_id}", json=payload)
+        resp = self.rest.put(f"networkServices/{service_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if not isinstance(resp, Response):
+            return self.get_network_service(service_id)
+
+    def list_time_windows(self) -> Box:
+        """
+        Returns a list of time intervals used for by the Firewall policy or the URL Filtering policy.
+
+        Args:
+            id (int): The unique id for the Time Interval.
+            name (str): The name of the Time Interval.
+
+        Returns:
+            :obj:`Box`: The ZIA Time Interval resource record.
+
+        Examples:
+            >>> pprint(zia.firewall.list_time_windows_lite)
+
+        """
+        response = self.rest.get("/timeWindows")
+        if isinstance(response, Response):
+            return None
+        return response
+
+    def list_time_windows_lite(self) -> Box:
+        """
+        Returns name and ID dictionary of time intervals used by the Firewall policy or the URL Filtering policy.
+
+        Args:
+            id (int): The unique id for the Time Interval.
+            name (str): The name of the Time Interval.
+
+        Returns:
+            :obj:`Box`: The ZIA Time Interval resource record.
+
+        Examples:
+            >>> pprint(zia.firewall.list_time_windows_lite)
+
+        """
+        response = self.rest.get("/timeWindows/lite")
+        if isinstance(response, Response):
+            return None
+        return response
