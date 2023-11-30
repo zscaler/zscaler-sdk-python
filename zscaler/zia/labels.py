@@ -17,7 +17,7 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
