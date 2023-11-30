@@ -35,12 +35,10 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-restfly = "1.4.7"
 python-box = "7.0.1"
 
 [tool.poetry.dev-dependencies]
 python = "^3.8"
-restfly = ">=1.4.7"
 python-box = "7.0.1"
 sphinx = "7.0.1"
 furo = "2023.5.20"
