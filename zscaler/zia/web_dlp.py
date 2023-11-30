@@ -15,37 +15,40 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import json
-
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
+from zscaler.utils import (
+    snake_to_camel,
+    transform_common_id_fields,
+    recursive_snake_to_camel,
+    convert_keys
+)
 
-from zscaler.utils import snake_to_camel
+from zscaler.zia import ZIAClient
 
-
-class WebDLPAPI(APIEndpoint):
+class WebDLPAPI:
     # Web DLP rule keys that only require an ID to be provided.
-    _key_id_list = [
-        "auditor",
-        "dlp_engines",
-        "departments",
-        "devices",
-        "device_groups",
-        "groups",
-        "icap_server",
-        "excluded_groups",
-        "excluded_departments",
-        "excluded_users",
-        "labels",
-        "locations",
-        "location_groups",
-        "notification_template",
-        "time_windows",
-        "users",
-        "url_categories",
+    reformat_params = [
+        ("auditor", "auditor"),
+        ("dlp_engines", "dlpEngines"),
+        ("departments", "departments"),
+        ("excluded_departments", "excludedDepartments"),
+        ("excluded_groups", "excludedGroups"),
+        ("excluded_users", "excludedUsers"),
+        ("groups", "groups"),
+        ("labels", "labels"),
+        ("locations", "locations"),
+        ("location_groups", "locationGroups"),
+        ("notification_template", "notificationTemplate"),
+        ("time_windows", "timeWindows"),
+        ("users", "users"),
+        ("url_categories", "urlCategories"),
     ]
+    def __init__(self, client: ZIAClient):
+        self.rest = client
 
-    def list_rules(self, **kwargs) -> BoxList:
+    def list_rules(self) -> BoxList:
+
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
 
@@ -60,7 +63,10 @@ class WebDLPAPI(APIEndpoint):
             ...    print(item)
 
         """
-        return self._get("webDlpRules")
+        response = self.rest.get("/webDlpRules")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -79,7 +85,8 @@ class WebDLPAPI(APIEndpoint):
             ... print(results)
 
         """
-        return self._get(f"webDlpRules/{rule_id}")
+        return self.rest.get(f"webDlpRules/{rule_id}")
+
 
     def list_rules_lite(self) -> BoxList:
         """
@@ -96,7 +103,10 @@ class WebDLPAPI(APIEndpoint):
             ...    print(item)
 
         """
-        return self._get("webDlpRules/lite")
+        response = self.rest.get("webDlpRules/lite")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
@@ -110,23 +120,23 @@ class WebDLPAPI(APIEndpoint):
              order (str): The order of the rule, defaults to adding rule to bottom of list.
              rank (str): The admin rank of the rule.
              state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-             auditor (list): The IDs for the auditors that this rule applies to.
+             auditor (:obj:`list` of :obj:`int`): The IDs for the auditors that this rule applies to.
              cloud_applications (list): The IDs for the cloud applications that this rule applies to.
              description (str): Additional information about the rule
-             departments (list): The IDs for the departments that this rule applies to.
-             dlp_engines (list): The IDs for the DLP engines that this rule applies to.
-             excluded_groups (list): The IDs for the excluded groups that this rule applies to.
-             excluded_departments (list): The IDs for the excluded departments that this rule applies to.
-             excluded_users (list): The IDs for the excluded users that this rule applies to.
+             departments (:obj:`list` of :obj:`int`):  The IDs for the departments that this rule applies to.
+             dlp_engines (:obj:`list` of :obj:`int`):  The IDs for the DLP engines that this rule applies to.
+             excluded_groups (:obj:`list` of :obj:`int`):  The IDs for the excluded groups that this rule applies to.
+             excluded_departments (:obj:`list` of :obj:`int`): The IDs for the excluded departments that this rule applies to.
+             excluded_users (:obj:`list` of :obj:`int`):  The IDs for the excluded users that this rule applies to.
              file_types (list): The list of file types for which the DLP policy rule must be applied.
-             groups (list): The IDs for the groups that this rule applies to.
-             icap_server (list): The IDs for the icap server that this rule applies to.
-             labels (list): The IDs for the labels that this rule applies to.
-             locations (list): The IDs for the locations that this rule applies to.
-             location_groups (list): The IDs for the location groups that this rule applies to.
-             notification_template (list): The IDs for the notification template that this rule applies to.
-             time_windows (list): The IDs for the time windows that this rule applies to.
-             users (list): The IDs for the users that this rule applies to.
+             groups (:obj:`list` of :obj:`int`):  The IDs for the groups that this rule applies to.
+             icap_server (:obj:`list` of :obj:`int`):  The IDs for the icap server that this rule applies to.
+             labels (:obj:`list` of :obj:`int`):  The IDs for the labels that this rule applies to.
+             locations (:obj:`list` of :obj:`int`):  The IDs for the locations that this rule applies to.
+             location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
+             notification_template (:obj:`list` of :obj:`int`):  The IDs for the notification template that this rule applies to.
+             time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
+             users (:obj:`list` of :obj:`int`):  The IDs for the users that this rule applies to.
              url_categories (list): The IDs for the URL categories the rule applies to.
              external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
              dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
@@ -158,22 +168,35 @@ class WebDLPAPI(APIEndpoint):
              ...    description='TT#1965432122')
 
         """
+        # Convert enabled to API format if present
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+
         payload = {
             "name": name,
             "action": action,
             "order": kwargs.pop("order", len(self.list_rules())),
         }
 
-        # Add optional parameters to payload
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
+            if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("webDlpRules", json=payload)
+        # Convert the entire payload's keys to camelCase before sending
+        camel_payload = recursive_snake_to_camel(payload)
+        for key, value in kwargs.items():
+            if value is not None:
+                camel_payload[snake_to_camel(key)] = value
+
+        # Send POST request to create the rule
+        response = self.rest.post("webDlpRules", json=payload)
+        if isinstance(response, Response):
+            status_code = response.status_code
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
@@ -230,19 +253,28 @@ class WebDLPAPI(APIEndpoint):
 
         """
 
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_rule(rule_id).items()}
+        # Set payload to value of existing record and convert nested dict keys.
+        payload = convert_keys(self.get_rule(rule_id))
 
-        # Add optional parameters to payload
+        # Convert enabled to API format if present in kwargs
+        if 'enabled' in kwargs:
+            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+
+        # Transform ID fields in kwargs
+        transform_common_id_fields(self.reformat_params, kwargs, payload)
+
+        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
-                payload[snake_to_camel(key)] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f"webDlpRules/{rule_id}", json=payload)
+        response = self.rest.put(f"webDlpRules/{rule_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_rule(rule_id)
+
 
     def delete_rule(self, rule_id: str) -> Box:
         """
@@ -262,4 +294,4 @@ class WebDLPAPI(APIEndpoint):
 
 
         """
-        return self._delete(f"webDlpRules/{rule_id}", box=False).status_code
+        return self.rest.delete(f"webDlpRules/{rule_id}").status_code

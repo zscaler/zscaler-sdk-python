@@ -15,10 +15,14 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class ActivationAPI(APIEndpoint):
+class ActivationAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def status(self) -> str:
         """
         Returns the activation status for a configuration change.
@@ -31,7 +35,7 @@ class ActivationAPI(APIEndpoint):
             >>> config_status = zia.config.status()
 
         """
-        return self._get("status").status
+        return self.rest.get("status").status
 
     def activate(self) -> str:
         """
@@ -45,4 +49,4 @@ class ActivationAPI(APIEndpoint):
             >>> config_activate = zia.config.activate()
 
         """
-        return self._post("status/activate").status
+        return self.rest.post("status/activate").status

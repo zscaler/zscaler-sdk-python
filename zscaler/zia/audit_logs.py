@@ -16,10 +16,14 @@
 
 
 from box import Box
-from restfly.endpoint import APIEndpoint
+from zscaler.zia import ZIAClient
 
 
-class AuditLogsAPI(APIEndpoint):
+class AuditLogsAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
     def status(self) -> Box:
         """
         Get the status of a request for an audit log report.
@@ -57,7 +61,7 @@ class AuditLogsAPI(APIEndpoint):
             "startTime": start_time,
             "endTime": end_time,
         }
-        return self._post("auditlogEntryReport", json=payload, box=False).status_code
+        return self.rest.post("auditlogEntryReport", json=payload, box=False).status_code
 
     def cancel(self) -> int:
         """
@@ -70,7 +74,7 @@ class AuditLogsAPI(APIEndpoint):
             >>> zia.audit_logs.cancel()
 
         """
-        return self._delete("auditlogEntryReport", box=False).status_code
+        return self.rest.delete("auditlogEntryReport", box=False).status_code
 
     def get_report(self) -> str:
         """
@@ -86,4 +90,4 @@ class AuditLogsAPI(APIEndpoint):
             ...    fh.write(zia.audit_logs.get_report())
 
         """
-        return self._get("auditlogEntryReport/download").text
+        return self.rest.get("auditlogEntryReport/download").text

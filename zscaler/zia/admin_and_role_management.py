@@ -16,12 +16,64 @@
 
 
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from requests import Response
 
 from zscaler.utils import Iterator, snake_to_camel
+from zscaler.zia import ZIAClient
+
+class AdminAndRoleManagementAPI:
+
+    def __init__(self, client: ZIAClient):
+        self.rest = client
+
+    def list_users(self, query: str = None) -> BoxList:
+        """
+        Returns a list of admin users.
+
+        Keyword Args:
+            **include_auditor_users (bool, optional):
+                Include or exclude auditor user information in the list.
+            **include_admin_users (bool, optional):
+                Include or exclude admin user information in the list. (default: True)
+            **search (str, optional):
+                The search string used to partially match against an admin/auditor user's Login ID or Name.
+            **page (int, optional):
+                Specifies the page offset.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+
+        Returns:
+            :obj:`BoxList`: The admin_users resource record.
+
+        Examples:
+            >>> users = zia.admin_and_role_management.list_users(search='login_name')
+
+        """
+        payload = {"search": query}
+        return self.rest.get("adminUsers", params=payload)
 
 
-class AdminAndRoleManagementAPI(APIEndpoint):
+    def get_user(self, user_id: str) -> Box:
+        """
+        Returns information on the specified admin user id.
+
+        Args:
+            user_id (str): The unique id of the admin user.
+
+        Returns:
+            :obj:`Box`: The admin user resource record.
+
+        Examples:
+            >>> print(zia.admin_and_role_management.get_user('987321202'))
+
+        """
+        response = self.rest.get("/adminUsers/%s" % (user_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+
     def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
         """
         Adds a new admin user to ZIA.
@@ -118,90 +170,13 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._post("adminUsers", json=payload)
-
-    def list_users(self, **kwargs) -> BoxList:
-        """
-        Returns a list of admin users.
-
-        Keyword Args:
-            **include_auditor_users (bool, optional):
-                Include or exclude auditor user information in the list.
-            **include_admin_users (bool, optional):
-                Include or exclude admin user information in the list. (default: True)
-            **search (str, optional):
-                The search string used to partially match against an admin/auditor user's Login ID or Name.
-            **page (int, optional):
-                Specifies the page offset.
-            **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
-
-        Returns:
-            :obj:`BoxList`: The admin_users resource record.
-
-        Examples:
-            >>> users = zia.admin_and_role_management.list_users(search='login_name')
-
-        """
-        return BoxList(Iterator(self._api, "adminUsers", **kwargs))
-
-    def list_roles(self, **kwargs) -> BoxList:
-        """
-        Return a list of the configured admin roles in ZIA.
-
-        Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
-            include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
-
-        Returns:
-            :obj:`BoxList`: A list of admin role resource records.
-
-        Examples:
-            Get a list of all configured admin roles:
-            >>> roles = zia.admin_and_management_roles.list_roles()
-
-        """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-
-        return self._get("adminRoles/lite", params=payload)
-
-    def get_user(self, user_id: str) -> Box:
-        """
-        Returns information on the specified admin user id.
-
-        Args:
-            user_id (str): The unique id of the admin user.
-
-        Returns:
-            :obj:`Box`: The admin user resource record.
-
-        Examples:
-            >>> print(zia.admin_and_role_management.get_user('987321202'))
-
-        """
-        admin_user = next(user for user in self.list_users() if user.id == int(user_id))
-
-        return admin_user
-
-    def delete_user(self, user_id: str) -> int:
-        """
-        Deletes the specified admin user by id.
-
-        Args:
-            user_id (str): The unique id of the admin user.
-
-        Returns:
-            :obj:`int`: The response code for the request.
-
-        Examples:
-            >>> zia.admin_role_management.delete_admin_user('99272455')
-
-        """
-
-        return self._delete(f"adminUsers/{user_id}", box=False).status_code
+        response = self.rest.post("adminUsers", json=payload)
+        if isinstance(response, Response):
+            # Handle error response
+            status_code = response.status_code
+            if status_code != 200:
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_user(self, user_id: str, **kwargs) -> dict:
         """
@@ -281,4 +256,70 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._put(f"adminUsers/{user_id}", json=payload)
+        # Update payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        response = self.rest.put("/adminUsers/%s" % (user_id), json=payload)
+        if isinstance(response, Response) and not response.ok:
+            # Handle error response
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # Return the updated object
+        return self.get_user(user_id)
+
+    def delete_user(self, user_id: str) -> int:
+        """
+        Deletes the specified admin user by id.
+
+        Args:
+            user_id (str): The unique id of the admin user.
+
+        Returns:
+            :obj:`int`: The response code for the request.
+
+        Examples:
+            >>> zia.admin_role_management.delete_admin_user('99272455')
+
+        """
+        response = self.rest.delete(f"/adminUsers/%s" % (user_id))
+        return response.status_code
+
+    def list_roles(self, **kwargs) -> BoxList:
+        """
+        Return a list of the configured admin roles in ZIA.
+
+        Args:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
+            include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
+
+        Returns:
+            :obj:`BoxList`: A list of admin role resource records.
+
+        Examples:
+            Get a list of all configured admin roles:
+            >>> roles = zia.admin_and_management_roles.list_roles()
+
+        """
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        return self.rest.get("adminRoles/lite", params=payload)
+
+    def get_role(self, role_id: str) -> Box:
+        """
+        Returns information on the specified admin user id.
+
+        Args:
+            user_id (str): The unique id of the admin user.
+
+        Returns:
+            :obj:`Box`: The admin user resource record.
+
+        Examples:
+            >>> print(zia.admin_and_role_management.get_user('987321202'))
+
+        """
+        admin_role = next(user for user in self.list_roles() if user.id == int(role_id))
+        return admin_role
