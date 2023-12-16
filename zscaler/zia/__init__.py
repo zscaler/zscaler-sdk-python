@@ -33,6 +33,7 @@ from zscaler.zia.activate import ActivationAPI
 from zscaler.zia.device import DeviceAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
+from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.labels import RuleLabelsAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
@@ -447,6 +448,14 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return FirewallPolicyAPI(self)
+
+    @property
+    def forwarding_control(self):
+        """
+        The interface object for the :ref:`ZIA Forwarding Control Policies interface <zia-forwarding>`.
+
+        """
+        return ForwardingControlAPI(self)
 
     @property
     def labels(self):
