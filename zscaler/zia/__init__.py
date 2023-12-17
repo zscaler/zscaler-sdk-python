@@ -46,6 +46,7 @@ from zscaler.zia.users import UserManagementAPI
 from zscaler.zia.vips import DataCenterVIPSAPI
 from zscaler.zia.web_dlp import WebDLPAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
+from zscaler.zia.isolation_profile import IsolationProfileAPI
 
 # Setup the logger
 logging.basicConfig(level=logging.INFO)
@@ -568,4 +569,12 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return ZPAGatewayAPI(self)
+
+    @property
+    def isolation_profile(self):
+        """
+        The interface object for the :ref: `ZIA Cloud Browser Isolation Profile`.
+
+        """
+        return IsolationProfileAPI(self)
 
