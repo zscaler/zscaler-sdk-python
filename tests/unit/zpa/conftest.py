@@ -42,34 +42,34 @@ def pytest_generate_tests(metafunc):
         os.environ[PYTEST_MOCK_CLIENT] = "1"
 
 
-# @pytest.fixture(scope='module')
-# def vcr_config():
-#     return {
-#         # Remove personal details from Integration Tests
-#         "before_record_request": before_record_request,
-#         "before_record_response": before_record_response
-#     }
+@pytest.fixture(scope='module')
+def vcr_config():
+    return {
+        # Remove personal details from Integration Tests
+        "before_record_request": before_record_request,
+        "before_record_response": before_record_response
+    }
 
-# def before_record_request(request):
-#     # Sanitize sensitive information in headers
-#     # This is generally more relevant for responses, as the token is usually not in the request
-#     return request
+def before_record_request(request):
+    # Sanitize sensitive information in headers
+    # This is generally more relevant for responses, as the token is usually not in the request
+    return request
 
 
-# def before_record_response(response):
-#     # Check if this is a response to the login request
-#     if 'signin' in response['url']:
-#         # Assuming the token is in the response body as a JSON field
-#         if response['body']['string']:
-#             body = json.loads(response['body']['string'])
-#             if 'access_token' in body:
-#                 # Replace the actual token with a placeholder
-#                 body['access_token'] = 'BEARER_TOKEN_PLACEHOLDER'
-#                 response['body']['string'] = json.dumps(body)
+def before_record_response(response):
+    # Check if this is a response to the login request
+    if 'signin' in response['url']:
+        # Assuming the token is in the response body as a JSON field
+        if response['body']['string']:
+            body = json.loads(response['body']['string'])
+            if 'access_token' in body:
+                # Replace the actual token with a placeholder
+                body['access_token'] = 'BEARER_TOKEN_PLACEHOLDER'
+                response['body']['string'] = json.dumps(body)
 
-#     # Sanitize other headers or body content as needed
+    # Sanitize other headers or body content as needed
 
-#     return response
+    return response
 
 
 # Cleanup function to run at the end of tests
