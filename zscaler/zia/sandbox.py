@@ -23,7 +23,6 @@ import io
 
 
 class CloudSandboxAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
         self.sandbox_token = client.sandbox_token
@@ -52,14 +51,9 @@ class CloudSandboxAPI:
         content_type, _ = mimetypes.guess_type(file)
         if not content_type:
             content_type = "application/octet-stream"
-
-        # Create a buffer to store the gzipped file
-        gzipped_data = io.BytesIO()
-        with gzip.GzipFile(fileobj=gzipped_data, mode="wb") as gz:
-            gz.write(file_content)
-
-        # Create a dictionary with the gzipped file data
-        files = {"file": (file, gzipped_data.getvalue(), content_type)}
+        params = {
+            "api_token": self.sandbox_token,
+        }
 
         params = {
             "api_token": self.sandbox_token,
@@ -70,7 +64,7 @@ class CloudSandboxAPI:
 
         return self.rest.post(
             url,
-            files=files,
+            data=file_content,
             params=params,
         )
 
@@ -97,23 +91,11 @@ class CloudSandboxAPI:
         if not content_type:
             content_type = "application/octet-stream"
 
-        # Create a buffer to store the gzipped file
-        gzipped_data = io.BytesIO()
-        with gzip.GzipFile(fileobj=gzipped_data, mode="wb") as gz:
-            gz.write(file_content)
-
-        # Create a dictionary with the gzipped file data
-        files = {"file": (file, gzipped_data.getvalue(), content_type)}
-
         params = {
             "api_token": self.sandbox_token,
         }
 
-        return self.rest.post(
-            f"/zscsb/discan",
-            params=params,
-            files=files,
-        )
+        return self.rest.post(f"/zscsb/discan", params=params, data=file_content, headers={"Content-Type": content_type})
 
     def get_quota(self) -> Box:
         """

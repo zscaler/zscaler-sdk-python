@@ -198,7 +198,7 @@ class ZIAClientHelper(ZIAClient):
         self.auth_details = resp.json()
         return resp
 
-    def send(self, method, path, json=None, params=None, files=None):
+    def send(self, method, path, json=None, params=None, data=None, headers=None):
         """
         Send a request to the ZIA API.
 
@@ -220,6 +220,8 @@ class ZIAClientHelper(ZIAClient):
         headers_with_user_agent["User-Agent"] = self.user_agent
         # Generate a unique UUID for this request
         request_uuid = uuid.uuid4()
+        if headers is not None:
+            headers_with_user_agent.update(headers)
         dump_request(logger, url, method, json, params, headers_with_user_agent, request_uuid, body=not is_sandbox)
         # Check cache before sending request
         cache_key = self.cache.create_key(url, params)
@@ -248,7 +250,7 @@ class ZIAClientHelper(ZIAClient):
                     method=method,
                     url=url,
                     json=json,
-                    files=files,
+                    data=data,
                     params=params,
                     headers=headers_with_user_agent,
                     timeout=self.timeout,
@@ -340,11 +342,11 @@ class ZIAClientHelper(ZIAClient):
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def post(self, path, json=None, params=None, files=None):
+    def post(self, path, json=None, params=None, data=None, headers=None):
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("POST", path, json, params, files=files)
+        resp = self.send("POST", path, json, params, data=data, headers=headers)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
