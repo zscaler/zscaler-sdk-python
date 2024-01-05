@@ -23,13 +23,18 @@ class SCIMGroupsAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
 
-    def list_groups(self, idp_id: str, **kwargs) -> BoxList:
+    def list_groups(self, idp_id: str, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
         """
         Returns a list of all configured SCIM groups for the specified IdP.
 
         Args:
             idp_id (str):
                 The unique id of the IdP.
+            sort_by (str):
+                The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
+            sort_order (str):
+                The sort order, values: ASC or DESC (default DESC)
+
 
         Keyword Args:
             **end_time (str):
@@ -62,8 +67,12 @@ class SCIMGroupsAPI:
             ...    pprint(scim_group)
 
         """
+        params = {}
+        if sort_order != "" and sort_by != "":
+            params["sortBy"] = sort_by
+            params["sortOrder"] = sort_order
         list, _ = self.rest.get_paginated_data(
-            path=f"/scimgroup/idpId/{idp_id}", data_key_name="list", **kwargs, api_version="userconfig_v1"
+            path=f"/scimgroup/idpId/{idp_id}", params=params, data_key_name="list", **kwargs, api_version="userconfig_v1"
         )
         return list
 
@@ -114,6 +123,7 @@ class SCIMGroupsAPI:
         return None  # Return None if the group wasn't found
 
     def _get_page(self, idp_id, page_number, search, page_size):
-        params = {"page": page_number, "search": search, "pagesize": page_size}
+        params = {"page": page_number, "search": search, "pagesize": page_size, "sortBy": "name", "sortOrder": "DESC"}
         page = self.rest.get(path=f"/scimgroup/idpId/{idp_id}", params=params, api_version="userconfig_v1")
         return page
+
