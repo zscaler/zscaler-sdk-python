@@ -316,7 +316,7 @@ class ZPAClientHelper(ZPAClient):
     }
 
     def get_paginated_data(
-        self, path=None, data_key_name=None, data_per_page=500, expected_status_code=200, api_version: str = None
+        self, path=None, params=None, data_key_name=None, data_per_page=500, expected_status_code=200, api_version: str = None
     ):
         """
         Fetch paginated data from the ZPA API.
@@ -332,7 +332,12 @@ class ZPAClientHelper(ZPAClient):
         error_message = None
 
         while True:
-            required_url = f"{path}?page={page}&pagesize={data_per_page}"
+            # Construct the URL with parameters
+            url_params = f"?page={page}&pagesize={data_per_page}"
+            if params:
+                url_params += "&" + "&".join(f"{key}={value}" for key, value in params.items())
+
+            required_url = f"{path}{url_params}"
             should_wait, delay = self.rate_limiter.wait("GET")
             if should_wait:
                 time.sleep(delay)
