@@ -67,13 +67,14 @@ class ZIAClient:
         """
         pass
 
-    def post(self, path: str, json=None, params=None):
+    def post(self, path: str, json=None, params=None, data=None, headers=None):
         """
         Send a POST request to the ZIA API.
         Parameters:
         - path (str): API endpoint path.
         - json (str): the request body.
         - params (dict): the query params
+        - data: (optional) Dictionary, list of tuples, bytes, or file-like object to send in the body of the :class:`Request`.
         """
         pass
 
