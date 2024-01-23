@@ -362,7 +362,7 @@ class ZIAClientHelper(ZIAClient):
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
 
-    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
+    def get_paginated_data(self, path=None, params = None, data_key_name=None, data_per_page=500, expected_status_code=200):
         """
         Fetch paginated data from the ZIA API.
         ...
@@ -377,7 +377,12 @@ class ZIAClientHelper(ZIAClient):
         error_message = None
 
         while True:
-            required_url = f"{path}"
+            # Construct the URL with parameters
+            url_params = f"?page={page}&pagesize={data_per_page}"
+            if params:
+                url_params += "&" + "&".join(f"{key}={value}" for key, value in params.items())
+
+            required_url = f"{path}{url_params}"
             should_wait, delay = self.rate_limiter.wait("GET")
             if should_wait:
                 time.sleep(delay)
@@ -386,7 +391,6 @@ class ZIAClientHelper(ZIAClient):
             response = self.send(
                 method="GET",
                 path=required_url,
-                params={"page": page, "pageSize": data_per_page},
             )
 
             if response.status_code != expected_status_code:

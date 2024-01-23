@@ -33,6 +33,7 @@ class ZIAClient:
     def get_paginated_data(
         self,
         path: str = None,
+        params = None,
         data_key_name: str = None,
         data_per_page: int = 500,
         expected_status_code=200,
@@ -67,14 +68,13 @@ class ZIAClient:
         """
         pass
 
-    def post(self, path: str, json=None, params=None, data=None, headers=None):
+    def post(self, path: str, json=None, params=None):
         """
         Send a POST request to the ZIA API.
         Parameters:
         - path (str): API endpoint path.
         - json (str): the request body.
         - params (dict): the query params
-        - data: (optional) Dictionary, list of tuples, bytes, or file-like object to send in the body of the :class:`Request`.
         """
         pass
 
