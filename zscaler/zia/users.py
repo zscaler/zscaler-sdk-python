@@ -16,10 +16,10 @@
 
 
 from box import Box, BoxList
-from requests import Response
 from zscaler.zia import ZIAClient
 
 from zscaler.utils import convert_keys, snake_to_camel
+
 
 class UserManagementAPI:
     """
@@ -30,7 +30,7 @@ class UserManagementAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_departments(self, **kwargs) -> BoxList:
+    def list_departments(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
         """
         Returns the list of departments.
 
@@ -45,6 +45,10 @@ class UserManagementAPI:
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to match against a department's name or comments attributes.
+            **sort_by (str):
+                The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
+            **sort_order (str):
+                The sort order, values: ASC or DESC (default DESC)
 
         Returns:
             :obj:`BoxList`: The list of departments configured in ZIA.
@@ -57,7 +61,7 @@ class UserManagementAPI:
 
             List departments, limiting to a maximum of 10 items:
 
-            >>> for department in zia.users.list_departments():
+            >>> for department in zia.users.list_departments(max_items=10):
             ...    print(department)
 
             List departments, returning 200 items per page for a maximum of 2 pages:
@@ -65,8 +69,12 @@ class UserManagementAPI:
             >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
             ...    print(department)
         """
-        list, _ = self.rest.get_paginated_data(path="/departments", data_key_name="list", **kwargs)
-        return list
+        if kwargs is None:
+            kwargs = {}
+        if sort_order != "" and sort_by != "":
+            kwargs["sortBy"] = sort_by
+            kwargs["sortOrder"] = sort_order
+        return self.rest.get_paginated_data("departments", params=kwargs)
 
     def get_department(self, department_id: str) -> Box:
         """
@@ -82,9 +90,9 @@ class UserManagementAPI:
             >>> department = zia.users.get_department('99999')
 
         """
-        return self.rest.get(f"departments/{department_id}")
+        return self._get(f"departments/{department_id}")
 
-    def list_groups(self, **kwargs) -> BoxList:
+    def list_groups(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
         """
         Returns the list of user groups.
 
@@ -97,7 +105,10 @@ class UserManagementAPI:
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to match against a group's name or comments attributes.
-
+            **sort_by (str):
+                The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
+            **sort_order (str):
+                The sort order, values: ASC or DESC (default DESC)
         Returns:
             :obj:`BoxList`: The list of user groups configured in ZIA.
 
@@ -118,8 +129,12 @@ class UserManagementAPI:
             ...    print(group)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/groups", data_key_name="list", **kwargs)
-        return list
+        if kwargs is None:
+            kwargs = {}
+        if sort_order != "" and sort_by != "":
+            kwargs["sortBy"] = sort_by
+            kwargs["sortOrder"] = sort_order
+        return self.rest.get_paginated_data("groups", params=kwargs)
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -135,9 +150,9 @@ class UserManagementAPI:
             >>> user_group = zia.users.get_group('99999')
 
         """
-        return self.rest.get(f"groups/{group_id}")
+        return self._get(f"groups/{group_id}")
 
-    def list_users(self, **kwargs) -> BoxList:
+    def list_users(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
         """
         Returns the list of users.
 
@@ -154,6 +169,10 @@ class UserManagementAPI:
                 Filters by user name. This is a `partial` match.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **sort_by (str):
+                The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
+            **sort_order (str):
+                The sort order, values: ASC or DESC (default DESC)
 
         Returns:
             :obj:`BoxList`: The list of users configured in ZIA.
@@ -175,8 +194,12 @@ class UserManagementAPI:
             ...    print(user)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/users", data_key_name="list", **kwargs)
-        return list
+        if kwargs is None:
+            kwargs = {}
+        if sort_order != "" and sort_by != "":
+            kwargs["sortBy"] = sort_by
+            kwargs["sortOrder"] = sort_order
+        return self.rest.get_paginated_data("users", params=kwargs)
 
     def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
         """
@@ -229,19 +252,12 @@ class UserManagementAPI:
             "groups": groups,
             "department": department,
         }
+
+        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[key] = value
 
-        response = self.rest.post("users", json=payload)
-        if isinstance(response, Response):
-            if response.status_code != 200:
-                try:
-                    response_data = response.json()
-                except ValueError:  # If response is not in JSON format
-                    response_data = response.text  # Use raw response
-                raise Exception(f"API call failed with status {response.status_code}: {response_data}")
-        return response
-
+        return self._post("users", json=payload)
 
     def bulk_delete_users(self, user_ids: list) -> Box:
         """
@@ -260,14 +276,7 @@ class UserManagementAPI:
 
         payload = {"ids": user_ids}
 
-        response = self.rest.post("users/bulkDelete", json=payload)
-        if isinstance(response, Response):
-            # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
-
+        return self._post("users/bulkDelete", json=payload)
 
     def get_user(self, user_id: str = None, email: str = None) -> Box:
         """
@@ -294,7 +303,7 @@ class UserManagementAPI:
             user = (record for record in self.list_users(search=email) if record.email == email)
             return next(user, None)
 
-        return self.rest.get(f"users/{user_id}")
+        return self._get(f"users/{user_id}")
 
     def update_user(
         self,
@@ -356,14 +365,7 @@ class UserManagementAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(f"users/{user_id}", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
-        return self.get_user(user_id)
-
+        return self._put(f"users/{user_id}", json=payload)
 
     def delete_user(self, user_id: str) -> int:
         """
@@ -379,4 +381,4 @@ class UserManagementAPI:
             >>> user = zia.users.delete_user('99999')
 
         """
-        return self.rest.delete(f"users/{user_id}").status_code
+        return self._delete(f"users/{user_id}", box=False).status_code
