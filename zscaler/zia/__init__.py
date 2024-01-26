@@ -47,6 +47,7 @@ from zscaler.zia.vips import DataCenterVIPSAPI
 from zscaler.zia.web_dlp import WebDLPAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 from zscaler.zia.isolation_profile import IsolationProfileAPI
+from zscaler.zia.workload_groups import WorkloadGroupsAPI
 
 # Setup the logger
 logging.basicConfig(level=logging.INFO)
@@ -598,4 +599,13 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return IsolationProfileAPI(self)
+
+    @property
+    def workload_groups(self):
+        """
+        The interface object for the :ref: `ZIA Workload Groups`.
+
+        """
+        return WorkloadGroupsAPI(self)
+
 
