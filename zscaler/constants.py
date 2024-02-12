@@ -2,6 +2,7 @@ import os
 
 ZPA_BASE_URLS = {
     "PRODUCTION": "https://config.private.zscaler.com",
+    "ZPATWO": "https://config.zpatwo.net",
     "BETA": "https://config.zpabeta.net",
     "GOV": "https://config.zpagov.net",
     "GOVUS": "https://config.zpagov.us",
