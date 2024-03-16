@@ -6,13 +6,13 @@ This script contains several examples that can be executed from the CLI to creat
 ### Add a VPN credential using `IP` authentication type:
 
 ```shell
-$ python3 vpn_credentials_management.py -a IP --pre_shared_key MyPreSharedKey --ip_address "1.1.1.1" --comments "SJC Branch Office"
+$ python3 vpn_credentials_management.py -a IP --pre_shared_key "<YourPreSharedSecret>" --ip_address "1.1.1.1" --comments "SJC Branch Office"
 ```
 
 ### Add a VPN credential using `UFQDN` authentication type:
 
 ```shell
-$ python3 vpn_credentials_management.py -a UFQDN --pre_shared_key MyPreSharedKey --email user@example.com --comments "SJC Branch Office"
+$ python3 vpn_credentials_management.py -a UFQDN --pre_shared_key "<YourPreSharedSecret>"--email user@example.com --comments "SJC Branch Office"
 ```
 
 ### List all VPN credentials:
