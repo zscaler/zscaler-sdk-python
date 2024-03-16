@@ -630,9 +630,11 @@ class TrafficForwardingAPI:
         return response
 
 
-    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str, **kwargs) -> Box:
+    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str = None, **kwargs) -> Box:
         """
         Add new VPN credentials.
+
+        If a pre_shared_key is not provided, one will be randomly generated.
 
         Args:
             authentication_type (str):
@@ -640,8 +642,8 @@ class TrafficForwardingAPI:
                 after VpnCredential is created.
 
                 Only ``IP`` and ``UFQDN`` supported via API.
-            pre_shared_key (str):
-                Pre-shared key. This is a required field for UFQDN and IP auth type.
+            pre_shared_key (str, optional):
+                Pre-shared key. This is a required field for UFQDN and IP auth type. If not provided, a random one will be generated.
 
         Keyword Args:
             ip_address (str):
@@ -656,24 +658,11 @@ class TrafficForwardingAPI:
 
         Returns:
             :obj:`Box`: The newly created VPN credential resource record.
-
-        Examples:
-            Add a VPN credential using IP authentication type before location has been defined:
-
-            >>> zia.traffic.add_vpn_credential(authentication_type='IP',
-            ...    pre_shared_key='MyInsecurePSK',
-            ...    ip_address='203.0.113.40',
-            ...    comments='NY Branch Office')
-
-            Add a VPN credential using UFQDN authentication type and associate with location:
-
-            >>> zia.traffic.add_vpn_credential(authentication_type='UFQDN',
-            ...    pre_shared_key='MyInsecurePSK',
-            ...    fqdn='london_branch@example.com',
-            ...    comments='London Branch Office',
-            ...    location_id='94963682')
-
         """
+
+        # Generate a random PSK if not provided
+        if not pre_shared_key:
+            pre_shared_key = self.randomize_psk()
 
         payload = {
             "type": authentication_type,
@@ -695,6 +684,7 @@ class TrafficForwardingAPI:
             # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
+
 
     def bulk_delete_vpn_credentials(self, credential_ids: list) -> int:
         """
