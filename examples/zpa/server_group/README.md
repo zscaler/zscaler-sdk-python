@@ -36,7 +36,7 @@ $ python3 server_group_management.py --add --name "New Server Group" --descripti
 ### Update an Existing Server Group
 
 ```shell
-$ python3 server_group_management.py --update GROUP_ID --name "Updated Segment Group" --description "New description"
+$ python3 server_group_management.py --update GROUP_ID --name "Updated Server Group" --description "Updated Server Group"
 ```
 
 ### Delete an Server Group
