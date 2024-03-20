@@ -16,12 +16,13 @@
 
 
 from box import Box
-from requests import Response
 from zscaler.zia import ZIAClient
+import gzip
+import mimetypes
+import io
 
 
 class CloudSandboxAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
         self.sandbox_token = client.sandbox_token
@@ -45,18 +46,26 @@ class CloudSandboxAPI:
 
         """
         with open(file, "rb") as f:
-            data = f.read()
+            file_content = f.read()
+
+        content_type, _ = mimetypes.guess_type(file)
+        if not content_type:
+            content_type = "application/octet-stream"
+        params = {
+            "api_token": self.sandbox_token,
+        }
 
         params = {
             "api_token": self.sandbox_token,
             "force": int(force),  # convert boolean to int for ZIA
         }
 
-        url = f"https://csbapi.{self.env_cloud}.net/zscsb/submit?api_token={self.sandbox_token}&force={int(force)}"
+        url = f"/zscsb/submit"
 
         return self.rest.post(
             url,
-            json=data,  # Assuming data is correctly formatted for your API
+            data=file_content,
+            params=params,
         )
 
     def submit_file_for_inspection(self, file: str) -> Box:
@@ -76,15 +85,17 @@ class CloudSandboxAPI:
 
         """
         with open(file, "rb") as f:
-            data = f.read()
+            file_content = f.read()
 
-        params = {"api_token": self.sandbox_token}
+        content_type, _ = mimetypes.guess_type(file)
+        if not content_type:
+            content_type = "application/octet-stream"
 
-        return self.rest.post(
-            f"https://csbapi.{self.env_cloud}.net/zscsb/discan",
-            params=params,
-            param=data,
-        )
+        params = {
+            "api_token": self.sandbox_token,
+        }
+
+        return self.rest.post(f"/zscsb/discan", params=params, data=file_content, headers={"Content-Type": content_type})
 
     def get_quota(self) -> Box:
         """
@@ -138,22 +149,6 @@ class CloudSandboxAPI:
         """
         return self.rest.get("behavioralAnalysisAdvancedSettings")
 
-
-    def get_file_hash_count(self) -> Box:
-        """
-        Returns the used and unused quota for blocking MD5 file hashes with Sandbox.
-
-        Returns:
-            :obj:`Box`: The used and unused quota for blocking MD5 file hashes with Sandbox.
-
-        Examples:
-            >>> pprint(zia.sandbox.get_file_hash_count())
-
-        """
-        return self.rest.get("/behavioralAnalysisAdvancedSettings/fileHashCount")
-
-
-
     def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> Box:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
@@ -167,43 +162,14 @@ class CloudSandboxAPI:
 
         Examples:
             >>> zia.sandbox.add_hash_to_custom_list(['42914d6d213a20a2684064be5c80ffa9', 'c0202cf6aeab8437c638533d14563d35'])
+            >>> zia.sandbox.add_hash_to_custom_list([])  # Clear the list
 
         """
 
         payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
 
         # Update the custom list with the provided hashes
-        response = self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
 
-        # Return the updated object
-        return self.get_behavioral_analysis()
-
-    def erase_hash_to_custom_list(self) -> Box:
-        """
-        Updates the custom list of MD5 file hashes that are blocked by Sandbox.
-
-        Args:
-            file_hashes_to_be_blocked (:obj:`list` of :obj:`str`):
-                The list of MD5 Hashes to be added. Pass an empty list to clear the blocklist.
-
-        Returns:
-            :obj:`Box`: The updated custom list of MD5 Hashes.
-
-        Examples:
-            >>> zia.sandbox.erase_hash_to_custom_list()  # Clear the list
-
-        """
-
-        payload = {"fileHashesToBeBlocked": []}
-
-        # Update the custom list with the provided hashes
-        response = self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
+        # Return the most up-to-date list after the update
         return self.get_behavioral_analysis()

@@ -29,7 +29,6 @@ class ZPAClient:
         - api_version (str): the api version, availbale values: v1, v2, userconfig_v1, cbiconfig_v1
         """
         pass
-        pass
 
     def get_paginated_data(
         self,
