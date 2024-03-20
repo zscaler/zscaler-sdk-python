@@ -14,8 +14,6 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# Author:
-
 """
 service_edge_group_management.py
 =============================
@@ -47,8 +45,6 @@ Delete a Service Edge Group by ID:
     $ python3 service_edge_group_management.py -d 99999
 
 """
-
-__author__ = "Your Name"
 
 import argparse
 import logging
