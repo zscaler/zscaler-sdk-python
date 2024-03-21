@@ -105,4 +105,3 @@ class ScimAttributeHeaderAPI:
         """
         list, _ = self.rest.get_paginated_data(path=f"/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}", data_key_name="list", **kwargs, api_version="userconfig_v1")
         return list
-
