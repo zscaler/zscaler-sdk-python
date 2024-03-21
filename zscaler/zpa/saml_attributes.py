@@ -73,8 +73,10 @@ class SAMLAttributesAPI:
             ...    pprint(saml_attribute)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/samlAttribute/idp/{idp_id}", data_key_name="list", **kwargs, api_version="v2")
+        path = f"/samlAttribute/idp/{idp_id}"  # Correctly format the path with the idp_id
+        list, _ = self.rest.get_paginated_data(path=path, data_key_name="list", **kwargs, api_version="v2")
         return list
+
 
     def get_attribute(self, attribute_id: str) -> Box:
         """
