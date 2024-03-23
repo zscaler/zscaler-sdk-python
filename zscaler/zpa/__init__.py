@@ -13,6 +13,7 @@ from zscaler.errors.http_error import ZscalerAPIError, HTTPError
 from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.constants import ZPA_BASE_URLS
+from zscaler.logger import setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
@@ -50,8 +51,8 @@ from zscaler.zpa.service_edges import ServiceEdgesAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 
 # Setup the logger
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+setup_logging(logger_name="zscaler-sdk-python")
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ZPAClientHelper(ZPAClient):
@@ -212,11 +213,17 @@ class ZPAClientHelper(ZPAClient):
             try:
                 # If the token is None or expired, fetch a new token
                 if is_token_expired(self.access_token):
-                    self.logger.warning("The provided or fetched token was already expired. Refreshing...")
+                    logger.warning("The provided or fetched token was already expired. Refreshing...")
                     self.refreshToken()
                 resp = requests.request(method, url, json=json, headers=headers_with_user_agent, timeout=self.timeout)
                 dump_response(
-                    logger=logger, url=url, params=params, method=method, resp=resp, request_uuid=request_uuid, start_time=start_time
+                    logger=logger,
+                    url=url,
+                    params=params,
+                    method=method,
+                    resp=resp,
+                    request_uuid=request_uuid,
+                    start_time=start_time,
                 )
                 if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
                     sleep_time = int(

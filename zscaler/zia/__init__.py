@@ -13,6 +13,7 @@ from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.errors.http_error import ZscalerAPIError, HTTPError
 from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
 from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.logger import setup_logging
 from zscaler.utils import obfuscate_api_key
 from zscaler.user_agent import UserAgent
 from zscaler.ratelimiter.ratelimiter import RateLimiter
@@ -50,12 +51,11 @@ from zscaler.zia.isolation_profile import IsolationProfileAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 
 # Setup the logger
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+setup_logging(logger_name="zscaler-sdk-python")
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ZIAClientHelper(ZIAClient):
-
     """
     A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
 
@@ -245,7 +245,7 @@ class ZIAClientHelper(ZIAClient):
             try:
                 # If the token is None or expired, fetch a new token
                 if self.is_session_expired():
-                    self.logger.warning("The provided sesion expired. Refreshing...")
+                    logger.warning("The provided sesion expired. Refreshing...")
                     self.authenticate()
                 resp = requests.request(
                     method=method,
@@ -363,7 +363,7 @@ class ZIAClientHelper(ZIAClient):
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
 
-    def get_paginated_data(self, path=None, params = None, data_key_name=None, data_per_page=500, expected_status_code=200):
+    def get_paginated_data(self, path=None, params=None, data_key_name=None, data_per_page=500, expected_status_code=200):
         """
         Fetch paginated data from the ZIA API.
         ...
@@ -607,5 +607,3 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return WorkloadGroupsAPI(self)
-
-

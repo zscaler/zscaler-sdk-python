@@ -136,6 +136,7 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
+
 def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         if kwargs.get(entry[0]):

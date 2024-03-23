@@ -14,13 +14,11 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# Author:
-
 """
 vip_management.py
 =================
 
-Manages Virtual IP Addresses (VIPs) in Zscaler Private Access (ZPA).
+Returns a list of Virtual IP Addresses (VIPs) in Zscaler Internet Access (ZIA).
 
 Usage:
     python vip_management.py [options]
@@ -54,6 +52,7 @@ def main():
     args = parser.parse_args()
 
     # Initialize ZIAClientHelper
+    print("\n\n ##########  STARTING SDK ##########\n\n")
     ZIA_USERNAME = os.getenv("ZIA_USERNAME")
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
