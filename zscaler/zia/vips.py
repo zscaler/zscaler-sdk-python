@@ -12,12 +12,13 @@
 # ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE
 
 
 from box import Box, BoxList
 from zscaler.zia import ZIAClient
 from requests import Response
+import json
 from zscaler.utils import snake_to_camel
 
 class DataCenterVIPSAPI:
@@ -215,3 +216,74 @@ class DataCenterVIPSAPI:
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
+
+    def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
+        """
+        Returns the closest diverse Zscaler destination VIPs for a given IP address.
+
+        Args:
+            ip_address (str):
+                The IP address used for locating the closest diverse VIPs.
+
+        Returns:
+            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
+
+        Examples:
+            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
+
+        """
+        vips_list = self.list_vips_recommended(source_ip=ip_address)
+        preferred_vip = vips_list[0]  # First entry is closest vip
+
+        # Generator to find the next closest vip not in the same city as our preferred
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
+        recommended_vips = (preferred_vip.id, secondary_vip.id)
+
+        return recommended_vips
+    
+    def list_vip_group_by_dc(self, source_ip: str, **kwargs) -> BoxList:
+        """
+        Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
+
+        Args:
+            source_ip (str):
+                The source IP address.
+            **kwargs:
+                Optional keywords args.
+
+        Keyword Args:
+            routable_ip (bool):
+                The routable IP address. Default: True.
+            within_country_only (bool):
+                Search within country only. Default: False.
+            include_private_service_edge (bool):
+                Include ZIA Private Service Edge VIPs. Default: True.
+            include_current_vips (bool):
+                Include currently assigned VIPs. Default: True.
+            latitude (str):
+                Latitude coordinate of GRE tunnel source.
+            longitude (str):
+                Longitude coordinate of GRE tunnel source.
+            geo_override (bool):
+                Override the geographic coordinates. Default: False.
+
+        Returns:
+            :obj:`BoxList`: List of VIP resource records.
+
+        Examples:
+            Return recommended VIPs for a given source IP:
+
+            >>> for vip in zia.traffic.list_vips_recommended(source_ip='203.0.113.30'):
+            ...    pprint(vip)
+
+        """
+        payload = {"sourceIp": source_ip}
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        response = self.rest.get("vips/groupByDatacenter", params=payload, **kwargs)
+        if isinstance(response, Response):
+            return None
+        return response

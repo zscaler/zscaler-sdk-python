@@ -17,17 +17,9 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import (
-    snake_to_camel,
-    transform_common_id_fields,
-    recursive_snake_to_camel,
-    convert_keys
-)
+from zscaler.utils import snake_to_camel, transform_common_id_fields, recursive_snake_to_camel, convert_keys
 from zscaler.zia import ZIAClient
-import logging
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 class FirewallPolicyAPI:
     # Firewall filter rule keys that only require an ID to be provided.
@@ -50,7 +42,6 @@ class FirewallPolicyAPI:
         ("time_windows", "timeWindows"),
         ("users", "users"),
     ]
-
 
     def __init__(self, client: ZIAClient):
         self.rest = client
@@ -151,8 +142,8 @@ class FirewallPolicyAPI:
 
         """
         # Convert enabled to API format if present
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         payload = {
             "name": name,
@@ -237,8 +228,8 @@ class FirewallPolicyAPI:
         payload = convert_keys(self.get_rule(rule_id))
 
         # Convert enabled to API format if present in kwargs
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
@@ -578,7 +569,7 @@ class FirewallPolicyAPI:
 
         # If 'response' is a Box, it should contain the response data directly
         # If 'response' is an HTTP response, it should have a 'status_code' attribute
-        if hasattr(response, 'status_code'):
+        if hasattr(response, "status_code"):
             # Check if the response is successful and the content is not empty
             if response.status_code == 200 and response.content:
                 # Convert to Box for consistent return type
@@ -588,7 +579,7 @@ class FirewallPolicyAPI:
                 response.raise_for_status()
         else:
             # Assume 'response' is a Box and contains the desired data
-            if 'ok' in response and response.ok:
+            if "ok" in response and response.ok:
                 # 'response' is a Box with the expected data
                 return response
             else:
@@ -597,7 +588,6 @@ class FirewallPolicyAPI:
                 # and raise an exception or handle the situation as needed
                 # Example: raise ValueError("Failed to retrieve the network application group.")
                 return Box()  # An empty Box indicates no data was found or an error occurred.
-
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -614,7 +604,6 @@ class FirewallPolicyAPI:
 
         """
         return self.rest.delete(f"networkApplicationGroups/{group_id}").status_code
-
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
@@ -697,7 +686,6 @@ class FirewallPolicyAPI:
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_network_app_group(group_id)
-
 
     def list_network_apps(self, search: str = None) -> BoxList:
         """
