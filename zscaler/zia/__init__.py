@@ -448,7 +448,7 @@ class ZIAClientHelper(ZIAClient):
         return AuditLogsAPI(self)
 
     @property
-    def config(self):
+    def activate(self):
         """
         The interface object for the :ref:`ZIA Activation interface <zia-config>`.
 

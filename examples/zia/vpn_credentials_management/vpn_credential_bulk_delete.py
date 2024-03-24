@@ -14,13 +14,6 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# Author:
-
-from zscaler import ZIAClientHelper
-import os
-import argparse
-import logging
-
 """
 vpn_credential_bulk_delete.py
 =============================
@@ -28,7 +21,7 @@ vpn_credential_bulk_delete.py
 Bulk delete VPN credentials for Zscaler Internet Access (ZIA). This script allows the deletion of multiple VPN credentials in a single operation, up to a maximum of 100 credentials per request. It utilizes environment variables for authentication with the Zscaler Internet Access (ZIA) platform. The script can also list all VPN credentials currently configured.
 
 Usage:
-    python vpn_credential_bulk_delete.py [-h] [-v] [-q] [-bd CREDENTIAL_IDS [CREDENTIAL_IDS ...]] [-l]
+    python3 vpn_credential_bulk_delete.py [-h] [-v] [-q] [-bd CREDENTIAL_IDS [CREDENTIAL_IDS ...]] [-l]
 
 Options:
     -h, --help          Show this help message and exit.
@@ -39,10 +32,10 @@ Options:
 
 Examples:
     Bulk delete VPN credentials by providing their IDs:
-        $ python vpn_credential_bulk_delete.py --bulk-delete 12345 67890 24680
+        $ python3 vpn_credential_bulk_delete.py --bulk-delete 12345 67890 24680
 
     List all VPN credentials:
-        $ python vpn_credential_bulk_delete.py --list
+        $ python3 vpn_credential_bulk_delete.py --list
 
 Environment Variables:
     ZIA_USERNAME: Username for ZIA.
@@ -53,14 +46,15 @@ Environment Variables:
 Please ensure that the ZIA environment variables are set before running this script.
 """
 
+from zscaler import ZIAClientHelper
+import os
+import argparse
+import time
+
 def main():
     parser = argparse.ArgumentParser(
         description="Manage VPN credentials for a cloud service provider."
     )
-    parser.add_argument(
-        "-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)."
-    )
-    parser.add_argument("-q", "--quiet", action="store_true", help="No output.")
     parser.add_argument(
         "-bd", "--bulk-delete", nargs='+', help="Bulk delete VPN credentials. Provide one or more credential IDs separated by spaces."
     )
@@ -70,13 +64,6 @@ def main():
     
     args = parser.parse_args()
 
-    # Set up logging
-    if args.verbose is None:
-        args.verbose = 0
-    if not args.quiet:
-        logging_level = 20 - (args.verbose * 10)
-        logging.basicConfig(level=logging_level)
-
     # Initialize SDK
     ZIA_USERNAME = os.getenv("ZIA_USERNAME")
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
@@ -84,17 +71,24 @@ def main():
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
     zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
 
+    changes_made = False
+
     if args.bulk_delete:
-        response_code = zia.traffic.bulk_delete_vpn_credentials(credential_ids=args.bulk_delete)
-        if response_code == 204:
-            print("VPN credentials successfully deleted.")
-        else:
-            print(f"Failed to delete VPN credentials. Response code: {response_code}")
+        zia.traffic.bulk_delete_vpn_credentials(credential_ids=args.bulk_delete)
+        print("VPN credentials successfully deleted.")
+        changes_made = True
 
     elif args.list:
         credentials = zia.traffic.list_vpn_credentials()
         for credential in credentials:
             print(credential)
+
+    # Activate changes if bulk deletion was performed
+    if changes_made:
+        print("Activating configuration changes. Please wait...")
+        time.sleep(5)  # Delay for 5 seconds before activating
+        activation_status = zia.activate.activate()
+        print("Configuration changes activated successfully. Status:", activation_status)
 
 if __name__ == "__main__":
     main()

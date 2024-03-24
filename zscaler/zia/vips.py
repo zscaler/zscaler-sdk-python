@@ -18,7 +18,6 @@
 from box import Box, BoxList
 from zscaler.zia import ZIAClient
 from requests import Response
-import json
 from zscaler.utils import snake_to_camel
 
 class DataCenterVIPSAPI:
@@ -127,17 +126,17 @@ class DataCenterVIPSAPI:
         Examples:
             List VIPs using default settings:
 
-            >>> for vip in zia.traffic.list_vips():
+            >>> for vip in zia.vips.list_vips():
             ...    pprint(vip)
 
             List VIPs, limiting to a maximum of 10 items:
 
-            >>> for vip in zia.traffic.list_vips(max_items=10):
+            >>> for vip in zia.vips.list_vips(max_items=10):
             ...    print(vip)
 
             List VIPs, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for vip in zia.traffic.list_vips(page_size=200, max_pages=2):
+            >>> for vip in zia.vips.list_vips(page_size=200, max_pages=2):
             ...    print(vip)
 
         """
@@ -178,7 +177,7 @@ class DataCenterVIPSAPI:
         Examples:
             Return recommended VIPs for a given source IP:
 
-            >>> for vip in zia.traffic.list_vips_recommended(source_ip='203.0.113.30'):
+            >>> for vip in zia.vips.list_vips_recommended(source_ip='203.0.113.30'):
             ...    pprint(vip)
 
         """
@@ -205,7 +204,7 @@ class DataCenterVIPSAPI:
             :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
 
         Examples:
-            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
+            >>> closest_vips = zia.vips.get_closest_diverse_vip_ids('203.0.113.20')
 
         """
         vips_list = self.list_vips_recommended(source_ip=ip_address)
@@ -229,7 +228,7 @@ class DataCenterVIPSAPI:
             :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
 
         Examples:
-            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
+            >>> closest_vips = zia.vips.get_closest_diverse_vip_ids('203.0.113.20')
 
         """
         vips_list = self.list_vips_recommended(source_ip=ip_address)
@@ -242,48 +241,100 @@ class DataCenterVIPSAPI:
         return recommended_vips
     
     def list_vip_group_by_dc(self, source_ip: str, **kwargs) -> BoxList:
-        """
-        Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
+            """
+            Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
 
-        Args:
-            source_ip (str):
-                The source IP address.
-            **kwargs:
-                Optional keywords args.
+            Args:
+                source_ip (str):
+                    The source IP address.
+                **kwargs:
+                    Optional keywords args.
 
-        Keyword Args:
-            routable_ip (bool):
-                The routable IP address. Default: True.
-            within_country_only (bool):
-                Search within country only. Default: False.
-            include_private_service_edge (bool):
-                Include ZIA Private Service Edge VIPs. Default: True.
-            include_current_vips (bool):
-                Include currently assigned VIPs. Default: True.
-            latitude (str):
-                Latitude coordinate of GRE tunnel source.
-            longitude (str):
-                Longitude coordinate of GRE tunnel source.
-            geo_override (bool):
-                Override the geographic coordinates. Default: False.
+            Keyword Args:
+                routable_ip (bool):
+                    The routable IP address. Default: True.
+                within_country_only (bool):
+                    Search within country only. Default: False.
+                include_private_service_edge (bool):
+                    Include ZIA Private Service Edge VIPs. Default: True.
+                include_current_vips (bool):
+                    Include currently assigned VIPs. Default: True.
+                latitude (str):
+                    Latitude coordinate of GRE tunnel source.
+                longitude (str):
+                    Longitude coordinate of GRE tunnel source.
+                geo_override (bool):
+                    Override the geographic coordinates. Default: False.
 
-        Returns:
-            :obj:`BoxList`: List of VIP resource records.
+            Returns:
+                :obj:`BoxList`: List of VIP resource records.
 
-        Examples:
-            Return recommended VIPs for a given source IP:
+            Examples:
+                Return recommended VIPs for a given source IP:
 
-            >>> for vip in zia.traffic.list_vips_recommended(source_ip='203.0.113.30'):
-            ...    pprint(vip)
+                >>> for vip in zia.vips.list_vip_group_by_dc(source_ip='203.0.113.30'):
+                ...    pprint(vip)
 
-        """
-        payload = {"sourceIp": source_ip}
+            """
+            params = {"sourceIp": source_ip}
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            for key, value in kwargs.items():
+                params[snake_to_camel(key)] = value
+            response = self.rest.get("/vips/groupByDatacenter", params=params)
+            if response is not None:
+                return response
+            else:
+                print("Failed to fetch VIP groups by data center. No response or error received.")
+                return BoxList([])
+            
+    def list_region_geo_coordinates(self, latitude: int, longitude: int, **kwargs) -> BoxList:
+            """
+            Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
-        response = self.rest.get("vips/groupByDatacenter", params=payload, **kwargs)
-        if isinstance(response, Response):
-            return None
-        return response
+            Args:
+                latitude (int):
+                    The latitude coordinate of the city.
+                longitude (int):
+                    The longitude coordinate of the city.
+                **kwargs:
+                    Optional keywords args.
+
+            Keyword Args:
+                city_geo_id (int):
+                    The geographical ID of the city
+                state_geo_id (int):
+                    The geographical ID of the state
+                city_name (str):
+                    The name of the city
+                state_name (str):
+                    The name of the state, province, or territory of a country
+                country_name (str):
+                    The name of the country
+                country_code (str):
+                    The ISO standard two-letter country code.
+                postal_code (str):
+                    The postal code
+                continent_code (str):
+                    The ISO standard two-letter continent code
+
+            Returns:
+                :obj:`BoxList`: List of geographical data of the region or city that is located.
+
+            Examples:
+                Return recommended VIPs for a given source IP:
+
+                >>> for geo in zia.vips.list_region_geo_coordinates(latitude='38.0', longitude='-123.0'):
+                ...    pprint(geo)
+
+            """
+            params = {"latitude": latitude,
+                      "longitude": longitude}
+
+            for key, value in kwargs.items():
+                params[snake_to_camel(key)] = value
+            response = self.rest.get("/region/byGeoCoordinates", params=params)
+            if response is not None:
+                return response
+            else:
+                print("Failed to fetch region by geo coordinates. No response or error received.")
+                return BoxList([])
