@@ -14,14 +14,6 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# Author:
-
-from zscaler import ZIAClientHelper
-import os
-import json
-import argparse
-import logging
-
 """
 static_ip_management.py
 =======================
@@ -58,74 +50,60 @@ List all static IPs:
     $ python3 static_ip_management.py -l
 
 Check if a static IP address is valid:
-    $ python3 static_ip_management.py -c --ip_address "192.0.2.1"
+    $ python3 static_ip_management.py -c --ip_address "185.211.32.65"
 
 Please note that this script requires environment variables to be set for ZIA_USERNAME, ZIA_PASSWORD, ZIA_API_KEY, and ZIA_CLOUD to authenticate with the ZIA API.
 """
 
+import argparse
+import os
+import json
+import time
+from zscaler import ZIAClientHelper
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="Manage Static IPs for Zscaler Internet Access (ZIA)."
-    )
-    parser.add_argument("-v", "--verbose", action="count", help="Increase output verbosity.")
-    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress all output.")
+    parser = argparse.ArgumentParser(description="Manage Static IPs for Zscaler Internet Access (ZIA).")
     parser.add_argument("-a", "--add", action="store_true", help="Add a new static IP. Requires --ip_address.")
-    parser.add_argument("-u", "--update", metavar="STATIC_IP_ID", help="Update an existing static IP by its ID. Requires additional arguments.")
+    parser.add_argument("-u", "--update", metavar="STATIC_IP_ID", help="Update an existing static IP by its ID. Requires --ip_address and/or --comment.")
     parser.add_argument("-d", "--delete", metavar="STATIC_IP_ID", help="Delete a static IP by its ID.")
     parser.add_argument("-l", "--list", action="store_true", help="List all static IPs.")
-    parser.add_argument("-c", "--check", help="Check if a static IP is valid. Use the IP address as the argument.")
-    parser.add_argument("--ip_address", help="The IP address for adding or checking a static IP.")
+    parser.add_argument("-c", "--check", metavar="IP_ADDRESS", help="Check if a static IP is valid. Requires --ip_address.")
+    parser.add_argument("--ip_address", help="The IP address for adding, checking, or updating a static IP.")
     parser.add_argument("--comment", help="A comment or description for the static IP.")
-    # Add more arguments as needed for other properties like geo_override, latitude, longitude, etc.
 
     args = parser.parse_args()
-
-    # Set up logging
-    logging_level = logging.WARNING  # Default to WARNING level
-    if args.verbose:
-        logging_level = logging.DEBUG
-    elif args.quiet:
-        logging_level = logging.CRITICAL
-    logging.basicConfig(level=logging_level)
 
     # Initialize ZIAClientHelper
     ZIA_USERNAME = os.getenv("ZIA_USERNAME")
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
+
     zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+
+    changes_made = False
 
     if args.add:
         if not args.ip_address:
-            logging.error("Adding a static IP requires an --ip_address argument.")
+            print("Error: Adding a static IP requires an --ip_address argument.")
             return
         response = zia.traffic.add_static_ip(ip_address=args.ip_address, comment=args.comment)
-        if response:
-            # Assuming response is a Box or dict object
-            print("Static IP added successfully:", json.dumps(response, indent=4))
-        else:
-            print("Failed to add static IP.")
+        print("Static IP added successfully:", json.dumps(response, indent=4))
+        changes_made = True
 
     elif args.update:
-        response_code = zia.traffic.update_static_ip(static_ip_id=args.update, comment=args.comment)
-        if response_code == 204:
-            print(f"Static IP {args.update} updated successfully.")
-        else:
-            print(f"Failed to update static IP {args.update}. Response code: {response_code}")
+        response = zia.traffic.update_static_ip(static_ip_id=args.update, ip_address=args.ip_address, comment=args.comment)
+        print(f"Static IP {args.update} updated successfully.")
+        changes_made = True
 
     elif args.delete:
-        response_code = zia.traffic.delete_static_ip(static_ip_id=args.delete)
-        if response_code == 204:
-            print(f"Static IP {args.delete} deleted successfully.")
-        else:
-            print(f"Failed to delete static IP {args.delete}. Response code: {response_code}")
+        zia.traffic.delete_static_ip(static_ip_id=args.delete)
+        print(f"Static IP {args.delete} deleted successfully.")
+        changes_made = True
 
     elif args.list:
         static_ips = zia.traffic.list_static_ips()
-        if static_ips:
-            print(json.dumps(static_ips, indent=4)) 
-        else:
-            print("No static IPs found.")
+        print(json.dumps(static_ips, indent=4))
 
     elif args.check:
         is_valid = zia.traffic.check_static_ip(ip_address=args.check)
@@ -134,6 +112,12 @@ def main():
         else:
             print(f"Static IP {args.check} is not valid or an error occurred.")
 
+    # Activate changes if any modifications were made.
+    if changes_made:
+        print("Activating configuration changes. Please wait...")
+        time.sleep(5)  # Delay for 5 seconds before activating.
+        activation_status = zia.activate.activate()
+        print("Configuration changes activated successfully. Status:", activation_status)
 
 if __name__ == "__main__":
     main()

@@ -202,8 +202,12 @@ class SecurityPolicyAPI:
         """
 
         payload = {"blacklistUrls": []}
+        try:
+            self.rest.put("security/advanced", json=payload)
+            return "Blacklist successfully erased."
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
 
-        return self.rest.put("security/advanced", json=payload, box=False).status_code
 
     def delete_urls_from_blacklist(self, url_list: list) -> int:
         """
