@@ -18,12 +18,32 @@
 add_ipsec_fqdn_location_gw_options.py
 =================================
 
-This script interacts with the Zscaler Internet Access (ZIA) API to manage locations. It supports adding a location with an associated IPSec tunnel (UFQDN type) and automatically activates changes.
+This script provides a CLI tool for adding a new location with an associated IPSec tunnel using UFQDN (User Fully Qualified Domain Name) in Zscaler Internet Access (ZIA). The script supports optional configuration of gateway options if the --gateway_options flag is set. After creating the IPSec tunnel and the location, it automatically activates the configuration changes.
 
 Usage:
-    python3 add_ipsec_fqdn_location_gw_options.py --add_location --name "Location Name" --email "user@example.com" --pre_shared_key "YourPreSharedKey" --gateway_options
+    python3 add_ipsec_fqdn_location_gw_options.py --add_location --name "Location Name" --email "user@example.com" --pre_shared_key "YourPreSharedKey" [--gateway_options]
 
-Please ensure that environment variables for ZIA_USERNAME, ZIA_PASSWORD, ZIA_API_KEY, and ZIA_CLOUD are set before running this script.
+Options:
+    --add_location       Flag to indicate the creation of a new location with an associated IPSec tunnel.
+    --name               Required. The name of the location to be added.
+    --email              Required. The email address for the IPSec tunnel (UFQDN type).
+    --pre_shared_key     Optional. The pre-shared key for the IPSec tunnel. If not provided, a random one will be generated.
+    --gateway_options    Optional. Flag to prompt for configuring gateway options for the location.
+
+Please ensure that the following environment variables are set before running the script:
+    ZIA_USERNAME - Username for ZIA.
+    ZIA_PASSWORD - Password for ZIA.
+    ZIA_API_KEY  - API Key for ZIA.
+    ZIA_CLOUD    - ZIA Cloud URL.
+
+The script prompts the user to configure various gateway options if the --gateway_options flag is provided. These options include enabling authentication, SSL inspection, Zscaler App SSL Setting, XFF forwarding, firewall, IPS control, AUP, and Surrogate IP.
+
+Examples:
+    To add a new location named 'San Francisco Office' with an email 'sf-office@example.com' and a specific pre-shared key, without configuring gateway options:
+    python3 add_ipsec_fqdn_location_gw_options.py --add_location --name "San Francisco Office" --email "sf-office@example.com" --pre_shared_key "exampleKey"
+
+    To add a new location named 'San Francisco Office' with an email 'sf-office@example.com', a specific pre-shared key, and prompt for gateway options configuration:
+    python3 add_ipsec_fqdn_location_gw_options.py --add_location --name "San Francisco Office" --email "sf-office@example.com" --pre_shared_key "exampleKey" --gateway_options
 """
 
 import argparse
@@ -99,9 +119,10 @@ def add_location_with_ufqdn_tunnel(zia, name, email, pre_shared_key, gateway_opt
 def main():
     parser = argparse.ArgumentParser(description="Manage locations in Zscaler Internet Access with an associated IPSec tunnel (UFQDN type).")
     parser.add_argument("--add_location", action="store_true", help="Add a new location with an IPSec UFQDN tunnel.")
-    parser.add_argument("--name", help="Name of the location to add.")
-    parser.add_argument("--email", help="Email address for the IPSec tunnel (UFQDN).")
+    parser.add_argument("--name", required=True, help="Name of the location to add.")
+    parser.add_argument("--email", required=True, help="Email address for the IPSec tunnel (UFQDN).")
     parser.add_argument("--pre_shared_key", help="Pre-shared key for the IPSec tunnel. If not provided, a random one will be generated.")
+    parser.add_argument("--gateway_options", action="store_true", help="Prompt for gateway options.")
 
     args = parser.parse_args()
 
@@ -112,8 +133,10 @@ def main():
             api_key=os.getenv("ZIA_API_KEY"),
             cloud=os.getenv("ZIA_CLOUD")
         )
-
-        gateway_options = prompt_for_gateway_options()
+        if args.gateway_options:
+            gateway_options = prompt_for_gateway_options()
+        else:
+            gateway_options = {}
 
         add_location_with_ufqdn_tunnel(zia, args.name, args.email, args.pre_shared_key, gateway_options)
     else:
