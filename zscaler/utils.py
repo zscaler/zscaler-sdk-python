@@ -445,13 +445,19 @@ def dump_response(logger, url: str, method: str, resp, params, request_uuid: str
         response_body = resp.text
 
     if from_cache:
-        log_lines.append(f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | FROM CACHE | DURATION:{duration_ms}ms ]-------------------------------")
+        log_lines.append(
+            f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | "
+            f"FROM CACHE | DURATION:{duration_ms}ms ]" + "-" * 31
+        )
     else:
-        log_lines.append(f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | DURATION:{duration_ms}ms ]-------------------------------")
+        log_lines.append(
+            f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | "
+            f"DURATION:{duration_ms}ms ]" + "-" * 46
+        )
     log_lines.append(f"{method} {full_url}")
     for key, value in response_headers_dict.items():
         log_lines.append(f"{key}: {value}")
     if response_body and response_body != "" and response_body != "null":
         log_lines.append(f"\n{response_body}")
-    log_lines.append("--------------------------------------------------------------------")
+    log_lines.append("-" * 68)
     logger.info('\n'.join(log_lines))

@@ -32,13 +32,13 @@ class ScimAttributeHeaderAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            **max_items (int):
+            max_items (int):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int):
+            max_pages (int):
                 The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
+            pagesize (int):
                 Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
+            search (str, optional):
                 The search string used to match against features and fields.
 
         Returns:
@@ -49,7 +49,12 @@ class ScimAttributeHeaderAPI:
             ...    pprint(scim_attribute)
 
         """
-        list, _ = self.rest.get_paginated_data(path=f"/idp/{idp_id}/scimattribute", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(
+            path=f"/idp/{idp_id}/scimattribute",
+            data_key_name="list",
+            **kwargs,
+            api_version="v1"
+        )
         return list
 
     def get_attribute(self, idp_id: str, attribute_id: str) -> Box:
