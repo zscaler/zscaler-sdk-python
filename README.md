@@ -107,7 +107,7 @@ Each one of the configuration values above can be turned into an environment var
 
 ## Rate Limiting
 
-The Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
+Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
 Please see:
 * [ZPA Rate Limiting][rate-limiting-zpa] for rate limiting requirements.
 * [ZIA Rate Limiting][rate-limiting-zia] for a complete list of which endpoints are rate limited.
