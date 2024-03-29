@@ -100,7 +100,7 @@ class ZIAClientHelper(ZIAClient):
         self.env_cloud = cloud or kw.get("cloud") or os.getenv(f"{self._env_base}_CLOUD")
         if not self.env_cloud:
             raise ValueError(
-                f"The cloud environment must be set via the 'cloud' argument or the {self._env_base}_CLOUD environment variable."
+                f"Cloud environment must be set via the 'cloud' argument or the {self._env_base}_CLOUD environment variable."
             )
 
         # URL construction

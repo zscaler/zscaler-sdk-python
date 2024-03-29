@@ -34,13 +34,13 @@ class CertificatesAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            **max_items (int, optional):
+            max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
+            max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
-            **pagesize (int, optional):
+            pagesize (int, optional):
                 Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
+            search (str, optional):
                 The search string used to match against features and fields.
 
         Returns:
@@ -51,7 +51,12 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/clientlessCertificate/issued", data_key_name="list", **kwargs, api_version="v2")
+        list, _ = self.rest.get_paginated_data(
+            path="/clientlessCertificate/issued",
+            data_key_name="list",
+            **kwargs,
+            api_version="v2"
+        )
         return list
 
     def list_all_certificates(self, **kwargs) -> BoxList:
