@@ -87,28 +87,27 @@ class CertificatesAPI:
         Add a new Certificate.
 
         Args:
-            name (str):
-                The name of the certificate.
-            cert_blob (str):
-                The content of the certificate.The certificateBlob field must be in string format and must include the certificate and the private key (in PEM format) in the JSON payload
-            **kwargs:
-                Optional keyword args.
+            name (str): The name of the certificate.
+            cert_blob (str): The content of the certificate. Must be in string format
+                and include the certificate and private key (in PEM format) in the
+                JSON payload.
+            **kwargs: Optional keyword args.
 
         Keyword Args:
-            description (str):
-                The description of the certificate.
+            description (str): The description of the certificate.
 
         Returns:
             :obj:`Box`: The resource record for the newly created server.
 
         Examples:
-            Create a certificate with the minimum required parameters:
+            Create a certificate with minimum required parameters:
 
             >>> zpa.servers.add_server(
             ...   name='myserver.example',
-            ...   cert_blob="-----BEGIN CERTIFICATE-----\nMIIFNzCCBIHNIHIO==\n-----END CERTIFICATE-----",'
+            ...   cert_blob=("-----BEGIN CERTIFICATE-----\n"
+            ...              "MIIFNzCCBIHNIHIO==\n"
+            ...              "-----END CERTIFICATE-----"),
             )
-
         """
         payload = {"name": name, "certBlob": cert_blob}
 
@@ -208,4 +207,3 @@ class CertificatesAPI:
         """
         list, _ = self.rest.get_paginated_data(path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2")
         return list
-

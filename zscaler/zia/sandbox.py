@@ -17,9 +17,7 @@
 
 from box import Box
 from zscaler.zia import ZIAClient
-import gzip
 import mimetypes
-import io
 
 
 class CloudSandboxAPI:
@@ -60,7 +58,7 @@ class CloudSandboxAPI:
             "force": int(force),  # convert boolean to int for ZIA
         }
 
-        url = f"/zscsb/submit"
+        url = "/zscsb/submit"
 
         return self.rest.post(
             url,
@@ -95,7 +93,7 @@ class CloudSandboxAPI:
             "api_token": self.sandbox_token,
         }
 
-        return self.rest.post(f"/zscsb/discan", params=params, data=file_content, headers={"Content-Type": content_type})
+        return self.rest.post("/zscsb/discan", params=params, data=file_content, headers={"Content-Type": content_type})
 
     def get_quota(self) -> Box:
         """

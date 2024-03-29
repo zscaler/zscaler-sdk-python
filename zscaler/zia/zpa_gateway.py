@@ -19,6 +19,7 @@ from requests import Response
 from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
+
 class ZPAGatewayAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
@@ -87,14 +88,19 @@ class ZPAGatewayAPI:
 
         Args:
             name (str): The name of the ZPA Gateway.
-            zpa_server_group (dict, required): The ZPA Server Group that is configured for Source IP Anchoring.
-            zpa_app_segments (list, optional): All the Application Segments that are associated with the selected ZPA Server Group for which Source IP Anchoring is enabled.
+            zpa_server_group (dict, required): The ZPA Server Group that is
+                configured for Source IP Anchoring.
+            zpa_app_segments (list, optional): All the Application Segments that are
+                associated with the selected ZPA Server Group for which Source IP
+                Anchoring is enabled.
 
         Keyword Args:
             description (str): Additional details about the ZPA gateway.
-            type (str): Indicates whether the ZPA gateway is configured for Zscaler Internet Access (using option ZPA) or Zscaler Cloud Connector (using option ECZPA)
-                Accepted values are 'ZPA' or 'ECZPA'.
-            zpa_tenant_id (int): The ID of the ZPA tenant where Source IP Anchoring is configured
+            type (str): Indicates whether the ZPA gateway is configured for Zscaler
+                Internet Access (using option ZPA) or Zscaler Cloud Connector (using
+                option ECZPA). Accepted values are 'ZPA' or 'ECZPA'.
+            zpa_tenant_id (int): The ID of the ZPA tenant where Source IP Anchoring
+                is configured
 
         Returns:
             :obj:`Box`: The newly added ZPA Gateway resource record.
@@ -102,12 +108,18 @@ class ZPAGatewayAPI:
         payload = {"name": name, "type": "ZPA"}
 
         if zpa_server_group:
-            payload["zpaServerGroup"] = {"externalId": zpa_server_group.get("external_id"),
-                                        "name": zpa_server_group.get("name")}
+            payload["zpaServerGroup"] = {
+                "externalId": zpa_server_group.get("external_id"),
+                "name": zpa_server_group.get("name")
+            }
 
         if zpa_app_segments:
-            payload["zpaAppSegments"] = [{"externalId": segment.get("external_id"),
-                                        "name": segment.get("name")} for segment in zpa_app_segments]
+            payload["zpaAppSegments"] = [
+                {
+                    "externalId": segment.get("external_id"),
+                    "name": segment.get("name")
+                } for segment in zpa_app_segments
+            ]
 
         # Add other optional parameters to payload
         for key, value in kwargs.items():
@@ -125,16 +137,21 @@ class ZPAGatewayAPI:
         Updates information for the specified ZPA Gateway.
 
         Args:
-            gateway_id (str): The unique id for the ZPA Gateway that will be updated.
+            gateway_id (str): The unique id for the ZPA Gateway to be updated.
 
         Keyword Args:
             name (str): The name of the ZPA gateway.
             description (str): Additional details about the ZPA gateway.
-            type (str): Indicates whether the ZPA gateway is configured for Zscaler Internet Access (using option ZPA) or Zscaler Cloud Connector (using option ECZPA)
-                Accepted values are 'ZPA' or 'ECZPA'.
-            zpa_server_group (dict, optional): The ZPA Server Group that is configured for Source IP Anchoring.
-            zpa_app_segments (list, optional): All the Application Segments that are associated with the selected ZPA Server Group for which Source IP Anchoring is enabled.
-            zpa_tenant_id (int): The ID of the ZPA tenant where Source IP Anchoring is configured
+            type (str): Indicates whether the ZPA gateway is configured for
+                Zscaler Internet Access (using option ZPA) or Zscaler Cloud
+                Connector (using option ECZPA). Accepted values are 'ZPA' or 'ECZPA'.
+            zpa_server_group (dict, optional): The ZPA Server Group configured for
+                Source IP Anchoring.
+            zpa_app_segments (list, optional): All the Application Segments associated
+                with the selected ZPA Server Group for which Source IP Anchoring is
+                enabled.
+            zpa_tenant_id (int): The ID of the ZPA tenant where Source IP Anchoring
+                is configured
 
         Returns:
             :obj:`Box`: The updated ZPA Gateway resource record.
@@ -147,7 +164,7 @@ class ZPAGatewayAPI:
                 # Convert nested keys in zpa_server_group to camelCase
                 value = {snake_to_camel(k): v for k, v in value.items()}
             elif key == 'zpa_app_segments' and isinstance(value, list):
-                # Convert nested keys in each dictionary in zpa_app_segments to camelCase
+                # Convert nested keys in zpa_app_segments to camelCase
                 value = [{snake_to_camel(k): v for k, v in item.items()} for item in value]
 
             payload[snake_to_camel(key)] = value
@@ -155,7 +172,8 @@ class ZPAGatewayAPI:
         response = self.rest.put(f"zpaGateways/{gateway_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(f"API call failed with status {response.status_code}: "
+                            f"{response.json()}")
 
         # Return the updated object
         return self.get_gateway(gateway_id)

@@ -18,7 +18,7 @@
 import pytest
 import responses
 
-from zscaler.zia import ZIA
+from zscaler.zia import ZIAClientHelper
 
 
 @pytest.fixture(name="session")
@@ -42,7 +42,7 @@ def zia(session):
         status=200,
     )
     # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-    return ZIA(
+    return ZIAClientHelper(
         username="test@example.com",
         password="hunter2",
         cloud="zscaler",

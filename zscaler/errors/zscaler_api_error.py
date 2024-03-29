@@ -1,5 +1,6 @@
 from zscaler.errors.error import Error
 
+
 # ZPA API Errors
 class ZPAAPIError(Error):
     def __init__(self, url, response_details, response_body):

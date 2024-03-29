@@ -173,7 +173,6 @@ class LSSConfigControllerAPI:
                 return None
         return response
 
-
     def get_log_formats(self) -> Box:
         """
         Returns all available pre-configured LSS Log Formats.
@@ -406,7 +405,7 @@ class LSSConfigControllerAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"/lssConfig", api_version="v2", json=payload)
+        response = self.rest.post("/lssConfig", api_version="v2", json=payload)
         if isinstance(response, Response):
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
@@ -524,7 +523,6 @@ class LSSConfigControllerAPI:
         if not isinstance(resp, Response):
             return self.get_config(lss_config_id)
 
-
     def delete_lss_config(self, lss_id: str) -> int:
         """
         Delete the specified LSS Receiver Config.
@@ -543,4 +541,3 @@ class LSSConfigControllerAPI:
 
         """
         return self.rest.delete(f"/lssConfig/{lss_id}", api_version="v2").status_code
-

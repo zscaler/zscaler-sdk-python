@@ -1,5 +1,6 @@
 import json
 
+
 # Zscaler Base Exceptions
 class ZscalerBaseException(Exception):
     def __init__(self, url, response, response_body):
@@ -10,6 +11,7 @@ class ZscalerBaseException(Exception):
 
     def __repr__(self):
         return str({"message": self.message})
+
     def __str__(self):
         return self.message
 
@@ -21,12 +23,9 @@ class HTTPException(ZscalerBaseException):
 class ZscalerAPIException(ZscalerBaseException):
     pass
 
+
 # Zscaler Private Access specific exceptions (Potential Future Use)
 class ZpaBaseException(Exception):
-    pass
-
-
-class HTTPException(ZpaBaseException):
     pass
 
 
@@ -38,6 +37,7 @@ class RateLimitExceededError(Exception):
     """Raised when the API rate limit is exceeded."""
 
     pass
+
 
 class RetryLimitExceededError(Exception):
     """Raised when the maximum number of retries is exceeded."""
@@ -85,17 +85,14 @@ class InvalidCloudEnvironmentError(Exception):
 
 class TokenExpirationError(Exception):
     """Raised when the authentication token has expired."""
-
     pass
 
 
 class TokenRefreshError(Exception):
     """Raised when there's an issue refreshing the authentication token."""
-
     pass
 
 
 class HeaderUpdateError(Exception):
     """Raised if there's a problem updating the session headers."""
-
     pass

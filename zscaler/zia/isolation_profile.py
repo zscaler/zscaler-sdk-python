@@ -26,7 +26,7 @@ class IsolationProfileAPI:
 
     def list_isolation_profiles(self, **kwargs) -> BoxList:
         """
-        Returns a list of all the cloud browser isolation profiles in the Isolation Profile field for URL Filtering Policy and Cloud App Control Policy rules.
+        Returns list of all the profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.
 
         Args:
             **kwargs: Optional keyword args.
