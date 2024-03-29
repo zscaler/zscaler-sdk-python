@@ -1,7 +1,7 @@
 from zscaler.cache.cache import Cache
 import logging
 import time
-from urllib.parse import urlparse, urlencode, parse_qs
+from urllib.parse import urlparse
 
 logger = logging.getLogger("zscaler-sdk-python")
 
@@ -73,7 +73,7 @@ class ZscalerCache(Cache):
             key {str} -- Key in pair
             value {tuple} -- Tuple of response and response body
         """
-        if type(key) == str and (type(value) != list or type(value[1]) != list):
+        if isinstance(key, str) and not (isinstance(value, list) or isinstance(value[1], list)):
             # Get current time
             now = self._get_current_time()
 

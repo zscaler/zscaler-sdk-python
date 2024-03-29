@@ -196,4 +196,3 @@ class AppServersAPI:
 
         """
         return self.rest.delete(f"server/{server_id}").status_code
-

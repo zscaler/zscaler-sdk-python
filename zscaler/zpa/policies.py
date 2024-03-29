@@ -682,7 +682,7 @@ class PolicySetsAPI:
             app_connector_group_ids (:obj:`list` of :obj:`str`):
                 A list of application connector IDs that will be attached to the access policy rule. Defaults to an empty list.
             app_server_group_ids (:obj:`list` of :obj:`str`):
-                A list of application server group IDs that will be attached to the access policy rule. Defaults to an empty list.
+                A list of server group IDs that will be attached to the access policy rule. Defaults to an empty list.
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
 

@@ -14,15 +14,15 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box, BoxList
+from box import BoxList
 from requests import Response
 from zscaler.zia import ZIAClient
+
 
 class WorkloadGroupsAPI:
 
     def __init__(self, client: ZIAClient):
         self.rest = client
-
 
     def list_groups(self) -> BoxList:
         """

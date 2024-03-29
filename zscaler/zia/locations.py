@@ -18,8 +18,9 @@
 from box import Box, BoxList
 from requests import Response
 from zscaler.utils import snake_to_camel
-
 from zscaler.zia import ZIAClient
+
+
 class LocationsAPI:
 
     def __init__(self, client: ZIAClient):

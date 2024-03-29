@@ -17,6 +17,7 @@
 from box import Box
 from zscaler.zia import ZIAClient
 
+
 class AppTotalAPI:
 
     def __init__(self, client: ZIAClient):

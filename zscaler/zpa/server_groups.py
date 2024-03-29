@@ -80,7 +80,6 @@ class ServerGroupsAPI:
                 return group
         return None
 
-
     def add_group(self, app_connector_group_ids: list, name: str, **kwargs) -> Box:
         """
         Adds a server group.
@@ -195,7 +194,6 @@ class ServerGroupsAPI:
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_group(group_id)
-
 
     def delete_group(self, group_id: str) -> int:
         """
