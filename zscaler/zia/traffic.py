@@ -132,30 +132,6 @@ class TrafficForwardingAPI:
         response = self.rest.get("region/byGeoCoordinates", params=query_params)
         return response
 
-    def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
-        """
-        Returns the closest diverse Zscaler destination VIPs for a given IP address.
-
-        Args:
-            ip_address (str):
-                The IP address used for locating the closest diverse VIPs.
-
-        Returns:
-            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
-
-        Examples:
-            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
-
-        """
-        vips_list = self.list_vips_recommended(source_ip=ip_address)
-        preferred_vip = vips_list[0]  # First entry is closest vip
-
-        # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
-        recommended_vips = (preferred_vip.id, secondary_vip.id)
-
-        return recommended_vips
-    
     def list_vips_recommended(self, source_ip: str, **kwargs) -> BoxList:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
@@ -202,7 +178,7 @@ class TrafficForwardingAPI:
         if isinstance(response, Response):
             return None
         return response
-    
+
     def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
         """
         Returns the closest diverse Zscaler destination VIPs for a given IP address.
@@ -226,53 +202,52 @@ class TrafficForwardingAPI:
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
-    
+
     def list_vip_group_by_dc(self, source_ip: str, **kwargs) -> BoxList:
-            """
-            Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
+        """
+        Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
 
-            Args:
-                source_ip (str):
-                    The source IP address.
-                **kwargs:
-                    Optional keywords args.
+        Args:
+            source_ip (str):
+                The source IP address.
+            **kwargs:
+                Optional keywords args.
 
-            Keyword Args:
-                routable_ip (bool):
-                    The routable IP address. Default: True.
-                within_country_only (bool):
-                    Search within country only. Default: False.
-                include_private_service_edge (bool):
-                    Include ZIA Private Service Edge VIPs. Default: True.
-                include_current_vips (bool):
-                    Include currently assigned VIPs. Default: True.
-                latitude (str):
-                    Latitude coordinate of GRE tunnel source.
-                longitude (str):
-                    Longitude coordinate of GRE tunnel source.
-                geo_override (bool):
-                    Override the geographic coordinates. Default: False.
+        Keyword Args:
+            routable_ip (bool):
+                The routable IP address. Default: True.
+            within_country_only (bool):
+                Search within country only. Default: False.
+            include_private_service_edge (bool):
+                Include ZIA Private Service Edge VIPs. Default: True.
+            include_current_vips (bool):
+                Include currently assigned VIPs. Default: True.
+            latitude (str):
+                Latitude coordinate of GRE tunnel source.
+            longitude (str):
+                Longitude coordinate of GRE tunnel source.
+            geo_override (bool):
+                Override the geographic coordinates. Default: False.
+        Returns:
+            :obj:`BoxList`: List of VIP resource records.
 
-            Returns:
-                :obj:`BoxList`: List of VIP resource records.
+        Examples:
+            Return recommended VIPs for a given source IP:
 
-            Examples:
-                Return recommended VIPs for a given source IP:
+            >>> for vip in zia.vips.list_vip_group_by_dc(source_ip='203.0.113.30'):
+            ...    pprint(vip)
 
-                >>> for vip in zia.vips.list_vip_group_by_dc(source_ip='203.0.113.30'):
-                ...    pprint(vip)
+        """
+        params = {"sourceIp": source_ip}
 
-            """
-            params = {"sourceIp": source_ip}
-
-            for key, value in kwargs.items():
-                params[snake_to_camel(key)] = value
-            response = self.rest.get("/vips/groupByDatacenter", params=params)
-            if response is not None:
-                return response
-            else:
-                print("Failed to fetch VIP groups by data center. No response or error received.")
-                return BoxList([])
+        for key, value in kwargs.items():
+            params[snake_to_camel(key)] = value
+        response = self.rest.get("/vips/groupByDatacenter", params=params)
+        if response is not None:
+            return response
+        else:
+            print("Failed to fetch VIP groups by data center. No response or error received.")
+            return BoxList([])
 
     def list_vips(self, **kwargs) -> BoxList:
         """
@@ -446,7 +421,6 @@ class TrafficForwardingAPI:
 
         # Return the updated object
         return self.get_gre_tunnel(tunnel_id)
-
 
     def delete_gre_tunnel(self, tunnel_id: str) -> int:
         """
@@ -701,7 +675,6 @@ class TrafficForwardingAPI:
         response = self.rest.get("vpnCredentials", params=query_params)
         return response
 
-
     def add_vpn_credential(self, authentication_type: str, pre_shared_key: str = None, **kwargs) -> Box:
         """
         Add new VPN credentials.
@@ -715,7 +688,7 @@ class TrafficForwardingAPI:
 
                 Only ``IP`` and ``UFQDN`` supported via API.
             pre_shared_key (str, optional):
-                Pre-shared key. This is a required field for UFQDN and IP auth type. If not provided, a random one will be generated.
+                This field is required for UFQDN and IP auth type. If not provided a random one will be generated.
 
         Keyword Args:
             ip_address (str):
@@ -756,7 +729,6 @@ class TrafficForwardingAPI:
             # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
-
 
     def bulk_delete_vpn_credentials(self, credential_ids: list) -> int:
         """
@@ -879,5 +851,3 @@ class TrafficForwardingAPI:
 
         """
         return self.rest.delete(f"vpnCredentials/{credential_id}").status_code
-
-

@@ -18,7 +18,6 @@
 from typing import Union
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import Iterator
 from zscaler.zpa.client import ZPAClient
 
 

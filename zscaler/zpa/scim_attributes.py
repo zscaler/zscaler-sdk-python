@@ -73,7 +73,6 @@ class ScimAttributeHeaderAPI:
         list, _ = self.rest.get(path=f"/idp/{idp_id}/scimattribute/{attribute_id}", data_key_name="list", api_version="v1")
         return list
 
-
     def get_values(self, idp_id: str, attribute_id: str, **kwargs) -> BoxList:
         """
         Returns information on the specified SCIM attributes.
@@ -87,13 +86,13 @@ class ScimAttributeHeaderAPI:
                 Optional keyword args.
 
         Keyword Args:
-            **max_items (int):
+            max_items (int):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int):
+            max_pages (int):
                 The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
+            pagesize (int):
+                Specifies the page size. Default is 20, maximum is 500.
+            search (str, optional):
                 The search string used to match against features and fields.
 
         Returns:
@@ -103,5 +102,10 @@ class ScimAttributeHeaderAPI:
             >>> pprint(zpa.scim_attributes.get_values('99999', '88888'))
 
         """
-        list, _ = self.rest.get_paginated_data(path=f"/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}", data_key_name="list", **kwargs, api_version="userconfig_v1")
+        list, _ = self.rest.get_paginated_data(
+            path=f"/scimattribute/idpId/{idp_id}/attributeId/{attribute_id}",
+            data_key_name="list",
+            **kwargs,
+            api_version="userconfig_v1"
+        )
         return list

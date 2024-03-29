@@ -77,7 +77,6 @@ class SAMLAttributesAPI:
         list, _ = self.rest.get_paginated_data(path=path, data_key_name="list", **kwargs, api_version="v2")
         return list
 
-
     def get_attribute(self, attribute_id: str) -> Box:
         """
         Returns information on the specified SAML attributes.
@@ -93,5 +92,4 @@ class SAMLAttributesAPI:
             >>> pprint(zpa.saml_attributes.get_attribute('99999'))
 
         """
-
         return self.rest.get(f"samlAttribute/{attribute_id}")

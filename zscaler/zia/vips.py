@@ -17,8 +17,8 @@
 
 from box import Box, BoxList
 from zscaler.zia import ZIAClient
-from requests import Response
 from zscaler.utils import snake_to_camel
+
 
 class DataCenterVIPSAPI:
 
@@ -101,56 +101,56 @@ class DataCenterVIPSAPI:
         """
         return self._get(f"https://api.config.zscaler.com/{cloud}.net/pac/json")["ip"]
 
-
-            
     def list_region_geo_coordinates(self, latitude: int, longitude: int, **kwargs) -> BoxList:
-            """
-            Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
+        """
+        Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
-            Args:
-                latitude (int):
-                    The latitude coordinate of the city.
-                longitude (int):
-                    The longitude coordinate of the city.
-                **kwargs:
-                    Optional keywords args.
+        Args:
+            latitude (int):
+                The latitude coordinate of the city.
+            longitude (int):
+                The longitude coordinate of the city.
+            **kwargs:
+                Optional keywords args.
 
-            Keyword Args:
-                city_geo_id (int):
-                    The geographical ID of the city
-                state_geo_id (int):
-                    The geographical ID of the state
-                city_name (str):
-                    The name of the city
-                state_name (str):
-                    The name of the state, province, or territory of a country
-                country_name (str):
-                    The name of the country
-                country_code (str):
-                    The ISO standard two-letter country code.
-                postal_code (str):
-                    The postal code
-                continent_code (str):
-                    The ISO standard two-letter continent code
+        Keyword Args:
+            city_geo_id (int):
+                The geographical ID of the city
+            state_geo_id (int):
+                The geographical ID of the state
+            city_name (str):
+                The name of the city
+            state_name (str):
+                The name of the state, province, or territory of a country
+            country_name (str):
+                The name of the country
+            country_code (str):
+                The ISO standard two-letter country code.
+            postal_code (str):
+                The postal code
+            continent_code (str):
+                The ISO standard two-letter continent code
 
-            Returns:
-                :obj:`BoxList`: List of geographical data of the region or city that is located.
+        Returns:
+            :obj:`BoxList`: List of geographical data of the region or city that is located.
 
-            Examples:
-                Return recommended VIPs for a given source IP:
+        Examples:
+            Return recommended VIPs for a given source IP:
 
-                >>> for geo in zia.vips.list_region_geo_coordinates(latitude='38.0', longitude='-123.0'):
-                ...    pprint(geo)
+            >>> for geo in zia.vips.list_region_geo_coordinates(latitude='38.0', longitude='-123.0'):
+            ...    pprint(geo)
 
-            """
-            params = {"latitude": latitude,
-                      "longitude": longitude}
+        """
+        params = {
+            "latitude": latitude,
+            "longitude": longitude
+        }
 
-            for key, value in kwargs.items():
-                params[snake_to_camel(key)] = value
-            response = self.rest.get("/region/byGeoCoordinates", params=params)
-            if response is not None:
-                return response
-            else:
-                print("Failed to fetch region by geo coordinates. No response or error received.")
-                return BoxList([])
+        for key, value in kwargs.items():
+            params[snake_to_camel(key)] = value
+        response = self.rest.get("/region/byGeoCoordinates", params=params)
+        if response is not None:
+            return response
+        else:
+            print("Failed to fetch region by geo coordinates. No response or error received.")
+            return BoxList([])

@@ -208,7 +208,6 @@ class SecurityPolicyAPI:
         except Exception as e:
             return f"An error occurred: {str(e)}"
 
-
     def delete_urls_from_blacklist(self, url_list: list) -> int:
         """
         Deletes the provided URLs from the blacklist.

@@ -328,7 +328,7 @@ class InspectionControllerAPI:
                 print(zpa.inspection.get_predef_control("99999"))
 
         """
-        response = self.rest.get(f"/inspectionControls/predefined/%s" % (control_id))
+        response = self.rest.get("/inspectionControls/predefined/%s" % (control_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -354,7 +354,7 @@ class InspectionControllerAPI:
                 print(zpa.inspection.get_profile("99999"))
 
         """
-        response = self.rest.get(f"/inspectionProfile/%s" % (profile_id))
+        response = self.rest.get("/inspectionProfile/%s" % (profile_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -558,7 +558,6 @@ class InspectionControllerAPI:
                 # Handle error or return None based on your API handling
                 return None
         return response
-
 
     def get_predef_control_by_name(self, name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
         """
@@ -945,8 +944,8 @@ class InspectionControllerAPI:
             duplication with the default Inspection Profile update API call. `**kwargs` has been provided as a parameter
             for you to be able to add any additional args that Zscaler may add.
 
-            If you feel that this is in error and that this functionality should be correctly implemented by zscaler-sdk-python,
-            `raise an issue <https://github.com/zscaler/zscaler-sdk-python/issues>`_ in the zscaler-sdk-python Github repo.
+            If you feel that this is in error and that this functionality should be correctly implemented by zscaler-sdk-python
+            `raise an issue <https://github.com/zscaler/zscaler-sdk-python/issues>` in the zscaler-sdk-python Github repo
 
         Args:
             profile_id (str):
@@ -965,7 +964,7 @@ class InspectionControllerAPI:
 
         payload = convert_keys(payload)
 
-        resp = self.rest.put(f"inspectionProfile/{profile_id}/patch", json=payload).status_code
+        resp = self.rest.put("inspectionProfile/{profile_id}/patch", json=payload).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):

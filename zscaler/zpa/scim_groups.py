@@ -97,7 +97,6 @@ class SCIMGroupsAPI:
         response = self.rest.get(f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1")
         return response
 
-
     def search_group(self, idp_id: str, group_name: str, **kwargs) -> dict:
         """
         Searches and returns the SCIM group with the specified name for the given IdP.
@@ -124,4 +123,3 @@ class SCIMGroupsAPI:
         params = {"page": page_number, "search": search, "pagesize": page_size, "sortBy": "name", "sortOrder": "DESC"}
         page = self.rest.get(path=f"/scimgroup/idpId/{idp_id}", params=params, api_version="userconfig_v1")
         return page
-

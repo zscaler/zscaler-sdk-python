@@ -123,7 +123,6 @@ class RuleLabelsAPI:
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-
     def update_label(self, label_id: str, **kwargs):
         """
         Updates information for the specified ZIA Rule Label.

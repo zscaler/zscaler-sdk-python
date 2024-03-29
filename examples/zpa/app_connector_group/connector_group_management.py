@@ -27,22 +27,22 @@ Manage Connector Groups for Zscaler Private Access (ZPA).
 **Examples**:
 
 List all Connector Groups:
-    $ python connector_group_management.py -l
+    $ python3 connector_group_management.py -l
 
 Get details of a specific Connector Group by ID:
-    $ python connector_group_management.py -g 99999
+    $ python3 connector_group_management.py -g 99999
 
 Get details of a specific Connector Group by Name:
-    $ python connector_group_management.py -n "Connector Group Name"
+    $ python3 connector_group_management.py -n "Connector Group Name"
 
 Add a new Connector Group:
-    $ python connector_group_management.py --add --name "New Connector Group" --location "Location" --latitude 123 --longitude 456
+    $ python3 connector_group_management.py --add --name "New Connector Group" --location "Location" --latitude 49.246292 --longitude -123.116226
 
 Update an existing Connector Group:
-    $ python connector_group_management.py --update 99999 --name "Updated Connector Group"
+    $ python3 connector_group_management.py --update 99999 --name "Updated Connector Group"
 
 Delete a Connector Group by ID:
-    $ python connector_group_management.py -d 99999
+    $ python3 connector_group_management.py -d 99999
 
 """
 
@@ -53,7 +53,7 @@ import logging
 from zscaler import ZPAClientHelper
 import json
 import os
-from utils import str2bool
+from zscaler.utils import str2bool
 
 def main():
     parser = argparse.ArgumentParser(

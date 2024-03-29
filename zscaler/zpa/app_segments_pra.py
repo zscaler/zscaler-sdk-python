@@ -66,7 +66,6 @@ class AppSegmentsPRAAPI:
         """
         return self.rest.get(f"application/{segment_id}")
 
-
     def get_segment_pra_by_name(self, name):
         apps = self.list_segments_pra()
         for app in apps:
@@ -158,8 +157,7 @@ class AppSegmentsPRAAPI:
                 Enable CNAMEs for this Application Segment.
             passive_health_enabled (bool):
                 Enable Passive Health Checks for this Application Segment.
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
             :obj:`Box`: The newly created application segment resource record.
@@ -259,9 +257,7 @@ class AppSegmentsPRAAPI:
             udp_ports (:obj:`list` of :obj:`tuple`):
                 List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
                      [(34000, 35000), (36000, 36000)]
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
-
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
             :obj:`Box`: The updated application segment resource record.

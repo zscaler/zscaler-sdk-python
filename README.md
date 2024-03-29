@@ -12,40 +12,45 @@
 
 -> **Disclaimer:** Please refer to our [General Support Statement](docs/guides/support.md) before proceeding with the use of this provider. You can also refer to our [troubleshooting guide](docs/guides/troubleshooting.md) for guidance on typical problems.
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+## Zscaler Python Management SDK Overview
 
-## Quick links
-
-* [Zscaler SDK Python API Documentation](https://zscaler-sdk-python.readthedocs.io)
-
-## Overview
-
-Each Zscaler product has separate developer documentation and authentication methods. This SDK simplifies
-software development using the Zscaler API.
-
-## Features
-
-* Simplified authentication with Zscaler APIs.
-* Uniform interaction with all Zscaler APIs.
-* Uses [python-box](https://github.com/cdgriffith/Box/wiki) to add dot notation access to json data structures.
-* Zscaler API output automatically converted from CamelCase to Snake Case.
-* Various quality of life enhancements for object CRUD methods.
-
-## Products
-
+This repository contains the Zscaler management SDK for Python. This SDK can be used to interact with several Zscaler services such as:
 * Zscaler Private Access (ZPA)
 * Zscaler Internet Access (ZIA)
 
-## Installation
+Each Zscaler product has separate developer documentation and authentication methods. This SDK aims to simplify
+software development using the Zscaler API for both customers and partners.
 
-The most recent version can be installed from pypi as per below.
+- [Release Status](#release-status)
+- [Need help?](#need-help)
+- [Getting Started](#getting-started)
+- [Logging](#logging)
+- [Rate Limiting](#rate-limiting)
+- [Environment variables](#environment-variables)
+- [Building the SDK](#building-the-sdk)
+- [Contributing](#contributing)
 
-    pip install zscaler-sdk-python
+> Requires Python version 3.8.0 or higher.
+
+## Need help?
+
+If you run into problems using the SDK, you can:
+
+- Ask questions on the [Zenith Community][zenith]
+- Post [issues on GitHub][github-issues] (for code errors)
+- Support [customer support portal][zscaler-support]
+
+## Getting started
+
+To install the Zscaler Python SDK in your project:
+
+```sh
+pip install zscaler
+```
 
 ## Usage
 
-Before you can interact with any of the Zscaler APIs, you may need to generate API keys or retrieve tenancy information
-for each product that you are interfacing with. Once you have the requirements and you have installed Zscaler SDK Python, you're ready to go.
+Before you can interact with any of the Zscaler APIs, you need to generate API keys or retrieve tenancy information for each product that you are interfacing with. Once you have the requirements and you have installed Zscaler SDK Python, you're ready to go.
 
 ### Quick ZIA Example
 
@@ -53,7 +58,7 @@ for each product that you are interfacing with. Once you have the requirements a
 from zscaler import ZIAClientHelper
 from pprint import pprint
 
-zia = ZIAClientHelper(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+zia = ZIAClientHelper(username='USERNAME', password='PASSWORD', api_key='ZIA_API_KEY', cloud='ZIA_CLOUD')
 for user in zia.users.list_users():
     pprint(user)
 ```
@@ -64,39 +69,80 @@ for user in zia.users.list_users():
 from zscaler import ZPAClientHelper
 from pprint import pprint
 
-zpa = ZPAClientHelper(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
+zpa = ZPAClientHelper(client_id='ZPA_CLIENT_ID', client_secret='ZPA_CLIENT_SECRET', customer_id='ZPA_CUSTOMER_ID', cloud='ZPA_CLOUD')
 for app_segment in zpa.app_segments.list_segments():
     pprint(app_segment)
 ```
 
-## Documentation
+~> **NOTE** The `ZPA_CLOUD` environment variable is optional and only required if your project needs to interact with any other ZPA cloud other than production cloud. In this case, use the `ZPA_CLOUD` environment variable followed by the name of the corresponding environment: `ZPA_CLOUD=BETA`, `ZPA_CLOUD=ZPATWO`, `ZPA_CLOUD=GOV`, `ZPA_CLOUD=GOVUS`, `ZPA_CLOUD=PREVIEW`, `ZPA_CLOUD=DEV`.
 
-### API Documentation
+## Logging
 
-Zscaler SDK Python's API is fully 100% documented and is hosted at [ReadTheDocs](https://zscaler-sdk-python.readthedocs.io).
+The Zscaler SDK Python, provides robust logging for debug purposes.
+Logs are disabled by default and should be enabled explicitly via custom environment variable:
 
-This documentation should be used when working with Zscaler SDK Python rather than referring to Zscaler's API reference.
-Zscaler SDK Python makes some quality of life improvements to simplify and clarify arguments passed to Zscaler's API.
+* `ZSCALER_SDK_LOG` - Turn on logging
+* `ZSCALER_SDK_VERBOSE` - Turn on logging in verbose mode
 
-## Is It Tested?
+```sh
+export ZSCALER_SDK_LOG=true
+export ZSCALER_SDK_VERBOSE=true
+```
 
-Yes! Zscaler SDK Python has a complete test suite that fully covers all methods within the ZIA and ZPA modules.
+**NOTE**: DO NOT SET DEBUG LEVEL IN PRODUCTION!
+
+You should now see logs in your console. Actual API Tokens will be logged to the console, so use caution and never use `DEBUG` level logging in production.
+
+What it being logged? `requests`, `responses`,  `http errors`, `caching responses`.
+
+### Environment variables
+
+Each one of the configuration values above can be turned into an environment variable name with the `_` (underscore) character and UPPERCASE characters. The following are accepted:
+
+- `ZSCALER_CLIENT_CACHE_ENABLED` - Enable or disable the caching mechanism within the clien
+- `ZSCALER_CLIENT_CACHE_DEFAULT_TTL` - Duration (in seconds) that cached data remains valid. By default data is cached in memory for 3600 seconds.
+- `ZSCALER_CLIENT_CACHE_DEFAULT_TTI` - This environment variable sets the maximum amount of time (in seconds) that cached data can remain in the cache without being accessed. If the cached data is not accessed within this timeframe, it is removed from the cache, regardless of its TTL. The default TTI is 1800 seconds (30 minutes) 
+- `ZSCALER_SDK_LOG` - Turn on logging
+- `ZSCALER_SDK_VERBOSE` - Turn on logging in verbose mode
+
+## Rate Limiting
+
+The Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
+Please see:
+* [ZPA Rate Limiting][rate-limiting-zpa] for rate limiting requirements.
+* [ZIA Rate Limiting][rate-limiting-zia] for a complete list of which endpoints are rate limited.
+
+When a 429 error is received, the `Retry-After` header will tell you the time at which you can retry. This section discusses the method for handling rate limiting with this SDK.
+
+### Built-In Retry
+
+This SDK uses the built-in retry strategy to automatically retry on 429 errors. The default Maximum Retry Attempts for both ZIA and ZPA explicitly limits the number of retry attempts to a maximum of `5`.
+
+Retry Conditions: The client for both ZPA and ZIA retries a request under the following conditions:
+
+* HTTP status code 429 (Too Many Requests): This indicates that the rate limit has been exceeded. The client waits for a duration specified by the `Retry-After` header, if present, or a default of `2 ` seconds, before retrying.
+
+* Exceptions during request execution: Any requests.RequestException encountered during the request triggers a retry, except on the last attempt, where the exception is raised.
+
+## Building the SDK
+
+In most cases, you won't need to build the SDK from source. If you want to build it yourself, you'll need these prerequisites:
+
+- Clone the repo
+- Run `python setup.py build` from the root of the project (assuming Python is installed)
+- Ensure tests run succesfully. Install `tox` if not installed already using: `pip install tox`. Run tests using `tox` in the root directory of the project.
 
 ## Contributing
 
-Contributions to Zscaler SDK Python are absolutely welcome.
+We're happy to accept contributions and PRs! Please see the [Contribution Guide](CONTRIBUTING.md) to understand how to structure a contribution.
 
-Please see the [Contribution Guidelines](https://github.com/zscaler/zscaler-sdk-python/blob/main/CONTRIBUTING.md) for more information.
-
-[Poetry](https://python-poetry.org/docs/) is currently being used for builds and management. You'll want to have
-poetry installed and available in your environment.
-
-## Issues
-
-Please feel free to open an issue using [Github Issues](https://github.com/zscaler/zscaler-sdk-python/issues) if you run into any problems using Zscaler SDK Python.
+[zenith]: https://community.zscaler.com/
+[zscaler-support]: https://help.zscaler.com/contact-support
+[github-issues]: https://github.com/zscaler/zscaler-sdk-python/issues
+[rate-limiting-zpa]: https://help.zscaler.com/zpa/understanding-rate-limiting
+[rate-limiting-zia]: https://help.zscaler.com/zia/understanding-rate-limiting
 
 ## License
-
 MIT License
 
 =======

@@ -15,9 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box, BoxList
-from requests import Response
-
+from box import BoxList
 from zscaler.zpa.client import ZPAClient
 
 

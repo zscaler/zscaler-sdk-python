@@ -45,8 +45,6 @@ class URLCategoriesAPI:
 
         """
 
-        # ZIA limits each API call to 100 URLs at a rate of 1 API call per second. zscaler-sdk-python simplifies this by allowing
-        # users to submit any number of URLs and handle the chunking of the API calls on their behalf.
         if len(urls) > 100:
             results = BoxList()
             for chunk in chunker(urls, 100):

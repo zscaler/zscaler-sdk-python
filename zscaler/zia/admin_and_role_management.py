@@ -18,8 +18,9 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
+
 
 class AdminAndRoleManagementAPI:
 
@@ -51,7 +52,6 @@ class AdminAndRoleManagementAPI:
         """
         payload = {"search": query}
         return self.rest.get("adminUsers", params=payload)
-
 
     def get_user(self, user_id: str) -> Box:
         """
@@ -282,7 +282,7 @@ class AdminAndRoleManagementAPI:
             >>> zia.admin_role_management.delete_admin_user('99272455')
 
         """
-        response = self.rest.delete(f"/adminUsers/%s" % (user_id))
+        response = self.rest.delete("/adminUsers/%s" % (user_id))
         return response.status_code
 
     def list_roles(self, **kwargs) -> BoxList:

@@ -36,7 +36,7 @@ Get details of a specific Application Server by Name:
     $ python3 application_server_management.py -n "Server Name"
 
 Add a new Application Server:
-    $ python3 application_server_management.py --add --name "New Application Server" --enabled True --description "Application Server Description --address "192.168.100.10" "
+    $ python3 application_server_management.py --add --name "New Application Server" --enabled True --description "Application Server Description" --address "192.168.100.10"
 
 Update an existing Application Server:
     $ python3 application_server_management.py --update 99999 --name "Updated Application Server Name"
@@ -51,7 +51,8 @@ import logging
 import os
 import json
 from zscaler import ZPAClientHelper
-from utils import str2bool
+from zscaler.utils import str2bool
+
 
 # Initialize ZIAClientHelper with environment variables
 ZPA_CLIENT_ID = os.getenv("ZPA_CLIENT_ID")
