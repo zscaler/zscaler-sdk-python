@@ -17,17 +17,9 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import (
-    snake_to_camel,
-    transform_common_id_fields,
-    recursive_snake_to_camel,
-    convert_keys
-)
+from zscaler.utils import snake_to_camel, transform_common_id_fields, recursive_snake_to_camel, convert_keys
 from zscaler.zia import ZIAClient
-import logging
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 class FirewallPolicyAPI:
     # Firewall filter rule keys that only require an ID to be provided.
@@ -50,7 +42,6 @@ class FirewallPolicyAPI:
         ("time_windows", "timeWindows"),
         ("users", "users"),
     ]
-
 
     def __init__(self, client: ZIAClient):
         self.rest = client
@@ -93,66 +84,57 @@ class FirewallPolicyAPI:
         Adds a new firewall filter rule.
 
         Args:
-            name (str): The name of the filter rule. 31 char limit.
-            action (str): The action for the filter rule.
-
-            device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
-                `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`, and `HIGH_TRUST`
-            **kwargs: Optional keyword args
+            name (str): Name of the rule, max 31 chars.
+            action (str): Action for the rule.
+            device_trust_levels (list): Device trust levels for the rule application.
+                Values: `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`,
+                `HIGH_TRUST`.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule.
-            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-            description (str): Additional information about the rule
-            src_ips (list): The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.
-            dest_addresses (list): The destination IP addresses that this rule applies to. Individual IP addresses or
-            CIDR ranges accepted.
-            dest_ip_categories (list): The IP address categories that this rule applies to.
-            dest_countries (list): The destination countries that this rule applies to.
-            enable_full_logging (bool): Enables full logging if True.
-            nw_applications (list): The network service applications that this rule applies to.
-            app_services (list): The IDs for the application services that this rule applies to.
-            app_service_groups (:obj:`list` of :obj:`int`): The IDs for the application service groups that this rule applies to.
-            departments (:obj:`list` of :obj:`int`): The IDs for the departments that this rule applies to.
-            dest_ip_groups (:obj:`list` of :obj:`int`): The IDs for the destination IP groups that this rule applies to.
-            devices (:obj:`list` of :obj:`int`): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
-            device_groups (:obj:`list` of :obj:`int`):The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
-            groups (:obj:`list` of :obj:`int`): The IDs for the groups that this rule applies to.
-            labels (:obj:`list` of :obj:`int`): The IDs for the labels that this rule applies to.
-            locations (:obj:`list` of :obj:`int`): The IDs for the locations that this rule applies to.
-            location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
-            nw_application_groups (:obj:`list` of :obj:`int`): The IDs for the network application groups that this rule applies to.
-            nw_services (:obj:`list` of :obj:`int`): The IDs for the network services that this rule applies to.
-            nw_service_groups (:obj:`list` of :obj:`int`):The IDs for the network service groups that this rule applies to.
-            time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
-            users (:obj:`list` of :obj:`int`): The IDs for the users that this rule applies to.
+            order (str): Rule order, defaults to the bottom.
+            rank (str): Admin rank of the rule.
+            state (str): Rule state ('ENABLED' or 'DISABLED').
+            description (str): Rule description.
+            src_ips (list): Source IPs for the rule. Accepts IP addresses or CIDR.
+            dest_addresses (list): Destination IPs for the rule. Accepts IP addresses or CIDR.
+            dest_ip_categories (list): IP address categories for the rule.
+            dest_countries (list): Destination countries for the rule.
+            enable_full_logging (bool): If True, enables full logging.
+            nw_applications (list): Network service applications for the rule.
+            app_services (list): IDs for application services for the rule.
+            app_service_groups (list): IDs for app service groups.
+            departments (list): IDs for departments the rule applies to.
+            dest_ip_groups (list): IDs for destination IP groups.
+            devices (list): IDs for devices managed by Zscaler Client Connector.
+            device_groups (list): IDs for device groups managed by Zscaler Client Connector.
+            groups (list): IDs for groups the rule applies to.
+            labels (list): IDs for labels the rule applies to.
+            locations (list): IDs for locations the rule applies to.
+            location_groups (list): IDs for location groups.
+            nw_application_groups (list): IDs for network application groups.
+            nw_services (list): IDs for network services the rule applies to.
+            nw_service_groups (list): IDs for network service groups.
+            time_windows (list): IDs for time windows the rule applies to.
+            users (list): IDs for users the rule applies to.
 
         Returns:
-            :obj:`Box`: The new firewall filter rule resource record.
+            :obj:`Box`: New firewall filter rule resource record.
 
         Examples:
-            Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
+            Add a rule to allow all traffic to Google DNS:
 
-            >>> zia.firewall.add_rule(rank='7',
-            ...    dest_addresses=['8.8.8.8', '8.8.4.4'],
-            ...    name='ALLOW_ANY_TO_GOOG-DNS',
-            ...    action='ALLOW'
+            >>> zia.firewall.add_rule(rank='7', dest_addresses=['8.8.8.8', '8.8.4.4'],
+            ...    name='ALLOW_ANY_TO_GOOG-DNS', action='ALLOW', description='TT#1965432122')
+
+            Block traffic to Quad9 DNS for Finance Group, send ICMP error:
+
+            >>> zia.firewall.add_rule(rank='7', dest_addresses=['9.9.9.9'],
+            ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS', action='BLOCK_ICMP', groups=['95016183'],
             ...    description='TT#1965432122')
-
-            Add a rule to block all traffic to Quad9 DNS for all users in Finance Group and send an ICMP error:
-
-            >>> zia.firewall.add_rule(rank='7',
-            ...    dest_addresses=['9.9.9.9'],
-            ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS',
-            ...    action='BLOCK_ICMP'
-            ...    groups=['95016183']
-            ...    description='TT#1965432122')
-
         """
         # Convert enabled to API format if present
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         payload = {
             "name": name,
@@ -237,8 +219,8 @@ class FirewallPolicyAPI:
         payload = convert_keys(self.get_rule(rule_id))
 
         # Convert enabled to API format if present in kwargs
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
@@ -578,7 +560,7 @@ class FirewallPolicyAPI:
 
         # If 'response' is a Box, it should contain the response data directly
         # If 'response' is an HTTP response, it should have a 'status_code' attribute
-        if hasattr(response, 'status_code'):
+        if hasattr(response, "status_code"):
             # Check if the response is successful and the content is not empty
             if response.status_code == 200 and response.content:
                 # Convert to Box for consistent return type
@@ -588,7 +570,7 @@ class FirewallPolicyAPI:
                 response.raise_for_status()
         else:
             # Assume 'response' is a Box and contains the desired data
-            if 'ok' in response and response.ok:
+            if "ok" in response and response.ok:
                 # 'response' is a Box with the expected data
                 return response
             else:
@@ -597,7 +579,6 @@ class FirewallPolicyAPI:
                 # and raise an exception or handle the situation as needed
                 # Example: raise ValueError("Failed to retrieve the network application group.")
                 return Box()  # An empty Box indicates no data was found or an error occurred.
-
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -614,7 +595,6 @@ class FirewallPolicyAPI:
 
         """
         return self.rest.delete(f"networkApplicationGroups/{group_id}").status_code
-
 
     def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
         """
@@ -697,7 +677,6 @@ class FirewallPolicyAPI:
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_network_app_group(group_id)
-
 
     def list_network_apps(self, search: str = None) -> BoxList:
         """

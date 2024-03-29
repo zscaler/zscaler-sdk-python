@@ -18,7 +18,7 @@
 import pytest
 import responses
 
-from zscaler.zpa import ZPA
+from zscaler.zpa import ZPAClientHelper
 
 
 @pytest.fixture(name="session")
@@ -40,7 +40,7 @@ def zpa(session):
         json=session,
         status=200,
     )
-    return ZPA(
+    return ZPAClientHelper(
         client_id="1",
         client_secret="yyy",
         customer_id="1",

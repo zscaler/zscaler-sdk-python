@@ -23,7 +23,7 @@ from zscaler.utils import (
     convert_keys
 )
 from zscaler.zia import ZIAClient
-import logging
+
 
 class ForwardingControlAPI:
     # Forwarding Control filter rule keys that only require an ID to be provided.
@@ -93,61 +93,57 @@ class ForwardingControlAPI:
         Adds a new forwarding control filter rule.
 
         Args:
-            name (str): The name of the forwarding control rule. 31 char limit.
-            forward_method (str): The type of traffic forwarding method selected from the available options.
-                 Accepted values are 'INVALID', 'DIRECT', 'PROXYCHAIN', 'ZIA', 'ZPA', 'ECZPA', 'ECSELF', 'DROP'.
-
-            **kwargs: Optional keyword args
+            name (str): Name of the rule, max 31 chars.
+            forward_method (str): Traffic forwarding method. Options: 'INVALID', 'DIRECT',
+                'PROXYCHAIN', 'ZIA', 'ZPA', 'ECZPA', 'ECSELF', 'DROP'.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule.
-            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-            description (str): Additional information about the rule
-            src_ips (list): The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.
-            dest_addresses (list): The destination IP addresses that this rule applies to. Individual IP addresses or
-            CIDR ranges accepted.
-            dest_ip_categories (list): The IP address categories that this rule applies to.
-            dest_countries (list): The destination countries that this rule applies to.
-            enable_full_logging (bool): Enables full logging if True.
-            nw_applications (list): The network service applications that this rule applies to.
-            app_services (list): The IDs for the application services that this rule applies to.
-            app_service_groups (:obj:`list` of :obj:`int`): The IDs for the application service groups that this rule applies to.
-            departments (:obj:`list` of :obj:`int`): The IDs for the departments that this rule applies to.
-            dest_ip_groups (:obj:`list` of :obj:`int`): The IDs for the destination IP groups that this rule applies to.
-            devices (:obj:`list` of :obj:`int`): The IDs for the devices that are managed using Zscaler Client Connector that this rule applies to.
-            device_groups (:obj:`list` of :obj:`int`):The IDs for the device groups that are managed using Zscaler Client Connector that this rule applies to.
-            groups (:obj:`list` of :obj:`int`): The IDs for the groups that this rule applies to.
-            labels (:obj:`list` of :obj:`int`): The IDs for the labels that this rule applies to.
-            locations (:obj:`list` of :obj:`int`): The IDs for the locations that this rule applies to.
-            location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
-            nw_application_groups (:obj:`list` of :obj:`int`): The IDs for the network application groups that this rule applies to.
-            nw_services (:obj:`list` of :obj:`int`): The IDs for the network services that this rule applies to.
-            nw_service_groups (:obj:`list` of :obj:`int`):The IDs for the network service groups that this rule applies to.
-            time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
-            users (:obj:`list` of :obj:`int`): The IDs for the users that this rule applies to.
+            order (str): Rule order, defaults to bottom.
+            rank (str): Admin rank of the rule.
+            state (str): Rule state ('ENABLED' or 'DISABLED').
+            description (str): Rule description.
+            src_ips (list): Source IPs for the rule, accepts IP addresses or CIDR.
+            dest_addresses (list): Destination IPs for the rule, accepts IP addresses or CIDR.
+            dest_ip_categories (list): IP address categories for the rule.
+            dest_countries (list): Destination countries for the rule.
+            enable_full_logging (bool): If True, enables full logging.
+            nw_applications (list): Network service applications for the rule.
+            app_services (list): IDs for application services for the rule.
+            app_service_groups (list): IDs for application service groups.
+            departments (list): IDs for departments the rule applies to.
+            dest_ip_groups (list): IDs for destination IP groups the rule applies to.
+            devices (list): IDs for Zscaler Client Connector managed devices.
+            device_groups (list): IDs for device groups managed by Zscaler Client Connector.
+            groups (list): IDs for groups the rule applies to.
+            labels (list): IDs for labels the rule applies to.
+            locations (list): IDs for locations the rule applies to.
+            location_groups (list): IDs for location groups the rule applies to.
+            nw_application_groups (list): IDs for network application groups.
+            nw_services (list): IDs for network services the rule applies to.
+            nw_service_groups (list): IDs for network service groups the rule applies to.
+            time_windows (list): IDs for time windows the rule applies to.
+            users (list): IDs for users the rule applies to.
 
         Returns:
-            :obj:`Box`: The new forwarding control filter rule resource record.
+            :obj:`Box`: New forwarding control filter rule resource.
 
         Examples:
-            Add a rule to forward all traffic to Google DNS (admin ranking is enabled):
+            Forward all traffic to Google DNS:
 
             >>> zia.forwarding_control.add_rule(rank='7',
             ...    dest_addresses=['8.8.8.8', '8.8.4.4'],
-            ...    name='FORWARDING_ANY_TO_GOOG-DNS',
-            ...    forward_method='DIRECT'
+            ...    name='FORWARD_ANY_TO_GOOG-DNS',
+            ...    forward_method='DIRECT',
             ...    description='TT#1965432122')
 
-            Add a rule to block all traffic to Quad9 DNS for all users in Finance Group and send an ICMP error:
+            Block all traffic to Quad9 DNS for Finance Group:
 
             >>> zia.forwarding_control.add_rule(rank='7',
             ...    dest_addresses=['9.9.9.9'],
-            ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS',
-            ...    forward_method='DIRECT'
-            ...    groups=['95016183']
+            ...    name='BLOCK_FIN_TO_Q9-DNS',
+            ...    forward_method='DIRECT',
+            ...    groups=['95016183'],
             ...    description='TT#1965432122')
-
         """
         # Convert enabled to API format if present
         if 'enabled' in kwargs:

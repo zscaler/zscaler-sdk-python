@@ -15,14 +15,14 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box, BoxList
+from box import BoxList
 from zscaler.zia import ZIAClient
+
 
 class DeviceAPI:
 
     def __init__(self, client: ZIAClient):
         self.rest = client
-
 
     def list_device_groups(self, query: str = None) -> BoxList:
         """

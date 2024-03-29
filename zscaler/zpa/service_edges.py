@@ -57,7 +57,7 @@ class ServiceEdgesAPI:
             ...    print(service_edge)
 
         """
-        list, _ = self.rest.get_paginated_data(path=f"/serviceEdge", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(path="/serviceEdge", data_key_name="list", **kwargs, api_version="v1")
         return list
 
     def get_service_edge(self, service_edge_id: str) -> Box:
@@ -74,7 +74,7 @@ class ServiceEdgesAPI:
             >>> service_edge = zpa.service_edges.get_service_edge('999999')
 
         """
-        response = self.rest.get(f"/serviceEdge/%s" % (service_edge_id))
+        response = self.rest.get("/serviceEdge/%s" % (service_edge_id))
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
@@ -122,7 +122,7 @@ class ServiceEdgesAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"/serviceEdge/%s" % (service_edge_id),json=payload).status_code
+        resp = self.rest.put("/serviceEdge/%s" % (service_edge_id), json=payload).status_code
         if not isinstance(resp, Response):
             return self.get_service_edge(service_edge_id)
 
@@ -293,7 +293,6 @@ class ServiceEdgesAPI:
             # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
-
 
     def update_service_edge_group(self, group_id: str, **kwargs) -> Box:
         """

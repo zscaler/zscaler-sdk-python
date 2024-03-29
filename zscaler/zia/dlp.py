@@ -20,6 +20,7 @@ from requests import Response
 from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
 
+
 class DLPAPI:
 
     def __init__(self, client: ZIAClient):
@@ -317,12 +318,11 @@ class DLPAPI:
         Keyword Args:
             name (str): The order of the rule, defaults to adding rule to bottom of list.
             description (str): The admin rank of the rule.
-            engine_expression (str, optional):
-                The logical expression that defines a DLP engine by combining DLP dictionaries using logical operators, namely All (AND), Any (OR), Exclude (NOT), and Sum (the total number of content matches).
-            custom_dlp_engine (bool, optional):
-                Indicates whether this is a custom DLP engine. If this value is set to true, the engine is custom.
-            description (str, optional):
-                The DLP engine description.
+            engine_expression (str, optional): The logical expression defining a DLP engine by
+                combining DLP dictionaries using logical operators: All (AND), Any (OR), Exclude (NOT),
+                and Sum (total number of content matches).
+            custom_dlp_engine (bool, optional): If true, indicates a custom DLP engine.
+            description (str, optional): The DLP engine description.
 
         Returns:
             :obj:`Box`: The updated dlp engine resource record.
@@ -331,19 +331,18 @@ class DLPAPI:
             Update the dlp engine:
 
             >>> zia.dlp.add_dlp_engine(name='new_dlp_engine',
-            ...    description='TT#1965432122'
-                   engine_expression="((D63.S > 1))"
-                   custom_dlp_engine=False)
+            ...    description='TT#1965432122',
+            ...    engine_expression="((D63.S > 1))",
+            ...    custom_dlp_engine=False)
 
             Update a rule to enable custom dlp engine:
 
             >>> zia.dlp.add_dlp_engine('976597',
             ...    custom_dlp_engine=True,
-                   engine_expression="((D63.S > 1))"
+            ...    engine_expression="((D63.S > 1))",
             ...    description="TT#1965232866")
 
         """
-
         # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()}
 
@@ -613,7 +612,6 @@ class DLPAPI:
             return None
         return response
 
-
     def add_dlp_template(self, name: str, subject: str, **kwargs) -> Box:
         """
         Adds a new DLP notification template to ZIA.
@@ -715,7 +713,6 @@ class DLPAPI:
 
         # Return the updated object
         return self.get_dlp_templates(template_id)
-
 
     def delete_dlp_template(self, template_id: str) -> int:
         """

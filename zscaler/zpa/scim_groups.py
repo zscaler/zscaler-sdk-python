@@ -86,10 +86,6 @@ class SCIMGroupsAPI:
             **kwargs:
                 Optional keyword args.
 
-        Keyword Args:
-            all_entries (bool):
-                Return all SCIM groups including the deleted ones if ``True``. Defaults to ``False``.
-
         Returns:
             :obj:`dict`: The resource record for the SCIM group.
 
@@ -97,8 +93,9 @@ class SCIMGroupsAPI:
             >>> pprint(zpa.scim_groups.get_group('99999'))
 
         """
-        list, _ = self.rest.get(path=f"/scimgroup/{group_id}", data_key_name="list", **kwargs, api_version="userconfig_v1")
-        return list
+        # Corrected call to self.rest.get without the unsupported 'data_key_name' argument
+        response = self.rest.get(f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1")
+        return response
 
     def search_group(self, idp_id: str, group_name: str, **kwargs) -> dict:
         """
@@ -126,4 +123,3 @@ class SCIMGroupsAPI:
         params = {"page": page_number, "search": search, "pagesize": page_size, "sortBy": "name", "sortOrder": "DESC"}
         page = self.rest.get(path=f"/scimgroup/idpId/{idp_id}", params=params, api_version="userconfig_v1")
         return page
-

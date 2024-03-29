@@ -26,6 +26,7 @@ from zscaler.utils import (
 )
 from zscaler.zpa.client import ZPAClient
 
+
 class AppSegmentsInspectionAPI:
     # Params that need reformatting
     reformat_params = [
@@ -157,8 +158,7 @@ class AppSegmentsInspectionAPI:
                 Enable CNAMEs for this Application Segment.
             passive_health_enabled (bool):
                 Enable Passive Health Checks for this Application Segment.
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
             :obj:`Box`: The newly created application segment resource record.
@@ -220,10 +220,8 @@ class AppSegmentsInspectionAPI:
                 Optional params.
 
         Keyword Args:
-            bypass_type (str):
-                The type of bypass for the AppProtection Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            config_space (str):
-                The config space for this AppProtection Application Segment. Accepted values are `DEFAULT` and `SIEM`.
+            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
+            config_space (str): Config space for the segment. Values: `DEFAULT`, `SIEM`.
             default_idle_timeout (int):
                 The Default Idle Timeout for the AppProtection Application Segment.
             default_max_age (int):
@@ -258,9 +256,7 @@ class AppSegmentsInspectionAPI:
             udp_ports (:obj:`list` of :obj:`tuple`):
                 List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
                      [(34000, 35000), (36000, 36000)]
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
-
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
             :obj:`Box`: The updated AppProtection application segment resource record.

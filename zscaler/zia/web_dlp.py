@@ -14,7 +14,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
+from zscaler.zia import ZIAClient
 from box import Box, BoxList
 from requests import Response
 from zscaler.utils import (
@@ -24,7 +24,6 @@ from zscaler.utils import (
     convert_keys
 )
 
-from zscaler.zia import ZIAClient
 
 class WebDLPAPI:
     # Web DLP rule keys that only require an ID to be provided.
@@ -44,6 +43,7 @@ class WebDLPAPI:
         ("users", "users"),
         ("url_categories", "urlCategories"),
     ]
+
     def __init__(self, client: ZIAClient):
         self.rest = client
 
@@ -87,7 +87,6 @@ class WebDLPAPI:
         """
         return self.rest.get(f"webDlpRules/{rule_id}")
 
-
     def list_rules_lite(self) -> BoxList:
         """
         Returns the name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules.
@@ -110,63 +109,62 @@ class WebDLPAPI:
 
     def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
-         Adds a new DLP policy rule.
+        Adds a new DLP policy rule.
 
-         Args:
-             name (str): The name of the filter rule. 31 char limit.
-             action (str): The action for the filter rule.
+        Args:
+            name (str): The name of the filter rule. 31 char limit.
+            action (str): The action for the filter rule.
 
         Keyword Args:
-             order (str): The order of the rule, defaults to adding rule to bottom of list.
-             rank (str): The admin rank of the rule.
-             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-             auditor (:obj:`list` of :obj:`int`): The IDs for the auditors that this rule applies to.
-             cloud_applications (list): The IDs for the cloud applications that this rule applies to.
-             description (str): Additional information about the rule
-             departments (:obj:`list` of :obj:`int`):  The IDs for the departments that this rule applies to.
-             dlp_engines (:obj:`list` of :obj:`int`):  The IDs for the DLP engines that this rule applies to.
-             excluded_groups (:obj:`list` of :obj:`int`):  The IDs for the excluded groups that this rule applies to.
-             excluded_departments (:obj:`list` of :obj:`int`): The IDs for the excluded departments that this rule applies to.
-             excluded_users (:obj:`list` of :obj:`int`):  The IDs for the excluded users that this rule applies to.
-             file_types (list): The list of file types for which the DLP policy rule must be applied.
-             groups (:obj:`list` of :obj:`int`):  The IDs for the groups that this rule applies to.
-             icap_server (:obj:`list` of :obj:`int`):  The IDs for the icap server that this rule applies to.
-             labels (:obj:`list` of :obj:`int`):  The IDs for the labels that this rule applies to.
-             locations (:obj:`list` of :obj:`int`):  The IDs for the locations that this rule applies to.
-             location_groups (:obj:`list` of :obj:`int`): The IDs for the location groups that this rule applies to.
-             notification_template (:obj:`list` of :obj:`int`):  The IDs for the notification template that this rule applies to.
-             time_windows (:obj:`list` of :obj:`int`): The IDs for the time windows that this rule applies to.
-             users (:obj:`list` of :obj:`int`):  The IDs for the users that this rule applies to.
-             url_categories (list): The IDs for the URL categories the rule applies to.
-             external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
-             dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
-             min_size (str): The minimum file size (in KB) used for evaluation of the DLP policy rule.
-             match_only (bool): The minimum file size (in KB) used for evaluation of the DLP policy rule.
-             ocr_enabled (bool): A true value denotes that Zscaler DLP engines are allowed to use optical character recognition (OCR) to scan image files such as BITMAP, JPEG, PNG, and TIFF file types. A false value indicates that OCR scanning is disabled.
-             without_content_inspection (bool): Indicates a DLP policy rule without content inspection, when the value is set to true.
-             zcc_notifications_enabled (bool): If this field is set to true, Zscaler Client Connector notification is enabled for the block action triggered by the web DLP rule.
+            order (str): The order of the rule, defaults to adding rule to bottom of list.
+            rank (str): The admin rank of the rule.
+            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+            auditor (:obj:`list` of :obj:`int`): IDs for the auditors this rule applies to.
+            cloud_applications (list): IDs for cloud applications this rule applies to.
+            description (str): Additional information about the rule
+            departments (:obj:`list` of :obj:`int`): IDs for departments this rule applies to.
+            dlp_engines (:obj:`list` of :obj:`int`): IDs for DLP engines this rule applies to.
+            excluded_groups (:obj:`list` of :obj:`int`): IDs for excluded groups.
+            excluded_departments (:obj:`list` of :obj:`int`): IDs for excluded departments.
+            excluded_users (:obj:`list` of :obj:`int`): IDs for excluded users.
+            file_types (list): List of file types the DLP policy rule applies to.
+            groups (:obj:`list` of :obj:`int`): IDs for groups this rule applies to.
+            icap_server (:obj:`list` of :obj:`int`): IDs for the icap server this rule applies to.
+            labels (:obj:`list` of :obj:`int`): IDs for labels this rule applies to.
+            locations (:obj:`list` of :obj:`int`): IDs for locations this rule applies to.
+            location_groups (:obj:`list` of :obj:`int`): IDs for location groups this rule applies to.
+            notification_template (:obj:`list` of :obj:`int`): IDs for the notification template.
+            time_windows (:obj:`list` of :obj:`int`): IDs for time windows this rule applies to.
+            users (:obj:`list` of :obj:`int`): IDs for users this rule applies to.
+            url_categories (list): IDs for URL categories the rule applies to.
+            external_auditor_email (str): Email of an external auditor for DLP notifications.
+            dlp_download_scan_enabled (bool): True enables DLP scan for file downloads.
+            min_size (str): Minimum file size (in KB) for DLP policy rule evaluation.
+            match_only (bool): If true, matches file size for DLP policy rule evaluation.
+            ocr_enabled (bool): True allows OCR scanning of image files.
+            without_content_inspection (bool): True indicates a DLP rule without content inspection.
+            zcc_notifications_enabled (bool): True enables Zscaler Client Connector notification.
 
-         Returns:
-             :obj:`Box`: The new dlp web rule resource record.
+        Returns:
+            :obj:`Box`: The new dlp web rule resource record.
 
-         Examples:
-             Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
+        Examples:
+            Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
 
-             >>> zia.web_dlp.add_rule(rank='7',
-             ...    file_types=['BITMAP', 'JPEG', 'PNG'],
-             ...    name='ALLOW_ANY_TO_GOOG-DNS',
-             ...    action='ALLOW'
-             ...    description='TT#1965432122')
+            >>> zia.web_dlp.add_rule(rank='7',
+            ...    file_types=['BITMAP', 'JPEG', 'PNG'],
+            ...    name='ALLOW_ANY_TO_GOOG-DNS',
+            ...    action='ALLOW',
+            ...    description='TT#1965432122')
 
-             Add a rule to block all traffic to Quad9 DNS for all users in Finance Group and send an ICMP error:
+            Add a rule to block all traffic to Quad9 DNS for Finance Group:
 
-             >>> zia.web_dlp.add_rule(rank='7',
-             ...    file_types=['BITMAP', 'JPEG', 'PNG'],
-             ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS',
-             ...    action='BLOCK_ICMP'
-             ...    groups=['95016183']
-             ...    description='TT#1965432122')
-
+            >>> zia.web_dlp.add_rule(rank='7',
+            ...    file_types=['BITMAP', 'JPEG', 'PNG'],
+            ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS',
+            ...    action='BLOCK_ICMP',
+            ...    groups=['95016183'],
+            ...    description='TT#1965432122')
         """
         # Convert enabled to API format if present
         if 'enabled' in kwargs:
@@ -200,47 +198,47 @@ class WebDLPAPI:
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
-        Updates an existing DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
+        Updates an existing DLP policy rule. Not applicable to SaaS Security API DLP policy rules.
 
         Args:
-            rule_id (str): String of ID.
+            rule_id (str): ID of the rule.
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule.
-            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
-            auditor (list): The IDs for the auditors that this rule applies to.
-            cloud_applications (list): The IDs for the cloud applications that this rule applies to.
-            description (str): Additional information about the rule
-            departments (list): The IDs for the departments that this rule applies to.
-            dlp_engines (list): The IDs for the DLP engines that this rule applies to.
-            excluded_groups (list): The IDs for the excluded groups that this rule applies to.
-            excluded_departments (list): The IDs for the excluded departments that this rule applies to.
-            excluded_users (list): The IDs for the excluded users that this rule applies to.
-            file_types (list): The list of file types for which the DLP policy rule must be applied.
-            groups (list): The IDs for the groups that this rule applies to.
-            icap_server (list): The IDs for the icap server that this rule applies to.
-            labels (list): The IDs for the labels that this rule applies to.
-            locations (list): The IDs for the locations that this rule applies to.
-            location_groups (list): The IDs for the location groups that this rule applies to.
-            notification_template (list): The IDs for the notification template that this rule applies to.
-            time_windows (list): The IDs for the time windows that this rule applies to.
-            users (list): The IDs for the users that this rule applies to.
-            url_categories (list): The IDs for the URL categories the rule applies to.
-            external_auditor_email (str): The email address of an external auditor to whom DLP email notifications are sent.
-            dlp_download_scan_enabled (bool): If this field is set to true, DLP scan is enabled for file downloads from cloud applications configured in the rule. If this field is set to false, DLP scan is disabled for downloads from the cloud applications.
-            min_size (str): The minimum file size (in KB) used for evaluation of the DLP policy rule.
-            match_only (bool): The minimum file size (in KB) used for evaluation of the DLP policy rule.
-            ocr_enabled (bool): A true value denotes that Zscaler DLP engines are allowed to use optical character recognition (OCR) to scan image files such as BITMAP, JPEG, PNG, and TIFF file types. A false value indicates that OCR scanning is disabled.
-            without_content_inspection (bool): Indicates a DLP policy rule without content inspection, when the value is set to true.
-            zcc_notifications_enabled (bool): If this field is set to true, Zscaler Client Connector notification is enabled for the block action triggered by the web DLP rule.
+            order (str): Rule order, defaults to bottom of list.
+            rank (str): Admin rank of the rule.
+            state (str): Rule state ('ENABLED' or 'DISABLED').
+            auditor (list): IDs for auditors this rule applies to.
+            cloud_applications (list): IDs for cloud applications rule applies to.
+            description (str): Additional information about the rule.
+            departments (list): IDs for departments rule applies to.
+            dlp_engines (list): IDs for DLP engines rule applies to.
+            excluded_groups (list): IDs for excluded groups.
+            excluded_departments (list): IDs for excluded departments.
+            excluded_users (list): IDs for excluded users.
+            file_types (list): List of file types the rule applies to.
+            groups (list): IDs for groups rule applies to.
+            icap_server (list): IDs for the ICAP server rule applies to.
+            labels (list): IDs for labels rule applies to.
+            locations (list): IDs for locations rule applies to.
+            location_groups (list): IDs for location groups rule applies to.
+            notification_template (list): IDs for the notification template.
+            time_windows (list): IDs for time windows rule applies to.
+            users (list): IDs for users rule applies to.
+            url_categories (list): IDs for URL categories rule applies to.
+            external_auditor_email (str): Email of external auditor for DLP notifications.
+            dlp_download_scan_enabled (bool): True enables DLP scan for file downloads.
+            min_size (str): Minimum file size (in KB) for rule evaluation.
+            match_only (bool): If true, uses min_size for rule evaluation.
+            ocr_enabled (bool): True allows OCR scanning of image files.
+            without_content_inspection (bool): True for DLP rule without content inspection.
+            zcc_notifications_enabled (bool): True enables ZCC notification for block action.
 
         Returns:
             :obj:`Box`: The updated web dlp rule resource record.
 
         Examples:
-            Update a Web DLP Policy Rule::
+            Update a Web DLP Policy Rule:
 
                 >>> zia.web_dlp.get_rule('9999')
                 ... name="updated name."
@@ -248,11 +246,8 @@ class WebDLPAPI:
 
             Update a web dlp policy rule to update description:
 
-            >>> zia.web_dlp.update_rule('976597',
-            ...    description="TT#1965232866")
-
+                >>> zia.web_dlp.update_rule('976597', description="TT#1965232866")
         """
-
         # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_rule(rule_id))
 
@@ -274,7 +269,6 @@ class WebDLPAPI:
 
         # Return the updated object
         return self.get_rule(rule_id)
-
 
     def delete_rule(self, rule_id: str) -> Box:
         """

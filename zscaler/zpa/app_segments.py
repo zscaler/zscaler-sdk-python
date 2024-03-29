@@ -122,65 +122,41 @@ class ApplicationSegmentAPI:
         Create an application segment.
 
         Args:
-            segment_group_id (str):
-                The unique identifer for the segment group this application segment belongs to.
-            udp_port_ranges (:obj:`list` of :obj:`str`):
-                List of udp port range pairs, e.g. ['35000', '35000'] for port 35000.
-            tcp_port_ranges (:obj:`list` of :obj:`str`):
-                List of tcp port range pairs, e.g. ['22', '22'] for port 22-22, ['80', '100'] for 80-100.
-            domain_names (:obj:`list` of :obj:`str`):
-                List of domain names or IP addresses for the application segment.
-            name (str):
-                The name of the application segment.
-            server_group_ids (:obj:`list` of :obj:`str`):
-                The list of server group IDs that belong to this application segment.
-            **kwargs:
-                Optional keyword args.
+            name (str): Name of the application segment.
+            domain_names (list of str): Domain names or IP addresses for the segment.
+            segment_group_id (str): Unique identifier for the segment group.
+            server_group_ids (list of str): Server group IDs for this segment.
+            tcp_port_ranges (list of str, optional): TCP port range pairs (e.g., ['22', '22']).
+            udp_port_ranges (list of str, optional): UDP port range pairs (e.g., ['35000', '35000']).
 
         Keyword Args:
-            bypass_type (str):
-                The type of bypass for the Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            clientless_app_ids (:obj:`list`):
-                List of unique IDs for clientless apps to associate with this Application Segment.
-            config_space (str):
-                The config space for this Application Segment. Accepted values are `DEFAULT` and `SIEM`.
-            default_idle_timeout (int):
-                The Default Idle Timeout for the Application Segment.
-            default_max_age (int):
-                The Default Max Age for the Application Segment.
-            description (str):
-                Additional information about this Application Segment.
-            double_encrypt (bool):
-                Double Encrypt the Application Segment micro-tunnel.
-            enabled (bool):
-                Enable the Application Segment.
-            health_check_type (str):
-                Set the Health Check Type. Accepted values are `DEFAULT` and `NONE`.
-            health_reporting (str):
-                Set the Health Reporting. Accepted values are `NONE`, `ON_ACCESS` and `CONTINUOUS`.
-            ip_anchored (bool):
-                Enable IP Anchoring for this Application Segment.
-            is_cname_enabled (bool):
-                Enable CNAMEs for this Application Segment.
-            passive_health_enabled (bool):
-                Enable Passive Health Checks for this Application Segment.
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
+            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
+            clientless_app_ids (list): IDs for associated clientless apps.
+            config_space (str): Config space for the segment. Values: `DEFAULT`, `SIEM`.
+            default_idle_timeout (int): Default Idle Timeout for the segment.
+            default_max_age (int): Default Max Age for the segment.
+            description (str): Additional information about the segment.
+            double_encrypt (bool): If true, enables double encryption.
+            enabled (bool): If true, enables the application segment.
+            health_check_type (str): Health Check Type. Values: `DEFAULT`, `NONE`.
+            health_reporting (str): Health Reporting mode. Values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
+            ip_anchored (bool): If true, enables IP Anchoring.
+            is_cname_enabled (bool): If true, enables CNAMEs for the segment.
+            passive_health_enabled (bool): If true, enables Passive Health Checks.
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
-            :obj:`Box`: The newly created application segment resource record.
+            :obj:`Box`: The newly created application segment.
 
         Examples:
-            Add a new application segment for example.com, ports 8080-8085.
+            Add a new application segment for example.com on ports 8080-8085:
 
             >>> zpa.app_segments.add_segment('new_app_segment',
             ...    domain_names=['example.com'],
             ...    segment_group_id='99999',
             ...    tcp_port_ranges=['8080', '8085'],
             ...    server_group_ids=['99999', '88888'])
-
         """
-
         # Initialise payload
         payload = {
             "name": name,
@@ -271,8 +247,7 @@ class ApplicationSegmentAPI:
             udp_port_ranges (:obj:`list` of :obj:`tuple`):
                 List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
                      [(34000, 35000), (36000, 36000)]
-            icmp_access_type (str):
-                Enable if you want various ZPA clients to allow access to the applications in this App Segment over ICMP. By default, this is set to Disabled.
+            icmp_access_type (str): Sets ICMP access type for ZPA clients.
 
         Returns:
             :obj:`Box`: The updated application segment resource record.

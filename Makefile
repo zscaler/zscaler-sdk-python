@@ -32,9 +32,7 @@ help:
 
 build\:dist:
 	python3 setup.py sdist bdist_wheel
-	rm -rf __pycache__
-	rm -rf dist
-	rm -rf zscaler_sdk_python.egg-info
+	pip3 install dist/zscaler-1.0.0.tar.gz
 
 publish\:test:
 	python3 -m twine upload --repository testpypi dist/*
