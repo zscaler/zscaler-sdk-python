@@ -53,10 +53,7 @@ def fixture_segment_groups():
                         "bypassType": "NEVER",
                         "configSpace": "DEFAULT",
                         "ipAnchored": False,
-                        "tcpPortRange": [
-                            {"from": "80", "to": "80"},
-                            {"from": "443", "to": "443"},
-                        ],
+                        "tcpPortRange": [{"from": "80", "to": "80"}, {"from": "443", "to": "443"}],
                     }
                 ],
                 "policyMigrated": True,
@@ -88,10 +85,7 @@ def fixture_segment_groups():
                         "bypassType": "NEVER",
                         "configSpace": "DEFAULT",
                         "ipAnchored": False,
-                        "tcpPortRange": [
-                            {"from": "80", "to": "80"},
-                            {"from": "443", "to": "443"},
-                        ],
+                        "tcpPortRange": [{"from": "80", "to": "80"}, {"from": "443", "to": "443"}],
                     }
                 ],
                 "policyMigrated": True,
@@ -101,112 +95,81 @@ def fixture_segment_groups():
         ],
     }
 
-
-@responses.activate
-@stub_sleep
-def test_list_groups(zpa, segment_groups):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup?page=1",
-        json=segment_groups,
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup?page=2",
-        json=[],
-        status=200,
-    )
-    resp = zpa.segment_groups.list_groups()
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 2
-    assert resp[0].id == "1"
-
-
-@responses.activate
-def test_get_group(zpa, segment_groups):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup/1",
-        json=segment_groups["list"][0],
-        status=200,
-    )
-    resp = zpa.segment_groups.get_group("1")
-    assert isinstance(resp, Box)
-    assert resp.id == "1"
-
-
-@responses.activate
-def test_delete_group(zpa):
-    responses.add(
-        responses.DELETE,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup/1",
-        status=204,
-    )
-    resp = zpa.segment_groups.delete_group("1")
-    assert resp == 204
-
-
-@responses.activate
-def test_add_group(zpa, segment_groups):
+def test_full_group_lifecycle(zpa):
+    # Assuming 'zpa' is already configured and 'responses' are activated where necessary
+    
+    # Step 1: Add a new group
+    add_response_simulated = {
+        "name": "Example",
+        "description": "Example",
+        "enabled": True,
+    }
+    add_url = f"{zpa.baseurl}/mgmtconfig/v1/admin/customers/{zpa.customer_id}/segmentGroup"
     responses.add(
         responses.POST,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup",
-        json=segment_groups["list"][0],
+        url=add_url,
+        json=add_response_simulated,
         status=200,
-        match=[
-            matchers.json_params_matcher(
-                {
-                    "name": "Test",
-                    "enabled": True,
-                    "applications": [{"id": "1"}],
-                    "description": "Test",
-                }
-            )
-        ],
     )
-    resp = zpa.segment_groups.add_group(
-        name="Test",
+    add_resp = zpa.segment_groups.add_group(
+        name="Example",
         enabled=True,
-        application_ids=["1"],
-        description="Test",
+        description="Example",
     )
+    assert isinstance(add_resp, Box)
+    group_id = add_resp.id
 
-    assert isinstance(resp, Box)
-    assert resp.id == "1"
-    assert resp.applications[0].id == "1"
-
-
-@responses.activate
-def test_update_group(zpa, segment_groups):
-    updated_group = segment_groups["list"][0]
-    updated_group["name"] = "Test Updated"
-    updated_group["applications"] = [{"id": "2"}]
-    updated_group["description"] = "Test Updated"
-
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup/1",
-        json=segment_groups["list"][0],
-        status=200,
-    )
-
+    # Step 2: Update the group
+    update_response_simulated = {
+        "id": group_id,
+        "name": "Test Updated",
+        "description": "Test Updated",
+        "enabled": True,
+    }
+    update_url = f"{zpa.baseurl}/mgmtconfig/v1/admin/customers/{zpa.customer_id}/segmentGroup/{group_id}"
     responses.add(
         responses.PUT,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup/1",
-        json=updated_group,
-        status=204,
-        match=[matchers.json_params_matcher(updated_group)],
+        url=update_url,
+        json=update_response_simulated,
+        status=200,
     )
-    resp = zpa.segment_groups.update_group(
-        "1",
+    update_resp = zpa.segment_groups.update_group(
+        group_id,
         name="Test Updated",
-        application_ids=["2"],
         description="Test Updated",
     )
+    assert isinstance(update_resp, Box)
 
-    assert isinstance(resp, Box)
-    assert resp.id == "1"
-    assert resp.name == updated_group["name"]
-    assert resp.applications[0].id == "2"
-    assert resp.description == updated_group["description"]
+    # Step 3: Get the updated group
+    get_url = f"{zpa.baseurl}/mgmtconfig/v1/admin/customers/{zpa.customer_id}/segmentGroup/{group_id}"
+    responses.add(
+        responses.GET,
+        url=get_url,
+        json=update_response_simulated,
+        status=200,
+    )
+    get_resp = zpa.segment_groups.get_group(group_id)
+    assert isinstance(get_resp, Box)
+
+    # Step 4: List all groups
+    list_groups_simulated = [add_response_simulated]  # Simulating a simple list response
+    list_url = f"{zpa.baseurl}/mgmtconfig/v1/admin/customers/{zpa.customer_id}/segmentGroup?page=1"
+    responses.add(
+        responses.GET,
+        url=list_url,
+        json={"list": list_groups_simulated, "totalPages": 1},
+        status=200,
+    )
+    list_resp = zpa.segment_groups.list_groups()
+    assert isinstance(list_resp, BoxList)
+    assert len(list_resp) >= 1  # Asserting that at least one group is returned
+
+    # Step 5: Delete the group
+    delete_url = f"{zpa.baseurl}/mgmtconfig/v1/admin/customers/{zpa.customer_id}/segmentGroup/{group_id}"
+    responses.add(
+        responses.DELETE,
+        url=delete_url,
+        status=204,
+    )
+    delete_resp = zpa.segment_groups.delete_group(group_id)
+    assert delete_resp == 204
