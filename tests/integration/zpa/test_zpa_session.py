@@ -15,33 +15,29 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import pytest
 import responses
-
-from zscaler.zpa import ZPAClientHelper
-
-
-@pytest.fixture(name="session")
-def fixture_session():
-    return {
-        "token_type": "Bearer",
-        "access_token": "xyz",
-        "expires_in": 3600,
-    }
+from responses import matchers
 
 
-@pytest.fixture(name="zpa")
 @responses.activate
-def zpa(session):
+def test_create_token(zpa, session):
     responses.add(
         responses.POST,
         url="https://config.private.zscaler.com/signin",
-        content_type="application/json",
         json=session,
         status=200,
+        match=[
+            matchers.urlencoded_params_matcher(
+                {
+                    "client_id": "1",
+                    "client_secret": "yyy",
+                }
+            ),
+            matchers.header_matcher({"Content-Type": "application/x-www-form-urlencoded"}),
+        ],
     )
-    return ZPAClientHelper(
-        client_id="1",
-        client_secret="yyy",
-        customer_id="1",
-    )
+
+    resp = zpa.refreshToken(client_id="1", client_secret="yyy")
+
+    assert isinstance(resp, str)
+    assert resp == "xyz"
