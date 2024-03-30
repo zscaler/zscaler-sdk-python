@@ -15,6 +15,10 @@ class ZPAAPIError(Error):
         self.headers = response_details.headers
         self.stack = ""
 
-        self.message = f"ZPA HTTP {self.status} {self.error_id} " f"{self.reason}\nParameters: {params_string}"
+        self.message = (
+            f"ZPA HTTP {self.status} {self.error_id} "
+            f"{self.reason}\nParameters: {params_string}"
+        )
+
 
 # ZIA API Errors

@@ -93,7 +93,12 @@ class CloudSandboxAPI:
             "api_token": self.sandbox_token,
         }
 
-        return self.rest.post("/zscsb/discan", params=params, data=file_content, headers={"Content-Type": content_type})
+        return self.rest.post(
+            "/zscsb/discan",
+            params=params,
+            data=file_content,
+            headers={"Content-Type": content_type},
+        )
 
     def get_quota(self) -> Box:
         """

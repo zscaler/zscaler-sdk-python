@@ -46,10 +46,22 @@ import os
 import time
 from zscaler import ZIAClientHelper
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Manage a URL blacklist using the ZIAClientHelper.")
-    parser.add_argument('action', choices=['get', 'add', 'remove', 'replace', 'erase'], help="Action to perform")
-    parser.add_argument('-u', '--urls', help="Comma-separated list of URLs (for add, remove, and replace actions)", default="")
+    parser = argparse.ArgumentParser(
+        description="Manage a URL blacklist using the ZIAClientHelper."
+    )
+    parser.add_argument(
+        "action",
+        choices=["get", "add", "remove", "replace", "erase"],
+        help="Action to perform",
+    )
+    parser.add_argument(
+        "-u",
+        "--urls",
+        help="Comma-separated list of URLs (for add, remove, and replace actions)",
+        default="",
+    )
 
     args = parser.parse_args()
 
@@ -59,37 +71,44 @@ def main():
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
 
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     changes_made = False
 
-    if args.action == 'get':
+    if args.action == "get":
         blacklist = zia.security.get_blacklist()
         print("Current Blacklist URLs:")
         for url in blacklist:
             print(url)
 
     else:
-        if not args.urls and args.action != 'erase':
-            parser.error("The '-u/--urls' option is required for the 'add', 'remove', and 'replace' actions.")
-        url_list = args.urls.split(',') if args.urls else []
+        if not args.urls and args.action != "erase":
+            parser.error(
+                "The '-u/--urls' option is required for the 'add', 'remove', and 'replace' actions."
+            )
+        url_list = args.urls.split(",") if args.urls else []
 
-        if args.action == 'add':
+        if args.action == "add":
             zia.security.add_urls_to_blacklist(url_list)
             print("URLs added to blacklist.")
             changes_made = True
 
-        elif args.action == 'remove':
+        elif args.action == "remove":
             zia.security.delete_urls_from_blacklist(url_list)
             print("URLs removed from blacklist.")
             changes_made = True
 
-        elif args.action == 'replace':
+        elif args.action == "replace":
             zia.security.replace_blacklist(url_list)
             print("Blacklist replaced.")
             changes_made = True
 
-        elif args.action == 'erase':
+        elif args.action == "erase":
             zia.security.replace_blacklist([])
             print("Blacklist erased.")
             changes_made = True
@@ -99,7 +118,11 @@ def main():
             print("Activating configuration changes. Please wait...")
             time.sleep(5)  # Delay for 5 seconds before activating
             activation_status = zia.activate.activate()
-            print("Configuration changes activated successfully. Status:", activation_status)
+            print(
+                "Configuration changes activated successfully. Status:",
+                activation_status,
+            )
+
 
 if __name__ == "__main__":
     main()

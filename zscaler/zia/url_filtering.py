@@ -18,7 +18,12 @@
 from box import Box, BoxList
 from requests import Response
 from zscaler.zia import ZIAClient
-from zscaler.utils import snake_to_camel, transform_common_id_fields, recursive_snake_to_camel, convert_keys
+from zscaler.utils import (
+    snake_to_camel,
+    transform_common_id_fields,
+    recursive_snake_to_camel,
+    convert_keys,
+)
 
 
 class URLFilteringAPI:
@@ -82,7 +87,7 @@ class URLFilteringAPI:
         protocols: list,
         # override_users: list,
         # override_groups: list,
-        **kwargs
+        **kwargs,
     ) -> Box:
         """
         Adds a new URL Filtering Policy rule.
@@ -158,8 +163,8 @@ class URLFilteringAPI:
 
         """
         # Convert enabled to API format if present
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Initialize the payload with required parameters
         payload = {
@@ -188,7 +193,9 @@ class URLFilteringAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+                raise Exception(
+                    f"API call failed with status {status_code}: {response.json()}"
+                )
         return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
@@ -265,8 +272,8 @@ class URLFilteringAPI:
         payload = convert_keys(self.get_rule(rule_id))
 
         # Convert enabled to API format if present in kwargs
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
@@ -278,7 +285,9 @@ class URLFilteringAPI:
         response = self.rest.put(f"urlFilteringRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_rule(rule_id)

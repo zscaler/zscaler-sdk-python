@@ -45,7 +45,9 @@ class IsolationProfileAPI:
             ...    pprint(isolation_profiles)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/isolation/profiles", data_key_name="list", **kwargs)
+        list, _ = self.rest.get_paginated_data(
+            path="/isolation/profiles", data_key_name="list", **kwargs
+        )
         return list
 
     def get_profile_by_name(self, name):

@@ -24,20 +24,57 @@ help:
 	@echo ""
 	@echo "$(COLOR_WARNING)Available commands:$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  help$(COLOR_NONE)           Show this help message"
-	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  build:dist                  Build the distribution for publishing$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)clean$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  clean                  	Remove all build, test, coverage and Python artifacts$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  clean-build                   Remove build artifacts$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  clean-pyc                     Remove Python file artifacts$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  clean-test                    Remove test and coverage artifacts$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)development$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  check-format                  Check code format/style with black$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  format                        Reformat code with black$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint                          Check style with flake8$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:all                    Run all tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:zia        Run only zia integration tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:zpa        Run only zpa integration tests$(COLOR_NONE)"
-
+	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  build:dist                    Build the distribution for publishing$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)publish$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  publish:test                Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  publish:prod                Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  publish:test                  Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  publish:prod                  Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
 
-build\:dist:
-	python3 setup.py sdist bdist_wheel
-	pip3 install dist/zscaler-1.0.0.tar.gz
+clean: clean-build clean-pyc clean-test clean-docs
+
+clean-build:
+	rm -fr build/
+	rm -fr dist/
+	rm -fr *.egg-info
+
+clean-docs:
+	rm -fr docs/_build/
+	rm -fr docs/_diagrams/
+
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
+clean-test:
+	rm -fr .tox/
+	rm -f .coverage
+	rm -fr htmlcov/
+	rm -fr .pytest_cache
+
+lint:
+	flake8 zscaler/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+format:
+	black .
+
+check-format:
+	black --check --diff .
 
 test\:integration\:zpa:
 	@echo "$(COLOR_ZSCALER)Running zpa integration tests...$(COLOR_NONE)"
@@ -47,8 +84,22 @@ test\:integration\:zia:
 	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
 	pytest tests/integration/zia
 
+test-simple:
+	pytest --disable-warnings
+
+coverage:
+	pytest --cov=zscaler
+
+build\:dist:
+	python3 setup.py sdist bdist_wheel
+	pip3 install dist/zscaler-1.0.0.tar.gz
+	ls -l dist
+
 publish\:test:
 	python3 -m twine upload --repository testpypi dist/*
 
 publish\:prod:
 	python3 -m twine upload dist/*
+
+
+

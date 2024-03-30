@@ -49,10 +49,23 @@ from zscaler import ZIAClientHelper
 import json
 import time  # Import the time module for the delay
 
+
 def main():
-    parser = argparse.ArgumentParser(description="CLI tool for Zscaler Cloud Sandbox operations.")
-    parser.add_argument("--action", required=True, choices=["get_behavioral_analysis", "add_hash_to_custom_list"], help="The action to perform.")
-    parser.add_argument("--hashes", nargs='?', const='', help="Comma-separated list of MD5 hashes for 'add_hash_to_custom_list' action. Leave empty to clear the list.")
+    parser = argparse.ArgumentParser(
+        description="CLI tool for Zscaler Cloud Sandbox operations."
+    )
+    parser.add_argument(
+        "--action",
+        required=True,
+        choices=["get_behavioral_analysis", "add_hash_to_custom_list"],
+        help="The action to perform.",
+    )
+    parser.add_argument(
+        "--hashes",
+        nargs="?",
+        const="",
+        help="Comma-separated list of MD5 hashes for 'add_hash_to_custom_list' action. Leave empty to clear the list.",
+    )
 
     args = parser.parse_args()
 
@@ -62,7 +75,12 @@ def main():
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
 
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     if args.action == "get_behavioral_analysis":
         print("\nFetching the custom list of MD5 file hashes blocked by Sandbox...\n")
@@ -70,7 +88,7 @@ def main():
         print(json.dumps(behavioral_analysis.to_dict(), indent=4))
 
     elif args.action == "add_hash_to_custom_list":
-        file_hashes_to_be_blocked = args.hashes.split(',') if args.hashes else []
+        file_hashes_to_be_blocked = args.hashes.split(",") if args.hashes else []
         print("\nUpdating the custom list of MD5 file hashes blocked by Sandbox...\n")
         updated_list = zia.sandbox.add_hash_to_custom_list(file_hashes_to_be_blocked)
         print("Updated Custom Block List:")
@@ -81,6 +99,7 @@ def main():
         time.sleep(5)  # Wait for 5 seconds
         activation_status = zia.activate.activate()  # Call the activate method
         print(f"Configuration activation status: {activation_status}")
+
 
 if __name__ == "__main__":
     main()

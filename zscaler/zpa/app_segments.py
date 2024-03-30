@@ -22,7 +22,7 @@ from zscaler.utils import (
     convert_keys,
     snake_to_camel,
     transform_clientless_apps,
-    recursive_snake_to_camel
+    recursive_snake_to_camel,
 )
 from zscaler.zpa.client import ZPAClient
 
@@ -47,7 +47,9 @@ class ApplicationSegmentAPI:
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        list, _ = self.rest.get_paginated_data(path="/application", data_key_name="list", **kwargs)
+        list, _ = self.rest.get_paginated_data(
+            path="/application", data_key_name="list", **kwargs
+        )
         return list
 
     def get_segment(self, segment_id: str) -> Box:
@@ -193,7 +195,9 @@ class ApplicationSegmentAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_segment(self, segment_id: str, **kwargs) -> Box:
@@ -263,16 +267,26 @@ class ApplicationSegmentAPI:
         payload = convert_keys(self.get_segment(segment_id))
 
         if kwargs.get("tcp_port_ranges"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_port_ranges")]
+            payload["tcpPortRange"] = [
+                {"from": ports[0], "to": ports[1]}
+                for ports in kwargs.pop("tcp_port_ranges")
+            ]
 
         if kwargs.get("udp_port_ranges"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
+            payload["udpPortRange"] = [
+                {"from": ports[0], "to": ports[1]}
+                for ports in kwargs.pop("udp_port_ranges")
+            ]
 
         # Handle the clientless_app_ids directly within this function without a separate helper
         if kwargs.get("clientless_app_ids"):
             # Here you would implement any necessary formatting directly
-            formatted_clientless_apps = [{"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")]
-            payload["clientlessApps"] = formatted_clientless_apps  # use the correct key expected by your API
+            formatted_clientless_apps = [
+                {"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")
+            ]
+            payload["clientlessApps"] = (
+                formatted_clientless_apps  # use the correct key expected by your API
+            )
 
         # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)

@@ -59,6 +59,5 @@ setup(
         "aenum",
         "pydash",
         "flake8",
-    ]
+    ],
 )
-
