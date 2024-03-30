@@ -2,16 +2,18 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: ZPA Test
-
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-  schedule:
-    - cron: '0 14 * * 1-5' # UTC
-   workflow_dispatch:
+    pull_request:
+      types: [opened, synchronize]
+    merge_group:
+      types: [checks_requested]
+    push:
+      branches:
+        - master
+    schedule:
+      - cron: '0 14 * * 1-5' # UTC
+    workflow_dispatch:
+  
 
 jobs:
     zpa-qa1-tenants:
