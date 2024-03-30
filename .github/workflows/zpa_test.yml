@@ -67,8 +67,8 @@ jobs:
     zpa-qa2-tenants:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
-            matrix:
+          fail-fast: false
+          matrix:
             python-version: ["3.7", "3.8", "3.9", "3.10"]
             environment:
                 - ZPA_QA2_TENANT01
@@ -114,8 +114,8 @@ jobs:
     zpa-beta-tenants:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
-            matrix:
+          fail-fast: false
+          matrix:
             python-version: ["3.7", "3.8", "3.9", "3.10"]
             environment:
                 - ZPA_BETA_TENANT01
@@ -164,8 +164,8 @@ jobs:
     zpa-prod-tenants:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
-            matrix:
+          fail-fast: false
+          matrix:
             python-version: ["3.7", "3.8", "3.9", "3.10"]
             environment:
                 - ZPA_PROD_TENANT01
