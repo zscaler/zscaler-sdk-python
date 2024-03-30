@@ -91,6 +91,10 @@ test-simple:
 coverage:
 	pytest --cov=zscaler
 
+docs: clean-docs
+	$(MAKE) -C docs html
+	open docs/_build/html/index.html
+	
 build\:dist:
 	python3 setup.py sdist bdist_wheel
 	pip3 install dist/zscaler-1.0.0.tar.gz
@@ -104,3 +108,4 @@ publish\:prod:
 
 
 
+.PHONY: clean-pyc clean-build docs clean local-setup
