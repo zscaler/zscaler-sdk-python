@@ -182,8 +182,12 @@ class CertificatesAPI:
             enrolment_cert = zpa.certificates.get_enrolment('99999999')
 
         """
-        response = self.rest.get("/enrollmentCert/%s?%s" % (certificate_id))
-        return response.status_code
+        response = self.rest.get("/enrollmentCert/%s" % (certificate_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def list_enrolment(self, **kwargs) -> BoxList:
         """

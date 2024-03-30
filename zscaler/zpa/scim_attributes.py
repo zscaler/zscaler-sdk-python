@@ -75,8 +75,9 @@ class ScimAttributeHeaderAPI:
             ...    scim_attribute_id="88888"))
 
         """
-        list, _ = self.rest.get(path=f"/idp/{idp_id}/scimattribute/{attribute_id}", data_key_name="list", api_version="v1")
-        return list
+        response = self.rest.get(f"/idp/{idp_id}/scimattribute/{attribute_id}", api_version="v1")
+        return response
+
 
     def get_values(self, idp_id: str, attribute_id: str, **kwargs) -> BoxList:
         """

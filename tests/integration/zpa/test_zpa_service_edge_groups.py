@@ -20,39 +20,49 @@ from tests.conftest import stub_sleep
 
 
 @stub_sleep
-def test_segment_group(zpa):
+def test_service_edge_groups(zpa):
     add_group_name = "tests-" + generate_random_string()
     update_group_name = "tests-" + generate_random_string()
 
-    add_resp = zpa.segment_groups.add_group(
+    add_resp = zpa.service_edges.add_service_edge_group(
         name=add_group_name,
-        enabled=True,
         description="A description for " + add_group_name,
+        enabled=True,
+        city_country="San Jose, US",
+        latitude="37.3382082",
+        longitude="-121.8863286",
+        location="San Jose, CA, USA",
+        upgrade_day="SUNDAY",
+        upgrade_time_in_secs="66600",
+        override_version_profile=True,
+        version_profile_name="Default",
+        version_profile_id="0",
+        is_public="TRUE",
     )
 
     assert isinstance(add_resp, Box)
     assert "id" in add_resp, "Add response does not contain an 'id' field"
     group_id = add_resp["id"]
 
-    verify_add_resp = zpa.segment_groups.get_group(group_id)
+    verify_add_resp = zpa.service_edges.get_service_edge_group(group_id)
     assert (
         verify_add_resp["name"] == add_group_name
     ), "Group name does not match after creation"
 
-    zpa.segment_groups.update_group(
+    zpa.service_edges.update_service_edge_group(
         group_id,
         name=update_group_name,
         description="Updated description for " + update_group_name,
     )
 
-    get_resp = zpa.segment_groups.get_group(group_id)
+    get_resp = zpa.service_edges.get_service_edge_group(group_id)
     assert isinstance(get_resp, Box)
     assert get_resp["name"] == update_group_name, "Group name did not update correctly"
 
-    list_resp = zpa.segment_groups.list_groups()
+    list_resp = zpa.service_edges.list_service_edge_groups()
     assert isinstance(list_resp, BoxList), "Expected a list of groups"
     assert any(
         group["id"] == group_id for group in list_resp
     ), "Updated group not found in list"
 
-    zpa.segment_groups.delete_group(group_id)
+    zpa.service_edges.delete_service_edge_group(group_id)

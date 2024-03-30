@@ -26,6 +26,11 @@ help:
 	@echo "$(COLOR_OK)  help$(COLOR_NONE)           Show this help message"
 	@echo "$(COLOR_WARNING)build$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  build:dist                  Build the distribution for publishing$(COLOR_NONE)"
+	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:all                    Run all tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zia        Run only zia integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:zpa        Run only zpa integration tests$(COLOR_NONE)"
+
 	@echo "$(COLOR_WARNING)publish$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  publish:test                Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  publish:prod                Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
@@ -33,6 +38,14 @@ help:
 build\:dist:
 	python3 setup.py sdist bdist_wheel
 	pip3 install dist/zscaler-1.0.0.tar.gz
+
+test\:integration\:zpa:
+	@echo "$(COLOR_ZSCALER)Running zpa integration tests...$(COLOR_NONE)"
+	pytest tests/integration/zpa
+
+test\:integration\:zia:
+	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
+	pytest tests/integration/zia
 
 publish\:test:
 	python3 -m twine upload --repository testpypi dist/*

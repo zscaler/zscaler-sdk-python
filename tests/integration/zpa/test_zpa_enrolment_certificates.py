@@ -18,24 +18,26 @@
 from box import Box, BoxList
 
 
-def test_list_idps(zpa):
-    resp = zpa.idp.list_idps()
+# Testing Enrolment Certificate Retrieval
+def test_list_enrolment_certificates(zpa):
+    resp = zpa.certificates.list_enrolment()
     assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
-    assert len(resp) > 0, "No idps were found."
+    assert len(resp) > 0, "No certificates were found."
 
 
-def test_get_idp(zpa):
-    list_idps = zpa.idp.list_idps()
-    assert len(list_idps) > 0, "No IdPs to retrieve."
+def test_get_enrolment_certificate(zpa):
+    # List enrolment certificates to find one to work with
+    certificates_list = zpa.certificates.list_enrolment()
+    assert len(certificates_list) > 0, "No certificates to retrieve."
 
-    # Assuming the list returns BoxList of idps and we can access 'id'
-    first_idp_id = list_idps[0].id
+    # Assuming the list returns BoxList of certificates and we can access 'id'
+    first_certificate_id = certificates_list[0].id
 
-    # Now, use that 'id' to get a specific idp
-    resp = zpa.idp.get_idp(first_idp_id)
+    # Now, use that 'id' to get a specific enrolment certificate
+    resp = zpa.certificates.get_enrolment(first_certificate_id)
 
-    # Perform your assertions on the retrieved idp
+    # Perform your assertions on the retrieved certificate
     assert isinstance(resp, Box), "Response is not in the expected Box format."
     assert (
-        resp.id == first_idp_id
-    ), f"Retrieved IdP ID does not match requested ID: {first_idp_id}."
+        resp.id == first_certificate_id
+    ), f"Retrieved certificate ID does not match requested ID: {first_certificate_id}."
