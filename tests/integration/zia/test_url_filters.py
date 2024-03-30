@@ -247,7 +247,9 @@ def test_update_rule(zia, url_filters):
         ],
     )
 
-    resp = zia.url_filters.update_rule("1", name="Updated Test", users=[1, 2], order=2, request_methods=["PUT"])
+    resp = zia.url_filters.update_rule(
+        "1", name="Updated Test", users=[1, 2], order=2, request_methods=["PUT"]
+    )
 
     assert resp.name == "Updated Test"
     assert resp.users[1]["id"] == 2

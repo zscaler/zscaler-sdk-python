@@ -15,29 +15,11 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import responses
-from responses import matchers
+import random
+import string
 
 
-@responses.activate
-def test_create_token(zpa, session):
-    responses.add(
-        responses.POST,
-        url="https://config.private.zscaler.com/signin",
-        json=session,
-        status=200,
-        match=[
-            matchers.urlencoded_params_matcher(
-                {
-                    "client_id": "1",
-                    "client_secret": "yyy",
-                }
-            ),
-            matchers.header_matcher({"Content-Type": "application/x-www-form-urlencoded"}),
-        ],
-    )
-
-    resp = zpa.refreshToken(client_id="1", client_secret="yyy")
-
-    assert isinstance(resp, str)
-    assert resp == "xyz"
+# Function to generate a random string
+def generate_random_string(length=10):
+    letters = string.ascii_lowercase
+    return "".join(random.choice(letters) for i in range(length))

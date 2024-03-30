@@ -15,70 +15,43 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import pytest
-import responses
 from box import Box, BoxList
 
-from tests.conftest import stub_sleep
 
-
-# Don't need to test the data structure as we just have list and get
-# methods available. id will suffice until add/update endpoints are available.
-@pytest.fixture(name="saml_attributes")
-def fixture_saml_attributes():
-    return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}]}
-
-
-@responses.activate
-@stub_sleep
-def test_list_saml_attributes(zpa, saml_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/1/samlAttribute?page=1",
-        json=saml_attributes,
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/1/samlAttribute?page=2",
-        json=[],
-        status=200,
-    )
+def test_list_saml_attributes(zpa):
     resp = zpa.saml_attributes.list_attributes()
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 2
-    assert resp[0].id == "1"
+
+    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
+    assert len(resp) > 0, "No Saml attributes were found for the specified IdP."
 
 
-@responses.activate
-@stub_sleep
-def test_list_saml_attributes_by_idp(zpa, saml_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/1/samlAttribute/idp/1?page=1",
-        json=saml_attributes,
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/1/samlAttribute/idp/1?page=2",
-        json=[],
-        status=200,
-    )
-    resp = zpa.saml_attributes.list_attributes_by_idp("1")
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 2
-    assert resp[0].id == "1"
+def test_list_saml_attributes_by_idp(zpa):
+    idps = zpa.idp.list_idps()
+
+    user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+    assert user_idp is not None, "No IdP with sso_type 'USER' found."
+
+    user_idp_id = user_idp["id"]
+
+    resp = zpa.saml_attributes.list_attributes_by_idp(user_idp_id)
+
+    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
+    assert len(resp) > 0, "No SAML attributes were found for the specified IdP."
 
 
-@responses.activate
-def test_get_saml_attribute(zpa, saml_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/samlAttribute/1",
-        json=saml_attributes["list"][0],
-        status=200,
-    )
-    resp = zpa.saml_attributes.get_attribute("1")
-    assert isinstance(resp, Box)
-    assert resp.id == "1"
+def test_get_saml_attribute(zpa):
+    idps = zpa.idp.list_idps()
+
+    user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+    assert user_idp is not None, "No IdP with sso_type 'USER' found."
+
+    attributes = zpa.saml_attributes.list_attributes_by_idp(user_idp["id"])
+    assert len(attributes) > 0, "No SAML attributes found for the specified IdP."
+
+    first_attribute_id = attributes[0].id
+    resp = zpa.saml_attributes.get_attribute(first_attribute_id)
+
+    assert isinstance(resp, Box), "Response is not in the expected Box format."
+    assert (
+        resp.id == first_attribute_id
+    ), "Retrieved SAML attribute ID does not match the requested ID."

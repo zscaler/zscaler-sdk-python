@@ -14,11 +14,11 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
 import os
 import pytest
 from zscaler.zpa import ZPAClientHelper
 from functools import wraps
+
 
 @pytest.fixture(scope="session")
 def zpa():
@@ -26,14 +26,16 @@ def zpa():
     client_id = os.getenv("ZPA_CLIENT_ID")
     client_secret = os.getenv("ZPA_CLIENT_SECRET")
     customer_id = os.getenv("ZPA_CUSTOMER_ID")
-    cloud = os.getenv("ZPA_CLOUD", "PRODUCTION")  # Default to "PRODUCTION" if not specified
+    cloud = os.getenv(
+        "ZPA_CLOUD", "PRODUCTION"
+    )  # Default to "PRODUCTION" if not specified
 
     # Initialize and return the ZPAClientHelper with actual credentials and cloud setting
     return ZPAClientHelper(
         client_id=client_id,
         client_secret=client_secret,
         customer_id=customer_id,
-        cloud=cloud
+        cloud=cloud,
     )
 
 

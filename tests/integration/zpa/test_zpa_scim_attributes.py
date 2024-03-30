@@ -15,70 +15,39 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import pytest
-import responses
 from box import Box, BoxList
 
-from tests.conftest import stub_sleep
+
+def test_list_scim_attributes_by_idp(zpa):
+    idps = zpa.idp.list_idps()
+
+    user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+    assert user_idp is not None, "No IdP with sso_type 'USER' found."
+
+    user_idp_id = user_idp["id"]
+
+    resp = zpa.scim_attributes.list_attributes_by_idp(user_idp_id)
+
+    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
+    assert len(resp) > 0, "No SCIM groups were found for the specified IdP."
 
 
-# Don't need to test the data structure as we just have list and get
-# methods available. id will suffice until add/update endpoints are available.
-@pytest.fixture(name="scim_attributes")
-def fixture_scim_attributes():
-    return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}]}
+def test_get_scim_attribute(zpa):
+    idps = zpa.idp.list_idps()
 
+    user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+    assert user_idp is not None, "No IdP with sso_type 'USER' found."
 
-@responses.activate
-@stub_sleep
-def test_list_scim_attributes_by_idp(zpa, scim_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/idp/1/scimattribute?page=1",
-        json=scim_attributes,
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/idp/1/scimattribute?page=2",
-        json=[],
-        status=200,
-    )
-    resp = zpa.scim_attributes.list_attributes_by_idp("1")
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 2
-    assert resp[0].id == "1"
+    user_idp_id = user_idp["id"]
 
+    attributes = zpa.scim_attributes.list_attributes_by_idp(user_idp_id)
+    assert len(attributes) > 0, "No SCIM attributes found for the specified IdP."
 
-@responses.activate
-def test_get_scim_attribute(zpa, scim_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/idp/1/scimattribute/1",
-        json=scim_attributes["list"][0],
-        status=200,
-    )
-    resp = zpa.scim_attributes.get_attribute("1", "1")
-    assert isinstance(resp, Box)
-    assert resp.id == "1"
+    first_attribute_id = attributes[0].id
 
+    resp = zpa.scim_attributes.get_attribute(user_idp_id, first_attribute_id)
 
-@responses.activate
-@stub_sleep
-def test_list_scim_values(zpa, scim_attributes):
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimattribute/idpId/1/attributeId/1?page=1",
-        json=scim_attributes,
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimattribute/idpId/1/attributeId/1?page=2",
-        json=[],
-        status=200,
-    )
-    resp = zpa.scim_attributes.get_values("1", "1")
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 2
-    assert resp[0].id == "1"
+    assert isinstance(resp, Box), "Response is not in the expected Box format."
+    assert (
+        resp.id == first_attribute_id
+    ), "Retrieved SCIM attribute ID does not match the requested ID."
