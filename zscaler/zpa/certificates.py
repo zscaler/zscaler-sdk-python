@@ -55,7 +55,7 @@ class CertificatesAPI:
             path="/clientlessCertificate/issued",
             data_key_name="list",
             **kwargs,
-            api_version="v2"
+            api_version="v2",
         )
         return list
 
@@ -84,7 +84,9 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/certificate", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(
+            path="/certificate", data_key_name="list", **kwargs, api_version="v1"
+        )
         return list
 
     def add_certificate(self, name: str, cert_blob: str, **kwargs) -> Box:
@@ -214,5 +216,7 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2")
+        list, _ = self.rest.get_paginated_data(
+            path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2"
+        )
         return list

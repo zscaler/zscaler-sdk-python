@@ -21,7 +21,9 @@ class SegmentGroupsAPI:
             ...    pprint(segment_group)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/segmentGroup", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(
+            path="/segmentGroup", data_key_name="list", **kwargs, api_version="v1"
+        )
         return list
 
     def get_group(self, group_id: str) -> Box:
@@ -85,7 +87,9 @@ class SegmentGroupsAPI:
         }
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
+            payload["applications"] = [
+                {"id": app_id} for app_id in kwargs.pop("application_ids")
+            ]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -96,7 +100,9 @@ class SegmentGroupsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_group(self, group_id: str, **kwargs) -> Box:
@@ -135,7 +141,9 @@ class SegmentGroupsAPI:
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
+            payload["applications"] = [
+                {"id": app_id} for app_id in kwargs.pop("application_ids")
+            ]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():

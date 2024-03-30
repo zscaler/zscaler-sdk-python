@@ -70,7 +70,11 @@ class CloudAppsAPI:
 
         """
         # Mapping for user-friendly sanction state values to API-expected values
-        sanction_state_mapping = {"sanctioned": "SANCTIONED", "unsanctioned": "UN_SANCTIONED", "any": "ANY"}
+        sanction_state_mapping = {
+            "sanctioned": "SANCTIONED",
+            "unsanctioned": "UN_SANCTIONED",
+            "any": "ANY",
+        }
 
         # Convert user-friendly sanction state to ZIA API-expected value
         api_sanction_state = sanction_state_mapping.get(sanction_state.lower())
@@ -292,7 +296,9 @@ class CloudAppsAPI:
 
         return self.rest.post("shadowIT/applications/export", json=payload).text
 
-    def export_shadow_it_csv(self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs):
+    def export_shadow_it_csv(
+        self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs
+    ):
         """
         Export the Shadow IT Report (in CSV format) for the list of users or known locations
         identified with using the cloud applications specified in the request. The report
@@ -362,7 +368,9 @@ class CloudAppsAPI:
 
         convert_keys(payload.update(kwargs))
 
-        return self.rest.post(f"shadowIT/applications/{entity}/exportCsv", json=payload).text
+        return self.rest.post(
+            f"shadowIT/applications/{entity}/exportCsv", json=payload
+        ).text
 
     def list_apps(self):
         """

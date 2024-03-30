@@ -59,19 +59,43 @@ import json
 import time
 from zscaler import ZIAClientHelper
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Manage VPN credentials for a cloud service provider.")
-    parser.add_argument("-a", "--add", choices=['IP', 'UFQDN'], help="Add a new VPN credential of type IP or UFQDN.")
-    parser.add_argument("-u", "--update", help="Credential ID to update an existing VPN credential.")
-    parser.add_argument("-d", "--delete", help="Credential ID to delete an existing VPN credential.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all VPN credentials.")
-    
+    parser = argparse.ArgumentParser(
+        description="Manage VPN credentials for a cloud service provider."
+    )
+    parser.add_argument(
+        "-a",
+        "--add",
+        choices=["IP", "UFQDN"],
+        help="Add a new VPN credential of type IP or UFQDN.",
+    )
+    parser.add_argument(
+        "-u", "--update", help="Credential ID to update an existing VPN credential."
+    )
+    parser.add_argument(
+        "-d", "--delete", help="Credential ID to delete an existing VPN credential."
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all VPN credentials."
+    )
+
     # VPN credential arguments for add and update
-    parser.add_argument("--pre_shared_key", help="Pre-shared key for the VPN credential.")
-    parser.add_argument("--ip_address", help="IP address for the VPN credential (required for IP auth type).")
-    parser.add_argument("--email", help="Email address for the VPN credential (required for UFQDN auth type).")
+    parser.add_argument(
+        "--pre_shared_key", help="Pre-shared key for the VPN credential."
+    )
+    parser.add_argument(
+        "--ip_address",
+        help="IP address for the VPN credential (required for IP auth type).",
+    )
+    parser.add_argument(
+        "--email",
+        help="Email address for the VPN credential (required for UFQDN auth type).",
+    )
     parser.add_argument("--comments", help="Comments for the VPN credential.")
-    parser.add_argument("--credential_id", help="Location ID associated with the VPN credential.")
+    parser.add_argument(
+        "--credential_id", help="Location ID associated with the VPN credential."
+    )
 
     args = parser.parse_args()
 
@@ -80,33 +104,52 @@ def main():
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     changes_made = False
 
     if args.add:
         response = None
         if args.add == "IP" and args.ip_address:
-            response = zia.traffic.add_vpn_credential(authentication_type=args.add,
-                                                      pre_shared_key=args.pre_shared_key,
-                                                      ip_address=args.ip_address,
-                                                      comments=args.comments)
-            print("IP-based VPN credential added successfully:", json.dumps(response, indent=4))
+            response = zia.traffic.add_vpn_credential(
+                authentication_type=args.add,
+                pre_shared_key=args.pre_shared_key,
+                ip_address=args.ip_address,
+                comments=args.comments,
+            )
+            print(
+                "IP-based VPN credential added successfully:",
+                json.dumps(response, indent=4),
+            )
             changes_made = True
         elif args.add == "UFQDN" and args.email:
-            response = zia.traffic.add_vpn_credential(authentication_type=args.add,
-                                                      pre_shared_key=args.pre_shared_key,
-                                                      fqdn=args.email,
-                                                      comments=args.comments)
-            print("UFQDN-based VPN credential added successfully:", json.dumps(response, indent=4))
+            response = zia.traffic.add_vpn_credential(
+                authentication_type=args.add,
+                pre_shared_key=args.pre_shared_key,
+                fqdn=args.email,
+                comments=args.comments,
+            )
+            print(
+                "UFQDN-based VPN credential added successfully:",
+                json.dumps(response, indent=4),
+            )
             changes_made = True
         else:
-            print("Error: Missing required fields for the selected authentication type.")
+            print(
+                "Error: Missing required fields for the selected authentication type."
+            )
 
     elif args.update:
-        zia.traffic.update_vpn_credential(credential_id=args.update,
-                                          pre_shared_key=args.pre_shared_key,
-                                          comments=args.comments)
+        zia.traffic.update_vpn_credential(
+            credential_id=args.update,
+            pre_shared_key=args.pre_shared_key,
+            comments=args.comments,
+        )
         print("VPN credential updated successfully.")
         changes_made = True
 
@@ -123,7 +166,10 @@ def main():
         print("Activating configuration changes. Please wait...")
         time.sleep(5)  # Delay for 5 seconds before activating.
         activation_status = zia.activate.activate()
-        print("Configuration changes activated successfully. Status:", activation_status)
+        print(
+            "Configuration changes activated successfully. Status:", activation_status
+        )
+
 
 if __name__ == "__main__":
     main()

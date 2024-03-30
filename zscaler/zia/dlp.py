@@ -26,7 +26,9 @@ class DLPAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> Box:
+    def add_dict(
+        self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs
+    ) -> Box:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
@@ -98,7 +100,7 @@ class DLPAPI:
         payload = {
             "name": name,
             "customPhraseMatchType": custom_phrase_match_type,
-            "dictionaryType": dictionary_type
+            "dictionaryType": dictionary_type,
         }
 
         # Process additional keyword arguments
@@ -111,7 +113,9 @@ class DLPAPI:
         if isinstance(response, Response):
             # Handle non-successful status codes
             status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
 
         return response
 
@@ -173,7 +177,7 @@ class DLPAPI:
             "id": dict_id,
             "name": existing_dict.get("name"),
             "customPhraseMatchType": existing_dict.get("customPhraseMatchType"),
-            "dictionaryType": existing_dict.get("dictionaryType")
+            "dictionaryType": existing_dict.get("dictionaryType"),
         }
 
         # Process additional keyword arguments
@@ -186,7 +190,9 @@ class DLPAPI:
         if isinstance(response, Response):
             # Handle non-successful status codes
             status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_dict(dict_id)
@@ -271,13 +277,21 @@ class DLPAPI:
         """
         payload = {"data": pattern}
 
-        response = self.rest.post(path="dlpDictionaries/validateDlpPattern", json=payload)
+        response = self.rest.post(
+            path="dlpDictionaries/validateDlpPattern", json=payload
+        )
         if isinstance(response, Response):
             return None
         return response
 
     # TODO: implement the remaining
-    def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, description=None) -> Box:
+    def add_dlp_engine(
+        self,
+        name: str,
+        engine_expression=None,
+        custom_dlp_engine=None,
+        description=None,
+    ) -> Box:
         """
         Adds a new dlp engine.
         ...
@@ -304,7 +318,9 @@ class DLPAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_dlp_engine(self, engine_id: str, **kwargs) -> Box:
@@ -344,7 +360,9 @@ class DLPAPI:
 
         """
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()}
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()
+        }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -653,7 +671,9 @@ class DLPAPI:
         if isinstance(response, Response):
             # Handle non-successful status codes
             status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
 
         return response
 
@@ -695,7 +715,12 @@ class DLPAPI:
             raise ValueError("Template not found with the provided ID")
 
         # Construct the payload for update
-        payload = {snake_to_camel(key): kwargs.get(key, existing_template.get(snake_to_camel(key))) for key in kwargs}
+        payload = {
+            snake_to_camel(key): kwargs.get(
+                key, existing_template.get(snake_to_camel(key))
+            )
+            for key in kwargs
+        }
 
         # Ensure mandatory fields are included
         mandatory_fields = ["plainTextMessage", "htmlMessage"]
@@ -707,9 +732,13 @@ class DLPAPI:
         payload["id"] = template_id
 
         # Make the API call
-        response = self.rest.put(f"/dlpNotificationTemplates/{template_id}", json=payload)
+        response = self.rest.put(
+            f"/dlpNotificationTemplates/{template_id}", json=payload
+        )
         if isinstance(response, Response) and response.status_code != 200:
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_dlp_templates(template_id)

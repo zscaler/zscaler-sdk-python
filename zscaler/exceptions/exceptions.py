@@ -85,14 +85,17 @@ class InvalidCloudEnvironmentError(Exception):
 
 class TokenExpirationError(Exception):
     """Raised when the authentication token has expired."""
+
     pass
 
 
 class TokenRefreshError(Exception):
     """Raised when there's an issue refreshing the authentication token."""
+
     pass
 
 
 class HeaderUpdateError(Exception):
     """Raised if there's a problem updating the session headers."""
+
     pass

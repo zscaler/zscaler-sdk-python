@@ -52,7 +52,9 @@ class ServerGroupsAPI:
             ...    pprint(server_group)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/serverGroup", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(
+            path="/serverGroup", data_key_name="list", **kwargs, api_version="v1"
+        )
         return list
 
     def get_group(self, group_id: str) -> Box:
@@ -126,7 +128,9 @@ class ServerGroupsAPI:
         # Initialise payload
         payload = {
             "name": name,
-            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
+            "appConnectorGroups": [
+                {"id": group_id} for group_id in app_connector_group_ids
+            ],
         }
 
         add_id_groups(self.reformat_params, kwargs, payload)
@@ -140,7 +144,9 @@ class ServerGroupsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_group(self, group_id: str, **kwargs) -> Box:

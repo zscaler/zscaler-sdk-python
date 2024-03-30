@@ -37,7 +37,9 @@ class LSSConfigControllerAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
 
-        self.v2_admin_url = "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
+        self.v2_admin_url = (
+            "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
+        )
 
     def _create_policy(self, conditions: list) -> list:
         """
@@ -55,7 +57,11 @@ class LSSConfigControllerAPI:
 
         for condition in conditions:
             # Template for SAML Policy Rule objects
-            if isinstance(condition, tuple) and len(condition) == 2 and condition[0] == "saml":
+            if (
+                isinstance(condition, tuple)
+                and len(condition) == 2
+                and condition[0] == "saml"
+            ):
                 operand = {"operands": [{"objectType": "SAML", "entryValues": []}]}
                 for item in condition[1]:
                     entry_values = {
@@ -69,7 +75,9 @@ class LSSConfigControllerAPI:
                     "operands": [
                         {
                             "objectType": condition[0].upper(),
-                            "values": [self.get_client_types()[item] for item in condition[1]],
+                            "values": [
+                                self.get_client_types()[item] for item in condition[1]
+                            ],
                         }
                     ]
                 }
@@ -113,7 +121,9 @@ class LSSConfigControllerAPI:
         # Example after:
         # {'web_browser': 'zpn_client_type_exporter'}
 
-        response = requests.get(f"{self.v2_admin_url}/clientTypes", headers=self.rest.headers)
+        response = requests.get(
+            f"{self.v2_admin_url}/clientTypes", headers=self.rest.headers
+        )
 
         if response.status_code == 200:
             return response.json()
@@ -146,7 +156,9 @@ class LSSConfigControllerAPI:
             >>> for lss_config in zpa.lss.list_configs():
             ...    print(config)
         """
-        list, _ = self.rest.get_paginated_data(path="/lssConfig", data_key_name="list", **kwargs, api_version="v2")
+        list, _ = self.rest.get_paginated_data(
+            path="/lssConfig", data_key_name="list", **kwargs, api_version="v2"
+        )
         return list
 
     def get_config(self, lss_id: str) -> Box:
@@ -188,7 +200,9 @@ class LSSConfigControllerAPI:
             ...    print(item)
 
         """
-        response = requests.get(f"{self.v2_admin_url}/logType/formats", headers=self.rest.headers)
+        response = requests.get(
+            f"{self.v2_admin_url}/logType/formats", headers=self.rest.headers
+        )
 
         if response.status_code == 200:
             return response.json()
@@ -375,7 +389,9 @@ class LSSConfigControllerAPI:
         if kwargs.get("log_stream_content"):
             log_stream_content = kwargs.pop("log_stream_content")
         else:
-            log_stream_content = self.get_log_formats()[source_log_type][source_log_format]
+            log_stream_content = self.get_log_formats()[source_log_type][
+                source_log_format
+            ]
 
         payload = {
             "config": {
@@ -387,7 +403,9 @@ class LSSConfigControllerAPI:
                 "sourceLogType": source_log_type,
                 "useTls": use_tls,
             },
-            "connectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
+            "connectorGroups": [
+                {"id": group_id} for group_id in app_connector_group_ids
+            ],
         }
 
         # Convert tuple list to dict and add to payload
@@ -410,7 +428,9 @@ class LSSConfigControllerAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_lss_config(self, lss_config_id: str, **kwargs):
@@ -493,7 +513,9 @@ class LSSConfigControllerAPI:
         elif kwargs.get("source_log_type"):
             source_log_type = self.source_log_map[kwargs.pop("source_log_type")]
             payload["config"]["sourceLogType"] = source_log_type
-            payload["config"]["format"] = self.get_log_formats()[source_log_type][kwargs.pop("source_log_format", "csv")]
+            payload["config"]["format"] = self.get_log_formats()[source_log_type][
+                kwargs.pop("source_log_format", "csv")
+            ]
 
         # Iterate kwargs and update payload for keys that we've renamed.
         for k in list(kwargs):
@@ -517,7 +539,9 @@ class LSSConfigControllerAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"/lssConfig/{lss_config_id}", api_version="v2", json=payload).status_code
+        resp = self.rest.put(
+            f"/lssConfig/{lss_config_id}", api_version="v2", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):

@@ -51,17 +51,21 @@ import os
 import argparse
 import time
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Manage VPN credentials for a cloud service provider."
     )
     parser.add_argument(
-        "-bd", "--bulk-delete", nargs='+', help="Bulk delete VPN credentials. Provide one or more credential IDs separated by spaces."
+        "-bd",
+        "--bulk-delete",
+        nargs="+",
+        help="Bulk delete VPN credentials. Provide one or more credential IDs separated by spaces.",
     )
     parser.add_argument(
         "-l", "--list", action="store_true", help="List all VPN credentials."
     )
-    
+
     args = parser.parse_args()
 
     # Initialize SDK
@@ -69,7 +73,12 @@ def main():
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     changes_made = False
 
@@ -88,7 +97,10 @@ def main():
         print("Activating configuration changes. Please wait...")
         time.sleep(5)  # Delay for 5 seconds before activating
         activation_status = zia.activate.activate()
-        print("Configuration changes activated successfully. Status:", activation_status)
+        print(
+            "Configuration changes activated successfully. Status:", activation_status
+        )
+
 
 if __name__ == "__main__":
     main()

@@ -12,7 +12,9 @@ class UserAgent:
         os_name = platform.system()
         os_version = platform.release()
         self._user_agent_string = (
-            f"{UserAgent.SDK_NAME}/{VERSION} " f"{UserAgent.PYTHON}/{python_version} " f"{os_name}/{os_version}"
+            f"{UserAgent.SDK_NAME}/{VERSION} "
+            f"{UserAgent.PYTHON}/{python_version} "
+            f"{os_name}/{os_version}"
         )
         if user_agent_extra:
             self._user_agent_string += f" {user_agent_extra}"

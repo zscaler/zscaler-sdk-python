@@ -19,7 +19,14 @@ class ZPAClient:
     def __init__():
         pass
 
-    def get(self, path: str, json=None, params=None, fail_safe: bool = False, api_version: str = None):
+    def get(
+        self,
+        path: str,
+        json=None,
+        params=None,
+        fail_safe: bool = False,
+        api_version: str = None,
+    ):
         """
         Send a GET request to the ZPA API.
         Parameters:
