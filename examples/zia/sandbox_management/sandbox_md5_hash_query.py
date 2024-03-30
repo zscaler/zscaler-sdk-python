@@ -41,27 +41,51 @@ import os
 from zscaler import ZIAClientHelper
 import json
 
+
 def is_md5hash_suspicious(report):
     """Determine if the MD5 hash report indicates the file is suspicious."""
-    classification = report.get('summary', {}).get('classification', {})
+    classification = report.get("summary", {}).get("classification", {})
     # Assuming a score above 50 and type "SUSPICIOUS" as suspicious
-    if classification.get('score', 0) > 50 and classification.get('type') == "SUSPICIOUS":
+    if (
+        classification.get("score", 0) > 50
+        and classification.get("type") == "SUSPICIOUS"
+    ):
         return True
     return False
+
 
 def is_md5hash_malicious(report):
     """Determine if the MD5 hash report indicates the file is malicious."""
-    classification = report.get('summary', {}).get('classification', {})
+    classification = report.get("summary", {}).get("classification", {})
     # Assuming a score above 80 and type "MALICIOUS" as malicious
-    if classification.get('score', 0) > 80 and classification.get('type') == "MALICIOUS":
+    if (
+        classification.get("score", 0) > 80
+        and classification.get("type") == "MALICIOUS"
+    ):
         return True
     return False
 
+
 def main():
-    parser = argparse.ArgumentParser(description="CLI tool for Zscaler Cloud Sandbox operations.")
-    parser.add_argument("--action", required=True, choices=["get_quota", "get_report"], help="The action to perform.")
-    parser.add_argument("--md5", help="The MD5 hash of the file to get the report for. Required for 'get_report'.")
-    parser.add_argument("--details", default="summary", choices=["summary", "full"], help="The detail level of the report. Defaults to 'summary'.")
+    parser = argparse.ArgumentParser(
+        description="CLI tool for Zscaler Cloud Sandbox operations."
+    )
+    parser.add_argument(
+        "--action",
+        required=True,
+        choices=["get_quota", "get_report"],
+        help="The action to perform.",
+    )
+    parser.add_argument(
+        "--md5",
+        help="The MD5 hash of the file to get the report for. Required for 'get_report'.",
+    )
+    parser.add_argument(
+        "--details",
+        default="summary",
+        choices=["summary", "full"],
+        help="The detail level of the report. Defaults to 'summary'.",
+    )
 
     args = parser.parse_args()
 
@@ -71,7 +95,12 @@ def main():
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
 
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     if args.action == "get_quota":
         print("\nFetching Cloud Sandbox Quota Information...\n")
@@ -83,8 +112,12 @@ def main():
             print("Error: --md5 option is required for 'get_report' action.")
             return
 
-        print(f"\nQuery Cloud Sandbox Report for MD5: {args.md5} with details: {args.details}\n")
-        report = zia.sandbox.get_report(md5_hash=args.md5, report_details=args.details).to_dict()
+        print(
+            f"\nQuery Cloud Sandbox Report for MD5: {args.md5} with details: {args.details}\n"
+        )
+        report = zia.sandbox.get_report(
+            md5_hash=args.md5, report_details=args.details
+        ).to_dict()
         print(json.dumps(report, indent=4))
 
         # Parsing the report
@@ -95,6 +128,7 @@ def main():
             print("The File Is Malicious\n\n")
         else:
             print("The File Is Not Suspicious or Malicious\n\n")
+
 
 if __name__ == "__main__":
     main()

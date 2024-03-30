@@ -55,7 +55,7 @@ class CertificatesAPI:
             path="/clientlessCertificate/issued",
             data_key_name="list",
             **kwargs,
-            api_version="v2"
+            api_version="v2",
         )
         return list
 
@@ -84,7 +84,9 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/certificate", data_key_name="list", **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(
+            path="/certificate", data_key_name="list", **kwargs, api_version="v1"
+        )
         return list
 
     def add_certificate(self, name: str, cert_blob: str, **kwargs) -> Box:
@@ -182,8 +184,12 @@ class CertificatesAPI:
             enrolment_cert = zpa.certificates.get_enrolment('99999999')
 
         """
-        response = self.rest.get("/enrollmentCert/%s?%s" % (certificate_id))
-        return response.status_code
+        response = self.rest.get("/enrollmentCert/%s" % (certificate_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def list_enrolment(self, **kwargs) -> BoxList:
         """
@@ -210,5 +216,7 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2")
+        list, _ = self.rest.get_paginated_data(
+            path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2"
+        )
         return list

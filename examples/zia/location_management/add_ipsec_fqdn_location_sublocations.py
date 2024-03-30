@@ -52,6 +52,7 @@ import os
 import time
 from zscaler import ZIAClientHelper
 
+
 def get_location_id_by_name(zia, location_name):
     """Get location ID by location name."""
     location = zia.locations.get_location(location_name=location_name)
@@ -66,7 +67,9 @@ def prompt_for_gateway_options():
     gateway_options = {
         "auth_required": prompt_yes_no("Enable Authentication (auth_required)?"),
         "ssl_scan_enabled": prompt_yes_no("Enable SSL Inspection (ssl_scan_enabled)?"),
-        "zapp_ssl_scan_enabled": prompt_yes_no("Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"),
+        "zapp_ssl_scan_enabled": prompt_yes_no(
+            "Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"
+        ),
         "ofw_enabled": prompt_yes_no("Enable Firewall (ofw_enabled)?"),
         "ips_control": prompt_yes_no("Enable IPS Control (ips_control)?"),
         "aup_enabled": prompt_yes_no("Enable AUP (aup_enabled)?"),
@@ -74,23 +77,36 @@ def prompt_for_gateway_options():
     }
 
     if gateway_options["aup_enabled"]:
-        gateway_options["aupTimeoutInDays"] = input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
-    
+        gateway_options["aupTimeoutInDays"] = (
+            input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
+        )
+
     if gateway_options["surrogate_ip"]:
-        gateway_options["idleTimeInMinutes"] = int(input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip() or "30")
+        gateway_options["idleTimeInMinutes"] = int(
+            input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip()
+            or "30"
+        )
         gateway_options["displayTimeUnit"] = "MINUTE"
-        if prompt_yes_no("Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"):
+        if prompt_yes_no(
+            "Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"
+        ):
             gateway_options["surrogateIPEnforcedForKnownBrowsers"] = True
             while True:
-                refresh_time = int(input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip() or "480")
+                refresh_time = int(
+                    input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip()
+                    or "480"
+                )
                 if refresh_time > gateway_options["idleTimeInMinutes"]:
-                    print("Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value.")
+                    print(
+                        "Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value."
+                    )
                 else:
                     gateway_options["surrogateRefreshTimeInMinutes"] = refresh_time
                     break
             gateway_options["surrogateRefreshTimeUnit"] = "MINUTE"
 
     return gateway_options
+
 
 def prompt_yes_no(question):
     """Simple Yes/No Prompt"""
@@ -100,6 +116,7 @@ def prompt_yes_no(question):
             return True
         elif response in ["n", "no"]:
             return False
+
 
 def add_sublocation(zia, name, parent_id_or_name, ip_range, gateway_options):
     # Determine if parent_id_or_name is an ID or a name
@@ -111,10 +128,7 @@ def add_sublocation(zia, name, parent_id_or_name, ip_range, gateway_options):
 
     print(f"\nAdding Sublocation '{name}' under parent ID: {parent_id}...")
     sublocation_response = zia.locations.add_location(
-        name=name,
-        parent_id=parent_id,
-        ip_addresses=[ip_range],
-        **gateway_options
+        name=name, parent_id=parent_id, ip_addresses=[ip_range], **gateway_options
     )
     print("Sublocation added successfully:", json.dumps(sublocation_response, indent=4))
     print("\nActivating configuration changes...")
@@ -122,13 +136,22 @@ def add_sublocation(zia, name, parent_id_or_name, ip_range, gateway_options):
     activation_status = zia.activate.activate()
     print("Configuration changes activated successfully. Status:", activation_status)
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Add a sublocation to Zscaler Internet Access.")
-    parser.add_argument("--add_sublocation", action="store_true", help="Add a new sublocation.")
+    parser = argparse.ArgumentParser(
+        description="Add a sublocation to Zscaler Internet Access."
+    )
+    parser.add_argument(
+        "--add_sublocation", action="store_true", help="Add a new sublocation."
+    )
     parser.add_argument("--name", required=True, help="Name of the sublocation to add.")
     parser.add_argument("--parent", required=True, help="Parent location name or ID.")
-    parser.add_argument("--ip_range", required=True, help="IP address range for the sublocation.")
-    parser.add_argument("--gateway_options", action="store_true", help="Prompt for gateway options.")
+    parser.add_argument(
+        "--ip_range", required=True, help="IP address range for the sublocation."
+    )
+    parser.add_argument(
+        "--gateway_options", action="store_true", help="Prompt for gateway options."
+    )
 
     args = parser.parse_args()
 
@@ -137,12 +160,13 @@ def main():
             username=os.getenv("ZIA_USERNAME"),
             password=os.getenv("ZIA_PASSWORD"),
             api_key=os.getenv("ZIA_API_KEY"),
-            cloud=os.getenv("ZIA_CLOUD")
+            cloud=os.getenv("ZIA_CLOUD"),
         )
         gateway_options = prompt_for_gateway_options() if args.gateway_options else {}
         add_sublocation(zia, args.name, args.parent, args.ip_range, gateway_options)
     else:
         print("Missing required arguments for adding a sublocation.")
+
 
 if __name__ == "__main__":
     main()

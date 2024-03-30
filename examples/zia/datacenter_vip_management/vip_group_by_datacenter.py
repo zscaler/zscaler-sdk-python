@@ -43,26 +43,67 @@ import os
 from zscaler import ZIAClientHelper
 import json
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Returns a list of Recommended Virtual IP Addresses (VIPs) grouped by data center in Zscaler Internet Access (ZIA).")
-    parser.add_argument("--source_ip", required=True, help="The source IP address to get recommended VIPs for.")
-    parser.add_argument("--routable_ip", type=bool, default=True, help="Specify to include routable IPs. Default is True.")
-    parser.add_argument("--within_country_only", type=bool, default=False, help="Restrict search within the same country. Default is False.")
-    parser.add_argument("--include_private_service_edge", type=bool, default=True, help="Include ZIA Private Service Edge VIPs. Default is True.")
-    parser.add_argument("--include_current_vips", type=bool, default=True, help="Include currently assigned VIPs. Default is True.")
-    parser.add_argument("--latitude", type=str, help="Latitude coordinate of GRE tunnel source.")
-    parser.add_argument("--longitude", type=str, help="Longitude coordinate of GRE tunnel source.")
-    parser.add_argument("--geo_override", type=bool, default=False, help="Override the geographic coordinates. Default is False.")
-    
+    parser = argparse.ArgumentParser(
+        description="Returns a list of Recommended Virtual IP Addresses (VIPs) grouped by data center in Zscaler Internet Access (ZIA)."
+    )
+    parser.add_argument(
+        "--source_ip",
+        required=True,
+        help="The source IP address to get recommended VIPs for.",
+    )
+    parser.add_argument(
+        "--routable_ip",
+        type=bool,
+        default=True,
+        help="Specify to include routable IPs. Default is True.",
+    )
+    parser.add_argument(
+        "--within_country_only",
+        type=bool,
+        default=False,
+        help="Restrict search within the same country. Default is False.",
+    )
+    parser.add_argument(
+        "--include_private_service_edge",
+        type=bool,
+        default=True,
+        help="Include ZIA Private Service Edge VIPs. Default is True.",
+    )
+    parser.add_argument(
+        "--include_current_vips",
+        type=bool,
+        default=True,
+        help="Include currently assigned VIPs. Default is True.",
+    )
+    parser.add_argument(
+        "--latitude", type=str, help="Latitude coordinate of GRE tunnel source."
+    )
+    parser.add_argument(
+        "--longitude", type=str, help="Longitude coordinate of GRE tunnel source."
+    )
+    parser.add_argument(
+        "--geo_override",
+        type=bool,
+        default=False,
+        help="Override the geographic coordinates. Default is False.",
+    )
+
     args = parser.parse_args()
-    
+
     # Initialize ZIAClientHelper
     ZIA_USERNAME = os.getenv("ZIA_USERNAME")
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
-    
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     # Prepare kwargs from args
     kwargs = {
@@ -72,7 +113,7 @@ def main():
         "include_current_vips": args.include_current_vips,
         "latitude": args.latitude,
         "longitude": args.longitude,
-        "geo_override": args.geo_override
+        "geo_override": args.geo_override,
     }
 
     # Fetch VIP groups by data center
@@ -81,7 +122,10 @@ def main():
         print("VIP groups by data center:")
         print(json.dumps([vip.to_dict() for vip in vip_groups], indent=4))
     else:
-        print("Failed to fetch VIP groups by data center. No response or error received.")
+        print(
+            "Failed to fetch VIP groups by data center. No response or error received."
+        )
+
 
 if __name__ == "__main__":
     main()

@@ -84,7 +84,14 @@ class PolicySetsAPI:
                     operand_template = {}
 
                     # Extracting keys from the operand dictionary
-                    for operand_key in ["id", "idp_id", "name", "lhs", "rhs", "objectType"]:
+                    for operand_key in [
+                        "id",
+                        "idp_id",
+                        "name",
+                        "lhs",
+                        "rhs",
+                        "objectType",
+                    ]:
                         if operand_key in operand:
                             operand_template[operand_key] = operand[operand_key]
 
@@ -208,7 +215,9 @@ class PolicySetsAPI:
                 f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
             )
         list, _ = self.rest.get_paginated_data(
-            path=f"policySet/rules/policyType/{mapped_policy_type}", data_key_name="list", **kwargs
+            path=f"policySet/rules/policyType/{mapped_policy_type}",
+            data_key_name="list",
+            **kwargs,
         )
         return list
 
@@ -242,7 +251,12 @@ class PolicySetsAPI:
         return self.rest.delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
 
     def add_access_rule(
-        self, name: str, action: str, app_connector_group_ids: list = [], app_server_group_ids: list = [], **kwargs
+        self,
+        name: str,
+        action: str,
+        app_connector_group_ids: list = [],
+        app_server_group_ids: list = [],
+        **kwargs,
     ) -> Box:
         """
         Add a new Access Policy rule.
@@ -296,10 +310,14 @@ class PolicySetsAPI:
         }
 
         if app_connector_group_ids:
-            payload["appConnectorGroups"] = [{"id": group_id} for group_id in app_connector_group_ids]
+            payload["appConnectorGroups"] = [
+                {"id": group_id} for group_id in app_connector_group_ids
+            ]
 
         if app_server_group_ids:
-            payload["appServerGroups"] = [{"id": group_id} for group_id in app_server_group_ids]
+            payload["appServerGroups"] = [
+                {"id": group_id} for group_id in app_server_group_ids
+            ]
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
@@ -315,7 +333,9 @@ class PolicySetsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def add_timeout_rule(self, name: str, **kwargs) -> Box:
@@ -382,7 +402,9 @@ class PolicySetsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> Box:
@@ -448,10 +470,14 @@ class PolicySetsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
-    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
+    def add_isolation_rule(
+        self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs
+    ) -> Box:
         """
         Add a new Isolation Policy rule.
 
@@ -513,10 +539,14 @@ class PolicySetsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
-    def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
+    def add_app_protection_rule(
+        self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs
+    ) -> Box:
         """
         Add a new AppProtection Policy rule.
 
@@ -578,7 +608,9 @@ class PolicySetsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
@@ -655,14 +687,21 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload).status_code
+        resp = self.rest.put(
+            f"policySet/{policy_id}/rule/{rule_id}", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_rule(policy_type, rule_id)
 
     def update_access_rule(
-        self, policy_type: str, rule_id: str, app_connector_group_ids: list = None, app_server_group_ids: list = None, **kwargs
+        self,
+        policy_type: str,
+        rule_id: str,
+        app_connector_group_ids: list = None,
+        app_server_group_ids: list = None,
+        **kwargs,
     ) -> Box:
         """
         Update an existing policy rule.
@@ -711,7 +750,9 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload).status_code
+        resp = self.rest.put(
+            f"policySet/{policy_id}/rule/{rule_id}", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
@@ -747,7 +788,9 @@ class PolicySetsAPI:
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}").status_code
+        resp = self._put(
+            f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}"
+        ).status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)

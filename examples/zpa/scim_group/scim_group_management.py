@@ -45,18 +45,30 @@ import json
 import os
 from zscaler import ZPAClientHelper
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Retrieves SCIM Groups from the ZPA cloud.")
-    parser.add_argument("-l", "--list", metavar="IDP_NAME", help="List all SCIM Groups for a given IdP name.")
-    parser.add_argument("-g", "--get", metavar="GROUP_ID", help="Get details of a SCIM Group by its ID.")
-    parser.add_argument("--search_name", metavar="GROUP_NAME", help="Search a SCIM Group by its name.")
+    parser = argparse.ArgumentParser(
+        description="Retrieves SCIM Groups from the ZPA cloud."
+    )
+    parser.add_argument(
+        "-l",
+        "--list",
+        metavar="IDP_NAME",
+        help="List all SCIM Groups for a given IdP name.",
+    )
+    parser.add_argument(
+        "-g", "--get", metavar="GROUP_ID", help="Get details of a SCIM Group by its ID."
+    )
+    parser.add_argument(
+        "--search_name", metavar="GROUP_NAME", help="Search a SCIM Group by its name."
+    )
     args = parser.parse_args()
 
     client = ZPAClientHelper(
         client_id=os.getenv("ZPA_CLIENT_ID"),
         client_secret=os.getenv("ZPA_CLIENT_SECRET"),
         customer_id=os.getenv("ZPA_CUSTOMER_ID"),
-        cloud=os.getenv("ZPA_CLOUD")
+        cloud=os.getenv("ZPA_CLOUD"),
     )
 
     if args.list:
@@ -66,14 +78,16 @@ def main():
     elif args.search_name:
         search_group_by_name(client, args.search_name)
 
+
 def list_groups_by_idp_name(client, idp_name):
     idps = client.idp.list_idps()
-    idp_id = next((idp['id'] for idp in idps if idp['name'] == idp_name), None)
+    idp_id = next((idp["id"] for idp in idps if idp["name"] == idp_name), None)
     if idp_id:
         groups = client.scim_groups.list_groups(idp_id=idp_id)
         print(json.dumps(groups, indent=4))
     else:
         print(f"No IdP found with name {idp_name}")
+
 
 def get_group(client, group_id):
     group = client.scim_groups.get_group(group_id)
@@ -88,12 +102,13 @@ def search_group_by_name(client, group_name):
     # A more efficient approach requires direct support from the API for searching by name.
     idps = client.idp.list_idps()
     for idp in idps:
-        groups = client.scim_groups.list_groups(idp_id=idp['id'])
+        groups = client.scim_groups.list_groups(idp_id=idp["id"])
         for group in groups:
-            if group['name'].lower() == group_name.lower():
+            if group["name"].lower() == group_name.lower():
                 print(json.dumps(group, indent=4))
                 return
     print(f"No SCIM Group found with name {group_name}")
+
 
 if __name__ == "__main__":
     main()

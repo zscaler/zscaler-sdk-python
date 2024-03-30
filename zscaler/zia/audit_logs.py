@@ -61,7 +61,9 @@ class AuditLogsAPI:
             "startTime": start_time,
             "endTime": end_time,
         }
-        return self.rest.post("auditlogEntryReport", json=payload, box=False).status_code
+        return self.rest.post(
+            "auditlogEntryReport", json=payload, box=False
+        ).status_code
 
     def cancel(self) -> int:
         """

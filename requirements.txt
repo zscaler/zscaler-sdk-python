@@ -17,12 +17,16 @@ pycryptodomex
 aenum
 pydash
 flake8
+sphinx
+sphinx-autobuild
+sphinx_rtd_theme
 
 # Testing dependencies
 pytest
 pytest-asyncio
 pytest-mock
 pytest-recording
+pytest-cov
 pyfakefs
 aenum==3.1.11
 pydash

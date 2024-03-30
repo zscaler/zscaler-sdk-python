@@ -37,32 +37,50 @@ import os
 from zscaler import ZIAClientHelper
 import json
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Returns a list of Recommended Virtual IP Addresses (VIPs) in Zscaler Internet Access (ZIA).")
-    parser.add_argument("--source_ip", required=True, help="The source IP address to get recommended VIPs for.")
-    parser.add_argument("--closest_diverse", action="store_true", help="Retrieve the closest diverse VIP IDs along with detailed information.")
-    
+    parser = argparse.ArgumentParser(
+        description="Returns a list of Recommended Virtual IP Addresses (VIPs) in Zscaler Internet Access (ZIA)."
+    )
+    parser.add_argument(
+        "--source_ip",
+        required=True,
+        help="The source IP address to get recommended VIPs for.",
+    )
+    parser.add_argument(
+        "--closest_diverse",
+        action="store_true",
+        help="Retrieve the closest diverse VIP IDs along with detailed information.",
+    )
+
     args = parser.parse_args()
-    
+
     # Initialize ZIAClientHelper
     ZIA_USERNAME = os.getenv("ZIA_USERNAME")
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
-    
-    zia = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+
+    zia = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     if args.closest_diverse:
         # Call get_closest_diverse_vip_ids method
-        preferred_vip_id, secondary_vip_id = zia.vips.get_closest_diverse_vip_ids(ip_address=args.source_ip)
-        
+        preferred_vip_id, secondary_vip_id = zia.vips.get_closest_diverse_vip_ids(
+            ip_address=args.source_ip
+        )
+
         # Fetch the complete list again to extract detailed information
         vips = zia.vips.list_vips_recommended(source_ip=args.source_ip)
         vip_details = {}
         for vip in vips:
             if vip.id in [preferred_vip_id, secondary_vip_id]:
                 vip_details[str(vip.id)] = vip.to_dict()
-        
+
         # Print detailed information for preferred and secondary VIPs in JSON format
         print(json.dumps(vip_details, indent=4))
     else:
@@ -73,6 +91,7 @@ def main():
             vip_dict = vip.to_dict()
             # Print in JSON format
             print(json.dumps(vip_dict, indent=4))
+
 
 if __name__ == "__main__":
     main()

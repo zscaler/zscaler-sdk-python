@@ -1,0 +1,211 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: ZPA Test
+on:
+    pull_request:
+      types: [opened, synchronize]
+    merge_group:
+      types: [checks_requested]
+    push:
+      branches:
+        - master
+    schedule:
+      - cron: '0 14 * * 1-5' # UTC
+    workflow_dispatch:
+  
+
+jobs:
+    zpa-qa1-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+                - ZPA_QA_TENANT01
+                - ZPA_QA_TENANT02
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                make lint
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zpa
+              env:
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+                ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+                OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+                OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+
+    zpa-qa2-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+                - ZPA_QA2_TENANT01
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                # stop the build if there are Python syntax errors or undefined names
+                flake8 zscaler/ --count --select=E9,F63,F7,F82 --show-source --statistics
+                # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+                flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zpa
+              env:
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+                ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+                OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+                OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+
+    zpa-beta-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+                - ZPA_BETA_TENANT01
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                # stop the build if there are Python syntax errors or undefined names
+                flake8 zscaler/ --count --select=E9,F63,F7,F82 --show-source --statistics
+                # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+                flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zpa
+              env:
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+                ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+                OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+                OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+        needs:
+            - zpa-qa1-tenants
+            - zpa-qa2-tenants
+
+    zpa-prod-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+                - ZPA_PROD_TENANT01
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                # stop the build if there are Python syntax errors or undefined names
+                flake8 zscaler/ --count --select=E9,F63,F7,F82 --show-source --statistics
+                # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+                flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zpa
+              env:
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+                ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+                OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+                OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+        needs:
+            - zpa-qa1-tenants
+            - zpa-qa2-tenants
+            - zpa-beta-tenants
+            
