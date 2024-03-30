@@ -21,7 +21,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.8", "3.9", "3.10"]
+            python-version: ["3.9", "3.10"]
             environment:
                 - ZPA_QA_TENANT01
                 - ZPA_QA_TENANT02
@@ -69,7 +69,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.8", "3.9", "3.10"]
+            python-version: ["3.9", "3.10"]
             environment:
                 - ZPA_QA2_TENANT01
         environment: ${{ matrix.environment }}
@@ -116,7 +116,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.8", "3.9", "3.10"]
+            python-version: ["3.9", "3.10"]
             environment:
                 - ZPA_BETA_TENANT01
         environment: ${{ matrix.environment }}
@@ -166,7 +166,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.8", "3.9", "3.10"]
+            python-version: ["3.9", "3.10"]
             environment:
                 - ZPA_PROD_TENANT01
         environment: ${{ matrix.environment }}
