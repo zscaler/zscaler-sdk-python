@@ -43,14 +43,32 @@ ZPA_CLIENT_SECRET = os.getenv("ZPA_CLIENT_SECRET")
 ZPA_CUSTOMER_ID = os.getenv("ZPA_CUSTOMER_ID")
 ZPA_CLOUD = os.getenv("ZPA_CLOUD")
 
-client = ZPAClientHelper(client_id=ZPA_CLIENT_ID, client_secret=ZPA_CLIENT_SECRET, customer_id=ZPA_CUSTOMER_ID, cloud=ZPA_CLOUD)
+client = ZPAClientHelper(
+    client_id=ZPA_CLIENT_ID,
+    client_secret=ZPA_CLIENT_SECRET,
+    customer_id=ZPA_CUSTOMER_ID,
+    cloud=ZPA_CLOUD,
+)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Provisioning Keys for ZPA.")
-    parser.add_argument("-l", "--list", nargs="?", const=True, help="List all provisioning keys of the specified type (connector or service_edge).")
-    parser.add_argument("-a", "--add", action="store_true", help="Add a new provisioning key.")
-    parser.add_argument("-u", "--update", metavar="KEY_ID", help="Update an existing provisioning key.")
-    parser.add_argument("-d", "--delete", metavar="KEY_ID", help="Delete a provisioning key by its ID.")
+    parser.add_argument(
+        "-l",
+        "--list",
+        nargs="?",
+        const=True,
+        help="List all provisioning keys of the specified type (connector or service_edge).",
+    )
+    parser.add_argument(
+        "-a", "--add", action="store_true", help="Add a new provisioning key."
+    )
+    parser.add_argument(
+        "-u", "--update", metavar="KEY_ID", help="Update an existing provisioning key."
+    )
+    parser.add_argument(
+        "-d", "--delete", metavar="KEY_ID", help="Delete a provisioning key by its ID."
+    )
     args = parser.parse_args()
 
     if args.list is not None:
@@ -66,51 +84,64 @@ def main():
     else:
         parser.print_help()
 
+
 def get_key_type():
     while True:
-        choice = input("Select provisioning key type (1- Connector, 2- Service Edge): ").strip()
-        if choice == '1':
+        choice = input(
+            "Select provisioning key type (1- Connector, 2- Service Edge): "
+        ).strip()
+        if choice == "1":
             return "connector"
-        elif choice == '2':
+        elif choice == "2":
             return "service_edge"
         else:
             print("Invalid selection. Please choose 1 or 2.")
+
 
 def add_provisioning_key(client):
     key_type = get_key_type()
     name = input("Enter the name of the provisioning key: ").strip()
     max_usage = input("Enter the max usage of the provisioning key: ").strip()
-    component_id = input("Enter the component ID (Connector Group ID or Service Edge Group ID): ").strip()
+    component_id = input(
+        "Enter the component ID (Connector Group ID or Service Edge Group ID): "
+    ).strip()
 
     # Fetch enrollment certificates
     enrollment_certs = client.certificates.list_enrolment()
-    
+
     cert_name = "Connector" if key_type == "connector" else "Service Edge"
     enrollment_cert_id = None
     for cert in enrollment_certs:
-        if cert_name in cert.get('name', ''):
-            enrollment_cert_id = cert.get('id')
+        if cert_name in cert.get("name", ""):
+            enrollment_cert_id = cert.get("id")
             break
 
     if not enrollment_cert_id:
         print(f"No enrollment certificate found for '{cert_name}'.")
         return
 
-    response = client.provisioning.add_provisioning_key(key_type, name, max_usage, enrollment_cert_id, component_id)
+    response = client.provisioning.add_provisioning_key(
+        key_type, name, max_usage, enrollment_cert_id, component_id
+    )
     print("Provisioning key added successfully:", response)
+
 
 def update_provisioning_key(client, key_id):
     key_type = get_key_type()
-    name = input("Enter the new name of the provisioning key (leave blank to skip): ").strip()
-    kwargs = {'name': name} if name else {}
-    
+    name = input(
+        "Enter the new name of the provisioning key (leave blank to skip): "
+    ).strip()
+    kwargs = {"name": name} if name else {}
+
     client.provisioning.update_provisioning_key(key_id, key_type, **kwargs)
     print(f"Provisioning key {key_id} updated successfully.")
+
 
 def delete_provisioning_key(client, key_id):
     key_type = get_key_type()
     client.provisioning.delete_provisioning_key(key_id, key_type)
     print(f"Provisioning key {key_id} deleted successfully.")
+
 
 if __name__ == "__main__":
     main()

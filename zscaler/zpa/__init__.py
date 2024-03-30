@@ -70,7 +70,16 @@ class ZPAClientHelper(ZPAClient):
     - headers (dict): Headers for API requests.
     """
 
-    def __init__(self, client_id, client_secret, customer_id, cloud, timeout=240, cache=None, fail_safe=False):
+    def __init__(
+        self,
+        client_id,
+        client_secret,
+        customer_id,
+        cloud,
+        timeout=240,
+        cache=None,
+        fail_safe=False,
+    ):
         """
         Initialize ZPAClientHelper.
 
@@ -115,7 +124,9 @@ class ZPAClientHelper(ZPAClient):
         self.cbi_url = f"{self.baseurl}/cbiconfig/cbi/api/customers/{customer_id}"
         self.fail_safe = fail_safe
         # Cache setup
-        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+        cache_enabled = (
+            os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+        )
         if cache is None:
             if cache_enabled:
                 ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
@@ -135,7 +146,9 @@ class ZPAClientHelper(ZPAClient):
         # login
         response = self.login()
         if response is None or response.status_code > 299 or not response.json():
-            logger.error("Failed to login using provided credentials, response: %s", response)
+            logger.error(
+                "Failed to login using provided credentials, response: %s", response
+            )
             raise Exception("Failed to login using provided credentials.")
         self.access_token = response.json().get("access_token")
         self.headers = {
@@ -148,7 +161,9 @@ class ZPAClientHelper(ZPAClient):
     @retry_with_backoff(retries=5)
     def login(self):
         """Log in to the ZPA API and set the access token for subsequent requests."""
-        data = urllib.parse.urlencode({"client_id": self.client_id, "client_secret": self.client_secret})
+        data = urllib.parse.urlencode(
+            {"client_id": self.client_id, "client_secret": self.client_secret}
+        )
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
@@ -190,7 +205,9 @@ class ZPAClientHelper(ZPAClient):
         headers_with_user_agent["User-Agent"] = self.user_agent
         # Generate a unique UUID for this request
         request_uuid = uuid.uuid4()
-        dump_request(logger, url, method, json, params, headers_with_user_agent, request_uuid)
+        dump_request(
+            logger, url, method, json, params, headers_with_user_agent, request_uuid
+        )
         # Check cache before sending request
         cache_key = self.cache.create_key(url, params)
         if method == "GET" and self.cache.contains(cache_key):
@@ -212,9 +229,17 @@ class ZPAClientHelper(ZPAClient):
             try:
                 # If the token is None or expired, fetch a new token
                 if is_token_expired(self.access_token):
-                    logger.warning("The provided or fetched token was already expired. Refreshing...")
+                    logger.warning(
+                        "The provided or fetched token was already expired. Refreshing..."
+                    )
                     self.refreshToken()
-                resp = requests.request(method, url, json=json, headers=headers_with_user_agent, timeout=self.timeout)
+                resp = requests.request(
+                    method,
+                    url,
+                    json=json,
+                    headers=headers_with_user_agent,
+                    timeout=self.timeout,
+                )
                 dump_response(
                     logger=logger,
                     url=url,
@@ -224,11 +249,15 @@ class ZPAClientHelper(ZPAClient):
                     request_uuid=request_uuid,
                     start_time=start_time,
                 )
-                if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
+                if (
+                    resp.status_code == 429
+                ):  # HTTP Status code 429 indicates "Too Many Requests"
                     sleep_time = int(
                         resp.headers.get("Retry-After", 2)
                     )  # Default to 60 seconds if 'Retry-After' header is missing
-                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
+                    logger.warning(
+                        f"Rate limit exceeded. Retrying in {sleep_time} seconds."
+                    )
                     sleep(sleep_time)
                     attempts += 1
                     continue
@@ -236,10 +265,14 @@ class ZPAClientHelper(ZPAClient):
                     break
             except requests.RequestException as e:
                 if attempts == 4:  # If it's the last attempt, raise the exception
-                    logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
+                    logger.error(
+                        f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}"
+                    )
                     raise e
                 else:
-                    logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
+                    logger.warning(
+                        f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}"
+                    )
                     attempts += 1
                     sleep(5)  # Sleep for 5 seconds before retrying
 
@@ -322,7 +355,13 @@ class ZPAClientHelper(ZPAClient):
     }
 
     def get_paginated_data(
-        self, path=None, params=None, data_key_name=None, data_per_page=500, expected_status_code=200, api_version: str = None
+        self,
+        path=None,
+        params=None,
+        data_key_name=None,
+        data_per_page=500,
+        expected_status_code=200,
+        api_version: str = None,
     ):
         """
         Fetch paginated data from the ZPA API.
@@ -341,7 +380,9 @@ class ZPAClientHelper(ZPAClient):
             # Construct the URL with parameters
             url_params = f"?page={page}&pagesize={data_per_page}"
             if params:
-                url_params += "&" + "&".join(f"{key}={value}" for key, value in params.items())
+                url_params += "&" + "&".join(
+                    f"{key}={value}" for key, value in params.items()
+                )
 
             required_url = f"{path}{url_params}"
             should_wait, delay = self.rate_limiter.wait("GET")
@@ -352,14 +393,18 @@ class ZPAClientHelper(ZPAClient):
             response = self.send("GET", required_url, api_version=api_version)
 
             if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                    status_code=response.status_code, page=page
+                )
                 logger.error(error_message)
                 break
 
             data = response.json().get(data_key_name)
 
             if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
+                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
+                    data_key_name=data_key_name, page=page
+                )
                 logger.error(error_message)
                 break
 
@@ -370,7 +415,10 @@ class ZPAClientHelper(ZPAClient):
             ret_data.extend(convert_keys_to_snake(data))
 
             # Check for more pages
-            if response.json().get("totalPages") is None or int(response.json().get("totalPages")) <= page + 1:
+            if (
+                response.json().get("totalPages") is None
+                or int(response.json().get("totalPages")) <= page + 1
+            ):
                 break
 
             page += 1

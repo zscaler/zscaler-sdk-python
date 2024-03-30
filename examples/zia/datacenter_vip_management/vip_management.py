@@ -44,11 +44,20 @@ import json
 import os
 from zscaler import ZIAClientHelper
 
+
 def main():
     parser = argparse.ArgumentParser(description="Manages VIPs in ZIA.")
-    parser.add_argument("--get_all_vips", action="store_true", help="List all VIPs including public and private.")
-    parser.add_argument("--get_all_public_vips", action="store_true", help="List all public VIPs.")
-    parser.add_argument("--get_all_private_vips", action="store_true", help="List all private VIPs.")
+    parser.add_argument(
+        "--get_all_vips",
+        action="store_true",
+        help="List all VIPs including public and private.",
+    )
+    parser.add_argument(
+        "--get_all_public_vips", action="store_true", help="List all public VIPs."
+    )
+    parser.add_argument(
+        "--get_all_private_vips", action="store_true", help="List all private VIPs."
+    )
     args = parser.parse_args()
 
     # Initialize ZIAClientHelper
@@ -57,8 +66,13 @@ def main():
     ZIA_PASSWORD = os.getenv("ZIA_PASSWORD")
     ZIA_API_KEY = os.getenv("ZIA_API_KEY")
     ZIA_CLOUD = os.getenv("ZIA_CLOUD")
-    
-    client = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
+
+    client = ZIAClientHelper(
+        username=ZIA_USERNAME,
+        password=ZIA_PASSWORD,
+        api_key=ZIA_API_KEY,
+        cloud=ZIA_CLOUD,
+    )
 
     if args.get_all_vips:
         list_vips(client, include="all")
@@ -67,10 +81,16 @@ def main():
     elif args.get_all_private_vips:
         list_vips(client, include="private")
 
+
 def list_vips(client, include):
     params = {"include": include}  # Define params as a dict
     vips = client.vips.list_vips(params=params)  # Pass params dict directly
-    print(json.dumps(vips, indent=4) if vips else f"No VIPs found for the specified type: {include}.")
+    print(
+        json.dumps(vips, indent=4)
+        if vips
+        else f"No VIPs found for the specified type: {include}."
+    )
+
 
 if __name__ == "__main__":
     main()

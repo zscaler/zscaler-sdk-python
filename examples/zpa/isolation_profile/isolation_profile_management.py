@@ -42,11 +42,24 @@ import json
 import os
 from zscaler import ZPAClientHelper
 
+
 def main():
     parser = argparse.ArgumentParser(description="Manage Isolation Profiles for ZPA.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all isolation profiles.")
-    parser.add_argument("-g", "--get", metavar="PROFILE_ID", help="Get details of an isolation profile by ID.")
-    parser.add_argument("-n", "--get_by_name", metavar="NAME", help="Get details of an isolation profile by name.")
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all isolation profiles."
+    )
+    parser.add_argument(
+        "-g",
+        "--get",
+        metavar="PROFILE_ID",
+        help="Get details of an isolation profile by ID.",
+    )
+    parser.add_argument(
+        "-n",
+        "--get_by_name",
+        metavar="NAME",
+        help="Get details of an isolation profile by name.",
+    )
     args = parser.parse_args()
 
     # Initialize ZIAClientHelper
@@ -54,7 +67,7 @@ def main():
         client_id=os.getenv("ZPA_CLIENT_ID"),
         client_secret=os.getenv("ZPA_CLIENT_SECRET"),
         customer_id=os.getenv("ZPA_CUSTOMER_ID"),
-        cloud=os.getenv("ZPA_CLOUD")
+        cloud=os.getenv("ZPA_CLOUD"),
     )
 
     if args.list:
@@ -64,9 +77,11 @@ def main():
     elif args.get_by_name:
         get_profile_by_name(client, args.get_by_name)
 
+
 def list_profiles(client):
     profiles = client.isolation_profile.list_profiles()
     print(json.dumps(profiles, indent=4))
+
 
 def get_profile_by_id(client, profile_id):
     profile = client.isolation_profile.get_profile_by_id(profile_id)
@@ -75,12 +90,14 @@ def get_profile_by_id(client, profile_id):
     else:
         print(f"No isolation profile found with ID {profile_id}")
 
+
 def get_profile_by_name(client, name):
     profile = client.isolation_profile.get_profile_by_name(name)
     if profile:
         print(json.dumps(profile, indent=4))
     else:
         print(f"No isolation profile found with name {name}")
+
 
 if __name__ == "__main__":
     main()

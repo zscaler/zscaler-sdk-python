@@ -21,7 +21,7 @@ from zscaler.utils import (
     snake_to_camel,
     transform_common_id_fields,
     recursive_snake_to_camel,
-    convert_keys
+    convert_keys,
 )
 
 
@@ -48,7 +48,6 @@ class WebDLPAPI:
         self.rest = client
 
     def list_rules(self) -> BoxList:
-
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
 
@@ -167,8 +166,8 @@ class WebDLPAPI:
             ...    description='TT#1965432122')
         """
         # Convert enabled to API format if present
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         payload = {
             "name": name,
@@ -193,7 +192,9 @@ class WebDLPAPI:
         if isinstance(response, Response):
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
@@ -252,8 +253,8 @@ class WebDLPAPI:
         payload = convert_keys(self.get_rule(rule_id))
 
         # Convert enabled to API format if present in kwargs
-        if 'enabled' in kwargs:
-            kwargs['state'] = "ENABLED" if kwargs.pop('enabled') else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
@@ -265,7 +266,9 @@ class WebDLPAPI:
         response = self.rest.put(f"webDlpRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_rule(rule_id)

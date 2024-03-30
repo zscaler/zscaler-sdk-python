@@ -74,7 +74,9 @@ class AdminAndRoleManagementAPI:
                 return None
         return response
 
-    def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
+    def add_user(
+        self, name: str, login_name: str, email: str, password: str, **kwargs
+    ) -> Box:
         """
         Adds a new admin user to ZIA.
 
@@ -175,7 +177,9 @@ class AdminAndRoleManagementAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+                raise Exception(
+                    f"API call failed with status {status_code}: {response.json()}"
+                )
         return response
 
     def update_user(self, user_id: str, **kwargs) -> dict:
@@ -263,7 +267,9 @@ class AdminAndRoleManagementAPI:
         response = self.rest.put("/adminUsers/%s" % (user_id), json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_user(user_id)

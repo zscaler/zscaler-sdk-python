@@ -41,7 +41,9 @@ def convert_keys_to_snake(data):
         for k in data.keys():
             v = data[k]
             new_key = camel_to_snake(k)
-            new_dict[new_key] = convert_keys_to_snake(v) if isinstance(v, (dict, list)) else v
+            new_dict[new_key] = (
+                convert_keys_to_snake(v) if isinstance(v, (dict, list)) else v
+            )
         return new_dict
     else:
         return data
@@ -82,7 +84,10 @@ def snake_to_camel(name: str):
 def recursive_snake_to_camel(data):
     """Recursively convert dictionary keys from snake_case to camelCase."""
     if isinstance(data, dict):
-        return {snake_to_camel(key): recursive_snake_to_camel(value) for key, value in data.items()}
+        return {
+            snake_to_camel(key): recursive_snake_to_camel(value)
+            for key, value in data.items()
+        }
     elif isinstance(data, list):
         return [recursive_snake_to_camel(item) for item in data]
     else:
@@ -92,7 +97,8 @@ def recursive_snake_to_camel(data):
 def chunker(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):
-        yield lst[i: i + n]
+        yield lst[i : i + n]
+
 
 # Recursive function to convert all keys and nested keys from snake case
 # to camel case.
@@ -142,7 +148,9 @@ def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         if kwargs.get(entry[0]):
             # Ensure each ID is treated as an integer before adding it to the payload
-            payload[entry[1]] = [{"id": int(param_id)} for param_id in kwargs.pop(entry[0])]
+            payload[entry[1]] = [
+                {"id": int(param_id)} for param_id in kwargs.pop(entry[0])
+            ]
     return
 
 
@@ -233,7 +241,11 @@ def format_json_response(
     if response.status_code > 299:
         return response
     content_type = response.headers.get("content-type", "application/json")
-    if (conv_json or conv_box) and "application/json" in content_type.lower() and len(response.text) > 0:  # noqa: E124
+    if (
+        (conv_json or conv_box)
+        and "application/json" in content_type.lower()
+        and len(response.text) > 0
+    ):  # noqa: E124
         if conv_box:
             data = convert_keys_to_snake(response.json())
             if isinstance(data, list):
@@ -343,7 +355,11 @@ def retry_with_backoff(method_type="GET", retries=5, backoff_in_seconds=0.5):
                 resp = f(*args, **kwargs)
 
                 # Check if it's a successful status code, 400, or if it shouldn't be retried
-                if 299 >= resp.status_code >= 200 or resp.status_code == 400 or not should_retry(resp.status_code):
+                if (
+                    299 >= resp.status_code >= 200
+                    or resp.status_code == 400
+                    or not should_retry(resp.status_code)
+                ):
                     return resp
 
                 if x == retries:
@@ -354,7 +370,9 @@ def retry_with_backoff(method_type="GET", retries=5, backoff_in_seconds=0.5):
                     raise Exception(f"Reached max retries. Response: {error_msg}")
                 else:
                     sleep = backoff_in_seconds * 2**x + random.uniform(0, 1)
-                    logger.info("Args: %s, retrying after %d seconds...", str(args), sleep)
+                    logger.info(
+                        "Args: %s, retrying after %d seconds...", str(args), sleep
+                    )
                     time.sleep(sleep)
                     x += 1
 
@@ -376,7 +394,9 @@ def is_token_expired(token_string):
             return True
 
         # Decode the payload
-        payload_bytes = base64.urlsafe_b64decode(parts[1] + "==")  # Padding might be needed
+        payload_bytes = base64.urlsafe_b64decode(
+            parts[1] + "=="
+        )  # Padding might be needed
         payload = jsonp.loads(payload_bytes)
 
         # Check expiration time
@@ -396,16 +416,20 @@ def is_token_expired(token_string):
 def str2bool(v):
     if isinstance(v, bool):
         return v
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+    if v.lower() in ("yes", "true", "t", "y", "1"):
         return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+    elif v.lower() in ("no", "false", "f", "n", "0"):
         return False
     else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
+        raise argparse.ArgumentTypeError("Boolean value expected.")
 
 
-def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
-    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
+def dump_request(
+    logger, url: str, method: str, json, params, headers, request_uuid: str, body=True
+):
+    request_headers_filtered = {
+        key: value for key, value in headers.items() if key != "Authorization"
+    }
     # Log the request details before sending the request
     request_data = {
         "url": url,
@@ -418,17 +442,30 @@ def dump_request(logger, url: str, method: str, json, params, headers, request_u
     request_body = ""
     if body:
         request_body = jsonp.dumps(json)
-    log_lines.append(f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------")
+    log_lines.append(
+        f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------"
+    )
     log_lines.append(f"{method} {url}")
     for key, value in headers.items():
         log_lines.append(f"{key}: {value}")
     if body and request_body != "" and request_body != "null":
         log_lines.append(f"\n{request_body}")
-    log_lines.append("--------------------------------------------------------------------")
-    logger.info('\n'.join(log_lines))
+    log_lines.append(
+        "--------------------------------------------------------------------"
+    )
+    logger.info("\n".join(log_lines))
 
 
-def dump_response(logger, url: str, method: str, resp, params, request_uuid: str, start_time, from_cache: bool = None):
+def dump_response(
+    logger,
+    url: str,
+    method: str,
+    resp,
+    params,
+    request_uuid: str,
+    start_time,
+    from_cache: bool = None,
+):
     # Calculate the duration in seconds
     end_time = time.time()
     duration_seconds = end_time - start_time
@@ -438,7 +475,7 @@ def dump_response(logger, url: str, method: str, resp, params, request_uuid: str
     response_headers_dict = dict(resp.headers)
     full_url = url
     if params:
-        full_url += '?' + urlencode(params)
+        full_url += "?" + urlencode(params)
     log_lines = []
     response_body = ""
     if resp.text:
@@ -460,4 +497,4 @@ def dump_response(logger, url: str, method: str, resp, params, request_uuid: str
     if response_body and response_body != "" and response_body != "null":
         log_lines.append(f"\n{response_body}")
     log_lines.append("-" * 68)
-    logger.info('\n'.join(log_lines))
+    logger.info("\n".join(log_lines))

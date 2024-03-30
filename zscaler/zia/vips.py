@@ -53,15 +53,17 @@ class DataCenterVIPSAPI:
             if continent == "amer":
                 # This return is an edge-case to handle the JSON structure for _americas which is in the format
                 # continent :_americas. All other continents have whitespace, e.g. continent : emea.
-                return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
-                    "continent :_americas"
-                ]
+                return self._get(
+                    f"https://api.config.zscaler.com/{cloud}.net/cenr/json"
+                )[f"{cloud}.net"]["continent :_americas"]
 
-            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
-                f"continent : {continent}"
-            ]
+            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
+                f"{cloud}.net"
+            ][f"continent : {continent}"]
 
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
+            f"{cloud}.net"
+        ]
 
     def list_ca(self, cloud: str) -> BoxList:
         """
@@ -80,7 +82,9 @@ class DataCenterVIPSAPI:
             ...    print(ip)
 
         """
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")["ranges"]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")[
+            "ranges"
+        ]
 
     def list_pac(self, cloud: str) -> BoxList:
         """
@@ -101,7 +105,9 @@ class DataCenterVIPSAPI:
         """
         return self._get(f"https://api.config.zscaler.com/{cloud}.net/pac/json")["ip"]
 
-    def list_region_geo_coordinates(self, latitude: int, longitude: int, **kwargs) -> BoxList:
+    def list_region_geo_coordinates(
+        self, latitude: int, longitude: int, **kwargs
+    ) -> BoxList:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
@@ -141,10 +147,7 @@ class DataCenterVIPSAPI:
             ...    pprint(geo)
 
         """
-        params = {
-            "latitude": latitude,
-            "longitude": longitude
-        }
+        params = {"latitude": latitude, "longitude": longitude}
 
         for key, value in kwargs.items():
             params[snake_to_camel(key)] = value
@@ -152,5 +155,7 @@ class DataCenterVIPSAPI:
         if response is not None:
             return response
         else:
-            print("Failed to fetch region by geo coordinates. No response or error received.")
+            print(
+                "Failed to fetch region by geo coordinates. No response or error received."
+            )
             return BoxList([])

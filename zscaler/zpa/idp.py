@@ -48,7 +48,9 @@ class IDPControllerAPI:
             ...    pprint(idp)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/idp", data_key_name="list", **kwargs, api_version="v2")
+        list, _ = self.rest.get_paginated_data(
+            path="/idp", data_key_name="list", **kwargs, api_version="v2"
+        )
         return list
 
     def get_idp_by_name(self, name):

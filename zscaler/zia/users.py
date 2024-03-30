@@ -30,7 +30,9 @@ class UserManagementAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_departments(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
+    def list_departments(
+        self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
+    ) -> BoxList:
         """
         Returns the list of departments.
 
@@ -92,7 +94,9 @@ class UserManagementAPI:
         """
         return self._get(f"departments/{department_id}")
 
-    def list_groups(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
+    def list_groups(
+        self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
+    ) -> BoxList:
         """
         Returns the list of user groups.
 
@@ -152,7 +156,9 @@ class UserManagementAPI:
         """
         return self._get(f"groups/{group_id}")
 
-    def list_users(self, sort_by: str = "name", sort_order: str = "DESC", **kwargs) -> BoxList:
+    def list_users(
+        self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
+    ) -> BoxList:
         """
         Returns the list of users.
 
@@ -201,7 +207,9 @@ class UserManagementAPI:
             kwargs["sortOrder"] = sort_order
         return self.rest.get_paginated_data("users", params=kwargs)
 
-    def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
+    def add_user(
+        self, name: str, email: str, groups: list, department: dict, **kwargs
+    ) -> Box:
         """
         Creates a new ZIA user.
 
@@ -297,10 +305,16 @@ class UserManagementAPI:
         """
 
         if user_id and email:
-            raise ValueError("TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided.")
+            raise ValueError(
+                "TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided."
+            )
 
         elif email:
-            user = (record for record in self.list_users(search=email) if record.email == email)
+            user = (
+                record
+                for record in self.list_users(search=email)
+                if record.email == email
+            )
             return next(user, None)
 
         return self._get(f"users/{user_id}")

@@ -46,11 +46,25 @@ import os
 import json
 from zscaler import ZIAClientHelper
 
+
 def main():
-    parser = argparse.ArgumentParser(description="CLI tool for Zscaler Cloud Sandbox operations.")
-    parser.add_argument("--action", choices=["submit_analysis", "submit_inspection"], required=True, help="Action to perform (submit_analysis or submit_inspection).")
-    parser.add_argument("--file", required=True, help="Path to the file you want to submit.")
-    parser.add_argument("--force", action="store_true", help="Force the sandbox to analyze the file even if it has been previously submitted. Only applicable for submit_analysis action.")
+    parser = argparse.ArgumentParser(
+        description="CLI tool for Zscaler Cloud Sandbox operations."
+    )
+    parser.add_argument(
+        "--action",
+        choices=["submit_analysis", "submit_inspection"],
+        required=True,
+        help="Action to perform (submit_analysis or submit_inspection).",
+    )
+    parser.add_argument(
+        "--file", required=True, help="Path to the file you want to submit."
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force the sandbox to analyze the file even if it has been previously submitted. Only applicable for submit_analysis action.",
+    )
 
     args = parser.parse_args()
 
@@ -60,7 +74,7 @@ def main():
         password=os.getenv("ZIA_PASSWORD"),
         api_key=os.getenv("ZIA_API_KEY"),
         cloud=os.getenv("ZIA_CLOUD"),
-        sandbox_token=os.getenv("ZIA_SANDBOX_TOKEN")
+        sandbox_token=os.getenv("ZIA_SANDBOX_TOKEN"),
     )
 
     if args.action == "submit_analysis":
@@ -68,7 +82,10 @@ def main():
         print("File submitted for analysis. Response:", json.dumps(response, indent=4))
     elif args.action == "submit_inspection":
         response = zia.sandbox.submit_file_for_inspection(file=args.file)
-        print("File submitted for inspection. Response:", json.dumps(response, indent=4))
+        print(
+            "File submitted for inspection. Response:", json.dumps(response, indent=4)
+        )
+
 
 if __name__ == "__main__":
     main()

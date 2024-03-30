@@ -1,0 +1,57 @@
+# -*- coding: utf-8 -*-
+
+# Copyright (c) 2023, Zscaler Inc.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+import os
+import pytest
+from zscaler.zpa import ZPAClientHelper
+from functools import wraps
+
+
+@pytest.fixture(scope="session")
+def zpa():
+    """Initializes a ZPAClientHelper instance for tests using real environment variables."""
+    client_id = os.getenv("ZPA_CLIENT_ID")
+    client_secret = os.getenv("ZPA_CLIENT_SECRET")
+    customer_id = os.getenv("ZPA_CUSTOMER_ID")
+    cloud = os.getenv(
+        "ZPA_CLOUD", "PRODUCTION"
+    )  # Default to "PRODUCTION" if not specified
+
+    # Initialize and return the ZPAClientHelper with actual credentials and cloud setting
+    return ZPAClientHelper(
+        client_id=client_id,
+        client_secret=client_secret,
+        customer_id=customer_id,
+        cloud=cloud,
+    )
+
+
+def stub_sleep(func):
+    """Decorator to speed up time.sleep function used in any methods under test."""
+    import time
+    from time import sleep
+
+    def newsleep(seconds):
+        sleep_speed_factor = 10.0
+        sleep(seconds / sleep_speed_factor)
+
+    time.sleep = newsleep
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper
