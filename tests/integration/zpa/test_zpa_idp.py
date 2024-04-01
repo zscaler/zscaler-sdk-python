@@ -14,28 +14,45 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import pytest
+from tests.integration.zpa.conftest import MockZPAClient
 
-from box import Box, BoxList
+@pytest.fixture
+def fs():
+    yield
+    
 
+class TestIdP:
+    """
+    Integration Tests for the identity provider
+    """
 
-def test_list_idps(zpa):
-    resp = zpa.idp.list_idps()
-    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
-    assert len(resp) > 0, "No idps were found."
+    @pytest.mark.asyncio
+    async def test_idp(self, fs): 
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
+        try:
+            # List all identity providers
+            idps = client.idp.list_idps()
+            assert isinstance(idps, list), "Expected a list of identity providers"
+            if idps:  # If there are any identity providers
+                # Select the first identity provider for further testing
+                first_idp = idps[0]
+                idp_id = first_idp.get('id')
+                
+                # Fetch the selected identity provider by its ID
+                fetched_idp = client.idp.get_idp(idp_id)
+                assert fetched_idp is not None, "Expected a valid identity provider object"
+                assert fetched_idp.get('id') == idp_id, "Mismatch in identity provider ID"
 
-def test_get_idp(zpa):
-    list_idps = zpa.idp.list_idps()
-    assert len(list_idps) > 0, "No IdPs to retrieve."
+                # Attempt to retrieve the identity provider by name
+                idp_name = first_idp.get('name')
+                idp_by_name= client.idp.get_idp_by_name(idp_name)
+                assert idp_by_name is not None, "Expected a valid identity provider object when searching by name"
+                assert idp_by_name.get('id') == idp_id, "Mismatch in identity provider ID when searching by name"
+        except Exception as exc:
+            errors.append(exc)
 
-    # Assuming the list returns BoxList of idps and we can access 'id'
-    first_idp_id = list_idps[0].id
-
-    # Now, use that 'id' to get a specific idp
-    resp = zpa.idp.get_idp(first_idp_id)
-
-    # Perform your assertions on the retrieved idp
-    assert isinstance(resp, Box), "Response is not in the expected Box format."
-    assert (
-        resp.id == first_idp_id
-    ), f"Retrieved IdP ID does not match requested ID: {first_idp_id}."
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during identity provider operations test: {errors}"

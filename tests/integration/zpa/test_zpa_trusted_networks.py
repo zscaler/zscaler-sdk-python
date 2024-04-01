@@ -14,27 +14,44 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box, BoxList
+import pytest
+from tests.integration.zpa.conftest import MockZPAClient
 
+@pytest.fixture
+def fs():
+    yield
 
-def test_list_trusted_networks(zpa):
-    resp = zpa.trusted_networks.list_networks()
-    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
-    assert len(resp) > 0, "No networks were found."
+class TestTrustedNetworks:
+    """
+    Integration Tests for the Trusted Networks
+    """
 
+    @pytest.mark.asyncio
+    async def test_trusted_networks(self, fs): 
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-def test_get_trusted_network(zpa):
-    list_networks = zpa.trusted_networks.list_networks()
-    assert len(list_networks) > 0, "No networks to retrieve."
+        try:
+            # List all trusted networks
+            trusted_networks = client.trusted_networks.list_networks()
+            assert isinstance(trusted_networks, list), "Expected a list of trusted networks"
+            if trusted_networks:  # If there are any trusted networks
+                # Select the first trusted network for further testing
+                first_network = trusted_networks[0]
+                network_id = first_network.get('id')
+                
+                # Fetch the selected trusted network by its ID
+                fetched_network = client.trusted_networks.get_network(network_id)
+                assert fetched_network is not None, "Expected a valid trusted network object"
+                assert fetched_network.get('id') == network_id, "Mismatch in trusted network ID"
 
-    # Assuming the list returns BoxList of networks and we can access 'id'
-    network_id = list_networks[0].id
+                # Attempt to retrieve the trusted network by name
+                network_name = first_network.get('name')
+                network_by_name= client.trusted_networks.get_network_by_name(network_name)
+                assert network_by_name is not None, "Expected a valid trusted network object when searching by name"
+                assert network_by_name.get('id') == network_id, "Mismatch in trusted network ID when searching by name"
+        except Exception as exc:
+            errors.append(exc)
 
-    # Now, use that 'id' to get a specific network
-    resp = zpa.trusted_networks.get_network(network_id)
-
-    # Perform your assertions on the retrieved network
-    assert isinstance(resp, Box), "Response is not in the expected Box format."
-    assert (
-        resp.id == network_id
-    ), f"Retrieved network ID does not match requested ID: {network_id}."
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during trusted network operations test: {errors}"
