@@ -42,7 +42,7 @@ class TestApplicationSegment:
         # Create an App Connector Group
         try:
             app_connector_group_name = "tests-" + generate_random_string()
-            app_connector_group_description = "Integration test for app connector group"
+            app_connector_group_description = "tests-" + generate_random_string()
             created_app_connector_group = client.connectors.add_connector_group(
                 name=app_connector_group_name,
                 description=app_connector_group_description,
@@ -76,7 +76,7 @@ class TestApplicationSegment:
         # Create a Server Group
         try:
             server_group_name = "tests-" + generate_random_string()
-            server_group_description = "Integration test for server group"
+            server_group_description = "tests-" + generate_random_string()
             created_server_group = client.server_groups.add_group(
                 name=server_group_name,
                 description=server_group_description,
