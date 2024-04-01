@@ -52,6 +52,13 @@ class TrustedNetworksAPI:
         )
         return list
 
+    def get_network_by_name(self, name):
+        networks = self.list_networks()
+        for network in networks:
+            if network.get("name") == name:
+                return network
+        return None
+
     def get_network(self, network_id: str) -> Box:
         """
         Returns information on the specified trusted network.

@@ -36,6 +36,13 @@ class PostureProfilesAPI:
         )
         return list
 
+    def get_profile_by_name(self, name):
+        profiles = self.list_profiles()
+        for profile in profiles:
+            if profile.get("name") == name:
+                return profile
+        return None
+
     def get_profile(self, profile_id: str) -> Box:
         """
         Returns information on the specified posture profiles.

@@ -89,6 +89,13 @@ class CertificatesAPI:
         )
         return list
 
+    def get_certificate_by_name(self, name):
+        certs = self.list_all_certificates()
+        for cert in certs:
+            if cert.get("name") == name:
+                return cert
+        return None
+
     def add_certificate(self, name: str, cert_blob: str, **kwargs) -> Box:
         """
         Add a new Certificate.
@@ -220,3 +227,10 @@ class CertificatesAPI:
             path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2"
         )
         return list
+
+    def get_enrolment_cert_by_name(self, name):
+        certs = self.list_enrolment()
+        for cert in certs:
+            if cert.get("name") == name:
+                return cert
+        return None
