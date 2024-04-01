@@ -19,17 +19,19 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestAccessPolicyRule:
     """
     Integration Tests for the Access Policy Rules
     """
-    
+
     @pytest.mark.asyncio
-    async def test_access_policy_rules(self, fs): 
+    async def test_access_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -56,9 +58,9 @@ class TestAccessPolicyRule:
                 pra_enabled=True,
                 tcp_quick_ack_app=True,
                 tcp_quick_ack_assistant=True,
-                tcp_quick_ack_read_assistant=True
+                tcp_quick_ack_read_assistant=True,
             )
-            connector_group_id = created_connector_group.get('id', None)
+            connector_group_id = created_connector_group.get("id", None)
         except Exception as exc:
             errors.append(f"Creating App Connector Group failed: {exc}")
 
@@ -71,16 +73,16 @@ class TestAccessPolicyRule:
                 name=rule_name,
                 description=rule_description,
                 action="allow",
-                app_connector_group_ids=[connector_group_id]
+                app_connector_group_ids=[connector_group_id],
             )
-            rule_id = created_rule.get('id', None)
+            rule_id = created_rule.get("id", None)
         except Exception as exc:
             errors.append(f"Creating Access Policy Rule failed: {exc}")
 
         try:
             # Test listing access policy rules
             all_access_rules = client.policies.list_rules("access")
-            if not any(rule['id'] == rule_id for rule in all_access_rules):
+            if not any(rule["id"] == rule_id for rule in all_access_rules):
                 raise AssertionError("Access Policy rules not found in list")
         except Exception as exc:
             errors.append(f"Listing Access Policy Rules failed: {exc}")
@@ -88,8 +90,10 @@ class TestAccessPolicyRule:
         try:
             # Test retrieving the specific Access Policy Rule
             retrieved_rule = client.policies.get_rule("access", rule_id)
-            if retrieved_rule['id'] != rule_id:
-                raise AssertionError("Failed to retrieve the correct Access Policy Rule")
+            if retrieved_rule["id"] != rule_id:
+                raise AssertionError(
+                    "Failed to retrieve the correct Access Policy Rule"
+                )
         except Exception as exc:
             errors.append(f"Retrieving Access Policy Rule failed: {exc}")
 
@@ -99,10 +103,12 @@ class TestAccessPolicyRule:
             updated_rule = client.policies.update_access_rule(
                 policy_type="access",
                 rule_id=rule_id,
-                description=updated_rule_description
+                description=updated_rule_description,
             )
-            if updated_rule['description'] != updated_rule_description:
-                raise AssertionError("Failed to update description for Access Policy Rule")
+            if updated_rule["description"] != updated_rule_description:
+                raise AssertionError(
+                    "Failed to update description for Access Policy Rule"
+                )
         except Exception as exc:
             errors.append(f"Updating Access Policy Rule failed: {exc}")
 
@@ -122,4 +128,6 @@ class TestAccessPolicyRule:
             except Exception as exc:
                 errors.append(f"Cleanup failed for Connector Group: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the Access Policy Rule operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the Access Policy Rule operations test: {errors}"

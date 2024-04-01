@@ -42,7 +42,7 @@ class PostureProfilesAPI:
             if profile.get("name") == name:
                 return profile
         return None
-    
+
     def get_profile(self, profile_id: str) -> Box:
         """
         Returns information on the specified posture profiles.

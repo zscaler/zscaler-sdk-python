@@ -7,19 +7,20 @@ from tests.test_utils import generate_random_string
 def fs():
     yield
 
+
 class TestAppConnectorGroupProvisioningKey:
     """
     Integration Tests for the Provisioning Key API
     """
 
     @pytest.mark.asyncio
-    async def test_provisioning_key_operations(self, fs): 
+    async def test_provisioning_key_operations(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         connector_group_id = None
         connector_key_id = None
-        
+
         try:
             # Prerequisite: Create an App Connector Group for the CONNECTOR_GRP Provisioning Key
             connector_group_name = "tests-" + generate_random_string()
@@ -40,9 +41,9 @@ class TestAppConnectorGroupProvisioningKey:
                 pra_enabled=True,
                 tcp_quick_ack_app=True,
                 tcp_quick_ack_assistant=True,
-                tcp_quick_ack_read_assistant=True
+                tcp_quick_ack_read_assistant=True,
             )
-            connector_group_id = created_connector_group.get('id', None)
+            connector_group_id = created_connector_group.get("id", None)
 
             connector_cert = client.certificates.get_enrolment_cert_by_name("Connector")
             connector_key_name = "tests-" + generate_random_string()
@@ -50,28 +51,43 @@ class TestAppConnectorGroupProvisioningKey:
                 key_type="connector",
                 name=connector_key_name,
                 max_usage=2,
-                enrollment_cert_id=connector_cert.get('id'),
+                enrollment_cert_id=connector_cert.get("id"),
                 component_id=connector_group_id,
             )
-            connector_key_id = created_connector_key.get('id', None)
-            
+            connector_key_id = created_connector_key.get("id", None)
+
             # Test listing provisioning keys
             all_connector_keys = client.provisioning.list_provisioning_keys("connector")
-            assert any(key['id'] == connector_key_id for key in all_connector_keys), "Connector key not found in list"
+            assert any(
+                key["id"] == connector_key_id for key in all_connector_keys
+            ), "Connector key not found in list"
 
             # Test retrieving the specific CONNECTOR_GRP Provisioning Key
-            retrieved_connector_key = client.provisioning.get_provisioning_key(connector_key_id, "connector")
-            assert retrieved_connector_key['id'] == connector_key_id, "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
+            retrieved_connector_key = client.provisioning.get_provisioning_key(
+                connector_key_id, "connector"
+            )
+            assert (
+                retrieved_connector_key["id"] == connector_key_id
+            ), "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
 
             # Update the CONNECTOR_GRP Provisioning Key (Example: changing `max_usage`)
             updated_connector_key = client.provisioning.update_provisioning_key(
-                connector_key_id, "connector", max_usage='3')
-            assert updated_connector_key['max_usage'] == '3', "Failed to update maxUsage for CONNECTOR_GRP Provisioning Key"
-            
+                connector_key_id, "connector", max_usage="3"
+            )
+            assert (
+                updated_connector_key["max_usage"] == "3"
+            ), "Failed to update maxUsage for CONNECTOR_GRP Provisioning Key"
+
             # Cleanup: Delete the CONNECTOR_GRP Provisioning Key
-            delete_status_connector = client.provisioning.delete_provisioning_key(connector_key_id, "connector")
-            assert delete_status_connector == 204, "Failed to delete CONNECTOR_GRP Provisioning Key"
-            connector_key_id = None  # Reset ID after deletion to prevent cleanup attempt
+            delete_status_connector = client.provisioning.delete_provisioning_key(
+                connector_key_id, "connector"
+            )
+            assert (
+                delete_status_connector == 204
+            ), "Failed to delete CONNECTOR_GRP Provisioning Key"
+            connector_key_id = (
+                None  # Reset ID after deletion to prevent cleanup attempt
+            )
 
         except Exception as exc:
             errors.append(f"Operations on CONNECTOR_GRP Provisioning Key failed: {exc}")
@@ -79,10 +95,14 @@ class TestAppConnectorGroupProvisioningKey:
         # Cleanup
         try:
             if connector_key_id:
-                client.provisioning.delete_provisioning_key(connector_key_id, "connector")
+                client.provisioning.delete_provisioning_key(
+                    connector_key_id, "connector"
+                )
             if connector_group_id:
                 client.connectors.delete_connector_group(connector_group_id)
         except Exception as exc:
             errors.append(f"Cleanup failed: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the provisioning key operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the provisioning key operations test: {errors}"

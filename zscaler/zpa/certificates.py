@@ -227,7 +227,7 @@ class CertificatesAPI:
             path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2"
         )
         return list
-    
+
     def get_enrolment_cert_by_name(self, name):
         certs = self.list_enrolment()
         for cert in certs:

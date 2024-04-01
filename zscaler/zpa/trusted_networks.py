@@ -58,7 +58,7 @@ class TrustedNetworksAPI:
             if network.get("name") == name:
                 return network
         return None
-    
+
     def get_network(self, network_id: str) -> Box:
         """
         Returns information on the specified trusted network.

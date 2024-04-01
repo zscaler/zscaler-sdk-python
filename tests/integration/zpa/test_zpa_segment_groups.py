@@ -19,31 +19,37 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestSegmentGroup:
     """
     Integration Tests for the Segment Group
     """
-    
+
     @pytest.mark.asyncio
-    async def test_segment_group(self, fs): 
+    async def test_segment_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         segment_group_name = "tests-" + generate_random_string()
         segment_group_description = "tests-" + generate_random_string()
-        
+
         try:
             # Create a new segment group
-            created_group = client.segment_groups.add_group(name=segment_group_name, description=segment_group_description, enabled=True)
+            created_group = client.segment_groups.add_group(
+                name=segment_group_name,
+                description=segment_group_description,
+                enabled=True,
+            )
             assert created_group is not None
             assert created_group.name == segment_group_name
             assert created_group.description == segment_group_description
             assert created_group.enabled is True
-            
+
             group_id = created_group.id
         except Exception as exc:
             errors.append(exc)
@@ -60,7 +66,7 @@ class TestSegmentGroup:
             # Update the segment group
             updated_name = segment_group_name + " Updated"
             client.segment_groups.update_group(group_id, name=updated_name)
-            
+
             updated_group = client.segment_groups.get_group(group_id)
             assert updated_group.name == updated_name
         except Exception as exc:
@@ -75,7 +81,9 @@ class TestSegmentGroup:
 
         try:
             # Search for the segment group by name
-            search_result = client.segment_groups.get_segment_group_by_name(updated_name)
+            search_result = client.segment_groups.get_segment_group_by_name(
+                updated_name
+            )
             assert search_result is not None
             assert search_result.id == group_id
         except Exception as exc:
@@ -89,4 +97,6 @@ class TestSegmentGroup:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the segment group lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the segment group lifecycle test: {errors}"
