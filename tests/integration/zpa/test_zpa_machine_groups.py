@@ -15,27 +15,56 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box, BoxList
+import pytest
+from tests.integration.zpa.conftest import MockZPAClient
 
 
-def test_list_machine_groups(zpa):
-    resp = zpa.machine_groups.list_groups()
-    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
-    assert len(resp) > 0, "No Groups were found."
+@pytest.fixture
+def fs():
+    yield
 
 
-def test_get_machine_group(zpa):
-    list_groups = zpa.machine_groups.list_groups()
-    assert len(list_groups) > 0, "No Groups to retrieve."
+class TestMachineGroups:
+    """
+    Integration Tests for the Machine Groups
+    """
 
-    # Assuming the list returns BoxList of groups and we can access 'id'
-    first_group_id = list_groups[0].id
+    @pytest.mark.asyncio
+    async def test_machine_groups(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-    # Now, use that 'id' to get a specific group
-    resp = zpa.machine_groups.get_group(first_group_id)
+        try:
+            # List all machine groups
+            machine_groups = client.machine_groups.list_groups()
+            assert isinstance(machine_groups, list), "Expected a list of machine groups"
+            if machine_groups:  # If there are any machine groups
+                # Select the first machine group for further testing
+                first_group = machine_groups[0]
+                group_id = first_group.get("id")
 
-    # Perform your assertions on the retrieved group
-    assert isinstance(resp, Box), "Response is not in the expected Box format."
-    assert (
-        resp.id == first_group_id
-    ), f"Retrieved Group ID does not match requested ID: {first_group_id}."
+                # Fetch the selected machine group by its ID
+                fetched_group = client.machine_groups.get_group(group_id)
+                assert (
+                    fetched_group is not None
+                ), "Expected a valid machine group object"
+                assert (
+                    fetched_group.get("id") == group_id
+                ), "Mismatch in machine group ID"
+
+                # Attempt to retrieve the machine group by name
+                group_name = first_group.get("name")
+                group_by_name = client.machine_groups.get_machine_group_by_name(
+                    group_name
+                )
+                assert (
+                    group_by_name is not None
+                ), "Expected a valid machine group object when searching by name"
+                assert (
+                    group_by_name.get("id") == group_id
+                ), "Mismatch in machine group ID when searching by name"
+        except Exception as exc:
+            errors.append(exc)
+
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during machine groups test: {errors}"

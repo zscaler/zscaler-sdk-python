@@ -1,72 +1,111 @@
-# -*- coding: utf-8 -*-
+import pytest
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-from box import Box, BoxList
-from utils import generate_random_string
-from tests.conftest import stub_sleep
+from tests.integration.zpa.conftest import MockZPAClient
+from tests.test_utils import generate_random_string
 
 
-@stub_sleep
-def test_app_connector_groups(zpa):
-    add_group_name = "tests-" + generate_random_string()
-    update_group_name = "tests-" + generate_random_string()
+@pytest.fixture
+def fs():
+    yield
 
-    add_resp = zpa.connectors.add_connector_group(
-        name=add_group_name,
-        description="A description for " + add_group_name,
-        enabled=True,
-        city_country="San Jose, US",
-        latitude="37.3382082",
-        longitude="-121.8863286",
-        location="San Jose, CA, USA",
-        upgrade_day="SUNDAY",
-        upgrade_time_in_secs="66600",
-        override_version_profile=True,
-        version_profile_name="Default",
-        version_profile_id="0",
-        dns_query_type="IPV4_IPV6",
-        pra_enabled=False,
-        tcp_quick_ack_app=True,
-        tcp_quick_ack_assistant=True,
-        tcp_quick_ack_read_assistant=True,
-    )
 
-    assert isinstance(add_resp, Box)
-    assert "id" in add_resp, "Add response does not contain an 'id' field"
-    group_id = add_resp["id"]
+class TestAppConnectorGroup:
+    """
+    Integration Tests for the App Connector Group
+    """
 
-    verify_add_resp = zpa.connectors.get_connector_group(group_id)
-    assert (
-        verify_add_resp["name"] == add_group_name
-    ), "Group name does not match after creation"
+    @pytest.mark.asyncio
+    async def test_app_connector_group(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-    zpa.connectors.update_connector_group(
-        group_id,
-        name=update_group_name,
-        description="Updated description for " + update_group_name,
-    )
+        group_name = "tests-" + generate_random_string()
+        group_description = "tests-" + generate_random_string()
+        group_enabled = True
+        latitude = "37.3382082"
+        longitude = "-121.8863286"
+        location = "San Jose, CA, USA"
+        upgrade_day = "SUNDAY"
+        upgrade_time_in_secs = "66600"
+        override_version_profile = True
+        version_profile_name = "Default"
+        version_profile_id = "0"
+        dns_query_type = "IPV4_IPV6"
+        pra_enabled = True
+        tcp_quick_ack_app = True
+        tcp_quick_ack_assistant = True
+        tcp_quick_ack_read_assistant = True
 
-    get_resp = zpa.connectors.get_connector_group(group_id)
-    assert isinstance(get_resp, Box)
-    assert get_resp["name"] == update_group_name, "Group name did not update correctly"
+        try:
+            # Create a new app connector group
+            created_group = client.connectors.add_connector_group(
+                name=group_name,
+                description=group_description,
+                enabled=group_enabled,
+                latitude=latitude,
+                longitude=longitude,
+                location=location,
+                upgrade_day=upgrade_day,
+                upgrade_time_in_secs=upgrade_time_in_secs,
+                override_version_profile=override_version_profile,
+                version_profile_id=version_profile_id,
+                version_profile_name=version_profile_name,
+                dns_query_type=dns_query_type,
+                pra_enabled=pra_enabled,
+                tcp_quick_ack_app=tcp_quick_ack_app,
+                tcp_quick_ack_assistant=tcp_quick_ack_assistant,
+                tcp_quick_ack_read_assistant=tcp_quick_ack_read_assistant,
+            )
+            assert created_group is not None
+            assert created_group.name == group_name
+            assert created_group.description == group_description
+            assert created_group.enabled == group_enabled
 
-    list_resp = zpa.connectors.list_connector_groups()
-    assert isinstance(list_resp, BoxList), "Expected a list of groups"
-    assert any(
-        group["id"] == group_id for group in list_resp
-    ), "Updated group not found in list"
+            group_id = created_group.id
+        except Exception as exc:
+            errors.append(exc)
 
-    zpa.connectors.delete_connector_group(group_id)
+        try:
+            # Retrieve the created app connector group by ID
+            retrieved_group = client.connectors.get_connector_group(group_id)
+            assert retrieved_group.id == group_id
+            assert retrieved_group.name == group_name
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # Update the app connector group
+            updated_name = group_name + " Updated"
+            client.connectors.update_connector_group(group_id, name=updated_name)
+
+            updated_group = client.connectors.get_connector_group(group_id)
+            assert updated_group.name == updated_name
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # List app connector groups and ensure the updated group is in the list
+            groups_list = client.connectors.list_connector_groups()
+            assert any(group.id == group_id for group in groups_list)
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # Search for the app connector group by name
+            search_result = client.connectors.get_connector_group_by_name(updated_name)
+            assert search_result is not None
+            assert search_result.id == group_id
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # Delete the app connector group
+            delete_response_code = client.connectors.delete_connector_group(group_id)
+            assert str(delete_response_code) == "204"
+        except Exception as exc:
+            errors.append(exc)
+
+        # Assert that no errors occurred during the test
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the app connector group lifecycle test: {errors}"

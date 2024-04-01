@@ -43,7 +43,7 @@ jobs:
 
             - name: Lint with flake8
               run: |
-                make lint
+                make lint:zpa
 
             - name: Run Pytest
               uses: nick-fields/retry@v2

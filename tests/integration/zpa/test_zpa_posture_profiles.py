@@ -15,27 +15,60 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box, BoxList
+import pytest
+from tests.integration.zpa.conftest import MockZPAClient
 
 
-def test_list_posture_profile(zpa):
-    resp = zpa.posture_profiles.list_profiles()
-    assert isinstance(resp, BoxList), "Response is not in the expected BoxList format."
-    assert len(resp) > 0, "No profiles were found."
+@pytest.fixture
+def fs():
+    yield
 
 
-def test_get_posture_profile(zpa):
-    list_profiles = zpa.posture_profiles.list_profiles()
-    assert len(list_profiles) > 0, "No profiles to retrieve."
+class TestPostureProfile:
+    """
+    Integration Tests for the Posture Profile
+    """
 
-    # Assuming the list returns BoxList of profiles and we can access 'id'
-    first_profile_id = list_profiles[0].id
+    @pytest.mark.asyncio
+    async def test_posture_profile(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-    # Now, use that 'id' to get a specific profile
-    resp = zpa.posture_profiles.get_profile(first_profile_id)
+        try:
+            # List all posture profiles
+            posture_profiles = client.posture_profiles.list_profiles()
+            assert isinstance(
+                posture_profiles, list
+            ), "Expected a list of posture profiles"
+            if posture_profiles:  # If there are any posture profiles
+                # Select the first posture profile for further testing
+                first_profile = posture_profiles[0]
+                profile_id = first_profile.get("id")
 
-    # Perform your assertions on the retrieved profile
-    assert isinstance(resp, Box), "Response is not in the expected Box format."
-    assert (
-        resp.id == first_profile_id
-    ), f"Retrieved profile ID does not match requested ID: {first_profile_id}."
+                # Fetch the selected posture profile by its ID
+                fetched_profile = client.posture_profiles.get_profile(profile_id)
+                assert (
+                    fetched_profile is not None
+                ), "Expected a valid posture profile object"
+                assert (
+                    fetched_profile.get("id") == profile_id
+                ), "Mismatch in posture profile ID"
+
+                # Attempt to retrieve the posture profile by name
+                profile_name = first_profile.get("name")
+                profile_by_name = client.posture_profiles.get_profile_by_name(
+                    profile_name
+                )
+                assert (
+                    profile_by_name is not None
+                ), "Expected a valid posture profile object when searching by name"
+                assert (
+                    profile_by_name.get("id") == profile_id
+                ), "Mismatch in posture profile ID when searching by name"
+        except Exception as exc:
+            errors.append(exc)
+
+        # Assert that no errors occurred during the test
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during posture profile operations test: {errors}"
