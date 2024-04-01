@@ -14,79 +14,81 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import pytest
 
+import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
 @pytest.fixture
 def fs():
     yield
-
+    
 class TestSegmentGroup:
     """
-    Integration Tests for the Segment Group
+    Integration Tests for the Application Server
     """
     
     @pytest.mark.asyncio
-    async def test_segment_group(self, fs): 
+    async def test_application_server(self, fs): 
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        segment_group_name = "tests-" + generate_random_string()
-        segment_group_description = "tests-" + generate_random_string()
+        server_name = "tests-" + generate_random_string()
+        server_description = "tests-" + generate_random_string()
+        server_address = "192.168.200.1"
         
         try:
-            # Create a new segment group
-            created_group = client.segment_groups.add_group(name=segment_group_name, description=segment_group_description, enabled=True)
-            assert created_group is not None
-            assert created_group.name == segment_group_name
-            assert created_group.description == segment_group_description
-            assert created_group.enabled is True
+            # Create a new application server
+            created_server = client.servers.add_server(name=server_name, description=server_description, enabled=True, address=server_address)
+            assert created_server is not None
+            assert created_server.name == server_name
+            assert created_server.description == server_description
+            assert created_server.address == server_address
+            assert created_server.enabled is True
             
-            group_id = created_group.id
+            server_id = created_server.id
         except Exception as exc:
             errors.append(exc)
 
         try:
             # Retrieve the created segment group by ID
-            retrieved_group = client.segment_groups.get_group(group_id)
-            assert retrieved_group.id == group_id
-            assert retrieved_group.name == segment_group_name
+            retrieved_server = client.servers.get_server(server_id)
+            assert retrieved_server.id == server_id
+            assert retrieved_server.name == server_name
         except Exception as exc:
             errors.append(exc)
 
         try:
             # Update the segment group
-            updated_name = segment_group_name + " Updated"
-            client.segment_groups.update_group(group_id, name=updated_name)
+            updated_name = server_name + " Updated"
+            client.servers.update_server(server_id, name=updated_name)
             
-            updated_group = client.segment_groups.get_group(group_id)
+            updated_group = client.servers.get_server(server_id)
             assert updated_group.name == updated_name
         except Exception as exc:
             errors.append(exc)
 
         try:
             # List segment groups and ensure the updated group is in the list
-            groups_list = client.segment_groups.list_groups()
-            assert any(group.id == group_id for group in groups_list)
+            groups_list = client.servers.list_servers()
+            assert any(group.id == server_id for group in groups_list)
         except Exception as exc:
             errors.append(exc)
 
         try:
             # Search for the segment group by name
-            search_result = client.segment_groups.get_segment_group_by_name(updated_name)
+            search_result = client.servers.get_server_by_name(updated_name)
             assert search_result is not None
-            assert search_result.id == group_id
+            assert search_result.id == server_id
         except Exception as exc:
             errors.append(exc)
 
         try:
             # Delete the segment group
-            delete_response_code = client.segment_groups.delete_group(group_id)
+            delete_response_code = client.servers.delete_server(server_id)
             assert str(delete_response_code) == "204"
         except Exception as exc:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the segment group lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the application server lifecycle test: {errors}"

@@ -14,55 +14,104 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from box import Box, BoxList
-from utils import generate_random_string
-from tests.conftest import stub_sleep
+import pytest
+
+from tests.integration.zpa.conftest import MockZPAClient
+from tests.test_utils import generate_random_string
 
 
-@stub_sleep
-def test_service_edge_groups(zpa):
-    add_group_name = "tests-" + generate_random_string()
-    update_group_name = "tests-" + generate_random_string()
+@pytest.fixture
+def fs():
+    yield
 
-    add_resp = zpa.service_edges.add_service_edge_group(
-        name=add_group_name,
-        description="A description for " + add_group_name,
-        enabled=True,
-        city_country="San Jose, US",
-        latitude="37.3382082",
-        longitude="-121.8863286",
-        location="San Jose, CA, USA",
-        upgrade_day="SUNDAY",
-        upgrade_time_in_secs="66600",
-        override_version_profile=True,
-        version_profile_name="Default",
-        version_profile_id="0",
-        is_public="TRUE",
-    )
+class TestServiceEdgeGroup:
+    """
+    Integration Tests for the Service Edge Group
+    """
 
-    assert isinstance(add_resp, Box)
-    assert "id" in add_resp, "Add response does not contain an 'id' field"
-    group_id = add_resp["id"]
+    @pytest.mark.asyncio
+    async def test_service_edge_group(self, fs): 
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-    verify_add_resp = zpa.service_edges.get_service_edge_group(group_id)
-    assert (
-        verify_add_resp["name"] == add_group_name
-    ), "Group name does not match after creation"
+        group_name = "tests-" + generate_random_string()
+        group_description = "tests-" + generate_random_string()
+        group_enabled = True
+        latitude = "37.3382082"
+        longitude = "-121.8863286"
+        location = "San Jose, CA, USA"
+        upgrade_day = "SUNDAY"
+        upgrade_time_in_secs = "66600"
+        override_version_profile = True
+        version_profile_name = "Default"
+        version_profile_id = "0"
+        is_public = "TRUE"
 
-    zpa.service_edges.update_service_edge_group(
-        group_id,
-        name=update_group_name,
-        description="Updated description for " + update_group_name,
-    )
+        
+        try:
+            # Create a new service edge group
+            created_group = client.service_edges.add_service_edge_group(
+                name=group_name,
+                description=group_description,
+                enabled=group_enabled,
+                latitude=latitude,
+                longitude=longitude,
+                location=location,
+                upgrade_day=upgrade_day,
+                upgrade_time_in_secs=upgrade_time_in_secs,
+                override_version_profile=override_version_profile,
+                version_profile_id=version_profile_id,
+                version_profile_name=version_profile_name,
+                is_public=is_public
+            )
+            assert created_group is not None
+            assert created_group.name == group_name
+            assert created_group.description == group_description
+            assert created_group.enabled == group_enabled
+            
+            group_id = created_group.id
+        except Exception as exc:
+            errors.append(exc)
 
-    get_resp = zpa.service_edges.get_service_edge_group(group_id)
-    assert isinstance(get_resp, Box)
-    assert get_resp["name"] == update_group_name, "Group name did not update correctly"
+        try:
+            # Retrieve the created service edge group by ID
+            retrieved_group = client.service_edges.get_service_edge_group(group_id)
+            assert retrieved_group.id == group_id
+            assert retrieved_group.name == group_name
+        except Exception as exc:
+            errors.append(exc)
 
-    list_resp = zpa.service_edges.list_service_edge_groups()
-    assert isinstance(list_resp, BoxList), "Expected a list of groups"
-    assert any(
-        group["id"] == group_id for group in list_resp
-    ), "Updated group not found in list"
+        try:
+            # Update the service edge group
+            updated_name = group_name + " Updated"
+            client.service_edges.update_service_edge_group(group_id, name=updated_name)
+            
+            updated_group = client.service_edges.get_service_edge_group(group_id)
+            assert updated_group.name == updated_name
+        except Exception as exc:
+            errors.append(exc)
 
-    zpa.service_edges.delete_service_edge_group(group_id)
+        try:
+            # List service edge groups and ensure the updated group is in the list
+            groups_list = client.service_edges.list_service_edge_groups()
+            assert any(group.id == group_id for group in groups_list)
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # Search for the service edge group by name
+            search_result = client.service_edges.get_service_edge_group_by_name(updated_name)
+            assert search_result is not None
+            assert search_result.id == group_id
+        except Exception as exc:
+            errors.append(exc)
+
+        try:
+            # Delete the service edge group
+            delete_response_code = client.service_edges.delete_service_edge_group(group_id)
+            assert str(delete_response_code) == "204"
+        except Exception as exc:
+            errors.append(exc)
+
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during the service edge group lifecycle test: {errors}"

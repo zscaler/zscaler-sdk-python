@@ -19,24 +19,30 @@ import pytest
 from zscaler.zpa import ZPAClientHelper
 from functools import wraps
 
+PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
-@pytest.fixture(scope="session")
-def zpa():
-    """Initializes a ZPAClientHelper instance for tests using real environment variables."""
-    client_id = os.getenv("ZPA_CLIENT_ID")
-    client_secret = os.getenv("ZPA_CLIENT_SECRET")
-    customer_id = os.getenv("ZPA_CUSTOMER_ID")
-    cloud = os.getenv(
-        "ZPA_CLOUD", "PRODUCTION"
-    )  # Default to "PRODUCTION" if not specified
-
-    # Initialize and return the ZPAClientHelper with actual credentials and cloud setting
-    return ZPAClientHelper(
-        client_id=client_id,
-        client_secret=client_secret,
-        customer_id=customer_id,
-        cloud=cloud,
-    )
+class MockZPAClient(ZPAClientHelper):
+    def __init__(self, fs):
+        # Fetch credentials from environment variables
+        client_id = os.environ.get('ZPA_CLIENT_ID')
+        client_secret = os.environ.get('ZPA_CLIENT_SECRET')
+        customer_id = os.environ.get('ZPA_CUSTOMER_ID')
+        cloud = os.environ.get('ZPA_CLOUD')
+        
+        if PYTEST_MOCK_CLIENT in os.environ:
+            fs.pause()
+            super().__init__()
+            fs.resume()
+        else:
+            super().__init__(
+                client_id=client_id,
+                client_secret=client_secret,
+                customer_id=customer_id,
+                cloud=cloud,
+                timeout=240,
+                cache=None,
+                fail_safe=False,
+            )
 
 
 def stub_sleep(func):

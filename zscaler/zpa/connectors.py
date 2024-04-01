@@ -214,7 +214,7 @@ class AppConnectorControllerAPI:
         return response
 
     def get_connector_group_by_name(self, name):
-        groups = self.list_groups()
+        groups = self.list_connector_groups()
         for group in groups:
             if group.get("name") == name:
                 return group
