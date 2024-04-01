@@ -19,33 +19,40 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
-    
+
+
 class TestSegmentGroup:
     """
     Integration Tests for the Application Server
     """
-    
+
     @pytest.mark.asyncio
-    async def test_application_server(self, fs): 
+    async def test_application_server(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         server_name = "tests-" + generate_random_string()
         server_description = "tests-" + generate_random_string()
         server_address = "192.168.200.1"
-        
+
         try:
             # Create a new application server
-            created_server = client.servers.add_server(name=server_name, description=server_description, enabled=True, address=server_address)
+            created_server = client.servers.add_server(
+                name=server_name,
+                description=server_description,
+                enabled=True,
+                address=server_address,
+            )
             assert created_server is not None
             assert created_server.name == server_name
             assert created_server.description == server_description
             assert created_server.address == server_address
             assert created_server.enabled is True
-            
+
             server_id = created_server.id
         except Exception as exc:
             errors.append(exc)
@@ -62,7 +69,7 @@ class TestSegmentGroup:
             # Update the segment group
             updated_name = server_name + " Updated"
             client.servers.update_server(server_id, name=updated_name)
-            
+
             updated_group = client.servers.get_server(server_id)
             assert updated_group.name == updated_name
         except Exception as exc:
@@ -91,4 +98,6 @@ class TestSegmentGroup:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the application server lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the application server lifecycle test: {errors}"

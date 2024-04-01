@@ -18,9 +18,11 @@
 import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestBaCertificate:
     """
@@ -28,7 +30,7 @@ class TestBaCertificate:
     """
 
     @pytest.mark.asyncio
-    async def test_ba_certificate(self, fs): 
+    async def test_ba_certificate(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -39,23 +41,34 @@ class TestBaCertificate:
             if idps:  # If there are any certificatess
                 # Select the first certificates for further testing
                 first_certificate = idps[0]
-                certificate_id = first_certificate.get('id')
-                
+                certificate_id = first_certificate.get("id")
+
                 # Fetch the selected certificates by its ID
-                fetched_certificate = client.certificates.get_certificate(certificate_id)
-                assert fetched_certificate is not None, "Expected a valid certificates object"
-                assert fetched_certificate.get('id') == certificate_id, "Mismatch in certificates ID"
+                fetched_certificate = client.certificates.get_certificate(
+                    certificate_id
+                )
+                assert (
+                    fetched_certificate is not None
+                ), "Expected a valid certificates object"
+                assert (
+                    fetched_certificate.get("id") == certificate_id
+                ), "Mismatch in certificates ID"
 
                 # Attempt to retrieve the certificates by name
-                certificate_name = first_certificate.get('name')
-                certificate_by_name= client.certificates.get_certificate_by_name(certificate_name)
-                assert certificate_by_name is not None, "Expected a valid certificates object when searching by name"
-                assert certificate_by_name.get('id') == certificate_id, "Mismatch in certificates ID when searching by name"
+                certificate_name = first_certificate.get("name")
+                certificate_by_name = client.certificates.get_certificate_by_name(
+                    certificate_name
+                )
+                assert (
+                    certificate_by_name is not None
+                ), "Expected a valid certificates object when searching by name"
+                assert (
+                    certificate_by_name.get("id") == certificate_id
+                ), "Mismatch in certificates ID when searching by name"
         except Exception as exc:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during certificates operations test: {errors}"
-
-
-
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during certificates operations test: {errors}"

@@ -3,17 +3,19 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestAppConnectorGroup:
     """
     Integration Tests for the App Connector Group
     """
-    
+
     @pytest.mark.asyncio
-    async def test_app_connector_group(self, fs): 
+    async def test_app_connector_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -33,7 +35,7 @@ class TestAppConnectorGroup:
         tcp_quick_ack_app = True
         tcp_quick_ack_assistant = True
         tcp_quick_ack_read_assistant = True
-        
+
         try:
             # Create a new app connector group
             created_group = client.connectors.add_connector_group(
@@ -52,13 +54,13 @@ class TestAppConnectorGroup:
                 pra_enabled=pra_enabled,
                 tcp_quick_ack_app=tcp_quick_ack_app,
                 tcp_quick_ack_assistant=tcp_quick_ack_assistant,
-                tcp_quick_ack_read_assistant=tcp_quick_ack_read_assistant
+                tcp_quick_ack_read_assistant=tcp_quick_ack_read_assistant,
             )
             assert created_group is not None
             assert created_group.name == group_name
             assert created_group.description == group_description
             assert created_group.enabled == group_enabled
-            
+
             group_id = created_group.id
         except Exception as exc:
             errors.append(exc)
@@ -75,7 +77,7 @@ class TestAppConnectorGroup:
             # Update the app connector group
             updated_name = group_name + " Updated"
             client.connectors.update_connector_group(group_id, name=updated_name)
-            
+
             updated_group = client.connectors.get_connector_group(group_id)
             assert updated_group.name == updated_name
         except Exception as exc:
@@ -104,4 +106,6 @@ class TestAppConnectorGroup:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the app connector group lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the app connector group lifecycle test: {errors}"

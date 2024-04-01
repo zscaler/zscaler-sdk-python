@@ -18,9 +18,11 @@
 import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestMachineGroups:
     """
@@ -28,7 +30,7 @@ class TestMachineGroups:
     """
 
     @pytest.mark.asyncio
-    async def test_machine_groups(self, fs): 
+    async def test_machine_groups(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -39,18 +41,28 @@ class TestMachineGroups:
             if machine_groups:  # If there are any machine groups
                 # Select the first machine group for further testing
                 first_group = machine_groups[0]
-                group_id = first_group.get('id')
-                
+                group_id = first_group.get("id")
+
                 # Fetch the selected machine group by its ID
                 fetched_group = client.machine_groups.get_group(group_id)
-                assert fetched_group is not None, "Expected a valid machine group object"
-                assert fetched_group.get('id') == group_id, "Mismatch in machine group ID"
+                assert (
+                    fetched_group is not None
+                ), "Expected a valid machine group object"
+                assert (
+                    fetched_group.get("id") == group_id
+                ), "Mismatch in machine group ID"
 
                 # Attempt to retrieve the machine group by name
-                group_name = first_group.get('name')
-                group_by_name = client.machine_groups.get_machine_group_by_name(group_name)
-                assert group_by_name is not None, "Expected a valid machine group object when searching by name"
-                assert group_by_name.get('id') == group_id, "Mismatch in machine group ID when searching by name"
+                group_name = first_group.get("name")
+                group_by_name = client.machine_groups.get_machine_group_by_name(
+                    group_name
+                )
+                assert (
+                    group_by_name is not None
+                ), "Expected a valid machine group object when searching by name"
+                assert (
+                    group_by_name.get("id") == group_id
+                ), "Mismatch in machine group ID when searching by name"
         except Exception as exc:
             errors.append(exc)
 

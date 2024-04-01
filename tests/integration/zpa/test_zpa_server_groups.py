@@ -19,17 +19,19 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestServerGroup:
     """
     Integration Tests for the Server Group
     """
-    
+
     @pytest.mark.asyncio
-    async def test_server_group(self, fs): 
+    async def test_server_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -56,9 +58,9 @@ class TestServerGroup:
                 pra_enabled=True,
                 tcp_quick_ack_app=True,
                 tcp_quick_ack_assistant=True,
-                tcp_quick_ack_read_assistant=True
+                tcp_quick_ack_read_assistant=True,
             )
-            connector_group_id = created_connector_group.get('id', None)
+            connector_group_id = created_connector_group.get("id", None)
         except Exception as exc:
             errors.append(f"Creating App Connector Group failed: {exc}")
 
@@ -70,16 +72,18 @@ class TestServerGroup:
                 name=server_group_name,
                 description=server_group_description,
                 dynamic_discovery=True,
-                app_connector_group_ids=[connector_group_id]  # Correctly formatted as a list
+                app_connector_group_ids=[
+                    connector_group_id
+                ],  # Correctly formatted as a list
             )
-            server_group_id = created_server_group.get('id', None)
+            server_group_id = created_server_group.get("id", None)
         except Exception as exc:
             errors.append(f"Creating Server Group failed: {exc}")
 
         try:
             # Test listing server groups
             all_server_groups = client.server_groups.list_groups()
-            if not any(group['id'] == server_group_id for group in all_server_groups):
+            if not any(group["id"] == server_group_id for group in all_server_groups):
                 raise AssertionError("Server group not found in list")
         except Exception as exc:
             errors.append(f"Listing Server Groups failed: {exc}")
@@ -87,7 +91,7 @@ class TestServerGroup:
         try:
             # Test retrieving the specific Server Group
             retrieved_server_group = client.server_groups.get_group(server_group_id)
-            if retrieved_server_group['id'] != server_group_id:
+            if retrieved_server_group["id"] != server_group_id:
                 raise AssertionError("Failed to retrieve the correct Server Group")
         except Exception as exc:
             errors.append(f"Retrieving Server Group failed: {exc}")
@@ -96,8 +100,9 @@ class TestServerGroup:
             # Update the Server Group
             updated_description = "Updated " + generate_random_string()
             updated_server_group = client.server_groups.update_group(
-                server_group_id, description=updated_description)
-            if updated_server_group['description'] != updated_description:
+                server_group_id, description=updated_description
+            )
+            if updated_server_group["description"] != updated_description:
                 raise AssertionError("Failed to update description for Server Group")
         except Exception as exc:
             errors.append(f"Updating Server Group failed: {exc}")
@@ -106,7 +111,9 @@ class TestServerGroup:
         if server_group_id:
             try:
                 # Cleanup: Delete the Server Group
-                delete_status_server_group = client.server_groups.delete_group(server_group_id)
+                delete_status_server_group = client.server_groups.delete_group(
+                    server_group_id
+                )
                 if delete_status_server_group != 204:
                     raise AssertionError("Failed to delete Server Group")
             except Exception as exc:
@@ -118,4 +125,6 @@ class TestServerGroup:
             except Exception as exc:
                 errors.append(f"Cleanup failed for Connector Group: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the server group operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the server group operations test: {errors}"

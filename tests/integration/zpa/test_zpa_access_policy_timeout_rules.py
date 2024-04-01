@@ -19,17 +19,19 @@ import pytest
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestAccessPolicyTimeoutRule:
     """
     Integration Tests for the Access Policy Timeout Rules
     """
-    
+
     @pytest.mark.asyncio
-    async def test_access_policy_timeout_policy_rules(self, fs): 
+    async def test_access_policy_timeout_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -48,33 +50,39 @@ class TestAccessPolicyTimeoutRule:
                 re_auth_timeout="3456000",
             )
             assert created_rule is not None, "Failed to create Timeout Policy Rule"
-            rule_id = created_rule.get('id', None)
+            rule_id = created_rule.get("id", None)
         except Exception as exc:
             errors.append(f"Failed to create Timeout Policy Rule: {exc}")
 
         try:
             # Test listing Timeout Policy Rules
             all_timeout_rules = client.policies.list_rules("timeout")
-            assert any(rule['id'] == rule_id for rule in all_timeout_rules), "Timeout Policy Rules not found in list"
+            assert any(
+                rule["id"] == rule_id for rule in all_timeout_rules
+            ), "Timeout Policy Rules not found in list"
         except Exception as exc:
             errors.append(f"Failed to list Timeout Policy Rules: {exc}")
 
         try:
             # Test retrieving the specific Timeout Policy Rule
             retrieved_rule = client.policies.get_rule("timeout", rule_id)
-            assert retrieved_rule['id'] == rule_id, "Failed to retrieve the correct Timeout Policy Rule"
+            assert (
+                retrieved_rule["id"] == rule_id
+            ), "Failed to retrieve the correct Timeout Policy Rule"
         except Exception as exc:
             errors.append(f"Failed to retrieve Timeout Policy Rule: {exc}")
-        
+
         try:
             # Update the Timeout Policy Rule
             updated_rule_description = "Updated " + generate_random_string()
             updated_rule = client.policies.update_rule(
                 policy_type="timeout",
                 rule_id=rule_id,
-                description=updated_rule_description
+                description=updated_rule_description,
             )
-            assert updated_rule['description'] == updated_rule_description, "Failed to update description for Timeout Policy Rule"
+            assert (
+                updated_rule["description"] == updated_rule_description
+            ), "Failed to update description for Timeout Policy Rule"
         except Exception as exc:
             errors.append(f"Failed to update Timeout Policy Rule: {exc}")
 
@@ -94,4 +102,6 @@ class TestAccessPolicyTimeoutRule:
                 errors.append(f"Cleanup failed: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the timeout policy rule operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the timeout policy rule operations test: {errors}"

@@ -32,7 +32,9 @@ help:
 	@echo "$(COLOR_WARNING)development$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  check-format                  Check code format/style with black$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  format                        Reformat code with black$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint                          Check style with flake8$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint                          Check style with flake8 for all packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
@@ -68,8 +70,16 @@ clean-test:
 	rm -fr .pytest_cache
 
 lint:
-	flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/ --count --select=E9,F63,F7,F82 --show-source --statistics
+	flake8 zscaler --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 zscaler --count --select=E9,F63,F7,F82 --show-source --statistics
+
+lint\:zpa:
+	flake8 zscaler/zpa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 zscaler/zpa --count --select=E9,F63,F7,F82 --show-source --statistics
+
+lint\:zia:
+	flake8 zscaler/zpa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 zscaler/zpa --count --select=E9,F63,F7,F82 --show-source --statistics
 
 format:
 	black .

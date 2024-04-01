@@ -21,14 +21,15 @@ from functools import wraps
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
+
 class MockZPAClient(ZPAClientHelper):
     def __init__(self, fs):
         # Fetch credentials from environment variables
-        client_id = os.environ.get('ZPA_CLIENT_ID')
-        client_secret = os.environ.get('ZPA_CLIENT_SECRET')
-        customer_id = os.environ.get('ZPA_CUSTOMER_ID')
-        cloud = os.environ.get('ZPA_CLOUD')
-        
+        client_id = os.environ.get("ZPA_CLIENT_ID")
+        client_secret = os.environ.get("ZPA_CLIENT_SECRET")
+        customer_id = os.environ.get("ZPA_CUSTOMER_ID")
+        cloud = os.environ.get("ZPA_CLOUD")
+
         if PYTEST_MOCK_CLIENT in os.environ:
             fs.pause()
             super().__init__()
