@@ -1,0 +1,116 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: ZPA Test
+on:
+    pull_request:
+      types: [opened, synchronize]
+    merge_group:
+      types: [checks_requested]
+    push:
+      branches:
+        - master
+    schedule:
+      - cron: '0 14 * * 1-5' # UTC
+    workflow_dispatch:
+  
+
+jobs:
+    zia-beta-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+                - ZIA_ZSBETA
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                make lint:zia
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zia
+              env:
+                ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
+                ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
+                ZIA_API_KEY: ${{ secrets.ZIA_API_KEY }}
+                ZIA_CLOUD: ${{ secrets.ZIA_CLOUD }}
+                ZIA_SANDBOX_TOKEN: ${{ secrets.ZIA_SANDBOX_TOKEN }}
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+
+    zia-test-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.9", "3.10"]
+            environment:
+              - ZIA_ZSCLOUD
+              - ZIA_ZS0
+              - ZIA_ZS1
+              - ZIA_ZS2
+              - ZIA_ZS3
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            - name: Lint with flake8
+              run: |
+                # stop the build if there are Python syntax errors or undefined names
+                flake8 zscaler/ --count --select=E9,F63,F7,F82 --show-source --statistics
+                # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+                flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+            - name: Run Pytest
+              uses: nick-fields/retry@v2
+              with:
+                max_attempts: 3
+                timeout_minutes: 20
+                command: |
+                    make test:integration:zpa
+              env:
+                ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
+                ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
+                ZIA_API_KEY: ${{ secrets.ZIA_API_KEY }}
+                ZIA_CLOUD: ${{ secrets.ZIA_CLOUD }}
+                ZIA_SANDBOX_TOKEN: ${{ secrets.ZIA_SANDBOX_TOKEN }}
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
