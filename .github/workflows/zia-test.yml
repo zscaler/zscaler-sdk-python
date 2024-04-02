@@ -103,7 +103,7 @@ jobs:
                 max_attempts: 3
                 timeout_minutes: 20
                 command: |
-                    make test:integration:zpa
+                    make test:integration:zia
               env:
                 ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
                 ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
