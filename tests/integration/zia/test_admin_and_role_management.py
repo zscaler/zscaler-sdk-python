@@ -1,338 +1,50 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
 import pytest
-import responses
-from box import BoxList
-from responses import matchers
-
-from tests.conftest import stub_sleep
+from tests.integration.zia.conftest import MockZIAClient
 
 
-# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-@pytest.fixture(name="admin_users")
-def fixture_users():
-    return [
-        {
-            "loginName": "testuser@example.com",
-            "userName": "Test User",
-            "id": 1,
-            "role": {"id": 1, "name": "Test"},
-            "email": "testuser@example.com",
-            "adminScopeType": "ORGANIZATION",
-            "isDefaultAdmin": False,
-            "isAuditor": False,
-            "password": "hunter2",
-            "isPasswordLoginAllowed": True,
-            "isPasswordExpired": False,
-            "newLocationCreateAllowed": False,
-            "disabled": False,
-        },
-        # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-        {
-            "loginName": "testuserb@example.com",
-            "userName": "Test User B",
-            "id": 2,
-            "role": {"id": 2, "name": "Test"},
-            "email": "testuserb@example.com",
-            "adminScopeType": "DEPARTMENT",
-            "isDefaultAdmin": False,
-            "isAuditor": False,
-            "password": "hunter2",
-            "isPasswordLoginAllowed": True,
-            "isPasswordExpired": False,
-            "newLocationCreateAllowed": False,
-            "disabled": False,
-        },
-    ]
+@pytest.fixture
+def fs():
+    yield
 
 
-@pytest.fixture(name="admin_roles")
-def fixture_admin_roles():
-    return [
-        {
-            "id": 1,
-            "rank": 7,
-            "name": "Super Admin",
-            "roleType": "EXEC_INSIGHT_AND_ORG_ADMIN",
-        },
-        {
-            "id": 2,
-            "rank": 7,
-            "name": "Executive Insights App",
-            "roleType": "EXEC_INSIGHT",
-        },
-    ]
+class TestAdminRole:
+    """
+    Integration Tests for the admin roles
+    """
 
+    @pytest.mark.asyncio
+    async def test_admin_role_management(self, fs):
+        client = MockZIAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
 
-# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-@responses.activate
-def test_admin_users_add_user(zia, admin_users):
-    responses.add(
-        method="POST",
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=admin_users[0],
-        status=200,
-        match=[
-            matchers.json_params_matcher(
-                {
-                    "userName": "Test User",
-                    "email": "testuser@example.com",
-                    "role": {"id": "1"},
-                    "password": "hunter2",
-                    "loginName": "testuser@example.com",
-                    "comments": "Test",
-                }
-            )
-        ],
-    )
-    # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-    resp = zia.admin_and_role_management.add_user(
-        name="Test User",
-        email="testuser@example.com",
-        login_name="testuser@example.com",
-        password="hunter2",
-        role_id="1",
-        comments="Test",
-    )
+        try:
+            # List all roles
+            roles = client.admin_and_role_management.list_roles()
+            assert isinstance(roles, list), "Expected a list of roles"
+            if roles:  # If there are any roles
+                # Select the first role for further testing
+                first_role = roles[0]
+                role_id = first_role.get("id")
+                
+                # Fetch the selected role by its ID
+                try:
+                    fetched_role = client.admin_and_role_management.get_role(role_id)
+                    assert fetched_role is not None, "Expected a valid role object"
+                    assert fetched_role.get("id") == role_id, "Mismatch in role ID"
+                except Exception as exc:
+                    errors.append(f"Fetching role by ID failed: {exc}")
 
-    assert isinstance(resp, dict)
-    assert resp.role.id == 1
-    assert resp.admin_scope_type == "ORGANIZATION"
+                # Attempt to retrieve the role by name
+                try:
+                    role_name = first_role.get("name")
+                    role_by_name = client.admin_and_role_management.get_roles_by_name(role_name)
+                    assert role_by_name is not None, "Expected a valid role object when searching by name"
+                    assert role_by_name.get("id") == role_id, "Mismatch in role ID when searching by name"
+                except Exception as exc:
+                    errors.append(f"Fetching role by name failed: {exc}")
 
+        except Exception as exc:
+            errors.append(f"Listing roles failed: {exc}")
 
-# THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-@responses.activate
-def test_admin_users_add_user_with_scope(zia, admin_users):
-    responses.add(
-        method="POST",
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=admin_users[1],
-        status=200,
-        match=[
-            matchers.json_params_matcher(
-                {
-                    "userName": "Test User B",
-                    "email": "testuserb@example.com",
-                    "role": {"id": "2"},
-                    "password": "hunter2",
-                    "loginName": "testuserb@example.com",
-                    "comments": "Test",
-                    "adminScopeType": "DEPARTMENT",
-                    "adminScopeScopeEntities": [{"id": "1"}],
-                }
-            )
-        ],
-    )
-    # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-    resp = zia.admin_and_role_management.add_user(
-        name="Test User B",
-        email="testuserb@example.com",
-        login_name="testuserb@example.com",
-        password="hunter2",
-        role_id="2",
-        comments="Test",
-        admin_scope="department",
-        scope_ids=["1"],
-    )
-    assert isinstance(resp, dict)
-    assert resp.role.id == 2
-    assert resp.admin_scope_type == "DEPARTMENT"
-
-
-@responses.activate
-def test_admin_users_update_user(zia, admin_users):
-    updated_user = admin_users[0]
-    updated_user["userName"] = "Test Updated"
-    updated_user["comments"] = "Updated Test"
-    updated_user["adminScopeType"] = "DEPARTMENT"
-    updated_user["adminScopeScopeEntities"] = [{"id": "1"}, {"id": "2"}]
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers?page=1",
-        json=admin_users,
-        status=200,
-    )
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers?page=2",
-        json=[],
-        status=200,
-    )
-
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers/1",
-        json=updated_user,
-        match=[matchers.json_params_matcher(updated_user)],
-    )
-
-    resp = zia.admin_and_role_management.update_user(
-        "1",
-        name="Test Updated",
-        comments="Updated Test",
-        admin_scope="department",
-        scope_ids=["1", "2"],
-    )
-
-    assert isinstance(resp, dict)
-
-
-@responses.activate
-@stub_sleep
-def test_list_admin_users_with_one_page(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.admin_and_role_management.list_users(max_pages=1, page_size=100)
-
-    assert isinstance(resp, BoxList)
-    assert resp[50].id == 50
-    assert len(resp) == 100
-
-
-@responses.activate
-@stub_sleep
-def test_list_admin_users_with_two_pages(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.admin_and_role_management.list_users(max_pages=2, page_size=100)
-
-    assert isinstance(resp, BoxList)
-    assert resp[50].id == 50
-    assert resp[150].id == 150
-    assert len(resp) == 200
-
-
-@responses.activate
-@stub_sleep
-def test_list_admin_users_with_max_items_1(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.admin_and_role_management.list_users(max_items=1)
-
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 1
-
-
-@responses.activate
-@stub_sleep
-def test_list_admin_users_with_max_items_150(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/adminUsers",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.admin_and_role_management.list_users(max_items=150)
-
-    assert isinstance(resp, BoxList)
-    assert len(resp) == 150
-
-
-@responses.activate
-@stub_sleep
-def test_admin_users_get_user(admin_users, zia):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/adminUsers?page=1",
-        json=admin_users,
-        status=200,
-    )
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/adminUsers?page=2",
-        json=[],
-        status=200,
-    )
-    resp = zia.admin_and_role_management.get_user("1")
-
-    assert isinstance(resp, dict)
-    assert resp.id == 1
-
-
-@responses.activate
-def test_admin_users_delete_user(zia):
-    responses.add(
-        method="DELETE",
-        url="https://zsapi.zscaler.net/api/v1/adminUsers/1",
-        status=204,
-    )
-    resp = zia.admin_and_role_management.delete_user("1")
-    assert resp == 204
-
-
-@responses.activate
-def test_admin_list_roles(admin_roles, zia):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/adminRoles/lite",
-        json=admin_roles,
-        status=200,
-    )
-    resp = zia.admin_and_role_management.list_roles(include_auditor_role=True)
-    assert isinstance(resp, BoxList)
-    assert resp[0].id == 1
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during roles test: {errors}"

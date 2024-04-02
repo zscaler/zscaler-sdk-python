@@ -329,3 +329,19 @@ class AdminAndRoleManagementAPI:
         """
         admin_role = next(user for user in self.list_roles() if user.id == int(role_id))
         return admin_role
+
+    # Search Cloud Browser Isolation By Name
+    def get_roles_by_name(self, name):
+        roles = self.list_roles()
+        for role in roles:
+            if role.get("name") == name:
+                return role
+        return None
+
+    # Search Cloud Browser Isolation By ID
+    def get_roles_by_id(self, role_id):
+        roles = self.list_roles()
+        for role in roles:
+            if role.get("id") == role_id:
+                return role
+        return None

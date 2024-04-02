@@ -89,17 +89,17 @@ check-format:
 
 test\:integration\:zpa:
 	@echo "$(COLOR_ZSCALER)Running zpa integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zpa
+	pytest tests/integration/zpa --disable-warnings
 
 test\:integration\:zia:
 	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zia
+	pytest tests/integration/zia --disable-warnings
 
 test-simple:
 	pytest --disable-warnings
 
 coverage:
-	pytest --cov=zscaler
+	pytest --cov=zscaler --cov-report term
 
 docs: clean-docs
 	$(MAKE) -C docs html
