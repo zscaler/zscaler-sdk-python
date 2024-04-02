@@ -15,77 +15,133 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import pytest
 import os
+import requests
+from tests.integration.zia.conftest import MockZIAClient
 
-import responses
-from box import Box
-from responses import matchers
+@pytest.fixture
+def fs():
+    yield
 
+FILE_NAMES = [
+    "2a961d4e5a2100570c942ed20a29735b.bin",
+    "327bd8a60fb54aaaba8718c890dda09d.bin",
+    "7665f6ee9017276dd817d15212e99ca7.bin",
+    "cefb4323ba4deb9dea94dcbe3faa139f.bin",
+    "8356bd54e47b000c5fdcf8dc5f6a69fa.apk",
+    "841abdc66ea1e208f63d717ebd11a5e9.apk",
+    "test-pe-file.exe",
+]
 
-@responses.activate
-def test_sandbox_get_quota(zia):
-    sandbox_response = [
-        {
-            "allowed": 1000,
-            "scale": "DAYS",
-            "start_time": -1,
-            "unused": 1000,
-            "used": 0,
-        }
-    ]
-
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/sandbox/report/quota",
-        json=sandbox_response,
-        status=200,
-    )
-
-    resp = zia.sandbox.get_quota()
-    assert isinstance(resp, Box)
-    assert resp.allowed == 1000
+BASE_URL = "https://github.com/SecurityGeekIO/malware-samples/raw/main/"
 
 
-@responses.activate
-def test_sandbox_get_report(zia):
-    sandbox_response = {"summary": "test"}
+class TestSandbox:
+    """
+    Integration Tests for the Sandbox Operations.
+    """
+    
+    @pytest.mark.asyncio
+    async def test_sandbox_get_quota(self, fs):
+        client = MockZIAClient(fs)
+        try:
+            quota = client.sandbox.get_quota()
+            assert quota.allowed > 0, "Sandbox quota retrieval failed."
+        except Exception as exc:
+            pytest.fail(f"Sandbox quota retrieval failed: {exc}")
 
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/sandbox/report/HASH?details=summary",
-        json=sandbox_response,
-        status=200,
-    )
+    @pytest.mark.asyncio
+    async def test_sandbox_get_report_summary(self, fs):
+        client = MockZIAClient(fs)
+        test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
+        try:
+            report = client.sandbox.get_report(test_md5_hash)
+            assert report.summary, "Sandbox report retrieval failed."
+        except Exception as exc:
+            pytest.fail(f"Sandbox report retrieval failed: {exc}")
+            
+    @pytest.mark.asyncio
+    async def test_sandbox_submit_files(fs):
+        client = MockZIAClient(fs)
+        errors = []
+        
+        for file_name in FILE_NAMES:
+            file_url = BASE_URL + file_name
+            local_file_path = file_name  # You may choose to download/locate files differently
+            
+            try:
+                # Simulate file download
+                response = requests.get(file_url)
+                response.raise_for_status()  # Ensure we got a valid response
+                
+                # Write the content to a local file
+                with open(local_file_path, 'wb') as f:
+                    f.write(response.content)
+                
+                # Submit the file to the sandbox
+                submission_response = client.sandbox.submit_file(local_file_path, force=True)
+                assert submission_response.code == 200, f"Sandbox file submission failed for {file_name}."
 
-    resp = zia.sandbox.get_report("HASH")
-    assert isinstance(resp, Box)
-    assert resp.summary == "test"
+            except Exception as exc:
+                errors.append(f"Sandbox file submission failed for {file_name}: {exc}")
+            
+            finally:
+                # Clean up by removing the downloaded file
+                if os.path.exists(local_file_path):
+                    os.remove(local_file_path)
+        
+        # Assert no errors occurred during the test
+        assert not errors, f"Errors occurred during sandbox file submission: {errors}"
+        
+    @pytest.mark.asyncio
+    async def test_submit_file_for_inspection(self, fs):
+        client = MockZIAClient(fs)
+        errors = []
+        
+        for file_name in FILE_NAMES:
+            file_url = BASE_URL + file_name
+            local_file_path = file_name  # You may choose to download/locate files differently
+            
+            try:
+                # Simulate file download
+                response = requests.get(file_url)
+                response.raise_for_status()  # Ensure we got a valid response
+                
+                # Write the content to a local file
+                with open(local_file_path, 'wb') as f:
+                    f.write(response.content)
+                
+                # Submit the file to the sandbox
+                submission_response = client.sandbox.submit_file_for_inspection(local_file_path)
+                assert submission_response.code == 200, f"Sandbox file submission failed for {file_name}."
 
-
-@responses.activate
-def test_sandbox_submit_file(zia):
-    with open("sandboxtest.txt", "w") as f:
-        f.write("Sandbox Test")
-
-    params = {"api_token": "SANDBOXTOKEN", "force": 1}
-
-    responses.add(
-        method="POST",
-        url="https://csbapi.zscaler.net/zscsb/submit?api_token=SANDBOXTOKEN&force=1",
-        json={
-            "code": 200,
-            "message": "/submit response OK",
-            "virus_name": "malicious beha",
-            "virus_type": "Sandbox Malware",
-            "file_type": "exe",
-            "md5": "XYZ",
-            "sandbox_submission": "Sandbox Malware",
-        },
-        match=[matchers.query_param_matcher(params)],
-        status=200,
-    )
-
-    resp = zia.sandbox.submit_file("sandboxtest.txt", True)
-    os.remove("sandboxtest.txt")
-
-    assert resp.code == 200
+            except Exception as exc:
+                errors.append(f"Sandbox file submission failed for {file_name}: {exc}")
+            
+            finally:
+                # Clean up by removing the downloaded file
+                if os.path.exists(local_file_path):
+                    os.remove(local_file_path)
+        
+        # Assert no errors occurred during the test
+        assert not errors, f"Errors occurred during sandbox file submission: {errors}"
+        
+    @pytest.mark.asyncio
+    async def test_get_behavioral_analysis(self, fs):
+        client = MockZIAClient(fs)
+        try:
+            behavioral_analysis = client.sandbox.get_behavioral_analysis()
+            assert behavioral_analysis, "Retrieving behavioral analysis failed."
+        except Exception as exc:
+            pytest.fail(f"Retrieving behavioral analysis failed: {exc}")
+        
+    @pytest.mark.asyncio
+    async def test_add_hash_to_custom_list(self, fs):
+        client = MockZIAClient(fs)
+        test_hashes = ["42914d6d213a20a2684064be5c80ffa9", "c0202cf6aeab8437c638533d14563d35"]
+        try:
+            updated_list = client.sandbox.add_hash_to_custom_list(test_hashes)
+            assert all(hash in updated_list.file_hashes_to_be_blocked for hash in test_hashes), "Adding hashes to custom list failed."
+        except Exception as exc:
+            pytest.fail(f"Adding hashes to custom list failed: {exc}")

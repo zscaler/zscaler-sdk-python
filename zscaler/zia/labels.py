@@ -83,6 +83,13 @@ class RuleLabelsAPI:
                 return None
         return response
 
+    def get_label_by_name(self, name):
+        engines = self.list_labels()
+        for engine in engines:
+            if engine.get("name") == name:
+                return engine
+        return None
+    
     def add_label(self, name: str, **kwargs) -> Box:
         """
         Creates a new ZIA Rule Label.

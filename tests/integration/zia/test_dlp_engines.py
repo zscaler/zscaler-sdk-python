@@ -24,71 +24,73 @@ def fs():
     yield
 
 
-class TestRuleLabels:
+class TestDLPEngines:
     """
-    Integration Tests for the Rule Label
+    Integration Tests for the DLP Engines
     """
 
     @pytest.mark.asyncio
-    async def test_rule_labels(self, fs):
+    async def test_dlp_engines(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        label_name = "tests-" + generate_random_string()
-        label_description = "tests-" + generate_random_string()
+        engine_name = "tests-" + generate_random_string()
+        engine_description = "tests-" + generate_random_string()
 
         try:
-            # Create a new rule label
-            created_label = client.labels.add_label(
-                name=label_name,
-                description=label_description,
+            # Create a new dlp engine
+            created_engine = client.dlp.add_dlp_engine(
+                name=engine_name,
+                description=engine_description,
+                engine_expression="((D63.S > 1))",
+                custom_dlp_engine=True,
             )
-            assert created_label is not None
-            assert created_label.name == label_name
-            assert created_label.description == label_description
+            assert created_engine is not None
+            assert created_engine.name == engine_name
+            assert created_engine.description == engine_description
 
-            label_id = created_label.id
+            engine_id = created_engine.id
         except Exception as exc:
             errors.append(exc)
 
         try:
-            # Retrieve the created rule label by ID
-            retrieved_label = client.labels.get_label(label_id)
-            assert retrieved_label.id == label_id
-            assert retrieved_label.name == label_name
+            # Retrieve the created dlp engine by ID
+            retrieved_engine = client.dlp.get_dlp_engines(engine_id)
+            assert retrieved_engine.id == engine_id
+            assert retrieved_engine.name == engine_name
         except Exception as exc:
             errors.append(exc)
 
         try:
-            # Update the rule label
-            updated_name = label_name + " Updated"
-            client.labels.update_label(label_id, name=updated_name)
+            # Update the dlp engine
+            updated_name = engine_name + " Updated"
+            client.dlp.update_dlp_engine(engine_id, name=updated_name)
 
-            updated_label = client.labels.get_label(label_id)
-            assert updated_label.name == updated_name
+            updated_engine = client.dlp.get_dlp_engines(engine_id)
+            assert updated_engine.name == updated_name
         except Exception as exc:
             errors.append(exc)
 
         try:
-            # List rule labels and ensure the updated label is in the list
-            labels_list = client.labels.list_labels()
-            assert any(label.id == label_id for label in labels_list)
+            # List dlp engines and ensure the updated engine is in the list
+            engines_list = client.dlp.list_dlp_engines()
+            assert any(engine.id == engine_id for engine in engines_list)
         except Exception as exc:
             errors.append(exc)
 
         try:
-            # Search for the rule label by name
-            search_result = client.labels.get_label_by_name(
+            # Search for the dlp engine by name
+            search_result = client.dlp.get_dlp_engine_by_name(
                 updated_name
             )
             assert search_result is not None
-            assert search_result.id == label_id
+            assert search_result.id == engine_id
         except Exception as exc:
             errors.append(exc)
 
         try:
-            # Delete the rule label
-            delete_response_code = client.labels.delete_label(label_id)
+            # Delete the dlp engine
+            delete_response_code = client.dlp.delete_dlp_engine(engine_id)
             assert str(delete_response_code) == "204"
         except Exception as exc:
             errors.append(exc)
@@ -96,4 +98,4 @@ class TestRuleLabels:
         # Assert that no errors occurred during the test
         assert (
             len(errors) == 0
-        ), f"Errors occurred during the rule label lifecycle test: {errors}"
+        ), f"Errors occurred during the dlp engine lifecycle test: {errors}"

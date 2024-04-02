@@ -26,6 +26,54 @@ class DLPAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
+    def list_dicts(self, query: str = None) -> BoxList:
+        """
+        Returns a list of all custom and predefined ZIA DLP Dictionaries.
+
+        Args:
+            query (str): A search string used to match against a DLP dictionary's name or description attributes.
+
+        Returns:
+            :obj:`BoxList`: A list containing ZIA DLP Dictionaries.
+
+        Examples:
+            Print all dictionaries
+
+            >>> for dictionary in zia.dlp.list_dicts():
+            ...    pprint(dictionary)
+
+            Print dictionaries that match the name or description 'GDPR'
+
+            >>> pprint(zia.dlp.list_dicts('GDPR'))
+
+        """
+        payload = {"search": query}
+        list = self.rest.get(path="/dlpDictionaries", params=payload)
+        if isinstance(list, Response):
+            return None
+        return list
+
+    def get_dict(self, dict_id: str) -> Box:
+        """
+        Returns the DLP Dictionary that matches the specified DLP Dictionary id.
+
+        Args:
+            dict_id (str): The unique id for the DLP Dictionary.
+
+        Returns:
+            :obj:`Box`: The ZIA DLP Dictionary resource record.
+
+        Examples:
+            >>> pprint(zia.dlp.get_dict('3'))
+
+        """
+        response = self.rest.get("/dlpDictionaries/%s" % (dict_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
+    
     def add_dict(
         self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs
     ) -> Box:
@@ -188,7 +236,6 @@ class DLPAPI:
 
         response = self.rest.put(f"/dlpDictionaries/{dict_id}", json=payload)
         if isinstance(response, Response):
-            # Handle non-successful status codes
             status_code = response.status_code
             raise Exception(
                 f"API call failed with status {status_code}: {response.json()}"
@@ -196,52 +243,6 @@ class DLPAPI:
 
         # Return the updated object
         return self.get_dict(dict_id)
-
-    def list_dicts(self, query: str = None) -> BoxList:
-        """
-        Returns a list of all custom and predefined ZIA DLP Dictionaries.
-
-        Args:
-            query (str): A search string used to match against a DLP dictionary's name or description attributes.
-
-        Returns:
-            :obj:`BoxList`: A list containing ZIA DLP Dictionaries.
-
-        Examples:
-            Print all dictionaries
-
-            >>> for dictionary in zia.dlp.list_dicts():
-            ...    pprint(dictionary)
-
-            Print dictionaries that match the name or description 'GDPR'
-
-            >>> pprint(zia.dlp.list_dicts('GDPR'))
-
-        """
-        payload = {"search": query}
-        list = self.rest.get(path="/dlpDictionaries", params=payload)
-        if isinstance(list, Response):
-            return None
-        return list
-
-    def get_dict(self, dict_id: str) -> Box:
-        """
-        Returns the DLP Dictionary that matches the specified DLP Dictionary id.
-
-        Args:
-            dict_id (str): The unique id for the DLP Dictionary.
-
-        Returns:
-            :obj:`Box`: The ZIA DLP Dictionary resource record.
-
-        Examples:
-            >>> pprint(zia.dlp.get_dict('3'))
-
-        """
-        response = self.rest.get("/dlpDictionaries/%s" % (dict_id))
-        if isinstance(response, Response):
-            return None
-        return response
 
     def delete_dict(self, dict_id: str) -> int:
         """
@@ -360,22 +361,18 @@ class DLPAPI:
 
         """
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            if key in self._key_id_list:
-                payload[snake_to_camel(key)] = []
-                for item in value:
-                    payload[snake_to_camel(key)].append({"id": item})
-            else:
-                payload[snake_to_camel(key)] = value
+            payload[snake_to_camel(key)] = value
 
-        response = self.rest.put("/dlpEngines/%s" % (engine_id), json=payload)
-        if not isinstance(response, Response):
-            return self.get_dlp_engines(engine_id)
+        response = self.rest.put(f"/dlpEngines/{engine_id}", json=payload)
+        if isinstance(response, Response) and response.status_code != 200:
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
+        return self.get_dlp_engines(engine_id)
 
     def delete_dlp_engine(self, engine_id: str) -> int:
         """
@@ -440,7 +437,7 @@ class DLPAPI:
         return response
 
     def get_dlp_engine_by_name(self, name):
-        engines = self.get_dlp_engines()
+        engines = self.list_dlp_engines()
         for engine in engines:
             if engine.get("name") == name:
                 return engine
@@ -492,6 +489,13 @@ class DLPAPI:
             return None
         return response
 
+    def get_dlp_icap_by_name(self, name):
+        icaps = self.list_dlp_icap_servers()
+        for icap in icaps:
+            if icap.get("name") == name:
+                return icap
+        return None
+    
     def list_dlp_incident_receiver(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP Incident Receiver.
@@ -514,10 +518,10 @@ class DLPAPI:
 
         """
         payload = {"search": query}
-        list = self.rest.get(path="/incidentReceiverServers", params=payload)
-        if isinstance(list, Response):
-            return None
-        return list
+        response = self.rest.get(path="/incidentReceiverServers", params=payload)
+        if isinstance(response, Response) and response.ok:
+            return response.json()
+        return []  # Return an empty list in case of no data or error
 
     def get_dlp_incident_receiver(self, receiver_id: str) -> Box:
         """
@@ -538,6 +542,17 @@ class DLPAPI:
             return None
         return response
 
+    def get_dlp_incident_receiver_by_name(self, name):
+        # Fetch all receivers (assuming the API doesn't support server-side filtering by name)
+        receivers = self.list_dlp_incident_receiver()
+        # Iterate through the receivers to find a match by name
+        for receiver in receivers:
+            if receiver.get("name") == name:
+                return receiver
+        # If no receiver matches the given name
+        return None
+
+    
     def list_dlp_idm_profiles(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP IDM Profiles.
