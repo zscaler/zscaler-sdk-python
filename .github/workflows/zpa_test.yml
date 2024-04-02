@@ -46,7 +46,7 @@ jobs:
                 make lint:zpa
 
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 20
@@ -93,7 +93,7 @@ jobs:
                 flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 20
@@ -140,7 +140,7 @@ jobs:
                 flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 20
@@ -190,7 +190,7 @@ jobs:
                 flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 20
