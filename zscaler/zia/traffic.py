@@ -583,26 +583,31 @@ class TrafficForwardingAPI:
             )
         return response
 
-    def check_static_ip(self, ip_address: str) -> int:
+    def check_static_ip(self, ip_address: str) -> bool:
         """
         Validates if a static IP object is correct.
 
         Args:
-            ip_address (str):
-                The static IP address
+            ip_address (str): The static IP address
 
         Returns:
-            :obj:`int`: 200 if the static IP provided is valid.
+            :obj:`bool`: True if the static IP provided is valid, False otherwise.
 
         Examples:
             >>> zia.traffic.check_static_ip(ip_address='203.0.113.11')
-
         """
         payload = {
             "ipAddress": ip_address,
         }
+        response = self.rest.post("staticIP/validate", json=payload)
+        
+        # Check if the status code is 200 and the response body text is "SUCCESS"
+        if response.status_code == 200 and response.text.strip().upper() == "SUCCESS":
+            return True
+        else:
+            # Optionally, you could log response.text or response.status_code here for debugging
+            return False
 
-        return self.rest.post("staticIP/validate", json=payload).status_code
 
     def update_static_ip(self, static_ip_id: str, **kwargs) -> Box:
         """

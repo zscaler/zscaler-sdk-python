@@ -88,6 +88,13 @@ class URLCategoriesAPI:
 
         return self.rest.get("urlCategories", params=payload)
 
+    def get_category_by_name(self, name):
+        categories = self.list_categories()
+        for category in categories:
+            if category.get("configured_name") == name:
+                return category
+        return None
+    
     def get_quota(self) -> Box:
         """
         Returns information on URL category quota usage.
