@@ -31,8 +31,12 @@ class TestCloudFirewallIPSourceGroup:
     @pytest.mark.asyncio
     async def test_add_ip_source_group(self, fs):
         client = MockZIAClient(fs)
+        errors = []
+        
         group_name = "tests-" + generate_random_string()
         group_description = "tests-" + generate_random_string()
+        group_id = None
+        
         try:
             created_group = client.firewall.add_ip_source_group(
                 name=group_name,
@@ -41,60 +45,46 @@ class TestCloudFirewallIPSourceGroup:
             )
             assert created_group.name == group_name, "Group name mismatch in creation"
             assert created_group.description == group_description, "Group description mismatch in creation"
-            global created_group_id  # For cleanup
-            created_group_id = created_group.id
+            group_id = created_group.id
         except Exception as exc:
-            pytest.fail(f"Failed to add IP source group: {exc}")
+            errors.append(f"Failed to add IP source group: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_get_ip_source_group(self, fs):
-        client = MockZIAClient(fs)
-        try:
-            group = client.firewall.get_ip_source_group(created_group_id)
-            assert group.id == created_group_id, "Failed to retrieve the correct IP source group"
-        except Exception as exc:
-            pytest.fail(f"Failed to retrieve IP source group: {exc}")
+            # Attempt to retrieve the created IP source group by ID
+            if group_id:
+                try:
+                    group = client.firewall.get_ip_source_group(group_id)
+                    assert group.id == group_id, "Failed to retrieve the correct IP source group"
+                except Exception as exc:
+                    errors.append(f"Failed to retrieve IP source group: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_update_ip_source_group(self, fs):
-        client = MockZIAClient(fs)
-        updated_name = "updated-" + generate_random_string()
-        try:
-            client.firewall.update_ip_source_group(
-                group_id=created_group_id,
-                name=updated_name
-            )
-            updated_group = client.firewall.get_ip_source_group(created_group_id)
-            assert updated_group.name == updated_name, "Group name mismatch after update"
-        except Exception as exc:
-            pytest.fail(f"Failed to update IP source group: {exc}")
+            # Attempt to update the IP source group
+            if group_id:
+                try:
+                    updated_name = "updated-" + generate_random_string()
+                    client.firewall.update_ip_source_group(
+                        group_id=group_id,
+                        name=updated_name
+                    )
+                    updated_group = client.firewall.get_ip_source_group(group_id)
+                    assert updated_group.name == updated_name, "Group name mismatch after update"
+                except Exception as exc:
+                    errors.append(f"Failed to update IP source group: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_list_ip_source_groups(self, fs):
-        client = MockZIAClient(fs)
-        try:
-            groups = client.firewall.list_ip_source_groups()
-            assert isinstance(groups, list), "Failed to list IP source groups"
-            assert any(group.id == created_group_id for group in groups), "Created group not found in list"
-        except Exception as exc:
-            pytest.fail(f"Failed to list IP source groups: {exc}")
+            # Attempt to list IP source groups and check if the updated group is in the list
+            try:
+                groups = client.firewall.list_ip_source_groups()
+                assert any(group.id == group_id for group in groups), "Updated IP source group not found in list"
+            except Exception as exc:
+                errors.append(f"Failed to list IP source groups: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_delete_ip_source_group(self, fs):
-        client = MockZIAClient(fs)
-        try:
-            status_code = client.firewall.delete_ip_source_group(created_group_id)
-            assert status_code == 204, "Failed to delete IP source group"
-        except Exception as exc:
-            pytest.fail(f"Failed to delete IP source group: {exc}")
+        finally:
+            # Cleanup: Attempt to delete the IP source group
+            if group_id:
+                try:
+                    status_code = client.firewall.delete_ip_source_group(group_id)
+                    assert status_code == 204, "Failed to delete IP source group"
+                except Exception as exc:
+                    errors.append(f"Cleanup failed: {exc}")
 
-@pytest.fixture(scope="module", autouse=True)
-def cleanup(request):
-    """Cleanup the created resources after tests"""
-    def remove_created_group():
-        try:
-            client = MockZIAClient()
-            client.firewall.delete_ip_source_group(created_group_id)
-        except Exception:
-            pass  # Handle cleanup failure silently
-    request.addfinalizer(remove_created_group)
+        # Assert that no errors occurred during the test
+        assert len(errors) == 0, f"Errors occurred during the IP source group lifecycle test: {errors}"
