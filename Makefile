@@ -99,7 +99,7 @@ test-simple:
 	pytest --disable-warnings
 
 coverage:
-	pytest --cov=zscaler --cov-report term
+	pytest --cov=zscaler --cov-report html
 
 docs: clean-docs
 	$(MAKE) -C docs html
