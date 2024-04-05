@@ -17,9 +17,17 @@
 
 import random
 import string
+import ipaddress
 
 
 # Function to generate a random string
 def generate_random_string(length=10):
     letters = string.ascii_lowercase
     return "".join(random.choice(letters) for i in range(length))
+
+# Function to generate a random IP address from a given subnet
+def generate_random_ip(subnet):
+    network = ipaddress.ip_network(subnet)
+    # Generate a random IP within the subnet, excluding the network and broadcast addresses
+    random_ip = random.choice(list(network.hosts()))
+    return str(random_ip)
