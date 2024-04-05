@@ -94,5 +94,5 @@ class AuthenticationSettingsAPI:
         )
 
         # Return the updated exemption list if the removal was successful.
-        if resp == 204:
+        if resp == 200:
             return self.get_exempted_urls()

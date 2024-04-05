@@ -26,7 +26,7 @@ def fs():
 
 class TestPostureProfile:
     """
-    Integration Tests for the Posture Profile
+    Integration Tests for the Posture Profile.
     """
 
     @pytest.mark.asyncio
@@ -34,41 +34,37 @@ class TestPostureProfile:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
+        # Attempt to list all posture profiles
         try:
-            # List all posture profiles
             posture_profiles = client.posture_profiles.list_profiles()
-            assert isinstance(
-                posture_profiles, list
-            ), "Expected a list of posture profiles"
-            if posture_profiles:  # If there are any posture profiles
-                # Select the first posture profile for further testing
-                first_profile = posture_profiles[0]
+            assert isinstance(posture_profiles, list), "Expected a list of posture profiles"
+        except Exception as exc:
+            errors.append(f"Listing posture profiles failed: {str(exc)}")
+
+        # Process each posture profile if the list is not empty
+        if posture_profiles:
+            for first_profile in posture_profiles:
                 profile_id = first_profile.get("id")
 
                 # Fetch the selected posture profile by its ID
-                fetched_profile = client.posture_profiles.get_profile(profile_id)
-                assert (
-                    fetched_profile is not None
-                ), "Expected a valid posture profile object"
-                assert (
-                    fetched_profile.get("id") == profile_id
-                ), "Mismatch in posture profile ID"
+                try:
+                    fetched_profile = client.posture_profiles.get_profile(profile_id)
+                    assert fetched_profile is not None, "Expected a valid posture profile object"
+                    assert fetched_profile.get("id") == profile_id, "Mismatch in posture profile ID"
+                except Exception as exc:
+                    errors.append(f"Fetching posture profile by ID failed: {str(exc)}")
 
                 # Attempt to retrieve the posture profile by name
-                profile_name = first_profile.get("name")
-                profile_by_name = client.posture_profiles.get_profile_by_name(
-                    profile_name
-                )
-                assert (
-                    profile_by_name is not None
-                ), "Expected a valid posture profile object when searching by name"
-                assert (
-                    profile_by_name.get("id") == profile_id
-                ), "Mismatch in posture profile ID when searching by name"
-        except Exception as exc:
-            errors.append(exc)
+                try:
+                    profile_name = first_profile.get("name")
+                    profile_by_name = client.posture_profiles.get_profile_by_name(profile_name)
+                    assert profile_by_name is not None, "Expected a valid posture profile object when searching by name"
+                    assert profile_by_name.get("id") == profile_id, "Mismatch in posture profile ID when searching by name"
+                except Exception as exc:
+                    errors.append(f"Fetching posture profile by name failed: {str(exc)}")
+
+                # Once we've tested one profile, exit the loop to avoid redundant testing
+                break
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during posture profile operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during posture profile operations test: {errors}"
