@@ -23,7 +23,6 @@ from zscaler.zia import ZIAClient
 
 
 class AdminAndRoleManagementAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 

@@ -99,7 +99,13 @@ test-simple:
 	pytest --disable-warnings
 
 coverage:
-	pytest --cov=zscaler --cov-report html
+	pytest --cov=zscaler --cov-report term
+
+coverage\:zia:
+	pytest tests/integration/zia --cov=zscaler/zia --cov-report term
+
+coverage\:zpa:
+	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
 
 docs: clean-docs
 	$(MAKE) -C docs html

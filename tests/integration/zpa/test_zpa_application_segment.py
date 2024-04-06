@@ -16,8 +16,10 @@
 
 
 import pytest
+
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
+
 
 @pytest.fixture
 def fs():
@@ -28,7 +30,7 @@ class TestApplicationSegment:
     """
     Integration Tests for the Applications Segment
     """
-    
+
     @pytest.mark.asyncio
     async def test_application_segment(self, fs):
         client = MockZPAClient(fs)
@@ -61,15 +63,17 @@ class TestApplicationSegment:
                 tcp_quick_ack_assistant=True,
                 tcp_quick_ack_read_assistant=True,
             )
-            app_connector_group_id = created_app_connector_group['id']
+            app_connector_group_id = created_app_connector_group["id"]
         except Exception as exc:
             errors.append(f"Creating App Connector Group failed: {exc}")
-            
+
         # Create a Segment Group
         try:
             segment_group_name = "tests-" + generate_random_string()
-            created_segment_group = client.segment_groups.add_group(name=segment_group_name, enabled=True)
-            segment_group_id = created_segment_group['id']
+            created_segment_group = client.segment_groups.add_group(
+                name=segment_group_name, enabled=True
+            )
+            segment_group_id = created_segment_group["id"]
         except Exception as exc:
             errors.append(f"Creating Segment Group failed: {exc}")
 
@@ -81,9 +85,11 @@ class TestApplicationSegment:
                 name=server_group_name,
                 description=server_group_description,
                 dynamic_discovery=True,
-                app_connector_group_ids=[app_connector_group_id],  # List of App Connector Group IDs
+                app_connector_group_ids=[
+                    app_connector_group_id
+                ],  # List of App Connector Group IDs
             )
-            server_group_id = created_server_group['id']
+            server_group_id = created_server_group["id"]
         except Exception as exc:
             errors.append(f"Creating Server Group failed: {exc}")
 
@@ -99,37 +105,41 @@ class TestApplicationSegment:
                 server_group_ids=[server_group_id],
                 tcp_port_ranges=["80", "80"],
             )
-            app_segment_id = app_segment['id']
+            app_segment_id = app_segment["id"]
         except Exception as exc:
             errors.append(f"Creating Application Segment failed: {exc}")
 
         # Test retrieving the specific Application Segment
         try:
             remote_app = client.app_segments.get_segment(segment_id=app_segment_id)
-            assert remote_app['id'] == app_segment_id
+            assert remote_app["id"] == app_segment_id
         except Exception as exc:
             errors.append(f"Retrieving Application Segment failed: {exc}")
 
         # Test listing Application Segments
         try:
             apps = client.app_segments.list_segments()
-            assert any(app['id'] == app_segment_id for app in apps)
+            assert any(app["id"] == app_segment_id for app in apps)
         except Exception as exc:
             errors.append(f"Listing Application Segments failed: {exc}")
 
         # Test updating the Application Segment
         try:
             updated_description = "Updated " + generate_random_string()
-            client.app_segments.update_segment(segment_id=app_segment_id, description=updated_description)
+            client.app_segments.update_segment(
+                segment_id=app_segment_id, description=updated_description
+            )
             updated_app = client.app_segments.get_segment(segment_id=app_segment_id)
-            assert updated_app['description'] == updated_description
+            assert updated_app["description"] == updated_description
         except Exception as exc:
             errors.append(f"Updating Application Segment failed: {exc}")
 
         # Cleanup resources
         if app_segment_id:
             try:
-                client.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
+                client.app_segments.delete_segment(
+                    segment_id=app_segment_id, force_delete=True
+                )
             except Exception as exc:
                 errors.append(f"Deleting Application Segment failed: {exc}")
 
@@ -145,4 +155,6 @@ class TestApplicationSegment:
             except Exception as exc:
                 errors.append(f"Deleting Segment Group failed: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the Application Segment lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the Application Segment lifecycle test: {errors}"

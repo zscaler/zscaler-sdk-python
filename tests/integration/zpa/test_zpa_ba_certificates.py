@@ -16,6 +16,7 @@
 
 
 import pytest
+
 from tests.integration.zpa.conftest import MockZPAClient
 
 
@@ -48,20 +49,34 @@ class TestBaCertificate:
         if certificate_id:
             # Fetch the selected certificate by its ID
             try:
-                fetched_certificate = client.certificates.get_certificate(certificate_id)
-                assert fetched_certificate is not None, "Expected a valid certificate object"
-                assert fetched_certificate.get("id") == certificate_id, "Mismatch in certificate ID"
+                fetched_certificate = client.certificates.get_certificate(
+                    certificate_id
+                )
+                assert (
+                    fetched_certificate is not None
+                ), "Expected a valid certificate object"
+                assert (
+                    fetched_certificate.get("id") == certificate_id
+                ), "Mismatch in certificate ID"
             except Exception as exc:
                 errors.append(f"Fetching certificate by ID failed: {str(exc)}")
 
             # Attempt to retrieve the certificate by name
             try:
                 certificate_name = first_certificate.get("name")
-                certificate_by_name = client.certificates.get_certificate_by_name(certificate_name)
-                assert certificate_by_name is not None, "Expected a valid certificate object when searching by name"
-                assert certificate_by_name.get("id") == certificate_id, "Mismatch in certificate ID when searching by name"
+                certificate_by_name = client.certificates.get_certificate_by_name(
+                    certificate_name
+                )
+                assert (
+                    certificate_by_name is not None
+                ), "Expected a valid certificate object when searching by name"
+                assert (
+                    certificate_by_name.get("id") == certificate_id
+                ), "Mismatch in certificate ID when searching by name"
             except Exception as exc:
                 errors.append(f"Fetching certificate by name failed: {str(exc)}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during certificate operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during certificate operations test: {errors}"
