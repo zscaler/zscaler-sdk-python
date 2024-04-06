@@ -17,12 +17,12 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.zia import ZIAClient
+
 from zscaler.utils import convert_keys, snake_to_camel
+from zscaler.zia import ZIAClient
 
 
 class TrafficForwardingAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 
@@ -111,33 +111,6 @@ class TrafficForwardingAPI:
         )
         if isinstance(response, Response):
             return None
-        return response
-
-    def list_region_geo_coordinates(self, **kwargs):
-        """
-        Returns a list of regions based on geographic coordinates.
-
-        Keyword Args:
-            **latitude (float, optional):
-                Latitude to search for.
-            **longitude (float, optional):
-                Longitude to search for.
-
-        Returns:
-            The raw response from the API.
-
-        Examples:
-            >>> regions = zia.traffic.list_region_geo_coordinates(latitude=41.0, longitude=117.0)
-            >>> print(regions)
-
-        """
-
-        valid_params = ["latitude", "longitude"]
-        query_params = {
-            k: v for k, v in kwargs.items() if k in valid_params and v is not None
-        }
-
-        response = self.rest.get("region/byGeoCoordinates", params=query_params)
         return response
 
     def list_vips_recommended(self, source_ip: str, **kwargs) -> BoxList:
@@ -600,14 +573,13 @@ class TrafficForwardingAPI:
             "ipAddress": ip_address,
         }
         response = self.rest.post("staticIP/validate", json=payload)
-        
+
         # Check if the status code is 200 and the response body text is "SUCCESS"
         if response.status_code == 200 and response.text.strip().upper() == "SUCCESS":
             return True
         else:
             # Optionally, you could log response.text or response.status_code here for debugging
             return False
-
 
     def update_static_ip(self, static_ip_id: str, **kwargs) -> Box:
         """
@@ -910,3 +882,85 @@ class TrafficForwardingAPI:
 
         """
         return self.rest.delete(f"vpnCredentials/{credential_id}").status_code
+
+    def list_region_geo_coordinates(self, latitude: int, longitude: int) -> Box:
+        """
+        Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
+        coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
+        state, etc.
+
+        Args:
+            latitude (int): The latitude of the location.
+            longitude (int): The longitude of the location.
+
+        Returns:
+            :obj:`Box`: The geographical data of the region or city that is located in the specified coordinates.
+
+        Examples:
+            Get the geographical data of the region or city that is located in the specified coordinates::
+
+                print(zia.locations.get_geo_by_coordinates(37.3860517, -122.0838511))
+
+        """
+        payload = {"latitude": latitude, "longitude": longitude}
+        return self.rest.get("region/byGeoCoordinates", params=payload)
+
+    def get_geo_by_ip(self, ip: str) -> Box:
+        """
+        Retrieves the geographical data of the region or city that is located in the specified IP address. The
+        geographical data includes the city name, state, country, geographical ID of the city and state, etc.
+
+        Args:
+            ip (str): The IP address of the location.
+
+        Returns:
+            :obj:`Box`: The geographical data of the region or city that is located in the specified IP address.
+
+        Examples:
+            Get the geographical data of the region or city that is located in the specified IP address::
+
+                print(zia.locations.get_geo_by_ip("8.8.8.8")
+        """
+        return self.rest.get(f"region/byIPAddress/{ip}")
+
+    def list_cities_by_name(self, **kwargs) -> BoxList:
+        """
+        Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
+         data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
+         country, postal code, etc.
+
+        Args:
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
+            prefix (str): The prefix string to search for cities.
+            page (int): The page number of the results.
+            page_size (int): The number of results per page.
+
+        Returns:
+            :obj:`BoxList`: The list of cities (along with their geographical data) that match the prefix search.
+
+        Examples:
+            Get the list of cities (along with their geographical data) that match the prefix search::
+
+                for city in zia.locations.list_cities_by_name(prefix="San Jose"):
+                    print(city)
+
+        Notes:
+            Very broad or generic search terms may return a large number of results which can take a long time to be
+            returned. Ensure you narrow your search result as much as possible to avoid this.
+
+        """
+        data_key_name = "cities"  # Adjust this to the actual key if different
+        response, error = self.rest.get_paginated_data(
+            path="region/search",
+            params=kwargs,
+            data_key_name=data_key_name,
+            data_per_page=kwargs.get(
+                "page_size", 500
+            ),  # Use the page_size from kwargs or default to 500
+        )
+        if error:
+            raise Exception(error)
+
+        return response

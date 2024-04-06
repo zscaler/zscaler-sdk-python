@@ -17,12 +17,12 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.utils import snake_to_camel
+
+from zscaler.utils import Iterator, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
 class LocationsAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 
@@ -70,6 +70,7 @@ class LocationsAPI:
         if isinstance(response, Response):
             return None
         return response
+        # return BoxList(Iterator(self.rest, "locations", **kwargs))
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """

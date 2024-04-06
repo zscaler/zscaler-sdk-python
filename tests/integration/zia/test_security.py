@@ -15,11 +15,14 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
+
 
 @pytest.fixture
 def fs():
     yield
+
 
 class TestSecurityWhitelistBlacklist:
     """
@@ -32,7 +35,9 @@ class TestSecurityWhitelistBlacklist:
         url_to_add = "example.com"
         try:
             updated_whitelist = client.security.add_urls_to_whitelist([url_to_add])
-            assert url_to_add in updated_whitelist, f"{url_to_add} not added to whitelist."
+            assert (
+                url_to_add in updated_whitelist
+            ), f"{url_to_add} not added to whitelist."
         except Exception as exc:
             pytest.fail(f"Failed to add URL to whitelist: {exc}")
 
@@ -51,7 +56,9 @@ class TestSecurityWhitelistBlacklist:
         url_to_replace = ["newsite.com"]
         try:
             updated_whitelist = client.security.replace_whitelist(url_to_replace)
-            assert url_to_replace[0] in updated_whitelist, "Whitelist replace operation failed."
+            assert (
+                url_to_replace[0] in updated_whitelist
+            ), "Whitelist replace operation failed."
         except Exception as exc:
             pytest.fail(f"Failed to replace whitelist: {exc}")
 
@@ -60,8 +67,12 @@ class TestSecurityWhitelistBlacklist:
         client = MockZIAClient(fs)
         url_to_delete = "example.com"
         try:
-            updated_whitelist = client.security.delete_urls_from_whitelist([url_to_delete])
-            assert url_to_delete not in updated_whitelist, f"{url_to_delete} was not deleted from whitelist."
+            updated_whitelist = client.security.delete_urls_from_whitelist(
+                [url_to_delete]
+            )
+            assert (
+                url_to_delete not in updated_whitelist
+            ), f"{url_to_delete} was not deleted from whitelist."
         except Exception as exc:
             pytest.fail(f"Failed to delete URL from whitelist: {exc}")
 
@@ -71,7 +82,9 @@ class TestSecurityWhitelistBlacklist:
         url_to_add = "badexample.com"
         try:
             updated_blacklist = client.security.add_urls_to_blacklist([url_to_add])
-            assert url_to_add in updated_blacklist, f"{url_to_add} not added to blacklist."
+            assert (
+                url_to_add in updated_blacklist
+            ), f"{url_to_add} not added to blacklist."
         except Exception as exc:
             pytest.fail(f"Failed to add URL to blacklist: {exc}")
 
@@ -90,7 +103,9 @@ class TestSecurityWhitelistBlacklist:
         new_blacklist_urls = ["newbadexample.com"]
         try:
             updated_blacklist = client.security.replace_blacklist(new_blacklist_urls)
-            assert new_blacklist_urls[0] in updated_blacklist, "Blacklist replace operation failed."
+            assert (
+                new_blacklist_urls[0] in updated_blacklist
+            ), "Blacklist replace operation failed."
         except Exception as exc:
             pytest.fail(f"Failed to replace blacklist: {exc}")
 
@@ -99,6 +114,8 @@ class TestSecurityWhitelistBlacklist:
         client = MockZIAClient(fs)
         try:
             result = client.security.erase_blacklist()
-            assert result == 204 or "successfully erased" in result.lower(), "Failed to erase blacklist."
+            assert (
+                result == 204 or "successfully erased" in result.lower()
+            ), "Failed to erase blacklist."
         except Exception as exc:
             pytest.fail(f"Failed to erase blacklist: {exc}")

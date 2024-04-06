@@ -15,6 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zpa.conftest import MockZPAClient
 
 
@@ -80,4 +81,6 @@ class TestTrustedNetworks:
             errors.append(f"Unexpected error during trusted networks test: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during trusted network operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during trusted network operations test: {errors}"

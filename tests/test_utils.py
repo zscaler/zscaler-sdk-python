@@ -15,15 +15,16 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import ipaddress
 import random
 import string
-import ipaddress
 
 
 # Function to generate a random string
 def generate_random_string(length=10):
     letters = string.ascii_lowercase
     return "".join(random.choice(letters) for i in range(length))
+
 
 # Function to generate a random IP address from a given subnet
 def generate_random_ip(subnet):

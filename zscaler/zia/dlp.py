@@ -17,12 +17,12 @@
 
 from box import Box, BoxList
 from requests import Response
+
 from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
 
 
 class DLPAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 
@@ -73,7 +73,7 @@ class DLPAPI:
             if status_code != 200:
                 return None
         return response
-    
+
     def add_dict(
         self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs
     ) -> Box:
@@ -361,7 +361,9 @@ class DLPAPI:
 
         """
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()}
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_dlp_engines(engine_id).items()
+        }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -495,7 +497,7 @@ class DLPAPI:
             if icap.get("name") == name:
                 return icap
         return None
-    
+
     def list_dlp_incident_receiver(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP Incident Receiver.
@@ -552,7 +554,6 @@ class DLPAPI:
         # If no receiver matches the given name
         return None
 
-    
     def list_dlp_idm_profiles(self, query: str = None) -> BoxList:
         """
         Returns the list of ZIA DLP IDM Profiles.
@@ -598,6 +599,13 @@ class DLPAPI:
         if isinstance(response, Response):
             return None
         return response
+
+    def get_dlp_idm_profile_by_name(self, profile_name):
+        profiles = self.list_dlp_idm_profiles()
+        for profile in profiles:
+            if profile.get("profile_name") == profile_name:
+                return profile
+        return None
 
     def list_dlp_templates(self, query: str = None) -> BoxList:
         """

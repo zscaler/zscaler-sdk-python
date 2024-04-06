@@ -16,13 +16,14 @@
 
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
-from tests.test_utils import generate_random_string, generate_random_ip
+from tests.test_utils import generate_random_ip, generate_random_string
+
 
 @pytest.fixture
 def fs():
     yield
-
 
 
 class TestTrafficStaticIP:
@@ -66,16 +67,22 @@ class TestTrafficStaticIP:
             if static_ip_id:
                 try:
                     updated_comment = comment + " Updated"
-                    client.traffic.update_static_ip(static_ip_id, comment=updated_comment)
+                    client.traffic.update_static_ip(
+                        static_ip_id, comment=updated_comment
+                    )
                     updated_static_ip = client.traffic.get_static_ip(static_ip_id)
-                    assert updated_static_ip.comment == updated_comment, "Failed to update comment"
+                    assert (
+                        updated_static_ip.comment == updated_comment
+                    ), "Failed to update comment"
                 except Exception as exc:
                     errors.append(f"Failed to update static IP: {exc}")
 
             # Attempt to list static IPs and check if the updated IP is in the list
             try:
                 ip_list = client.traffic.list_static_ips()
-                assert any(ip.id == static_ip_id for ip in ip_list), "Updated IP not found in list"
+                assert any(
+                    ip.id == static_ip_id for ip in ip_list
+                ), "Updated IP not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list static IPs: {exc}")
 
@@ -84,9 +91,13 @@ class TestTrafficStaticIP:
             if static_ip_id:
                 try:
                     delete_response_code = client.traffic.delete_static_ip(static_ip_id)
-                    assert str(delete_response_code) == "204", "Failed to delete static IP"
+                    assert (
+                        str(delete_response_code) == "204"
+                    ), "Failed to delete static IP"
                 except Exception as exc:
                     errors.append(f"Cleanup failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the static ip lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the static ip lifecycle test: {errors}"

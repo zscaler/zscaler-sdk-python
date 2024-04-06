@@ -17,6 +17,7 @@
 
 from box import Box, BoxList
 from requests import Response
+
 from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
@@ -89,7 +90,7 @@ class RuleLabelsAPI:
             if engine.get("name") == name:
                 return engine
         return None
-    
+
     def add_label(self, name: str, **kwargs) -> Box:
         """
         Creates a new ZIA Rule Label.

@@ -15,18 +15,21 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
+
 
 @pytest.fixture
 def fs():
     yield
 
+
 class TestLocationManagement:
     """
     Integration Tests for the ZIA Location Management
     """
-    
+
     @pytest.mark.asyncio
     async def test_location_management_vpn_ufqdn_type(self, fs):
         client = MockZIAClient(fs)
@@ -41,7 +44,7 @@ class TestLocationManagement:
                 created_vpn_credential = client.traffic.add_vpn_credential(
                     authentication_type="UFQDN",
                     pre_shared_key="testkey-" + generate_random_string(),
-                    fqdn=email
+                    fqdn=email,
                 )
                 vpn_id = created_vpn_credential.get("id", None)
                 assert vpn_id is not None, "VPN Credential creation failed"
@@ -50,7 +53,9 @@ class TestLocationManagement:
 
             # Create Location Management
             try:
-                location_name = "Integration test location - " + generate_random_string()
+                location_name = (
+                    "Integration test location - " + generate_random_string()
+                )
                 created_location = client.locations.add_location(
                     name=location_name,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
@@ -61,7 +66,7 @@ class TestLocationManagement:
                     xff_forward_enabled=True,
                     ofw_enabled=True,
                     ips_control=True,
-                    vpn_credentials=[{'id': vpn_id, 'type': 'UFQDN'}]
+                    vpn_credentials=[{"id": vpn_id, "type": "UFQDN"}],
                 )
                 location_id = created_location.get("id", None)
                 assert location_id is not None, "Location creation failed"
@@ -71,7 +76,9 @@ class TestLocationManagement:
             try:
                 # Verify the location management by retrieving it
                 retrieved_location = client.locations.get_location(location_id)
-                assert retrieved_location["id"] == location_id, "Incorrect location retrieved"
+                assert (
+                    retrieved_location["id"] == location_id
+                ), "Incorrect location retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Location Management failed: {exc}")
 
@@ -83,7 +90,9 @@ class TestLocationManagement:
                     description=updated_description,
                 )
                 updated_location = client.locations.get_location(location_id)
-                assert updated_location["description"] == updated_description, "Location Management update failed"
+                assert (
+                    updated_location["description"] == updated_description
+                ), "Location Management update failed"
             except Exception as exc:
                 errors.append(f"Updating Location Management failed: {exc}")
 
@@ -92,7 +101,9 @@ class TestLocationManagement:
             cleanup_errors = []
             if location_id:
                 try:
-                    delete_status_location = client.locations.delete_location(location_id)
+                    delete_status_location = client.locations.delete_location(
+                        location_id
+                    )
                     assert delete_status_location == 204, "Location deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting location failed: {exc}")
@@ -107,4 +118,6 @@ class TestLocationManagement:
             errors.extend(cleanup_errors)
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the location management lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the location management lifecycle test: {errors}"
