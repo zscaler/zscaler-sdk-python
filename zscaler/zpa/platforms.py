@@ -39,4 +39,4 @@ class PlatformsAPI:
                     print(platform)
 
         """
-        return self._get("platform")
+        return self.rest.get("platform")

@@ -101,6 +101,15 @@ class TestFirewallRules:
             except Exception as exc:
                 errors.append(f"Updating Firewall Rule failed: {exc}")
 
+            try:
+                # Retrieve the list of all rules
+                rules = client.firewall.list_rules()
+                # Check if the newly created location is in the list of rules
+                found_rule = any(rule ["id"] == rule_id for rule in rules)
+                assert found_rule, "Newly created rule not found in the list of rules."
+            except Exception as exc:
+                errors.append(f"Listing rules failed: {exc}")
+
         finally:
             cleanup_errors = []
             try:

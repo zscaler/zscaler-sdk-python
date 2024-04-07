@@ -32,3 +32,8 @@ def generate_random_ip(subnet):
     # Generate a random IP within the subnet, excluding the network and broadcast addresses
     random_ip = random.choice(list(network.hosts()))
     return str(random_ip)
+
+def generate_random_password(length=12):
+    """Generate a random string of letters, digits, and special characters."""
+    characters = string.ascii_letters + string.digits + "!@#$%^&*()"
+    return ''.join(random.choice(characters) for i in range(length))
