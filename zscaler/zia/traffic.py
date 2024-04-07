@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import convert_keys, snake_to_camel
+from zscaler.utils import Iterator, convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -58,10 +58,7 @@ class TrafficForwardingAPI:
             ...    print(tunnel)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/greTunnels", data_key_name="list", **kwargs
-        )
-        return list
+        return BoxList(Iterator(self.rest, "greTunnels", **kwargs))
 
     def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
@@ -99,15 +96,10 @@ class TrafficForwardingAPI:
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
 
         """
-        # payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-
-        valid_params = ["internalIpRange", "staticIp", "limit"]
-        query_params = {
-            k: v for k, v in kwargs.items() if k in valid_params and v is not None
-        }
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
         response = self.rest.get(
-            "greTunnels/availableInternalIpRanges", params=query_params
+            "greTunnels/availableInternalIpRanges", params=payload
         )
         if isinstance(response, Response):
             return None
@@ -273,10 +265,11 @@ class TrafficForwardingAPI:
             ...    print(vip)
 
         """
-        response = self.rest.get("/vips", **kwargs)
-        if isinstance(response, Response):
-            return None
-        return response
+        return BoxList(Iterator(self.rest, "vips", **kwargs))
+        # response = self.rest.get("/vips", **kwargs)
+        # if isinstance(response, Response):
+        #     return None
+        # return response
 
     def add_gre_tunnel(
         self,
@@ -359,7 +352,7 @@ class TrafficForwardingAPI:
 
     def update_gre_tunnel(
         self,
-        tunnel_id: int,
+        tunnel_id: str,
         source_ip: str = None,
         primary_dest_vip_id: str = None,
         secondary_dest_vip_id: str = None,
@@ -367,57 +360,33 @@ class TrafficForwardingAPI:
     ) -> Box:
         """
         Update an existing GRE tunnel.
-
-        Args:
-            tunnel_id (int): Unique identifier of the GRE tunnel to be updated.
-            source_ip (str): The source IP address of the GRE tunnel.
-            primary_dest_vip_id (str): The unique identifier for the primary destination VIP of the GRE tunnel.
-            secondary_dest_vip_id (str): The unique identifier for the secondary destination VIP of the GRE tunnel.
-
-        Keyword Args:
-            Additional parameters such as 'comment', 'ip_unnumbered', etc.
-
-        Returns:
-            Box: Updated GRE tunnel object.
         """
 
         if tunnel_id is None:
-            raise ValueError(
-                "tunnel_id is a required parameter for updating a GRE tunnel."
-            )
+            raise ValueError("tunnel_id is a required parameter for updating a GRE tunnel.")
 
-        # Extract IDs from list if provided as such
-        primary_vip_id = (
-            primary_dest_vip_id[0]
-            if isinstance(primary_dest_vip_id, list)
-            else primary_dest_vip_id
-        )
-        secondary_vip_id = (
-            secondary_dest_vip_id[0]
-            if isinstance(secondary_dest_vip_id, list)
-            else secondary_dest_vip_id
-        )
+        # Determine VIPs based on source_ip if not provided
+        if primary_dest_vip_id is None or secondary_dest_vip_id is None:
+            recommended_vips = self.get_closest_diverse_vip_ids(source_ip)
+            primary_dest_vip_id = primary_dest_vip_id or recommended_vips[0]
+            secondary_dest_vip_id = secondary_dest_vip_id or recommended_vips[1]
 
-        payload = {}
-        if source_ip:
-            payload["sourceIp"] = source_ip
-        if primary_vip_id:
-            payload["primaryDestVip"] = {"id": primary_vip_id}
-        if secondary_vip_id:
-            payload["secondaryDestVip"] = {"id": secondary_vip_id}
+        payload = {
+            "sourceIp": source_ip,
+            "primaryDestVip": {"id": primary_dest_vip_id},
+            "secondaryDestVip": {"id": secondary_dest_vip_id},
+        }
 
-        # Add additional optional parameters
+        # Include additional optional parameters
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"greTunnels/{tunnel_id}", json=payload)
-
         if isinstance(response, Response) and not response.ok:
             # Handle error response
             raise Exception(
                 f"API call failed with status {response.status_code}: {response.json()}"
             )
-
         # Return the updated object
         return self.get_gre_tunnel(tunnel_id)
 
