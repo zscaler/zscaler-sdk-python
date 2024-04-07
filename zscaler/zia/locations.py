@@ -66,7 +66,7 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        response = self.rest.get("/locations")
+        response = self.rest.get("/locations", **kwargs)
         if isinstance(response, Response):
             return None
         return response
@@ -271,7 +271,7 @@ class LocationsAPI:
 
         """
         return self.rest.get(
-            f"locations/{location_id}/sublocations", max_pages=1, **kwargs
+            f"locations/{location_id}/sublocations", **kwargs
         )
 
     def list_locations_lite(self, **kwargs) -> BoxList:
@@ -586,3 +586,85 @@ class LocationsAPI:
         """
         params = {"page": page, "pageSize": page_size, "search": group_name}
         return self.rest.get("locations/groups/lite", json=params)
+
+    def list_region_geo_coordinates(self, latitude: int, longitude: int) -> Box:
+        """
+        Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
+        coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
+        state, etc.
+
+        Args:
+            latitude (int): The latitude of the location.
+            longitude (int): The longitude of the location.
+
+        Returns:
+            :obj:`Box`: The geographical data of the region or city that is located in the specified coordinates.
+
+        Examples:
+            Get the geographical data of the region or city that is located in the specified coordinates::
+
+                print(zia.locations.get_geo_by_coordinates(37.3860517, -122.0838511))
+
+        """
+        payload = {"latitude": latitude, "longitude": longitude}
+        return self.rest.get("region/byGeoCoordinates", params=payload)
+
+    def get_geo_by_ip(self, ip: str) -> Box:
+        """
+        Retrieves the geographical data of the region or city that is located in the specified IP address. The
+        geographical data includes the city name, state, country, geographical ID of the city and state, etc.
+
+        Args:
+            ip (str): The IP address of the location.
+
+        Returns:
+            :obj:`Box`: The geographical data of the region or city that is located in the specified IP address.
+
+        Examples:
+            Get the geographical data of the region or city that is located in the specified IP address::
+
+                print(zia.locations.get_geo_by_ip("8.8.8.8")
+        """
+        return self.rest.get(f"region/byIPAddress/{ip}")
+
+    def list_cities_by_name(self, **kwargs) -> BoxList:
+        """
+        Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
+         data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
+         country, postal code, etc.
+
+        Args:
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
+            prefix (str): The prefix string to search for cities.
+            page (int): The page number of the results.
+            page_size (int): The number of results per page.
+
+        Returns:
+            :obj:`BoxList`: The list of cities (along with their geographical data) that match the prefix search.
+
+        Examples:
+            Get the list of cities (along with their geographical data) that match the prefix search::
+
+                for city in zia.locations.list_cities_by_name(prefix="San Jose"):
+                    print(city)
+
+        Notes:
+            Very broad or generic search terms may return a large number of results which can take a long time to be
+            returned. Ensure you narrow your search result as much as possible to avoid this.
+
+        """
+        data_key_name = "cities"  # Adjust this to the actual key if different
+        response, error = self.rest.get_paginated_data(
+            path="region/search",
+            params=kwargs,
+            data_key_name=data_key_name,
+            data_per_page=kwargs.get(
+                "page_size", 500
+            ),  # Use the page_size from kwargs or default to 500
+        )
+        if error:
+            raise Exception(error)
+
+        return response

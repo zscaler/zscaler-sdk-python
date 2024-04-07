@@ -17,7 +17,7 @@
 
 from box import Box, BoxList
 from zscaler.zia import ZIAClient
-
+from requests import Response
 from zscaler.utils import convert_keys, snake_to_camel
 
 
@@ -92,7 +92,7 @@ class UserManagementAPI:
             >>> department = zia.users.get_department('99999')
 
         """
-        return self._get(f"departments/{department_id}")
+        return self.rest.get(f"departments/{department_id}")
 
     def list_groups(
         self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
@@ -154,7 +154,7 @@ class UserManagementAPI:
             >>> user_group = zia.users.get_group('99999')
 
         """
-        return self._get(f"groups/{group_id}")
+        return self.rest.get(f"groups/{group_id}")
 
     def list_users(
         self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
@@ -264,8 +264,7 @@ class UserManagementAPI:
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[key] = value
-
-        return self._post("users", json=payload)
+        return self.rest.post("users", json=payload)
 
     def bulk_delete_users(self, user_ids: list) -> Box:
         """
@@ -284,7 +283,7 @@ class UserManagementAPI:
 
         payload = {"ids": user_ids}
 
-        return self._post("users/bulkDelete", json=payload)
+        return self.rest.post("users/bulkDelete", json=payload)
 
     def get_user(self, user_id: str = None, email: str = None) -> Box:
         """
@@ -317,7 +316,7 @@ class UserManagementAPI:
             )
             return next(user, None)
 
-        return self._get(f"users/{user_id}")
+        return self.rest.get(f"users/{user_id}")
 
     def update_user(
         self,
@@ -379,7 +378,7 @@ class UserManagementAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"users/{user_id}", json=payload)
+        return self.rest.put(f"users/{user_id}", json=payload)
 
     def delete_user(self, user_id: str) -> int:
         """
@@ -395,4 +394,4 @@ class UserManagementAPI:
             >>> user = zia.users.delete_user('99999')
 
         """
-        return self._delete(f"users/{user_id}", box=False).status_code
+        return self.rest.delete(f"users/{user_id}", box=False).status_code

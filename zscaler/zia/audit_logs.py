@@ -35,7 +35,7 @@ class AuditLogsAPI:
             >>> print(zia.audit_logs.status())
 
         """
-        return self._get("auditlogEntryReport")
+        return self.rest.get("auditlogEntryReport")
 
     def create(self, start_time: str, end_time: str) -> int:
         """
