@@ -66,11 +66,11 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        response = self.rest.get("/locations", **kwargs)
-        if isinstance(response, Response):
-            return None
-        return response
-        # return BoxList(Iterator(self.rest, "locations", **kwargs))
+        # response = self.rest.get("/locations", **kwargs)
+        # if isinstance(response, Response):
+        #     return None
+        # return response
+        return BoxList(Iterator(self.rest, "locations", **kwargs))
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """

@@ -18,23 +18,25 @@ import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
 
+
 @pytest.fixture
 def fs():
     yield
-
 
 class TestUsers:
     """
     Integration Tests for the User Management
     """
-          
+    
     @pytest.mark.asyncio
     async def test_user_departments(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
+        
         try:
-            # List all departments
-            depts = client.users.list_departments()
+            # List departments with optional parameters
+            depts = client.users.list_departments(page_size=2, max_pages=1)
+            assert len(depts) <= 2, "More departments returned than expected with page_size=2"
             assert isinstance(depts, list), "Expected a list of departments"
             if depts:  # If there are any departments
                 # Select the first department for further testing
@@ -42,34 +44,21 @@ class TestUsers:
                 department_id = first_dept.get("id")
 
                 # Fetch the selected department by its ID
-                try:
-                    fetched_dept = client.users.get_department(department_id)
-                    assert fetched_dept is not None, "Expected a valid department object"
-                    assert (
-                        fetched_dept.get("id") == department_id
-                    ), "Mismatch in department ID"
-                except Exception as exc:
-                    errors.append(f"Fetching department by ID failed: {exc}")
+                fetched_dept = client.users.get_department(department_id)
+                assert fetched_dept is not None, "Expected a valid department object"
+                assert fetched_dept.get("id") == department_id, "Mismatch in department ID"
 
                 # Attempt to retrieve the department by name
-                try:
-                    dept_name = fetched_dept.get("name")
-                    dept_by_name = client.users.get_dept_by_name(dept_name)
-                    assert (
-                        dept_by_name is not None
-                    ), "Expected a valid department object when searching by name"
-                    assert (
-                        dept_by_name.get("id") == department_id
-                    ), "Mismatch in department ID when searching by name"
-                except Exception as exc:
-                    errors.append(f"Fetching department by name failed: {exc}")
+                dept_name = fetched_dept.get("name")
+                dept_by_name = client.users.get_dept_by_name(dept_name)
+                assert dept_by_name is not None, "Expected a valid department object when searching by name"
+                assert dept_by_name.get("id") == department_id, "Mismatch in department ID when searching by name"
 
         except Exception as exc:
-            errors.append(f"Listing departments failed: {exc}")
+            errors.append(f"Test failed: {exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during departments test: {errors}"
-
 
     @pytest.mark.asyncio
     async def test_user_groups(self, fs):
@@ -77,39 +66,27 @@ class TestUsers:
         errors = []  # Initialize an empty list to collect errors
 
         try:
-            # List all departments
-            groups = client.users.list_groups()
-            assert isinstance(groups, list), "Expected a list of departments"
-            if groups:  # If there are any departments
-                # Select the first group for further testing
+            # List groups with optional parameters
+            groups = client.users.list_groups(page_size=2, max_pages=1, sort_order="ASC")
+            assert len(groups) <= 2, "More groups returned than expected with page_size=2"
+            assert isinstance(groups, list), "Expected a list of groups"
+            if groups:
                 first_group = groups[0]
                 group_id = first_group.get("id")
 
                 # Fetch the selected group by its ID
-                try:
-                    fetched_group = client.users.get_group(group_id)
-                    assert fetched_group is not None, "Expected a valid group object"
-                    assert (
-                        fetched_group.get("id") == group_id
-                    ), "Mismatch in group ID"
-                except Exception as exc:
-                    errors.append(f"Fetching group by ID failed: {exc}")
+                fetched_group = client.users.get_group(group_id)
+                assert fetched_group is not None, "Expected a valid group object"
+                assert fetched_group.get("id") == group_id, "Mismatch in group ID"
 
                 # Attempt to retrieve the group by name
-                try:
-                    group_name = fetched_group.get("name")
-                    group_by_name = client.users.get_group_by_name(group_name)
-                    assert (
-                        group_name is not None
-                    ), "Expected a valid group object when searching by name"
-                    assert (
-                        group_by_name.get("id") == group_id
-                    ), "Mismatch in group ID when searching by name"
-                except Exception as exc:
-                    errors.append(f"Fetching group by name failed: {exc}")
+                group_name = fetched_group.get("name")
+                group_by_name = client.users.get_group_by_name(group_name)
+                assert group_by_name is not None, "Expected a valid group object when searching by name"
+                assert group_by_name.get("id") == group_id, "Mismatch in group ID when searching by name"
 
         except Exception as exc:
-            errors.append(f"Listing groups failed: {exc}")
+            errors.append(f"Test failed: {exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during groups test: {errors}"

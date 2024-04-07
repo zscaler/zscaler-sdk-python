@@ -63,10 +63,7 @@ class FirewallPolicyAPI:
             ...    pprint(rule)
 
         """
-        response = self.rest.get("/firewallFilteringRules")
-        if isinstance(response, Response):
-            return None
-        return response
+        return self.rest.get("firewallFilteringRules")
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -162,7 +159,6 @@ class FirewallPolicyAPI:
         # Send POST request to create the rule
         response = self.rest.post("firewallFilteringRules", json=payload)
         if isinstance(response, Response):
-            # Handle error response
             status_code = response.status_code
             if status_code != 200:
                 raise Exception(
