@@ -31,54 +31,63 @@ class TestUsers:
     async def test_users(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
-
+        user_id = None
+        
         try:
             # Retrieve the first department's ID
             departments = client.users.list_departments(search='A000')
             department_id = departments[0]["id"] if departments else None
             assert department_id, "No departments available for assignment"
-
+        except Exception as exc:
+            errors.append(f"Department retrieval failed: {exc}")
+            
+        try:
             # Retrieve the first group's ID
             groups = client.users.list_groups(search='A000')
             group_id = groups[0]["id"] if groups else None
             assert group_id, "No groups available for assignment"
-
+        except Exception as exc:
+            errors.append(f"Group retrieval failed: {exc}")
+            
             # Generate a random password
             password = generate_random_password()
 
+        try:
             # Create a User Account
             created_user = client.users.add_user(
-                name='tests-'+ generate_random_string(),
-                email='tests-'+ generate_random_string()+"@bd-hashicorp.com",
-                password=password,
+                name='tests-' + generate_random_string(),
+                email='tests-' + generate_random_string() + "@bd-hashicorp.com",
+                password=generate_random_password(),
                 groups=[{'id': group_id}],
                 department=({'id': department_id}),
             )
             user_id = created_user.get("id", None)
-            assert user_id is not None, "User account creation failed"
-        except Exception as exc:
-            errors.append(f"User account creation failed: {exc}")
+            assert user_id, "User account creation failed"
 
+            # Activate Configuration
+            activation_response = client.activate.activate()
+            assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending"
+        except Exception as exc:
+            errors.append(f"User creation or activation failed: {exc}")
+            
         try:
-            # Verify the user by retrieving it
+            # Fetch and verify the user
             retrieved_user = client.users.get_user(user_id)
             assert retrieved_user["id"] == user_id, "Incorrect user account retrieved"
         except Exception as exc:
             errors.append(f"Retrieving User Account failed: {exc}")
-
+            
         try:
-            # Update the User Account
-            updated_password = generate_random_password()  # Generate a new password
-            client.users.update_user(
-                user_id,
-                password=updated_password,
-            )
-            # Since password is not returned in the API Response, we'll skip direct assertion on the password
-            # Instead, we could potentially check other fields if updated as part of the user update process
-            updated_user = client.users.get_user(user_id)
-            assert updated_user, "Failed to retrieve updated user account"
+                # Update the User Account
+                updated_password = generate_random_password()  # Generate a new password
+                client.users.update_user(
+                    user_id,
+                    password=updated_password,
+                )
+                # Reactivate Configuration after update
+                client.activate.activate()
         except Exception as exc:
-            errors.append(f"Updating User Account password failed: {exc}")
+            errors.append(f"Updating User Account password failed or activation after update failed: {exc}")
 
         try:
             # Example 1: List users using default settings
@@ -113,19 +122,21 @@ class TestUsers:
         except Exception as exc:
             errors.append(f"Listing users with specific parameters failed: {exc}")
 
-
         finally:
-            cleanup_errors = []
             if user_id:
                 try:
+                    # Delete the User Account
                     delete_status = client.users.delete_user(user_id)
                     assert delete_status == 204, "User Account deletion failed"
+                    
+                    # Reactivate Configuration after Deletion
+                    activation_response = client.activate.activate()
+                    assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending after deletion"
                 except Exception as exc:
-                    cleanup_errors.append(f"Deleting User Account failed: {exc}")
+                    errors.append(f"Deleting User Account or reactivation failed: {exc}")
 
-            errors.extend(cleanup_errors)
-        assert len(errors) == 0, f"Errors occurred during the user account lifecycle test: {errors}"
-
+            if errors:
+                raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
 
 
     # @pytest.mark.asyncio
