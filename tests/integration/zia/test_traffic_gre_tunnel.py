@@ -53,6 +53,7 @@ class TestTrafficGRETunnel:
         try:
             gre_tunnel = client.traffic.add_gre_tunnel(
                 source_ip=static_ip_address,  # Use the IP address from the created static IP
+                ip_unnumbered=True,
                 comment='tests-' + generate_random_string(),
             )
             assert gre_tunnel, "Failed to create GRE Tunnel"
@@ -67,6 +68,7 @@ class TestTrafficGRETunnel:
                 updated_gre_tunnel = client.traffic.update_gre_tunnel(
                     tunnel_id=gre_tunnel_ids[0],
                     source_ip=static_ip_address,
+                    ip_unnumbered=True,
                     comment=updated_comment
                 )
                 # No need to check for status_code; presence of 'comment' implies success
