@@ -19,13 +19,12 @@ import time
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.zia import ZIAClient
 
 from zscaler.utils import chunker, convert_keys, snake_to_camel
+from zscaler.zia import ZIAClient
 
 
 class URLCategoriesAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 
@@ -87,6 +86,13 @@ class URLCategoriesAPI:
         }
 
         return self.rest.get("urlCategories", params=payload)
+
+    def get_category_by_name(self, name):
+        categories = self.list_categories()
+        for category in categories:
+            if category.get("configured_name") == name:
+                return category
+        return None
 
     def get_quota(self) -> Box:
         """

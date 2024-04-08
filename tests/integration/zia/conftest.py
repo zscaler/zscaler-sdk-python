@@ -14,49 +14,51 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
-import pytest
-import responses
-
+import os
 from zscaler.zia import ZIAClientHelper
+from functools import wraps
+
+PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
 
-@pytest.fixture(name="session")
-def fixture_session():
-    return {
-        "authType": "ADMIN_LOGIN",
-        "obfuscateApiKey": False,
-        "passwordExpiryTime": 0,
-        "passwordExpiryDays": 0,
-    }
+class MockZIAClient(ZIAClientHelper):
+    def __init__(self, fs):
+        # Fetch credentials from environment variables
+        username = os.environ.get("ZIA_USERNAME")
+        password = os.environ.get("ZIA_PASSWORD")
+        api_key = os.environ.get("ZIA_API_KEY")
+        cloud = os.environ.get("ZIA_CLOUD")
+        sandbox_token = os.environ.get("ZIA_SANDBOX_TOKEN")
+
+        if PYTEST_MOCK_CLIENT in os.environ:
+            fs.pause()
+            super().__init__()
+            fs.resume()
+        else:
+            super().__init__(
+                username=username,
+                password=password,
+                api_key=api_key,
+                cloud=cloud,
+                sandbox_token=sandbox_token,
+                cache=None,
+                fail_safe=False,
+            )
 
 
-@pytest.fixture(name="zia")
-@responses.activate
-def zia(session):
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/authenticatedSession",
-        content_type="application/json",
-        json=session,
-        status=200,
-    )
-    # THIS IS A FAKE (EXAMPLE) USERNAME AND PASSWORD AND NOT USED IN PRODUCTION
-    return ZIAClientHelper(
-        username="test@example.com",
-        password="hunter2",
-        cloud="zscaler",
-        api_key="123456789abcdef",
-        sandbox_token="SANDBOXTOKEN",
-    )
+def stub_sleep(func):
+    """Decorator to speed up time.sleep function used in any methods under test."""
+    import time
+    from time import sleep
 
+    def newsleep(seconds):
+        sleep_speed_factor = 10.0
+        sleep(seconds / sleep_speed_factor)
 
-@pytest.fixture(name="paginated_items")
-def fixture_pagination_items():
-    def _method(num):
-        items = []
-        for x in range(0, num):
-            items.append({"id": x})
-        return items
+    time.sleep = newsleep
 
-    return _method
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper

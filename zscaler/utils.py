@@ -14,18 +14,20 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import argparse
 import base64
 import json as jsonp
 import logging
 import random
 import re
 import time
-import argparse
 from typing import Dict, Optional
 from urllib.parse import urlencode
+
 from box import Box, BoxList
 from requests import Response
 from restfly import APIIterator
+
 from zscaler.constants import RETRYABLE_STATUS_CODES
 
 logger = logging.getLogger("zscaler-sdk-python")
@@ -290,35 +292,20 @@ def remove_cloud_suffix(str_name: str) -> str:
 
 
 class Iterator(APIIterator):
-    """Iterator class."""
-
-    page_size = 500
-
-    def __init__(self, api, path: str = "", **kw):
-        """Initialize Iterator class."""
+    def __init__(self, api, path: str, **kw):
         super().__init__(api, **kw)
-
         self.path = path
-        self.max_items = kw.pop("max_items", 0)
-        self.max_pages = kw.pop("max_pages", 0)
-        self.payload = {}
-        if kw:
-            self.payload = {snake_to_camel(key): value for key, value in kw.items()}
+        self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
-    def _get_page(self) -> None:
-        """Iterator function to get the page."""
-        resp = self._api.get(
-            self.path,
-            params={**self.payload, "page": self.num_pages + 1},
-        )
+    def _get_page(self):
+        params = {**self.payload, "page": self.num_pages + 1}
+        response = self._api.get(self.path, params=params)
+
+        # Process the response as needed (similar to the original _get_page logic)
         try:
-            # If we are using ZPA then the API will return records under the
-            # 'list' key.
-            self.page = resp.get("list") or []
+            self.page = response.get("list") or []
         except AttributeError:
-            # If the list key doesn't exist then we're likely using ZIA so just
-            # return the full response.
-            self.page = resp
+            self.page = response
         finally:
             # If we use the default retry-after logic in Restfly then we are
             # going to keep seeing 429 messages in stdout. ZIA and ZPA have a

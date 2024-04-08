@@ -15,7 +15,6 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
-import pytest
 from zscaler.zpa import ZPAClientHelper
 from functools import wraps
 

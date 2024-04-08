@@ -210,6 +210,28 @@ class ZIAClientHelper(ZIAClient):
         self.auth_details = resp.json()
         return resp
 
+    def deauthenticate(self):
+        """
+        Ends the ZIA authentication session.
+        """
+        logout_url = self.url + "/authenticatedSession"
+
+        headers = self.headers.copy()
+        headers.update({"Cookie": f"JSESSIONID={self.session_id}"})
+
+        try:
+            response = requests.delete(
+                logout_url, headers=headers, timeout=self.timeout
+            )
+            if response.status_code == 204:
+                self.session_id = None
+                self.auth_details = None
+                return True
+            else:
+                return False
+        except requests.RequestException as e:
+            return False
+        
     def send(self, method, path, json=None, params=None, data=None, headers=None):
         """
         Send a request to the ZIA API.

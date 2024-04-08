@@ -37,7 +37,7 @@ class SSLInspectionAPI:
             >>> csr = zia.ssl.get_csr()
 
         """
-        return self._get("sslSettings/downloadcsr").text
+        return self.rest.get("sslSettings/downloadcsr").text
 
     def get_intermediate_ca(self) -> Box:
         """
@@ -50,7 +50,7 @@ class SSLInspectionAPI:
             >>> pprint(zia.ssl.get_intermediate_ca())
 
         """
-        return self._get("sslSettings/showcert")
+        return self.rest.get("sslSettings/showcert")
 
     def generate_csr(
         self,

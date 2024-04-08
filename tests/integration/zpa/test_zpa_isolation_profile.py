@@ -1,4 +1,5 @@
 import pytest
+
 from tests.integration.zpa.conftest import MockZPAClient
 
 
@@ -9,7 +10,7 @@ def fs():
 
 class TestIsolationProfile:
     """
-    Integration Tests for the Isolation Profile
+    Integration Tests for the Isolation Profile.
     """
 
     @pytest.mark.asyncio
@@ -17,41 +18,57 @@ class TestIsolationProfile:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
+        # Attempt to list all isolation profiles
         try:
-            # List all isolation profiles
             isolation_profiles = client.isolation_profile.list_profiles()
             assert isinstance(
                 isolation_profiles, list
             ), "Expected a list of isolation profiles"
-            if isolation_profiles:  # If there are any isolation profiles
-                # Select the first isolation profile for further testing
-                first_profile = isolation_profiles[0]
+        except Exception as exc:
+            errors.append(f"Listing isolation profiles failed: {str(exc)}")
+
+        # Process each isolation profile if the list is not empty
+        if isolation_profiles:
+            for first_profile in isolation_profiles:
                 profile_id = first_profile.get("id")
 
                 # Fetch the selected isolation profile by its ID
-                fetched_profile = client.isolation_profile.get_profile_by_id(profile_id)
-                assert (
-                    fetched_profile is not None
-                ), "Expected a valid isolation profile object"
-                assert (
-                    fetched_profile.get("id") == profile_id
-                ), "Mismatch in isolation profile ID"
+                try:
+                    fetched_profile = client.isolation_profile.get_profile_by_id(
+                        profile_id
+                    )
+                    assert (
+                        fetched_profile is not None
+                    ), "Expected a valid isolation profile object"
+                    assert (
+                        fetched_profile.get("id") == profile_id
+                    ), "Mismatch in isolation profile ID"
+                except Exception as exc:
+                    errors.append(
+                        f"Fetching isolation profile by ID failed: {str(exc)}"
+                    )
 
                 # Attempt to retrieve the isolation profile by name
-                profile_name = first_profile.get("name")
-                profile_by_name = client.isolation_profile.get_profile_by_name(
-                    profile_name
-                )
-                assert (
-                    profile_by_name is not None
-                ), "Expected a valid isolation profile object when searching by name"
-                assert (
-                    profile_by_name.get("id") == profile_id
-                ), "Mismatch in isolation profile ID when searching by name"
-        except Exception as exc:
-            errors.append(exc)
+                try:
+                    profile_name = first_profile.get("name")
+                    profile_by_name = client.isolation_profile.get_profile_by_name(
+                        profile_name
+                    )
+                    assert (
+                        profile_by_name is not None
+                    ), "Expected a valid isolation profile object when searching by name"
+                    assert (
+                        profile_by_name.get("id") == profile_id
+                    ), "Mismatch in isolation profile ID when searching by name"
+                except Exception as exc:
+                    errors.append(
+                        f"Fetching isolation profile by name failed: {str(exc)}"
+                    )
+
+                # Once we've tested one profile, exit the loop to avoid redundant testing
+                break
 
         # Assert that no errors occurred during the test
         assert (
             len(errors) == 0
-        ), f"Errors occurred during isolation profiles test: {errors}"
+        ), f"Errors occurred during isolation profile operations test: {errors}"
