@@ -39,7 +39,7 @@ class SecurityPolicyAPI:
         response = self.rest.get("security")
 
         # ZIA removes the whitelistUrls key from the JSON response when it's empty.
-        if "whitelist_urls" in self._get("security"):
+        if "whitelist_urls" in self.rest.get("security"):
             return response.whitelist_urls
         else:
             return (

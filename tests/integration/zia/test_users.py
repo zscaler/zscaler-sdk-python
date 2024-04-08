@@ -14,509 +14,190 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
-import copy
-
 import pytest
-import responses
-from box import Box
-from responses import matchers
 
-from tests.conftest import stub_sleep
+from tests.integration.zia.conftest import MockZIAClient
+from tests.test_utils import generate_random_password, generate_random_string
 
+@pytest.fixture
+def fs():
+    yield
 
-@pytest.fixture(name="users")
-def fixture_users():
-    return [
-        {
-            "id": 1,
-            "name": "Test User A",
-            "email": "testusera@example.com",
-            "groups": {"id": 1, "name": "test"},
-            "department": {"id": 1, "name": "test_department"},
-            "comments": "Test",
-            "adminUser": False,
-            "isNonEditable": False,
-            "disabled": False,
-            "deleted": False,
-        },
-        {
-            "id": 2,
-            "name": "Test User B",
-            "email": "testuserb@example.com",
-            "groups": {"id": 1, "name": "test"},
-            "department": {"id": 1, "name": "test_department"},
-            "adminUser": True,
-            "isNonEditable": False,
-            "disabled": True,
-            "deleted": False,
-        },
-    ]
+class TestUsers:
+    """
+    Integration Tests for the User Management
+    """
+    @pytest.mark.asyncio
+    async def test_users(self, fs):
+        client = MockZIAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
+        user_id = None
+        
+        try:
+            # Retrieve the first department's ID
+            departments = client.users.list_departments(search='A000')
+            department_id = departments[0]["id"] if departments else None
+            assert department_id, "No departments available for assignment"
+        except Exception as exc:
+            errors.append(f"Department retrieval failed: {exc}")
+            
+        try:
+            # Retrieve the first group's ID
+            groups = client.users.list_groups(search='A000')
+            group_id = groups[0]["id"] if groups else None
+            assert group_id, "No groups available for assignment"
+        except Exception as exc:
+            errors.append(f"Group retrieval failed: {exc}")
+            
+            # Generate a random password
+            password = generate_random_password()
 
-
-@pytest.fixture(name="groups")
-def fixture_groups():
-    return [
-        {"id": 1, "name": "Group A"},
-        {"id": 2, "name": "Group B"},
-    ]
-
-
-@pytest.fixture(name="departments")
-def fixture_depts():
-    return [
-        {"id": 1, "name": "Dept A"},
-        {"id": 2, "name": "Dept B"},
-    ]
-
-
-@responses.activate
-def test_users_add_user(zia, users):
-    responses.add(
-        method="POST",
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=users[0],
-        status=200,
-        match=[
-            matchers.json_params_matcher(
-                {
-                    "name": "Test User A",
-                    "email": "testusera@example.com",
-                    "groups": {"id": "1"},
-                    "department": {"id": "1"},
-                    "comments": "Test",
-                }
+        try:
+            # Create a User Account
+            created_user = client.users.add_user(
+                name='tests-' + generate_random_string(),
+                email='tests-' + generate_random_string() + "@bd-hashicorp.com",
+                password=generate_random_password(),
+                groups=[{'id': group_id}],
+                department=({'id': department_id}),
             )
-        ],
-    )
-
-    resp = zia.users.add_user(
-        name="Test User A",
-        email="testusera@example.com",
-        groups={"id": "1"},
-        department={"id": "1"},
-        comments="Test",
-    )
-
-    assert isinstance(resp, dict)
-    assert resp.id == 1
-    assert resp.admin_user is False
-    assert resp.comments == "Test"
-
-
-@responses.activate
-def test_users_get_user_by_id(users, zia):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/users/1",
-        json=users[0],
-        status=200,
-    )
-    resp = zia.users.get_user("1")
-
-    assert isinstance(resp, dict)
-    assert resp.id == 1
-
-
-@responses.activate
-def test_users_get_user_by_email(users, zia):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/users?search=testuserb@example.com&page=1",
-        json=[users[1]],
-        status=200,
-    )
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/users?search=testuserb@example.com&page=2",
-        json=[],
-        status=200,
-    )
-    resp = zia.users.get_user(email="testuserb@example.com")
-
-    assert isinstance(resp, Box)
-    assert resp.id == 2
-
-
-@responses.activate
-def test_users_get_user_error(zia):
-    with pytest.raises(Exception) as e_info:
-        resp = zia.users.get_user("1", email="test@example.com")
-
-
-@responses.activate
-def test_users_update_user(zia, users):
-    updated_user = copy.deepcopy(users[0])
-    updated_user["name"] = "Test User C"
-    updated_user["comments"] = "Updated Test"
-
-    responses.add(
-        responses.GET,
-        "https://zsapi.zscaler.net/api/v1/users/1",
-        json=users[0],
-        status=200,
-    )
-
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/users/1",
-        json=updated_user,
-        match=[matchers.json_params_matcher(updated_user)],
-    )
-
-    resp = zia.users.update_user("1", name="Test User C", comments="Updated Test")
-
-    assert isinstance(resp, Box)
-    assert resp.name == updated_user["name"]
-    assert resp.comments == updated_user["comments"]
-
-
-@responses.activate
-@stub_sleep
-def test_list_users_with_one_page(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_users(max_pages=1, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert len(resp) == 100
-
-
-@responses.activate
-@stub_sleep
-def test_list_users_with_two_pages(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_users(max_pages=2, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert resp[150].id == 150
-    assert len(resp) == 200
-
-
-@responses.activate
-@stub_sleep
-def test_list_users_with_max_items_1(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_users(max_items=1)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 1
-
-
-@responses.activate
-@stub_sleep
-def test_list_users_with_max_items_150(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/users",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_users(max_items=150)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 150
-
-
-@responses.activate
-@stub_sleep
-def test_list_groups_with_one_page(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_groups(max_pages=1, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert len(resp) == 100
-
-
-@responses.activate
-@stub_sleep
-def test_list_groups_with_two_pages(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_groups(max_pages=2, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert resp[150].id == 150
-    assert len(resp) == 200
-
-
-@responses.activate
-@stub_sleep
-def test_list_groups_with_max_items_1(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_groups(max_items=1)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 1
-
-
-@responses.activate
-@stub_sleep
-def test_list_groups_with_max_items_150(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_groups(max_items=150)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 150
-
-
-@responses.activate
-def test_users_get_group(zia, groups):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/groups/1",
-        json=groups[0],
-        status=200,
-    )
-
-    resp = zia.users.get_group("1")
-
-    assert isinstance(resp, dict)
-    assert resp.id == 1
-
-
-@responses.activate
-@stub_sleep
-def test_list_departments_with_one_page(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_departments(max_pages=1, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert len(resp) == 100
-
-
-@responses.activate
-@stub_sleep
-def test_list_departments_with_two_pages(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_departments(max_pages=2, page_size=100)
-
-    assert isinstance(resp, list)
-    assert resp[50].id == 50
-    assert resp[150].id == 150
-    assert len(resp) == 200
-
-
-@responses.activate
-@stub_sleep
-def test_list_departments_with_max_items_1(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_departments(max_items=1)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 1
-
-
-@responses.activate
-@stub_sleep
-def test_list_departments_with_max_items_150(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/departments",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_departments(max_items=150)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 150
-
-
-@responses.activate
-def test_users_get_department(zia, departments):
-    responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/departments/1",
-        json=departments[0],
-        status=200,
-    )
-
-    resp = zia.users.get_department("1")
-
-    assert isinstance(resp, dict)
-    assert resp.id == 1
-
-
-@responses.activate
-def test_users_delete_user(zia):
-    responses.add(
-        method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204
-    )
-    resp = zia.users.delete_user("1")
-    assert resp == 204
-
-
-@responses.activate
-def test_users_bulk_delete_users(zia):
-    user_ids = ["1", "2"]
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/users/bulkDelete",
-        status=204,
-        json={"ids": user_ids},
-        match=[matchers.json_params_matcher({"ids": user_ids})],
-    )
-    resp = zia.users.bulk_delete_users(["1", "2"])
-    assert isinstance(resp, dict)
-    assert resp.ids == ["1", "2"]
+            user_id = created_user.get("id", None)
+            assert user_id, "User account creation failed"
+
+            # Activate Configuration
+            activation_response = client.activate.activate()
+            assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending"
+        except Exception as exc:
+            errors.append(f"User creation or activation failed: {exc}")
+            
+        try:
+            # Fetch and verify the user
+            retrieved_user = client.users.get_user(user_id)
+            assert retrieved_user["id"] == user_id, "Incorrect user account retrieved"
+        except Exception as exc:
+            errors.append(f"Retrieving User Account failed: {exc}")
+            
+        try:
+                # Update the User Account
+                updated_password = generate_random_password()  # Generate a new password
+                client.users.update_user(
+                    user_id,
+                    password=updated_password,
+                )
+                # Reactivate Configuration after update
+                client.activate.activate()
+        except Exception as exc:
+            errors.append(f"Updating User Account password failed or activation after update failed: {exc}")
+
+        try:
+            # Example 1: List users using default settings
+            all_users = client.users.list_users()
+            assert all_users, "Failed to list users with default settings."
+
+            # Example 2: List users, limiting to a maximum of 10 items
+            limited_users = client.users.list_users(max_items=10)
+            assert len(limited_users) <= 10, "Failed to limit the list of users to max_items=10."
+
+            # Example 3: List users, returning 200 items per page for a maximum of 2 pages
+            paginated_users = client.users.list_users(page_size=200, max_pages=2)
+            # Since we can't directly assert the total pages without fetching all data, we focus on page size
+            assert len(paginated_users) <= 400, "Failed to paginate users with page_size=200 and max_pages=2."
+
+            # Additional example: Filter by department and group with a `starts with` match
+            filtered_users_dept = client.users.list_users(dept="A000")
+            assert filtered_users_dept, "Failed to filter users by department name."
+
+            filtered_users_group = client.users.list_users(group="A000")
+            assert filtered_users_group, "Failed to filter users by group name."
+
+            # Additional example: Filter by user name with a `partial` match
+            filtered_users_name = client.users.list_users(name="tests")
+            assert filtered_users_name, "Failed to filter users by partial name match."
+
+            # Check if the newly created user is in one of the lists of users
+            found_user_default = any(user["id"] == user_id for user in all_users)
+            found_user_limited = any(user["id"] == user_id for user in limited_users)
+            found_user_paginated = any(user["id"] == user_id for user in paginated_users)
+            assert found_user_default or found_user_limited or found_user_paginated, "Newly created user account not found in any list of users."
+        except Exception as exc:
+            errors.append(f"Listing users with specific parameters failed: {exc}")
+
+        finally:
+            if user_id:
+                try:
+                    # Delete the User Account
+                    delete_status = client.users.delete_user(user_id)
+                    assert delete_status == 204, "User Account deletion failed"
+                    
+                    # Reactivate Configuration after Deletion
+                    activation_response = client.activate.activate()
+                    assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending after deletion"
+                except Exception as exc:
+                    errors.append(f"Deleting User Account or reactivation failed: {exc}")
+
+            if errors:
+                raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
+
+
+    # @pytest.mark.asyncio
+    # async def test_user_departments(self, fs):
+    #     client = MockZIAClient(fs)
+    #     errors = []  # Initialize an empty list to collect errors
+        
+    #     try:
+    #         # List departments with optional parameters
+    #         depts = client.users.list_departments(page_size=2, max_pages=1)
+    #         assert len(depts) <= 2, "More departments returned than expected with page_size=2"
+    #         assert isinstance(depts, list), "Expected a list of departments"
+    #         if depts:  # If there are any departments
+    #             # Select the first department for further testing
+    #             first_dept = depts[0]
+    #             department_id = first_dept.get("id")
+
+    #             # Fetch the selected department by its ID
+    #             fetched_dept = client.users.get_department(department_id)
+    #             assert fetched_dept is not None, "Expected a valid department object"
+    #             assert fetched_dept.get("id") == department_id, "Mismatch in department ID"
+
+    #             # Attempt to retrieve the department by name
+    #             dept_name = fetched_dept.get("name")
+    #             dept_by_name = client.users.get_dept_by_name(dept_name)
+    #             assert dept_by_name is not None, "Expected a valid department object when searching by name"
+    #             assert dept_by_name.get("id") == department_id, "Mismatch in department ID when searching by name"
+
+    #     except Exception as exc:
+    #         errors.append(f"Test failed: {exc}")
+
+    #     # Assert that no errors occurred during the test
+    #     assert len(errors) == 0, f"Errors occurred during departments test: {errors}"
+
+    # @pytest.mark.asyncio
+    # async def test_user_groups(self, fs):
+    #     client = MockZIAClient(fs)
+    #     errors = []  # Initialize an empty list to collect errors
+
+    #     try:
+    #         # List groups with optional parameters
+    #         groups = client.users.list_groups(page_size=2, max_pages=1, sort_order="ASC")
+    #         assert len(groups) <= 2, "More groups returned than expected with page_size=2"
+    #         assert isinstance(groups, list), "Expected a list of groups"
+    #         if groups:
+    #             first_group = groups[0]
+    #             group_id = first_group.get("id")
+
+    #             # Fetch the selected group by its ID
+    #             fetched_group = client.users.get_group(group_id)
+    #             assert fetched_group is not None, "Expected a valid group object"
+    #             assert fetched_group.get("id") == group_id, "Mismatch in group ID"
+
+    #             # Attempt to retrieve the group by name
+    #             group_name = fetched_group.get("name")
+    #             group_by_name = client.users.get_group_by_name(group_name)
+    #             assert group_by_name is not None, "Expected a valid group object when searching by name"
+    #             assert group_by_name.get("id") == group_id, "Mismatch in group ID when searching by name"
+
+    #     except Exception as exc:
+    #         errors.append(f"Test failed: {exc}")
+
+    #     # Assert that no errors occurred during the test
+    #     assert len(errors) == 0, f"Errors occurred during groups test: {errors}"

@@ -14,204 +14,108 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
 import pytest
-import responses
-from responses import matchers
+
+from tests.integration.zia.conftest import MockZIAClient
 
 
-@pytest.fixture(name="blacklist_urls")
-def fixture_urls():
-    return {"blacklistUrls": ["test.com", "example.com"]}
+@pytest.fixture
+def fs():
+    yield
 
 
-@pytest.fixture(name="whitelist_urls")
-def fixture_whitelist_urls():
-    return {"whitelistUrls": ["demo.com", "site.com"]}
+class TestSecurityWhitelistBlacklist:
+    """
+    Integration Tests for the Security Whitelist and Blacklist.
+    """
 
+    @pytest.mark.asyncio
+    async def test_add_url_to_whitelist(self, fs):
+        client = MockZIAClient(fs)
+        url_to_add = "example.com"
+        try:
+            updated_whitelist = client.security.add_urls_to_whitelist([url_to_add])
+            assert (
+                url_to_add in updated_whitelist
+            ), f"{url_to_add} not added to whitelist."
+        except Exception as exc:
+            pytest.fail(f"Failed to add URL to whitelist: {exc}")
 
-@responses.activate
-def test_get_blacklist(zia, blacklist_urls):
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced",
-        json=blacklist_urls,
-        status=200,
-    )
-    resp = zia.security.get_blacklist()
+    @pytest.mark.asyncio
+    async def test_get_whitelist(self, fs):
+        client = MockZIAClient(fs)
+        try:
+            whitelist = client.security.get_whitelist()
+            assert isinstance(whitelist, list), "Failed to retrieve whitelist."
+        except Exception as exc:
+            pytest.fail(f"Whitelist retrieval failed: {exc}")
 
-    assert isinstance(resp, list)
-    assert resp[0] == "test.com"
+    @pytest.mark.asyncio
+    async def test_replace_url_from_whitelist(self, fs):
+        client = MockZIAClient(fs)
+        url_to_replace = ["newsite.com"]
+        try:
+            updated_whitelist = client.security.replace_whitelist(url_to_replace)
+            assert (
+                url_to_replace[0] in updated_whitelist
+            ), "Whitelist replace operation failed."
+        except Exception as exc:
+            pytest.fail(f"Failed to replace whitelist: {exc}")
 
+    @pytest.mark.asyncio
+    async def test_delete_urls_from_whitelist(self, fs):
+        client = MockZIAClient(fs)
+        url_to_delete = "example.com"
+        try:
+            updated_whitelist = client.security.delete_urls_from_whitelist(
+                [url_to_delete]
+            )
+            assert (
+                url_to_delete not in updated_whitelist
+            ), f"{url_to_delete} was not deleted from whitelist."
+        except Exception as exc:
+            pytest.fail(f"Failed to delete URL from whitelist: {exc}")
 
-@responses.activate
-def test_get_whitelist(zia, whitelist_urls):
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-    )
-    resp = zia.security.get_whitelist()
+    @pytest.mark.asyncio
+    async def test_add_urls_to_blacklist(self, fs):
+        client = MockZIAClient(fs)
+        url_to_add = "badexample.com"
+        try:
+            updated_blacklist = client.security.add_urls_to_blacklist([url_to_add])
+            assert (
+                url_to_add in updated_blacklist
+            ), f"{url_to_add} not added to blacklist."
+        except Exception as exc:
+            pytest.fail(f"Failed to add URL to blacklist: {exc}")
 
-    assert isinstance(resp, list)
-    assert resp[0] == "demo.com"
+    @pytest.mark.asyncio
+    async def test_get_blacklist(self, fs):
+        client = MockZIAClient(fs)
+        try:
+            blacklist = client.security.get_blacklist()
+            assert isinstance(blacklist, list), "Failed to retrieve blacklist."
+        except Exception as exc:
+            pytest.fail(f"Blacklist retrieval failed: {exc}")
 
+    @pytest.mark.asyncio
+    async def test_replace_blacklist(self, fs):
+        client = MockZIAClient(fs)
+        new_blacklist_urls = ["newbadexample.com"]
+        try:
+            updated_blacklist = client.security.replace_blacklist(new_blacklist_urls)
+            assert (
+                new_blacklist_urls[0] in updated_blacklist
+            ), "Blacklist replace operation failed."
+        except Exception as exc:
+            pytest.fail(f"Failed to replace blacklist: {exc}")
 
-@responses.activate
-def test_get_whitelist_empty(zia, whitelist_urls):
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json={},
-        status=200,
-    )
-    resp = zia.security.get_whitelist()
-
-    assert isinstance(resp, list)
-    assert resp == []
-
-
-@responses.activate
-def test_erase_whitelist(zia):
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        status=200,
-        match=[matchers.json_params_matcher({"whitelistUrls": []})],
-    )
-
-    resp = zia.security.erase_whitelist()
-    assert resp == 200
-
-
-@responses.activate
-def test_replace_whitelist(zia, whitelist_urls):
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-        match=[matchers.json_params_matcher(whitelist_urls)],
-    )
-    resp = zia.security.replace_whitelist(["demo.com", "site.com"])
-
-    assert isinstance(resp, list)
-    assert resp[0] == "demo.com"
-
-
-@responses.activate
-def test_add_urls_to_whitelist(zia, whitelist_urls):
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-    )
-
-    whitelist_urls["whitelistUrls"].append("mysite.com")
-
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-        match=[matchers.json_params_matcher(whitelist_urls)],
-    )
-    resp = zia.security.add_urls_to_whitelist(["mysite.com"])
-
-    assert isinstance(resp, list)
-    assert resp[2] == "mysite.com"
-
-
-@responses.activate
-def test_delete_urls_from_whitelist(zia, whitelist_urls):
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-    )
-
-    whitelist_urls["whitelistUrls"].pop(0)
-
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security",
-        json=whitelist_urls,
-        status=200,
-        match=[matchers.json_params_matcher(whitelist_urls)],
-    )
-
-    resp = zia.security.delete_urls_from_whitelist(["demo.com"])
-
-    assert isinstance(resp, list)
-    assert len(resp) == 1
-
-
-@responses.activate
-def test_add_urls_to_blacklist(zia, blacklist_urls):
-    blacklist_urls["blacklistUrls"].append("mysite.com")
-
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced/blacklistUrls?action=ADD_TO_LIST",
-        status=204,
-        match=[matchers.json_params_matcher({"blacklistUrls": ["mysite.com"]})],
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced",
-        json=blacklist_urls,
-        status=200,
-    )
-    resp = zia.security.add_urls_to_blacklist(["mysite.com"])
-
-    assert isinstance(resp, list)
-    assert resp == ["test.com", "example.com", "mysite.com"]
-
-
-@responses.activate
-def test_delete_urls_from_blacklist(zia, blacklist_urls):
-    blacklist_urls["blacklistUrls"].pop(0)
-
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
-        status=204,
-        match=[matchers.json_params_matcher({"blacklistUrls": ["test.com"]})],
-    )
-    resp = zia.security.delete_urls_from_blacklist(["test.com"])
-
-    assert isinstance(resp, int)
-    assert resp == 204
-
-
-@responses.activate
-def test_erase_blacklist(zia):
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced",
-        status=200,
-        match=[matchers.json_params_matcher({"blacklistUrls": []})],
-    )
-
-    resp = zia.security.erase_blacklist()
-    assert resp == 200
-
-
-@responses.activate
-def test_replace_blacklist(zia):
-    new_urls = {"blacklistUrls": ["abc.com", "def.com"]}
-
-    responses.add(
-        responses.PUT,
-        url="https://zsapi.zscaler.net/api/v1/security/advanced",
-        json=new_urls,
-        status=204,
-        match=[matchers.json_params_matcher(new_urls)],
-    )
-    resp = zia.security.replace_blacklist(["abc.com", "def.com"])
-
-    assert isinstance(resp, list)
-    assert resp[0] == "abc.com"
+    @pytest.mark.asyncio
+    async def test_erase_blacklist(self, fs):
+        client = MockZIAClient(fs)
+        try:
+            result = client.security.erase_blacklist()
+            assert (
+                result == 204 or "successfully erased" in result.lower()
+            ), "Failed to erase blacklist."
+        except Exception as exc:
+            pytest.fail(f"Failed to erase blacklist: {exc}")

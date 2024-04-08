@@ -16,6 +16,7 @@
 
 
 import pytest
+
 from tests.integration.zpa.conftest import MockZPAClient
 
 
@@ -26,7 +27,7 @@ def fs():
 
 class TestMachineGroups:
     """
-    Integration Tests for the Machine Groups
+    Integration Tests for the Machine Groups.
     """
 
     @pytest.mark.asyncio
@@ -34,37 +35,49 @@ class TestMachineGroups:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
+        # Attempt to list all machine groups
         try:
-            # List all machine groups
             machine_groups = client.machine_groups.list_groups()
             assert isinstance(machine_groups, list), "Expected a list of machine groups"
-            if machine_groups:  # If there are any machine groups
-                # Select the first machine group for further testing
-                first_group = machine_groups[0]
+        except Exception as exc:
+            errors.append(f"Listing machine groups failed: {str(exc)}")
+
+        # Process each machine group if the list is not empty
+        if machine_groups:
+            for first_group in machine_groups:
                 group_id = first_group.get("id")
 
                 # Fetch the selected machine group by its ID
-                fetched_group = client.machine_groups.get_group(group_id)
-                assert (
-                    fetched_group is not None
-                ), "Expected a valid machine group object"
-                assert (
-                    fetched_group.get("id") == group_id
-                ), "Mismatch in machine group ID"
+                try:
+                    fetched_group = client.machine_groups.get_group(group_id)
+                    assert (
+                        fetched_group is not None
+                    ), "Expected a valid machine group object"
+                    assert (
+                        fetched_group.get("id") == group_id
+                    ), "Mismatch in machine group ID"
+                except Exception as exc:
+                    errors.append(f"Fetching machine group by ID failed: {str(exc)}")
 
                 # Attempt to retrieve the machine group by name
-                group_name = first_group.get("name")
-                group_by_name = client.machine_groups.get_machine_group_by_name(
-                    group_name
-                )
-                assert (
-                    group_by_name is not None
-                ), "Expected a valid machine group object when searching by name"
-                assert (
-                    group_by_name.get("id") == group_id
-                ), "Mismatch in machine group ID when searching by name"
-        except Exception as exc:
-            errors.append(exc)
+                try:
+                    group_name = first_group.get("name")
+                    group_by_name = client.machine_groups.get_machine_group_by_name(
+                        group_name
+                    )
+                    assert (
+                        group_by_name is not None
+                    ), "Expected a valid machine group object when searching by name"
+                    assert (
+                        group_by_name.get("id") == group_id
+                    ), "Mismatch in machine group ID when searching by name"
+                except Exception as exc:
+                    errors.append(f"Fetching machine group by name failed: {str(exc)}")
+
+                # Once we've tested one group, exit the loop to avoid redundant testing
+                break
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during machine groups test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during machine group operations test: {errors}"
