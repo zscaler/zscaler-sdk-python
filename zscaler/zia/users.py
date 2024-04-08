@@ -151,9 +151,7 @@ class UserManagementAPI:
                 return group
         return None
 
-    def list_users(
-        self, sort_by: str = "name", sort_order: str = "DESC", **kwargs
-    ) -> BoxList:
+    def list_users(self, **kwargs) -> BoxList:
         """
         Returns the list of users.
 
@@ -195,12 +193,7 @@ class UserManagementAPI:
             ...    print(user)
 
         """
-        if kwargs is None:
-            kwargs = {}
-        if sort_order != "" and sort_by != "":
-            kwargs["sortBy"] = sort_by
-            kwargs["sortOrder"] = sort_order
-        return self.rest.get_paginated_data("users", params=kwargs)
+        return BoxList(Iterator(self.rest, "users", **kwargs))
 
     def add_user(
         self, name: str, email: str, groups: list, department: dict, **kwargs
@@ -385,8 +378,8 @@ class UserManagementAPI:
         Returns:
             :obj:`int`: The response code for the request.
 
-        Examples
+        Examples:
             >>> user = zia.users.delete_user('99999')
-
         """
-        return self.rest.delete(f"users/{user_id}", box=False).status_code
+        response = self.rest.delete(f"users/{user_id}")
+        return response.status_code
