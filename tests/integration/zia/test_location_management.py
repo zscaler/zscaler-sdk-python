@@ -54,7 +54,7 @@ class TestLocationManagement:
             # Create Location Management
             try:
                 location_name = (
-                    "tests - " + generate_random_string()
+                    "tests- " + generate_random_string()
                 )
                 created_location = client.locations.add_location(
                     name=location_name,
@@ -155,7 +155,7 @@ class TestLocationManagement:
 
             # Create Location Management (Parent Location)
             try:
-                parent_location_name = "tests - " + generate_random_string()
+                parent_location_name = "tests-" + generate_random_string()
                 created_location = client.locations.add_location(
                     name=parent_location_name,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
@@ -175,7 +175,7 @@ class TestLocationManagement:
                 
             # Create Sublocation Management
             try:
-                sublocation_name = "tests - " + generate_random_string()
+                sublocation_name = "tests-" + generate_random_string()
                 created_sublocation = client.locations.add_location(
                     name=sublocation_name,
                     description=sublocation_name,
