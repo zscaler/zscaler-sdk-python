@@ -64,7 +64,7 @@ class TestTrafficGRETunnel:
         # Update GRE Tunnel
         if gre_tunnel_ids:
             try:
-                updated_comment = 'Updated GRE Tunnel ' + generate_random_string()
+                updated_comment = "tests-" + generate_random_string()
                 updated_gre_tunnel = client.traffic.update_gre_tunnel(
                     tunnel_id=gre_tunnel_ids[0],
                     source_ip=static_ip_address,

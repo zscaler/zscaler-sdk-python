@@ -63,7 +63,7 @@ class TestCloudFirewallIPDestinationGroup:
             # Attempt to update the IP destination group
             if group_id:
                 try:
-                    updated_name = "updated-" + generate_random_string()
+                    updated_name = "tests-" + generate_random_string()
                     client.firewall.update_ip_destination_group(
                         group_id=group_id,
                         name=updated_name
