@@ -41,7 +41,8 @@ class TestTrafficVPNCredential:
         # Create Static IP for VPN Credential of type IP
         try:
             created_static_ip = client.traffic.add_static_ip(
-                ip_address=randomIP, comment="tests-" + generate_random_string()
+                ip_address=randomIP, 
+                comment="tests-" + generate_random_string()
             )
             assert created_static_ip is not None, "Static IP creation returned None"
             static_ip_id = created_static_ip["id"]
@@ -76,7 +77,7 @@ class TestTrafficVPNCredential:
         # Update VPN Credential of type IP
         if created_vpn_ids:
             try:
-                updated_comment = "Updated IP VPN Credential"
+                updated_comment = "tests-" + generate_random_string()
                 updated_vpn_ip = client.traffic.update_vpn_credential(
                     created_vpn_ids[0], comments=updated_comment
                 )
@@ -89,7 +90,7 @@ class TestTrafficVPNCredential:
         # Update VPN Credential of type UFQDN
         if len(created_vpn_ids) > 1:
             try:
-                updated_comment = "Updated UFQDN VPN Credential"
+                updated_comment = "tests-" + generate_random_string()
                 updated_vpn_ufqdn = client.traffic.update_vpn_credential(
                     created_vpn_ids[1], comments=updated_comment
                 )

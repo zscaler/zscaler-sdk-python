@@ -54,9 +54,10 @@ class TestFirewallRules:
             try:
                 # Prerequisite: Create a Source IP Group
                 src_group_name = "tests-" + generate_random_string()
+                src_group_description = "tests-" + generate_random_string()
                 created_src_group = client.firewall.add_ip_source_group(
                     name=src_group_name,
-                    description="Integration test source group",
+                    description=src_group_description,
                     ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
                 )
                 src_group_id = created_src_group.get("id", None)
@@ -67,9 +68,10 @@ class TestFirewallRules:
             try:
                 # Create a Firewall Rule
                 rule_name = "tests-" + generate_random_string()
+                rule_description = "tests-" + generate_random_string()
                 created_rule = client.firewall.add_rule(
                     name=rule_name,
-                    description="Integration test firewall rule",
+                    description=rule_description,
                     state='ENABLED',
                     action='BLOCK_DROP',
                     order=1,
@@ -91,7 +93,7 @@ class TestFirewallRules:
 
             try:
                 # Update the Firewall Rule
-                updated_description = "Updated integration test firewall rule"
+                updated_description = "tests-" + generate_random_string()
                 client.firewall.update_rule(
                     rule_id,
                     description=updated_description,
