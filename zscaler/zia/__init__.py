@@ -12,6 +12,7 @@ from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.errors.http_error import ZscalerAPIError, HTTPError
 from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
 from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.constants import RETRYABLE_STATUS_CODES, MAX_RETRIES
 from zscaler.logger import setup_logging
 from zscaler.utils import obfuscate_api_key
 from zscaler.user_agent import UserAgent
@@ -182,7 +183,7 @@ class ZIAClientHelper(ZIAClient):
             return True
         return False
 
-    @retry_with_backoff(retries=5)
+    @retry_with_backoff(MAX_RETRIES)
     def authenticate(self) -> Box:
         """
         Creates a ZIA authentication session.
@@ -283,7 +284,7 @@ class ZIAClientHelper(ZIAClient):
             return resp
 
         attempts = 0
-        while attempts < 5:  # Trying a maximum of 5 times
+        while attempts < MAX_RETRIES:  # Trying a maximum of 5 times
             try:
                 # If the token is None or expired, fetch a new token
                 if self.is_session_expired():
@@ -308,21 +309,17 @@ class ZIAClientHelper(ZIAClient):
                     request_uuid=request_uuid,
                     start_time=start_time,
                 )
-                if (
-                    resp.status_code == 429
-                ):  # HTTP Status code 429 indicates "Too Many Requests"
-                    sleep_time = int(
-                        resp.headers.get("Retry-After", 2)
-                    )  # Default to 60 seconds if 'Retry-After' header is missing
-                    logger.warning(
-                        f"Rate limit exceeded. Retrying in {sleep_time} seconds."
-                    )
-                    sleep(sleep_time)
+                
+                if resp.status_code in RETRYABLE_STATUS_CODES:
+                    # Handle retry logic
+                    sleep_time = int(resp.headers.get("Retry-After", 2))  # Use a sensible default
+                    logger.warning(f"Encountered {resp.status_code}, retrying in {sleep_time} seconds...")
+                    time.sleep(sleep_time)
                     attempts += 1
-                    continue
-                else:
-                    break
+                    continue  # Proceed to next attempt
+                break  # If not a retryable status code, exit loop
             except requests.RequestException as e:
+                
                 if attempts == 4:  # If it's the last attempt, raise the exception
                     logger.error(
                         f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}"
