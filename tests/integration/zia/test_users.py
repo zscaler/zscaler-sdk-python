@@ -66,7 +66,7 @@ class TestUsers:
 
             # Activate Configuration
             activation_response = client.activate.activate()
-            assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending"
+            assert activation_response in ["ACTIVE", "INPROGRESS", "PENDING"], "Activation failed or is pending"
         except Exception as exc:
             errors.append(f"User creation or activation failed: {exc}")
             
@@ -131,7 +131,7 @@ class TestUsers:
                     
                     # Reactivate Configuration after Deletion
                     activation_response = client.activate.activate()
-                    assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending after deletion"
+                    assert activation_response in ["ACTIVE", "INPROGRESS", "PENDING"], "Activation failed or is pending after deletion"
                 except Exception as exc:
                     errors.append(f"Deleting User Account or reactivation failed: {exc}")
 

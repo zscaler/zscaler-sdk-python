@@ -50,7 +50,7 @@ jobs:
                 max_attempts: 3
                 timeout_minutes: 20
                 command: |
-                    make test:integration:zia
+                  make coverage:zia 
               env:
                 ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
                 ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
@@ -103,7 +103,7 @@ jobs:
                 max_attempts: 3
                 timeout_minutes: 20
                 command: |
-                    make test:integration:zia
+                  make coverage:zia
               env:
                 ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
                 ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
@@ -114,3 +114,5 @@ jobs:
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
                 ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
                 ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+        needs:
+          - zia-beta-tenants
