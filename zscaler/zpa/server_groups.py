@@ -196,8 +196,6 @@ class ServerGroupsAPI:
             payload[snake_to_camel(key)] = value
 
         resp = self.rest.put(f"serverGroup/{group_id}", json=payload).status_code
-
-        # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 

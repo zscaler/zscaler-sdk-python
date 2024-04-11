@@ -21,9 +21,11 @@ import logging
 import random
 import re
 import time
+import datetime
+import pytz
+from dateutil import parser
 from typing import Dict, Optional
 from urllib.parse import urlencode
-
 from box import Box, BoxList
 from requests import Response
 from restfly import APIIterator
@@ -410,6 +412,72 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError("Boolean value expected.")
 
+def is_valid_ssh_key(private_key: str) -> bool:
+    """
+    Validate SSH private key format.
+    """
+    # Basic pattern matching to check for RSA/ECDSA (OpenSSH/PEM) key headers
+    ssh_key_patterns = [
+        r"-----BEGIN OPENSSH PRIVATE KEY-----",
+        r"-----BEGIN RSA PRIVATE KEY-----",
+        r"-----BEGIN EC PRIVATE KEY-----"
+    ]
+    return any(re.search(pattern, private_key) for pattern in ssh_key_patterns)
+
+def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
+    """
+    Validates and converts provided time strings to epoch.
+    Validates the time zone against IANA Time Zone database.
+    Ensures start time is not more than 1 hour in the past and within 1 year range of end time.
+
+    Args:
+        start_time_str (str): Start time in RFC1123Z or RFC1123 format.
+        end_time_str (str): End time in RFC1123Z or RFC1123 format.
+        time_zone_str (str): IANA Time Zone database string.
+
+    Returns:
+        tuple: Converted start and end times in epoch format.
+    
+    Raises:
+        ValueError: If any validation fails.
+    """
+    # Validate time zone
+    if time_zone_str not in pytz.all_timezones:
+        raise ValueError(f"Invalid time zone: {time_zone_str}")
+
+    # Convert times
+    try:
+        start_time = parser.parse(start_time_str)
+        end_time = parser.parse(end_time_str)
+    except ValueError as e:
+        raise ValueError(f"Time parsing error: {e}")
+
+    # Handle timezone conversion
+    tz = pytz.timezone(time_zone_str)
+    if start_time.tzinfo is not None:
+        start_time = start_time.astimezone(tz)
+    else:
+        start_time = tz.localize(start_time)
+
+    if end_time.tzinfo is not None:
+        end_time = end_time.astimezone(tz)
+    else:
+        end_time = tz.localize(end_time)
+
+    # Ensure start time is not more than 1 hour in the past
+    now_in_tz = datetime.datetime.now(tz)
+    if start_time < (now_in_tz - datetime.timedelta(hours=1)):
+        raise ValueError("Start time cannot be more than 1 hour in the past.")
+
+    # Ensure start time is within a one year range of end time
+    if end_time > (start_time + datetime.timedelta(days=365)):
+        raise ValueError("Start time and end time range cannot exceed 1 year.")
+
+    # Convert to epoch
+    start_epoch = int(start_time.timestamp())
+    end_epoch = int(end_time.timestamp())
+
+    return start_epoch, end_epoch
 
 def dump_request(
     logger, url: str, method: str, json, params, headers, request_uuid: str, body=True

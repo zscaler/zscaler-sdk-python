@@ -39,6 +39,7 @@ from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
 from zscaler.zpa.posture_profile import PostureProfilesAPI
+from zscaler.zpa.privilegedremoteaccess import PrivilegedRemoteAccessAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
@@ -545,6 +546,14 @@ class ZPAClientHelper(ZPAClient):
         """
         return PostureProfilesAPI(self)
 
+    @property
+    def privilegedremoteaccess(self):
+        """
+        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged-remote-access>`.
+
+        """
+        return PrivilegedRemoteAccessAPI(self)
+    
     @property
     def provisioning(self):
         """
