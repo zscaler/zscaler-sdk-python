@@ -53,7 +53,7 @@ class ServerGroupsAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/serverGroup", data_key_name="list", **kwargs, api_version="v1"
+            path="/serverGroup", **kwargs, api_version="v1"
         )
         return list
 
@@ -185,7 +185,6 @@ class ServerGroupsAPI:
             ...    dynamic_discovery=True)
 
         """
-
         # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 

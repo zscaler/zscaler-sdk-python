@@ -478,7 +478,6 @@ class InspectionControllerAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path="/inspectionControls/custom",
-            data_key_name="list",
         )
         return list
 
@@ -670,7 +669,6 @@ class InspectionControllerAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path="/inspectionProfile",
-            data_key_name="list",
         )
         return list
 

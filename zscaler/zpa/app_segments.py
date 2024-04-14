@@ -23,6 +23,7 @@ from zscaler.utils import (
     snake_to_camel,
     transform_clientless_apps,
     recursive_snake_to_camel,
+    Iterator
 )
 from zscaler.zpa.client import ZPAClient
 
@@ -40,6 +41,16 @@ class ApplicationSegmentAPI:
         """
         Retrieve all configured application segments.
 
+        Keyword Args:
+            **max_items (int):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
+            **search (str, optional):
+                The search string used to match against features and fields.
+                
         Returns:
             :obj:`BoxList`: List of application segments.
 
@@ -48,7 +59,7 @@ class ApplicationSegmentAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/application", data_key_name="list", **kwargs
+            path="/application", **kwargs, api_version="v1"
         )
         return list
 

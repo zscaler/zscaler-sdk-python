@@ -39,7 +39,7 @@ class SegmentGroupsAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/segmentGroup", data_key_name="list", **kwargs, api_version="v1"
+            path="/segmentGroup", **kwargs, api_version="v1"
         )
         return list
 
