@@ -48,7 +48,7 @@ class TrustedNetworksAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/network", data_key_name="list", **kwargs, api_version="v2"
+            path="/network", **kwargs, api_version="v2"
         )
         return list
 

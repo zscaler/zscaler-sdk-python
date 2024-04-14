@@ -47,7 +47,7 @@ class MachineGroupsAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/machineGroup", data_key_name="list", **kwargs
+            path="/machineGroup", **kwargs
         )
         return list
 

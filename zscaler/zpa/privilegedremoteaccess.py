@@ -19,8 +19,8 @@ from box import Box, BoxList
 from requests import Response
 from typing import List, Dict, Any
 from typing import Optional
-from zscaler.utils import Iterator, snake_to_camel, is_valid_ssh_key, validate_and_convert_times
-from . import ZPAClient
+from zscaler.utils import snake_to_camel, is_valid_ssh_key, validate_and_convert_times
+from zscaler.zpa.client import ZPAClient
 
 
 class PrivilegedRemoteAccessAPI:
@@ -54,8 +54,11 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_portal)
 
         """
-        return BoxList(Iterator(self.rest, "praPortal", **kwargs))
-    
+        list, _ = self.rest.get_paginated_data(
+            path="/praPortal", **kwargs, api_version="v1"
+        )
+        return list
+
     def get_portal(self, portal_id: str) -> Box:
         """
         Returns information on the specified pra portal.
@@ -230,7 +233,10 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_console)
 
         """
-        return BoxList(Iterator(self.rest, "praConsole", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/praConsole", **kwargs, api_version="v1"
+        )
+        return list
     
     def get_console(self, console_id: str) -> Box:
         """
@@ -461,7 +467,10 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_credential)
 
         """
-        return BoxList(Iterator(self.rest, "credential", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/credential", **kwargs, api_version="v1"
+        )
+        return list
     
     def get_credential(self, credential_id: str) -> Box:
         """
@@ -479,6 +488,12 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.get(f"credential/{credential_id}")
+        # response = self.rest.get("/credential/%s" % (credential_id))
+        # if isinstance(response, Response):
+        #     status_code = response.status_code
+        #     if status_code != 200:
+        #         return None
+        # return response
 
     def add_credential(
         self, name: str,
@@ -518,12 +533,15 @@ class PrivilegedRemoteAccessAPI:
             if key in ['description', 'user_domain', 'passphrase']:
                 payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/credential", json=payload)
-        if isinstance(response, Response) and response.status_code > 299:
+        response = self.rest.post("credential", json=payload)
+        if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
+            status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        return self.get_credential(response.json().get("id"))
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
+        return response
     
     def update_credential(self, credential_id: str, **kwargs) -> Box:
         """
@@ -596,6 +614,10 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.delete(f"credential/{credential_id}").status_code
+        # response = self.rest.delete(f"/credential/{credential_id}")
+        # if response.status_code != 204:
+        #     raise Exception(f"Failed to delete credential: {response.text}")
+        # return response.status_code
     
 ##############################################################################
 ################################# PRA APPROVAL #############################
@@ -603,26 +625,41 @@ class PrivilegedRemoteAccessAPI:
 
     def list_approval(self, **kwargs) -> BoxList:
         """
-        Returns a list of all privileged remote access approval.
+        Returns a list of all privileged remote access approvals.
 
         Keyword Args:
-            **max_items (int):
+            max_items (int):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int):
+            max_pages (int):
                 The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
+            pagesize (int):
                 Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
+            search (str, optional):
                 The search string used to match against features and fields.
+            search_field (str, optional):
+                The field to search against. Defaults to 'name'. Commonly used fields include 'name' and 'email_ids'.
 
         Returns:
-            :obj:`BoxList`: A list of all configured privileged remote access approval.
+            :obj:`BoxList`: A list of all configured privileged remote access approvals.
 
         Examples:
-            >>> for pra_approval in zpa.privilegedremoteaccess.list_approval():
-            ...    pprint(pra_approval)
+            Search by default field 'name':
+            >>> for pra_approval in zpa.privilegedremoteaccess.list_approval(search='Example_Name'):
+            ...     pprint(pra_approval)
+
+            Search by 'email_ids':
+            >>> for pra_approval in zpa.privilegedremoteaccess.list_approval(search='jdoe@example.com', search_field='email_ids'):
+            ...     pprint(pra_approval)
+
+            Specify maximum items and use an explicit search field:
+            >>> approvals = zpa.privilegedremoteaccess.list_approval(search='Example_Name', search_field='name', max_items=10)
+            >>> for approval in approvals:
+            ...     pprint(approval)
         """
-        return BoxList(Iterator(self.rest, "approval", **kwargs))
+        list, _ = self.rest.get_paginated_data(
+            path="/approval", **kwargs, api_version="v1"
+        )
+        return list
     
     def get_approval(self, approval_id: str) -> Box:
         """

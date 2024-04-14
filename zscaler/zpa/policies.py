@@ -216,8 +216,8 @@ class PolicySetsAPI:
             )
         list, _ = self.rest.get_paginated_data(
             path=f"policySet/rules/policyType/{mapped_policy_type}",
-            data_key_name="list",
             **kwargs,
+            api_version="v1"
         )
         return list
 

@@ -57,7 +57,7 @@ class TestUsers:
             created_user = client.users.add_user(
                 name='tests-' + generate_random_string(),
                 email='tests-' + generate_random_string() + "@bd-hashicorp.com",
-                password=generate_random_password(),
+                password=password,
                 groups=[{'id': group_id}],
                 department=({'id': department_id}),
             )

@@ -41,6 +41,5 @@ class ClientTypesAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path="/clientTypes",
-            data_key_name="list",
         )
         return list

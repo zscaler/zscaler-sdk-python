@@ -71,7 +71,6 @@ class ProvisioningKeyAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path=f"/associationType/{simplify_key_type(key_type)}/provisioningKey",
-            data_key_name="list",
             **kwargs,
         )
         return list

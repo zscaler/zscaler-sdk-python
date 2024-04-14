@@ -18,7 +18,9 @@
 import ipaddress
 import random
 import string
-
+from datetime import datetime, timedelta
+import pytz
+from typing import Tuple
 
 # Function to generate a random string
 def generate_random_string(length=10):
@@ -37,3 +39,44 @@ def generate_random_password(length=12):
     """Generate a random string of letters, digits, and special characters."""
     characters = string.ascii_letters + string.digits + "!@#$%^&*()"
     return ''.join(random.choice(characters) for i in range(length))
+
+def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str, str]:
+    """
+    Generates start and end time strings in the specified time zone.
+    Ensures start time is not more than 1 hour in the past and the end time
+    does not exceed 1 year from the start time.
+
+    Args:
+        time_zone (str): A string representing the IANA time zone.
+        format (str): The desired string format of the time, "RFC1123" or "RFC1123Z".
+
+    Returns:
+        Tuple[str, str]: A tuple containing the start time and end time as strings.
+    """
+def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str, str]:
+    """
+    Generates start and end time strings in the specified time zone.
+    Ensures start time is the current time and the end time does not exceed 1 year from today.
+
+    Args:
+        time_zone (str): A string representing the IANA time zone.
+        format (str): The desired string format of the time, "RFC1123" or "RFC1123Z".
+
+    Returns:
+        Tuple[str, str]: A tuple containing the start time and end time as strings.
+    """
+    tz = pytz.timezone(time_zone)
+    start_time = datetime.now(tz)
+
+    # Ensure end time does not exceed 1 year from today
+    end_time = start_time + timedelta(days=365 - 1)  # Subtracting one day to ensure it's within a year
+
+    if format.upper() == "RFC1123":
+        time_format = "%a, %d %b %Y %H:%M:%S %Z"
+    else:  # RFC1123Z format
+        time_format = "%a, %d %b %Y %H:%M:%S %z"
+
+    formatted_start_time = start_time.strftime(time_format)
+    formatted_end_time = end_time.strftime(time_format)
+
+    return formatted_start_time, formatted_end_time

@@ -49,7 +49,7 @@ class PostureProfilesAPI:
             ...    pprint(posture_profile)
         """
         list, _ = self.rest.get_paginated_data(
-            path="/posture", data_key_name="list", **kwargs, api_version="v2"
+            path="/posture", **kwargs, api_version="v2"
         )
         return list
 

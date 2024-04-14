@@ -59,7 +59,7 @@ class AppConnectorControllerAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/connector", data_key_name="list", **kwargs, api_version="v1"
+            path="/connector", **kwargs, api_version="v1"
         )
         return list
 
@@ -186,7 +186,7 @@ class AppConnectorControllerAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/appConnectorGroup", data_key_name="list", **kwargs, api_version="v1"
+            path="/appConnectorGroup", **kwargs, api_version="v1"
         )
         return list
 

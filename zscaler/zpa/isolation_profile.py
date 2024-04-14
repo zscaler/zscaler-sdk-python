@@ -46,7 +46,7 @@ class IsolationProfileAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/isolation/profiles", data_key_name="list", **kwargs
+            path="/isolation/profiles", **kwargs
         )
         return list
 

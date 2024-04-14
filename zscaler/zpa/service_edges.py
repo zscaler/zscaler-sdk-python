@@ -58,7 +58,7 @@ class ServiceEdgesAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/serviceEdge", data_key_name="list", **kwargs, api_version="v1"
+            path="/serviceEdge", **kwargs, api_version="v1"
         )
         return list
 
@@ -197,7 +197,7 @@ class ServiceEdgesAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/serviceEdgeGroup", data_key_name="list", **kwargs, api_version="v1"
+            path="/serviceEdgeGroup", **kwargs, api_version="v1"
         )
         return list
 
