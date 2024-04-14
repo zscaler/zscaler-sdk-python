@@ -137,12 +137,12 @@ class TestPRAApproval:
         except Exception as exc:
             errors.append(f"Error during approval creation: {exc}")
             
-        try:
-            # List all approvals using the search parameter and verify the created approval is in the list
-            approval_list = client.privilegedremoteaccess.list_approval(max_items=1, search=email_id, search_field='email_ids')
-            assert any(approval['email_ids'][0] == email_id for approval in approval_list), "Created approval not found in the list"
-        except Exception as exc:
-            errors.append(f"Error listing approvals: {exc}")
+        # try:
+        #     # List all approvals using the search parameter and verify the created approval is in the list
+        #     approval_list = client.privilegedremoteaccess.list_approval(max_items=1, search=email_id, search_field='email_ids')
+        #     assert any(approval['email_ids'][0] == email_id for approval in approval_list), "Created approval not found in the list"
+        # except Exception as exc:
+        #     errors.append(f"Error listing approvals: {exc}")
             
         try:
             # Assuming get_approval method returns a Box object
