@@ -15,8 +15,6 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
-from datetime import datetime, timedelta
-import pytz
 
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string, generate_random_password
