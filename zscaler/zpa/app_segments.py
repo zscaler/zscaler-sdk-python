@@ -48,6 +48,8 @@ class ApplicationSegmentAPI:
                 The maximum number of pages to request before stopping iteration.
             **pagesize (int):
                 Specifies the page size. The default size is 20, but the maximum size is 500.
+            **page (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
             **search (str, optional):
                 The search string used to match against features and fields.
                 

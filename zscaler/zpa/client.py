@@ -41,19 +41,21 @@ class ZPAClient:
         self,
         path=None,
         params=None,
-        data_per_page=500,
         expected_status_code=200,
         api_version: str = None,
-        search=None,  # Optional search term
-        search_field="name",  # Default search field in snake_case
-        max_pages=None,  # Maximum number of pages to iterate over
-        max_items=None,  # Maximum number of items to collect
-        sort_order=None,  # Optional sort order
-        sort_by=None,  # Optional sort by field
-        sort_dir=None,  # Optional sortdir field
-        start_time=None,  # Optional start time for filtering
-        end_time=None,  # Optional end time for filtering
-        idp_group_id=None  # Optional IDP group ID
+        search=None,
+        search_field="name",
+        max_pages=None,
+        max_items=None,
+        sort_order=None,
+        sort_by=None,
+        sort_dir=None,
+        start_time=None,
+        end_time=None,
+        idp_group_id=None,
+        scim_user_id=None,
+        page=None,
+        pagesize=20
     ):
         """
         Send a GET request to the ZPA API to fetch all pages of a resources.

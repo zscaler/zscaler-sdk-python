@@ -81,7 +81,7 @@ for app_segment in zpa.app_segments.list_segments():
 
 This SDK provides methods that retrieve a list of resources from the API, which return paginated results due to the volume of data. Each method capable of returning paginated data is prefixed as `list_` and handles the pagination internally by providing an easy interface to iterate through pages. The user does not need to manually fetch each page; instead, they can process items as they iterate through them.
 
-### Example of Iterating Over Paginated Results (ZPA)
+### Example of Iterating Over Paginated Results
 
 The following example shows how you can list ZPA items using this SDK, processing each item one at a time. This pattern is useful for operations that need to handle large datasets efficiently.
 
@@ -96,11 +96,11 @@ for apps in zpa.app_segments.list_segments():
     pprint(apps)
 ```
 
-### Customizing Pagination Parameters (ZPA)
+### Customizing Pagination Parameters
 
 While pagination is handled automatically, you can also customize pagination behavior by specifying parameters such as data_per_page and max_items. These parameters give you control over the volume of data fetched per request and the total amount of data to process. This is useful for limiting the scope of data fetched
 
-* `data_per_page`: controls the number of items fetched per API call (per page).
+* `max_pages`: controls the number of items fetched per API call (per page).
 * `max_items`: controls the total number of items to retrieve across all pages. 
 
 ```python
@@ -111,8 +111,8 @@ from pprint import pprint
 zpa = ZPAClientHelper(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, customer_id=CUSTOMER_ID, cloud=CLOUD)
 
 pagination_params = {
-    'data_per_page': 10,
-    'max_items': 50
+    'max_pages': 1,
+    'max_items': 5
 }
 
 # Fetch data using custom pagination settings
@@ -123,7 +123,9 @@ for segment in segments:
 
 ### Efficient Pagination Handling
 
-To enhance efficiency, this SDK adjusts the `data_per_page` parameter automatically if `max_items` is specified and is less than `data_per_page`. This ensures that no more data is fetched than necessary, thus optimizing network usage and processing time.
+For more details on each pagination parameter see:
+[ZPA Pagination Parameters](zscaler/zpa/README.md)
+[ZIA Pagination Parameters](zscaler/zia/README.md)
 
 ## Logging
 

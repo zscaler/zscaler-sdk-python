@@ -354,7 +354,6 @@ class ZPAClientHelper(ZPAClient):
         self,
         path=None,
         params=None,
-        data_per_page=500,
         expected_status_code=200,
         api_version: str = None,
         search=None,
@@ -367,7 +366,9 @@ class ZPAClientHelper(ZPAClient):
         start_time=None,
         end_time=None,
         idp_group_id=None,
-        scim_user_id=None
+        scim_user_id=None,
+        page=None,
+        pagesize=20
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -375,7 +376,6 @@ class ZPAClientHelper(ZPAClient):
         Args:
             path (str): The API endpoint path to send requests to.
             params (dict): Initial set of query parameters for the API request.
-            data_per_page (int): Number of items to request per page. Defaults to 500.
             expected_status_code (int): The expected HTTP status code for a successful request. Defaults to 200.
             api_version (str): Specifies the version of the API to be used. Helps in routing within the API service.
             search (str): Search query to filter the results based on specific conditions.
@@ -389,6 +389,8 @@ class ZPAClientHelper(ZPAClient):
             end_time (str): The end of a time range for filtering data based on modification time.
             idp_group_id (str): Identifier for a specific IDP group, used for fetching data related to that group.
             scim_user_id (str): Identifier for a specific SCIM user, used for fetching data related to that user.
+            page (int): Specific page number to fetch. Overrides automatic pagination.
+            pagesize (int): Number of items per page, default is 20 as per API specification, maximum is 500.
 
         Returns:
             tuple: A tuple containing:
@@ -408,12 +410,15 @@ class ZPAClientHelper(ZPAClient):
 
         if params is None:
             params = {}
-        
-        # Ensure we do not request more items per page than the total needed
-        effective_page_size = min(data_per_page, max_items) if max_items is not None else data_per_page
-        params['pagesize'] = effective_page_size
 
-        # Handle additional parameters
+        if (page is not None or pagesize != 20) and (max_pages is not None or max_items is not None):
+            raise ValueError("Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters.")
+
+        params['pagesize'] = min(pagesize, 500)  # Apply maximum constraint and handle default
+
+        if page:
+            params['page'] = page
+
         if search:
             api_search_field = snake_to_camel(search_field)
             params['search'] = f"{api_search_field} EQ {search}"
@@ -431,13 +436,14 @@ class ZPAClientHelper(ZPAClient):
         if scim_user_id:
             params['scimUserId'] = scim_user_id
 
-        page = 1
-        ret_data = []
         total_collected = 0
+        ret_data = []
 
         try:
             while True:
-                params['page'] = page
+                if max_pages is not None and (page is not None and page > max_pages):
+                    break
+
                 should_wait, delay = self.rate_limiter.wait("GET")
                 if should_wait:
                     time.sleep(delay)
@@ -451,32 +457,28 @@ class ZPAClientHelper(ZPAClient):
                     return BoxList([]), error_msg
 
                 response_data = response.json()
-                if int(response_data.get('totalPages', 0)) == 0:
-                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
-                    logger.warn(error_msg)
-                    return BoxList([]), error_msg
-
                 data = response_data.get('list', [])
-                if not data and page == 1:  # Additional empty check for the first page
+                if not data and (page is None or page == 1):
                     error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
                     logger.warn(error_msg)
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(data)
-                ret_data.extend(data)
+                ret_data.extend(data[:max_items - total_collected] if max_items is not None else data)
                 total_collected += len(data)
 
                 if max_items is not None and total_collected >= max_items:
                     break
 
-                totalPages = int(response_data.get('totalPages', 1))
-                if page >= totalPages or (max_pages is not None and page >= max_pages):
+                nextPage = response_data.get('nextPage')
+                if not nextPage or (max_pages is not None and page >= max_pages):
                     break
 
-                page += 1
+                page = nextPage if page is None else page + 1
+                params['page'] = page
 
         finally:
-            time.sleep(1)
+            time.sleep(1)  # Ensure a delay between requests regardless of outcome
 
         if not ret_data:
             error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
@@ -484,6 +486,8 @@ class ZPAClientHelper(ZPAClient):
             return BoxList([]), error_msg
 
         return BoxList(ret_data), None
+
+
 
 
     @property

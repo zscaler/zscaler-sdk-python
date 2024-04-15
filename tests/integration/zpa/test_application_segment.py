@@ -116,10 +116,11 @@ class TestApplicationSegment:
         except Exception as exc:
             errors.append(f"Retrieving Application Segment failed: {exc}")
 
-        # Test listing Application Segments
+        # Test listing Application Segments - Filter by the unique name
         try:
-            apps = client.app_segments.list_segments()
-            assert any(app["id"] == app_segment_id for app in apps)
+            # Since you generate a unique name for the segment, you can use it to search
+            apps = client.app_segments.list_segments(search=app_segment_name)
+            assert any(app["id"] == app_segment_id for app in apps), "Newly created app segment should be in the list"
         except Exception as exc:
             errors.append(f"Listing Application Segments failed: {exc}")
 
