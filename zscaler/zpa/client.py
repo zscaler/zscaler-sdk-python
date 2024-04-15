@@ -39,11 +39,23 @@ class ZPAClient:
 
     def get_paginated_data(
         self,
-        path: str = None,
-        data_key_name: str = None,
-        data_per_page: int = 500,
+        path=None,
+        params=None,
         expected_status_code=200,
         api_version: str = None,
+        search=None,
+        search_field="name",
+        max_pages=None,
+        max_items=None,
+        sort_order=None,
+        sort_by=None,
+        sort_dir=None,
+        start_time=None,
+        end_time=None,
+        idp_group_id=None,
+        scim_user_id=None,
+        page=None,
+        pagesize=20
     ):
         """
         Send a GET request to the ZPA API to fetch all pages of a resources.

@@ -38,7 +38,7 @@ import argparse
 import json
 import os
 from zscaler import ZPAClientHelper
-from utils import str2bool
+from zscaler.utils import str2bool
 
 # Initialize ZIAClientHelper with environment variables
 ZPA_CLIENT_ID = os.getenv("ZPA_CLIENT_ID")

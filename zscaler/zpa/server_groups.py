@@ -53,7 +53,7 @@ class ServerGroupsAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/serverGroup", data_key_name="list", **kwargs, api_version="v1"
+            path="/serverGroup", **kwargs, api_version="v1"
         )
         return list
 
@@ -185,7 +185,6 @@ class ServerGroupsAPI:
             ...    dynamic_discovery=True)
 
         """
-
         # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
@@ -196,8 +195,6 @@ class ServerGroupsAPI:
             payload[snake_to_camel(key)] = value
 
         resp = self.rest.put(f"serverGroup/{group_id}", json=payload).status_code
-
-        # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 

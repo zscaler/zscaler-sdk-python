@@ -49,7 +49,6 @@ class CloudConnectorGroupsAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path="/cloudConnectorGroup",
-            data_key_name="list",
         )
         return list
 

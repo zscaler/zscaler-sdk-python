@@ -23,9 +23,7 @@ class SCIMGroupsAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
 
-    def list_groups(
-        self, idp_id: str, sort_by: str = "name", sort_order: str = "DESC", **kwargs
-    ) -> BoxList:
+    def list_groups(self, idp_id: str, **kwargs) -> BoxList:
         """
         Returns a list of all configured SCIM groups for the specified IdP.
 
@@ -35,7 +33,7 @@ class SCIMGroupsAPI:
             sort_by (str):
                 The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
             sort_order (str):
-                The sort order, values: ASC or DESC (default DESC)
+                The sort order, values: ASC or DSC (default DSC)
 
 
         Keyword Args:
@@ -69,18 +67,21 @@ class SCIMGroupsAPI:
             ...    pprint(scim_group)
 
         """
-        params = {}
-        if sort_order != "" and sort_by != "":
-            params["sortBy"] = sort_by
-            params["sortOrder"] = sort_order
         list, _ = self.rest.get_paginated_data(
-            path=f"/scimgroup/idpId/{idp_id}",
-            params=params,
-            data_key_name="list",
-            **kwargs,
-            api_version="userconfig_v1",
+            path=f"/scimgroup/idpId/{idp_id}", **kwargs, api_version="userconfig_v1",
         )
         return list
+        # params = {}
+        # if sort_order != "" and sort_by != "":
+        #     params["sortBy"] = sort_by
+        #     params["sortOrder"] = sort_order
+        # list, _ = self.rest.get_paginated_data(
+        #     path=f"/scimgroup/idpId/{idp_id}",
+        #     params=params,
+        #     **kwargs,
+        #     api_version="userconfig_v1",
+        # )
+        # return list
 
     def get_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -99,7 +100,6 @@ class SCIMGroupsAPI:
             >>> pprint(zpa.scim_groups.get_group('99999'))
 
         """
-        # Corrected call to self.rest.get without the unsupported 'data_key_name' argument
         response = self.rest.get(
             f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1"
         )
@@ -133,7 +133,7 @@ class SCIMGroupsAPI:
             "search": search,
             "pagesize": page_size,
             "sortBy": "name",
-            "sortOrder": "DESC",
+            "sortOrder": "DSC",
         }
         page = self.rest.get(
             path=f"/scimgroup/idpId/{idp_id}",

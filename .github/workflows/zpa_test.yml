@@ -49,9 +49,9 @@ jobs:
               uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
-                timeout_minutes: 20
+                timeout_minutes: 30
                 command: |
-                    make test:integration:zpa
+                    make coverage:zpa
               env:
                 ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -96,9 +96,9 @@ jobs:
               uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
-                timeout_minutes: 20
+                timeout_minutes: 30
                 command: |
-                    make test:integration:zpa
+                    make coverage:zpa
               env:
                 ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -143,9 +143,9 @@ jobs:
               uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
-                timeout_minutes: 20
+                timeout_minutes: 30
                 command: |
-                    make test:integration:zpa
+                    make coverage:zpa
               env:
                 ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -193,9 +193,9 @@ jobs:
               uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
-                timeout_minutes: 20
+                timeout_minutes: 30
                 command: |
-                    make test:integration:zpa
+                    make coverage:zpa
               env:
                 ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}

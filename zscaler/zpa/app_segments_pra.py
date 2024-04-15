@@ -47,7 +47,7 @@ class AppSegmentsPRAAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/application", data_key_name="list", **kwargs
+            path="/application", **kwargs
         )
         return list
 

@@ -48,9 +48,9 @@ jobs:
               uses: nick-fields/retry@v2
               with:
                 max_attempts: 3
-                timeout_minutes: 20
+                timeout_minutes: 45
                 command: |
-                    make test:integration:zia
+                    make coverage:zia
               env:
                 ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
                 ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
@@ -103,7 +103,7 @@ jobs:
                 max_attempts: 3
                 timeout_minutes: 20
                 command: |
-                    make test:integration:zia
+                    make coverage:zia
               env:
                 ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
                 ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}

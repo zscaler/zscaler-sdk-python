@@ -17,15 +17,19 @@
 import argparse
 import base64
 import json as jsonp
+import json
 import logging
 import random
 import re
 import time
+import datetime
+import pytz
+from dateutil import parser
 from typing import Dict, Optional
 from urllib.parse import urlencode
-
 from box import Box, BoxList
 from requests import Response
+from box import Box, BoxList
 from restfly import APIIterator
 
 from zscaler.constants import RETRYABLE_STATUS_CODES
@@ -79,6 +83,7 @@ def snake_to_camel(name: str):
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
         "is_incomplete_dr_config": "isIncompleteDRConfig",
+        "email_ids": "emailIds",
     }
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 
@@ -275,7 +280,43 @@ def pick_version_profile(kwargs: list, payload: list):
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
 
+class Iterator(APIIterator):
+    """Iterator class."""
 
+    page_size = 100
+
+    def __init__(self, api, path: str = "", **kw):
+        """Initialize Iterator class."""
+        super().__init__(api, **kw)
+
+        self.path = path
+        self.max_items = kw.pop("max_items", 0)
+        self.max_pages = kw.pop("max_pages", 0)
+        self.payload = {}
+        if kw:
+            self.payload = {snake_to_camel(key): value for key, value in kw.items()}
+
+    def _get_page(self) -> None:
+        """Iterator function to get the page."""
+        resp = self._api.get(
+            self.path,
+            params={**self.payload, "page": self.num_pages + 1},
+        )
+        try:
+            # If we are using ZPA then the API will return records under the
+            # 'list' key.
+            self.page = resp.get("list") or []
+        except AttributeError:
+            # If the list key doesn't exist then we're likely using ZIA so just
+            # return the full response.
+            self.page = resp
+        finally:
+            # If we use the default retry-after logic in Restfly then we are
+            # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
+            # standard 1 sec rate limit on the API endpoints with pagination so
+            # we are going to include it here.
+            time.sleep(1)
+            
 def remove_cloud_suffix(str_name: str) -> str:
     """
     Removes appended cloud name (e.g. "(zscalerthree.net)") from the string.
@@ -289,30 +330,6 @@ def remove_cloud_suffix(str_name: str) -> str:
     reg = re.compile(r"(.*)\s+\([a-zA-Z0-9\-_\.]*\)\s*$")
     res = reg.sub(r"\1", str_name)
     return res.strip()
-
-
-class Iterator(APIIterator):
-    def __init__(self, api, path: str, **kw):
-        super().__init__(api, **kw)
-        self.path = path
-        self.payload = {snake_to_camel(key): value for key, value in kw.items()}
-
-    def _get_page(self):
-        params = {**self.payload, "page": self.num_pages + 1}
-        response = self._api.get(self.path, params=params)
-
-        # Process the response as needed (similar to the original _get_page logic)
-        try:
-            self.page = response.get("list") or []
-        except AttributeError:
-            self.page = response
-        finally:
-            # If we use the default retry-after logic in Restfly then we are
-            # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
-            # standard 1 sec rate limit on the API endpoints with pagination so
-            # we are going to include it here.
-            time.sleep(1)
-
 
 def should_retry(status_code):
     """Determine if a given status code should be retried."""
@@ -410,6 +427,72 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError("Boolean value expected.")
 
+def is_valid_ssh_key(private_key: str) -> bool:
+    """
+    Validate SSH private key format.
+    """
+    # Basic pattern matching to check for RSA/ECDSA (OpenSSH/PEM) key headers
+    ssh_key_patterns = [
+        r"-----BEGIN OPENSSH PRIVATE KEY-----",
+        r"-----BEGIN RSA PRIVATE KEY-----",
+        r"-----BEGIN EC PRIVATE KEY-----"
+    ]
+    return any(re.search(pattern, private_key) for pattern in ssh_key_patterns)
+
+def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
+    """
+    Validates and converts provided time strings to epoch.
+    Validates the time zone against IANA Time Zone database.
+    Ensures start time is not more than 1 hour in the past and within 1 year range of end time.
+
+    Args:
+        start_time_str (str): Start time in RFC1123Z or RFC1123 format.
+        end_time_str (str): End time in RFC1123Z or RFC1123 format.
+        time_zone_str (str): IANA Time Zone database string.
+
+    Returns:
+        tuple: Converted start and end times in epoch format.
+    
+    Raises:
+        ValueError: If any validation fails.
+    """
+    # Validate time zone
+    if time_zone_str not in pytz.all_timezones:
+        raise ValueError(f"Invalid time zone: {time_zone_str}")
+
+    # Convert times
+    try:
+        start_time = parser.parse(start_time_str)
+        end_time = parser.parse(end_time_str)
+    except ValueError as e:
+        raise ValueError(f"Time parsing error: {e}")
+
+    # Handle timezone conversion
+    tz = pytz.timezone(time_zone_str)
+    if start_time.tzinfo is not None:
+        start_time = start_time.astimezone(tz)
+    else:
+        start_time = tz.localize(start_time)
+
+    if end_time.tzinfo is not None:
+        end_time = end_time.astimezone(tz)
+    else:
+        end_time = tz.localize(end_time)
+
+    # Ensure start time is not more than 1 hour in the past
+    now_in_tz = datetime.datetime.now(tz)
+    if start_time < (now_in_tz - datetime.timedelta(hours=1)):
+        raise ValueError("Start time cannot be more than 1 hour in the past.")
+
+    # Ensure start time is within a one year range of end time
+    if end_time > (start_time + datetime.timedelta(days=365)):
+        raise ValueError("Start time and end time range cannot exceed 1 year.")
+
+    # Convert to epoch
+    start_epoch = int(start_time.timestamp())
+    end_epoch = int(end_time.timestamp())
+
+    return start_epoch, end_epoch
 
 def dump_request(
     logger, url: str, method: str, json, params, headers, request_uuid: str, body=True
