@@ -20,7 +20,7 @@ import random
 import string
 from datetime import datetime, timedelta
 import pytz
-from typing import Tuple
+from typing import List, Tuple
 
 # Function to generate a random string
 def generate_random_string(length=10):
@@ -80,3 +80,29 @@ def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str,
     formatted_end_time = end_time.strftime(time_format)
 
     return formatted_start_time, formatted_end_time
+
+def generate_random_port_ranges(count: int, range_size: int = 1) -> List[str]:
+    """
+    Generate a list of unique, non-overlapping TCP port ranges.
+    Each range is returned as a string formatted as "start-end".
+
+    Args:
+        count: The number of unique port ranges to generate.
+        range_size: The number of consecutive ports in each range (default is 1).
+
+    Returns:
+        A list of port range strings.
+    """
+    max_port = 65535
+    selected_ports = set()
+    port_ranges = []
+
+    while len(port_ranges) < count:
+        start_port = random.randint(1, max_port - range_size + 1)
+        end_port = start_port + range_size - 1
+
+        if all(p not in selected_ports for p in range(start_port, end_port + 1)):
+            port_ranges.append(f"{start_port}-{end_port}")
+            selected_ports.update(range(start_port, end_port + 1))
+
+    return port_ranges
