@@ -16,7 +16,7 @@
 
 
 import pytest
-
+import time
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
@@ -94,6 +94,7 @@ class TestApplicationSegment:
             errors.append(f"Creating Server Group failed: {exc}")
 
         # Create an Application Segment
+        time.sleep(1)
         try:
             app_segment_name = "tests-" + generate_random_string()
             app_segment_description = "tests-" + generate_random_string()
@@ -103,7 +104,7 @@ class TestApplicationSegment:
                 domain_names=["test.example.com"],
                 segment_group_id=segment_group_id,
                 server_group_ids=[server_group_id],
-                tcp_port_ranges=["80", "80"],
+                tcp_port_ranges=["8001", "8001"],
             )
             app_segment_id = app_segment["id"]
         except Exception as exc:
