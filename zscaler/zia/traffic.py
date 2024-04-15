@@ -58,7 +58,8 @@ class TrafficForwardingAPI:
             ...    print(tunnel)
 
         """
-        return BoxList(Iterator(self.rest, "greTunnels", **kwargs))
+        data, _ = self.rest.get_paginated_data(path="greTunnels", **kwargs)
+        return data  
 
     def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
@@ -137,7 +138,7 @@ class TrafficForwardingAPI:
         Examples:
             Return recommended VIPs for a given source IP:
 
-            >>> for vip in zia.vips.list_vips_recommended(source_ip='203.0.113.30'):
+            >>> for vip in zia.traffic.list_vips_recommende(source_ip='203.0.113.30'):
             ...    pprint(vip)
 
         """
@@ -161,20 +162,32 @@ class TrafficForwardingAPI:
                 The IP address used for locating the closest diverse VIPs.
 
         Returns:
-            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
+            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs in Box format.
 
         Examples:
             >>> closest_vips = zia.vips.get_closest_diverse_vip_ids('203.0.113.20')
+            >>> print(closest_vips)
 
         """
         vips_list = self.list_vips_recommended(source_ip=ip_address)
+        if not vips_list:  # Make sure we have VIPs to process
+            return ()
+
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next(
-            (vip for vip in vips_list if vip.city != preferred_vip.city)
-        )
-        recommended_vips = (preferred_vip.id, secondary_vip.id)
+        try:
+            secondary_vip = next(
+                (vip for vip in vips_list if vip.city != preferred_vip.city)
+            )
+        except StopIteration:
+            secondary_vip = None
+
+        if not secondary_vip:
+            # Handle case where no secondary VIP is found
+            recommended_vips = (preferred_vip,)  # Return only one VIP as a tuple if no diverse option is found
+        else:
+            recommended_vips = (preferred_vip, secondary_vip)
 
         return recommended_vips
 
@@ -261,15 +274,12 @@ class TrafficForwardingAPI:
 
             List VIPs, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for vip in zia.vips.list_vips(page_size=200, max_pages=2):
+            >>> for vip in zia.traffic.list_vips(page_size=200, max_pages=2):
             ...    print(vip)
 
         """
-        return BoxList(Iterator(self.rest, "vips", **kwargs))
-        # response = self.rest.get("/vips", **kwargs)
-        # if isinstance(response, Response):
-        #     return None
-        # return response
+        data, _ = self.rest.get_paginated_data(path="vips", params=kwargs)
+        return data  
 
     def add_gre_tunnel(
         self,
@@ -646,6 +656,22 @@ class TrafficForwardingAPI:
 
         Returns:
             :obj:`BoxList`: List containing the VPN credential resource records.
+            
+        Examples:
+            List VPN credentials using default settings:
+
+            >>> for credential in zia.traffic.list_vpn_credentials:
+            ...    pprint(credential)
+
+            List VPN credentials, limiting to a maximum of 10 items:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(max_items=10):
+            ...    print(credential)
+
+            List VPN credentials, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
+            ...    print(credential)
         """
         valid_params = [
             "search",
@@ -657,9 +683,8 @@ class TrafficForwardingAPI:
         query_params = {
             k: v for k, v in kwargs.items() if k in valid_params and v is not None
         }
-
-        response = self.rest.get("vpnCredentials", params=query_params)
-        return response
+        data, _ = self.rest.get_paginated_data(path="vpnCredentials", params=query_params)
+        return data  
 
     def add_vpn_credential(
         self, authentication_type: str, pre_shared_key: str = None, **kwargs

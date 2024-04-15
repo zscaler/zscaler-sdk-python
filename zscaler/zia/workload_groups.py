@@ -24,7 +24,7 @@ class WorkloadGroupsAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_groups(self) -> BoxList:
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all firewall filter rules.
 
@@ -36,10 +36,13 @@ class WorkloadGroupsAPI:
             ...    pprint(rule)
 
         """
-        response = self.rest.get("/workloadGroups")
-        if isinstance(response, Response):
-            return None
-        return response
+        data, _ = self.rest.get_paginated_data(path="workloadGroups", params=kwargs)
+        # Ensure data is wrapped in BoxList
+        return BoxList(data)
+        # response = self.rest.get("/workloadGroups")
+        # if isinstance(response, Response):
+        #     return None
+        # return response
 
     # Search Workload Group By Name
     def get_group_by_name(self, name):

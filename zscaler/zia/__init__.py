@@ -18,6 +18,7 @@ from zscaler.user_agent import UserAgent
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.utils import (
     convert_keys_to_snake,
+    snake_to_camel,
     format_json_response,
     retry_with_backoff,
     dump_request,
@@ -43,7 +44,6 @@ from zscaler.zia.traffic import TrafficForwardingAPI
 from zscaler.zia.url_categories import URLCategoriesAPI
 from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.users import UserManagementAPI
-from zscaler.zia.vips import DataCenterVIPSAPI
 from zscaler.zia.web_dlp import WebDLPAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 from zscaler.zia.isolation_profile import IsolationProfileAPI
@@ -407,88 +407,85 @@ class ZIAClientHelper(ZIAClient):
             time.sleep(delay)
         return self.send("DELETE", path, json, params)
 
-    ERROR_MESSAGES = {
-        "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
-        "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
-        "EMPTY_RESULTS": "No results found for page {page}.",
-    }
-
     def get_paginated_data(
         self,
         path=None,
         params=None,
-        data_key_name=None,
-        data_per_page=500,
         expected_status_code=200,
+        page=None,
+        page_size=100,  # Default value
+        search=None
     ):
         """
-        Fetch paginated data from the ZIA API.
-        ...
+        Fetch paginated data from the ZIA API based on specified parameters.
+
+        Args:
+            path (str): The API endpoint path to send requests to.
+            params (dict): Additional query parameters for the API request.
+            expected_status_code (int): The expected HTTP status code for a successful request.
+            page (int): Specifies the page offset, defaults to starting from the first page if pagination is supported.
+            page_size (int): Specifies the page size, default is 100 with a maximum of 1000.
+            search (str): Search query string to filter the results, applicable if supported by the endpoint.
 
         Returns:
-        - list: List of fetched items.
-        - str: Error message, if any occurred.
+            list: A list of fetched items.
+            str: An error message if any occurred during the data fetching process.
         """
+        logger = logging.getLogger(__name__)
+        ERROR_MESSAGES = {
+            "UNEXPECTED_STATUS": "Unexpected status code {status_code} received on page {page}.",
+            "EMPTY_RESULTS": "No results found on page {page}.",
+        }
 
-        page = 1
+        if params is None:
+            params = {}
+
+        # Add page and search parameters to local params dictionary, not overriding input params
+        local_params = {
+            'page': page or 1,
+            'pageSize': page_size,  # Adjusting the name to API specification
+            'search': search
+        }
+        # Merge with additional params provided by the user
+        local_params.update(params)
+
+        # Convert all params keys to CamelCase for API compliance
+        camel_case_params = {snake_to_camel(key): value for key, value in local_params.items() if value is not None}
+
         ret_data = []
-        error_message = None
+        current_page = camel_case_params.get('page', 1)
 
         while True:
             # Construct the URL with parameters
-            url_params = f"?page={page}&pagesize={data_per_page}"
-            if params:
-                url_params += "&" + "&".join(
-                    f"{key}={value}" for key, value in params.items()
-                )
+            url_params = "&".join(f"{key}={value}" for key, value in camel_case_params.items())
+            required_url = f"{path}?{url_params}"
 
-            required_url = f"{path}{url_params}"
             should_wait, delay = self.rate_limiter.wait("GET")
             if should_wait:
                 time.sleep(delay)
 
-            # Now proceed with sending the request
-            response = self.send(
-                method="GET",
-                path=required_url,
-            )
-
+            response = self.send("GET", required_url)
             if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=page
-                )
+                error_message = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=current_page)
                 logger.error(error_message)
-                break
-            data_json = response.json()
-            if isinstance(data_json, list):
-                data = data_json
-            else:
-                data = data_json.get(data_key_name)
+                return [], error_message
 
-            if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
-                    data_key_name=data_key_name, page=page
-                )
-                logger.error(error_message)
-                break
-
-            if not data:  # Checks for empty data
-                logger.info(self.ERROR_MESSAGES["EMPTY_RESULTS"].format(page=page))
+            data = response.json()
+            if not data:  # Handles empty list or non-paginated endpoints
+                logger.info(ERROR_MESSAGES["EMPTY_RESULTS"].format(page=current_page))
                 break
 
             ret_data.extend(convert_keys_to_snake(data))
 
-            # Check for more pages
-            if (
-                len(data) == 0
-                or isinstance(data_json, dict)
-                and int(response.json().get("totalPages")) <= page + 1
-            ):
-                break
+            # Check data size for stopping condition
+            if len(data) < camel_case_params['pageSize']:
+                break  # Stop if data returned is less than pageSize
 
-            page += 1
+            current_page += 1
+            camel_case_params['page'] = current_page
+            time.sleep(1)  # Sleep to handle rate limiting
 
-        return BoxList(ret_data), error_message
+        return ret_data, None
 
     @property
     def admin_and_role_management(self):
@@ -634,14 +631,6 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return UserManagementAPI(self)
-
-    @property
-    def vips(self):
-        """
-        The interface object for the :ref:`ZIA Data Center VIPs interface <zia-vips>`.
-
-        """
-        return DataCenterVIPSAPI(self)
 
     @property
     def web_dlp(self):
