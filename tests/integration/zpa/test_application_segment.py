@@ -16,7 +16,7 @@
 
 
 import pytest
-
+import time
 from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 
@@ -94,6 +94,7 @@ class TestApplicationSegment:
             errors.append(f"Creating Server Group failed: {exc}")
 
         # Create an Application Segment
+        time.sleep(1)
         try:
             app_segment_name = "tests-" + generate_random_string()
             app_segment_description = "tests-" + generate_random_string()
@@ -103,7 +104,7 @@ class TestApplicationSegment:
                 domain_names=["test.example.com"],
                 segment_group_id=segment_group_id,
                 server_group_ids=[server_group_id],
-                tcp_port_ranges=["80", "80"],
+                tcp_port_ranges=["8001", "8001"],
             )
             app_segment_id = app_segment["id"]
         except Exception as exc:
@@ -116,10 +117,11 @@ class TestApplicationSegment:
         except Exception as exc:
             errors.append(f"Retrieving Application Segment failed: {exc}")
 
-        # Test listing Application Segments
+        # Test listing Application Segments - Filter by the unique name
         try:
-            apps = client.app_segments.list_segments()
-            assert any(app["id"] == app_segment_id for app in apps)
+            # Since you generate a unique name for the segment, you can use it to search
+            apps = client.app_segments.list_segments(search=app_segment_name)
+            assert any(app["id"] == app_segment_id for app in apps), "Newly created app segment should be in the list"
         except Exception as exc:
             errors.append(f"Listing Application Segments failed: {exc}")
 

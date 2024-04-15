@@ -46,7 +46,7 @@ class SAMLAttributesAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/samlAttribute", data_key_name="list", **kwargs, api_version="v2"
+            path="/samlAttribute", **kwargs, api_version="v2"
         )
         return list
 
@@ -79,7 +79,7 @@ class SAMLAttributesAPI:
             f"/samlAttribute/idp/{idp_id}"  # Correctly format the path with the idp_id
         )
         list, _ = self.rest.get_paginated_data(
-            path=path, data_key_name="list", **kwargs, api_version="v2"
+            path=path, **kwargs, api_version="v2"
         )
         return list
 

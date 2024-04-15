@@ -102,10 +102,10 @@ coverage:
 	pytest --cov=zscaler --cov-report term
 
 coverage\:zia:
-	pytest tests/integration/zia --cov=zscaler/zia --cov-report term
+	pytest tests/integration/zia --cov=zscaler/zia --cov-report term --disable-warnings
 
 coverage\:zpa:
-	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
+	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term --disable-warnings
 
 docs: clean-docs
 	$(MAKE) -C docs html
@@ -113,7 +113,7 @@ docs: clean-docs
 	
 build\:dist:
 	python setup.py sdist bdist_wheel
-	pip install dist/zscaler-1.0.0.tar.gz
+	pip install dist/zscaler-${VERSION}.tar.gz
 	ls -l dist
 
 publish\:test:

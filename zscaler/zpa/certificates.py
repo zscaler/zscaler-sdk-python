@@ -53,7 +53,6 @@ class CertificatesAPI:
         """
         list, _ = self.rest.get_paginated_data(
             path="/clientlessCertificate/issued",
-            data_key_name="list",
             **kwargs,
             api_version="v2",
         )
@@ -85,7 +84,7 @@ class CertificatesAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/certificate", data_key_name="list", **kwargs, api_version="v1"
+            path="/certificate", **kwargs, api_version="v1"
         )
         return list
 
@@ -224,7 +223,7 @@ class CertificatesAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path="/enrollmentCert", data_key_name="list", **kwargs, api_version="v2"
+            path="/enrollmentCert", **kwargs, api_version="v2"
         )
         return list
 

@@ -24,6 +24,7 @@ software development using the Zscaler API for both customers and partners.
 - [Release Status](#release-status)
 - [Need help?](#need-help)
 - [Getting Started](#getting-started)
+- [Pagination](#pagination)
 - [Logging](#logging)
 - [Rate Limiting](#rate-limiting)
 - [Environment variables](#environment-variables)
@@ -76,6 +77,56 @@ for app_segment in zpa.app_segments.list_segments():
 
 ~> **NOTE** The `ZPA_CLOUD` environment variable is optional and only required if your project needs to interact with any other ZPA cloud other than production cloud. In this case, use the `ZPA_CLOUD` environment variable followed by the name of the corresponding environment: `ZPA_CLOUD=BETA`, `ZPA_CLOUD=ZPATWO`, `ZPA_CLOUD=GOV`, `ZPA_CLOUD=GOVUS`, `ZPA_CLOUD=PREVIEW`, `ZPA_CLOUD=DEV`.
 
+## Pagination
+
+This SDK provides methods that retrieve a list of resources from the API, which return paginated results due to the volume of data. Each method capable of returning paginated data is prefixed as `list_` and handles the pagination internally by providing an easy interface to iterate through pages. The user does not need to manually fetch each page; instead, they can process items as they iterate through them.
+
+### Example of Iterating Over Paginated Results
+
+The following example shows how you can list ZPA items using this SDK, processing each item one at a time. This pattern is useful for operations that need to handle large datasets efficiently.
+
+```python
+from zscaler import ZPAClientHelper
+from pprint import pprint
+
+# Initialize the client
+zpa = ZPAClientHelper(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, customer_id=CUSTOMER_ID, cloud=CLOUD)
+
+for apps in zpa.app_segments.list_segments():
+    pprint(apps)
+```
+
+### Customizing Pagination Parameters
+
+While pagination is handled automatically, you can also customize pagination behavior by specifying parameters such as data_per_page and max_items. These parameters give you control over the volume of data fetched per request and the total amount of data to process. This is useful for limiting the scope of data fetched
+
+* `max_pages`: controls the number of items fetched per API call (per page).
+* `max_items`: controls the total number of items to retrieve across all pages. 
+
+```python
+from zscaler import ZPAClientHelper
+from pprint import pprint
+
+# Initialize the client
+zpa = ZPAClientHelper(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, customer_id=CUSTOMER_ID, cloud=CLOUD)
+
+pagination_params = {
+    'max_pages': 1,
+    'max_items': 5
+}
+
+# Fetch data using custom pagination settings
+segments = zpa.app_segments.list_segments(**pagination_params)
+for segment in segments:
+    pprint(segment)
+```
+
+### Efficient Pagination Handling
+
+For more details on each pagination parameter see:
+[ZPA Pagination Parameters](zscaler/zpa/README.md)
+[ZIA Pagination Parameters](zscaler/zia/README.md)
+
 ## Logging
 
 The Zscaler SDK Python, provides robust logging for debug purposes.
@@ -91,7 +142,7 @@ export ZSCALER_SDK_VERBOSE=true
 
 **NOTE**: DO NOT SET DEBUG LEVEL IN PRODUCTION!
 
-You should now see logs in your console. Actual API Tokens will be logged to the console, so use caution and never use `DEBUG` level logging in production.
+You should now see logs in your console. Notice that API tokens are **NOT** logged to the console; however, we still advise to use caution and never use `DEBUG` level logging in production.
 
 What it being logged? `requests`, `responses`,  `http errors`, `caching responses`.
 
@@ -100,8 +151,8 @@ What it being logged? `requests`, `responses`,  `http errors`, `caching response
 Each one of the configuration values above can be turned into an environment variable name with the `_` (underscore) character and UPPERCASE characters. The following are accepted:
 
 - `ZSCALER_CLIENT_CACHE_ENABLED` - Enable or disable the caching mechanism within the clien
-- `ZSCALER_CLIENT_CACHE_DEFAULT_TTL` - Duration (in seconds) that cached data remains valid. By default data is cached in memory for 3600 seconds.
-- `ZSCALER_CLIENT_CACHE_DEFAULT_TTI` - This environment variable sets the maximum amount of time (in seconds) that cached data can remain in the cache without being accessed. If the cached data is not accessed within this timeframe, it is removed from the cache, regardless of its TTL. The default TTI is 1800 seconds (30 minutes) 
+- `ZSCALER_CLIENT_CACHE_DEFAULT_TTL` - Duration (in seconds) that cached data remains valid. By default data is cached in memory for `3600` seconds.
+- `ZSCALER_CLIENT_CACHE_DEFAULT_TTI` - This environment variable sets the maximum amount of time (in seconds) that cached data can remain in the cache without being accessed. If the cached data is not accessed within this timeframe, it is removed from the cache, regardless of its TTL. The default TTI is `1800` seconds (`30 minutes`) 
 - `ZSCALER_SDK_LOG` - Turn on logging
 - `ZSCALER_SDK_VERBOSE` - Turn on logging in verbose mode
 
@@ -129,8 +180,10 @@ Retry Conditions: The client for both ZPA and ZIA retries a request under the fo
 In most cases, you won't need to build the SDK from source. If you want to build it yourself, you'll need these prerequisites:
 
 - Clone the repo
-- Run `python setup.py build` from the root of the project (assuming Python is installed)
-- Ensure tests run succesfully. Install `tox` if not installed already using: `pip install tox`. Run tests using `tox` in the root directory of the project.
+- Run `make build:dist` from the root of the project (assuming Python is installed)
+- Ensure tests run succesfully. 
+- Install `tox` if not installed already using: `pip install tox`. 
+- Run tests using `tox` in the root directory of the project.
 
 ## Contributing
 

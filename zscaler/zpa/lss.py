@@ -157,7 +157,7 @@ class LSSConfigControllerAPI:
             ...    print(config)
         """
         list, _ = self.rest.get_paginated_data(
-            path="/lssConfig", data_key_name="list", **kwargs, api_version="v2"
+            path="/lssConfig", **kwargs, api_version="v2"
         )
         return list
 

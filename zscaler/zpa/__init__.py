@@ -17,6 +17,7 @@ from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
     convert_keys_to_snake,
+    snake_to_camel,
     format_json_response,
     is_token_expired,
     retry_with_backoff,
@@ -39,6 +40,7 @@ from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
 from zscaler.zpa.posture_profile import PostureProfilesAPI
+from zscaler.zpa.privilegedremoteaccess import PrivilegedRemoteAccessAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
@@ -95,10 +97,10 @@ class ZPAClientHelper(ZPAClient):
         # Initialize rate limiter
         # You may want to adjust these parameters as per your rate limit configuration
         self.rate_limiter = RateLimiter(
-            get_limit=10,  # Adjust as per actual limit
-            post_put_delete_limit=5,  # Adjust as per actual limit
-            get_freq=1,  # Adjust as per actual frequency (in seconds)
-            post_put_delete_freq=1,  # Adjust as per actual frequency (in seconds)
+            get_limit=20,  # Adjusted to allow 20 GET requests per 10 seconds
+            post_put_delete_limit=10,  # Adjusted to allow 10 POST/PUT/DELETE requests per 10 seconds
+            get_freq=10,  # Adjust frequency to 10 seconds
+            post_put_delete_freq=10,  # Adjust frequency to 10 seconds
         )
 
         # Validate cloud value
@@ -348,82 +350,145 @@ class ZPAClientHelper(ZPAClient):
             time.sleep(delay)
         return self.send("DELETE", path, json, params, api_version=api_version)
 
-    ERROR_MESSAGES = {
-        "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
-        "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
-        "EMPTY_RESULTS": "No results found for page {page}.",
-    }
-
     def get_paginated_data(
         self,
         path=None,
         params=None,
-        data_key_name=None,
-        data_per_page=500,
         expected_status_code=200,
         api_version: str = None,
+        search=None,
+        search_field="name",
+        max_pages=None,
+        max_items=None,
+        sort_order=None,
+        sort_by=None,
+        sort_dir=None,
+        start_time=None,
+        end_time=None,
+        idp_group_id=None,
+        scim_user_id=None,
+        page=None,
+        pagesize=20
     ):
         """
-        Fetch paginated data from the ZPA API.
-        ...
+        Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
+
+        Args:
+            path (str): The API endpoint path to send requests to.
+            params (dict): Initial set of query parameters for the API request.
+            expected_status_code (int): The expected HTTP status code for a successful request. Defaults to 200.
+            api_version (str): Specifies the version of the API to be used. Helps in routing within the API service.
+            search (str): Search query to filter the results based on specific conditions.
+            search_field (str): The field name against which to search the query. Default is "name".
+            max_pages (int): The maximum number of pages to fetch. If None, fetches all available pages.
+            max_items (int): The maximum number of items to fetch across all pages. Stops fetching once reached.
+            sort_order (str): Specifies the order of sorting (e.g., 'ASC' or 'DSC').
+            sort_by (str): Specifies the field name by which the results should be sorted.
+            sort_dir (str): Specifies the direction of sorting. This is similar to `sort_order` and can be used interchangeably.
+            start_time (str): The start of a time range for filtering data based on modification time.
+            end_time (str): The end of a time range for filtering data based on modification time.
+            idp_group_id (str): Identifier for a specific IDP group, used for fetching data related to that group.
+            scim_user_id (str): Identifier for a specific SCIM user, used for fetching data related to that user.
+            page (int): Specific page number to fetch. Overrides automatic pagination.
+            pagesize (int): Number of items per page, default is 20 as per API specification, maximum is 500.
 
         Returns:
-        - list: List of fetched items.
-        - str: Error message, if any occurred.
+            tuple: A tuple containing:
+                - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+                - str: An error message if any occurred during the data fetching process.
+
+        Raises:
+            Logs errors and warnings through the configured logger when requests fail or if no data is found.
         """
+        logger = logging.getLogger(__name__)
 
-        page = 1
+        ERROR_MESSAGES = {
+            "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+            "MISSING_DATA_KEY": "The key 'list' was not found in the response for page {page}.",
+            "EMPTY_RESULTS": "No results found for all requested pages.",
+        }
+
+        if params is None:
+            params = {}
+
+        if (page is not None or pagesize != 20) and (max_pages is not None or max_items is not None):
+            raise ValueError("Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters.")
+
+        params['pagesize'] = min(pagesize, 500)  # Apply maximum constraint and handle default
+
+        if page:
+            params['page'] = page
+
+        if search:
+            api_search_field = snake_to_camel(search_field)
+            params['search'] = f"{api_search_field} EQ {search}"
+        if sort_order:
+            params['sortOrder'] = sort_order
+        if sort_by:
+            params['sortBy'] = sort_by
+        if sort_dir:
+            params['sortdir'] = sort_dir
+        if start_time and end_time:
+            params['startTime'] = start_time
+            params['endTime'] = end_time
+        if idp_group_id:
+            params['idpGroupId'] = idp_group_id
+        if scim_user_id:
+            params['scimUserId'] = scim_user_id
+
+        total_collected = 0
         ret_data = []
-        error_message = None
 
-        while True:
-            # Construct the URL with parameters
-            url_params = f"?page={page}&pagesize={data_per_page}"
-            if params:
-                url_params += "&" + "&".join(
-                    f"{key}={value}" for key, value in params.items()
-                )
+        try:
+            while True:
+                if max_pages is not None and (page is not None and page > max_pages):
+                    break
 
-            required_url = f"{path}{url_params}"
-            should_wait, delay = self.rate_limiter.wait("GET")
-            if should_wait:
-                time.sleep(delay)
+                should_wait, delay = self.rate_limiter.wait("GET")
+                if should_wait:
+                    time.sleep(delay)
 
-            # Now proceed with sending the request
-            response = self.send("GET", required_url, api_version=api_version)
+                url = f"{path}?{urllib.parse.urlencode(params)}"
+                response = self.send("GET", url, api_version=api_version)
 
-            if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=page
-                )
-                logger.error(error_message)
-                break
+                if response.status_code != expected_status_code:
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                    logger.error(error_msg)
+                    return BoxList([]), error_msg
 
-            data = response.json().get(data_key_name)
+                response_data = response.json()
+                data = response_data.get('list', [])
+                if not data and (page is None or page == 1):
+                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
+                    logger.warn(error_msg)
+                    return BoxList([]), error_msg
 
-            if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
-                    data_key_name=data_key_name, page=page
-                )
-                logger.error(error_message)
-                break
+                data = convert_keys_to_snake(data)
+                ret_data.extend(data[:max_items - total_collected] if max_items is not None else data)
+                total_collected += len(data)
 
-            if not data:  # Checks for empty data
-                logger.info(self.ERROR_MESSAGES["EMPTY_RESULTS"].format(page=page))
-                break
+                if max_items is not None and total_collected >= max_items:
+                    break
 
-            ret_data.extend(convert_keys_to_snake(data))
+                nextPage = response_data.get('nextPage')
+                if not nextPage or (max_pages is not None and page >= max_pages):
+                    break
 
-            # Check for more pages
-            if (
-                response.json().get("totalPages") is None
-                or int(response.json().get("totalPages")) <= page + 1
-            ):
-                break
+                page = nextPage if page is None else page + 1
+                params['page'] = page
 
-            page += 1
+        finally:
+            time.sleep(1)  # Ensure a delay between requests regardless of outcome
 
-        return BoxList(ret_data), error_message
+        if not ret_data:
+            error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
+            logger.warn(error_msg)
+            return BoxList([]), error_msg
+
+        return BoxList(ret_data), None
+
+
+
 
     @property
     def app_segments(self):
@@ -545,6 +610,14 @@ class ZPAClientHelper(ZPAClient):
         """
         return PostureProfilesAPI(self)
 
+    @property
+    def privilegedremoteaccess(self):
+        """
+        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged-remote-access>`.
+
+        """
+        return PrivilegedRemoteAccessAPI(self)
+    
     @property
     def provisioning(self):
         """

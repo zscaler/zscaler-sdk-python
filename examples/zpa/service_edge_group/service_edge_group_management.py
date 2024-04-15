@@ -51,7 +51,7 @@ import logging
 from zscaler import ZPAClientHelper
 import json
 import os
-from utils import str2bool
+from zscaler.utils import str2bool
 
 
 def main():

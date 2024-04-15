@@ -47,7 +47,7 @@ class AppServersAPI:
             >>> servers = zpa.servers.list_servers()
         """
         list, _ = self.rest.get_paginated_data(
-            path="/server", data_key_name="list", **kwargs, api_version="v1"
+            path="/server", **kwargs, api_version="v1"
         )
         return list
 
