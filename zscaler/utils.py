@@ -84,6 +84,7 @@ def snake_to_camel(name: str):
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
         "is_incomplete_dr_config": "isIncompleteDRConfig",
         "email_ids": "emailIds",
+        "page_size": "pageSize",
     }
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 

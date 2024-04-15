@@ -58,10 +58,8 @@ class RuleLabelsAPI:
             ...    print(label)
 
         """
-        list = self.rest.get(path="/ruleLabels", **kwargs)
-        if isinstance(list, Response):
-            return None
-        return list
+        data, _ = self.rest.get_paginated_data(path="ruleLabels", params=kwargs)
+        return data  
 
     def get_label(self, label_id: str) -> Box:
         """

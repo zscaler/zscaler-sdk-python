@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -66,11 +66,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        # response = self.rest.get("/locations", **kwargs)
-        # if isinstance(response, Response):
-        #     return None
-        # return response
-        return BoxList(Iterator(self.rest, "locations", **kwargs))
+        data, _ = self.rest.get_paginated_data(path="locations", **kwargs)
+        return data  
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """
@@ -270,10 +267,9 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        return self.rest.get(
-            f"locations/{location_id}/sublocations", **kwargs
-        )
-
+        data, _ = self.rest.get_paginated_data(path=f"locations/{location_id}/sublocations", **kwargs)
+        return data  
+    
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
         Returns only the name and ID of all configured locations.
@@ -312,7 +308,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        return self.rest.get("locations/lite", **kwargs)
+        data, _ = self.rest.get_paginated_data(path="locations/lite", **kwargs)
+        return data 
 
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
@@ -630,11 +627,11 @@ class LocationsAPI:
     def list_cities_by_name(self, **kwargs) -> BoxList:
         """
         Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
-         data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
-         country, postal code, etc.
+        data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
+        country, postal code, etc.
 
         Args:
-            **kwargs: Optional keyword arguments.
+            **kwargs: Optional keyword arguments including 'prefix', 'page', and 'page_size'.
 
         Keyword Args:
             prefix (str): The prefix string to search for cities.
@@ -655,16 +652,5 @@ class LocationsAPI:
             returned. Ensure you narrow your search result as much as possible to avoid this.
 
         """
-        data_key_name = "cities"  # Adjust this to the actual key if different
-        response, error = self.rest.get_paginated_data(
-            path="region/search",
-            params=kwargs,
-            data_key_name=data_key_name,
-            data_per_page=kwargs.get(
-                "page_size", 500
-            ),  # Use the page_size from kwargs or default to 500
-        )
-        if error:
-            raise Exception(error)
-
-        return response
+        data, _ = self.rest.get_paginated_data(path="region/search", params=kwargs)
+        return BoxList([Box(city) for city in data])
