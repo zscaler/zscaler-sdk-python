@@ -114,6 +114,3 @@ jobs:
                 ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
                 ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
                 ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-
-        needs:
-          - ZIA_ZSBETA
