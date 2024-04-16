@@ -24,7 +24,7 @@ class WorkloadGroupsAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_groups(self) -> BoxList:
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all firewall filter rules.
 

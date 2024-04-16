@@ -84,7 +84,7 @@ def main():
 
 def list_vips(client, include):
     params = {"include": include}  # Define params as a dict
-    vips = client.vips.list_vips(params=params)  # Pass params dict directly
+    vips = client.traffic.list_vips(params=params)  # Pass params dict directly
     print(
         json.dumps(vips, indent=4)
         if vips

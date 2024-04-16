@@ -33,7 +33,6 @@ class ZIAClient:
     def get_paginated_data(
         self,
         path: str = None,
-        params=None,
         data_key_name: str = None,
         data_per_page: int = 500,
         expected_status_code=200,

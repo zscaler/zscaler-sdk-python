@@ -106,7 +106,7 @@ class SSLInspectionAPI:
             "signatureAlgorithm": signature,
         }
 
-        return self._post(
+        return self.rest.post(
             "sslSettings/generatecsr", json=payload, box=False
         ).status_code
 
@@ -132,7 +132,7 @@ class SSLInspectionAPI:
 
         payload = {"fileUpload": cert}
 
-        return self._post(
+        return self.rest.post(
             "sslSettings/uploadcert/text", files=payload, box=False
         ).status_code
 
@@ -160,7 +160,7 @@ class SSLInspectionAPI:
 
         payload = {"fileUpload": cert}
 
-        return self._post(
+        return self.rest.post(
             "sslSettings/uploadcertchain/text", files=payload, box=False
         ).status_code
 
@@ -172,4 +172,4 @@ class SSLInspectionAPI:
             :obj:`int`: The status code for the operation.
 
         """
-        return self._delete("sslSettings/certchain", box=False).status_code
+        return self.rest.delete("sslSettings/certchain", box=False).status_code

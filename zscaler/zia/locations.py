@@ -66,10 +66,6 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        # response = self.rest.get("/locations", **kwargs)
-        # if isinstance(response, Response):
-        #     return None
-        # return response
         return BoxList(Iterator(self.rest, "locations", **kwargs))
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
@@ -270,10 +266,8 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        return self.rest.get(
-            f"locations/{location_id}/sublocations", **kwargs
-        )
-
+        return BoxList(Iterator(self.rest, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
+    
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
         Returns only the name and ID of all configured locations.
@@ -312,8 +306,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        return self.rest.get("locations/lite", **kwargs)
-
+        return BoxList(Iterator(self.rest, "locations/lite", **kwargs))
+    
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
         Update the specified location.
@@ -630,11 +624,11 @@ class LocationsAPI:
     def list_cities_by_name(self, **kwargs) -> BoxList:
         """
         Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
-         data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
-         country, postal code, etc.
+        data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
+        country, postal code, etc.
 
         Args:
-            **kwargs: Optional keyword arguments.
+            **kwargs: Optional keyword arguments including 'prefix', 'page', and 'page_size'.
 
         Keyword Args:
             prefix (str): The prefix string to search for cities.
@@ -655,16 +649,6 @@ class LocationsAPI:
             returned. Ensure you narrow your search result as much as possible to avoid this.
 
         """
-        data_key_name = "cities"  # Adjust this to the actual key if different
-        response, error = self.rest.get_paginated_data(
-            path="region/search",
-            params=kwargs,
-            data_key_name=data_key_name,
-            data_per_page=kwargs.get(
-                "page_size", 500
-            ),  # Use the page_size from kwargs or default to 500
-        )
-        if error:
-            raise Exception(error)
-
-        return response
+        return BoxList(Iterator(self.rest, "region/search", **kwargs))
+        # data, _ = self.rest.get_paginated_data(path="region/search", params=kwargs)
+        # return BoxList([Box(city) for city in data])

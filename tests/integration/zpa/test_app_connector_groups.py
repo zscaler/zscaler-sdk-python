@@ -63,15 +63,16 @@ class TestAppConnectorGroup:
 
             group_id = created_group.id
         except Exception as exc:
-            errors.append(exc)
+            errors.append(f"Failed to create app connector group: {exc}")
 
-        try:
-            # Retrieve the created app connector group by ID
-            retrieved_group = client.connectors.get_connector_group(group_id)
-            assert retrieved_group.id == group_id
-            assert retrieved_group.name == group_name
-        except Exception as exc:
-            errors.append(exc)
+        if group_id:
+            try:
+                # Retrieve the created app connector group by ID
+                retrieved_group = client.connectors.get_connector_group(group_id)
+                assert retrieved_group.id == group_id
+                assert retrieved_group.name == group_name
+            except Exception as exc:
+                errors.append(f"Failed to retrieve app connector group: {exc}")
 
         try:
             # Update the app connector group
@@ -81,14 +82,14 @@ class TestAppConnectorGroup:
             updated_group = client.connectors.get_connector_group(group_id)
             assert updated_group.name == updated_name
         except Exception as exc:
-            errors.append(exc)
+            errors.append(f"Failed to update app connector group: {exc}")
 
         try:
-            # List app connector groups and ensure the updated group is in the list
+            # List app connector group and ensure the updated group is in the list
             groups_list = client.connectors.list_connector_groups()
             assert any(group.id == group_id for group in groups_list)
         except Exception as exc:
-            errors.append(exc)
+            errors.append(f"Failed to list app connector group: {exc}")
 
         try:
             # Search for the app connector group by name
@@ -96,16 +97,16 @@ class TestAppConnectorGroup:
             assert search_result is not None
             assert search_result.id == group_id
         except Exception as exc:
-            errors.append(exc)
+            errors.append(f"Failed to search for app connector group by name: {exc}")
 
-        try:
-            # Delete the app connector group
-            delete_response_code = client.connectors.delete_connector_group(group_id)
-            assert str(delete_response_code) == "204"
-        except Exception as exc:
-            errors.append(exc)
+        finally:
+            # Cleanup: Delete the app connector group if it was created
+            if group_id:
+                try:
+                    delete_response_code = client.connectors.delete_connector_group(group_id)
+                    assert str(delete_response_code) == "204", f"Failed to delete app connector group with ID {group_id}"
+                except Exception as cleanup_exc:
+                    errors.append(f"Cleanup failed for app connector group ID {group_id}: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the app connector group lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the app connector group lifecycle test: {errors}"

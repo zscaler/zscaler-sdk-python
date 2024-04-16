@@ -18,39 +18,44 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import snake_to_camel
+from zscaler.utils import Iterator, snake_to_camel
 from zscaler.zia import ZIAClient
+import logging
 
+# Configure the logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Now you can use logging to output messages
+logger = logging.getLogger(__name__)
 
 class AdminAndRoleManagementAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_users(self, query: str = None) -> BoxList:
+    def list_users(self, **kwargs) -> BoxList:
         """
         Returns a list of admin users.
 
         Keyword Args:
-            **include_auditor_users (bool, optional):
+            include_auditor_users (bool, optional):
                 Include or exclude auditor user information in the list.
-            **include_admin_users (bool, optional):
+            include_admin_users (bool, optional):
                 Include or exclude admin user information in the list. (default: True)
-            **search (str, optional):
+            search (str, optional):
                 The search string used to partially match against an admin/auditor user's Login ID or Name.
-            **page (int, optional):
+            page (int, optional):
                 Specifies the page offset.
-            **page_size (int, optional):
+            page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            :obj:`BoxList`: The admin_users resource record.
+            list: The admin_users resource records.
 
         Examples:
-            >>> users = zia.admin_and_role_management.list_users(search='login_name')
+            >>> users = zia.admin_and_role_management.list_users('admin@example.com')
 
         """
-        payload = {"search": query}
-        return self.rest.get("adminUsers", params=payload)
+        return BoxList(Iterator(self.rest, "adminUsers", **kwargs))
 
     def get_user(self, user_id: str) -> Box:
         """
@@ -329,7 +334,6 @@ class AdminAndRoleManagementAPI:
         admin_role = next(user for user in self.list_roles() if user.id == int(role_id))
         return admin_role
 
-    # Search Cloud Browser Isolation By Name
     def get_roles_by_name(self, name):
         roles = self.list_roles()
         for role in roles:
@@ -337,7 +341,6 @@ class AdminAndRoleManagementAPI:
                 return role
         return None
 
-    # Search Cloud Browser Isolation By ID
     def get_roles_by_id(self, role_id):
         roles = self.list_roles()
         for role in roles:

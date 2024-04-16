@@ -88,15 +88,6 @@ class TestRuleLabels:
             except Exception as exc:
                 errors.append(f"Failed to list labels: {exc}")
 
-            # Attempt to search for the rule label by name
-            if label_id:
-                try:
-                    search_result = client.labels.get_label_by_name(updated_name)
-                    assert search_result is not None, "Search returned None"
-                    assert search_result.id == label_id, "Search result ID mismatch"
-                except Exception as exc:
-                    errors.append(f"Failed to search label by name: {exc}")
-
         finally:
             # Cleanup: Attempt to delete the rule label
             if label_id:

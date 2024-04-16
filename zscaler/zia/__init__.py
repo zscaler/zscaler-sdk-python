@@ -18,6 +18,7 @@ from zscaler.user_agent import UserAgent
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.utils import (
     convert_keys_to_snake,
+    snake_to_camel,
     format_json_response,
     retry_with_backoff,
     dump_request,
@@ -43,7 +44,6 @@ from zscaler.zia.traffic import TrafficForwardingAPI
 from zscaler.zia.url_categories import URLCategoriesAPI
 from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.users import UserManagementAPI
-from zscaler.zia.vips import DataCenterVIPSAPI
 from zscaler.zia.web_dlp import WebDLPAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 from zscaler.zia.isolation_profile import IsolationProfileAPI
@@ -412,15 +412,8 @@ class ZIAClientHelper(ZIAClient):
         "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
-
-    def get_paginated_data(
-        self,
-        path=None,
-        params=None,
-        data_key_name=None,
-        data_per_page=500,
-        expected_status_code=200,
-    ):
+    
+    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
         """
         Fetch paginated data from the ZIA API.
         ...
@@ -435,14 +428,7 @@ class ZIAClientHelper(ZIAClient):
         error_message = None
 
         while True:
-            # Construct the URL with parameters
-            url_params = f"?page={page}&pagesize={data_per_page}"
-            if params:
-                url_params += "&" + "&".join(
-                    f"{key}={value}" for key, value in params.items()
-                )
-
-            required_url = f"{path}{url_params}"
+            required_url = f"{path}"
             should_wait, delay = self.rate_limiter.wait("GET")
             if should_wait:
                 time.sleep(delay)
@@ -451,12 +437,11 @@ class ZIAClientHelper(ZIAClient):
             response = self.send(
                 method="GET",
                 path=required_url,
+                params={"page": page, "pageSize": data_per_page},
             )
 
             if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=page
-                )
+                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
                 logger.error(error_message)
                 break
             data_json = response.json()
@@ -466,9 +451,7 @@ class ZIAClientHelper(ZIAClient):
                 data = data_json.get(data_key_name)
 
             if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
-                    data_key_name=data_key_name, page=page
-                )
+                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
                 logger.error(error_message)
                 break
 
@@ -479,11 +462,7 @@ class ZIAClientHelper(ZIAClient):
             ret_data.extend(convert_keys_to_snake(data))
 
             # Check for more pages
-            if (
-                len(data) == 0
-                or isinstance(data_json, dict)
-                and int(response.json().get("totalPages")) <= page + 1
-            ):
+            if len(data) == 0 or isinstance(data_json, dict) and int(response.json().get("totalPages")) <= page + 1:
                 break
 
             page += 1
@@ -634,14 +613,6 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return UserManagementAPI(self)
-
-    @property
-    def vips(self):
-        """
-        The interface object for the :ref:`ZIA Data Center VIPs interface <zia-vips>`.
-
-        """
-        return DataCenterVIPSAPI(self)
 
     @property
     def web_dlp(self):

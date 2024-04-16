@@ -154,9 +154,9 @@ jobs:
                 ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
                 OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
                 OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-        needs:
-            - zpa-qa1-tenants
-            - zpa-qa2-tenants
+        # needs:
+        #     - zpa-qa1-tenants
+        #     - zpa-qa2-tenants
 
     zpa-prod-tenants:
         runs-on: ubuntu-latest
@@ -204,8 +204,8 @@ jobs:
                 ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
                 OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
                 OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-        needs:
-            - zpa-qa1-tenants
-            - zpa-qa2-tenants
-            - zpa-beta-tenants
+        # needs:
+        #     - zpa-qa1-tenants
+        #     - zpa-qa2-tenants
+        #     - zpa-beta-tenants
             
