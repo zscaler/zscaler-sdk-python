@@ -42,11 +42,11 @@ class TestPRACredential:
         try:
             # Create a new pra credential
             created_credential = client.privilegedremoteaccess.add_credential(
-                name='John Doe',
+                name='John Doe' + generate_random_string(),
                 description=credential_description,
                 credential_type='USERNAME_PASSWORD',
                 user_domain='acme.com',
-                username='jdoe',
+                username='jdoe'+generate_random_string(),
                 password=password,
             )
             assert created_credential is not None, "Failed to create credential"

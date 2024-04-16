@@ -47,6 +47,7 @@ class TestServiceEdgeGroup:
         version_profile_name = "Default"
         version_profile_id = "0"
         is_public = "TRUE"
+        group_id = None  # Initialize group_id to None
 
         try:
             # Create a new service edge group
@@ -69,55 +70,53 @@ class TestServiceEdgeGroup:
             assert created_group.description == group_description
             assert created_group.enabled == group_enabled
 
-            group_id = created_group.id
+            group_id = created_group.id  # Capture the group ID for later use
+
         except Exception as exc:
-            errors.append(exc)
+            errors.append(f"Failed to create service edge group: {exc}")
 
-        try:
-            # Retrieve the created service edge group by ID
-            retrieved_group = client.service_edges.get_service_edge_group(group_id)
-            assert retrieved_group.id == group_id
-            assert retrieved_group.name == group_name
-        except Exception as exc:
-            errors.append(exc)
+        if group_id:
+            try:
+                # Retrieve the created service edge group by ID
+                retrieved_group = client.service_edges.get_service_edge_group(group_id)
+                assert retrieved_group.id == group_id
+                assert retrieved_group.name == group_name
+            except Exception as exc:
+                errors.append(f"Failed to retrieve service edge group: {exc}")
 
-        try:
-            # Update the service edge group
-            updated_name = group_name + " Updated"
-            client.service_edges.update_service_edge_group(group_id, name=updated_name)
+            try:
+                # Update the service edge group
+                updated_name = group_name + " Updated"
+                client.service_edges.update_service_edge_group(group_id, name=updated_name)
 
-            updated_group = client.service_edges.get_service_edge_group(group_id)
-            assert updated_group.name == updated_name
-        except Exception as exc:
-            errors.append(exc)
+                updated_group = client.service_edges.get_service_edge_group(group_id)
+                assert updated_group.name == updated_name
+            except Exception as exc:
+                errors.append(f"Failed to update service edge group: {exc}")
 
-        try:
-            # List service edge groups and ensure the updated group is in the list
-            groups_list = client.service_edges.list_service_edge_groups()
-            assert any(group.id == group_id for group in groups_list)
-        except Exception as exc:
-            errors.append(exc)
+            try:
+                # List service edge groups and ensure the updated group is in the list
+                groups_list = client.service_edges.list_service_edge_groups()
+                assert any(group.id == group_id for group in groups_list)
+            except Exception as exc:
+                errors.append(f"Failed to list service edge groups: {exc}")
 
-        try:
-            # Search for the service edge group by name
-            search_result = client.service_edges.get_service_edge_group_by_name(
-                updated_name
-            )
-            assert search_result is not None
-            assert search_result.id == group_id
-        except Exception as exc:
-            errors.append(exc)
+            try:
+                # Search for the service edge group by name
+                search_result = client.service_edges.get_service_edge_group_by_name(updated_name)
+                assert search_result is not None
+                assert search_result.id == group_id
+            except Exception as exc:
+                errors.append(f"Failed to search for service edge group by name: {exc}")
 
-        try:
-            # Delete the service edge group
-            delete_response_code = client.service_edges.delete_service_edge_group(
-                group_id
-            )
-            assert str(delete_response_code) == "204"
-        except Exception as exc:
-            errors.append(exc)
+            finally:
+                # Cleanup: Delete the service edge group if it was created
+                if group_id:
+                    try:
+                        delete_response_code = client.service_edges.delete_service_edge_group(group_id)
+                        assert str(delete_response_code) == "204", f"Failed to delete service edge group with ID {group_id}"
+                    except Exception as cleanup_exc:
+                        errors.append(f"Cleanup failed for service edge group ID {group_id}: {cleanup_exc}")
 
-        # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the service edge group lifecycle test: {errors}"
+            # Assert that no errors occurred during the test
+            assert len(errors) == 0, f"Errors occurred during the service edge group lifecycle test: {errors}"
