@@ -5,7 +5,7 @@ Zscaler SDK Python provides a uniform and easy-to-use interface for each of the 
 
 Getting Started
 ---------------
-``` $ pip install zscaler-sdk-python ```
+``` $ pip install zscaler ```
 
 What you need
 --------------------
