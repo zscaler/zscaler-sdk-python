@@ -84,6 +84,7 @@ class TestApplicationSegment:
             created_server_group = client.server_groups.add_group(
                 name=server_group_name,
                 description=server_group_description,
+                enabled=True,
                 dynamic_discovery=True,
                 app_connector_group_ids=[
                     app_connector_group_id
@@ -101,6 +102,7 @@ class TestApplicationSegment:
             app_segment = client.app_segments.add_segment(
                 name=app_segment_name,
                 description=app_segment_description,
+                enabled=True,
                 domain_names=["test.example.com"],
                 segment_group_id=segment_group_id,
                 server_group_ids=[server_group_id],
