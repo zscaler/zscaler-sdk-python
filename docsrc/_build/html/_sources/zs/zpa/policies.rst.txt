@@ -9,3 +9,5 @@ Methods are accessible via ``zpa.policies``
 
 .. automodule:: zscaler.zpa.policies
     :members:
+    :undoc-members:
+    :show-inheritance:

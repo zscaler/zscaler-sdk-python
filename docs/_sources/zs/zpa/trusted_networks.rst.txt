@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.trusted_networks``
 
 .. automodule:: zscaler.zpa.trusted_networks
     :members:
+    :undoc-members:
+    :show-inheritance:

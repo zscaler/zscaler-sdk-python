@@ -10,3 +10,5 @@ Methods are accessible via ``zia.dlp``
 
 .. automodule:: zscaler.zia.dlp
     :members:
+    :undoc-members:
+    :show-inheritance:

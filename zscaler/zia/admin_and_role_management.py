@@ -124,14 +124,14 @@ class AdminAndRoleManagementAPI:
                 >>> admin_user = zia.admin_and_role_management.add_user(
                 ...    name="Jim Bob",
                 ...    login_name="jim@example.com",
-                ...    password="hunter2",
+                ...    password="*********",
                 ...    email="jim@example.com")
 
             Add an admin user with a department admin scope:
                 >>> admin_user = zia.admin_and_role_management.add_user(
                 ...    name="Jane Bob",
                 ...    login_name="jane@example.com",
-                ...    password="hunter3",
+                ...    password="*********",
                 ...    email="jane@example.com,
                 ...    admin_scope="department",
                 ...    scope_ids = ['376542', '245688'])
@@ -140,7 +140,7 @@ class AdminAndRoleManagementAPI:
                 >>> auditor_user = zia.admin_and_role_management.add_user(
                 ...    name="Head Bob",
                 ...    login_name="head@example.com",
-                ...    password="hunter4",
+                ...    password="*********",
                 ...    email="head@example.com,
                 ...    is_auditor=True)
 

@@ -6,7 +6,7 @@ from time import sleep
 import uuid
 import requests
 from box import BoxList
-
+from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.errors.http_error import ZscalerAPIError, HTTPError
 from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
@@ -29,18 +29,17 @@ from zscaler.zpa.app_segments import ApplicationSegmentAPI
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.certificates import CertificatesAPI
-from zscaler.zpa.client_types import ClientTypesAPI
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from zscaler.zpa.connectors import AppConnectorControllerAPI
+from zscaler.zpa.emergency_access import EmergencyAccessAPI
 from zscaler.zpa.idp import IDPControllerAPI
 from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation_profile import IsolationProfileAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
-from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
-from zscaler.zpa.posture_profile import PostureProfilesAPI
-from zscaler.zpa.privilegedremoteaccess import PrivilegedRemoteAccessAPI
+from zscaler.zpa.posture_profiles import PostureProfilesAPI
+from zscaler.zpa.privileged_remote_access import PrivilegedRemoteAccessAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
@@ -56,20 +55,22 @@ setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
 
-class ZPAClientHelper(ZPAClient):
-    """
-    Client helper for ZPA operations.
+class ZPAClientHelper:
+    """A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.
 
+    The ZPA object stores the session token and simplifies access to API interfaces within ZPA.
+    
     Attributes:
-    - client_id (str): The client ID.
-    - client_secret (str): The client secret.
-    - customer_id (str): The customer ID.
-    - cloud (str): The cloud endpoint to be used.
-    - timeout (int): Request timeout duration in seconds.
-    - cache (object): Cache object to be used.
-    - baseurl (str): Base URL for API requests.
-    - access_token (str): Access token for API requests.
-    - headers (dict): Headers for API requests.
+        client_id (str): The ZPA API client ID generated from the ZPA console.
+        client_secret (str): The ZPA API client secret generated from the ZPA console.
+        customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
+        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+
+            * ``production``
+            * ``beta``
+            * ``gov``
+            * ``govus``
+            * ``zpatwo``
     """
 
     def __init__(
@@ -520,22 +521,6 @@ class ZPAClientHelper(ZPAClient):
         return CertificatesAPI(self)
 
     @property
-    def platforms(self):
-        """
-        The interface object for the :ref:`ZPA Access Policy platform interface <zpa-platforms>`.
-
-        """
-        return PlatformsAPI(self)
-
-    @property
-    def client_types(self):
-        """
-        The interface object for the :ref:`ZPA Access Policy client types interface <zpa-client_types>`.
-
-        """
-        return ClientTypesAPI(self)
-
-    @property
     def isolation_profile(self):
         """
         The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profile>`.
@@ -559,6 +544,14 @@ class ZPAClientHelper(ZPAClient):
         """
         return AppConnectorControllerAPI(self)
 
+    @property
+    def emergency_access(self):
+        """
+        The interface object for the :ref:`ZPA Emergency Access interface <zpa-emergency_access>`.
+
+        """
+        return EmergencyAccessAPI(self)
+    
     @property
     def idp(self):
         """
@@ -608,9 +601,9 @@ class ZPAClientHelper(ZPAClient):
         return PostureProfilesAPI(self)
 
     @property
-    def privilegedremoteaccess(self):
+    def privileged_remote_access(self):
         """
-        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged-remote-access>`.
+        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged_remote_access>`.
 
         """
         return PrivilegedRemoteAccessAPI(self)

@@ -50,7 +50,7 @@ class TestPRAPortal:
             
         try:
             # Create a new pra portal
-            created_portal = client.privilegedremoteaccess.add_portal(
+            created_portal = client.privileged_remote_access.add_portal(
                 name="tests-" + generate_random_string(),
                 description="tests-" + generate_random_string(),
                 enabled=True,
@@ -67,7 +67,7 @@ class TestPRAPortal:
             
         try:
             # Test listing Portal
-            all_portals = client.privilegedremoteaccess.list_portals()
+            all_portals = client.privileged_remote_access.list_portals()
             if not any(portal["id"] == portal_id for portal in all_portals):
                 raise AssertionError("Portal not found in list")
         except Exception as exc:
@@ -75,7 +75,7 @@ class TestPRAPortal:
             
         try:
             # Test retrieving the specific portal
-            retrieved_portal = client.privilegedremoteaccess.get_portal(portal_id)
+            retrieved_portal = client.privileged_remote_access.get_portal(portal_id)
             if retrieved_portal["id"] != portal_id:
                 raise AssertionError("Failed to retrieve the correct portal")
         except Exception as exc:
@@ -84,7 +84,7 @@ class TestPRAPortal:
         try:
             # Update the portal
             updated_description = "Updated " + generate_random_string()
-            updated_portal = client.privilegedremoteaccess.update_portal(
+            updated_portal = client.privileged_remote_access.update_portal(
                 portal_id, 
                 description=updated_description,
                 enabled=True,
@@ -102,7 +102,7 @@ class TestPRAPortal:
             try:
                 # Attempt to delete resources created during the test
                 if portal_id:
-                    delete_status = client.privilegedremoteaccess.delete_portal(portal_id)
+                    delete_status = client.privileged_remote_access.delete_portal(portal_id)
                     assert delete_status == 204, "Portal deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Portal failed: {exc}")

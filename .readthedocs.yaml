@@ -14,7 +14,7 @@ build:
 sphinx:
    configuration: docsrc/conf.py
 
-# pyZscaler doc build requirements
+# Zscaler doc build requirements
 python:
   install:
   - requirements: dev_requirements.txt
