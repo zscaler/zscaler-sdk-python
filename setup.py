@@ -26,6 +26,7 @@ setup(
     license="MIT",
     description="Python SDK for the Zscaler API",
     long_description=open("LONG_DESCRIPTION.md").read(),
+    long_description_content_type="text/markdown",
     test_suite="tests",
     packages=find_packages(exclude=("tests",)),
     python_requires=">=3.8",
@@ -36,7 +37,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "License :: MIT License",
+        "License :: OSI Approved :: MIT License",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     install_requires=[
