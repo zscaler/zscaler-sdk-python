@@ -86,9 +86,11 @@ class TestTrafficGRETunnel:
         # List GRE Tunnels and verify creation
         try:
             tunnels_list = client.traffic.list_gre_tunnels()
-            assert any(tunnel["id"] == gre_tunnel_ids[0] for tunnel in tunnels_list), "Newly created GRE Tunnel not listed"
+            # Change the access method to attribute-style because the response is in Box format
+            assert any(tunnel.id == gre_tunnel_ids[0] for tunnel in tunnels_list), "Newly created GRE Tunnel not listed"
         except Exception as exc:
             errors.append(f"List GRE Tunnels failed: {exc}")
+
 
         finally:
             # Cleanup: Delete any created GRE Tunnel

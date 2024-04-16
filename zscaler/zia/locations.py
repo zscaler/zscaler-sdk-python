@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import snake_to_camel
+from zscaler.utils import Iterator, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -66,8 +66,7 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        data, _ = self.rest.get_paginated_data(path="locations", **kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "locations", **kwargs))
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """
@@ -267,8 +266,7 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        data, _ = self.rest.get_paginated_data(path=f"locations/{location_id}/sublocations", **kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
     
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
@@ -308,9 +306,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        data, _ = self.rest.get_paginated_data(path="locations/lite", **kwargs)
-        return data 
-
+        return BoxList(Iterator(self.rest, "locations/lite", **kwargs))
+    
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
         Update the specified location.
@@ -652,5 +649,6 @@ class LocationsAPI:
             returned. Ensure you narrow your search result as much as possible to avoid this.
 
         """
-        data, _ = self.rest.get_paginated_data(path="region/search", params=kwargs)
-        return BoxList([Box(city) for city in data])
+        return BoxList(Iterator(self.rest, "region/search", **kwargs))
+        # data, _ = self.rest.get_paginated_data(path="region/search", params=kwargs)
+        # return BoxList([Box(city) for city in data])

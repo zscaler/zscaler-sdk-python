@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import convert_keys, snake_to_camel
+from zscaler.utils import Iterator, convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -58,8 +58,7 @@ class RuleLabelsAPI:
             ...    print(label)
 
         """
-        data, _ = self.rest.get_paginated_data(path="ruleLabels", params=kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "ruleLabels", **kwargs))
 
     def get_label(self, label_id: str) -> Box:
         """
@@ -81,13 +80,6 @@ class RuleLabelsAPI:
             if status_code != 200:
                 return None
         return response
-
-    def get_label_by_name(self, name):
-        engines = self.list_labels()
-        for engine in engines:
-            if engine.get("name") == name:
-                return engine
-        return None
 
     def add_label(self, name: str, **kwargs) -> Box:
         """

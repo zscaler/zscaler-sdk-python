@@ -32,24 +32,18 @@ class ZIAClient:
 
     def get_paginated_data(
         self,
-        path=None,
-        params=None,
+        path: str = None,
+        data_key_name: str = None,
+        data_per_page: int = 500,
         expected_status_code=200,
-        page=None,
-        page_size=100,
-        search=None,
-        max_pages=None,
-        max_items=None
     ):
         """
         Send a GET request to the ZIA API to fetch all pages of a resources.
         Parameters:
-        - path (str): The API endpoint path to send requests to.
-        - params (dict): Additional query parameters for the API request.
-        - expected_status_code (int): The expected HTTP status code for a successful request.
-        - page (int): Specifies the page offset, defaults to starting from the first page if pagination is supported.
-        - page_size (int): Specifies the page size, default is 100 with a maximum of 1000.
-        - search (str): Search query string to filter the results, applicable if supported by the endpoint.
+        - path (str): API endpoint path.
+        - data_key_name (str): list field key.
+        - data_per_page: the page size
+        - params (dict): the query params
         """
         pass
 

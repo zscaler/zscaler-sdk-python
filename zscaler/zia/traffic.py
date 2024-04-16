@@ -58,8 +58,7 @@ class TrafficForwardingAPI:
             ...    print(tunnel)
 
         """
-        data, _ = self.rest.get_paginated_data(path="greTunnels", **kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "greTunnels", **kwargs))
 
     def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
@@ -162,32 +161,18 @@ class TrafficForwardingAPI:
                 The IP address used for locating the closest diverse VIPs.
 
         Returns:
-            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs in Box format.
+            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
 
         Examples:
-            >>> closest_vips = zia.vips.get_closest_diverse_vip_ids('203.0.113.20')
-            >>> print(closest_vips)
+            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
 
         """
         vips_list = self.list_vips_recommended(source_ip=ip_address)
-        if not vips_list:  # Make sure we have VIPs to process
-            return ()
-
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        try:
-            secondary_vip = next(
-                (vip for vip in vips_list if vip.city != preferred_vip.city)
-            )
-        except StopIteration:
-            secondary_vip = None
-
-        if not secondary_vip:
-            # Handle case where no secondary VIP is found
-            recommended_vips = (preferred_vip,)  # Return only one VIP as a tuple if no diverse option is found
-        else:
-            recommended_vips = (preferred_vip, secondary_vip)
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
+        recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
 
@@ -278,8 +263,7 @@ class TrafficForwardingAPI:
             ...    print(vip)
 
         """
-        data, _ = self.rest.get_paginated_data(path="vips", params=kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "vips", **kwargs))
 
     def add_gre_tunnel(
         self,
@@ -673,18 +657,7 @@ class TrafficForwardingAPI:
             >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
             ...    print(credential)
         """
-        valid_params = [
-            "search",
-            "type",
-            "include_only_without_location",
-            "location_id",
-            "managedBy",
-        ]
-        query_params = {
-            k: v for k, v in kwargs.items() if k in valid_params and v is not None
-        }
-        data, _ = self.rest.get_paginated_data(path="vpnCredentials", params=query_params)
-        return data  
+        return BoxList(Iterator(self.rest, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
         self, authentication_type: str, pre_shared_key: str = None, **kwargs
