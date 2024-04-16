@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.app_segments``
 
 .. automodule:: zscaler.zpa.app_segments
     :members:
+    :undoc-members:
+    :show-inheritance:

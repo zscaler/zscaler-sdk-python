@@ -116,7 +116,7 @@ class TestPRAApproval:
 
         try:
             # Create a new privileged approval
-            created_approval = client.privilegedremoteaccess.add_approval(
+            created_approval = client.privileged_remote_access.add_approval(
                 email_ids=['carol.kirk@bd-hashicorp.com'],
                 application_ids=[app_segment_id],  # Assuming a valid application ID
                 start_time=start_time,
@@ -139,14 +139,14 @@ class TestPRAApproval:
             
         try:
             # List all approvals using the search parameter and verify the created approval is in the list
-            approval_list = client.privilegedremoteaccess.list_approval(max_items=1, search='carol.kirk@bd-hashicorp.com', search_field='email_ids')
+            approval_list = client.privileged_remote_access.list_approval(max_items=1, search='carol.kirk@bd-hashicorp.com', search_field='email_ids')
             assert any(approval['email_ids'][0] == 'carol.kirk@bd-hashicorp.com' for approval in approval_list), "Created approval not found in the list"
         except Exception as exc:
             errors.append(f"Error listing approvals: {exc}")
             
         try:
             # Assuming get_approval method returns a Box object
-            retrieved_approval = client.privilegedremoteaccess.get_approval(approval_id)
+            retrieved_approval = client.privileged_remote_access.get_approval(approval_id)
             assert retrieved_approval.id == approval_id, "Mismatch in retrieved approval ID"
             
             # Example assertions (modify based on actual returned attributes)
@@ -161,7 +161,7 @@ class TestPRAApproval:
             try:
                 # Attempt to delete resources created during the test
                 if approval_id:
-                    delete_status = client.privilegedremoteaccess.delete_approval(approval_id)
+                    delete_status = client.privileged_remote_access.delete_approval(approval_id)
                     assert delete_status == 204, "Approval deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Approval failed: {exc}")

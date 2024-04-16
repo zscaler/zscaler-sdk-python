@@ -25,13 +25,14 @@ from zscaler.utils import (
     dump_response,
 )
 
+from zscaler import __version__
 from zscaler.zia.client import ZIAClient
 from zscaler.zia.admin_and_role_management import AdminAndRoleManagementAPI
 from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
 from zscaler.zia.activate import ActivationAPI
-from zscaler.zia.device import DeviceAPI
+from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
@@ -496,7 +497,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def activate(self):
         """
-        The interface object for the :ref:`ZIA Activation interface <zia-config>`.
+        The interface object for the :ref:`ZIA Activation interface <zia-activate>`.
 
         """
         return ActivationAPI(self)
@@ -521,7 +522,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def forwarding_control(self):
         """
-        The interface object for the :ref:`ZIA Forwarding Control Policies interface <zia-forwarding>`.
+        The interface object for the :ref:`ZIA Forwarding Control Policies interface <zia-forwarding_control>`.
 
         """
         return ForwardingControlAPI(self)
@@ -535,12 +536,12 @@ class ZIAClientHelper(ZIAClient):
         return RuleLabelsAPI(self)
 
     @property
-    def device(self):
+    def device_management(self):
         """
-        The interface object for the :ref:`ZIA device interface <zia-device>`.
+        The interface object for the :ref:`ZIA device interface <zia-device_management>`.
 
         """
-        return DeviceAPI(self)
+        return DeviceManagementAPI(self)
 
     @property
     def locations(self):
@@ -569,7 +570,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def authentication_settings(self):
         """
-        The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-auth-settings>`.
+        The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-authentication_settings>`.
 
         """
         return AuthenticationSettingsAPI(self)
@@ -617,7 +618,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def web_dlp(self):
         """
-        The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
+        The interface object for the :ref:`ZIA Web DLP interface <zia-web_dlp>`.
 
         """
         return WebDLPAPI(self)
@@ -625,7 +626,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def zpa_gateway(self):
         """
-        The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
+        The interface object for the :ref: `ZPA Gateway <zia-zpa_gateway>`.
 
         """
         return ZPAGatewayAPI(self)
@@ -633,7 +634,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def isolation_profile(self):
         """
-        The interface object for the :ref: `ZIA Cloud Browser Isolation Profile`.
+        The interface object for the :ref: `ZIA Cloud Browser Isolation Profile <zia-isolation_profile>`.
 
         """
         return IsolationProfileAPI(self)
@@ -641,7 +642,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def workload_groups(self):
         """
-        The interface object for the :ref: `ZIA Workload Groups`.
+        The interface object for the :ref: `ZIA Workload Groups <zia-workload_groups>`.
 
         """
         return WorkloadGroupsAPI(self)

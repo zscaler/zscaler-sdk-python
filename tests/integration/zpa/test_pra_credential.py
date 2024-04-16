@@ -41,7 +41,7 @@ class TestPRACredential:
             
         try:
             # Create a new pra credential
-            created_credential = client.privilegedremoteaccess.add_credential(
+            created_credential = client.privileged_remote_access.add_credential(
                 name='John Doe' + generate_random_string(),
                 description=credential_description,
                 credential_type='USERNAME_PASSWORD',
@@ -57,7 +57,7 @@ class TestPRACredential:
 
         try:
             # Test listing Credential
-            all_credentials = client.privilegedremoteaccess.list_credentials()
+            all_credentials = client.privileged_remote_access.list_credentials()
             if not any(credential["id"] == credential_id for credential in all_credentials):
                 raise AssertionError("Credential not found in list")
         except Exception as exc:
@@ -65,7 +65,7 @@ class TestPRACredential:
 
         try:
             # Test retrieving the specific credential
-            retrieved_credential = client.privilegedremoteaccess.get_credential(credential_id)
+            retrieved_credential = client.privileged_remote_access.get_credential(credential_id)
             if retrieved_credential["id"] != credential_id:
                 raise AssertionError("Failed to retrieve the correct credential")
         except Exception as exc:
@@ -74,7 +74,7 @@ class TestPRACredential:
         try:
             # Update the credential
             updated_description = "Updated " + generate_random_string()
-            updated_credential = client.privilegedremoteaccess.update_credential(
+            updated_credential = client.privileged_remote_access.update_credential(
                 credential_id, 
                 description=updated_description,
                 credential_type='USERNAME_PASSWORD',
@@ -93,7 +93,7 @@ class TestPRACredential:
             try:
                 # Attempt to delete resources created during the test
                 if credential_id:
-                    delete_status = client.privilegedremoteaccess.delete_credential(credential_id)
+                    delete_status = client.privileged_remote_access.delete_credential(credential_id)
                     assert delete_status == 204, "Credential deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting credential failed: {exc}")

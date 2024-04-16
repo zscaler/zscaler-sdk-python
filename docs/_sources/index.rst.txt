@@ -1,6 +1,6 @@
 .. meta::
    :description lang=en:
-        Zscaler SDK Python is an SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
+        Official Zscaler Python  SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 .. toctree::
    :maxdepth: 1
    :hidden:
@@ -8,6 +8,14 @@
 
    zs/zia/index
    zs/zpa/index
+   zs/guides/index
+
+Support Disclaimer
+========================
+
+-> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider. 
+You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_` for guidance on typical problems.
+
 
 Zscaler SDK Python - Library Reference
 =====================================================================
@@ -18,7 +26,7 @@ Quick Links
 - `Zscaler SDK Python User Documentation and Examples <https://zscaler.github.io/zscaler-sdk-python>`_
 - `Zscaler SDK Python SDK on GitHub <https://github.com/zscaler/zscaler-sdk-python>`_
 
-.. attention:: This SDK is supported by the Zscaler Technology Alliances team.
+.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
 
 
 Overview
@@ -63,10 +71,10 @@ Quick ZIA Example
 
 .. code-block:: python
 
-    from zscaler import ZIA
+    from zscaler import ZIAClientHelper
     from pprint import pprint
 
-    zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+    zia = ZIAClientHelper(api_key='ZIA_API_KEY', cloud='ZIA_CLOUD', username='ZIA_USERNAME', password='ZIA_PASSWORD')
     for user in zia.users.list_users():
         pprint(user)
 
@@ -75,10 +83,10 @@ Quick ZPA Example
 
 .. code-block:: python
 
-    from zscaler import ZPA
+    from zscaler import ZPAClientHelper
     from pprint import pprint
 
-    zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
+    zpa = ZPAClientHelper(client_id='ZPA_CLIENT_ID', client_secret='ZPA_CLIENT_SECRET', customer_id='ZPA_CUSTOMER_ID')
     for app_segment in zpa.app_segments.list_segments():
         pprint(app_segment)
 
@@ -87,15 +95,12 @@ Quick ZPA Example
 
 Contributing
 ==============
-Contributions to Zscaler SDK Python are absolutely welcome. At the moment, we could use more tests and documentation/examples.
-Please see the `Contribution Guidelines <https://github.com/zscaler/zscaler-sdk-python/blob/main/CONTRIBUTING.md>`_ for more information.
-
-`Poetry <https://python-poetry.org/docs/>`_ is currently being used for builds and management. You'll want to have
-poetry installed and available in your environment.
+At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in the future.
 
 Issues
 =========
 Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ if you run into any problems using Zscaler SDK Python.
+
 
 License
 =========

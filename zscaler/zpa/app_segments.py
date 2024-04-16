@@ -23,8 +23,8 @@ from zscaler.utils import (
     snake_to_camel,
     transform_clientless_apps,
     recursive_snake_to_camel,
-    Iterator
 )
+
 from zscaler.zpa.client import ZPAClient
 
 

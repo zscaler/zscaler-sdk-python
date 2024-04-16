@@ -37,16 +37,16 @@ class TestPostureProfile:
 
         # Attempt to list all posture profiles
         try:
-            posture_profiles = client.posture_profiles.list_profiles()
+            posture_profile = client.posture_profiles.list_profiles()
             assert isinstance(
-                posture_profiles, list
+                posture_profile, list
             ), "Expected a list of posture profiles"
         except Exception as exc:
             errors.append(f"Listing posture profiles failed: {str(exc)}")
 
         # Process each posture profile if the list is not empty
-        if posture_profiles:
-            for first_profile in posture_profiles:
+        if posture_profile:
+            for first_profile in posture_profile:
                 profile_id = first_profile.get("id")
 
                 # Fetch the selected posture profile by its ID
