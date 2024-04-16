@@ -863,9 +863,7 @@ class FirewallPolicyAPI:
         if not isinstance(resp, Response):
             return self.get_network_svc_group(group_id)
 
-    def list_network_services(
-        self, search: str = None, protocol: str = None
-    ) -> BoxList:
+    def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
         Returns a list of all Network Services.
 

@@ -487,9 +487,6 @@ class ZPAClientHelper(ZPAClient):
 
         return BoxList(ret_data), None
 
-
-
-
     @property
     def app_segments(self):
         """

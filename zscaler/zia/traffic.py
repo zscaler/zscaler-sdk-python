@@ -137,7 +137,7 @@ class TrafficForwardingAPI:
         Examples:
             Return recommended VIPs for a given source IP:
 
-            >>> for vip in zia.vips.list_vips_recommended(source_ip='203.0.113.30'):
+            >>> for vip in zia.traffic.list_vips_recommende(source_ip='203.0.113.30'):
             ...    pprint(vip)
 
         """
@@ -164,16 +164,14 @@ class TrafficForwardingAPI:
             :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
 
         Examples:
-            >>> closest_vips = zia.vips.get_closest_diverse_vip_ids('203.0.113.20')
+            >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
 
         """
         vips_list = self.list_vips_recommended(source_ip=ip_address)
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next(
-            (vip for vip in vips_list if vip.city != preferred_vip.city)
-        )
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
@@ -261,15 +259,11 @@ class TrafficForwardingAPI:
 
             List VIPs, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for vip in zia.vips.list_vips(page_size=200, max_pages=2):
+            >>> for vip in zia.traffic.list_vips(page_size=200, max_pages=2):
             ...    print(vip)
 
         """
         return BoxList(Iterator(self.rest, "vips", **kwargs))
-        # response = self.rest.get("/vips", **kwargs)
-        # if isinstance(response, Response):
-        #     return None
-        # return response
 
     def add_gre_tunnel(
         self,
@@ -646,20 +640,24 @@ class TrafficForwardingAPI:
 
         Returns:
             :obj:`BoxList`: List containing the VPN credential resource records.
-        """
-        valid_params = [
-            "search",
-            "type",
-            "include_only_without_location",
-            "location_id",
-            "managedBy",
-        ]
-        query_params = {
-            k: v for k, v in kwargs.items() if k in valid_params and v is not None
-        }
+            
+        Examples:
+            List VPN credentials using default settings:
 
-        response = self.rest.get("vpnCredentials", params=query_params)
-        return response
+            >>> for credential in zia.traffic.list_vpn_credentials:
+            ...    pprint(credential)
+
+            List VPN credentials, limiting to a maximum of 10 items:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(max_items=10):
+            ...    print(credential)
+
+            List VPN credentials, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
+            ...    print(credential)
+        """
+        return BoxList(Iterator(self.rest, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
         self, authentication_type: str, pre_shared_key: str = None, **kwargs
