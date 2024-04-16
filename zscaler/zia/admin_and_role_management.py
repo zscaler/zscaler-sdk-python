@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import snake_to_camel
+from zscaler.utils import Iterator, snake_to_camel
 from zscaler.zia import ZIAClient
 import logging
 
@@ -52,11 +52,10 @@ class AdminAndRoleManagementAPI:
             list: The admin_users resource records.
 
         Examples:
-            >>> users = zia.admin_and_role_management.list_users(search='admin@example.com')
+            >>> users = zia.admin_and_role_management.list_users('admin@example.com')
 
         """
-        data, _ = self.rest.get_paginated_data(path="adminUsers", params=kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "adminUsers", **kwargs))
 
     def get_user(self, user_id: str) -> Box:
         """

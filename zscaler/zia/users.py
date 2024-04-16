@@ -69,8 +69,6 @@ class UserManagementAPI:
             ...    print(department)
         """
         return BoxList(Iterator(self.rest, "departments", **kwargs))
-        # data, _ = self.rest.get_paginated_data(path="departments", params=kwargs)
-        # return data
     
     def get_department(self, department_id: str) -> Box:
         """
@@ -195,8 +193,7 @@ class UserManagementAPI:
             ...    print(user)
 
         """
-        data, _ = self.rest.get_paginated_data(path="users", params=kwargs)
-        return data  
+        return BoxList(Iterator(self.rest, "users", **kwargs))
 
     def add_user(
         self, name: str, email: str, groups: list, department: dict, **kwargs

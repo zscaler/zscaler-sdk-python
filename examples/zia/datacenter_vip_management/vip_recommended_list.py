@@ -70,12 +70,12 @@ def main():
 
     if args.closest_diverse:
         # Call get_closest_diverse_vip_ids method
-        preferred_vip_id, secondary_vip_id = zia.vips.get_closest_diverse_vip_ids(
+        preferred_vip_id, secondary_vip_id = zia.traffic.get_closest_diverse_vip_ids(
             ip_address=args.source_ip
         )
 
         # Fetch the complete list again to extract detailed information
-        vips = zia.vips.list_vips_recommended(source_ip=args.source_ip)
+        vips = zia.traffic.list_vips_recommended(source_ip=args.source_ip)
         vip_details = {}
         for vip in vips:
             if vip.id in [preferred_vip_id, secondary_vip_id]:
@@ -85,7 +85,7 @@ def main():
         print(json.dumps(vip_details, indent=4))
     else:
         # Call list_vips_recommended method
-        vips = zia.vips.list_vips_recommended(source_ip=args.source_ip)
+        vips = zia.traffic.list_vips_recommended(source_ip=args.source_ip)
         for vip in vips:
             # Convert Box object to dictionary
             vip_dict = vip.to_dict()

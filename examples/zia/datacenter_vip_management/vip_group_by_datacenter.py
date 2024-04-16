@@ -117,7 +117,7 @@ def main():
     }
 
     # Fetch VIP groups by data center
-    vip_groups = zia.vips.list_vip_group_by_dc(source_ip=args.source_ip, **kwargs)
+    vip_groups = zia.traffic.list_vip_group_by_dc(source_ip=args.source_ip, **kwargs)
     if vip_groups:
         print("VIP groups by data center:")
         print(json.dumps([vip.to_dict() for vip in vip_groups], indent=4))
