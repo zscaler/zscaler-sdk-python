@@ -16,6 +16,7 @@
 
 
 from box import BoxList
+
 from zscaler.utils import snake_to_camel
 from zscaler.zia.client import ZIAClient
 
@@ -26,33 +27,55 @@ class IsolationProfileAPI:
 
     def list_isolation_profiles(self, **kwargs) -> BoxList:
         """
-        Returns list of all the profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.
+        Returns a list of all profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.
 
         Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
+            **kwargs: Optional keyword arguments to refine the search query.
 
         Returns:
             :obj:`BoxList`: A list of isolation profile resource records.
 
         Examples:
-            Get a list of all configured browser isolation profiles:
-            >>> location = zia.isolation_profile.list_isolation_profiles()
+            >>> isolation_profiles = zia.isolation_profiles.list_isolation_profiles()
+        
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
         return self.rest.get("browserIsolation/profiles", json=payload)
 
-    # Search Cloud Browser Isolation By Name
-    def get_profiles_by_name(self, name):
+    def get_profiles_by_name(self, name: str):
+        """
+        Retrieves a specific isolation profile by its name.
+
+        Args:
+            name (str): The name of the isolation profile to retrieve.
+
+        Returns:
+            :obj:`Box`: The isolation profile if found, otherwise None.
+
+        Examples:
+            >>> profile = zia.isolation_profiles.get_profiles_by_name('Default Isolation')
+            ...    print(profile)
+        """
         profiles = self.list_isolation_profiles()
         for profile in profiles:
             if profile.get("name") == name:
                 return profile
         return None
 
-    # Search Cloud Browser Isolation By ID
-    def get_profiles_by_id(self, profile_id):
+    def get_profiles_by_id(self, profile_id: str):
+        """
+        Retrieves a specific isolation profile by its unique identifier.
+
+        Args:
+            profile_id (str): The ID of the isolation profile to retrieve.
+
+        Returns:
+            :obj:`Box`: The isolation profile if found, otherwise None.
+
+        Examples:
+            >>> profile = zia.isolation_profiles.get_profiles_by_id('12345')
+            ...    print(profile)
+        """
         profiles = self.list_isolation_profiles()
         for profile in profiles:
             if profile.get("id") == profile_id:

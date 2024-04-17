@@ -17,6 +17,7 @@
 
 import pytest
 from box import Box, BoxList
+
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
 
@@ -132,29 +133,120 @@ class TestURLCategories:
 
         # Define a complete list of URLs to lookup
         urls = [
-            "google.com","youtube.com","facebook.com","baidu.com","wikipedia.org","yahoo.com",
-            "reddit.com","google.co.in","qq.com","taobao.com","amazon.com","tmall.com","twitter.com",
-            "google.co.jp","sohu.com","live.com","vk.com","instagram.com","sina.com","360.cn","google.de",
-            "jd.com","google.co.uk","linkedin.com","weibo.com","google.fr","google.ru","yahoo.co.jp","yandex.ru",
-            "netflix.com","t.co","hao123.com","imgur.com","google.it","ebay.com","pornhub.com","google.es","detail.tmall.com",
-            "WordPress.com","msn.com","aliexpress.com","bing.com","tumblr.com","google.ca","livejasmin.com","microsoft.com",
-            "stackoverflow.com","twitch.tv","Soso.com","blogspot.com","ok.ru","apple.com","Naver.com","mail.ru","imdb.com",
-            "popads.net","tianya.cn","office.com","google.co.kr","github.com","pinterest.com","paypal.com","diply.com","amazon.de",
-            "microsoftonline.com","onclckds.com","amazon.co.uk","txxx.com","adobe.com","wikia.com","cnzz.com","xhamster.com","coccoc.com",
-            "bongacams.com","fc2.com","pixnet.net","google.pl","dropbox.com","googleusercontent.com","gmw.cn","whatsapp.com","google.co.th",
-            "soundcloud.com","google.nl","xvideos.com","Booking.com","rakuten.co.jp","nytimes.com","alibaba.com","bet365.com","ebay.co.uk",
-            "quora.com","avito.ru","dailymail.co.uk","globo.com","uol.com","nicovideo.jp","walmart.com","redtube.com","go2cloud.org"
+            "google.com",
+            "youtube.com",
+            "facebook.com",
+            "baidu.com",
+            "wikipedia.org",
+            "yahoo.com",
+            "reddit.com",
+            "google.co.in",
+            "qq.com",
+            "taobao.com",
+            "amazon.com",
+            "tmall.com",
+            "twitter.com",
+            "google.co.jp",
+            "sohu.com",
+            "live.com",
+            "vk.com",
+            "instagram.com",
+            "sina.com",
+            "360.cn",
+            "google.de",
+            "jd.com",
+            "google.co.uk",
+            "linkedin.com",
+            "weibo.com",
+            "google.fr",
+            "google.ru",
+            "yahoo.co.jp",
+            "yandex.ru",
+            "netflix.com",
+            "t.co",
+            "hao123.com",
+            "imgur.com",
+            "google.it",
+            "ebay.com",
+            "pornhub.com",
+            "google.es",
+            "detail.tmall.com",
+            "WordPress.com",
+            "msn.com",
+            "aliexpress.com",
+            "bing.com",
+            "tumblr.com",
+            "google.ca",
+            "livejasmin.com",
+            "microsoft.com",
+            "stackoverflow.com",
+            "twitch.tv",
+            "Soso.com",
+            "blogspot.com",
+            "ok.ru",
+            "apple.com",
+            "Naver.com",
+            "mail.ru",
+            "imdb.com",
+            "popads.net",
+            "tianya.cn",
+            "office.com",
+            "google.co.kr",
+            "github.com",
+            "pinterest.com",
+            "paypal.com",
+            "diply.com",
+            "amazon.de",
+            "microsoftonline.com",
+            "onclckds.com",
+            "amazon.co.uk",
+            "txxx.com",
+            "adobe.com",
+            "wikia.com",
+            "cnzz.com",
+            "xhamster.com",
+            "coccoc.com",
+            "bongacams.com",
+            "fc2.com",
+            "pixnet.net",
+            "google.pl",
+            "dropbox.com",
+            "googleusercontent.com",
+            "gmw.cn",
+            "whatsapp.com",
+            "google.co.th",
+            "soundcloud.com",
+            "google.nl",
+            "xvideos.com",
+            "Booking.com",
+            "rakuten.co.jp",
+            "nytimes.com",
+            "alibaba.com",
+            "bet365.com",
+            "ebay.co.uk",
+            "quora.com",
+            "avito.ru",
+            "dailymail.co.uk",
+            "globo.com",
+            "uol.com",
+            "nicovideo.jp",
+            "walmart.com",
+            "redtube.com",
+            "go2cloud.org",
         ]
 
         try:
             lookup_results = client.url_categories.lookup(urls)
-            assert isinstance(lookup_results, BoxList), "Lookup results should be a BoxList."
+            assert isinstance(
+                lookup_results, BoxList
+            ), "Lookup results should be a BoxList."
             # Further assertions can be made here based on expected results, such as verifying specific categories for URLs
         except Exception as exc:
             errors.append(f"URL lookup failed: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during URL lookup test: {'; '.join(errors)}"
-
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during URL lookup test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_get_quota(self, fs):
@@ -168,4 +260,6 @@ class TestURLCategories:
         except Exception as exc:
             errors.append(f"Getting URL category quota failed: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during getting URL category quota test: {'; '.join(errors)}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during getting URL category quota test: {'; '.join(errors)}"

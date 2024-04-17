@@ -55,7 +55,7 @@ class ZPAClient:
         idp_group_id=None,
         scim_user_id=None,
         page=None,
-        pagesize=20
+        pagesize=20,
     ):
         """
         Send a GET request to the ZPA API to fetch all pages of a resources.

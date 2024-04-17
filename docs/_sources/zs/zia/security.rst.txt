@@ -10,3 +10,5 @@ Methods are accessible via ``zia.security``
 
 .. automodule:: zscaler.zia.security
     :members:
+    :undoc-members:
+    :show-inheritance:

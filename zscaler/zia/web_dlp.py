@@ -14,15 +14,16 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from zscaler.zia import ZIAClient
 from box import Box, BoxList
 from requests import Response
+
 from zscaler.utils import (
+    convert_keys,
+    recursive_snake_to_camel,
     snake_to_camel,
     transform_common_id_fields,
-    recursive_snake_to_camel,
-    convert_keys,
 )
+from zscaler.zia import ZIAClient
 
 
 class WebDLPAPI:

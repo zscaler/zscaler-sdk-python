@@ -101,9 +101,7 @@ class CertificatesAPI:
 
         Args:
             name (str): The name of the certificate.
-            cert_blob (str): The content of the certificate. Must be in string format
-                and include the certificate and private key (in PEM format) in the
-                JSON payload.
+            cert_blob (str): The content of the certificate. Must include the certificate and private key (in PEM format) in the JSON payload.
             **kwargs: Optional keyword args.
 
         Keyword Args:
@@ -117,10 +115,11 @@ class CertificatesAPI:
 
             >>> zpa.servers.add_server(
             ...   name='myserver.example',
-            ...   cert_blob=("-----BEGIN CERTIFICATE-----\n"
-            ...              "MIIFNzCCBIHNIHIO==\n"
+            ...   cert_blob=("-----BEGIN CERTIFICATE-----\\n"
+            ...              "MIIFNzCCBIHNIHIO==\\n"
             ...              "-----END CERTIFICATE-----"),
             )
+
         """
         payload = {"name": name, "certBlob": cert_blob}
 

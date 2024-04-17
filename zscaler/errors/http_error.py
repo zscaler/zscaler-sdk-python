@@ -1,9 +1,9 @@
 import json
+
 from zscaler.errors.error import Error
 
 
 class HTTPError(Error):
-
     def __init__(self, url, response_details, response_body):
         self.status = response_details.status
         self.url = url

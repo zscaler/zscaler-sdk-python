@@ -98,9 +98,7 @@ class TrafficForwardingAPI:
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        response = self.rest.get(
-            "greTunnels/availableInternalIpRanges", params=payload
-        )
+        response = self.rest.get("greTunnels/availableInternalIpRanges", params=payload)
         if isinstance(response, Response):
             return None
         return response
@@ -171,7 +169,9 @@ class TrafficForwardingAPI:
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
+        secondary_vip = next(
+            (vip for vip in vips_list if vip.city != preferred_vip.city)
+        )
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
@@ -357,7 +357,9 @@ class TrafficForwardingAPI:
         """
 
         if tunnel_id is None:
-            raise ValueError("tunnel_id is a required parameter for updating a GRE tunnel.")
+            raise ValueError(
+                "tunnel_id is a required parameter for updating a GRE tunnel."
+            )
 
         # Determine VIPs based on source_ip if not provided
         if primary_dest_vip_id is None or secondary_dest_vip_id is None:
@@ -640,7 +642,7 @@ class TrafficForwardingAPI:
 
         Returns:
             :obj:`BoxList`: List containing the VPN credential resource records.
-            
+
         Examples:
             List VPN credentials using default settings:
 
