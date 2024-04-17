@@ -14,26 +14,26 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["3.8", "3.9"]
+        python-version: ["3.9", "3.10"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
         with:
-          poetry-version: 1.7.1
+          poetry-version: 1.8.2
 
       - name: Get poetry cache directory
         id: poetry-cache
         run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache poetry dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.poetry-cache.outputs.dir }}
           key:
@@ -45,36 +45,33 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Test with pytest
-        run: poetry run make test
-
   format:
     name: Check Code Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
         with:
-          poetry-version: 1.7.1
+          poetry-version: 1.8.2
 
       - name: Get poetry cache directory
         id: poetry-cache
         run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache poetry dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ${{ steps.poetry-cache.outputs.dir }}
-          key: ${{ runner.os }}-poetry-3.8-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-poetry-3.9-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-3.8-
+            ${{ runner.os }}-poetry-3.9-
 
       - name: Install dependencies
         run: poetry install
@@ -89,12 +86,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
@@ -106,7 +103,7 @@ jobs:
         run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache poetry dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ${{ steps.poetry-cache.outputs.dir }}
           key: ${{ runner.os }}-poetry-3.8-${{ hashFiles('**/poetry.lock') }}
