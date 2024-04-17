@@ -4,23 +4,6 @@ import re
 
 from setuptools import find_packages, setup
 
-long_description = (
-    "Zscaler SDK Python\n"
-    "==================\n\n"
-    "The Zscaler SDK Python provides a uniform and easy-to-use interface for each of the Zscaler product APIs.\n\n"
-    "Getting Started\n"
-    "---------------\n"
-    "Install using pip:\n\n"
-    ".. code-block:: shell\n\n"
-    "    $ pip install zscaler\n\n"
-    "What you need\n"
-    "-------------\n\n"
-    "Before you can interact with any of the Zscaler APIs, you need to generate API keys or retrieve tenancy information for each product that you are interfacing with. Once you have the requirements and you have installed Zscaler SDK Python, you're ready to go.\n\n"
-    "- `ZPA API Credentials <https://help.zscaler.com/zpa/getting-started-zpa-api>`_\n"
-    "- `ZIA API Credentials <https://help.zscaler.com/zia/getting-started-zia-api>`_\n\n"
-    "Look for our quickstart guide here!\n\n"
-    "- `Zscaler SDK Python Quickstart <https://github.com/zscaler/zscaler-sdk-python>`_\n"
-)
 
 def get_version():
     # Define the path to the __init__.py file
@@ -36,15 +19,15 @@ def get_version():
 
 
 setup(
-    name="zscaler-sdk-python",
+    name="zscaler",
     version=get_version(),
     author="Zscaler, Inc.",
     author_email="devrel@zscaler.com",
     url="https://github.com/zscaler/zscaler-sdk-python",
     license="MIT",
     description="Official Python SDK for the Zscaler Products",
-    long_description=long_description,
-    long_description_content_type='text/x-rst',
+    long_description=open("LONG_DESCRIPTION.md").read(),
+    long_description_content_type="text/markdown",
     test_suite="tests",
     packages=find_packages(exclude=("tests",)),
     python_requires=">=3.8",
@@ -55,8 +38,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
