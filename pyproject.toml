@@ -1,0 +1,105 @@
+[tool.poetry]
+name = "zscaler-sdk-python"
+version = "1.0.0"
+description = "Official Python SDK for the Zscaler Products"
+authors = ["Zscaler Technology Alliances <devrel@zscaler.com>"]
+license = "MIT"
+keywords = ["zscaler", "zpa", "zia", "zscaler-sdk-python"]
+readme = "README.md"
+documentation = "https://zscaler-sdk-python.readthedocs.io/"
+homepage = "https://github.com/zscaler/zscaler-sdk-python"
+repository = "https://github.com/zscaler/zscaler-sdk-python"
+packages = [
+    { include = "zscaler/*" }
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/zscaler/zscaler-sdk-python/issues"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "*"
+urllib3 = "^2.0"
+python-box = "^7.0"
+pyyaml = "*"
+certifi = "*"
+charset-normalizer = "*"
+idna = "*"
+python-dateutil = "*"
+six = "*"
+flatdict = "*"
+xmltodict = "*"
+yarl = "*"
+pycryptodomex = "*"
+aenum = "*"
+pydash = "*"
+pytz = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.3"
+pytest-asyncio = "*"
+pytest-mock = "*"
+pytest-recording = "*"
+pytest-cov = "*"
+pyfakefs = "*"
+flake8 = "*"
+flake8-eradicate = "^1.5"
+flake8-bugbear = "*"
+flake8-logging-format = "*"
+flake8-pep3101 = "*"
+flake8-builtins = "*"
+flake8-comprehensions = "*"
+flake8-string-format = "*"
+flake8-mutable = "*"
+flake8-pytest = "*"
+flake8-mock = "*"
+flake8-docstrings = "*"
+flake8-variables-names = "*"
+pep8-naming = "*"
+fissix = "^19.2b1"
+sphinx = "*"
+sphinx-autobuild = "*"
+sphinx-rtd-theme = "*"
+furo = "2023.5.20"
+bandit = "^1.7.6"
+isort = "^5.13"
+poetry2setup = {version = "^1.1.0", python = ">=3.6"}
+m2r = "^0.2.1"
+mypy = "^1.8"
+packaging = "^23.2"
+docutils = "^0.20.1"
+
+[tool.black]
+line-length = 127
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "format",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-public-methods",
+    "anomalous-backslash-in-string",
+    "import-error",
+    "redefined-outer-name",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 127
+
+[tool.isort]
+profile = "black"
+
+[build-system]
+requires = ["poetry>=1.1.12"]
+build-backend = "poetry.core.masonry.api"
