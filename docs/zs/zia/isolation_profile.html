@@ -211,6 +211,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../zpa/trusted_networks.html">trusted_networks</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -254,41 +259,68 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsolationProfileAPI</span></span><a class="headerlink" href="#zscaler.zia.isolation_profile.IsolationProfileAPI" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.isolation_profile.IsolationProfileAPI.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.__init__" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_id">
 <span class="sig-name descname"><span class="pre">get_profiles_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_id" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves a specific isolation profile by its unique identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>profile_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the isolation profile to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The isolation profile if found, otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">isolation_profiles</span><span class="o">.</span><span class="n">get_profiles_by_id</span><span class="p">(</span><span class="s1">&#39;12345&#39;</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_name">
 <span class="sig-name descname"><span class="pre">get_profiles_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_name" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves a specific isolation profile by its name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the isolation profile to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The isolation profile if found, otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">isolation_profiles</span><span class="o">.</span><span class="n">get_profiles_by_name</span><span class="p">(</span><span class="s1">&#39;Default Isolation&#39;</span><span class="p">)</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="zscaler.zia.isolation_profile.IsolationProfileAPI.list_isolation_profiles">
 <span class="sig-name descname"><span class="pre">list_isolation_profiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.list_isolation_profiles" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns list of all the profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.</p>
+<dd><p>Returns a list of all profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Optional keyword args.</p>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Optional keyword arguments to refine the search query.</p>
 </dd>
-</dl>
-<p>Keyword Args:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of isolation profile resource records.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of isolation profile resource records.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Get a list of all configured browser isolation profiles:
-&gt;&gt;&gt; location = zia.isolation_profile.list_isolation_profiles()</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">isolation_profiles</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">isolation_profiles</span><span class="o">.</span><span class="n">list_isolation_profiles</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -352,7 +384,6 @@
             <ul>
 <li><a class="reference internal" href="#">isolation_profile</a><ul>
 <li><a class="reference internal" href="#zscaler.zia.isolation_profile.IsolationProfileAPI"><code class="docutils literal notranslate"><span class="pre">IsolationProfileAPI</span></code></a><ul>
-<li><a class="reference internal" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.__init__"><code class="docutils literal notranslate"><span class="pre">IsolationProfileAPI.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_id"><code class="docutils literal notranslate"><span class="pre">IsolationProfileAPI.get_profiles_by_id()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.get_profiles_by_name"><code class="docutils literal notranslate"><span class="pre">IsolationProfileAPI.get_profiles_by_name()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.isolation_profile.IsolationProfileAPI.list_isolation_profiles"><code class="docutils literal notranslate"><span class="pre">IsolationProfileAPI.list_isolation_profiles()</span></code></a></li>

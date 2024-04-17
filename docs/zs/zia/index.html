@@ -330,11 +330,6 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">240</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fail_safe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.__init__" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.activate">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">activate</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.activate" title="Permalink to this definition">#</a></dt>
@@ -365,22 +360,6 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <dd><p>The interface object for the <a class="reference internal" href="authentication_settings.html#zia-authentication-settings"><span class="std std-ref">ZIA Authentication Security Settings interface</span></a>.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.deauthenticate">
-<span class="sig-name descname"><span class="pre">deauthenticate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.deauthenticate" title="Permalink to this definition">#</a></dt>
-<dd><p>Ends the ZIA authentication session.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.delete" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a DELETE request to the ZIA API.
-Parameters:
-- path (str): API endpoint path.
-- json (str): the request body.
-- params (dict): the query params</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.device_management">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device_management</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.device_management" title="Permalink to this definition">#</a></dt>
@@ -405,39 +384,10 @@ Parameters:
 <dd><p>The interface object for the <a class="reference internal" href="forwarding_control.html#zia-forwarding-control"><span class="std std-ref">ZIA Forwarding Control Policies interface</span></a>.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.get" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a GET request to the ZIA API.</p>
-<p>Parameters:
-- path (str): API endpoint path.
-- data (dict, optional): Request payload. Defaults to None.
-Returns:
-- Response: Response object from the request.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.get_paginated_data">
-<span class="sig-name descname"><span class="pre">get_paginated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_key_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_per_page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_status_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.get_paginated_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Fetch paginated data from the ZIA API.
-…</p>
-<p>Returns:
-- list: List of fetched items.
-- str: Error message, if any occurred.</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.isolation_profile">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">isolation_profile</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.isolation_profile" title="Permalink to this definition">#</a></dt>
-<dd><p><cite>ZIA Cloud Browser Isolation Profile &lt;zia-isolation_profile&gt;</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The interface object for the</p>
-</dd>
-<dt class="field-even">Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>ref</p>
-</dd>
-</dl>
+<dd><p>The interface object for the <a class="reference internal" href="isolation_profile.html#zia-isolation-profile"><span class="std std-ref">ZIA Cloud Browser Isolation Profile</span></a>.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -452,26 +402,6 @@ Returns:
 <dd><p>The interface object for the <a class="reference internal" href="locations.html#zia-locations"><span class="std std-ref">ZIA Locations interface</span></a>.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.post">
-<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.post" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a POST request to the ZIA API.
-Parameters:
-- path (str): API endpoint path.
-- json (str): the request body.
-- params (dict): the query params</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.put">
-<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.put" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a PUT request to the ZIA API.
-Parameters:
-- path (str): API endpoint path.
-- json (str): the request body.
-- params (dict): the query params</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.sandbox">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sandbox</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.sandbox" title="Permalink to this definition">#</a></dt>
@@ -482,18 +412,6 @@ Parameters:
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.security">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">security</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.security" title="Permalink to this definition">#</a></dt>
 <dd><p>The interface object for the <a class="reference internal" href="security.html#zia-security"><span class="std std-ref">ZIA Security Policy Settings interface</span></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.send">
-<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.send" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a request to the ZIA API.</p>
-<p>Parameters:
-- method (str): The HTTP method.
-- path (str): API endpoint path.
-- json (dict, optional): Request payload. Defaults to None.
-Returns:
-- Response: Response object from the request.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -535,29 +453,13 @@ Returns:
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.workload_groups">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">workload_groups</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.workload_groups" title="Permalink to this definition">#</a></dt>
-<dd><p><cite>ZIA Workload Groups &lt;zia-workload_groups&gt;</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The interface object for the</p>
-</dd>
-<dt class="field-even">Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>ref</p>
-</dd>
-</dl>
+<dd><p>The interface object for the <a class="reference internal" href="workload_groups.html#zia-workload-groups"><span class="std std-ref">ZIA Workload Groups</span></a>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.zpa_gateway">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zpa_gateway</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.zpa_gateway" title="Permalink to this definition">#</a></dt>
-<dd><p><cite>ZPA Gateway &lt;zia-zpa_gateway&gt;</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The interface object for the</p>
-</dd>
-<dt class="field-even">Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>ref</p>
-</dd>
-</dl>
+<dd><p>The interface object for the <a class="reference internal" href="zpa_gateway.html#zia-zpa-gateway"><span class="std std-ref">ZPA Gateway</span></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -626,28 +528,20 @@ Returns:
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.password"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.password</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.cloud"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.cloud</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.override_url"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.override_url</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.__init__"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.activate"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.activate</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.admin_and_role_management"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.admin_and_role_management</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.apptotal"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.apptotal</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.audit_logs"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.audit_logs</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.authentication_settings"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.authentication_settings</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.deauthenticate"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.deauthenticate()</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.delete"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.delete()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.device_management"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.device_management</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.dlp"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.dlp</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.firewall"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.firewall</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.forwarding_control"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.forwarding_control</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.get"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.get()</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.get_paginated_data"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.get_paginated_data()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.isolation_profile"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.isolation_profile</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.labels"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.labels</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.locations"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.locations</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.post"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.post()</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.put"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.put()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.sandbox"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.sandbox</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.security"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.security</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.send"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.send()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.ssl"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.ssl</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.traffic"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.traffic</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.url_categories"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.url_categories</span></code></a></li>
