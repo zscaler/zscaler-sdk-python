@@ -101,7 +101,6 @@ Contributing
 At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in future releases.
 Issues
 
-=========
 Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ 
 if you run into any problems using Zscaler SDK Python or please refer to our `General Support Statement <docs/guides/support.rst>`_
 
