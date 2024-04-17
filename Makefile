@@ -113,14 +113,14 @@ docs: clean-docs
 	
 build\:dist:
 	python setup.py sdist bdist_wheel
-	pip install dist/zscaler-${VERSION}.tar.gz
+	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
 	ls -l dist
 
 publish\:test:
-	python3 -m twine upload --repository testpypi dist/*
+	python3 -m twine upload --repository testpypi dist/* --verbose
 
 publish\:prod:
-	python3 -m twine upload dist/*
+	python3 -m twine upload dist/* --verbose
 
 
 
