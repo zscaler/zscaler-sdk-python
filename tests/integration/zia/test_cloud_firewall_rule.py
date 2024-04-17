@@ -15,12 +15,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
+
 
 @pytest.fixture
 def fs():
     yield
+
 
 class TestFirewallRules:
     """
@@ -70,8 +73,8 @@ class TestFirewallRules:
                 created_rule = client.firewall.add_rule(
                     name=rule_name,
                     description="Integration test firewall rule",
-                    state='ENABLED',
-                    action='BLOCK_DROP',
+                    state="ENABLED",
+                    action="BLOCK_DROP",
                     order=1,
                     rank=7,
                     src_ip_groups=[src_group_id],
@@ -97,7 +100,9 @@ class TestFirewallRules:
                     description=updated_description,
                 )
                 updated_rule = client.firewall.get_rule(rule_id)
-                assert updated_rule["description"] == updated_description, "Firewall Rule update failed"
+                assert (
+                    updated_rule["description"] == updated_description
+                ), "Firewall Rule update failed"
             except Exception as exc:
                 errors.append(f"Updating Firewall Rule failed: {exc}")
 
@@ -105,7 +110,7 @@ class TestFirewallRules:
                 # Retrieve the list of all rules
                 rules = client.firewall.list_rules()
                 # Check if the newly created location is in the list of rules
-                found_rule = any(rule ["id"] == rule_id for rule in rules)
+                found_rule = any(rule["id"] == rule_id for rule in rules)
                 assert found_rule, "Newly created rule not found in the list of rules."
             except Exception as exc:
                 errors.append(f"Listing rules failed: {exc}")
@@ -135,4 +140,6 @@ class TestFirewallRules:
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the firewall rule lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the firewall rule lifecycle test: {errors}"

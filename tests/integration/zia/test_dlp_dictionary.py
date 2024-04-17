@@ -16,12 +16,15 @@
 
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
+
 
 @pytest.fixture
 def fs():
     yield
+
 
 class TestDLPDictionary:
     """
@@ -36,9 +39,9 @@ class TestDLPDictionary:
         dict_id = None  # Placeholder for the dictionary ID
         custom_phrase_match_type = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
         dictionary_type = "PATTERNS_AND_PHRASES"
-        phrases=[{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"}],
-        patterns=[{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}]
-        
+        phrases = ([{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"}],)
+        patterns = [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}]
+
         # Attempt to add a DLP dictionary
         try:
             dlp_dict = client.dlp.add_dict(
@@ -47,9 +50,9 @@ class TestDLPDictionary:
                 custom_phrase_match_type=custom_phrase_match_type,
                 dictionary_type=dictionary_type,
                 phrases=[{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"}],
-                patterns=[{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}]
+                patterns=[{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}],
             )
-            dict_id = dlp_dict.get('id')
+            dict_id = dlp_dict.get("id")
             assert dict_id is not None, "Failed to create DLP Dictionary"
         except Exception as exc:
             errors.append(f"Adding DLP Dictionary failed: {exc}")
@@ -65,9 +68,11 @@ class TestDLPDictionary:
                     custom_phrase_match_type=custom_phrase_match_type,
                     dictionary_type=dictionary_type,
                     phrases=[{"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"}],
-                    patterns=[{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}]
+                    patterns=[{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"}],
                 )
-                assert updated_dict.get('name') == updated_name, "Failed to update DLP Dictionary"
+                assert (
+                    updated_dict.get("name") == updated_name
+                ), "Failed to update DLP Dictionary"
             except Exception as exc:
                 errors.append(f"Updating DLP Dictionary failed: {exc}")
 
@@ -82,10 +87,12 @@ class TestDLPDictionary:
         if dict_id:
             try:
                 specific_dict = client.dlp.get_dict(dict_id)
-                assert specific_dict.get('id') == dict_id, "Failed to retrieve specific DLP Dictionary"
+                assert (
+                    specific_dict.get("id") == dict_id
+                ), "Failed to retrieve specific DLP Dictionary"
             except Exception as exc:
                 errors.append(f"Retrieving specific DLP Dictionary failed: {exc}")
- 
+
         # Attempt to delete the DLP dictionary
         if dict_id:
             try:
@@ -95,4 +102,6 @@ class TestDLPDictionary:
                 errors.append(f"Deleting DLP Dictionary failed: {exc}")
 
         # Assert no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during DLP dictionary operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during DLP dictionary operations test: {errors}"

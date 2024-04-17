@@ -266,8 +266,15 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        return BoxList(Iterator(self.rest, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
-    
+        return BoxList(
+            Iterator(
+                self.rest,
+                f"locations/{location_id}/sublocations",
+                max_pages=1,
+                **kwargs,
+            )
+        )
+
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
         Returns only the name and ID of all configured locations.
@@ -307,7 +314,7 @@ class LocationsAPI:
 
         """
         return BoxList(Iterator(self.rest, "locations/lite", **kwargs))
-    
+
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
         Update the specified location.

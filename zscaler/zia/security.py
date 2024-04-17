@@ -16,11 +16,11 @@
 
 
 from box import BoxList
+
 from zscaler.zia import ZIAClient
 
 
 class SecurityPolicyAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 

@@ -15,11 +15,11 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from box import Box
+
 from zscaler.zia import ZIAClient
 
 
 class AppTotalAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 

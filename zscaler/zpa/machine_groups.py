@@ -46,9 +46,7 @@ class MachineGroupsAPI:
             ...    pprint(machine_group)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/machineGroup", **kwargs
-        )
+        list, _ = self.rest.get_paginated_data(path="/machineGroup", **kwargs)
         return list
 
     def get_group(self, group_id: str) -> Box:

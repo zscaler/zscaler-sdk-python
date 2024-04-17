@@ -15,22 +15,18 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+from typing import Any, Dict, List, Optional
+
 from box import Box, BoxList
 from requests import Response
-from typing import List, Dict, Any
-from typing import Optional
-from zscaler.utils import snake_to_camel, is_valid_ssh_key, validate_and_convert_times
+
+from zscaler.utils import is_valid_ssh_key, snake_to_camel, validate_and_convert_times
 from zscaler.zpa.client import ZPAClient
 
 
 class PrivilegedRemoteAccessAPI:
-    
     def __init__(self, client: ZPAClient):
         self.rest = client
-
-##############################################################################
-################################# PRA PORTAL #################################
-##############################################################################
 
     def list_portals(self, **kwargs) -> BoxList:
         """
@@ -75,14 +71,15 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.get(f"praPortal/{portal_id}")
-    
+
     def add_portal(
-        self, name: str, 
-        certificate_id: str, 
-        domain: str, 
+        self,
+        name: str,
+        certificate_id: str,
+        domain: str,
         enabled: bool = True,
-        user_notification_enabled: bool = True, 
-        **kwargs
+        user_notification_enabled: bool = True,
+        **kwargs,
     ) -> Box:
         """
         Add a privileged remote access portal.
@@ -118,12 +115,12 @@ class PrivilegedRemoteAccessAPI:
             ...   user_notification_enabled=True)
         """
         payload = {
-                   "name": name, 
-                   "enabled": enabled, 
-                   "domain": domain, 
-                   "userNotificationEnabled": user_notification_enabled,
-                   "certificateId": certificate_id
-                }
+            "name": name,
+            "enabled": enabled,
+            "domain": domain,
+            "userNotificationEnabled": user_notification_enabled,
+            "certificateId": certificate_id,
+        }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -161,7 +158,7 @@ class PrivilegedRemoteAccessAPI:
                 The notification message displayed in the banner of the privileged portallink, if enabled.
             user_notification_enabled (bool):
                 Indicates if the Notification Banner is enabled (true) or disabled (false)
-                
+
         Returns:
             :obj:`Box`: The resource record for the updated portal.
 
@@ -207,10 +204,6 @@ class PrivilegedRemoteAccessAPI:
         """
         return self.rest.delete(f"praPortal/{portal_id}").status_code
 
-##############################################################################
-################################# PRA Console ################################
-##############################################################################
-
     def list_consoles(self, **kwargs) -> BoxList:
         """
         Returns a list of all privileged remote access consoles.
@@ -237,7 +230,7 @@ class PrivilegedRemoteAccessAPI:
             path="/praConsole", **kwargs, api_version="v1"
         )
         return list
-    
+
     def get_console(self, console_id: str) -> Box:
         """
         Returns information on the specified pra console.
@@ -271,13 +264,14 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.get(f"praConsole/praPortal/{portal_id}")
-    
+
     def add_console(
-        self, name: str,
-        pra_application_id: str, 
+        self,
+        name: str,
+        pra_application_id: str,
         pra_portal_ids: list,
         enabled: bool = True,
-        **kwargs
+        **kwargs,
     ) -> Box:
         """
         Adds a new Privileged Remote Access (PRA) console.
@@ -323,8 +317,14 @@ class PrivilegedRemoteAccessAPI:
                 f"API call failed with status {status_code}: {response.json()}"
             )
         return response
-    
-    def update_console(self, console_id: str, pra_application_id: str = None, pra_portal_ids: list = None, **kwargs) -> Box:
+
+    def update_console(
+        self,
+        console_id: str,
+        pra_application_id: str = None,
+        pra_portal_ids: list = None,
+        **kwargs,
+    ) -> Box:
         """
         Updates the specified PRA console. All the attributes are required by the API.
 
@@ -353,7 +353,7 @@ class PrivilegedRemoteAccessAPI:
         """
         # Fetch existing console details first if necessary
         existing_console = self.get_console(console_id)
-        
+
         # Set payload to value of existing record if needed
         payload = {snake_to_camel(k): v for k, v in existing_console.items()}
 
@@ -389,10 +389,7 @@ class PrivilegedRemoteAccessAPI:
             raise Exception(f"Failed to delete console: {response.text}")
         return response.status_code
 
-
-    def add_bulk_console(
-        self, consoles: List[Dict[str, Any]]
-    ) -> Box:
+    def add_bulk_console(self, consoles: List[Dict[str, Any]]) -> Box:
         """
         Adds a list of Privileged Remote Access (PRA) consoles in bulk.
 
@@ -424,13 +421,16 @@ class PrivilegedRemoteAccessAPI:
             ... ])
         """
         # Transform the input list of console dictionaries to the expected JSON payload format
-        payload = [{
-            "name": console.get("name"),
-            "description": console.get("description", ""),
-            "enabled": console.get("enabled", True),
-            "praApplication": {"id": console.get("pra_application_id")},
-            "praPortals": [{"id": id} for id in console.get("pra_portal_ids", [])]
-        } for console in consoles]
+        payload = [
+            {
+                "name": console.get("name"),
+                "description": console.get("description", ""),
+                "enabled": console.get("enabled", True),
+                "praApplication": {"id": console.get("pra_application_id")},
+                "praPortals": [{"id": id} for id in console.get("pra_portal_ids", [])],
+            }
+            for console in consoles
+        ]
 
         response = self.rest.post("praConsole/bulk", json=payload)
         if isinstance(response, Response):
@@ -440,10 +440,6 @@ class PrivilegedRemoteAccessAPI:
                 f"API call failed with status {status_code}: {response.json()}"
             )
         return response
-    
-##############################################################################
-################################# PRA CREDENTIAL #############################
-##############################################################################
 
     def list_credentials(self, **kwargs) -> BoxList:
         """
@@ -471,7 +467,7 @@ class PrivilegedRemoteAccessAPI:
             path="/credential", **kwargs, api_version="v1"
         )
         return list
-    
+
     def get_credential(self, credential_id: str) -> Box:
         """
         Returns information on the specified pra credential.
@@ -496,31 +492,36 @@ class PrivilegedRemoteAccessAPI:
         # return response
 
     def add_credential(
-        self, name: str,
+        self,
+        name: str,
         credential_type: str,
         username: Optional[str] = None,
         password: Optional[str] = None,
         private_key: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ) -> Box:
         """
         Validates input based on credential_type and adds a new credential.
         """
         payload = {"name": name, "credentialType": credential_type}
 
-        if credential_type == 'USERNAME_PASSWORD':
+        if credential_type == "USERNAME_PASSWORD":
             if not username or not password:
-                raise ValueError("Username and password must be provided for USERNAME_PASSWORD type.")
+                raise ValueError(
+                    "Username and password must be provided for USERNAME_PASSWORD type."
+                )
             payload.update({"userName": username, "password": password})
 
-        elif credential_type == 'SSH_KEY':
+        elif credential_type == "SSH_KEY":
             if not username or not private_key:
-                raise ValueError("Username and private_key must be provided for SSH_KEY type.")
+                raise ValueError(
+                    "Username and private_key must be provided for SSH_KEY type."
+                )
             if not is_valid_ssh_key(private_key):
                 raise ValueError("Invalid SSH key format.")
             payload.update({"userName": username, "privateKey": private_key})
 
-        elif credential_type == 'PASSWORD':
+        elif credential_type == "PASSWORD":
             if not password:
                 raise ValueError("Password must be provided for PASSWORD type.")
             payload["password"] = password
@@ -530,7 +531,7 @@ class PrivilegedRemoteAccessAPI:
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            if key in ['description', 'user_domain', 'passphrase']:
+            if key in ["description", "user_domain", "passphrase"]:
                 payload[snake_to_camel(key)] = value
 
         response = self.rest.post("credential", json=payload)
@@ -542,7 +543,7 @@ class PrivilegedRemoteAccessAPI:
                 f"API call failed with status {status_code}: {response.json()}"
             )
         return response
-    
+
     def update_credential(self, credential_id: str, **kwargs) -> Box:
         """
         Updates a specified credential based on provided keyword arguments.
@@ -583,18 +584,29 @@ class PrivilegedRemoteAccessAPI:
 
         # Validate and enforce required fields based on the credential type
         credential_type = existing_credential.credential_type
-        required_fields = ["username", "password"] if credential_type in ['USERNAME_PASSWORD', 'SSH_KEY'] else ["password"]
+        required_fields = (
+            ["username", "password"]
+            if credential_type in ["USERNAME_PASSWORD", "SSH_KEY"]
+            else ["password"]
+        )
         missing_fields = [field for field in required_fields if field not in kwargs]
         if missing_fields:
-            raise ValueError(f"Missing required fields for '{credential_type}': {', '.join(missing_fields)}")
+            raise ValueError(
+                f"Missing required fields for '{credential_type}': {', '.join(missing_fields)}"
+            )
 
         # Prepare the payload with the existing details and updates from kwargs
-        payload = {**existing_credential.to_dict(), **{snake_to_camel(key): value for key, value in kwargs.items()}}
+        payload = {
+            **existing_credential.to_dict(),
+            **{snake_to_camel(key): value for key, value in kwargs.items()},
+        }
 
         # Execute the update operation
         response = self.rest.put(f"credential/{credential_id}", json=payload)
         if not response.ok:
-            raise Exception(f"Failed to update credential {credential_id}: {response.text}")
+            raise Exception(
+                f"Failed to update credential {credential_id}: {response.text}"
+            )
 
         # Fetch and return the updated credential details
         return self.get_credential(credential_id)
@@ -618,10 +630,6 @@ class PrivilegedRemoteAccessAPI:
         # if response.status_code != 204:
         #     raise Exception(f"Failed to delete credential: {response.text}")
         # return response.status_code
-    
-##############################################################################
-################################# PRA APPROVAL #############################
-##############################################################################
 
     def list_approval(self, **kwargs) -> BoxList:
         """
@@ -660,7 +668,7 @@ class PrivilegedRemoteAccessAPI:
             path="/approval", **kwargs, api_version="v1"
         )
         return list
-    
+
     def get_approval(self, approval_id: str) -> Box:
         """
         Returns information on the specified pra approval.
@@ -677,16 +685,16 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.get(f"approval/{approval_id}")
-    
+
     def add_approval(
-        self, 
-        email_ids: list, 
-        application_ids: list, 
+        self,
+        email_ids: list,
+        application_ids: list,
         start_time: str,
         end_time: str,
         status: str,
         working_hours: dict,
-        **kwargs
+        **kwargs,
     ) -> Box:
         """
         Add a privileged remote access approval.
@@ -700,7 +708,7 @@ class PrivilegedRemoteAccessAPI:
             working_hours (dict): A dictionary containing the details of working hours including cron expressions for start and end times, actual start and end times, days of the week, and time zone.
 
         Keyword Args:
-            Any additional optional parameters that can be included in the payload. 
+            Any additional optional parameters that can be included in the payload.
 
         Returns:
             Box: The resource record for the newly created approval.
@@ -724,11 +732,15 @@ class PrivilegedRemoteAccessAPI:
             ...   }
             ... )
         """
-        start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours["time_zone"])
+        start_epoch, end_epoch = validate_and_convert_times(
+            start_time, end_time, working_hours["time_zone"]
+        )
 
         payload = {
             "emailIds": email_ids,
-            "applications": [{"id": application_id} for application_id in application_ids],
+            "applications": [
+                {"id": application_id} for application_id in application_ids
+            ],
             "startTime": start_epoch,
             "endTime": end_epoch,
             "status": status,
@@ -738,8 +750,8 @@ class PrivilegedRemoteAccessAPI:
                 "startTime": working_hours["start_time"],
                 "endTime": working_hours["end_time"],
                 "days": working_hours["days"],
-                "timeZone": working_hours["time_zone"]
-            }
+                "timeZone": working_hours["time_zone"],
+            },
         }
         # Incorporate optional parameters
         for key, value in kwargs.items():
@@ -766,19 +778,29 @@ class PrivilegedRemoteAccessAPI:
             raise Exception(f"Failed to fetch approval {approval_id}")
 
         # Pre-process and validate start_time and end_time if provided
-        if 'start_time' in kwargs and 'end_time' in kwargs:
-            start_time = kwargs['start_time']
-            end_time = kwargs['end_time']
+        if "start_time" in kwargs and "end_time" in kwargs:
+            start_time = kwargs["start_time"]
+            end_time = kwargs["end_time"]
             # Assuming working_hours contains the time zone
-            time_zone = kwargs.get('working_hours', {}).get('time_zone', existing_approval.working_hours.time_zone)
-            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
-            kwargs['start_time'] = start_epoch
-            kwargs['end_time'] = end_epoch
+            time_zone = kwargs.get("working_hours", {}).get(
+                "time_zone", existing_approval.working_hours.time_zone
+            )
+            start_epoch, end_epoch = validate_and_convert_times(
+                start_time, end_time, time_zone
+            )
+            kwargs["start_time"] = start_epoch
+            kwargs["end_time"] = end_epoch
 
         # Construct payload dynamically based on existing details and updates from kwargs
         payload = {
             "emailIds": kwargs.get("email_ids", existing_approval.email_ids),
-            "applications": [{"id": app_id} for app_id in kwargs.get("application_ids", [app['id'] for app in existing_approval.applications])],
+            "applications": [
+                {"id": app_id}
+                for app_id in kwargs.get(
+                    "application_ids",
+                    [app["id"] for app in existing_approval.applications],
+                )
+            ],
             "status": kwargs.get("status", existing_approval.status),
         }
 
@@ -786,8 +808,12 @@ class PrivilegedRemoteAccessAPI:
         working_hours = kwargs.get("working_hours", {})
         existing_wh = existing_approval.working_hours
         payload["workingHours"] = {
-            "startTimeCron": working_hours.get("start_time_cron", existing_wh.start_time_cron),
-            "endTimeCron": working_hours.get("end_time_cron", existing_wh.end_time_cron),
+            "startTimeCron": working_hours.get(
+                "start_time_cron", existing_wh.start_time_cron
+            ),
+            "endTimeCron": working_hours.get(
+                "end_time_cron", existing_wh.end_time_cron
+            ),
             "startTime": working_hours.get("start_time", existing_wh.start_time),
             "endTime": working_hours.get("end_time", existing_wh.end_time),
             "days": working_hours.get("days", existing_wh.days),
@@ -796,7 +822,7 @@ class PrivilegedRemoteAccessAPI:
 
         # Add any additional provided parameters to payload
         for key, value in kwargs.items():
-            if key not in ['email_ids', 'application_ids', 'working_hours']:
+            if key not in ["email_ids", "application_ids", "working_hours"]:
                 payload[snake_to_camel(key)] = value
 
         # Execute the update operation
@@ -821,7 +847,7 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.delete(f"approval/{approval_id}").status_code
-    
+
     def expired_approval(self) -> int:
         """
         Deletes all expired privileged approvals.
@@ -833,4 +859,4 @@ class PrivilegedRemoteAccessAPI:
             >>> zpa.privilegedremoteaccess.expired_approval('99999')
 
         """
-        return self.rest.delete(f"approval/expired").status_code
+        return self.rest.delete("approval/expired").status_code

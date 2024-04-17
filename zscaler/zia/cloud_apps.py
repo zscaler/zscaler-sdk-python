@@ -14,9 +14,8 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from zscaler.zia import ZIAClient
-
 from zscaler.utils import convert_keys
+from zscaler.zia import ZIAClient
 
 
 class CloudAppsAPI:

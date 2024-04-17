@@ -119,7 +119,7 @@ class CertificatesAPI:
             ...              "MIIFNzCCBIHNIHIO==\\n"
             ...              "-----END CERTIFICATE-----"),
             )
-            
+
         """
         payload = {"name": name, "certBlob": cert_blob}
 

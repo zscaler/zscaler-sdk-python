@@ -16,20 +16,20 @@
 
 import argparse
 import base64
-import json as jsonp
+import datetime
 import json
+import json as jsonp
 import logging
 import random
 import re
 import time
-import datetime
-import pytz
-from dateutil import parser
 from typing import Dict, Optional
 from urllib.parse import urlencode
+
+import pytz
 from box import Box, BoxList
+from dateutil import parser
 from requests import Response
-from box import Box, BoxList
 from restfly import APIIterator
 
 from zscaler.constants import RETRYABLE_STATUS_CODES
@@ -281,6 +281,7 @@ def pick_version_profile(kwargs: list, payload: list):
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
 
+
 class Iterator(APIIterator):
     """Iterator class."""
 
@@ -317,7 +318,8 @@ class Iterator(APIIterator):
             # standard 1 sec rate limit on the API endpoints with pagination so
             # we are going to include it here.
             time.sleep(1)
-            
+
+
 def remove_cloud_suffix(str_name: str) -> str:
     """
     Removes appended cloud name (e.g. "(zscalerthree.net)") from the string.
@@ -331,6 +333,7 @@ def remove_cloud_suffix(str_name: str) -> str:
     reg = re.compile(r"(.*)\s+\([a-zA-Z0-9\-_\.]*\)\s*$")
     res = reg.sub(r"\1", str_name)
     return res.strip()
+
 
 def should_retry(status_code):
     """Determine if a given status code should be retried."""
@@ -428,6 +431,7 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError("Boolean value expected.")
 
+
 def is_valid_ssh_key(private_key: str) -> bool:
     """
     Validate SSH private key format.
@@ -436,9 +440,10 @@ def is_valid_ssh_key(private_key: str) -> bool:
     ssh_key_patterns = [
         r"-----BEGIN OPENSSH PRIVATE KEY-----",
         r"-----BEGIN RSA PRIVATE KEY-----",
-        r"-----BEGIN EC PRIVATE KEY-----"
+        r"-----BEGIN EC PRIVATE KEY-----",
     ]
     return any(re.search(pattern, private_key) for pattern in ssh_key_patterns)
+
 
 def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     """
@@ -453,7 +458,7 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
 
     Returns:
         tuple: Converted start and end times in epoch format.
-    
+
     Raises:
         ValueError: If any validation fails.
     """
@@ -494,6 +499,7 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     end_epoch = int(end_time.timestamp())
 
     return start_epoch, end_epoch
+
 
 def dump_request(
     logger, url: str, method: str, json, params, headers, request_uuid: str, body=True

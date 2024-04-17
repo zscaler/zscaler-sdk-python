@@ -16,11 +16,11 @@
 
 
 from box import Box
+
 from zscaler.zia import ZIAClient
 
 
 class SSLInspectionAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 

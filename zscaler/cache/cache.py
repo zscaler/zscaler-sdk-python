@@ -1,4 +1,4 @@
-from urllib.parse import urlparse, urlencode, parse_qs
+from urllib.parse import parse_qs, urlencode, urlparse
 
 
 class Cache:

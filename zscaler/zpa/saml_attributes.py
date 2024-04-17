@@ -16,6 +16,7 @@
 
 
 from box import Box, BoxList
+
 from zscaler.zpa.client import ZPAClient
 
 
@@ -78,9 +79,7 @@ class SAMLAttributesAPI:
         path = (
             f"/samlAttribute/idp/{idp_id}"  # Correctly format the path with the idp_id
         )
-        list, _ = self.rest.get_paginated_data(
-            path=path, **kwargs, api_version="v2"
-        )
+        list, _ = self.rest.get_paginated_data(path=path, **kwargs, api_version="v2")
         return list
 
     def get_attribute(self, attribute_id: str) -> Box:

@@ -16,8 +16,9 @@
 
 
 from box import Box, BoxList
-from zscaler.zia import ZIAClient
+
 from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.zia import ZIAClient
 
 
 class UserManagementAPI:
@@ -69,7 +70,7 @@ class UserManagementAPI:
             ...    print(department)
         """
         return BoxList(Iterator(self.rest, "departments", **kwargs))
-    
+
     def get_department(self, department_id: str) -> Box:
         """
         Returns the department details for a given department.
@@ -92,7 +93,7 @@ class UserManagementAPI:
             if dept.get("name") == name:
                 return dept
         return None
-    
+
     def list_groups(self, **kwargs) -> BoxList:
         """
         Returns the list of user groups.
@@ -127,7 +128,7 @@ class UserManagementAPI:
 
         """
         return BoxList(Iterator(self.rest, "groups", **kwargs))
-    
+
     def get_group(self, group_id: str) -> Box:
         """
         Returns the user group details for a given user group.
