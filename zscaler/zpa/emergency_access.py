@@ -17,14 +17,15 @@
 
 from box import Box
 from requests import Response
-from zscaler.zpa.client import ZPAClient
+
 from zscaler.utils import snake_to_camel
+from zscaler.zpa.client import ZPAClient
+
 
 class EmergencyAccessAPI:
-    
     def __init__(self, client: ZPAClient):
         self.rest = client
-    
+
     def get_user(self, user_id: str) -> Box:
         """
         Returns information on the specified emergency access user.
@@ -41,15 +42,15 @@ class EmergencyAccessAPI:
 
         """
         return self.rest.get(f"emergencyAccess/user/{user_id}")
-    
+
     def add_user(
-        self, 
-        email_id: str, 
-        first_name: str, 
+        self,
+        email_id: str,
+        first_name: str,
         last_name: str,
-        user_id: str, 
+        user_id: str,
         activate_now: bool = True,
-        **kwargs
+        **kwargs,
     ) -> Box:
         """
         Add an emergency access user.
@@ -60,7 +61,7 @@ class EmergencyAccessAPI:
             last_name (str): The last name of the emergency access user, as provided by the admin.
             user_id (str): The unique identifier of the emergency access user.
             activate_now (bool, optional): Indicates if the emergency access user is activated upon creation. Defaults to True.
-            
+
             **kwargs: Optional keyword args for additional attributes.
 
         Returns:
@@ -76,9 +77,9 @@ class EmergencyAccessAPI:
             )
         """
         payload = {
-            "emailId": email_id, 
+            "emailId": email_id,
             "userId": user_id,
-            "firstName": first_name, 
+            "firstName": first_name,
             "lastName": last_name,
         }
 
@@ -88,8 +89,10 @@ class EmergencyAccessAPI:
 
         # Append 'activateNow=true' to the URL query parameters if activate_now is True
         query_params = {"activateNow": "true"} if activate_now else {}
-        
-        response = self.rest.post(f"emergencyAccess/user", params=query_params, json=payload)
+
+        response = self.rest.post(
+            "emergencyAccess/user", params=query_params, json=payload
+        )
         if isinstance(response, Response):
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
@@ -98,7 +101,7 @@ class EmergencyAccessAPI:
                 f"API call failed with status {status_code}: {response.json()}"
             )
         return response
-    
+
     def update_user(self, user_id: str, **kwargs) -> Box:
         """
         Updates the specified emergency access user.
@@ -111,7 +114,7 @@ class EmergencyAccessAPI:
             first_name (str): The first name of the emergency access user.
             last_name (str): The last name of the emergency access user, as provided by the admin.
             user_id (str): The unique identifier of the emergency access user.
-            
+
         Returns:
             Box: A Box object containing the details of the emergency access user.
 
@@ -131,7 +134,7 @@ class EmergencyAccessAPI:
         resp = self.rest.put(f"emergencyAccess/user/{user_id}", json=payload)
         if not isinstance(resp, Response):
             return self.get_user(user_id)
-        
+
     def activate_user(self, user_id: str, send_email: bool = False) -> Box:
         """
         Activates the emergency access user.
@@ -147,12 +150,16 @@ class EmergencyAccessAPI:
         """
         query_params = {"sendEmail": "true"} if send_email else {}
 
-        response = self.rest.put(f"emergencyAccess/user/{user_id}/activate", params=query_params)
+        response = self.rest.put(
+            f"emergencyAccess/user/{user_id}/activate", params=query_params
+        )
         if response.status_code == 200:
             return self.get_user(user_id)
         else:
-            raise Exception(f"API call failed with status {response.status_code}: {response.text}")
-        
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.text}"
+            )
+
     def deactivate_user(self, user_id: str) -> Box:
         """
         Deactivates the emergency access user.

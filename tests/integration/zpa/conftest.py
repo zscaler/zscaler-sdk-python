@@ -15,8 +15,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
-from zscaler.zpa import ZPAClientHelper
 from functools import wraps
+
+from zscaler.zpa import ZPAClientHelper
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 

@@ -17,11 +17,12 @@
 
 from box import Box, BoxList
 from requests import Response
+
 from zscaler.utils import (
+    convert_keys,
+    recursive_snake_to_camel,
     snake_to_camel,
     transform_common_id_fields,
-    recursive_snake_to_camel,
-    convert_keys,
 )
 from zscaler.zia import ZIAClient
 
@@ -863,7 +864,9 @@ class FirewallPolicyAPI:
         if not isinstance(resp, Response):
             return self.get_network_svc_group(group_id)
 
-    def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
+    def list_network_services(
+        self, search: str = None, protocol: str = None
+    ) -> BoxList:
         """
         Returns a list of all Network Services.
 

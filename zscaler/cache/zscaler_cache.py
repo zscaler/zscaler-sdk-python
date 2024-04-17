@@ -1,7 +1,8 @@
-from zscaler.cache.cache import Cache
 import logging
 import time
 from urllib.parse import urlparse
+
+from zscaler.cache.cache import Cache
 
 logger = logging.getLogger("zscaler-sdk-python")
 

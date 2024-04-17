@@ -2,45 +2,46 @@ import logging
 import os
 import time
 import urllib.parse
-from time import sleep
 import uuid
+from time import sleep
+
 import requests
 from box import BoxList
 
+from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.errors.http_error import ZscalerAPIError, HTTPError
-from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.constants import ZPA_BASE_URLS
+from zscaler.errors.http_error import HTTPError, ZscalerAPIError
+from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
     convert_keys_to_snake,
-    snake_to_camel,
+    dump_request,
+    dump_response,
     format_json_response,
     is_token_expired,
     retry_with_backoff,
-    dump_request,
-    dump_response,
+    snake_to_camel,
 )
-from zscaler.zpa.client import ZPAClient
 from zscaler.zpa.app_segments import ApplicationSegmentAPI
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.certificates import CertificatesAPI
-from zscaler.zpa.client_types import ClientTypesAPI
+from zscaler.zpa.client import ZPAClient
 from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from zscaler.zpa.connectors import AppConnectorControllerAPI
+from zscaler.zpa.emergency_access import EmergencyAccessAPI
 from zscaler.zpa.idp import IDPControllerAPI
 from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation_profile import IsolationProfileAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
-from zscaler.zpa.platforms import PlatformsAPI
 from zscaler.zpa.policies import PolicySetsAPI
-from zscaler.zpa.posture_profile import PostureProfilesAPI
-from zscaler.zpa.privilegedremoteaccess import PrivilegedRemoteAccessAPI
+from zscaler.zpa.posture_profiles import PostureProfilesAPI
+from zscaler.zpa.privileged_remote_access import PrivilegedRemoteAccessAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
@@ -57,19 +58,21 @@ logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ZPAClientHelper(ZPAClient):
-    """
-    Client helper for ZPA operations.
+    """A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.
+
+    The ZPA object stores the session token and simplifies access to API interfaces within ZPA.
 
     Attributes:
-    - client_id (str): The client ID.
-    - client_secret (str): The client secret.
-    - customer_id (str): The customer ID.
-    - cloud (str): The cloud endpoint to be used.
-    - timeout (int): Request timeout duration in seconds.
-    - cache (object): Cache object to be used.
-    - baseurl (str): Base URL for API requests.
-    - access_token (str): Access token for API requests.
-    - headers (dict): Headers for API requests.
+        client_id (str): The ZPA API client ID generated from the ZPA console.
+        client_secret (str): The ZPA API client secret generated from the ZPA console.
+        customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
+        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+
+            * ``production``
+            * ``beta``
+            * ``gov``
+            * ``govus``
+            * ``zpatwo``
     """
 
     def __init__(
@@ -82,18 +85,6 @@ class ZPAClientHelper(ZPAClient):
         cache=None,
         fail_safe=False,
     ):
-        """
-        Initialize ZPAClientHelper.
-
-        Parameters:
-        - client_id (str): The client ID.
-        - client_secret (str): The client secret.
-        - customer_id (str): The customer ID.
-        - cloud (str): The cloud endpoint to be used.
-        - cache (object, optional): Cache object. Defaults to None.
-        - fail_safe (bool, optional): Log an error and continue on failure. Defaults to False.
-        """
-
         # Initialize rate limiter
         # You may want to adjust these parameters as per your rate limit configuration
         self.rate_limiter = RateLimiter(
@@ -368,7 +359,7 @@ class ZPAClientHelper(ZPAClient):
         idp_group_id=None,
         scim_user_id=None,
         page=None,
-        pagesize=20
+        pagesize=20,
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -411,30 +402,36 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        if (page is not None or pagesize != 20) and (max_pages is not None or max_items is not None):
-            raise ValueError("Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters.")
+        if (page is not None or pagesize != 20) and (
+            max_pages is not None or max_items is not None
+        ):
+            raise ValueError(
+                "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
+            )
 
-        params['pagesize'] = min(pagesize, 500)  # Apply maximum constraint and handle default
+        params["pagesize"] = min(
+            pagesize, 500
+        )  # Apply maximum constraint and handle default
 
         if page:
-            params['page'] = page
+            params["page"] = page
 
         if search:
             api_search_field = snake_to_camel(search_field)
-            params['search'] = f"{api_search_field} EQ {search}"
+            params["search"] = f"{api_search_field} EQ {search}"
         if sort_order:
-            params['sortOrder'] = sort_order
+            params["sortOrder"] = sort_order
         if sort_by:
-            params['sortBy'] = sort_by
+            params["sortBy"] = sort_by
         if sort_dir:
-            params['sortdir'] = sort_dir
+            params["sortdir"] = sort_dir
         if start_time and end_time:
-            params['startTime'] = start_time
-            params['endTime'] = end_time
+            params["startTime"] = start_time
+            params["endTime"] = end_time
         if idp_group_id:
-            params['idpGroupId'] = idp_group_id
+            params["idpGroupId"] = idp_group_id
         if scim_user_id:
-            params['scimUserId'] = scim_user_id
+            params["scimUserId"] = scim_user_id
 
         total_collected = 0
         ret_data = []
@@ -452,30 +449,36 @@ class ZPAClientHelper(ZPAClient):
                 response = self.send("GET", url, api_version=api_version)
 
                 if response.status_code != expected_status_code:
-                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                        status_code=response.status_code, page=page
+                    )
                     logger.error(error_msg)
                     return BoxList([]), error_msg
 
                 response_data = response.json()
-                data = response_data.get('list', [])
+                data = response_data.get("list", [])
                 if not data and (page is None or page == 1):
                     error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
                     logger.warn(error_msg)
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(data)
-                ret_data.extend(data[:max_items - total_collected] if max_items is not None else data)
+                ret_data.extend(
+                    data[: max_items - total_collected]
+                    if max_items is not None
+                    else data
+                )
                 total_collected += len(data)
 
                 if max_items is not None and total_collected >= max_items:
                     break
 
-                nextPage = response_data.get('nextPage')
+                nextPage = response_data.get("nextPage")
                 if not nextPage or (max_pages is not None and page >= max_pages):
                     break
 
                 page = nextPage if page is None else page + 1
-                params['page'] = page
+                params["page"] = page
 
         finally:
             time.sleep(1)  # Ensure a delay between requests regardless of outcome
@@ -520,22 +523,6 @@ class ZPAClientHelper(ZPAClient):
         return CertificatesAPI(self)
 
     @property
-    def platforms(self):
-        """
-        The interface object for the :ref:`ZPA Access Policy platform interface <zpa-platforms>`.
-
-        """
-        return PlatformsAPI(self)
-
-    @property
-    def client_types(self):
-        """
-        The interface object for the :ref:`ZPA Access Policy client types interface <zpa-client_types>`.
-
-        """
-        return ClientTypesAPI(self)
-
-    @property
     def isolation_profile(self):
         """
         The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profile>`.
@@ -558,6 +545,14 @@ class ZPAClientHelper(ZPAClient):
 
         """
         return AppConnectorControllerAPI(self)
+
+    @property
+    def emergency_access(self):
+        """
+        The interface object for the :ref:`ZPA Emergency Access interface <zpa-emergency_access>`.
+
+        """
+        return EmergencyAccessAPI(self)
 
     @property
     def idp(self):
@@ -608,13 +603,13 @@ class ZPAClientHelper(ZPAClient):
         return PostureProfilesAPI(self)
 
     @property
-    def privilegedremoteaccess(self):
+    def privileged_remote_access(self):
         """
-        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged-remote-access>`.
+        The interface object for the :ref:`ZPA Privileged Remote Access interface <zpa-privileged_remote_access>`.
 
         """
         return PrivilegedRemoteAccessAPI(self)
-    
+
     @property
     def provisioning(self):
         """

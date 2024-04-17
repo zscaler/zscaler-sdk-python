@@ -9,3 +9,5 @@ Methods are accessible via ``zia.firewall``
 
 .. automodule:: zscaler.zia.firewall
     :members:
+    :undoc-members:
+    :show-inheritance:

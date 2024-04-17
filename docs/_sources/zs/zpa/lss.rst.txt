@@ -10,3 +10,5 @@ Methods are accessible via ``zpa.lss``
 
 .. automodule:: zscaler.zpa.lss
     :members:
+    :undoc-members:
+    :show-inheritance:

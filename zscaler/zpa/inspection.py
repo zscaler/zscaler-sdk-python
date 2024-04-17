@@ -15,10 +15,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from requests.utils import quote
-
 from box import Box, BoxList
 from requests import Response
+from requests.utils import quote
 
 from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zpa.client import ZPAClient

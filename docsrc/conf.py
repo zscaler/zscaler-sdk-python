@@ -14,20 +14,22 @@
 #
 import os
 import sys
+import zscaler
 
 sys.path.insert(0, os.path.abspath(".."))
+
 
 # -- Project information -----------------------------------------------------
 
 project = "Zscaler SDK Python"
-copyright = "2023, Zscaler Technology Alliances"
+copyright = "2023, Zscaler Inc."
 author = "Zscaler Technology Alliances"
 html_title = ""
 
 # The short X.Y version
-version = "1.0"
+version = zscaler.__version__
 # The full version, including alpha/beta/rc tags
-release = "1.0.0"
+release = zscaler.__version__
 
 # -- General configuration ---------------------------------------------------
 
@@ -81,8 +83,8 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
-# html_logo = None
+html_theme = "furo"
+html_logo = "logo.svg"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -95,7 +97,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -111,7 +113,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "zscalersdkpythondoc"
+htmlhelp_basename = "Zscalerdoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -134,22 +136,14 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "zscaler-sdk-python.tex",
-        "Zscaler SDK Python Documentation",
-        "Zscaler Technology Alliances",
-        "manual",
-    ),
+    (master_doc, "Zscaler.tex", "Zscaler Documentation", "Zscaler Technology Alliances", "manual"),
 ]
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, "zscaler-sdk-python", "Zscaler SDK Python Documentation", [author], 1)
-]
+man_pages = [(master_doc, "Zscaler", "Zscaler Documentation", [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -159,11 +153,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "zscaler-sdk-python",
-        "Zscaler SDK Python Documentation",
+        "Zscaler",
+        "Zscaler Documentation",
         author,
-        "zscaler-sdk-python",
-        "Official Python SDK for Zscaler products.",
+        "Zscaler",
+        "Official Python SDK for the Zscaler Products",
         "Miscellaneous",
     ),
 ]
@@ -190,9 +184,20 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
+                       'restfly': ('https://restfly.readthedocs.io/en/latest/', None),
+                       'box': ('https://box.readthedocs.io/en/latest', None),
+                       }
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+def skip(app, what, name, obj, would_skip, options):
+    if name in ["refreshToken", "login", "send", "__init__", "delete", "get", "get_paginated_data", "post", "put", "deauthenticate"]:
+        return True
+    return would_skip
+
+def setup(app):
+    app.connect("autodoc-skip-member", skip)

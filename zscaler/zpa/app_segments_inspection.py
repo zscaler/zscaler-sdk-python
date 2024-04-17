@@ -47,9 +47,7 @@ class AppSegmentsInspectionAPI:
             >>> app_segments = zpa.app_segments_inspection.list_segments_inspection()
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/application", **kwargs
-        )
+        list, _ = self.rest.get_paginated_data(path="/application", **kwargs)
         return list
 
     def get_segment_inspection(self, segment_id: str) -> Box:
@@ -295,9 +293,9 @@ class AppSegmentsInspectionAPI:
             camel_common_apps_dto = recursive_snake_to_camel(
                 common_apps_dto
             )  # use the recursive function
-            payload["commonAppsDto"] = (
-                camel_common_apps_dto  # ensure commonAppsDto gets added to payload
-            )
+            payload[
+                "commonAppsDto"
+            ] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
 
         # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)

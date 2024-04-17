@@ -15,8 +15,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
-from zscaler.zia import ZIAClientHelper
 from functools import wraps
+
+from zscaler.zia import ZIAClientHelper
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 

@@ -1,11 +1,12 @@
 # Zscaler SDK Python for the Zscaler API
 
-[![CI/CD](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/zscaler/zscaler-sdk-python/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/zscaler/zscaler-sdk-python.svg)](https://github.com/zscaler/zscaler-sdk-python)
-[![Code Quality](https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666)](https://www.codacy.com/gh/zscaler/zscaler-sdk-python/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zscaler/zscaler-sdk-python&amp;utm_campaign=Badge_Grade)
-[![PyPI Version](https://img.shields.io/pypi/v/zscaler.svg)](https://pypi.org/project/zscaler-sdk-python)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/zscaler.svg)](https://pypi.python.org/pypi/zscaler-sdk-python/)
-[![GitHub Release](https://img.shields.io/github/release/zscaler/zscaler-sdk-python.svg)](https://github.com/zscaler/zscaler-sdk-python/releases/)
+[![Build Status](https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg)](https://github.com/mitchos/pyZscaler/actions/workflows/build.yml)
+[![Documentation Status](https://readthedocs.org/projects/pyzscaler/badge/?version=latest)](https://pyzscaler.readthedocs.io/?badge=latest)
+[![License](https://img.shields.io/github/license/zscaler/pyZscaler.svg)](https://github.com/mitchos/pyZscaler)
+[![Code Quality](https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666)](https://www.codacy.com/gh/mitchos/pyZscaler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mitchos/pyZscaler&amp;utm_campaign=Badge_Grade)
+[![PyPI Version](https://img.shields.io/pypi/v/pyzscaler.svg)](https://pypi.org/project/pyZscaler)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyzscaler.svg)](https://pypi.python.org/pypi/pyzscaler/)
+[![GitHub Release](https://img.shields.io/github/release/mitchos/pyZscaler.svg)](https://github.com/mitchos/pyZscaler/releases/)
 [![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
 
 ## Support Disclaimer

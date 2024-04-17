@@ -17,13 +17,14 @@
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
-from tests.test_utils import generate_random_string, generate_random_password
+from tests.test_utils import generate_random_password, generate_random_string
 
 
 @pytest.fixture
 def fs():
     yield
-    
+
+
 class TestPRACredential:
     """
     Integration Tests for the PRA Credential.
@@ -34,19 +35,19 @@ class TestPRACredential:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         credential_id = None
-        
+
         credential_description = "tests-" + generate_random_string()
         # Generate a random password
         password = generate_random_password()
-            
+
         try:
             # Create a new pra credential
-            created_credential = client.privilegedremoteaccess.add_credential(
-                name='John Doe' + generate_random_string(),
+            created_credential = client.privileged_remote_access.add_credential(
+                name="John Doe" + generate_random_string(),
                 description=credential_description,
-                credential_type='USERNAME_PASSWORD',
-                user_domain='acme.com',
-                username='jdoe'+generate_random_string(),
+                credential_type="USERNAME_PASSWORD",
+                user_domain="acme.com",
+                username="jdoe" + generate_random_string(),
                 password=password,
             )
             assert created_credential is not None, "Failed to create credential"
@@ -57,15 +58,19 @@ class TestPRACredential:
 
         try:
             # Test listing Credential
-            all_credentials = client.privilegedremoteaccess.list_credentials()
-            if not any(credential["id"] == credential_id for credential in all_credentials):
+            all_credentials = client.privileged_remote_access.list_credentials()
+            if not any(
+                credential["id"] == credential_id for credential in all_credentials
+            ):
                 raise AssertionError("Credential not found in list")
         except Exception as exc:
             errors.append(f"Listing Credential failed: {exc}")
 
         try:
             # Test retrieving the specific credential
-            retrieved_credential = client.privilegedremoteaccess.get_credential(credential_id)
+            retrieved_credential = client.privileged_remote_access.get_credential(
+                credential_id
+            )
             if retrieved_credential["id"] != credential_id:
                 raise AssertionError("Failed to retrieve the correct credential")
         except Exception as exc:
@@ -74,12 +79,12 @@ class TestPRACredential:
         try:
             # Update the credential
             updated_description = "Updated " + generate_random_string()
-            updated_credential = client.privilegedremoteaccess.update_credential(
-                credential_id, 
+            updated_credential = client.privileged_remote_access.update_credential(
+                credential_id,
                 description=updated_description,
-                credential_type='USERNAME_PASSWORD',
-                user_domain='acme.com',
-                username='jdoe',
+                credential_type="USERNAME_PASSWORD",
+                user_domain="acme.com",
+                username="jdoe",
                 password=password,
             )
             if updated_credential["description"] != updated_description:
@@ -89,16 +94,20 @@ class TestPRACredential:
 
         finally:
             cleanup_errors = []
-            
+
             try:
                 # Attempt to delete resources created during the test
                 if credential_id:
-                    delete_status = client.privilegedremoteaccess.delete_credential(credential_id)
+                    delete_status = client.privileged_remote_access.delete_credential(
+                        credential_id
+                    )
                     assert delete_status == 204, "Credential deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting credential failed: {exc}")
-                
+
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the credential lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the credential lifecycle test: {errors}"

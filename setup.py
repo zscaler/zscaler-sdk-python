@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
 import os
 import re
+
+from setuptools import find_packages, setup
 
 
 def get_version():
@@ -24,7 +25,7 @@ setup(
     author_email="devrel@zscaler.com",
     url="https://github.com/zscaler/zscaler-sdk-python",
     license="MIT",
-    description="Python SDK for the Zscaler API",
+    description="Official Python SDK for the Zscaler Products",
     long_description=open("LONG_DESCRIPTION.md").read(),
     long_description_content_type="text/markdown",
     test_suite="tests",

@@ -15,9 +15,11 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box
-from zscaler.zia import ZIAClient
 import mimetypes
+
+from box import Box
+
+from zscaler.zia import ZIAClient
 
 
 class CloudSandboxAPI:
