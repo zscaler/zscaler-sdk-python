@@ -15,9 +15,10 @@
 import os
 import sys
 import zscaler
-
 sys.path.insert(0, os.path.abspath(".."))
 
+# Check if building documentation on RTD
+on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
 
