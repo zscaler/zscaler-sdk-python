@@ -25,12 +25,12 @@ from zscaler.utils import (
     obfuscate_api_key,
     retry_with_backoff,
 )
+from zscaler.zia.client import ZIAClient
 from zscaler.zia.activate import ActivationAPI
 from zscaler.zia.admin_and_role_management import AdminAndRoleManagementAPI
 from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
-from zscaler.zia.client import ZIAClient
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
@@ -635,7 +635,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def zpa_gateway(self):
         """
-        The interface object for the :ref: `ZPA Gateway <zia-zpa_gateway>`.
+        The interface object for the :ref:`ZPA Gateway <zia-zpa_gateway>`.
 
         """
         return ZPAGatewayAPI(self)
@@ -643,7 +643,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def isolation_profile(self):
         """
-        The interface object for the :ref: `ZIA Cloud Browser Isolation Profile <zia-isolation_profile>`.
+        The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-isolation_profile>`.
 
         """
         return IsolationProfileAPI(self)
@@ -651,7 +651,7 @@ class ZIAClientHelper(ZIAClient):
     @property
     def workload_groups(self):
         """
-        The interface object for the :ref: `ZIA Workload Groups <zia-workload_groups>`.
+        The interface object for the :ref:`ZIA Workload Groups <zia-workload_groups>`.
 
         """
         return WorkloadGroupsAPI(self)

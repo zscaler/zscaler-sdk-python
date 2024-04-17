@@ -211,6 +211,11 @@
 <li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -254,11 +259,6 @@ Log Streaming Service Controller API endpoints.</p>
 <dt class="sig sig-object py" id="zscaler.zpa.lss.LSSConfigControllerAPI">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LSSConfigControllerAPI</span></span><a class="headerlink" href="#zscaler.zpa.lss.LSSConfigControllerAPI" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zpa.lss.LSSConfigControllerAPI.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.lss.LSSConfigControllerAPI.__init__" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="zscaler.zpa.lss.LSSConfigControllerAPI.add_lss_config">
 <span class="sig-name descname"><span class="pre">add_lss_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lss_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lss_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_log_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_connector_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_log_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.lss.LSSConfigControllerAPI.add_lss_config" title="Permalink to this definition">#</a></dt>
@@ -654,7 +654,6 @@ options:</p>
             <ul>
 <li><a class="reference internal" href="#">lss</a><ul>
 <li><a class="reference internal" href="#zscaler.zpa.lss.LSSConfigControllerAPI"><code class="docutils literal notranslate"><span class="pre">LSSConfigControllerAPI</span></code></a><ul>
-<li><a class="reference internal" href="#zscaler.zpa.lss.LSSConfigControllerAPI.__init__"><code class="docutils literal notranslate"><span class="pre">LSSConfigControllerAPI.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.lss.LSSConfigControllerAPI.add_lss_config"><code class="docutils literal notranslate"><span class="pre">LSSConfigControllerAPI.add_lss_config()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.lss.LSSConfigControllerAPI.delete_lss_config"><code class="docutils literal notranslate"><span class="pre">LSSConfigControllerAPI.delete_lss_config()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.lss.LSSConfigControllerAPI.get_client_types"><code class="docutils literal notranslate"><span class="pre">LSSConfigControllerAPI.get_client_types()</span></code></a></li>

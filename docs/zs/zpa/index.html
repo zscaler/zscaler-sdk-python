@@ -311,19 +311,6 @@
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">240</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fail_safe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.__init__" title="Permalink to this definition">#</a></dt>
-<dd><p>Initialize ZPAClientHelper.</p>
-<p>Parameters:
-- client_id (str): The client ID.
-- client_secret (str): The client secret.
-- customer_id (str): The customer ID.
-- cloud (str): The cloud endpoint to be used.
-- cache (object, optional): Cache object. Defaults to None.
-- fail_safe (bool, optional): Log an error and continue on failure. Defaults to False.</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.app_segments">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">app_segments</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.app_segments" title="Permalink to this definition">#</a></dt>
@@ -364,62 +351,6 @@
 <dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.emergency_access">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emergency_access</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.emergency_access" title="Permalink to this definition">#</a></dt>
 <dd><p>The interface object for the <a class="reference internal" href="emergency_access.html#zpa-emergency-access"><span class="std std-ref">ZPA Emergency Access interface</span></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.get" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a GET request to the ZPA API.</p>
-<p>Parameters:
-- path (str): API endpoint path.
-- data (dict, optional): Request payload. Defaults to None.
-Returns:
-- Response: Response object from the request.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.get_paginated_data">
-<span class="sig-name descname"><span class="pre">get_paginated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_status_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idp_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scim_user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pagesize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.get_paginated_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The API endpoint path to send requests to.</p></li>
-<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Initial set of query parameters for the API request.</p></li>
-<li><p><strong>expected_status_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The expected HTTP status code for a successful request. Defaults to 200.</p></li>
-<li><p><strong>api_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specifies the version of the API to be used. Helps in routing within the API service.</p></li>
-<li><p><strong>search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Search query to filter the results based on specific conditions.</p></li>
-<li><p><strong>search_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The field name against which to search the query. Default is “name”.</p></li>
-<li><p><strong>max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of pages to fetch. If None, fetches all available pages.</p></li>
-<li><p><strong>max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of items to fetch across all pages. Stops fetching once reached.</p></li>
-<li><p><strong>sort_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specifies the order of sorting (e.g., ‘ASC’ or ‘DSC’).</p></li>
-<li><p><strong>sort_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specifies the field name by which the results should be sorted.</p></li>
-<li><p><strong>sort_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specifies the direction of sorting. This is similar to <cite>sort_order</cite> and can be used interchangeably.</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start of a time range for filtering data based on modification time.</p></li>
-<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end of a time range for filtering data based on modification time.</p></li>
-<li><p><strong>idp_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Identifier for a specific IDP group, used for fetching data related to that group.</p></li>
-<li><p><strong>scim_user_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Identifier for a specific SCIM user, used for fetching data related to that user.</p></li>
-<li><p><strong>page</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specific page number to fetch. Overrides automatic pagination.</p></li>
-<li><p><strong>pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of items per page, default is 20 as per API specification, maximum is 500.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A tuple containing:</dt><dd><ul class="simple">
-<li><p>BoxList: A list of fetched items wrapped in a BoxList for easy access.</p></li>
-<li><p>str: An error message if any occurred during the data fetching process.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Logs errors and warnings through the configured logger when requests fail</strong><strong> or </strong><strong>if no data is found.</strong> – </p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -498,18 +429,6 @@ Returns:
 <dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.segment_groups">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segment_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.segment_groups" title="Permalink to this definition">#</a></dt>
 <dd><p>The interface object for the <a class="reference internal" href="segment_groups.html#zpa-segment-groups"><span class="std std-ref">ZPA Segment Groups interface</span></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.send">
-<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.send" title="Permalink to this definition">#</a></dt>
-<dd><p>Send a request to the ZPA API.</p>
-<p>Parameters:
-- method (str): The HTTP method.
-- path (str): API endpoint path.
-- json (dict, optional): Request payload. Defaults to None.
-Returns:
-- Response: Response object from the request.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -601,7 +520,6 @@ Returns:
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.client_secret"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.client_secret</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.customer_id"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.customer_id</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.cloud"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.cloud</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.__init__"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments_inspection"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments_inspection</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments_pra"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments_pra</span></code></a></li>
@@ -609,8 +527,6 @@ Returns:
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.cloud_connector_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.cloud_connector_groups</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.connectors"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.connectors</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.emergency_access"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.emergency_access</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.get"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.get()</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.get_paginated_data"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.get_paginated_data()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.idp"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.idp</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.inspection"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.inspection</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.isolation_profile"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.isolation_profile</span></code></a></li>
@@ -624,7 +540,6 @@ Returns:
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.scim_attributes"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.scim_attributes</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.scim_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.scim_groups</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.segment_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.segment_groups</span></code></a></li>
-<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.send"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.send()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.server_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.server_groups</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.servers"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.servers</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.service_edges"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.service_edges</span></code></a></li>

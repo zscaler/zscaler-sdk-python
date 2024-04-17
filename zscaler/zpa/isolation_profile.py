@@ -29,29 +29,34 @@ class IsolationProfileAPI:
         Returns a list of all configured isolation profiles.
 
         Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            max_items (int): The maximum number of items to request before stopping iteration.
+            max_pages (int): The maximum number of pages to request before stopping iteration.
+            pagesize (int): Specifies the page size. The default size is 20, but the maximum size is 500.
+            search (str, optional): The search string used to match against features and fields.
 
         Returns:
-            :obj:`list`: A list of all configured isolation profiles.
+            BoxList: A list of all configured isolation profiles.
 
         Examples:
-            >>> for isolation_profiles in zpa.isolation_profiles.list_profiles():
-            ...    pprint(isolation_profiles)
-
+            >>> for isolation_profile in zpa.isolation_profiles.list_profiles():
+            ...     pprint(isolation_profile)
         """
         list, _ = self.rest.get_paginated_data(path="/isolation/profiles", **kwargs)
         return list
 
-    def get_profile_by_name(self, name):
+    def get_profile_by_name(self, name: str):
         """
-        Returns information on the specified isolation profile by name.
+        Retrieves a specific isolation profile by its name.
+
+        Args:
+            name (str): The name of the isolation profile to search for.
+
+        Returns:
+            dict or None: The isolation profile with the specified name if found, otherwise None.
+
+        Examples:
+            >>> profile = zpa.isolation_profiles.get_profile_by_name('DefaultProfile')
+            >>> print(profile)
         """
         profiles = self.list_profiles()
         for profile in profiles:
@@ -59,13 +64,22 @@ class IsolationProfileAPI:
                 return profile
         return None
 
-    def get_profile_by_id(self, profile_id):
+    def get_profile_by_id(self, profile_id: str):
         """
-        Returns information on the specified isolation profile by ID.
+        Retrieves a specific isolation profile by its unique identifier (ID).
+
+        Args:
+            profile_id (str): The ID of the isolation profile to retrieve.
+
+        Returns:
+            dict or None: The isolation profile with the specified ID if found, otherwise None.
+
+        Examples:
+            >>> profile = zpa.isolation_profiles.get_profile_by_id('12345')
+            >>> print(profile)
         """
         profiles = self.list_profiles()
         for profile in profiles:
-            # Ensure both IDs are compared as strings
-            if str(profile.get("id")) == str(profile_id):
+            if str(profile.get("id")) == str(profile_id):  # Ensuring ID comparison as strings
                 return profile
         return None

@@ -211,6 +211,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../zpa/trusted_networks.html">trusted_networks</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -255,11 +260,6 @@ User Management API endpoints.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UserManagementAPI</span></span><a class="headerlink" href="#zscaler.zia.users.UserManagementAPI" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The methods within this section use the ZIA User Management API and are accessed via <code class="docutils literal notranslate"><span class="pre">ZIA.users</span></code>.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="zscaler.zia.users.UserManagementAPI.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.users.UserManagementAPI.__init__" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="zscaler.zia.users.UserManagementAPI.add_user">
 <span class="sig-name descname"><span class="pre">add_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">department</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.users.UserManagementAPI.add_user" title="Permalink to this definition">#</a></dt>
@@ -660,7 +660,6 @@ AUDITOR, GUEST, REPORT_USER and UNAUTH_TRAFFIC_DEFAULT.</p></li>
             <ul>
 <li><a class="reference internal" href="#">users</a><ul>
 <li><a class="reference internal" href="#zscaler.zia.users.UserManagementAPI"><code class="docutils literal notranslate"><span class="pre">UserManagementAPI</span></code></a><ul>
-<li><a class="reference internal" href="#zscaler.zia.users.UserManagementAPI.__init__"><code class="docutils literal notranslate"><span class="pre">UserManagementAPI.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.users.UserManagementAPI.add_user"><code class="docutils literal notranslate"><span class="pre">UserManagementAPI.add_user()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.users.UserManagementAPI.bulk_delete_users"><code class="docutils literal notranslate"><span class="pre">UserManagementAPI.bulk_delete_users()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.users.UserManagementAPI.delete_user"><code class="docutils literal notranslate"><span class="pre">UserManagementAPI.delete_user()</span></code></a></li>
