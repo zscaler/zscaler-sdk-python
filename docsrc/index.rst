@@ -24,15 +24,15 @@ You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rs
 
 Quick Links
 --------------
-- `Zscaler SDK Python User Documentation and Examples <https://zscaler.github.io/zscaler-sdk-python>`_
-- `Zscaler SDK Python SDK on GitHub <https://github.com/zscaler/zscaler-sdk-python>`_
+- `Zscaler SDK Python User Documentation and Examples <htthttps://zscaler-sdk-python.readthedocs.io/en/latest/>`_
+- `Zscaler SDK Python SDK on GitHub <https://zscaler-sdk-python.readthedocs.io/en/latest/>`_
 
 
 Overview
 ==========
 This site is the library reference for the Zscaler SDK Python and describes every class and method in detail. If you are
 looking for user documentation with explanations and examples then you might be looking for the
-`Zscaler SDK Python User Documentation <https://zscaler.github.io/zscaler-sdk-python>`_
+`Zscaler SDK Python User Documentation <https://zscaler-sdk-python.readthedocs.io/en/latest/>`_
 
 Features
 ----------
@@ -44,8 +44,12 @@ Features
 
 Products
 ---------
+This repository contains the Zscaler SDK for Python. This SDK can be used to interact with several Zscaler services such as:
+
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+
+* `Documentation <https://://zscaler-sdk-python.readthedocs.io>`_
 
 Installation
 ==============
@@ -94,12 +98,19 @@ Quick ZPA Example
 
 Contributing
 ==============
-At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in the future.
-
+At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in future releases.
 Issues
-=========
-Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ if you run into any problems using Zscaler SDK Python.
 
+=========
+Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ 
+if you run into any problems using Zscaler SDK Python or please refer to our `General Support Statement <docs/guides/support.rst>`_
+
+Contributors
+------------
+
+* William Guilherme - `willguibr <https://github.com/willguibr>`_
+* Eddie Parra - `eparra <https://github.com/eparra>`_
+* Paul Abbot - `abbottp <https://github.com/abbottp>`_
 
 License
 =========
