@@ -20,6 +20,7 @@ flake8
 sphinx
 sphinx-autobuild
 sphinx_rtd_theme
+furo==2023.5.20
 pytz
 
 # Testing dependencies
@@ -31,3 +32,5 @@ pytest-cov
 pyfakefs
 aenum==3.1.11
 pydash
+
+
