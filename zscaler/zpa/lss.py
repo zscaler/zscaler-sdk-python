@@ -15,9 +15,10 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import requests
 from box import Box, BoxList
 from requests import Response
-import requests
+
 from zscaler.utils import convert_keys, keys_exists, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 

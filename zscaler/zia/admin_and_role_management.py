@@ -15,18 +15,22 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import logging
+
 from box import Box, BoxList
 from requests import Response
 
 from zscaler.utils import Iterator, snake_to_camel
 from zscaler.zia import ZIAClient
-import logging
 
 # Configure the logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # Now you can use logging to output messages
 logger = logging.getLogger(__name__)
+
 
 class AdminAndRoleManagementAPI:
     def __init__(self, client: ZIAClient):

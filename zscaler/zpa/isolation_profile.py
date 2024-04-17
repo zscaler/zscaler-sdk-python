@@ -16,6 +16,7 @@
 
 
 from box import BoxList
+
 from zscaler.zpa.client import ZPAClient
 
 
@@ -45,9 +46,7 @@ class IsolationProfileAPI:
             ...    pprint(isolation_profiles)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/isolation/profiles", **kwargs
-        )
+        list, _ = self.rest.get_paginated_data(path="/isolation/profiles", **kwargs)
         return list
 
     def get_profile_by_name(self, name):

@@ -16,6 +16,7 @@
 
 
 from box import Box, BoxList
+
 from zscaler.zpa.client import ZPAClient
 
 
@@ -68,7 +69,9 @@ class SCIMGroupsAPI:
 
         """
         list, _ = self.rest.get_paginated_data(
-            path=f"/scimgroup/idpId/{idp_id}", **kwargs, api_version="userconfig_v1",
+            path=f"/scimgroup/idpId/{idp_id}",
+            **kwargs,
+            api_version="userconfig_v1",
         )
         return list
         # params = {}

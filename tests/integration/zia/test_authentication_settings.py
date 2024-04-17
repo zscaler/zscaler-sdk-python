@@ -15,18 +15,23 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
+
 from tests.integration.zia.conftest import MockZIAClient
+
 
 @pytest.fixture
 def fs():
     yield
+
 
 import pytest
 from tests.integration.zia.conftest import MockZIAClient
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestExemptedUrls:
     """
@@ -38,8 +43,12 @@ class TestExemptedUrls:
         client = MockZIAClient(fs)
         urls_to_add = ["example.com", "testsite.com"]
         try:
-            updated_exempt_list = client.authentication_settings.add_urls_to_exempt_list(urls_to_add)
-            assert updated_exempt_list is not None, "The update exempt list operation returned None."
+            updated_exempt_list = (
+                client.authentication_settings.add_urls_to_exempt_list(urls_to_add)
+            )
+            assert (
+                updated_exempt_list is not None
+            ), "The update exempt list operation returned None."
         except Exception as exc:
             pytest.fail(f"Failed to add URLs to exempt list: {exc}")
 
@@ -51,7 +60,6 @@ class TestExemptedUrls:
             assert isinstance(exempt_list, list), "Failed to retrieve exempt list."
         except Exception as exc:
             pytest.fail(f"Exempt list retrieval failed: {exc}")
-
 
     @pytest.mark.asyncio
     async def test_delete_urls_from_exempt_list(self, fs):

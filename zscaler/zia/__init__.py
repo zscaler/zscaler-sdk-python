@@ -1,41 +1,41 @@
-import re
+import datetime
 import logging
 import os
+import re
 import time
-import datetime
 import uuid
 from time import sleep
+
 import requests
 from box import Box, BoxList
-from zscaler import __version__
-from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.errors.http_error import ZscalerAPIError, HTTPError
-from zscaler.exceptions.exceptions import ZscalerAPIException, HTTPException
-from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.logger import setup_logging
-from zscaler.utils import obfuscate_api_key
-from zscaler.user_agent import UserAgent
-from zscaler.ratelimiter.ratelimiter import RateLimiter
-from zscaler.utils import (
-    convert_keys_to_snake,
-    snake_to_camel,
-    format_json_response,
-    retry_with_backoff,
-    dump_request,
-    dump_response,
-)
 
 from zscaler import __version__
-from zscaler.zia.client import ZIAClient
+from zscaler.cache.no_op_cache import NoOpCache
+from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.errors.http_error import HTTPError, ZscalerAPIError
+from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
+from zscaler.logger import setup_logging
+from zscaler.ratelimiter.ratelimiter import RateLimiter
+from zscaler.user_agent import UserAgent
+from zscaler.utils import (
+    convert_keys_to_snake,
+    dump_request,
+    dump_response,
+    format_json_response,
+    obfuscate_api_key,
+    retry_with_backoff,
+)
+from zscaler.zia.activate import ActivationAPI
 from zscaler.zia.admin_and_role_management import AdminAndRoleManagementAPI
 from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
-from zscaler.zia.activate import ActivationAPI
+from zscaler.zia.client import ZIAClient
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
+from zscaler.zia.isolation_profile import IsolationProfileAPI
 from zscaler.zia.labels import RuleLabelsAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
@@ -46,9 +46,8 @@ from zscaler.zia.url_categories import URLCategoriesAPI
 from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.users import UserManagementAPI
 from zscaler.zia.web_dlp import WebDLPAPI
-from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-from zscaler.zia.isolation_profile import IsolationProfileAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
+from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -232,7 +231,7 @@ class ZIAClientHelper(ZIAClient):
                 return False
         except requests.RequestException as e:
             return False
-        
+
     def send(self, method, path, json=None, params=None, data=None, headers=None):
         """
         Send a request to the ZIA API.
@@ -413,8 +412,10 @@ class ZIAClientHelper(ZIAClient):
         "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
-    
-    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
+
+    def get_paginated_data(
+        self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200
+    ):
         """
         Fetch paginated data from the ZIA API.
         ...
@@ -442,7 +443,9 @@ class ZIAClientHelper(ZIAClient):
             )
 
             if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                    status_code=response.status_code, page=page
+                )
                 logger.error(error_message)
                 break
             data_json = response.json()
@@ -452,7 +455,9 @@ class ZIAClientHelper(ZIAClient):
                 data = data_json.get(data_key_name)
 
             if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
+                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
+                    data_key_name=data_key_name, page=page
+                )
                 logger.error(error_message)
                 break
 
@@ -463,7 +468,11 @@ class ZIAClientHelper(ZIAClient):
             ret_data.extend(convert_keys_to_snake(data))
 
             # Check for more pages
-            if len(data) == 0 or isinstance(data_json, dict) and int(response.json().get("totalPages")) <= page + 1:
+            if (
+                len(data) == 0
+                or isinstance(data_json, dict)
+                and int(response.json().get("totalPages")) <= page + 1
+            ):
                 break
 
             page += 1

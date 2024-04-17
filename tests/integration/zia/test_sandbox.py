@@ -96,13 +96,13 @@ class TestSandbox:
     #         except Exception as exc:
     #             errors.append(f"Sandbox file submission failed for {file_name}: {exc}")
 
-        #     finally:
-        #         # Clean up by removing the downloaded file
-        #         if os.path.exists(local_file_path):
-        #             os.remove(local_file_path)
+    #     finally:
+    #         # Clean up by removing the downloaded file
+    #         if os.path.exists(local_file_path):
+    #             os.remove(local_file_path)
 
-        # # Assert no errors occurred during the test
-        # assert not errors, f"Errors occurred during sandbox file submission: {errors}"
+    # # Assert no errors occurred during the test
+    # assert not errors, f"Errors occurred during sandbox file submission: {errors}"
 
     # @pytest.mark.asyncio
     # async def test_submit_file_for_inspection(self, fs):

@@ -17,13 +17,14 @@
 
 from box import Box, BoxList
 from requests import Response
-from zscaler.zia import ZIAClient
+
 from zscaler.utils import (
+    convert_keys,
+    recursive_snake_to_camel,
     snake_to_camel,
     transform_common_id_fields,
-    recursive_snake_to_camel,
-    convert_keys,
 )
+from zscaler.zia import ZIAClient
 
 
 class URLFilteringAPI:

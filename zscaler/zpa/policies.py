@@ -15,11 +15,13 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+import functools
+
 from box import Box, BoxList
 from requests import Response
+
 from zscaler.utils import add_id_groups, convert_keys, snake_to_camel
 from zscaler.zpa.client import ZPAClient
-import functools
 
 
 class PolicySetsAPI:
@@ -217,7 +219,7 @@ class PolicySetsAPI:
         list, _ = self.rest.get_paginated_data(
             path=f"policySet/rules/policyType/{mapped_policy_type}",
             **kwargs,
-            api_version="v1"
+            api_version="v1",
         )
         return list
 

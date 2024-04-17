@@ -16,6 +16,7 @@
 
 
 from box import BoxList
+
 from zscaler.utils import snake_to_camel
 from zscaler.zia.client import ZIAClient
 

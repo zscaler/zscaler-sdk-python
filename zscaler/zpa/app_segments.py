@@ -20,11 +20,10 @@ from requests import Response
 from zscaler.utils import (
     add_id_groups,
     convert_keys,
+    recursive_snake_to_camel,
     snake_to_camel,
     transform_clientless_apps,
-    recursive_snake_to_camel,
 )
-
 from zscaler.zpa.client import ZPAClient
 
 
@@ -52,7 +51,7 @@ class ApplicationSegmentAPI:
                 Specifies the page size. The default size is 20, but the maximum size is 500.
             **search (str, optional):
                 The search string used to match against features and fields.
-                
+
         Returns:
             :obj:`BoxList`: List of application segments.
 
@@ -297,9 +296,9 @@ class ApplicationSegmentAPI:
             formatted_clientless_apps = [
                 {"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")
             ]
-            payload["clientlessApps"] = (
-                formatted_clientless_apps  # use the correct key expected by your API
-            )
+            payload[
+                "clientlessApps"
+            ] = formatted_clientless_apps  # use the correct key expected by your API
 
         # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)
