@@ -1,7 +1,7 @@
 Machine Group Example
 =====================
 
-This script contains several examples that can be executed from the CLI to create/read/update/delete Machine Group resources in the Zscaler Private Access (ZPA) service. See the [README](../README.md) for authentication requirements. The examples in this folder assume that environment variables are being used as the authentication method.
+This script contains several examples that can be executed from the CLI to `READ` Machine Group resources in the Zscaler Private Access (ZPA) service. See the [README](../README.md) for authentication requirements. The examples in this folder assume that environment variables are being used as the authentication method.
 
 ### Listing All Machine Groups
 

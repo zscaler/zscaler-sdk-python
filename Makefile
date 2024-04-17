@@ -116,6 +116,16 @@ build\:dist:
 	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
 	ls -l dist
 
+dist\:clean:
+	python setup.py sdist
+	python setup.py bdist_wheel
+	ls -l dist
+
+sync-deps:
+	poetry export -f requirements.txt > requirements.txt
+	poetry2setup > setup.py
+	black setup.py
+
 publish\:test:
 	python3 -m twine upload --repository testpypi dist/* --verbose
 
@@ -123,5 +133,13 @@ publish\:prod:
 	python3 -m twine upload dist/* --verbose
 
 
-
+local-setup:
+ifeq ($(wildcard ~/.local/bin/poetry),)
+	@echo "installing poetry"
+	curl -sSL https://install.python-poetry.org | python3 -
+else
+	@echo "poetry installation found"
+endif
+	~/.local/bin/poetry install
+	
 .PHONY: clean-pyc clean-build docs clean local-setup

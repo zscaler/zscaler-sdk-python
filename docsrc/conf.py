@@ -14,8 +14,8 @@
 #
 import os
 import sys
-import zscaler
-sys.path.insert(0, os.path.abspath(".."))
+
+sys.path.insert(0, os.path.abspath("../"))
 
 # Check if building documentation on RTD
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
@@ -28,9 +28,9 @@ author = "Zscaler Technology Alliances"
 html_title = ""
 
 # The short X.Y version
-version = zscaler.__version__
+version = '1.0.0'
 # The full version, including alpha/beta/rc tags
-release = zscaler.__version__
+release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 
