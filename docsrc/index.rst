@@ -10,23 +10,22 @@
    zs/zpa/index
    zs/guides/index
 
+Zscaler SDK Python - Library Reference
+=====================================================================
+Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+
 Support Disclaimer
 ========================
 
 -> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider. 
-You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_` for guidance on typical problems.
+You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_ for guidance on typical problems.
 
-
-Zscaler SDK Python - Library Reference
-=====================================================================
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
 
 Quick Links
 --------------
 - `Zscaler SDK Python User Documentation and Examples <https://zscaler.github.io/zscaler-sdk-python>`_
 - `Zscaler SDK Python SDK on GitHub <https://github.com/zscaler/zscaler-sdk-python>`_
-
-.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
 
 
 Overview
@@ -55,7 +54,7 @@ The most recent version can be installed from pypi as per below.
 
 .. code-block:: console
 
-    $ pip install zscaler
+    $ pip install zscaler-sdk-python
 
 Usage
 ========

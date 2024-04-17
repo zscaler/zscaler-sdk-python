@@ -74,17 +74,6 @@ class SCIMGroupsAPI:
             api_version="userconfig_v1",
         )
         return list
-        # params = {}
-        # if sort_order != "" and sort_by != "":
-        #     params["sortBy"] = sort_by
-        #     params["sortOrder"] = sort_order
-        # list, _ = self.rest.get_paginated_data(
-        #     path=f"/scimgroup/idpId/{idp_id}",
-        #     params=params,
-        #     **kwargs,
-        #     api_version="userconfig_v1",
-        # )
-        # return list
 
     def get_group(self, group_id: str, **kwargs) -> Box:
         """
