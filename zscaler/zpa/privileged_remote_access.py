@@ -638,11 +638,12 @@ class PrivilegedRemoteAccessAPI:
             max_pages (int):
                 The maximum number of pages to request before stopping iteration.
             pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
+                Specifies the page size. Default is 20, maximum is 500.
             search (str, optional):
                 The search string used to match against features and fields.
             search_field (str, optional):
-                The field to search against. Defaults to 'name'. Commonly used fields include 'name' and 'email_ids'.
+                The field to search against. Defaults to 'name'. Commonly used fields
+                include 'name' and 'email_ids'.
 
         Returns:
             :obj:`BoxList`: A list of all configured privileged remote access approvals.
@@ -650,20 +651,23 @@ class PrivilegedRemoteAccessAPI:
         Examples:
             Search by default field 'name':
 
-            >>> for pra_approval in zpa.privileged_remote_access.list_approval(search='Example_Name'):
+            >>> for pra_approval in zpa.privileged_remote_access.list_approval(
+            ...     search='Example_Name'):
             ...     pprint(pra_approval)
 
             Search by 'email_ids':
 
-            >>> for pra_approval in zpa.privileged_remote_access.list_approval(search='jdoe@example.com', search_field='email_ids'):
-            ...     pprint(pra_approval)
-            
+            >>> for approval in zpa.privileged_remote_access.list_approval(
+            ...     search='jdoe@example.com', search_field='email_ids'):
+            ...     pprint(approval)
+
             Specify maximum items and use an explicit search field:
 
-            >>> approvals = zpa.privileged_remote_access.list_approval(search='Example_Name', search_field='name', max_items=10)
+            >>> approvals = zpa.privileged_remote_access.list_approval(
+            ...     search='Example_Name', search_field='name', max_items=10)
             ... for approval in approvals:
             ...     pprint(approval)
-            
+
         """
         list, _ = self.rest.get_paginated_data(
             path="/approval", **kwargs, api_version="v1"

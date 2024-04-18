@@ -19,7 +19,7 @@ class TestServiceEdgeGroupProvisioningKey:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        group_id = None
+        svc_edge_group_id = None
         svc_edge_group_key_id = None
 
         try:
