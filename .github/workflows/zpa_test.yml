@@ -38,7 +38,7 @@ jobs:
     #         - name: Install dependencies
     #           run: |
     #             python -m pip install --upgrade pip
-    #             python -m pip install flake8 pytest
+    #             python -m pip install flake8 pytest pytest-cov
     #             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     #         - name: Lint with flake8
@@ -66,7 +66,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.9", "3.10"]
+            python-version: ["3.10"]
             environment:
                 - ZPA_QA2_TENANT01
         environment: ${{ matrix.environment }}
@@ -82,7 +82,7 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                python -m pip install flake8 pytest
+                python -m pip install flake8 pytest pytest-cov
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8
@@ -113,7 +113,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.9", "3.10"]
+            python-version: ["3.10"]
             environment:
                 - ZPA_BETA_TENANT01
         environment: ${{ matrix.environment }}
@@ -129,7 +129,7 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                python -m pip install flake8 pytest
+                python -m pip install flake8 pytest pytest-cov
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8
@@ -163,7 +163,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            python-version: ["3.9", "3.10"]
+            python-version: ["3.10"]
             environment:
                 - ZPA_PROD_TENANT01
         environment: ${{ matrix.environment }}
@@ -179,7 +179,7 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                python -m pip install flake8 pytest
+                python -m pip install flake8 pytest pytest-cov
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8
