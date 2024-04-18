@@ -46,17 +46,27 @@ class TestDLPIDMProfile:
                 # Fetch the selected profile by its ID
                 try:
                     fetched_profile = client.dlp.get_dlp_idm_profiles(profile_id)
-                    assert fetched_profile is not None, "Expected a valid profile object"
-                    assert fetched_profile.get("profile_id") == profile_id, "Mismatch in profile ID"
+                    assert (
+                        fetched_profile is not None
+                    ), "Expected a valid profile object"
+                    assert (
+                        fetched_profile.get("profile_id") == profile_id
+                    ), "Mismatch in profile ID"
                 except Exception as exc:
                     errors.append(f"Fetching profile by ID failed: {exc}")
 
                 # Attempt to retrieve the profile by name
                 try:
                     profile_name = first_profile.get("profile_name")
-                    profile_by_name = client.dlp.get_dlp_idm_profile_by_name(profile_name)
-                    assert profile_by_name is not None, "Expected a valid profile object when searching by name"
-                    assert profile_by_name.get("profile_id") == profile_id, "Mismatch in profile ID when searching by name"
+                    profile_by_name = client.dlp.get_dlp_idm_profile_by_name(
+                        profile_name
+                    )
+                    assert (
+                        profile_by_name is not None
+                    ), "Expected a valid profile object when searching by name"
+                    assert (
+                        profile_by_name.get("profile_id") == profile_id
+                    ), "Mismatch in profile ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Fetching profile by name failed: {exc}")
 

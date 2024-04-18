@@ -60,9 +60,15 @@ def main():
         const=True,
         help="List all provisioning keys of the specified type (connector or service_edge).",
     )
-    parser.add_argument("-a", "--add", action="store_true", help="Add a new provisioning key.")
-    parser.add_argument("-u", "--update", metavar="KEY_ID", help="Update an existing provisioning key.")
-    parser.add_argument("-d", "--delete", metavar="KEY_ID", help="Delete a provisioning key by its ID.")
+    parser.add_argument(
+        "-a", "--add", action="store_true", help="Add a new provisioning key."
+    )
+    parser.add_argument(
+        "-u", "--update", metavar="KEY_ID", help="Update an existing provisioning key."
+    )
+    parser.add_argument(
+        "-d", "--delete", metavar="KEY_ID", help="Delete a provisioning key by its ID."
+    )
     args = parser.parse_args()
 
     if args.list is not None:
@@ -81,7 +87,9 @@ def main():
 
 def get_key_type():
     while True:
-        choice = input("Select provisioning key type (1- Connector, 2- Service Edge): ").strip()
+        choice = input(
+            "Select provisioning key type (1- Connector, 2- Service Edge): "
+        ).strip()
         if choice == "1":
             return "connector"
         elif choice == "2":
@@ -94,7 +102,9 @@ def add_provisioning_key(client):
     key_type = get_key_type()
     name = input("Enter the name of the provisioning key: ").strip()
     max_usage = input("Enter the max usage of the provisioning key: ").strip()
-    component_id = input("Enter the component ID (Connector Group ID or Service Edge Group ID): ").strip()
+    component_id = input(
+        "Enter the component ID (Connector Group ID or Service Edge Group ID): "
+    ).strip()
 
     # Fetch enrollment certificates
     enrollment_certs = client.certificates.list_enrolment()
@@ -110,13 +120,17 @@ def add_provisioning_key(client):
         print(f"No enrollment certificate found for '{cert_name}'.")
         return
 
-    response = client.provisioning.add_provisioning_key(key_type, name, max_usage, enrollment_cert_id, component_id)
+    response = client.provisioning.add_provisioning_key(
+        key_type, name, max_usage, enrollment_cert_id, component_id
+    )
     print("Provisioning key added successfully:", response)
 
 
 def update_provisioning_key(client, key_id):
     key_type = get_key_type()
-    name = input("Enter the new name of the provisioning key (leave blank to skip): ").strip()
+    name = input(
+        "Enter the new name of the provisioning key (leave blank to skip): "
+    ).strip()
     kwargs = {"name": name} if name else {}
 
     client.provisioning.update_provisioning_key(key_id, key_type, **kwargs)

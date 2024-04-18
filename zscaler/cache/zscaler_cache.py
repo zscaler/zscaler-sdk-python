@@ -107,7 +107,9 @@ class ZscalerCache(Cache):
         for other_key in self._store.keys():
             other_url_object = urlparse(other_key)
             other_base_url = f"{other_url_object.netloc}{other_url_object.path}"
-            if not self._is_valid_entry(self._store[other_key]) and other_base_url.startswith(base_url):
+            if not self._is_valid_entry(
+                self._store[other_key]
+            ) and other_base_url.startswith(base_url):
                 del self._store[other_key]
                 logger.info(f'Removed also value from cache for key "{other_key}".')
 

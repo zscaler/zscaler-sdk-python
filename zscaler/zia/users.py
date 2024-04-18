@@ -196,7 +196,9 @@ class UserManagementAPI:
         """
         return BoxList(Iterator(self.rest, "users", **kwargs))
 
-    def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
+    def add_user(
+        self, name: str, email: str, groups: list, department: dict, **kwargs
+    ) -> Box:
         """
         Creates a new ZIA user.
 
@@ -291,10 +293,16 @@ class UserManagementAPI:
         """
 
         if user_id and email:
-            raise ValueError("TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided.")
+            raise ValueError(
+                "TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided."
+            )
 
         elif email:
-            user = (record for record in self.list_users(search=email) if record.email == email)
+            user = (
+                record
+                for record in self.list_users(search=email)
+                if record.email == email
+            )
             return next(user, None)
 
         return self.rest.get(f"users/{user_id}")

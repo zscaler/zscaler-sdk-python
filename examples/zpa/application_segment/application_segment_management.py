@@ -52,11 +52,19 @@ from zscaler.utils import str2bool
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage Application Segments for Zscaler Private Access (ZPA).")
+    parser = argparse.ArgumentParser(
+        description="Manage Application Segments for Zscaler Private Access (ZPA)."
+    )
     # Existing arguments
-    parser.add_argument("-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)")
-    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress all output")
-    parser.add_argument("-l", "--list", action="store_true", help="List all application segments")
+    parser.add_argument(
+        "-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)"
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Suppress all output"
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all application segments"
+    )
     parser.add_argument(
         "-g",
         "--get",
@@ -69,12 +77,18 @@ def main():
         metavar="SEGMENT_ID",
         help="Delete an application segment by ID",
     )
-    parser.add_argument("--add", action="store_true", help="Add a new application segment")
-    parser.add_argument("--update", metavar="SEGMENT_ID", help="Update an existing application segment")
+    parser.add_argument(
+        "--add", action="store_true", help="Add a new application segment"
+    )
+    parser.add_argument(
+        "--update", metavar="SEGMENT_ID", help="Update an existing application segment"
+    )
 
     # New arguments for adding/updating segments
     parser.add_argument("--name", help="The name of the application segment")
-    parser.add_argument("--enabled", type=str2bool, help="Whether the Application Segment is enabled")
+    parser.add_argument(
+        "--enabled", type=str2bool, help="Whether the Application Segment is enabled"
+    )
     parser.add_argument(
         "--domain_names",
         nargs="+",
@@ -128,14 +142,20 @@ def main():
 
     elif args.get:
         app_segment = client.app_segments.get_segment(args.get)
-        print(json.dumps(app_segment, indent=4) if app_segment else f"No application segment found with ID {args.get}")
+        print(
+            json.dumps(app_segment, indent=4)
+            if app_segment
+            else f"No application segment found with ID {args.get}"
+        )
 
     elif args.delete:
         response_code = client.app_segments.delete_segment(args.delete)
         if response_code == 204:
             print(f"Application segment {args.delete} deleted successfully.")
         else:
-            print(f"Failed to delete application segment {args.delete}. Response code: {response_code}")
+            print(
+                f"Failed to delete application segment {args.delete}. Response code: {response_code}"
+            )
 
     elif args.add:
         # Gather additional details required for adding an application segment
@@ -163,7 +183,9 @@ def main():
             "name": "Updated App Segment",
             "description": "Updated description",
         }
-        app_segment = client.app_segments.update_segment(segment_id=args.update, **update_fields)
+        app_segment = client.app_segments.update_segment(
+            segment_id=args.update, **update_fields
+        )
         print(f"Application segment {args.update} updated successfully: {app_segment}")
 
 
