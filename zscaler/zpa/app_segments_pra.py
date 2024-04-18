@@ -205,10 +205,14 @@ class AppSegmentsPRAAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
-    def update_segment_pra(self, segment_id: str, common_apps_dto=None, **kwargs) -> Box:
+    def update_segment_pra(
+        self, segment_id: str, common_apps_dto=None, **kwargs
+    ) -> Box:
         """
         Update an application segment.
 
@@ -273,14 +277,24 @@ class AppSegmentsPRAAPI:
         payload = convert_keys(self.get_segment_pra(segment_id))
 
         if kwargs.get("tcp_port_ranges"):
-            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_port_ranges")]
+            payload["tcpPortRange"] = [
+                {"from": ports[0], "to": ports[1]}
+                for ports in kwargs.pop("tcp_port_ranges")
+            ]
 
         if kwargs.get("udp_port_ranges"):
-            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
+            payload["udpPortRange"] = [
+                {"from": ports[0], "to": ports[1]}
+                for ports in kwargs.pop("udp_port_ranges")
+            ]
 
         if common_apps_dto:
-            camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)  # use the recursive function
-            payload["commonAppsDto"] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
+            camel_common_apps_dto = recursive_snake_to_camel(
+                common_apps_dto
+            )  # use the recursive function
+            payload["commonAppsDto"] = (
+                camel_common_apps_dto  # ensure commonAppsDto gets added to payload
+            )
 
         # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)

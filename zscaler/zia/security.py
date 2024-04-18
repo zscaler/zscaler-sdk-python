@@ -42,7 +42,9 @@ class SecurityPolicyAPI:
         if "whitelist_urls" in self.rest.get("security"):
             return response.whitelist_urls
         else:
-            return BoxList()  # Return empty list so other methods in this class don't break
+            return (
+                BoxList()
+            )  # Return empty list so other methods in this class don't break
 
     def get_blacklist(self) -> BoxList:
         """
@@ -163,7 +165,9 @@ class SecurityPolicyAPI:
 
         payload = {"blacklistUrls": url_list}
 
-        resp = self.rest.post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).status_code
+        resp = self.rest.post(
+            "security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if resp == 204:

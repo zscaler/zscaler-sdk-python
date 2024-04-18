@@ -90,7 +90,9 @@ class TestPRAApproval:
                 description=server_group_description,
                 enabled=True,
                 dynamic_discovery=True,
-                app_connector_group_ids=[app_connector_group_id],  # List of App Connector Group IDs
+                app_connector_group_ids=[
+                    app_connector_group_id
+                ],  # List of App Connector Group IDs
             )
             server_group_id = created_server_group["id"]
         except Exception as exc:
@@ -144,15 +146,20 @@ class TestPRAApproval:
                 search_field="email_ids",
             )
             assert any(
-                approval["email_ids"][0] == "carol.kirk@bd-hashicorp.com" for approval in approval_list
+                approval["email_ids"][0] == "carol.kirk@bd-hashicorp.com"
+                for approval in approval_list
             ), "Created approval not found in the list"
         except Exception as exc:
             errors.append(f"Error listing approvals: {exc}")
 
         try:
             # Assuming get_approval method returns a Box object
-            retrieved_approval = client.privileged_remote_access.get_approval(approval_id)
-            assert retrieved_approval.id == approval_id, "Mismatch in retrieved approval ID"
+            retrieved_approval = client.privileged_remote_access.get_approval(
+                approval_id
+            )
+            assert (
+                retrieved_approval.id == approval_id
+            ), "Mismatch in retrieved approval ID"
 
             # Example assertions (modify based on actual returned attributes)
             assert retrieved_approval.status == "ACTIVE", "Approval status mismatch"
@@ -166,7 +173,9 @@ class TestPRAApproval:
             try:
                 # Attempt to delete resources created during the test
                 if approval_id:
-                    delete_status = client.privileged_remote_access.delete_approval(approval_id)
+                    delete_status = client.privileged_remote_access.delete_approval(
+                        approval_id
+                    )
                     assert delete_status == 204, "Approval deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Approval failed: {exc}")
@@ -195,7 +204,9 @@ class TestPRAApproval:
 
             try:
                 if app_connector_group_id:
-                    delete_status = client.connectors.delete_connector_group(app_connector_group_id)
+                    delete_status = client.connectors.delete_connector_group(
+                        app_connector_group_id
+                    )
                     assert delete_status == 204, "App Connector Group deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting App Connector Group failed: {exc}")
@@ -203,4 +214,6 @@ class TestPRAApproval:
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the approval lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the approval lifecycle test: {errors}"

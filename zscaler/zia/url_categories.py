@@ -55,7 +55,9 @@ class URLCategoriesAPI:
             payload = urls
             return self.rest.post("urlLookup", json=payload)
 
-    def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
+    def list_categories(
+        self, custom_only: bool = False, only_counts: bool = False
+    ) -> BoxList:
         """
         Returns information on URL categories.
 
@@ -123,7 +125,9 @@ class URLCategoriesAPI:
         """
         return self.rest.get(f"urlCategories/{category_id}")
 
-    def add_url_category(self, configured_name: str, super_category: str, urls: list, **kwargs) -> Box:
+    def add_url_category(
+        self, configured_name: str, super_category: str, urls: list, **kwargs
+    ) -> Box:
         """
         Adds a new custom URL category.
 
@@ -190,7 +194,9 @@ class URLCategoriesAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+                raise Exception(
+                    f"API call failed with status {status_code}: {response.json()}"
+                )
         return response
 
     def add_tld_category(self, name: str, tlds: list, **kwargs) -> Box:
@@ -237,7 +243,9 @@ class URLCategoriesAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+                raise Exception(
+                    f"API call failed with status {status_code}: {response.json()}"
+                )
         return response
 
     def update_url_category(self, category_id: str, **kwargs) -> Box:
@@ -293,7 +301,9 @@ class URLCategoriesAPI:
         response = self.rest.put(f"urlCategories/{category_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_category(category_id)
@@ -320,10 +330,14 @@ class URLCategoriesAPI:
         payload = convert_keys(self.get_category(category_id))
         payload["urls"] = urls
 
-        response = self.rest.put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
+        response = self.rest.put(
+            f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload
+        )
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
     def delete_urls_from_category(self, category_id: str, urls: list) -> Box:
         """
@@ -349,7 +363,9 @@ class URLCategoriesAPI:
             "urls": urls,
         }  # Required for successful call
 
-        return self.rest.put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self.rest.put(
+            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
+        )
 
     def delete_from_category(self, category_id: str, **kwargs):
         """
@@ -392,7 +408,9 @@ class URLCategoriesAPI:
         current_config = self.get_category(category_id)
 
         payload = {
-            "configured_name": current_config["configured_name"],  # Required for successful call
+            "configured_name": current_config[
+                "configured_name"
+            ],  # Required for successful call
         }
 
         # Add optional parameters to payload
@@ -402,7 +420,9 @@ class URLCategoriesAPI:
         # Convert snake to camelcase
         payload = convert_keys(payload)
 
-        return self.rest.put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+        return self.rest.put(
+            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
+        )
 
     def delete_category(self, category_id: str) -> int:
         """

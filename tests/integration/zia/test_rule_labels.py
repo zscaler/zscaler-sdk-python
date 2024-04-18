@@ -49,7 +49,9 @@ class TestRuleLabels:
                 )
                 assert created_label is not None, "Label creation returned None"
                 assert created_label.name == label_name, "Label name mismatch"
-                assert created_label.description == label_description, "Label description mismatch"
+                assert (
+                    created_label.description == label_description
+                ), "Label description mismatch"
                 label_id = created_label.id
             except Exception as exc:
                 errors.append(f"Failed to add label: {exc}")
@@ -59,7 +61,9 @@ class TestRuleLabels:
                 try:
                     retrieved_label = client.labels.get_label(label_id)
                     assert retrieved_label.id == label_id, "Retrieved label ID mismatch"
-                    assert retrieved_label.name == label_name, "Retrieved label name mismatch"
+                    assert (
+                        retrieved_label.name == label_name
+                    ), "Retrieved label name mismatch"
                 except Exception as exc:
                     errors.append(f"Failed to retrieve label: {exc}")
 
@@ -69,14 +73,18 @@ class TestRuleLabels:
                     updated_name = label_name + " Updated"
                     client.labels.update_label(label_id, name=updated_name)
                     updated_label = client.labels.get_label(label_id)
-                    assert updated_label.name == updated_name, "Failed to update label name"
+                    assert (
+                        updated_label.name == updated_name
+                    ), "Failed to update label name"
                 except Exception as exc:
                     errors.append(f"Failed to update label: {exc}")
 
             # Attempt to list rule labels and check if the updated label is in the list
             try:
                 labels_list = client.labels.list_labels()
-                assert any(label.id == label_id for label in labels_list), "Updated label not found in list"
+                assert any(
+                    label.id == label_id for label in labels_list
+                ), "Updated label not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list labels: {exc}")
 
@@ -90,4 +98,6 @@ class TestRuleLabels:
                     errors.append(f"Cleanup failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the rule label lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the rule label lifecycle test: {errors}"

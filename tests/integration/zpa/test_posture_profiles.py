@@ -38,7 +38,9 @@ class TestPostureProfile:
         # Attempt to list all posture profiles
         try:
             posture_profile = client.posture_profiles.list_profiles()
-            assert isinstance(posture_profile, list), "Expected a list of posture profiles"
+            assert isinstance(
+                posture_profile, list
+            ), "Expected a list of posture profiles"
         except Exception as exc:
             errors.append(f"Listing posture profiles failed: {str(exc)}")
 
@@ -50,22 +52,36 @@ class TestPostureProfile:
                 # Fetch the selected posture profile by its ID
                 try:
                     fetched_profile = client.posture_profiles.get_profile(profile_id)
-                    assert fetched_profile is not None, "Expected a valid posture profile object"
-                    assert fetched_profile.get("id") == profile_id, "Mismatch in posture profile ID"
+                    assert (
+                        fetched_profile is not None
+                    ), "Expected a valid posture profile object"
+                    assert (
+                        fetched_profile.get("id") == profile_id
+                    ), "Mismatch in posture profile ID"
                 except Exception as exc:
                     errors.append(f"Fetching posture profile by ID failed: {str(exc)}")
 
                 # Attempt to retrieve the posture profile by name
                 try:
                     profile_name = first_profile.get("name")
-                    profile_by_name = client.posture_profiles.get_profile_by_name(profile_name)
-                    assert profile_by_name is not None, "Expected a valid posture profile object when searching by name"
-                    assert profile_by_name.get("id") == profile_id, "Mismatch in posture profile ID when searching by name"
+                    profile_by_name = client.posture_profiles.get_profile_by_name(
+                        profile_name
+                    )
+                    assert (
+                        profile_by_name is not None
+                    ), "Expected a valid posture profile object when searching by name"
+                    assert (
+                        profile_by_name.get("id") == profile_id
+                    ), "Mismatch in posture profile ID when searching by name"
                 except Exception as exc:
-                    errors.append(f"Fetching posture profile by name failed: {str(exc)}")
+                    errors.append(
+                        f"Fetching posture profile by name failed: {str(exc)}"
+                    )
 
                 # Once we've tested one profile, exit the loop to avoid redundant testing
                 break
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during posture profile operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during posture profile operations test: {errors}"

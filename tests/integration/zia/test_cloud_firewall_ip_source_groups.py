@@ -47,7 +47,9 @@ class TestCloudFirewallIPSourceGroup:
                 ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
             )
             assert created_group.name == group_name, "Group name mismatch in creation"
-            assert created_group.description == group_description, "Group description mismatch in creation"
+            assert (
+                created_group.description == group_description
+            ), "Group description mismatch in creation"
             group_id = created_group.id
         except Exception as exc:
             errors.append(f"Failed to add IP source group: {exc}")
@@ -56,7 +58,9 @@ class TestCloudFirewallIPSourceGroup:
             if group_id:
                 try:
                     group = client.firewall.get_ip_source_group(group_id)
-                    assert group.id == group_id, "Failed to retrieve the correct IP source group"
+                    assert (
+                        group.id == group_id
+                    ), "Failed to retrieve the correct IP source group"
                 except Exception as exc:
                     errors.append(f"Failed to retrieve IP source group: {exc}")
 
@@ -64,16 +68,22 @@ class TestCloudFirewallIPSourceGroup:
             if group_id:
                 try:
                     updated_name = "updated-" + generate_random_string()
-                    client.firewall.update_ip_source_group(group_id=group_id, name=updated_name)
+                    client.firewall.update_ip_source_group(
+                        group_id=group_id, name=updated_name
+                    )
                     updated_group = client.firewall.get_ip_source_group(group_id)
-                    assert updated_group.name == updated_name, "Group name mismatch after update"
+                    assert (
+                        updated_group.name == updated_name
+                    ), "Group name mismatch after update"
                 except Exception as exc:
                     errors.append(f"Failed to update IP source group: {exc}")
 
             # Attempt to list IP source groups and check if the updated group is in the list
             try:
                 groups = client.firewall.list_ip_source_groups()
-                assert any(group.id == group_id for group in groups), "Updated IP source group not found in list"
+                assert any(
+                    group.id == group_id for group in groups
+                ), "Updated IP source group not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list IP source groups: {exc}")
 
@@ -87,4 +97,6 @@ class TestCloudFirewallIPSourceGroup:
                     errors.append(f"Cleanup failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the IP source group lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the IP source group lifecycle test: {errors}"

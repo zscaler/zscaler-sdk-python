@@ -77,8 +77,12 @@ def main():
         default=True,
         help="Include currently assigned VIPs. Default is True.",
     )
-    parser.add_argument("--latitude", type=str, help="Latitude coordinate of GRE tunnel source.")
-    parser.add_argument("--longitude", type=str, help="Longitude coordinate of GRE tunnel source.")
+    parser.add_argument(
+        "--latitude", type=str, help="Latitude coordinate of GRE tunnel source."
+    )
+    parser.add_argument(
+        "--longitude", type=str, help="Longitude coordinate of GRE tunnel source."
+    )
     parser.add_argument(
         "--geo_override",
         type=bool,
@@ -118,7 +122,9 @@ def main():
         print("VIP groups by data center:")
         print(json.dumps([vip.to_dict() for vip in vip_groups], indent=4))
     else:
-        print("Failed to fetch VIP groups by data center. No response or error received.")
+        print(
+            "Failed to fetch VIP groups by data center. No response or error received."
+        )
 
 
 if __name__ == "__main__":

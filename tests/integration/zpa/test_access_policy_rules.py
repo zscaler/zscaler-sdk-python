@@ -91,7 +91,9 @@ class TestAccessPolicyRule:
             # Test retrieving the specific Access Policy Rule
             retrieved_rule = client.policies.get_rule("access", rule_id)
             if retrieved_rule["id"] != rule_id:
-                raise AssertionError("Failed to retrieve the correct Access Policy Rule")
+                raise AssertionError(
+                    "Failed to retrieve the correct Access Policy Rule"
+                )
         except Exception as exc:
             errors.append(f"Retrieving Access Policy Rule failed: {exc}")
 
@@ -104,7 +106,9 @@ class TestAccessPolicyRule:
                 description=updated_rule_description,
             )
             if updated_rule["description"] != updated_rule_description:
-                raise AssertionError("Failed to update description for Access Policy Rule")
+                raise AssertionError(
+                    "Failed to update description for Access Policy Rule"
+                )
         except Exception as exc:
             errors.append(f"Updating Access Policy Rule failed: {exc}")
 
@@ -124,4 +128,6 @@ class TestAccessPolicyRule:
             except Exception as exc:
                 errors.append(f"Cleanup failed for Connector Group: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the Access Policy Rule operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the Access Policy Rule operations test: {errors}"

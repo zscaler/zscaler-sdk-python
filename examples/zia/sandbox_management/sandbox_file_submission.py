@@ -48,14 +48,18 @@ from zscaler import ZIAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(description="CLI tool for Zscaler Cloud Sandbox operations.")
+    parser = argparse.ArgumentParser(
+        description="CLI tool for Zscaler Cloud Sandbox operations."
+    )
     parser.add_argument(
         "--action",
         choices=["submit_analysis", "submit_inspection"],
         required=True,
         help="Action to perform (submit_analysis or submit_inspection).",
     )
-    parser.add_argument("--file", required=True, help="Path to the file you want to submit.")
+    parser.add_argument(
+        "--file", required=True, help="Path to the file you want to submit."
+    )
     parser.add_argument(
         "--force",
         action="store_true",
@@ -78,7 +82,9 @@ def main():
         print("File submitted for analysis. Response:", json.dumps(response, indent=4))
     elif args.action == "submit_inspection":
         response = zia.sandbox.submit_file_for_inspection(file=args.file)
-        print("File submitted for inspection. Response:", json.dumps(response, indent=4))
+        print(
+            "File submitted for inspection. Response:", json.dumps(response, indent=4)
+        )
 
 
 if __name__ == "__main__":

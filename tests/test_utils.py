@@ -60,7 +60,9 @@ def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str,
     start_time = datetime.now(tz)
 
     # Ensure end time does not exceed 1 year from today
-    end_time = start_time + timedelta(days=365 - 1)  # Subtracting one day to ensure it's within a year
+    end_time = start_time + timedelta(
+        days=365 - 1
+    )  # Subtracting one day to ensure it's within a year
 
     if format.upper() == "RFC1123":
         time_format = "%a, %d %b %Y %H:%M:%S %Z"

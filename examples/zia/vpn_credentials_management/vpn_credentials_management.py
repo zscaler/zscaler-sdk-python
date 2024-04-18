@@ -61,19 +61,29 @@ from zscaler import ZIAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage VPN credentials for a cloud service provider.")
+    parser = argparse.ArgumentParser(
+        description="Manage VPN credentials for a cloud service provider."
+    )
     parser.add_argument(
         "-a",
         "--add",
         choices=["IP", "UFQDN"],
         help="Add a new VPN credential of type IP or UFQDN.",
     )
-    parser.add_argument("-u", "--update", help="Credential ID to update an existing VPN credential.")
-    parser.add_argument("-d", "--delete", help="Credential ID to delete an existing VPN credential.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all VPN credentials.")
+    parser.add_argument(
+        "-u", "--update", help="Credential ID to update an existing VPN credential."
+    )
+    parser.add_argument(
+        "-d", "--delete", help="Credential ID to delete an existing VPN credential."
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all VPN credentials."
+    )
 
     # VPN credential arguments for add and update
-    parser.add_argument("--pre_shared_key", help="Pre-shared key for the VPN credential.")
+    parser.add_argument(
+        "--pre_shared_key", help="Pre-shared key for the VPN credential."
+    )
     parser.add_argument(
         "--ip_address",
         help="IP address for the VPN credential (required for IP auth type).",
@@ -83,7 +93,9 @@ def main():
         help="Email address for the VPN credential (required for UFQDN auth type).",
     )
     parser.add_argument("--comments", help="Comments for the VPN credential.")
-    parser.add_argument("--credential_id", help="Location ID associated with the VPN credential.")
+    parser.add_argument(
+        "--credential_id", help="Location ID associated with the VPN credential."
+    )
 
     args = parser.parse_args()
 
@@ -128,7 +140,9 @@ def main():
             )
             changes_made = True
         else:
-            print("Error: Missing required fields for the selected authentication type.")
+            print(
+                "Error: Missing required fields for the selected authentication type."
+            )
 
     elif args.update:
         zia.traffic.update_vpn_credential(
@@ -152,7 +166,9 @@ def main():
         print("Activating configuration changes. Please wait...")
         time.sleep(5)  # Delay for 5 seconds before activating.
         activation_status = zia.activate.activate()
-        print("Configuration changes activated successfully. Status:", activation_status)
+        print(
+            "Configuration changes activated successfully. Status:", activation_status
+        )
 
 
 if __name__ == "__main__":
