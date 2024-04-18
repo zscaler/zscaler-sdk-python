@@ -45,9 +45,7 @@ from zscaler import ZPAClientHelper
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Isolation Profiles for ZPA.")
-    parser.add_argument(
-        "-l", "--list", action="store_true", help="List all isolation profiles."
-    )
+    parser.add_argument("-l", "--list", action="store_true", help="List all isolation profiles.")
     parser.add_argument(
         "-g",
         "--get",

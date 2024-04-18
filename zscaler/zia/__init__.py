@@ -97,9 +97,7 @@ class ZIAClientHelper(ZIAClient):
         self.username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
         self.password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
         # The 'cloud' parameter should have precedence over environment variables
-        self.env_cloud = (
-            cloud or kw.get("cloud") or os.getenv(f"{self._env_base}_CLOUD")
-        )
+        self.env_cloud = cloud or kw.get("cloud") or os.getenv(f"{self._env_base}_CLOUD")
         if not self.env_cloud:
             raise ValueError(
                 f"Cloud environment must be set via the 'cloud' argument or the {self._env_base}_CLOUD environment variable."
@@ -117,14 +115,10 @@ class ZIAClientHelper(ZIAClient):
             )
 
         self.conv_box = True
-        self.sandbox_token = kw.get("sandbox_token") or os.getenv(
-            f"{self._env_base}_SANDBOX_TOKEN"
-        )
+        self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
-        cache_enabled = (
-            os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        )
+        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
         if cache is None:
             if cache_enabled:
                 ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
@@ -175,9 +169,7 @@ class ZIAClientHelper(ZIAClient):
             return True
         now = datetime.datetime.now()
         if self.auth_details["passwordExpiryTime"] > 0 and (
-            self.session_refreshed
-            + datetime.timedelta(seconds=-self.session_timeout_offset)
-            < now
+            self.session_refreshed + datetime.timedelta(seconds=-self.session_timeout_offset) < now
         ):
             return True
         return False
@@ -220,9 +212,7 @@ class ZIAClientHelper(ZIAClient):
         headers.update({"Cookie": f"JSESSIONID={self.session_id}"})
 
         try:
-            response = requests.delete(
-                logout_url, headers=headers, timeout=self.timeout
-            )
+            response = requests.delete(logout_url, headers=headers, timeout=self.timeout)
             if response.status_code == 204:
                 self.session_id = None
                 self.auth_details = None
@@ -308,15 +298,11 @@ class ZIAClientHelper(ZIAClient):
                     request_uuid=request_uuid,
                     start_time=start_time,
                 )
-                if (
-                    resp.status_code == 429
-                ):  # HTTP Status code 429 indicates "Too Many Requests"
+                if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
                     sleep_time = int(
                         resp.headers.get("Retry-After", 2)
                     )  # Default to 60 seconds if 'Retry-After' header is missing
-                    logger.warning(
-                        f"Rate limit exceeded. Retrying in {sleep_time} seconds."
-                    )
+                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
                     sleep(sleep_time)
                     attempts += 1
                     continue
@@ -324,14 +310,10 @@ class ZIAClientHelper(ZIAClient):
                     break
             except requests.RequestException as e:
                 if attempts == 4:  # If it's the last attempt, raise the exception
-                    logger.error(
-                        f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}"
-                    )
+                    logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
                     raise e
                 else:
-                    logger.warning(
-                        f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}"
-                    )
+                    logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
                     attempts += 1
                     sleep(5)  # Sleep for 5 seconds before retrying
 
@@ -413,9 +395,7 @@ class ZIAClientHelper(ZIAClient):
         "EMPTY_RESULTS": "No results found for page {page}.",
     }
 
-    def get_paginated_data(
-        self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200
-    ):
+    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
         """
         Fetch paginated data from the ZIA API.
         ...
@@ -443,9 +423,7 @@ class ZIAClientHelper(ZIAClient):
             )
 
             if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=page
-                )
+                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
                 logger.error(error_message)
                 break
             data_json = response.json()
@@ -455,9 +433,7 @@ class ZIAClientHelper(ZIAClient):
                 data = data_json.get(data_key_name)
 
             if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(
-                    data_key_name=data_key_name, page=page
-                )
+                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
                 logger.error(error_message)
                 break
 
@@ -468,11 +444,7 @@ class ZIAClientHelper(ZIAClient):
             ret_data.extend(convert_keys_to_snake(data))
 
             # Check for more pages
-            if (
-                len(data) == 0
-                or isinstance(data_json, dict)
-                and int(response.json().get("totalPages")) <= page + 1
-            ):
+            if len(data) == 0 or isinstance(data_json, dict) and int(response.json().get("totalPages")) <= page + 1:
                 break
 
             page += 1

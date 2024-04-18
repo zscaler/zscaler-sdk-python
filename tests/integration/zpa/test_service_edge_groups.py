@@ -87,9 +87,7 @@ class TestServiceEdgeGroup:
             try:
                 # Update the service edge group
                 updated_name = group_name + " Updated"
-                client.service_edges.update_service_edge_group(
-                    group_id, name=updated_name
-                )
+                client.service_edges.update_service_edge_group(group_id, name=updated_name)
 
                 updated_group = client.service_edges.get_service_edge_group(group_id)
                 assert updated_group.name == updated_name
@@ -105,9 +103,7 @@ class TestServiceEdgeGroup:
 
             try:
                 # Search for the service edge group by name
-                search_result = client.service_edges.get_service_edge_group_by_name(
-                    updated_name
-                )
+                search_result = client.service_edges.get_service_edge_group_by_name(updated_name)
                 assert search_result is not None
                 assert search_result.id == group_id
             except Exception as exc:
@@ -117,18 +113,10 @@ class TestServiceEdgeGroup:
                 # Cleanup: Delete the service edge group if it was created
                 if group_id:
                     try:
-                        delete_response_code = (
-                            client.service_edges.delete_service_edge_group(group_id)
-                        )
-                        assert (
-                            str(delete_response_code) == "204"
-                        ), f"Failed to delete service edge group with ID {group_id}"
+                        delete_response_code = client.service_edges.delete_service_edge_group(group_id)
+                        assert str(delete_response_code) == "204", f"Failed to delete service edge group with ID {group_id}"
                     except Exception as cleanup_exc:
-                        errors.append(
-                            f"Cleanup failed for service edge group ID {group_id}: {cleanup_exc}"
-                        )
+                        errors.append(f"Cleanup failed for service edge group ID {group_id}: {cleanup_exc}")
 
             # Assert that no errors occurred during the test
-            assert (
-                len(errors) == 0
-            ), f"Errors occurred during the service edge group lifecycle test: {errors}"
+            assert len(errors) == 0, f"Errors occurred during the service edge group lifecycle test: {errors}"

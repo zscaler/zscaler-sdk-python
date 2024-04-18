@@ -99,6 +99,4 @@ class TestSegmentGroup:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the application server lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the application server lifecycle test: {errors}"

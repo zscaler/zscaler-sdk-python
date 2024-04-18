@@ -64,12 +64,8 @@ def prompt_for_gateway_options():
     gateway_options = {
         "auth_required": prompt_yes_no("Enable Authentication (auth_required)?"),
         "ssl_scan_enabled": prompt_yes_no("Enable SSL Inspection (ssl_scan_enabled)?"),
-        "zapp_ssl_scan_enabled": prompt_yes_no(
-            "Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"
-        ),
-        "xff_forward_enabled": prompt_yes_no(
-            "Enable XFF Forwarding (xff_forward_enabled)?"
-        ),
+        "zapp_ssl_scan_enabled": prompt_yes_no("Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"),
+        "xff_forward_enabled": prompt_yes_no("Enable XFF Forwarding (xff_forward_enabled)?"),
         "ofw_enabled": prompt_yes_no("Enable Firewall (ofw_enabled)?"),
         "ips_control": prompt_yes_no("Enable IPS Control (ips_control)?"),
         "aup_enabled": prompt_yes_no("Enable AUP (aup_enabled)?"),
@@ -77,29 +73,19 @@ def prompt_for_gateway_options():
     }
 
     if gateway_options["aup_enabled"]:
-        gateway_options["aupTimeoutInDays"] = (
-            input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
-        )
+        gateway_options["aupTimeoutInDays"] = input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
 
     if gateway_options["surrogate_ip"]:
         gateway_options["idleTimeInMinutes"] = int(
-            input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip()
-            or "30"
+            input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip() or "30"
         )
         gateway_options["displayTimeUnit"] = "MINUTE"
-        if prompt_yes_no(
-            "Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"
-        ):
+        if prompt_yes_no("Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"):
             gateway_options["surrogateIPEnforcedForKnownBrowsers"] = True
             while True:
-                refresh_time = int(
-                    input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip()
-                    or "480"
-                )
+                refresh_time = int(input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip() or "480")
                 if refresh_time > gateway_options["idleTimeInMinutes"]:
-                    print(
-                        "Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value."
-                    )
+                    print("Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value.")
                 else:
                     gateway_options["surrogateRefreshTimeInMinutes"] = refresh_time
                     break
@@ -121,9 +107,7 @@ def prompt_yes_no(question):
 def add_location_with_ip_tunnel(zia, name, ip_address, pre_shared_key, gateway_options):
     print("\nCreating Static IP...")
     static_ip_response = zia.traffic.add_static_ip(ip_address=ip_address)
-    print(
-        f"Static IP {ip_address} created successfully. Response: {json.dumps(static_ip_response, indent=4)}"
-    )
+    print(f"Static IP {ip_address} created successfully. Response: {json.dumps(static_ip_response, indent=4)}")
 
     # Now create VPN credential with Static IP
     print("\nCreating IPSec IP tunnel...")
@@ -169,16 +153,12 @@ def main():
         help="Add a new location with an IPSec IP tunnel.",
     )
     parser.add_argument("--name", required=True, help="Name of the location to add.")
-    parser.add_argument(
-        "--ip_address", required=True, help="The IP address for the IPSec tunnel."
-    )
+    parser.add_argument("--ip_address", required=True, help="The IP address for the IPSec tunnel.")
     parser.add_argument(
         "--pre_shared_key",
         help="Pre-shared key for the IPSec tunnel. If not provided, a random one will be generated.",
     )
-    parser.add_argument(
-        "--gateway_options", action="store_true", help="Prompt for gateway options."
-    )
+    parser.add_argument("--gateway_options", action="store_true", help="Prompt for gateway options.")
 
     args = parser.parse_args()
 
@@ -194,9 +174,7 @@ def main():
         else:
             gateway_options = {}
 
-        add_location_with_ip_tunnel(
-            zia, args.name, args.ip_address, args.pre_shared_key, gateway_options
-        )
+        add_location_with_ip_tunnel(zia, args.name, args.ip_address, args.pre_shared_key, gateway_options)
     else:
         print(
             "Missing required arguments: --name and --ip_address are required for adding a location with an IPSec IP tunnel."

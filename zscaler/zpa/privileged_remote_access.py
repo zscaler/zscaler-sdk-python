@@ -50,9 +50,7 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_portal)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/praPortal", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/praPortal", **kwargs, api_version="v1")
         return list
 
     def get_portal(self, portal_id: str) -> Box:
@@ -226,9 +224,7 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_console)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/praConsole", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/praConsole", **kwargs, api_version="v1")
         return list
 
     def get_console(self, console_id: str) -> Box:
@@ -313,9 +309,7 @@ class PrivilegedRemoteAccessAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_console(
@@ -436,9 +430,7 @@ class PrivilegedRemoteAccessAPI:
         if isinstance(response, Response):
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def list_credentials(self, **kwargs) -> BoxList:
@@ -463,9 +455,7 @@ class PrivilegedRemoteAccessAPI:
             ...    pprint(pra_credential)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/credential", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/credential", **kwargs, api_version="v1")
         return list
 
     def get_credential(self, credential_id: str) -> Box:
@@ -507,16 +497,12 @@ class PrivilegedRemoteAccessAPI:
 
         if credential_type == "USERNAME_PASSWORD":
             if not username or not password:
-                raise ValueError(
-                    "Username and password must be provided for USERNAME_PASSWORD type."
-                )
+                raise ValueError("Username and password must be provided for USERNAME_PASSWORD type.")
             payload.update({"userName": username, "password": password})
 
         elif credential_type == "SSH_KEY":
             if not username or not private_key:
-                raise ValueError(
-                    "Username and private_key must be provided for SSH_KEY type."
-                )
+                raise ValueError("Username and private_key must be provided for SSH_KEY type.")
             if not is_valid_ssh_key(private_key):
                 raise ValueError("Invalid SSH key format.")
             payload.update({"userName": username, "privateKey": private_key})
@@ -539,9 +525,7 @@ class PrivilegedRemoteAccessAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_credential(self, credential_id: str, **kwargs) -> Box:
@@ -584,16 +568,10 @@ class PrivilegedRemoteAccessAPI:
 
         # Validate and enforce required fields based on the credential type
         credential_type = existing_credential.credential_type
-        required_fields = (
-            ["username", "password"]
-            if credential_type in ["USERNAME_PASSWORD", "SSH_KEY"]
-            else ["password"]
-        )
+        required_fields = ["username", "password"] if credential_type in ["USERNAME_PASSWORD", "SSH_KEY"] else ["password"]
         missing_fields = [field for field in required_fields if field not in kwargs]
         if missing_fields:
-            raise ValueError(
-                f"Missing required fields for '{credential_type}': {', '.join(missing_fields)}"
-            )
+            raise ValueError(f"Missing required fields for '{credential_type}': {', '.join(missing_fields)}")
 
         # Prepare the payload with the existing details and updates from kwargs
         payload = {
@@ -604,9 +582,7 @@ class PrivilegedRemoteAccessAPI:
         # Execute the update operation
         response = self.rest.put(f"credential/{credential_id}", json=payload)
         if not response.ok:
-            raise Exception(
-                f"Failed to update credential {credential_id}: {response.text}"
-            )
+            raise Exception(f"Failed to update credential {credential_id}: {response.text}")
 
         # Fetch and return the updated credential details
         return self.get_credential(credential_id)
@@ -664,9 +640,7 @@ class PrivilegedRemoteAccessAPI:
             >>> for approval in approvals:
             ...     pprint(approval)
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/approval", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/approval", **kwargs, api_version="v1")
         return list
 
     def get_approval(self, approval_id: str) -> Box:
@@ -732,15 +706,11 @@ class PrivilegedRemoteAccessAPI:
             ...   }
             ... )
         """
-        start_epoch, end_epoch = validate_and_convert_times(
-            start_time, end_time, working_hours["time_zone"]
-        )
+        start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours["time_zone"])
 
         payload = {
             "emailIds": email_ids,
-            "applications": [
-                {"id": application_id} for application_id in application_ids
-            ],
+            "applications": [{"id": application_id} for application_id in application_ids],
             "startTime": start_epoch,
             "endTime": end_epoch,
             "status": status,
@@ -762,9 +732,7 @@ class PrivilegedRemoteAccessAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_approval(self, approval_id: str, **kwargs) -> Box:
@@ -782,12 +750,8 @@ class PrivilegedRemoteAccessAPI:
             start_time = kwargs["start_time"]
             end_time = kwargs["end_time"]
             # Assuming working_hours contains the time zone
-            time_zone = kwargs.get("working_hours", {}).get(
-                "time_zone", existing_approval.working_hours.time_zone
-            )
-            start_epoch, end_epoch = validate_and_convert_times(
-                start_time, end_time, time_zone
-            )
+            time_zone = kwargs.get("working_hours", {}).get("time_zone", existing_approval.working_hours.time_zone)
+            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
             kwargs["start_time"] = start_epoch
             kwargs["end_time"] = end_epoch
 
@@ -808,12 +772,8 @@ class PrivilegedRemoteAccessAPI:
         working_hours = kwargs.get("working_hours", {})
         existing_wh = existing_approval.working_hours
         payload["workingHours"] = {
-            "startTimeCron": working_hours.get(
-                "start_time_cron", existing_wh.start_time_cron
-            ),
-            "endTimeCron": working_hours.get(
-                "end_time_cron", existing_wh.end_time_cron
-            ),
+            "startTimeCron": working_hours.get("start_time_cron", existing_wh.start_time_cron),
+            "endTimeCron": working_hours.get("end_time_cron", existing_wh.end_time_cron),
             "startTime": working_hours.get("start_time", existing_wh.start_time),
             "endTime": working_hours.get("end_time", existing_wh.end_time),
             "days": working_hours.get("days", existing_wh.days),

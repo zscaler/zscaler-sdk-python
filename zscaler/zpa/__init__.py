@@ -117,9 +117,7 @@ class ZPAClientHelper(ZPAClient):
         self.cbi_url = f"{self.baseurl}/cbiconfig/cbi/api/customers/{customer_id}"
         self.fail_safe = fail_safe
         # Cache setup
-        cache_enabled = (
-            os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        )
+        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
         if cache is None:
             if cache_enabled:
                 ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
@@ -139,9 +137,7 @@ class ZPAClientHelper(ZPAClient):
         # login
         response = self.login()
         if response is None or response.status_code > 299 or not response.json():
-            logger.error(
-                "Failed to login using provided credentials, response: %s", response
-            )
+            logger.error("Failed to login using provided credentials, response: %s", response)
             raise Exception("Failed to login using provided credentials.")
         self.access_token = response.json().get("access_token")
         self.headers = {
@@ -154,9 +150,7 @@ class ZPAClientHelper(ZPAClient):
     @retry_with_backoff(retries=5)
     def login(self):
         """Log in to the ZPA API and set the access token for subsequent requests."""
-        data = urllib.parse.urlencode(
-            {"client_id": self.client_id, "client_secret": self.client_secret}
-        )
+        data = urllib.parse.urlencode({"client_id": self.client_id, "client_secret": self.client_secret})
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
@@ -198,9 +192,7 @@ class ZPAClientHelper(ZPAClient):
         headers_with_user_agent["User-Agent"] = self.user_agent
         # Generate a unique UUID for this request
         request_uuid = uuid.uuid4()
-        dump_request(
-            logger, url, method, json, params, headers_with_user_agent, request_uuid
-        )
+        dump_request(logger, url, method, json, params, headers_with_user_agent, request_uuid)
         # Check cache before sending request
         cache_key = self.cache.create_key(url, params)
         if method == "GET" and self.cache.contains(cache_key):
@@ -222,9 +214,7 @@ class ZPAClientHelper(ZPAClient):
             try:
                 # If the token is None or expired, fetch a new token
                 if is_token_expired(self.access_token):
-                    logger.warning(
-                        "The provided or fetched token was already expired. Refreshing..."
-                    )
+                    logger.warning("The provided or fetched token was already expired. Refreshing...")
                     self.refreshToken()
                 resp = requests.request(
                     method,
@@ -242,15 +232,11 @@ class ZPAClientHelper(ZPAClient):
                     request_uuid=request_uuid,
                     start_time=start_time,
                 )
-                if (
-                    resp.status_code == 429
-                ):  # HTTP Status code 429 indicates "Too Many Requests"
+                if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
                     sleep_time = int(
                         resp.headers.get("Retry-After", 2)
                     )  # Default to 60 seconds if 'Retry-After' header is missing
-                    logger.warning(
-                        f"Rate limit exceeded. Retrying in {sleep_time} seconds."
-                    )
+                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
                     sleep(sleep_time)
                     attempts += 1
                     continue
@@ -258,14 +244,10 @@ class ZPAClientHelper(ZPAClient):
                     break
             except requests.RequestException as e:
                 if attempts == 4:  # If it's the last attempt, raise the exception
-                    logger.error(
-                        f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}"
-                    )
+                    logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
                     raise e
                 else:
-                    logger.warning(
-                        f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}"
-                    )
+                    logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
                     attempts += 1
                     sleep(5)  # Sleep for 5 seconds before retrying
 
@@ -402,16 +384,12 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        if (page is not None or pagesize != 20) and (
-            max_pages is not None or max_items is not None
-        ):
+        if (page is not None or pagesize != 20) and (max_pages is not None or max_items is not None):
             raise ValueError(
                 "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
             )
 
-        params["pagesize"] = min(
-            pagesize, 500
-        )  # Apply maximum constraint and handle default
+        params["pagesize"] = min(pagesize, 500)  # Apply maximum constraint and handle default
 
         if page:
             params["page"] = page
@@ -449,9 +427,7 @@ class ZPAClientHelper(ZPAClient):
                 response = self.send("GET", url, api_version=api_version)
 
                 if response.status_code != expected_status_code:
-                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                        status_code=response.status_code, page=page
-                    )
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
                     logger.error(error_msg)
                     return BoxList([]), error_msg
 
@@ -463,11 +439,7 @@ class ZPAClientHelper(ZPAClient):
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(data)
-                ret_data.extend(
-                    data[: max_items - total_collected]
-                    if max_items is not None
-                    else data
-                )
+                ret_data.extend(data[: max_items - total_collected] if max_items is not None else data)
                 total_collected += len(data)
 
                 if max_items is not None and total_collected >= max_items:

@@ -67,9 +67,7 @@ def prompt_for_gateway_options():
     gateway_options = {
         "auth_required": prompt_yes_no("Enable Authentication (auth_required)?"),
         "ssl_scan_enabled": prompt_yes_no("Enable SSL Inspection (ssl_scan_enabled)?"),
-        "zapp_ssl_scan_enabled": prompt_yes_no(
-            "Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"
-        ),
+        "zapp_ssl_scan_enabled": prompt_yes_no("Enable Zscaler App SSL Setting (zapp_ssl_scan_enabled)?"),
         "ofw_enabled": prompt_yes_no("Enable Firewall (ofw_enabled)?"),
         "ips_control": prompt_yes_no("Enable IPS Control (ips_control)?"),
         "aup_enabled": prompt_yes_no("Enable AUP (aup_enabled)?"),
@@ -77,29 +75,19 @@ def prompt_for_gateway_options():
     }
 
     if gateway_options["aup_enabled"]:
-        gateway_options["aupTimeoutInDays"] = (
-            input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
-        )
+        gateway_options["aupTimeoutInDays"] = input("Set AUP Timeout in Days (at least 1): ").strip() or "1"
 
     if gateway_options["surrogate_ip"]:
         gateway_options["idleTimeInMinutes"] = int(
-            input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip()
-            or "30"
+            input("Set Idle Time in Minutes for Surrogate IP (e.g., 30): ").strip() or "30"
         )
         gateway_options["displayTimeUnit"] = "MINUTE"
-        if prompt_yes_no(
-            "Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"
-        ):
+        if prompt_yes_no("Enforce Surrogate IP for Known Browsers (surrogateIPEnforcedForKnownBrowsers)?"):
             gateway_options["surrogateIPEnforcedForKnownBrowsers"] = True
             while True:
-                refresh_time = int(
-                    input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip()
-                    or "480"
-                )
+                refresh_time = int(input("Set Surrogate Refresh Time in Minutes (e.g., 480): ").strip() or "480")
                 if refresh_time > gateway_options["idleTimeInMinutes"]:
-                    print(
-                        "Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value."
-                    )
+                    print("Surrogate Refresh Time cannot be greater than Idle Time. Please enter a valid value.")
                 else:
                     gateway_options["surrogateRefreshTimeInMinutes"] = refresh_time
                     break
@@ -138,20 +126,12 @@ def add_sublocation(zia, name, parent_id_or_name, ip_range, gateway_options):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Add a sublocation to Zscaler Internet Access."
-    )
-    parser.add_argument(
-        "--add_sublocation", action="store_true", help="Add a new sublocation."
-    )
+    parser = argparse.ArgumentParser(description="Add a sublocation to Zscaler Internet Access.")
+    parser.add_argument("--add_sublocation", action="store_true", help="Add a new sublocation.")
     parser.add_argument("--name", required=True, help="Name of the sublocation to add.")
     parser.add_argument("--parent", required=True, help="Parent location name or ID.")
-    parser.add_argument(
-        "--ip_range", required=True, help="IP address range for the sublocation."
-    )
-    parser.add_argument(
-        "--gateway_options", action="store_true", help="Prompt for gateway options."
-    )
+    parser.add_argument("--ip_range", required=True, help="IP address range for the sublocation.")
+    parser.add_argument("--gateway_options", action="store_true", help="Prompt for gateway options.")
 
     args = parser.parse_args()
 

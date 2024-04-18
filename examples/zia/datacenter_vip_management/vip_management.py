@@ -52,12 +52,8 @@ def main():
         action="store_true",
         help="List all VIPs including public and private.",
     )
-    parser.add_argument(
-        "--get_all_public_vips", action="store_true", help="List all public VIPs."
-    )
-    parser.add_argument(
-        "--get_all_private_vips", action="store_true", help="List all private VIPs."
-    )
+    parser.add_argument("--get_all_public_vips", action="store_true", help="List all public VIPs.")
+    parser.add_argument("--get_all_private_vips", action="store_true", help="List all private VIPs.")
     args = parser.parse_args()
 
     # Initialize ZIAClientHelper
@@ -85,11 +81,7 @@ def main():
 def list_vips(client, include):
     params = {"include": include}  # Define params as a dict
     vips = client.traffic.list_vips(params=params)  # Pass params dict directly
-    print(
-        json.dumps(vips, indent=4)
-        if vips
-        else f"No VIPs found for the specified type: {include}."
-    )
+    print(json.dumps(vips, indent=4) if vips else f"No VIPs found for the specified type: {include}.")
 
 
 if __name__ == "__main__":

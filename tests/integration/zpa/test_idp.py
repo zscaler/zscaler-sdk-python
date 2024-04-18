@@ -39,9 +39,7 @@ class TestIdP:
         try:
             idps = client.idp.list_idps()
             assert isinstance(idps, list), "Expected a list of identity providers"
-            if (
-                idps
-            ):  # If there are any identity providers, proceed with further operations
+            if idps:  # If there are any identity providers, proceed with further operations
                 first_idp = idps[0]
                 idp_id = first_idp.get("id")
         except Exception as exc:
@@ -51,12 +49,8 @@ class TestIdP:
             # Fetch the selected identity provider by its ID
             try:
                 fetched_idp = client.idp.get_idp(idp_id)
-                assert (
-                    fetched_idp is not None
-                ), "Expected a valid identity provider object"
-                assert (
-                    fetched_idp.get("id") == idp_id
-                ), "Mismatch in identity provider ID"
+                assert fetched_idp is not None, "Expected a valid identity provider object"
+                assert fetched_idp.get("id") == idp_id, "Mismatch in identity provider ID"
             except Exception as exc:
                 errors.append(f"Fetching identity provider by ID failed: {str(exc)}")
 
@@ -64,16 +58,10 @@ class TestIdP:
             try:
                 idp_name = first_idp.get("name")
                 idp_by_name = client.idp.get_idp_by_name(idp_name)
-                assert (
-                    idp_by_name is not None
-                ), "Expected a valid identity provider object when searching by name"
-                assert (
-                    idp_by_name.get("id") == idp_id
-                ), "Mismatch in identity provider ID when searching by name"
+                assert idp_by_name is not None, "Expected a valid identity provider object when searching by name"
+                assert idp_by_name.get("id") == idp_id, "Mismatch in identity provider ID when searching by name"
             except Exception as exc:
                 errors.append(f"Fetching identity provider by name failed: {str(exc)}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during identity provider operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during identity provider operations test: {errors}"
