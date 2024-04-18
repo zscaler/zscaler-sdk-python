@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ "3.8", "3.9", "3.10", "3.11" ]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - uses: actions/checkout@v2
 
@@ -43,7 +43,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          draft: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' ? 'false' : 'true' }}
+          draft: false  # Automatically publish the release
           files: |
             dist/**/zscaler-sdk-python-*.whl
             dist/**/zscaler-sdk-python-*.tar.gz
