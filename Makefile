@@ -113,7 +113,7 @@ docs: clean-docs
 	
 build\:dist:
 	python setup.py sdist bdist_wheel
-	pip install dist/zscaler-1.0.0.tar.gz
+	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
 	ls -l dist
 
 publish\:test:
