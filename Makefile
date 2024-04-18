@@ -46,7 +46,7 @@ help:
 	@echo "$(COLOR_OK)  publish:test                  Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  publish:prod                  Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
 
-clean: clean-build clean-pyc clean-test clean-docs
+clean: clean-build clean-pyc clean-test clean-docsrc
 
 clean-build:
 	rm -fr build/

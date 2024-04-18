@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "1.0.0"
+version = "1.0.1"
 description = "Official Python SDK for the Zscaler Products"
 authors = ["Zscaler Technology Alliances <devrel@zscaler.com>"]
 license = "MIT"
@@ -28,9 +28,12 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
+arrow = "*"
 requests = "*"
-urllib3 = "^2.0"
+responses = "*"
+urllib3 = ">=1.25.4,<1.27"
 python-box = "^7.0"
+restfly = "1.4.7"
 pyyaml = "*"
 certifi = "*"
 charset-normalizer = "*"
@@ -46,7 +49,7 @@ pydash = "*"
 pytz = "*"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.3"
+pytest = "*"
 pytest-asyncio = "*"
 pytest-mock = "*"
 pytest-recording = "*"
