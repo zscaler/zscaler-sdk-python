@@ -46,20 +46,17 @@ help:
 	@echo "$(COLOR_OK)  publish:test                  Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  publish:prod                  Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
 
-clean: clean-build clean-pyc clean-test clean-docsrc
+clean: clean-build clean-pyc clean-test clean-docs
 
 clean-build:
 	rm -fr build/
 	rm -fr dist/
 	rm -fr *.egg-info
 
-clean-docsrc:
-	rm -fr docsrc/_build/
+clean-docs:
+	rm -fr docs/_build/
+	rm -fr docs/_diagrams/
 
-docs: clean-docsrc
-	$(MAKE) -C docsrc html
-	open docsrc/_build/html/index.html
-	
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
@@ -105,14 +102,18 @@ coverage:
 	pytest --cov=zscaler --cov-report term
 
 coverage\:zia:
-	pytest tests/integration/zia --cov=zscaler/zia --cov-report term --disable-warnings
+	pytest tests/integration/zia --cov=zscaler/zia --cov-report term
 
 coverage\:zpa:
-	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term --disable-warnings
+	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
+
+docs: clean-docs
+	$(MAKE) -C docs html
+	open docs/_build/html/index.html
 	
 build\:dist:
 	python setup.py sdist bdist_wheel
-	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
+	pip install dist/zscaler-1.0.0.tar.gz
 	ls -l dist
 
 publish\:test:
@@ -121,18 +122,6 @@ publish\:test:
 publish\:prod:
 	python3 -m twine upload dist/*
 
-sync-deps:
-	poetry export -f requirements.txt > requirements.txt
-	poetry2setup > setup.py
-	black setup.py
 
-local-setup:
-ifeq ($(wildcard ~/.local/bin/poetry),)
-	@echo "installing poetry"
-	curl -sSL https://install.python-poetry.org | python3 -
-else
-	@echo "poetry installation found"
-endif
-	~/.local/bin/poetry install
 
 .PHONY: clean-pyc clean-build docs clean local-setup
