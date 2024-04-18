@@ -640,9 +640,10 @@ can also be included.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of items to request before stopping iteration.</p></li>
 <li><p><strong>max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of pages to request before stopping iteration.</p></li>
-<li><p><strong>pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specifies the page size. The default size is 20, but the maximum size is 500.</p></li>
+<li><p><strong>pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specifies the page size. Default is 20, maximum is 500.</p></li>
 <li><p><strong>search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to match against features and fields.</p></li>
-<li><p><strong>search_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The field to search against. Defaults to ‘name’. Commonly used fields include ‘name’ and ‘email_ids’.</p></li>
+<li><p><strong>search_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The field to search against. Defaults to ‘name’. Commonly used fields
+include ‘name’ and ‘email_ids’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -654,17 +655,20 @@ can also be included.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Search by default field ‘name’:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">pra_approval</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Search by ‘email_ids’:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="s1">&#39;jdoe@example.com&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;email_ids&#39;</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">pra_approval</span><span class="p">)</span>
-<span class="go">Specify maximum items and use an explicit search field:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;jdoe@example.com&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;email_ids&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">approval</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">approvals</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<p>Specify maximum items and use an explicit search field:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">approvals</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">for</span> <span class="n">approval</span> <span class="ow">in</span> <span class="n">approvals</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">approval</span><span class="p">)</span>
 </pre></div>
