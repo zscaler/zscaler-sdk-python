@@ -38,8 +38,7 @@ class TestExemptedUrls:
     Integration Tests for Authentication Settings Exempted URLs.
     """
 
-    @pytest.mark.asyncio
-    async def test_add_urls_to_exempt_list(self, fs):
+    def test_add_urls_to_exempt_list(self, fs):
         client = MockZIAClient(fs)
         urls_to_add = ["example.com", "testsite.com"]
         try:
@@ -52,8 +51,7 @@ class TestExemptedUrls:
         except Exception as exc:
             pytest.fail(f"Failed to add URLs to exempt list: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_get_exempted_urls(self, fs):
+    def test_get_exempted_urls(self, fs):
         client = MockZIAClient(fs)
         try:
             exempt_list = client.authentication_settings.get_exempted_urls()
@@ -61,8 +59,7 @@ class TestExemptedUrls:
         except Exception as exc:
             pytest.fail(f"Exempt list retrieval failed: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_delete_urls_from_exempt_list(self, fs):
+    def test_delete_urls_from_exempt_list(self, fs):
         client = MockZIAClient(fs)
         try:
             urls_to_clean = ["example.com", "testsite.com"]

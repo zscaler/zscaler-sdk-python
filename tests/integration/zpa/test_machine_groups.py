@@ -30,8 +30,7 @@ class TestMachineGroups:
     Integration Tests for the Machine Groups.
     """
 
-    @pytest.mark.asyncio
-    async def test_machine_groups(self, fs):
+    def test_machine_groups(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

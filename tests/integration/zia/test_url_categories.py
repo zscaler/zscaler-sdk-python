@@ -32,8 +32,7 @@ class TestURLCategories:
     Integration Tests for the URL Categories
     """
 
-    @pytest.mark.asyncio
-    async def test_url_categories(self, fs):
+    def test_url_categories(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -126,8 +125,7 @@ class TestURLCategories:
             len(errors) == 0
         ), f"Errors occurred during the URL category lifecycle test: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_lookup(self, fs):
+    def test_lookup(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -248,8 +246,7 @@ class TestURLCategories:
             len(errors) == 0
         ), f"Errors occurred during URL lookup test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_get_quota(self, fs):
+    def test_get_quota(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

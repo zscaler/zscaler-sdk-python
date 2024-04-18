@@ -30,8 +30,7 @@ class TestSegmentGroup:
     Integration Tests for the Segment Group
     """
 
-    @pytest.mark.asyncio
-    async def test_segment_group(self, fs):
+    def test_segment_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

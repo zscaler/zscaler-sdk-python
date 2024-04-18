@@ -30,8 +30,7 @@ class TestPRAPortal:
     Integration Tests for the PRA Portal.
     """
 
-    @pytest.mark.asyncio
-    async def test_pra_portal(self, fs):
+    def test_pra_portal(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         portal_id = None

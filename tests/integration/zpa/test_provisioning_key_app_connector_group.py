@@ -14,8 +14,7 @@ class TestAppConnectorGroupProvisioningKey:
     Integration Tests for the Provisioning Key API.
     """
 
-    @pytest.mark.asyncio
-    async def test_provisioning_key_operations(self, fs):
+    def test_provisioning_key_operations(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

@@ -30,8 +30,7 @@ class TestAdminRole:
     Integration Tests for the admin roles
     """
 
-    @pytest.mark.asyncio
-    async def test_admin_role_management(self, fs):
+    def test_admin_role_management(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
