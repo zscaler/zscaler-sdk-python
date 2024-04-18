@@ -357,7 +357,7 @@ class ZPAClientHelper(ZPAClient):
             max_items (int): The maximum number of items to fetch across all pages. Stops fetching once reached.
             sort_order (str): Specifies the order of sorting (e.g., 'ASC' or 'DSC').
             sort_by (str): Specifies the field name by which the results should be sorted.
-            sort_dir (str): Specifies the direction of sorting. This is similar to `sort_order` and can be used interchangeably.
+            sort_dir (str): Specifies the direction of sorting. Supported values: ASC, DESC.
             start_time (str): The start of a time range for filtering data based on modification time.
             end_time (str): The end of a time range for filtering data based on modification time.
             idp_group_id (str): Identifier for a specific IDP group, used for fetching data related to that group.

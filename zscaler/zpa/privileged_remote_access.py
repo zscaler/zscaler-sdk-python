@@ -330,7 +330,7 @@ class PrivilegedRemoteAccessAPI:
             description (str): The new description of the PRA console.
             enabled (bool): Indicates whether the console should be enabled.
             pra_application_id (str): The unique identifier of the associated PRA application to be linked with the console.
-            pra_portal_ids (list of str): A list of unique identifiers for the associated PRA portals to be linked with the console.
+            pra_portal_ids (list of str): List of unique IDs for the associated PRA portals to be linked with the console.
 
         Returns:
             Box: A Box object containing the details of the updated console.
@@ -632,7 +632,8 @@ class PrivilegedRemoteAccessAPI:
             ...     pprint(pra_approval)
 
             Search by 'email_ids':
-            >>> for pra_approval in zpa.privilegedremoteaccess.list_approval(search='jdoe@example.com', search_field='email_ids'):
+            >>> for pra_approval in zpa.privilegedremoteaccess.list_approval(
+                    search='jdoe@example.com', search_field='email_ids'):
             ...     pprint(pra_approval)
 
             Specify maximum items and use an explicit search field:
@@ -679,7 +680,7 @@ class PrivilegedRemoteAccessAPI:
             start_time (str): The start timestamp in UNIX format for when the approval begins.
             end_time (str): The end timestamp in UNIX format for when the approval ends.
             status (str): The status of the privileged approval. Supported values are: INVALID, ACTIVE, FUTURE, EXPIRED.
-            working_hours (dict): A dictionary containing the details of working hours including cron expressions for start and end times, actual start and end times, days of the week, and time zone.
+            working_hours (dict): Dictionary containing details of working hours.
 
         Keyword Args:
             Any additional optional parameters that can be included in the payload.

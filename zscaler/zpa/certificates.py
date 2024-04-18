@@ -99,7 +99,7 @@ class CertificatesAPI:
 
         Args:
             name (str): The name of the certificate.
-            cert_blob (str): The content of the certificate. Must include the certificate and private key (in PEM format) in the JSON payload.
+            cert_blob (str): The content of the certificate. Must include the certificate and private key (in PEM format).
             **kwargs: Optional keyword args.
 
         Keyword Args:
