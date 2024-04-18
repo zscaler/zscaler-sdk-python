@@ -45,8 +45,12 @@ from zscaler import ZPAClientHelper
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Machine Group for ZPA.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all machine groups.")
-    parser.add_argument("-g", "--get", metavar="GROUP_ID", help="Get details of an machine group by ID.")
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all machine groups."
+    )
+    parser.add_argument(
+        "-g", "--get", metavar="GROUP_ID", help="Get details of an machine group by ID."
+    )
     parser.add_argument(
         "-n",
         "--get_by_name",

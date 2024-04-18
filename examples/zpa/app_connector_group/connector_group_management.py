@@ -57,27 +57,51 @@ from zscaler.utils import str2bool
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage App Connector Groups for Zscaler Private Access (ZPA)")
-    parser.add_argument("-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)")
-    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress all output")
-    parser.add_argument("-l", "--list", action="store_true", help="List all connector groups")
-    parser.add_argument("-g", "--get", metavar="GROUP_ID", help="Get details of a connector group by ID")
+    parser = argparse.ArgumentParser(
+        description="Manage App Connector Groups for Zscaler Private Access (ZPA)"
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)"
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Suppress all output"
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all connector groups"
+    )
+    parser.add_argument(
+        "-g", "--get", metavar="GROUP_ID", help="Get details of a connector group by ID"
+    )
     parser.add_argument(
         "-n",
         "--get_by_name",
         metavar="GROUP_NAME",
         help="Get details of a connector group by name",
     )
-    parser.add_argument("-d", "--delete", metavar="GROUP_ID", help="Delete a connector group by ID")
+    parser.add_argument(
+        "-d", "--delete", metavar="GROUP_ID", help="Delete a connector group by ID"
+    )
     parser.add_argument("--add", action="store_true", help="Add a new connector group")
-    parser.add_argument("--update", metavar="GROUP_ID", help="Update an existing connector group")
+    parser.add_argument(
+        "--update", metavar="GROUP_ID", help="Update an existing connector group"
+    )
     parser.add_argument("--name", help="Name of the connector group")
-    parser.add_argument("--description", help="The description of the App Connector Group.")
-    parser.add_argument("--enabled", type=str2bool, help="Whether the App Connector Group is enabled")
-    parser.add_argument("--city_country", help="The city and country of the App Connector.")
+    parser.add_argument(
+        "--description", help="The description of the App Connector Group."
+    )
+    parser.add_argument(
+        "--enabled", type=str2bool, help="Whether the App Connector Group is enabled"
+    )
+    parser.add_argument(
+        "--city_country", help="The city and country of the App Connector."
+    )
     parser.add_argument("--country_code", help="The country code of the App Connector.")
-    parser.add_argument("--latitude", type=float, help="Latitude of the connector group's location")
-    parser.add_argument("--longitude", type=float, help="Longitude of the connector group's location")
+    parser.add_argument(
+        "--latitude", type=float, help="Latitude of the connector group's location"
+    )
+    parser.add_argument(
+        "--longitude", type=float, help="Longitude of the connector group's location"
+    )
     parser.add_argument("--location", help="Location name of the connector group")
     # Define other arguments for adding/updating connector groups as needed
 
@@ -109,10 +133,16 @@ def main():
 
     elif args.get:
         connector_group = client.connectors.get_connector_group(args.get)
-        print(json.dumps(connector_group, indent=4) if connector_group else f"No connector group found with ID {args.get}")
+        print(
+            json.dumps(connector_group, indent=4)
+            if connector_group
+            else f"No connector group found with ID {args.get}"
+        )
 
     elif args.get_by_name:
-        connector_group = client.connectors.get_connector_group_by_name(args.get_by_name)
+        connector_group = client.connectors.get_connector_group_by_name(
+            args.get_by_name
+        )
         print(
             json.dumps(connector_group, indent=4)
             if connector_group
@@ -144,7 +174,9 @@ def main():
             longitude=args.longitude,
             location=args.location,
         )
-        print(f"Connector Group {args.update} updated successfully: {json.dumps(updated_group, indent=4)}")
+        print(
+            f"Connector Group {args.update} updated successfully: {json.dumps(updated_group, indent=4)}"
+        )
 
 
 if __name__ == "__main__":

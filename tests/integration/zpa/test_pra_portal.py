@@ -103,7 +103,9 @@ class TestPRAPortal:
             try:
                 # Attempt to delete resources created during the test
                 if portal_id:
-                    delete_status = client.privileged_remote_access.delete_portal(portal_id)
+                    delete_status = client.privileged_remote_access.delete_portal(
+                        portal_id
+                    )
                     assert delete_status == 204, "Portal deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Portal failed: {exc}")
@@ -111,4 +113,6 @@ class TestPRAPortal:
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the portal lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the portal lifecycle test: {errors}"

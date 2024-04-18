@@ -40,7 +40,9 @@ class TestTrafficVPNCredential:
 
         # Create Static IP for VPN Credential of type IP
         try:
-            created_static_ip = client.traffic.add_static_ip(ip_address=randomIP, comment="tests-" + generate_random_string())
+            created_static_ip = client.traffic.add_static_ip(
+                ip_address=randomIP, comment="tests-" + generate_random_string()
+            )
             assert created_static_ip is not None, "Static IP creation returned None"
             static_ip_id = created_static_ip["id"]
         except Exception as exc:
@@ -75,8 +77,12 @@ class TestTrafficVPNCredential:
         if created_vpn_ids:
             try:
                 updated_comment = "Updated IP VPN Credential"
-                updated_vpn_ip = client.traffic.update_vpn_credential(created_vpn_ids[0], comments=updated_comment)
-                assert updated_vpn_ip.comments == updated_comment, "Failed to update IP VPN Credential"
+                updated_vpn_ip = client.traffic.update_vpn_credential(
+                    created_vpn_ids[0], comments=updated_comment
+                )
+                assert (
+                    updated_vpn_ip.comments == updated_comment
+                ), "Failed to update IP VPN Credential"
             except Exception as exc:
                 errors.append(f"Update IP VPN Credential failed: {exc}")
 
@@ -84,8 +90,12 @@ class TestTrafficVPNCredential:
         if len(created_vpn_ids) > 1:
             try:
                 updated_comment = "Updated UFQDN VPN Credential"
-                updated_vpn_ufqdn = client.traffic.update_vpn_credential(created_vpn_ids[1], comments=updated_comment)
-                assert updated_vpn_ufqdn.comments == updated_comment, "Failed to update UFQDN VPN Credential"
+                updated_vpn_ufqdn = client.traffic.update_vpn_credential(
+                    created_vpn_ids[1], comments=updated_comment
+                )
+                assert (
+                    updated_vpn_ufqdn.comments == updated_comment
+                ), "Failed to update UFQDN VPN Credential"
             except Exception as exc:
                 errors.append(f"Update UFQDN VPN Credential failed: {exc}")
 
@@ -95,14 +105,20 @@ class TestTrafficVPNCredential:
                     try:
                         client.traffic.delete_vpn_credential(vpn_id)
                     except Exception as cleanup_exc:
-                        errors.append(f"Cleanup failed for VPN Credential ID {vpn_id}: {cleanup_exc}")
+                        errors.append(
+                            f"Cleanup failed for VPN Credential ID {vpn_id}: {cleanup_exc}"
+                        )
 
                 # Cleanup: Delete the static IP
                 if static_ip_id:
                     try:
                         client.traffic.delete_static_ip(static_ip_id)
                     except Exception as cleanup_exc:
-                        errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
+                        errors.append(
+                            f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
+                        )
 
             # Assert no errors occurred during the test
-            assert len(errors) == 0, f"Errors occurred during VPN credential operations test: {errors}"
+            assert (
+                len(errors) == 0
+            ), f"Errors occurred during VPN credential operations test: {errors}"

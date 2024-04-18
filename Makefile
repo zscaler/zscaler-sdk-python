@@ -46,7 +46,7 @@ help:
 	@echo "$(COLOR_OK)  publish:test                  Publish distribution to testpypi (Will ask for credentials)$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  publish:prod                  Publish distribution to pypi (Will ask for credentials)$(COLOR_NONE)"
 
-clean: clean-build clean-pyc clean-test clean-docs
+clean: clean-build clean-pyc clean-test clean-docsrc
 
 clean-build:
 	rm -fr build/
@@ -68,6 +68,13 @@ clean-test:
 	rm -f .coverage
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
+
+clean-docsrc:
+	rm -fr docsrc/_build/
+
+docs: clean-docsrc
+	$(MAKE) -C docsrc html
+	open docsrc/_build/html/index.html
 
 lint:
 	flake8 zscaler --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
@@ -106,10 +113,6 @@ coverage\:zia:
 
 coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
-
-docs: clean-docs
-	$(MAKE) -C docs html
-	open docs/_build/html/index.html
 	
 build\:dist:
 	python setup.py sdist bdist_wheel

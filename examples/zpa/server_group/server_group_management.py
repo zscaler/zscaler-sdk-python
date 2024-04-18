@@ -49,17 +49,27 @@ ZPA_CLOUD = os.getenv("ZPA_CLOUD")
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Server Groups for ZPA.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all server groups.")
-    parser.add_argument("-g", "--get", metavar="GROUP_ID", help="Get details of a server group by ID.")
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all server groups."
+    )
+    parser.add_argument(
+        "-g", "--get", metavar="GROUP_ID", help="Get details of a server group by ID."
+    )
     parser.add_argument(
         "-n",
         "--get_by_name",
         metavar="NAME",
         help="Get details of a server group by name.",
     )
-    parser.add_argument("-a", "--add", action="store_true", help="Add a new server group.")
-    parser.add_argument("-u", "--update", metavar="GROUP_ID", help="Update an existing server group.")
-    parser.add_argument("-d", "--delete", metavar="GROUP_ID", help="Delete a server group by its ID.")
+    parser.add_argument(
+        "-a", "--add", action="store_true", help="Add a new server group."
+    )
+    parser.add_argument(
+        "-u", "--update", metavar="GROUP_ID", help="Update an existing server group."
+    )
+    parser.add_argument(
+        "-d", "--delete", metavar="GROUP_ID", help="Delete a server group by its ID."
+    )
     parser.add_argument("--name", help="Name of the server group")
     parser.add_argument("--description", help="Description of the server group")
     parser.add_argument(
@@ -67,8 +77,12 @@ def main():
         type=str2bool,
         help="Whether dynamic discovery is enabled",
     )
-    parser.add_argument("--enabled", type=str2bool, help="Whether the server group is enabled")
-    parser.add_argument("--app_connector_group_ids", help="App Connector Group IDs (comma-separated)")
+    parser.add_argument(
+        "--enabled", type=str2bool, help="Whether the server group is enabled"
+    )
+    parser.add_argument(
+        "--app_connector_group_ids", help="App Connector Group IDs (comma-separated)"
+    )
     parser.add_argument(
         "--server_ids",
         help="Server IDs (comma-separated, required if dynamic discovery is false)",
@@ -115,14 +129,20 @@ def get_server_group_by_name(client, name):
 
 def add_server_group(client, args):
     name = args.name if args.name else input("Enter the name of the server group: ")
-    description = args.description if args.description else input("Enter the description of the server group: ")
+    description = (
+        args.description
+        if args.description
+        else input("Enter the description of the server group: ")
+    )
     if args.dynamic_discovery is not None:
         dynamic_discovery = str2bool(args.dynamic_discovery)
     else:
         dynamic_discovery_input = input("Is dynamic discovery enabled? (True/False): ")
         dynamic_discovery = str2bool(dynamic_discovery_input)
     enabled = (
-        args.enabled if args.enabled is not None else input("Is the server group enabled? (True/False): ").lower() == "true"
+        args.enabled
+        if args.enabled is not None
+        else input("Is the server group enabled? (True/False): ").lower() == "true"
     )
     app_connector_group_ids = (
         args.app_connector_group_ids.split(",")
@@ -135,7 +155,9 @@ def add_server_group(client, args):
         else (
             None
             if dynamic_discovery
-            else input("Enter Server IDs (comma-separated, required if dynamic discovery is false): ").split(",")
+            else input(
+                "Enter Server IDs (comma-separated, required if dynamic discovery is false): "
+            ).split(",")
         )
     )
 
