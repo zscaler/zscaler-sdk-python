@@ -4,6 +4,6 @@
 
 ### Notes
 
-- Python Versions: **v3.9, v3.10, v3.11, v3,12**
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
 🎉 **Initial Release** 🎉
