@@ -30,8 +30,7 @@ class TestPostureProfile:
     Integration Tests for the Posture Profile.
     """
 
-    @pytest.mark.asyncio
-    async def test_posture_profile(self, fs):
+    def test_posture_profile(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

@@ -31,8 +31,7 @@ class TestCloudFirewallIPDestinationGroup:
     Integration Tests for the Cloud Firewall IP Destination Group.
     """
 
-    @pytest.mark.asyncio
-    async def test_cloud_firewall_ip_destination_group(self, fs):
+    def test_cloud_firewall_ip_destination_group(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

@@ -31,8 +31,7 @@ class TestDLPEngines:
     Integration Tests for the DLP Engines
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_engines(self, fs):
+    def test_dlp_engines(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

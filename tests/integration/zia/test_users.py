@@ -30,8 +30,7 @@ class TestUsers:
     Integration Tests for the User Management
     """
 
-    # @pytest.mark.asyncio
-    # async def test_users(self, fs):
+    #def test_users(self, fs):
     #     client = MockZIAClient(fs)
     #     errors = []  # Initialize an empty list to collect errors
     #     user_id = None
@@ -141,8 +140,7 @@ class TestUsers:
     #         if errors:
     #             raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
 
-    @pytest.mark.asyncio
-    async def test_user_departments(self, fs):
+    def test_user_departments(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
@@ -181,8 +179,7 @@ class TestUsers:
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during departments test: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_user_groups(self, fs):
+    def test_user_groups(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

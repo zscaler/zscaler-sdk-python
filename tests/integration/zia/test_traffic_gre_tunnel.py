@@ -30,8 +30,7 @@ class TestTrafficGRETunnel:
     Integration Tests for the ZIA Traffic GRE Tunnel.
     """
 
-    @pytest.mark.asyncio
-    async def test_traffic_gre_tunnel(self, fs):
+    def test_traffic_gre_tunnel(self, fs):
         client = MockZIAClient(fs)
         errors = []
         gre_tunnel_ids = []
@@ -128,8 +127,7 @@ class TestTrafficGRETunnel:
             len(errors) == 0
         ), f"Errors occurred during GRE Tunnel operations test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_traffic_list_gre_ranges(self, fs):
+    def test_traffic_list_gre_ranges(self, fs):
         client = MockZIAClient(fs)
         errors = []
         randomIP = generate_random_ip("104.239.237.0/24")
@@ -190,8 +188,7 @@ class TestTrafficGRETunnel:
             len(errors) == 0
         ), f"Errors occurred during listing GRE ranges test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_traffic_list_vips_recommended(self, fs):
+    def test_traffic_list_vips_recommended(self, fs):
         client = MockZIAClient(fs)
         errors = []
         randomIP = generate_random_ip("104.239.237.0/24")
@@ -240,8 +237,7 @@ class TestTrafficGRETunnel:
             len(errors) == 0
         ), f"Errors occurred during listing recommended VIPs test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_traffic_list_vip_group_by_dc(self, fs):
+    def test_traffic_list_vip_group_by_dc(self, fs):
         client = MockZIAClient(fs)
         errors = []
         randomIP = generate_random_ip("104.239.237.0/24")
@@ -288,8 +284,7 @@ class TestTrafficGRETunnel:
             len(errors) == 0
         ), f"Errors occurred during listing VIP group by DC test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_traffic_get_closest_diverse_vip_ids(self, fs):
+    def test_traffic_get_closest_diverse_vip_ids(self, fs):
         client = MockZIAClient(fs)
         errors = []
         randomIP = generate_random_ip("104.239.237.0/24")
@@ -338,8 +333,7 @@ class TestTrafficGRETunnel:
             len(errors) == 0
         ), f"Errors occurred during getting closest diverse VIP IDs test: {'; '.join(errors)}"
 
-    @pytest.mark.asyncio
-    async def test_traffic_list_vips(self, fs):
+    def test_traffic_list_vips(self, fs):
         client = MockZIAClient(fs)
         errors = []
 

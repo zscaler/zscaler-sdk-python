@@ -30,8 +30,7 @@ class TestAccessPolicyTimeoutRule:
     Integration Tests for the Access Policy Timeout Rules
     """
 
-    @pytest.mark.asyncio
-    async def test_access_policy_timeout_policy_rules(self, fs):
+    def test_access_policy_timeout_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

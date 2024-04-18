@@ -31,8 +31,7 @@ class TestRuleLabels:
     Integration Tests for the Rule Label
     """
 
-    @pytest.mark.asyncio
-    async def test_rule_labels(self, fs):
+    def test_rule_labels(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

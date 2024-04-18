@@ -29,8 +29,7 @@ class TestIdP:
     Integration Tests for the identity provider.
     """
 
-    @pytest.mark.asyncio
-    async def test_idp(self, fs):
+    def test_idp(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         idp_id = None

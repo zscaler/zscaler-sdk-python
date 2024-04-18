@@ -31,8 +31,7 @@ class TestTrafficStaticIP:
     Integration Tests for the traffic static ip
     """
 
-    @pytest.mark.asyncio
-    async def test_traffic_static_ip(self, fs):
+    def test_traffic_static_ip(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

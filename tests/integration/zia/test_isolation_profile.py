@@ -29,8 +29,7 @@ class TestIsolationProfile:
     Integration Tests for the Isolation Profile
     """
 
-    @pytest.mark.asyncio
-    async def test_isolation_profile(self, fs):
+    def test_isolation_profile(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

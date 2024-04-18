@@ -29,8 +29,7 @@ class TestDLPIDMProfile:
     Integration Tests for the DLP IDM Profile
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_idm_profile(self, fs):
+    def test_dlp_idm_profile(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

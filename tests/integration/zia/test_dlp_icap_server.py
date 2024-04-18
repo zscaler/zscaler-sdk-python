@@ -29,8 +29,7 @@ class TestDLPIcapServer:
     Integration Tests for the DLP Icap Server
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_icap_server(self, fs):
+    def test_dlp_icap_server(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
