@@ -43,7 +43,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          draft: true
+          draft: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' ? 'false' : 'true' }}
           files: |
             dist/**/zscaler-sdk-python-*.whl
             dist/**/zscaler-sdk-python-*.tar.gz
