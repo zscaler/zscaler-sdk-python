@@ -16,50 +16,50 @@ on:
   
 
 jobs:
-    # zpa-qa1-tenants:
-    #     runs-on: ubuntu-latest
-    #     strategy:
-    #       fail-fast: false
-    #       matrix:
-    #         python-version: ["3.10"]
-    #         environment:
-    #             - ZPA_QA_TENANT01
-    #             - ZPA_QA_TENANT02
-    #     environment: ${{ matrix.environment }}
-    #     steps:
-    #         - name: Checkout code
-    #           uses: actions/checkout@v4
+    zpa-qa1-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.10"]
+            environment:
+                - ZPA_QA_TENANT01
+                - ZPA_QA_TENANT02
+        environment: ${{ matrix.environment }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-    #         - name: Set up Python ${{ matrix.python-version }}
-    #           uses: actions/setup-python@v5
-    #           with:
-    #             python-version: ${{ matrix.python-version }}
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v5
+              with:
+                python-version: ${{ matrix.python-version }}
 
-    #         - name: Install dependencies
-    #           run: |
-    #             python -m pip install --upgrade pip
-    #             python -m pip install flake8 pytest pytest-cov
-    #             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                python -m pip install flake8 pytest pytest-cov
+                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    #         - name: Lint with flake8
-    #           run: |
-    #             make lint:zpa
+            - name: Lint with flake8
+              run: |
+                make lint:zpa
 
-    #         - name: Run Pytest
-    #           uses: nick-fields/retry@v3
-    #           with:
-    #             max_attempts: 3
-    #             timeout_minutes: 30
-    #             command: |
-    #                 make coverage:zpa
-    #           env:
-    #             ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
-    #             ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
-    #             ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
-    #             ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-    #             ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
-    #             OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
-    #             OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+            - name: Run Pytest
+              uses: nick-fields/retry@v3
+              with:
+                max_attempts: 3
+                timeout_minutes: 30
+                command: |
+                    make coverage:zpa
+              env:
+                ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+                ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+                ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+                ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+                ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+                OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+                OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
 
     zpa-qa2-tenants:
         runs-on: ubuntu-latest
@@ -154,9 +154,9 @@ jobs:
                 ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
                 OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
                 OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-        # needs:
-        #     - zpa-qa1-tenants
-        #     - zpa-qa2-tenants
+        needs:
+            - zpa-qa1-tenants
+            - zpa-qa2-tenants
 
     zpa-prod-tenants:
         runs-on: ubuntu-latest
@@ -204,8 +204,8 @@ jobs:
                 ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
                 OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
                 OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-        # needs:
-        #     - zpa-qa1-tenants
-        #     - zpa-qa2-tenants
-        #     - zpa-beta-tenants
+        needs:
+            - zpa-qa1-tenants
+            - zpa-qa2-tenants
+            - zpa-beta-tenants
             
