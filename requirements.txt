@@ -20,6 +20,7 @@ flake8
 sphinx
 sphinx-autobuild
 sphinx_rtd_theme
+pytz
 
 # Testing dependencies
 pytest
