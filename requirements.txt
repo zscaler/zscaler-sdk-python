@@ -29,5 +29,5 @@ pytest-mock
 pytest-recording
 pytest-cov
 pyfakefs
-aenum==3.1.11
+aenum==3.1.15
 pydash
