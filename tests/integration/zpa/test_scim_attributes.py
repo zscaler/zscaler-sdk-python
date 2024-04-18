@@ -30,8 +30,7 @@ class TestScimAttributes:
     Integration Tests for the SCIM attributes
     """
 
-    @pytest.mark.asyncio
-    async def test_scim_attributes_operations(self, fs):
+    def test_scim_attributes_operations(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

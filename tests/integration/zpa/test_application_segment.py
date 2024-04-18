@@ -33,8 +33,7 @@ class TestApplicationSegment:
     Integration Tests for the Applications Segment
     """
 
-    @pytest.mark.asyncio
-    async def test_application_segment(self, fs):
+    def test_application_segment(self, fs):
         client = MockZPAClient(fs)
         errors = []
 

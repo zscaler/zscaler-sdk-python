@@ -29,8 +29,8 @@ class TestSecurityWhitelistBlacklist:
     Integration Tests for the Security Whitelist and Blacklist.
     """
 
-    @pytest.mark.asyncio
-    async def test_add_url_to_whitelist(self, fs):
+
+    def test_add_url_to_whitelist(self, fs):
         client = MockZIAClient(fs)
         url_to_add = "example.com"
         try:
@@ -41,8 +41,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Failed to add URL to whitelist: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_get_whitelist(self, fs):
+    def test_get_whitelist(self, fs):
         client = MockZIAClient(fs)
         try:
             whitelist = client.security.get_whitelist()
@@ -50,8 +49,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Whitelist retrieval failed: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_replace_url_from_whitelist(self, fs):
+    def test_replace_url_from_whitelist(self, fs):
         client = MockZIAClient(fs)
         url_to_replace = ["newsite.com"]
         try:
@@ -62,8 +60,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Failed to replace whitelist: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_delete_urls_from_whitelist(self, fs):
+    def test_delete_urls_from_whitelist(self, fs):
         client = MockZIAClient(fs)
         url_to_delete = "example.com"
         try:
@@ -76,8 +73,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Failed to delete URL from whitelist: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_add_urls_to_blacklist(self, fs):
+    def test_add_urls_to_blacklist(self, fs):
         client = MockZIAClient(fs)
         url_to_add = "badexample.com"
         try:
@@ -88,8 +84,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Failed to add URL to blacklist: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_get_blacklist(self, fs):
+    def test_get_blacklist(self, fs):
         client = MockZIAClient(fs)
         try:
             blacklist = client.security.get_blacklist()
@@ -97,8 +92,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Blacklist retrieval failed: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_replace_blacklist(self, fs):
+    def test_replace_blacklist(self, fs):
         client = MockZIAClient(fs)
         new_blacklist_urls = ["newbadexample.com"]
         try:
@@ -109,8 +103,7 @@ class TestSecurityWhitelistBlacklist:
         except Exception as exc:
             pytest.fail(f"Failed to replace blacklist: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_erase_blacklist(self, fs):
+    def test_erase_blacklist(self, fs):
         client = MockZIAClient(fs)
         try:
             result = client.security.erase_blacklist()

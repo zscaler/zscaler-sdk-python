@@ -31,8 +31,7 @@ class TestSegmentGroup:
     Integration Tests for the Application Server
     """
 
-    @pytest.mark.asyncio
-    async def test_application_server(self, fs):
+    def test_application_server(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

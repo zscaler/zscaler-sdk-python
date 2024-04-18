@@ -30,8 +30,7 @@ class TestLocationManagement:
     Integration Tests for the ZIA Location Management
     """
 
-    @pytest.mark.asyncio
-    async def test_location_management_vpn_ufqdn_type(self, fs):
+    def test_location_management_vpn_ufqdn_type(self, fs):
         client = MockZIAClient(fs)
         errors = []
         vpn_id = None
@@ -133,8 +132,7 @@ class TestLocationManagement:
             len(errors) == 0
         ), f"Errors occurred during the location management lifecycle test: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_sub_location(self, fs):
+    def test_sub_location(self, fs):
         client = MockZIAClient(fs)
         errors = []
         parent_location_id = None
@@ -273,8 +271,7 @@ class TestLocationManagement:
                 len(errors) == 0
             ), f"Errors occurred during the sublocation management lifecycle test: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_list_cities_by_name(self, fs):
+    def test_list_cities_by_name(self, fs):
         client = MockZIAClient(fs)
         errors = []
 
@@ -288,8 +285,7 @@ class TestLocationManagement:
             len(errors) == 0
         ), f"Errors occurred during test_list_cities_by_name: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_get_geo_by_ip(self, fs):
+    def test_get_geo_by_ip(self, fs):
         client = MockZIAClient(fs)
         errors = []
 
@@ -313,8 +309,7 @@ class TestLocationManagement:
 
         assert len(errors) == 0, f"Errors occurred during test_get_geo_by_ip: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_list_region_geo_coordinates(self, fs):
+    def test_list_region_geo_coordinates(self, fs):
         client = MockZIAClient(fs)
         errors = []
 

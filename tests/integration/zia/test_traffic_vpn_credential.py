@@ -30,8 +30,7 @@ class TestTrafficVPNCredential:
     Integration Tests for the ZIA Traffic VPN Credential.
     """
 
-    @pytest.mark.asyncio
-    async def test_traffic_vpn_credential(self, fs):
+    def test_traffic_vpn_credential(self, fs):
         client = MockZIAClient(fs)
         errors = []
         created_vpn_ids = []

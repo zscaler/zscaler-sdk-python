@@ -30,8 +30,7 @@ class TestPRAApproval:
     Integration Tests for the PRA Approval.
     """
 
-    @pytest.mark.asyncio
-    async def test_pra_approval(self, fs):
+    def test_pra_approval(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

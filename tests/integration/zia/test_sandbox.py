@@ -46,8 +46,7 @@ class TestSandbox:
     Integration Tests for the Sandbox Operations.
     """
 
-    @pytest.mark.asyncio
-    async def test_sandbox_get_quota(self, fs):
+    def test_sandbox_get_quota(self, fs):
         client = MockZIAClient(fs)
         try:
             quota = client.sandbox.get_quota()
@@ -55,8 +54,7 @@ class TestSandbox:
         except Exception as exc:
             pytest.fail(f"Sandbox quota retrieval failed: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_sandbox_get_report_summary(self, fs):
+    def test_sandbox_get_report_summary(self, fs):
         client = MockZIAClient(fs)
         test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
         try:
@@ -65,8 +63,7 @@ class TestSandbox:
         except Exception as exc:
             pytest.fail(f"Sandbox report retrieval failed: {exc}")
 
-    # @pytest.mark.asyncio
-    # async def test_sandbox_submit_files(fs):
+    #def test_sandbox_submit_files(fs):
     #     client = MockZIAClient(fs)
     #     errors = []
 
@@ -104,8 +101,7 @@ class TestSandbox:
     # # Assert no errors occurred during the test
     # assert not errors, f"Errors occurred during sandbox file submission: {errors}"
 
-    # @pytest.mark.asyncio
-    # async def test_submit_file_for_inspection(self, fs):
+    #def test_submit_file_for_inspection(self, fs):
     #     client = MockZIAClient(fs)
     #     errors = []
 
@@ -143,8 +139,7 @@ class TestSandbox:
     #     # Assert no errors occurred during the test
     #     assert not errors, f"Errors occurred during sandbox file submission: {errors}"
 
-    @pytest.mark.asyncio
-    async def test_get_behavioral_analysis(self, fs):
+    def test_get_behavioral_analysis(self, fs):
         client = MockZIAClient(fs)
         try:
             behavioral_analysis = client.sandbox.get_behavioral_analysis()
@@ -152,8 +147,7 @@ class TestSandbox:
         except Exception as exc:
             pytest.fail(f"Retrieving behavioral analysis failed: {exc}")
 
-    @pytest.mark.asyncio
-    async def test_add_hash_to_custom_list(self, fs):
+    def test_add_hash_to_custom_list(self, fs):
         client = MockZIAClient(fs)
         test_hashes = [
             "42914d6d213a20a2684064be5c80ffa9",

@@ -30,8 +30,7 @@ class TestDLPWebRule:
     Integration Tests for the ZIA DLP Web Rule
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_web_rule(self, fs):
+    def test_dlp_web_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []
         rule_id = None

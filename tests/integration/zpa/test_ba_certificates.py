@@ -30,8 +30,7 @@ class TestBaCertificate:
     Integration Tests for the certificates.
     """
 
-    @pytest.mark.asyncio
-    async def test_ba_certificate(self, fs):
+    def test_ba_certificate(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         certificate_id = None

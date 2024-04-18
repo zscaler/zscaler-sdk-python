@@ -30,8 +30,7 @@ class TestServerGroup:
     Integration Tests for the Server Group
     """
 
-    @pytest.mark.asyncio
-    async def test_server_group(self, fs):
+    def test_server_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

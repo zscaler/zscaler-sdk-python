@@ -30,8 +30,7 @@ class TestFirewallRules:
     Integration Tests for the ZIA Firewall Rules
     """
 
-    @pytest.mark.asyncio
-    async def test_firewall_rule(self, fs):
+    def test_firewall_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []
         dst_group_id = None
