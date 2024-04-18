@@ -30,8 +30,7 @@ class TestPRACredential:
     Integration Tests for the PRA Credential.
     """
 
-    @pytest.mark.asyncio
-    async def test_pra_credential(self, fs):
+    def test_pra_credential(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         credential_id = None

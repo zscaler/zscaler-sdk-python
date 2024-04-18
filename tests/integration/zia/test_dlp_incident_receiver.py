@@ -30,8 +30,7 @@ class TestDLPIncidentReceiver:
     Integration Tests for the DLP Incident Receiver
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_incident_receiver(self, fs):
+    def test_dlp_incident_receiver(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

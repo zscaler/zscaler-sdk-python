@@ -29,8 +29,7 @@ class TestTrustedNetworks:
     Integration Tests for the Trusted Networks
     """
 
-    @pytest.mark.asyncio
-    async def test_trusted_networks(self, fs):
+    def test_trusted_networks(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

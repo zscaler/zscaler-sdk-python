@@ -31,8 +31,7 @@ class TestDLPDictionary:
     Integration Tests for the DLP dictionary
     """
 
-    @pytest.mark.asyncio
-    async def test_dlp_dictionary(self, fs):
+    def test_dlp_dictionary(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

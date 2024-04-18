@@ -29,8 +29,7 @@ class TestLocationGroup:
     Integration Tests for the Location Group.
     """
 
-    @pytest.mark.asyncio
-    async def test_location_group(self, fs):
+    def test_location_group(self, fs):
         client = MockZIAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

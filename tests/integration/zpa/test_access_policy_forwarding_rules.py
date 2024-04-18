@@ -30,8 +30,7 @@ class TestAccessPolicyForwardingRule:
     Integration Tests for the Access Policy Forwarding Rules
     """
 
-    @pytest.mark.asyncio
-    async def test_access_policy_forwarding_rules(self, fs):
+    def test_access_policy_forwarding_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

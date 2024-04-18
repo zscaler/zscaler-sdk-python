@@ -27,8 +27,7 @@
 #     Integration Tests for the ZIA Activation
 #     """
 
-#     @pytest.mark.asyncio
-#     async def test_activation(self, fs):
+#     def test_activation(self, fs):
 #         client = MockZIAClient(fs)
 #         errors = []  # Initialize an empty list to collect errors
 
