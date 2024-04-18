@@ -13,7 +13,6 @@ Support Ticket Severity
 -----------------------
 
 Support tickets related to the GO SDK can be opened with `Zscaler Support <https://help.zscaler.com/login-tickets>`_, however since the SDK is just a client of the underlying product API, we will **NOT** be able to treat SDK related support requests as a Severity-1 (Immediate time frame).
-
 When reporting bugs, please provide the Terraform script that demonstrates the bug and the command output. Stack traces will also be helpful.
 
 Notice that we will **NOT**, however, fix bugs upon customer demand, as we have to prioritize all pending bugs and features, as part of the product's backlog and release cycles.
@@ -24,4 +23,5 @@ Contact
 -------
 
 For questions or requests that cannot be submitted via GitHub Issues, please contact ``devrel@zscaler.com`` with "Zscaler-SDK-GO" in the subject line.
-We also provide a `private Slack channel <https://docs.google.com/forms/d/e/1FAIpQLSfkd3EMkLQdIWMNQ7QCr8TrH_xVSwSYcQshfBPDEZFOaF28qA/viewform?usp=sf_link>`_ where you can submit your questions to the SDK maintainers. Notice that this form will be reviewed and approved by Zscaler Technology Alliances team.
+We also provide a `private Slack channel <https://docs.google.com/forms/d/e/1FAIpQLSfkd3EMkLQdIWMNQ7QCr8TrH_xVSwSYcQshfBPDEZFOaF28qA/viewform?usp=sf_link>`_ 
+where you can submit your questions to the SDK maintainers. Notice that this form will be reviewed and approved by Zscaler Technology Alliances team.
