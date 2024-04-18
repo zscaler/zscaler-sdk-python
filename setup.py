@@ -1,25 +1,12 @@
-# -*- coding: utf-8 -*-
-from setuptools import setup
-import os
-import re
+import io
+import pathlib
 
-def read(rel_path):
-    here = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(here, rel_path), encoding='utf-8') as fp:
-        return fp.read()
-    
-def get_version():
-    # Define the path to the __init__.py file
-    init_path = os.path.join(os.path.dirname(__file__), "zscaler", "__init__.py")
-    # Use a regular expression to find the version number
-    version_pattern = re.compile(r"^__version__ = ['\"]([^'\"]*)['\"]")
-    with open(init_path, "rt") as version_file:
-        for line in version_file:
-            match = version_pattern.search(line)
-            if match:
-                return match.group(1)
-    raise RuntimeError("Unable to find version string.")
+from setuptools import setup, find_packages
 
+version_data = {}
+version_file = pathlib.Path(__file__).parent / "zscaler/__init__.py"
+with version_file.open('r') as f:
+    exec(f.read(), version_data)
 
 packages = [
     "zscaler",
@@ -33,22 +20,31 @@ packages = [
 
 package_data = {"": ["*"]}
 
-setup(
-    name="zscaler-sdk-python",
-    version=get_version(),
-    description="Official Python SDK for the Zscaler Products",
-    long_description=read('LONG_DESCRIPTION.md'),  # Read the content of the Markdown file
-    long_description_content_type='text/markdown',  # Specify the content type as Markdown
-    author="Zscaler Technology Alliances",
-    author_email="devrel@zscaler.com",
-    url="https://github.com/zscaler/zscaler-sdk-python",
-    packages=packages,
-    package_data=package_data,
-    install_requires=[
-        "arrow", "certifi", "charset-normalizer", "idna", "python-box",
+setup(name="zscaler-sdk-python",
+      version=version_data['__version__'],
+      packages=find_packages(exclude=["tests", "*tests.*", "*tests"]),
+      package_data=package_data,
+      python_requires=">=3.8,<4.0",
+      install_requires=["arrow", "certifi", "charset-normalizer", "idna", "python-box",
         "python-dateutil", "requests", "responses", "restfly", "six",
         "urllib3", "flatdict", "pyyaml", "xmltodict", "yarl",
-        "pycryptodomex", "aenum", "pydash", "flake8",
-    ],
-    python_requires=">=3.8,<4.0",
-)
+        "pycryptodomex", "aenum", "pydash", "flake8", "pytz"],
+      extras_require={"dev": ["black", "pytest", "pytest-asyncio", "pytest-mock", "pytest-recording",
+                              "pytest-cov", "pyfakefs", "aenum", "isort", "wheel",
+                              "pydash"]},
+      author="Zscaler, Inc.",
+      author_email="devrel@zscaler.com",
+      description="Official Python SDK for the Zscaler Products (Beta)",
+      long_description=io.open("README.md", encoding="utf-8").read(),
+      long_description_content_type='text/markdown',
+      url="https://zscaler-sdk-python.readthedocs.io",
+      keywords="zscaler, sdk, zpa, zia, zdx, zcc, zcon",
+      classifiers=[
+          "Development Status :: 1 - Beta",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Operating System :: OS Independent"])
