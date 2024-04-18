@@ -42,8 +42,12 @@ from zscaler import ZPAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manages Enrollment Certificates for ZPA.")
-    parser.add_argument("-l", "--list", action="store_true", help="List all enrollment certificates.")
+    parser = argparse.ArgumentParser(
+        description="Manages Enrollment Certificates for ZPA."
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List all enrollment certificates."
+    )
     parser.add_argument(
         "-s",
         "--search",

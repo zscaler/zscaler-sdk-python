@@ -162,7 +162,9 @@ class FirewallPolicyAPI:
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
+                raise Exception(
+                    f"API call failed with status {status_code}: {response.json()}"
+                )
         return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
@@ -234,7 +236,9 @@ class FirewallPolicyAPI:
         response = self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {response.status_code}: {response.json()}"
+            )
 
         # Return the updated object
         return self.get_rule(rule_id)
@@ -389,7 +393,10 @@ class FirewallPolicyAPI:
         """
 
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_ip_destination_group(group_id).items()}
+        payload = {
+            snake_to_camel(k): v
+            for k, v in self.get_ip_destination_group(group_id).items()
+        }
 
         # Update payload
         for key, value in kwargs.items():
@@ -456,7 +463,9 @@ class FirewallPolicyAPI:
         """
         return self.rest.delete(f"ipSourceGroups/{group_id}").status_code
 
-    def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None) -> Box:
+    def add_ip_source_group(
+        self, name: str, ip_addresses: list, description: str = None
+    ) -> Box:
         """
         Adds a new IP Source Group.
 
@@ -518,7 +527,9 @@ class FirewallPolicyAPI:
         """
 
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()}
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()
+        }
 
         # Update payload
         for key, value in kwargs.items():
@@ -580,7 +591,9 @@ class FirewallPolicyAPI:
                 # For example, you might want to check for an 'error' or 'message' field
                 # and raise an exception or handle the situation as needed
                 # Example: raise ValueError("Failed to retrieve the network application group.")
-                return Box()  # An empty Box indicates no data was found or an error occurred.
+                return (
+                    Box()
+                )  # An empty Box indicates no data was found or an error occurred.
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -598,7 +611,9 @@ class FirewallPolicyAPI:
         """
         return self.rest.delete(f"networkApplicationGroups/{group_id}").status_code
 
-    def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
+    def add_network_app_group(
+        self, name: str, network_applications: list, description: str = None
+    ) -> Box:
         """
         Adds a new Network Application Group.
 
@@ -630,7 +645,9 @@ class FirewallPolicyAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
         # return self.rest.post("networkApplicationGroups", json=payload)
@@ -668,13 +685,18 @@ class FirewallPolicyAPI:
         """
 
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_network_app_group(group_id).items()}
+        payload = {
+            snake_to_camel(k): v
+            for k, v in self.get_network_app_group(group_id).items()
+        }
 
         # Update payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"networkApplicationGroups/{group_id}", json=payload).status_code
+        resp = self.rest.put(
+            f"networkApplicationGroups/{group_id}", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
@@ -767,7 +789,9 @@ class FirewallPolicyAPI:
         """
         return self.rest.delete(f"networkServiceGroups/{group_id}").status_code
 
-    def add_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
+    def add_network_svc_group(
+        self, name: str, service_ids: list, description: str = None
+    ) -> Box:
         """
         Adds a new Network Service Group.
 
@@ -821,7 +845,10 @@ class FirewallPolicyAPI:
         """
 
         # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_network_svc_group(group_id).items()}
+        payload = {
+            snake_to_camel(k): v
+            for k, v in self.get_network_svc_group(group_id).items()
+        }
 
         # Update payload
         for key, value in kwargs.items():
@@ -829,13 +856,17 @@ class FirewallPolicyAPI:
 
         # return self.rest.put(f"networkServiceGroups/{group_id}", json=payload)
 
-        resp = self.rest.put(f"networkServiceGroups/{group_id}", json=payload).status_code
+        resp = self.rest.put(
+            f"networkServiceGroups/{group_id}", json=payload
+        ).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_network_svc_group(group_id)
 
-    def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
+    def list_network_services(
+        self, search: str = None, protocol: str = None
+    ) -> BoxList:
         """
         Returns a list of all Network Services.
 
@@ -944,7 +975,9 @@ class FirewallPolicyAPI:
                 port_range = [{"start": items[2]}]
                 if len(items) == 4:
                     port_range.append({"end": items[3]})
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(port_range)
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(
+                    port_range
+                )
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -955,10 +988,14 @@ class FirewallPolicyAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+            raise Exception(
+                f"API call failed with status {status_code}: {response.json()}"
+            )
         return response
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
+    def update_network_service(
+        self, service_id: str, ports: list = None, **kwargs
+    ) -> Box:
         """
         Updates the specified Network Service.
 
@@ -1001,7 +1038,10 @@ class FirewallPolicyAPI:
 
 
         """
-        payload = {snake_to_camel(k): v for k, v in self.get_network_service(service_id).items()}
+        payload = {
+            snake_to_camel(k): v
+            for k, v in self.get_network_service(service_id).items()
+        }
 
         # Convert tuple list to dict and add to payload
         if ports is not None:

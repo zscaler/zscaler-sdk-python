@@ -80,6 +80,8 @@ class IsolationProfileAPI:
         """
         profiles = self.list_profiles()
         for profile in profiles:
-            if str(profile.get("id")) == str(profile_id):  # Ensuring ID comparison as strings
+            if str(profile.get("id")) == str(
+                profile_id
+            ):  # Ensuring ID comparison as strings
                 return profile
         return None

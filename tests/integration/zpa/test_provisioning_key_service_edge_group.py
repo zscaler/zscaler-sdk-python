@@ -19,7 +19,7 @@ class TestServiceEdgeGroupProvisioningKey:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        group_id = None
+        svc_edge_group_id = None
         svc_edge_group_key_id = None
 
         try:
@@ -42,16 +42,24 @@ class TestServiceEdgeGroupProvisioningKey:
                     is_public="TRUE",
                 )
                 svc_edge_group_id = created_svc_edge_group.get("id", None)
-                assert svc_edge_group_id is not None, "Service Edge Group creation failed"
+                assert (
+                    svc_edge_group_id is not None
+                ), "Service Edge Group creation failed"
             except Exception as exc:
                 errors.append(f"Service Edge Group creation failed: {exc}")
 
             try:
                 # Obtain the "Connector" enrolment certificate ID
-                svc_edge_cert = client.certificates.get_enrolment_cert_by_name("Service Edge")
-                assert svc_edge_cert, "Failed to retrieve 'Service Edge' enrolment certificate"
+                svc_edge_cert = client.certificates.get_enrolment_cert_by_name(
+                    "Service Edge"
+                )
+                assert (
+                    svc_edge_cert
+                ), "Failed to retrieve 'Service Edge' enrolment certificate"
             except Exception as exc:
-                errors.append(f"Retrieving 'service edge' enrolment certificate failed: {exc}")
+                errors.append(
+                    f"Retrieving 'service edge' enrolment certificate failed: {exc}"
+                )
 
             try:
                 # Create a SERVICE_EDGE_GRP Provisioning Key
@@ -64,47 +72,68 @@ class TestServiceEdgeGroupProvisioningKey:
                     component_id=svc_edge_group_id,
                 )
                 svc_edge_group_key_id = created_svc_edge_group_key.get("id", None)
-                assert svc_edge_group_key_id is not None, "SERVICE_EDGE_GRP Provisioning Key creation failed"
+                assert (
+                    svc_edge_group_key_id is not None
+                ), "SERVICE_EDGE_GRP Provisioning Key creation failed"
             except Exception as exc:
-                errors.append(f"SERVICE_EDGE_GRP Provisioning Key creation failed: {exc}")
+                errors.append(
+                    f"SERVICE_EDGE_GRP Provisioning Key creation failed: {exc}"
+                )
 
             try:
                 # List provisioning keys to verify creation
-                all_svc_edge_group_keys = client.provisioning.list_provisioning_keys("service_edge")
+                all_svc_edge_group_keys = client.provisioning.list_provisioning_keys(
+                    "service_edge"
+                )
                 assert any(
-                    key["id"] == svc_edge_group_key_id for key in all_svc_edge_group_keys
+                    key["id"] == svc_edge_group_key_id
+                    for key in all_svc_edge_group_keys
                 ), "Newly created service edge group key not found in list"
             except Exception as exc:
                 errors.append(f"Listing service edge group keys failed: {exc}")
 
             try:
                 # Retrieve the specific SERVICE_EDGE_GRP Provisioning Key
-                retrieved_connector_key = client.provisioning.get_provisioning_key(svc_edge_group_key_id, "service_edge")
+                retrieved_connector_key = client.provisioning.get_provisioning_key(
+                    svc_edge_group_key_id, "service_edge"
+                )
                 assert (
                     retrieved_connector_key["id"] == svc_edge_group_key_id
                 ), "Failed to retrieve the correct SERVICE_EDGE_GRP Provisioning Key"
             except Exception as exc:
-                errors.append(f"Retrieving SERVICE_EDGE_GRP Provisioning Key failed: {exc}")
+                errors.append(
+                    f"Retrieving SERVICE_EDGE_GRP Provisioning Key failed: {exc}"
+                )
 
             try:
                 # Update the SERVICE_EDGE_GRP Provisioning Key
                 updated_connector_key = client.provisioning.update_provisioning_key(
                     svc_edge_group_key_id, "service_edge", max_usage="3"
                 )
-                assert updated_connector_key["max_usage"] == "3", "Failed to update SERVICE_EDGE_GRP Provisioning Key"
+                assert (
+                    updated_connector_key["max_usage"] == "3"
+                ), "Failed to update SERVICE_EDGE_GRP Provisioning Key"
             except Exception as exc:
-                errors.append(f"Updating SERVICE_EDGE_GRP Provisioning Key failed: {exc}")
+                errors.append(
+                    f"Updating SERVICE_EDGE_GRP Provisioning Key failed: {exc}"
+                )
 
         finally:
             try:
                 # Cleanup: Attempt to delete the SERVICE_EDGE_GRP Provisioning Key
                 if svc_edge_group_key_id:
-                    delete_status_connector = client.provisioning.delete_provisioning_key(
-                        svc_edge_group_key_id, "service_edge"
+                    delete_status_connector = (
+                        client.provisioning.delete_provisioning_key(
+                            svc_edge_group_key_id, "service_edge"
+                        )
                     )
-                    assert delete_status_connector == 204, "Failed to delete SERVICE_EDGE_GRP Provisioning Key"
+                    assert (
+                        delete_status_connector == 204
+                    ), "Failed to delete SERVICE_EDGE_GRP Provisioning Key"
             except Exception as cleanup_exc:
-                errors.append(f"Deleting SERVICE_EDGE_GRP Provisioning Key failed: {cleanup_exc}")
+                errors.append(
+                    f"Deleting SERVICE_EDGE_GRP Provisioning Key failed: {cleanup_exc}"
+                )
 
             try:
                 # Cleanup: Attempt to delete the Service Edge Group
@@ -114,4 +143,6 @@ class TestServiceEdgeGroupProvisioningKey:
                 errors.append(f"Deleting Service Edge Group failed: {cleanup_exc}")
 
         # Assert no errors occurred during the test execution
-        assert len(errors) == 0, f"Errors occurred during the provisioning key operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the provisioning key operations test: {errors}"

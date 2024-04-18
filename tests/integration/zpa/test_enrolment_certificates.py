@@ -48,13 +48,21 @@ class TestEnrolmentCertificate:
         for name in cert_names:
             # Attempt to retrieve each enrolment certificate by name
             try:
-                certificate_by_name = client.certificates.get_enrolment_cert_by_name(name)
+                certificate_by_name = client.certificates.get_enrolment_cert_by_name(
+                    name
+                )
                 if certificate_by_name is not None:
-                    assert certificate_by_name.get("name") == name, f"Mismatch in certificate name for '{name}'"
+                    assert (
+                        certificate_by_name.get("name") == name
+                    ), f"Mismatch in certificate name for '{name}'"
                 else:
                     errors.append(f"Certificate named '{name}' not found")
             except Exception as exc:
-                errors.append(f"Retrieving certificate by name '{name}' failed: {str(exc)}")
+                errors.append(
+                    f"Retrieving certificate by name '{name}' failed: {str(exc)}"
+                )
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during enrolment certificate operations test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during enrolment certificate operations test: {errors}"

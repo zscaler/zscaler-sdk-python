@@ -103,10 +103,18 @@ class TestAppConnectorGroup:
             # Cleanup: Delete the app connector group if it was created
             if group_id:
                 try:
-                    delete_response_code = client.connectors.delete_connector_group(group_id)
-                    assert str(delete_response_code) == "204", f"Failed to delete app connector group with ID {group_id}"
+                    delete_response_code = client.connectors.delete_connector_group(
+                        group_id
+                    )
+                    assert (
+                        str(delete_response_code) == "204"
+                    ), f"Failed to delete app connector group with ID {group_id}"
                 except Exception as cleanup_exc:
-                    errors.append(f"Cleanup failed for app connector group ID {group_id}: {cleanup_exc}")
+                    errors.append(
+                        f"Cleanup failed for app connector group ID {group_id}: {cleanup_exc}"
+                    )
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the app connector group lifecycle test: {errors}"
+        assert (
+            len(errors) == 0
+        ), f"Errors occurred during the app connector group lifecycle test: {errors}"

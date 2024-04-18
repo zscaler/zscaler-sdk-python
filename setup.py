@@ -3,6 +3,7 @@ from setuptools import find_packages, setup
 import os
 import re
 
+
 def get_version():
     # Define the path to the __init__.py file
     init_path = os.path.join(os.path.dirname(__file__), "zscaler", "__init__.py")
@@ -15,38 +16,29 @@ def get_version():
                 return match.group(1)
     raise RuntimeError("Unable to find version string.")
 
-# packages = [
-#     "zscaler",
-#     "zscaler.cache",
-#     "zscaler.errors",
-#     "zscaler.exceptions",
-#     "zscaler.ratelimiter",
-#     "zscaler.zia",
-#     "zscaler.zpa",
-# ]
 
 package_data = {"": ["*"]}
 
 install_requires = [
-        "arrow",
-        "certifi",
-        "charset-normalizer",
-        "idna",
-        "python-box",
-        "python-dateutil",
-        "requests",
-        "responses",
-        "restfly",
-        "six",
-        "urllib3",
-        "flatdict",
-        "pyyaml",
-        "xmltodict",
-        "yarl",
-        "pycryptodomex",
-        "aenum",
-        "pydash",
-        "flake8",
+    "arrow",
+    "certifi",
+    "charset-normalizer",
+    "idna",
+    "python-box",
+    "python-dateutil",
+    "requests",
+    "responses",
+    "restfly",
+    "six",
+    "urllib3",
+    "flatdict",
+    "pyyaml",
+    "xmltodict",
+    "yarl",
+    "pycryptodomex",
+    "aenum",
+    "pydash",
+    "flake8",
 ]
 
 setup_kwargs = {
@@ -64,6 +56,5 @@ setup_kwargs = {
     "install_requires": install_requires,
     "python_requires": ">=3.8,<4.0",
 }
-
 
 setup(**setup_kwargs)
