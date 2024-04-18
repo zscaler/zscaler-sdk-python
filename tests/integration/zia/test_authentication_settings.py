@@ -43,12 +43,8 @@ class TestExemptedUrls:
         client = MockZIAClient(fs)
         urls_to_add = ["example.com", "testsite.com"]
         try:
-            updated_exempt_list = (
-                client.authentication_settings.add_urls_to_exempt_list(urls_to_add)
-            )
-            assert (
-                updated_exempt_list is not None
-            ), "The update exempt list operation returned None."
+            updated_exempt_list = client.authentication_settings.add_urls_to_exempt_list(urls_to_add)
+            assert updated_exempt_list is not None, "The update exempt list operation returned None."
         except Exception as exc:
             pytest.fail(f"Failed to add URLs to exempt list: {exc}")
 

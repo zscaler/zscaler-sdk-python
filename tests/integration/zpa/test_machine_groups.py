@@ -50,27 +50,17 @@ class TestMachineGroups:
                 # Fetch the selected machine group by its ID
                 try:
                     fetched_group = client.machine_groups.get_group(group_id)
-                    assert (
-                        fetched_group is not None
-                    ), "Expected a valid machine group object"
-                    assert (
-                        fetched_group.get("id") == group_id
-                    ), "Mismatch in machine group ID"
+                    assert fetched_group is not None, "Expected a valid machine group object"
+                    assert fetched_group.get("id") == group_id, "Mismatch in machine group ID"
                 except Exception as exc:
                     errors.append(f"Fetching machine group by ID failed: {str(exc)}")
 
                 # Attempt to retrieve the machine group by name
                 try:
                     group_name = first_group.get("name")
-                    group_by_name = client.machine_groups.get_machine_group_by_name(
-                        group_name
-                    )
-                    assert (
-                        group_by_name is not None
-                    ), "Expected a valid machine group object when searching by name"
-                    assert (
-                        group_by_name.get("id") == group_id
-                    ), "Mismatch in machine group ID when searching by name"
+                    group_by_name = client.machine_groups.get_machine_group_by_name(group_name)
+                    assert group_by_name is not None, "Expected a valid machine group object when searching by name"
+                    assert group_by_name.get("id") == group_id, "Mismatch in machine group ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Fetching machine group by name failed: {str(exc)}")
 
@@ -78,6 +68,4 @@ class TestMachineGroups:
                 break
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during machine group operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during machine group operations test: {errors}"

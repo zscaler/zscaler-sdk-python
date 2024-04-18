@@ -38,9 +38,7 @@ class TestTrustedNetworks:
             # List all trusted networks
             try:
                 trusted_networks = client.trusted_networks.list_networks()
-                assert isinstance(
-                    trusted_networks, list
-                ), "Expected a list of trusted networks"
+                assert isinstance(trusted_networks, list), "Expected a list of trusted networks"
             except Exception as exc:
                 errors.append(f"Failed to list trusted networks: {exc}")
 
@@ -52,27 +50,17 @@ class TestTrustedNetworks:
 
                     # Fetch the selected trusted network by its ID
                     fetched_network = client.trusted_networks.get_network(network_id)
-                    assert (
-                        fetched_network is not None
-                    ), "Expected a valid trusted network object"
-                    assert (
-                        fetched_network.get("id") == network_id
-                    ), "Mismatch in trusted network ID"
+                    assert fetched_network is not None, "Expected a valid trusted network object"
+                    assert fetched_network.get("id") == network_id, "Mismatch in trusted network ID"
                 except Exception as exc:
                     errors.append(f"Failed to fetch network by ID: {exc}")
 
                 try:
                     # Attempt to retrieve the trusted network by name
                     network_name = first_network.get("name")
-                    network_by_name = client.trusted_networks.get_network_by_name(
-                        network_name
-                    )
-                    assert (
-                        network_by_name is not None
-                    ), "Expected a valid trusted network object when searching by name"
-                    assert (
-                        network_by_name.get("id") == network_id
-                    ), "Mismatch in trusted network ID when searching by name"
+                    network_by_name = client.trusted_networks.get_network_by_name(network_name)
+                    assert network_by_name is not None, "Expected a valid trusted network object when searching by name"
+                    assert network_by_name.get("id") == network_id, "Mismatch in trusted network ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Failed to fetch network by name: {exc}")
 
@@ -81,6 +69,4 @@ class TestTrustedNetworks:
             errors.append(f"Unexpected error during trusted networks test: {exc}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during trusted network operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during trusted network operations test: {errors}"

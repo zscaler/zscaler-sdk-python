@@ -81,9 +81,7 @@ class TestSegmentGroup:
 
         try:
             # Search for the segment group by name
-            search_result = client.segment_groups.get_segment_group_by_name(
-                updated_name
-            )
+            search_result = client.segment_groups.get_segment_group_by_name(updated_name)
             assert search_result is not None
             assert search_result.id == group_id
         except Exception as exc:
@@ -97,6 +95,4 @@ class TestSegmentGroup:
             errors.append(exc)
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the segment group lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the segment group lifecycle test: {errors}"

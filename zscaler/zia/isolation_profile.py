@@ -37,7 +37,7 @@ class IsolationProfileAPI:
 
         Examples:
             >>> isolation_profiles = zia.isolation_profiles.list_isolation_profiles()
-        
+
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
         return self.rest.get("browserIsolation/profiles", json=payload)

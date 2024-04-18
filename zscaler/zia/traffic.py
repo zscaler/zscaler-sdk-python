@@ -169,9 +169,7 @@ class TrafficForwardingAPI:
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next(
-            (vip for vip in vips_list if vip.city != preferred_vip.city)
-        )
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
@@ -219,9 +217,7 @@ class TrafficForwardingAPI:
         if response is not None:
             return response
         else:
-            print(
-                "Failed to fetch VIP groups by data center. No response or error received."
-            )
+            print("Failed to fetch VIP groups by data center. No response or error received.")
             return BoxList([])
 
     def list_vips(self, **kwargs) -> BoxList:
@@ -339,9 +335,7 @@ class TrafficForwardingAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_gre_tunnel(
@@ -357,9 +351,7 @@ class TrafficForwardingAPI:
         """
 
         if tunnel_id is None:
-            raise ValueError(
-                "tunnel_id is a required parameter for updating a GRE tunnel."
-            )
+            raise ValueError("tunnel_id is a required parameter for updating a GRE tunnel.")
 
         # Determine VIPs based on source_ip if not provided
         if primary_dest_vip_id is None or secondary_dest_vip_id is None:
@@ -380,9 +372,7 @@ class TrafficForwardingAPI:
         response = self.rest.put(f"greTunnels/{tunnel_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
         # Return the updated object
         return self.get_gre_tunnel(tunnel_id)
 
@@ -442,9 +432,7 @@ class TrafficForwardingAPI:
 
         """
         valid_params = ["availableForGreTunnel", "ipAddress"]
-        query_params = {
-            k: v for k, v in kwargs.items() if k in valid_params and v is not None
-        }
+        query_params = {k: v for k, v in kwargs.items() if k in valid_params and v is not None}
 
         response = self.rest.get("/staticIP", params=query_params)
         if isinstance(response, Response):
@@ -516,9 +504,7 @@ class TrafficForwardingAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def check_static_ip(self, ip_address: str) -> bool:
@@ -589,9 +575,7 @@ class TrafficForwardingAPI:
         response = self.rest.put(f"staticIP/{static_ip_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
         # Return the updated object
         return self.get_static_ip(static_ip_id)
@@ -661,9 +645,7 @@ class TrafficForwardingAPI:
         """
         return BoxList(Iterator(self.rest, "vpnCredentials", **kwargs))
 
-    def add_vpn_credential(
-        self, authentication_type: str, pre_shared_key: str = None, **kwargs
-    ) -> Box:
+    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str = None, **kwargs) -> Box:
         """
         Add new VPN credentials.
 
@@ -715,9 +697,7 @@ class TrafficForwardingAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def bulk_delete_vpn_credentials(self, credential_ids: list) -> int:
@@ -743,9 +723,7 @@ class TrafficForwardingAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def get_vpn_credential(self, credential_id: str = None, fqdn: str = None) -> Box:
@@ -768,15 +746,9 @@ class TrafficForwardingAPI:
 
         """
         if credential_id and fqdn:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided.")
         elif fqdn:
-            credential = (
-                record
-                for record in self.list_vpn_credentials(search=fqdn)
-                if record.fqdn == fqdn
-            )
+            credential = (record for record in self.list_vpn_credentials(search=fqdn) if record.fqdn == fqdn)
             return next(credential, None)
 
         return self.rest.get(f"vpnCredentials/{credential_id}")
@@ -828,9 +800,7 @@ class TrafficForwardingAPI:
         response = self.rest.put(f"vpnCredentials/{credential_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
         # Return the updated object
         return self.get_vpn_credential(credential_id)

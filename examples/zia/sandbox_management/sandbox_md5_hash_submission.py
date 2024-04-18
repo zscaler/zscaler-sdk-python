@@ -51,9 +51,7 @@ import time  # Import the time module for the delay
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="CLI tool for Zscaler Cloud Sandbox operations."
-    )
+    parser = argparse.ArgumentParser(description="CLI tool for Zscaler Cloud Sandbox operations.")
     parser.add_argument(
         "--action",
         required=True,

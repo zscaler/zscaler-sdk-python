@@ -38,16 +38,12 @@ class TestScimAttributes:
         try:
             # Test listing SCIM attributes by IDP
             idps = client.idp.list_idps()
-            user_idp = next(
-                (idp for idp in idps if "USER" in idp.get("sso_type", [])), None
-            )
+            user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
             assert user_idp is not None, "No IdP with sso_type 'USER' found."
 
             user_idp_id = user_idp["id"]
             resp = client.scim_attributes.list_attributes_by_idp(user_idp_id)
-            assert isinstance(
-                resp, list
-            ), "Response is not in the expected list format."
+            assert isinstance(resp, list), "Response is not in the expected list format."
             assert len(resp) > 0, "No SCIM groups were found for the specified IdP."
         except Exception as exc:
             errors.append(f"Listing SCIM attributes by IDP failed: {exc}")
@@ -55,24 +51,14 @@ class TestScimAttributes:
         try:
             # Test getting a specific SCIM attribute
             attributes = client.scim_attributes.list_attributes_by_idp(user_idp_id)
-            assert (
-                len(attributes) > 0
-            ), "No SCIM attributes found for the specified IdP."
+            assert len(attributes) > 0, "No SCIM attributes found for the specified IdP."
 
-            first_attribute_id = attributes[0][
-                "id"
-            ]  # Assuming attributes is a list of dicts
+            first_attribute_id = attributes[0]["id"]  # Assuming attributes is a list of dicts
             resp = client.scim_attributes.get_attribute(user_idp_id, first_attribute_id)
-            assert isinstance(
-                resp, dict
-            ), "Response is not in the expected dict format."
-            assert (
-                resp["id"] == first_attribute_id
-            ), "Retrieved SCIM attribute ID does not match the requested ID."
+            assert isinstance(resp, dict), "Response is not in the expected dict format."
+            assert resp["id"] == first_attribute_id, "Retrieved SCIM attribute ID does not match the requested ID."
         except Exception as exc:
             errors.append(f"Getting a specific SCIM attribute failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during SCIM attributes operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during SCIM attributes operations test: {errors}"

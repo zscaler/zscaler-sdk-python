@@ -28,9 +28,9 @@ author = "Zscaler Technology Alliances"
 html_title = ""
 
 # The short X.Y version
-version = '1.0.1'
+version = "1.0.1"
 # The full version, including alpha/beta/rc tags
-release = '1.0.1'
+release = "1.0.1"
 
 # -- General configuration ---------------------------------------------------
 
@@ -185,20 +185,34 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
-                       'restfly': ('https://restfly.readthedocs.io/en/latest/', None),
-                       'box': ('https://box.readthedocs.io/en/latest', None),
-                       }
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "restfly": ("https://restfly.readthedocs.io/en/latest/", None),
+    "box": ("https://box.readthedocs.io/en/latest", None),
+}
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+
 def skip(app, what, name, obj, would_skip, options):
-    if name in ["refreshToken", "login", "send", "__init__", "delete", "get", "get_paginated_data", "post", "put", "deauthenticate"]:
+    if name in [
+        "refreshToken",
+        "login",
+        "send",
+        "__init__",
+        "delete",
+        "get",
+        "get_paginated_data",
+        "post",
+        "put",
+        "deauthenticate",
+    ]:
         return True
     return would_skip
+
 
 def setup(app):
     app.connect("autodoc-skip-member", skip)

@@ -59,18 +59,14 @@ class TestPRACredential:
         try:
             # Test listing Credential
             all_credentials = client.privileged_remote_access.list_credentials()
-            if not any(
-                credential["id"] == credential_id for credential in all_credentials
-            ):
+            if not any(credential["id"] == credential_id for credential in all_credentials):
                 raise AssertionError("Credential not found in list")
         except Exception as exc:
             errors.append(f"Listing Credential failed: {exc}")
 
         try:
             # Test retrieving the specific credential
-            retrieved_credential = client.privileged_remote_access.get_credential(
-                credential_id
-            )
+            retrieved_credential = client.privileged_remote_access.get_credential(credential_id)
             if retrieved_credential["id"] != credential_id:
                 raise AssertionError("Failed to retrieve the correct credential")
         except Exception as exc:
@@ -98,9 +94,7 @@ class TestPRACredential:
             try:
                 # Attempt to delete resources created during the test
                 if credential_id:
-                    delete_status = client.privileged_remote_access.delete_credential(
-                        credential_id
-                    )
+                    delete_status = client.privileged_remote_access.delete_credential(credential_id)
                     assert delete_status == 204, "Credential deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting credential failed: {exc}")
@@ -108,6 +102,4 @@ class TestPRACredential:
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the credential lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the credential lifecycle test: {errors}"

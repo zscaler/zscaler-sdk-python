@@ -40,15 +40,11 @@ class TestTrafficGRETunnel:
 
         # Create Static IP for GRE Tunnel
         try:
-            created_static_ip = client.traffic.add_static_ip(
-                ip_address=randomIP, comment="tests-" + generate_random_string()
-            )
+            created_static_ip = client.traffic.add_static_ip(ip_address=randomIP, comment="tests-" + generate_random_string())
             assert created_static_ip is not None, "Static IP creation returned None"
             static_ip_id = created_static_ip["id"]
             # Use the IP address from the created static IP for the GRE tunnel
-            static_ip_address = created_static_ip[
-                "ip_address"
-            ]  # Assuming the key is 'ip_address'
+            static_ip_address = created_static_ip["ip_address"]  # Assuming the key is 'ip_address'
         except Exception as exc:
             errors.append(f"Failed to add static IP: {exc}")
 
@@ -75,18 +71,14 @@ class TestTrafficGRETunnel:
                     comment=updated_comment,
                 )
                 # No need to check for status_code; presence of 'comment' implies success
-                assert (
-                    updated_gre_tunnel["comment"] == updated_comment
-                ), "Failed to update GRE Tunnel"
+                assert updated_gre_tunnel["comment"] == updated_comment, "Failed to update GRE Tunnel"
             except Exception as exc:
                 errors.append(f"Update GRE Tunnel failed: {exc}")
 
         # Get and verify GRE Tunnel details
         try:
             fetched_gre_tunnel = client.traffic.get_gre_tunnel(gre_tunnel_ids[0])
-            assert (
-                fetched_gre_tunnel["id"] == gre_tunnel_ids[0]
-            ), "Failed to fetch GRE Tunnel"
+            assert fetched_gre_tunnel["id"] == gre_tunnel_ids[0], "Failed to fetch GRE Tunnel"
         except Exception as exc:
             errors.append(f"Fetch GRE Tunnel failed: {exc}")
 
@@ -94,9 +86,7 @@ class TestTrafficGRETunnel:
         try:
             tunnels_list = client.traffic.list_gre_tunnels()
             # Change the access method to attribute-style because the response is in Box format
-            assert any(
-                tunnel.id == gre_tunnel_ids[0] for tunnel in tunnels_list
-            ), "Newly created GRE Tunnel not listed"
+            assert any(tunnel.id == gre_tunnel_ids[0] for tunnel in tunnels_list), "Newly created GRE Tunnel not listed"
         except Exception as exc:
             errors.append(f"List GRE Tunnels failed: {exc}")
 
@@ -105,13 +95,9 @@ class TestTrafficGRETunnel:
             for tunnel_id in gre_tunnel_ids:
                 try:
                     deletion_status = client.traffic.delete_gre_tunnel(tunnel_id)
-                    assert (
-                        deletion_status == 204
-                    ), f"Failed to delete GRE Tunnel with ID {tunnel_id}"
+                    assert deletion_status == 204, f"Failed to delete GRE Tunnel with ID {tunnel_id}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for GRE Tunnel ID {tunnel_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for GRE Tunnel ID {tunnel_id}: {cleanup_exc}")
 
             # Cleanup: Delete the static IP
             if static_ip_id:
@@ -119,14 +105,10 @@ class TestTrafficGRETunnel:
                     deletion_status = client.traffic.delete_static_ip(static_ip_id)
                     assert deletion_status == 204, "Static IP deletion failed"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
 
         # Assert no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during GRE Tunnel operations test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during GRE Tunnel operations test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_traffic_list_gre_ranges(self, fs):
@@ -146,18 +128,12 @@ class TestTrafficGRETunnel:
                 static_ip_id = created_static_ip["id"]
             except Exception as exc:
                 errors.append(f"Failed to add static IP: {exc}")
-                raise AssertionError(
-                    f"Precondition failed: {exc}"
-                )  # To ensure we don't proceed if static IP creation fails
+                raise AssertionError(f"Precondition failed: {exc}")  # To ensure we don't proceed if static IP creation fails
 
             # List GRE Ranges using the created static IP
             try:
-                gre_ranges_with_static_ip = client.traffic.list_gre_ranges(
-                    static_ip=static_ip_id
-                )
-                assert isinstance(
-                    gre_ranges_with_static_ip, list
-                ), "GRE ranges listing with static IP did not return a list."
+                gre_ranges_with_static_ip = client.traffic.list_gre_ranges(static_ip=static_ip_id)
+                assert isinstance(gre_ranges_with_static_ip, list), "GRE ranges listing with static IP did not return a list."
                 # Additional assertions based on expected values in gre_ranges_with_static_ip
             except Exception as exc:
                 errors.append(f"Listing GRE ranges with static IP failed: {exc}")
@@ -167,13 +143,9 @@ class TestTrafficGRETunnel:
             if static_ip_id:
                 try:
                     deletion_status = client.traffic.delete_static_ip(static_ip_id)
-                    assert (
-                        deletion_status == 204
-                    ), f"Static IP deletion failed for ID {static_ip_id}"
+                    assert deletion_status == 204, f"Static IP deletion failed for ID {static_ip_id}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
 
         # Test Case 2: Without passing static IP
         try:
@@ -186,9 +158,7 @@ class TestTrafficGRETunnel:
         except Exception as exc:
             errors.append(f"Listing GRE ranges without static IP failed: {exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during listing GRE ranges test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during listing GRE ranges test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_traffic_list_vips_recommended(self, fs):
@@ -207,18 +177,12 @@ class TestTrafficGRETunnel:
                 static_ip_id = created_static_ip["id"]
             except Exception as exc:
                 errors.append(f"Failed to add static IP: {exc}")
-                raise AssertionError(
-                    f"Precondition failed: {exc}"
-                )  # To ensure we don't proceed if static IP creation fails
+                raise AssertionError(f"Precondition failed: {exc}")  # To ensure we don't proceed if static IP creation fails
 
             # Fetching recommended VIPs using the created static IP
             try:
-                recommended_vips = client.traffic.list_vips_recommended(
-                    source_ip=randomIP
-                )
-                assert isinstance(
-                    recommended_vips, list
-                ), "Recommended VIPs listing did not return a list."
+                recommended_vips = client.traffic.list_vips_recommended(source_ip=randomIP)
+                assert isinstance(recommended_vips, list), "Recommended VIPs listing did not return a list."
                 assert recommended_vips, "Expected non-empty list of recommended VIPs."
                 # Optionally, further assertions to validate the content of recommended VIPs, if specific data is known/expected
             except Exception as exc:
@@ -228,17 +192,11 @@ class TestTrafficGRETunnel:
             if static_ip_id:
                 try:
                     deletion_status = client.traffic.delete_static_ip(static_ip_id)
-                    assert (
-                        deletion_status == 204
-                    ), f"Static IP deletion failed for ID {static_ip_id}"
+                    assert deletion_status == 204, f"Static IP deletion failed for ID {static_ip_id}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during listing recommended VIPs test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during listing recommended VIPs test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_traffic_list_vip_group_by_dc(self, fs):
@@ -257,16 +215,12 @@ class TestTrafficGRETunnel:
                 static_ip_id = created_static_ip["id"]
             except Exception as exc:
                 errors.append(f"Failed to add static IP: {exc}")
-                raise AssertionError(
-                    f"Precondition failed: {exc}"
-                )  # To ensure we don't proceed if static IP creation fails
+                raise AssertionError(f"Precondition failed: {exc}")  # To ensure we don't proceed if static IP creation fails
 
             # Fetching VIP groups by data center using the created static IP
             try:
                 vip_groups = client.traffic.list_vip_group_by_dc(source_ip=randomIP)
-                assert isinstance(
-                    vip_groups, list
-                ), "VIP groups listing did not return a list."
+                assert isinstance(vip_groups, list), "VIP groups listing did not return a list."
                 assert vip_groups, "Expected non-empty list of VIP groups."
                 # Optionally, further assertions to validate the content of VIP groups, if specific data is known/expected
             except Exception as exc:
@@ -276,17 +230,11 @@ class TestTrafficGRETunnel:
             if static_ip_id:
                 try:
                     deletion_status = client.traffic.delete_static_ip(static_ip_id)
-                    assert (
-                        deletion_status == 204
-                    ), f"Static IP deletion failed for ID {static_ip_id}"
+                    assert deletion_status == 204, f"Static IP deletion failed for ID {static_ip_id}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during listing VIP group by DC test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during listing VIP group by DC test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_traffic_get_closest_diverse_vip_ids(self, fs):
@@ -305,18 +253,12 @@ class TestTrafficGRETunnel:
                 static_ip_id = created_static_ip["id"]
             except Exception as exc:
                 errors.append(f"Failed to add static IP: {exc}")
-                raise AssertionError(
-                    f"Precondition failed: {exc}"
-                )  # To ensure we don't proceed if static IP creation fails
+                raise AssertionError(f"Precondition failed: {exc}")  # To ensure we don't proceed if static IP creation fails
 
             # Fetching closest diverse VIP IDs using the created static IP
             try:
-                closest_vips = client.traffic.get_closest_diverse_vip_ids(
-                    ip_address=randomIP
-                )
-                assert isinstance(
-                    closest_vips, tuple
-                ), "Fetching closest diverse VIP IDs did not return a tuple."
+                closest_vips = client.traffic.get_closest_diverse_vip_ids(ip_address=randomIP)
+                assert isinstance(closest_vips, tuple), "Fetching closest diverse VIP IDs did not return a tuple."
                 assert len(closest_vips) == 2, "Expected two VIP IDs."
                 # Optionally, further assertions to validate the VIP IDs, if specific IDs are known/expected
             except Exception as exc:
@@ -326,17 +268,11 @@ class TestTrafficGRETunnel:
             if static_ip_id:
                 try:
                     deletion_status = client.traffic.delete_static_ip(static_ip_id)
-                    assert (
-                        deletion_status == 204
-                    ), f"Static IP deletion failed for ID {static_ip_id}"
+                    assert deletion_status == 204, f"Static IP deletion failed for ID {static_ip_id}"
                 except Exception as cleanup_exc:
-                    errors.append(
-                        f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}"
-                    )
+                    errors.append(f"Cleanup failed for Static IP ID {static_ip_id}: {cleanup_exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during getting closest diverse VIP IDs test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during getting closest diverse VIP IDs test: {'; '.join(errors)}"
 
     @pytest.mark.asyncio
     async def test_traffic_list_vips(self, fs):
@@ -352,13 +288,9 @@ class TestTrafficGRETunnel:
 
             # Example test with page_size=200, max_pages=2
             vips_large = client.traffic.list_vips(page_size=200, max_pages=2)
-            assert isinstance(
-                vips_large, list
-            ), "Listing VIPs with page_size=200, max_pages=2 did not return a list."
+            assert isinstance(vips_large, list), "Listing VIPs with page_size=200, max_pages=2 did not return a list."
             # Additional assertions based on expected values in vips_large
         except Exception as exc:
             errors.append(f"Listing VIPs with specific parameters failed: {exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during listing VIPs test: {'; '.join(errors)}"
+        assert len(errors) == 0, f"Errors occurred during listing VIPs test: {'; '.join(errors)}"

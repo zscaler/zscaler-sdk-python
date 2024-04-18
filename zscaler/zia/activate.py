@@ -19,7 +19,6 @@ from zscaler.zia import ZIAClient
 
 
 class ActivationAPI:
-
     def __init__(self, client: ZIAClient):
         self.rest = client
 

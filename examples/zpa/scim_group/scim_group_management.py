@@ -47,21 +47,15 @@ from zscaler import ZPAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Retrieves SCIM Groups from the ZPA cloud."
-    )
+    parser = argparse.ArgumentParser(description="Retrieves SCIM Groups from the ZPA cloud.")
     parser.add_argument(
         "-l",
         "--list",
         metavar="IDP_NAME",
         help="List all SCIM Groups for a given IdP name.",
     )
-    parser.add_argument(
-        "-g", "--get", metavar="GROUP_ID", help="Get details of a SCIM Group by its ID."
-    )
-    parser.add_argument(
-        "--search_name", metavar="GROUP_NAME", help="Search a SCIM Group by its name."
-    )
+    parser.add_argument("-g", "--get", metavar="GROUP_ID", help="Get details of a SCIM Group by its ID.")
+    parser.add_argument("--search_name", metavar="GROUP_NAME", help="Search a SCIM Group by its name.")
     args = parser.parse_args()
 
     client = ZPAClientHelper(

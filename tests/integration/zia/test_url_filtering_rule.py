@@ -82,9 +82,7 @@ class TestURLFilteringRule:
 
             # Retrieve the specific url filtering rule
             retrieved_rule = client.url_filtering.get_rule(rule_id)
-            assert (
-                retrieved_rule["id"] == rule_id
-            ), "Failed to retrieve the correct url filtering rule"
+            assert retrieved_rule["id"] == rule_id, "Failed to retrieve the correct url filtering rule"
 
             # Update the url filtering rule
             updated_description = "Updated " + generate_random_string()
@@ -92,15 +90,11 @@ class TestURLFilteringRule:
                 rule_id,
                 description=updated_description,
             )
-            assert (
-                updated_rule["description"] == updated_description
-            ), "Failed to update description for url filtering rule"
+            assert updated_rule["description"] == updated_description, "Failed to update description for url filtering rule"
 
             # List static ips and ensure the updated static ip is in the list
             ip_list = client.url_filtering.list_rules()
-            assert any(
-                ip["id"] == rule_id for ip in ip_list
-            ), "Updated url filtering rule not found in list"
+            assert any(ip["id"] == rule_id for ip in ip_list), "Updated url filtering rule not found in list"
 
         except Exception as exc:
             errors.append(exc)
@@ -111,15 +105,11 @@ class TestURLFilteringRule:
             if rule_id:
                 try:
                     delete_response_code = client.url_filtering.delete_rule(rule_id)
-                    assert (
-                        delete_response_code == 204
-                    ), "Failed to delete url filtering rule"
+                    assert delete_response_code == 204, "Failed to delete url filtering rule"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting url filtering rule failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the url filtering rule lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the url filtering rule lifecycle test: {errors}"
