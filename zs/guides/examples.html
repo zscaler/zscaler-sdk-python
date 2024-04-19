@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="prev" title="Support Guide" href="support.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Support Guide" href="support.html" /><link rel="prev" title="Guides" href="index.html" />
 
     <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Troubleshooting Guide</title>
+        <title>Examples</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -212,9 +212,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="support.html">Support Guide</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Troubleshooting Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
 </ul>
 </li>
 </ul>
@@ -251,11 +251,94 @@
           </label>
         </div>
         <article role="main">
-          <section id="troubleshooting-guide">
-<span id="id1"></span><h1>Troubleshooting Guide<a class="headerlink" href="#troubleshooting-guide" title="Permalink to this heading">#</a></h1>
-<section id="how-to-troubleshoot-your-problem">
-<h2>How to troubleshoot your problem<a class="headerlink" href="#how-to-troubleshoot-your-problem" title="Permalink to this heading">#</a></h2>
-<p>This section is under construction</p>
+          <section id="examples">
+<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h1>
+<section id="example-scripts">
+<h2>Example scripts<a class="headerlink" href="#example-scripts" title="Permalink to this heading">#</a></h2>
+<p>There are several example scripts written as CLI programs in the
+<a class="reference external" href="https://github.com/zscaler/zscaler-sdk-python/tree/master/examples">examples directory</a>
+for both ZPA and ZIA interactions:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/zscaler/zscaler-sdk-python/tree/master/examples/zpa">ZPA Examples</a></p></li>
+<li><p><a class="reference external" href="https://github.com/zscaler/zscaler-sdk-python/tree/master/examples/zia">ZIA Examples</a></p></li>
+</ul>
+</section>
+<section id="zpa-cookbook-examples">
+<h2>ZPA Cookbook examples<a class="headerlink" href="#zpa-cookbook-examples" title="Permalink to this heading">#</a></h2>
+<section id="get-saml-attribute-information">
+<h3>Get SAML Attribute Information<a class="headerlink" href="#get-saml-attribute-information" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zscaler.zpa</span> <span class="kn">import</span> <span class="n">ZPAClientHelper</span>
+
+<span class="n">ZPA_CLIENT_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLIENT_ID&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CLIENT_SECRET</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLIENT_SECRET&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CUSTOMER_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CUSTOMER_ID&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CLOUD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLOUD&quot;</span><span class="p">)</span>
+
+<span class="n">zpa</span> <span class="o">=</span> <span class="n">ZPAClientHelper</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">ZPA_CLIENT_ID</span><span class="p">,</span> <span class="n">client_secret</span><span class="o">=</span><span class="n">ZPA_CLIENT_SECRET</span><span class="p">,</span> <span class="n">customer_id</span><span class="o">=</span><span class="n">ZPA_CUSTOMER_ID</span><span class="p">,</span> <span class="n">cloud</span><span class="o">=</span><span class="n">ZPA_CLOUD</span><span class="p">)</span>
+
+<span class="c1"># Fetch and print SAML attributes using the ZPA client.</span>
+<span class="k">for</span> <span class="n">saml_attribute</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">saml_attributes</span><span class="o">.</span><span class="n">list_attributes</span><span class="p">():</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">saml_attribute</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Box</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191061&#39;</span><span class="p">,</span> <span class="s1">&#39;creation_time&#39;</span><span class="p">:</span> <span class="s1">&#39;1651557323&#39;</span><span class="p">,</span> <span class="s1">&#39;modified_by&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191056&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;DepartmentName_BD_Okta_Users&#39;</span><span class="p">,</span> <span class="s1">&#39;user_attribute&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;idp_id&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191058&#39;</span><span class="p">,</span> <span class="s1">&#39;saml_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DepartmentName&#39;</span><span class="p">,</span> <span class="s1">&#39;idp_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BD_Okta_Users&#39;</span><span class="p">})</span>
+<span class="n">Box</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191062&#39;</span><span class="p">,</span> <span class="s1">&#39;creation_time&#39;</span><span class="p">:</span> <span class="s1">&#39;1651557323&#39;</span><span class="p">,</span> <span class="s1">&#39;modified_by&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191056&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Email_BD_Okta_Users&#39;</span><span class="p">,</span> <span class="s1">&#39;user_attribute&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;idp_id&#39;</span><span class="p">:</span> <span class="s1">&#39;216199618143191058&#39;</span><span class="p">,</span> <span class="s1">&#39;saml_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="s1">&#39;idp_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BD_Okta_Users&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="print-specific-scim-group-information">
+<h3>Print Specific SCIM Group Information<a class="headerlink" href="#print-specific-scim-group-information" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zscaler.zpa</span> <span class="kn">import</span> <span class="n">ZPAClientHelper</span>
+
+<span class="n">ZPA_CLIENT_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLIENT_ID&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CLIENT_SECRET</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLIENT_SECRET&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CUSTOMER_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CUSTOMER_ID&quot;</span><span class="p">)</span>
+<span class="n">ZPA_CLOUD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZPA_CLOUD&quot;</span><span class="p">)</span>
+
+<span class="n">zpa</span> <span class="o">=</span> <span class="n">ZPAClientHelper</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">ZPA_CLIENT_ID</span><span class="p">,</span> <span class="n">client_secret</span><span class="o">=</span><span class="n">ZPA_CLIENT_SECRET</span><span class="p">,</span> <span class="n">customer_id</span><span class="o">=</span><span class="n">ZPA_CUSTOMER_ID</span><span class="p">,</span> <span class="n">cloud</span><span class="o">=</span><span class="n">ZPA_CLOUD</span><span class="p">)</span>
+
+<span class="c1"># Fetch and print a Specific SCIM Group using the ZPA client.</span>
+<span class="k">for</span> <span class="n">scim_group</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">scim_groups</span><span class="o">.</span><span class="n">list_groups</span><span class="p">(</span><span class="n">idp_id</span><span class="o">=</span><span class="s1">&#39;123456789&#39;</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;A000&#39;</span><span class="p">):</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">scim_group</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Box</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2079446</span><span class="p">,</span> <span class="s1">&#39;modified_time&#39;</span><span class="p">:</span> <span class="mi">1699852094</span><span class="p">,</span> <span class="s1">&#39;creation_time&#39;</span><span class="p">:</span> <span class="mi">1699852094</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;A000&#39;</span><span class="p">,</span> <span class="s1">&#39;idp_id&#39;</span><span class="p">:</span> <span class="mi">216199618143191058</span><span class="p">,</span> <span class="s1">&#39;internal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;c32d4677-3ead-4964-bf0a-d4876d5ce5a1&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="zia-cookbook-examples">
+<h2>ZIA Cookbook examples<a class="headerlink" href="#zia-cookbook-examples" title="Permalink to this heading">#</a></h2>
+<section id="list-of-firewall-rules-by-name">
+<h3>List of firewall rules by name<a class="headerlink" href="#list-of-firewall-rules-by-name" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">zscaler.zia</span> <span class="kn">import</span> <span class="n">ZIAClientHelper</span>
+
+<span class="c1"># Environment variables for API access</span>
+<span class="n">ZIA_USERNAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ZIA_USERNAME&#39;</span><span class="p">)</span>
+<span class="n">ZIA_PASSWORD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ZIA_PASSWORD&#39;</span><span class="p">)</span>
+<span class="n">ZIA_API_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ZIA_API_KEY&#39;</span><span class="p">)</span>
+<span class="n">ZIA_CLOUD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ZIA_CLOUD&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the ZPAClientHelper with environment variables.</span>
+<span class="n">zia</span> <span class="o">=</span> <span class="n">ZIAClientHelper</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">ZIA_USERNAME</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">ZIA_PASSWORD</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">ZIA_API_KEY</span><span class="p">,</span> <span class="n">cloud</span><span class="o">=</span><span class="n">ZIA_CLOUD</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">zia</span><span class="o">.</span><span class="n">firewall</span><span class="o">.</span><span class="n">list_rules</span><span class="p">():</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Default Firewall Filtering Rule&#39;</span>
+<span class="s1">&#39;Block malicious IPs and domains&#39;</span>
+<span class="s1">&#39;UCaaS One Click Rule&#39;</span>
+<span class="s1">&#39;Office 365 One Click Rule&#39;</span>
+<span class="s1">&#39;Recommended Firewall Rule&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -264,15 +347,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="support.html">
+          <a class="next-page" href="support.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Support Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Support Guide</div>
+                <div class="title">Guides</div>
                 
               </div>
             </a>
@@ -306,8 +397,17 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Troubleshooting Guide</a><ul>
-<li><a class="reference internal" href="#how-to-troubleshoot-your-problem">How to troubleshoot your problem</a></li>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#example-scripts">Example scripts</a></li>
+<li><a class="reference internal" href="#zpa-cookbook-examples">ZPA Cookbook examples</a><ul>
+<li><a class="reference internal" href="#get-saml-attribute-information">Get SAML Attribute Information</a></li>
+<li><a class="reference internal" href="#print-specific-scim-group-information">Print Specific SCIM Group Information</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zia-cookbook-examples">ZIA Cookbook examples</a><ul>
+<li><a class="reference internal" href="#list-of-firewall-rules-by-name">List of firewall rules by name</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

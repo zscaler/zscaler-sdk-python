@@ -212,6 +212,7 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
 </ul>
@@ -271,7 +272,7 @@ Privileged Remote Access API endpoints.</p>
 <li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start timestamp in UNIX format for when the approval begins.</p></li>
 <li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end timestamp in UNIX format for when the approval ends.</p></li>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The status of the privileged approval. Supported values are: INVALID, ACTIVE, FUTURE, EXPIRED.</p></li>
-<li><p><strong>working_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary containing the details of working hours including cron expressions for start and end times, actual start and end times, days of the week, and time zone.</p></li>
+<li><p><strong>working_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Dictionary containing details of working hours.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
@@ -286,7 +287,7 @@ Privileged Remote Access API endpoints.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Create a PRA approval with the minimum required parameters and working hours:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">add_approval</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">add_approval</span><span class="p">(</span>
 <span class="gp">... </span>  <span class="n">email_ids</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;jdoe@example.com&#39;</span><span class="p">],</span>
 <span class="gp">... </span>  <span class="n">application_ids</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;999999999&#39;</span><span class="p">],</span>
 <span class="gp">... </span>  <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;1712856502&#39;</span><span class="p">,</span>
@@ -324,7 +325,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">add_bulk_console</span><span class="p">([</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">add_bulk_console</span><span class="p">([</span>
 <span class="gp">... </span>    <span class="p">{</span>
 <span class="gp">... </span>        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;PRA Console Example 1&#39;</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s1">&#39;pra_application_id&#39;</span><span class="p">:</span> <span class="s1">&#39;999999999&#39;</span><span class="p">,</span>
@@ -368,7 +369,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">add_console</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">add_console</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PRA Console Example&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">pra_application_id</span><span class="o">=</span><span class="s1">&#39;999999999&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">pra_portal_ids</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;999999999&#39;</span><span class="p">],</span>
@@ -415,7 +416,7 @@ can also be included.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Create a pra portal with the minimum required parameters:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">add_portal</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">add_portal</span><span class="p">(</span>
 <span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PRA Portal Example&#39;</span><span class="p">,</span>
 <span class="gp">... </span>  <span class="n">certificate_id</span><span class="o">=</span><span class="s1">&#39;123456789&#39;</span><span class="p">,</span>
 <span class="gp">... </span>  <span class="n">user_notification_enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -439,7 +440,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">delete_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">delete_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -460,7 +461,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">delete_console</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">delete_console</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -481,7 +482,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">delete_credential</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">delete_credential</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -502,7 +503,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">delete_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">delete_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -520,7 +521,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">expired_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">expired_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -541,7 +542,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">get_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">get_approval</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -562,7 +563,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">get_console</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">get_console</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -583,7 +584,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">get_console_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">get_console_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -604,7 +605,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">get_credential</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">get_credential</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -625,7 +626,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">get_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">get_portal</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -639,9 +640,10 @@ can also be included.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of items to request before stopping iteration.</p></li>
 <li><p><strong>max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of pages to request before stopping iteration.</p></li>
-<li><p><strong>pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specifies the page size. The default size is 20, but the maximum size is 500.</p></li>
+<li><p><strong>pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specifies the page size. Default is 20, maximum is 500.</p></li>
 <li><p><strong>search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to match against features and fields.</p></li>
-<li><p><strong>search_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The field to search against. Defaults to ‘name’. Commonly used fields include ‘name’ and ‘email_ids’.</p></li>
+<li><p><strong>search_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The field to search against. Defaults to ‘name’. Commonly used fields
+include ‘name’ and ‘email_ids’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -652,16 +654,25 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Search by default field ‘name’:
-&gt;&gt;&gt; for pra_approval in zpa.privilegedremoteaccess.list_approval(search=’Example_Name’):
-…     pprint(pra_approval)</p>
-<p>Search by ‘email_ids’:
-&gt;&gt;&gt; for pra_approval in zpa.privilegedremoteaccess.list_approval(<a class="reference external" href="mailto:search='jdoe&#37;&#52;&#48;example&#46;com">search=’jdoe<span>&#64;</span>example<span>&#46;</span>com</a>’, search_field=’email_ids’):
-…     pprint(pra_approval)</p>
-<p>Specify maximum items and use an explicit search field:
-&gt;&gt;&gt; approvals = zpa.privilegedremoteaccess.list_approval(search=’Example_Name’, search_field=’name’, max_items=10)
-&gt;&gt;&gt; for approval in approvals:
-…     pprint(approval)</p>
+<p>Search by default field ‘name’:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">pra_approval</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Search by ‘email_ids’:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">approval</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;jdoe@example.com&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;email_ids&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">approval</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Specify maximum items and use an explicit search field:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">approvals</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_approval</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">search</span><span class="o">=</span><span class="s1">&#39;Example_Name&#39;</span><span class="p">,</span> <span class="n">search_field</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">approval</span> <span class="ow">in</span> <span class="n">approvals</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">approval</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -685,7 +696,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_console</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">list_consoles</span><span class="p">():</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_console</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_consoles</span><span class="p">():</span>
 <span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">pra_console</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -712,7 +723,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_credential</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">list_credentials</span><span class="p">():</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_credential</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_credentials</span><span class="p">():</span>
 <span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">pra_credential</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -739,7 +750,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_portal</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">list_portals</span><span class="p">():</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pra_portal</span> <span class="ow">in</span> <span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">list_portals</span><span class="p">():</span>
 <span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">pra_portal</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -766,7 +777,7 @@ can also be included.</p>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The new description of the PRA console.</p></li>
 <li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Indicates whether the console should be enabled.</p></li>
 <li><p><strong>pra_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier of the associated PRA application to be linked with the console.</p></li>
-<li><p><strong>pra_portal_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A list of unique identifiers for the associated PRA portals to be linked with the console.</p></li>
+<li><p><strong>pra_portal_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – List of unique IDs for the associated PRA portals to be linked with the console.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -777,7 +788,7 @@ can also be included.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">update_console</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">update_console</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">console_id</span><span class="o">=</span><span class="s1">&#39;99999&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Updated PRA Console&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Updated Description&#39;</span><span class="p">,</span>
@@ -820,7 +831,7 @@ can also be included.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Update a USERNAME_PASSWORD credential:
-&gt;&gt;&gt; zpa.privilegedremoteaccess.update_credential(
+&gt;&gt;&gt; zpa.privileged_remote_access.update_credential(
 …     credential_id=’2223’,
 …     username=’jdoe’,
 …     name=’John Doe’,
@@ -861,13 +872,13 @@ can also be included.</p>
 </dl>
 <p class="rubric">Examples</p>
 <p>Update the name of a portal:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">update_portal</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">update_portal</span><span class="p">(</span>
 <span class="gp">... </span>  <span class="s1">&#39;99999&#39;</span><span class="p">,</span>
 <span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Updated PRA Portal&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Update the pra portal:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privilegedremoteaccess</span><span class="o">.</span><span class="n">update_portal</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">privileged_remote_access</span><span class="o">.</span><span class="n">update_portal</span><span class="p">(</span>
 <span class="gp">... </span>   <span class="s1">&#39;99999&#39;</span><span class="p">,</span>
 <span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Updated PRA Portal&#39;</span><span class="p">)</span>
 </pre></div>
