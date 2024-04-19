@@ -87,5 +87,3 @@ local_dev
 *.swp
 .DS_Store
 install_package.sh
-zscaler
-tests
