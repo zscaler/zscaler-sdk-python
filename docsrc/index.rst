@@ -2,7 +2,7 @@
    :description lang=en:
         Official Zscaler Python  SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :hidden:
    :caption: Contents
 
