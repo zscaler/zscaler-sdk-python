@@ -114,12 +114,12 @@ coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
 	
 build\:dist:
-	python3 setup.py sdist bdist_wheel
+	python setup.py sdist bdist_wheel
 	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
 	ls -l dist
 
 publish\:test:
-	python3 -m twine upload --repository testpypi dist/*
+	python -m twine upload --repository testpypi dist/*
 
 publish\:prod:
 	python3 -m twine upload dist/*
