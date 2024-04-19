@@ -34,7 +34,7 @@ setup(name="zscaler-sdk-python",
       url="https://zscaler-sdk-python.readthedocs.io",
       keywords="zscaler, sdk, zpa, zia, zdx, zcc, zcon",
       classifiers=[
-          "Development Status :: 1 - Beta",
+          "Development Status :: 4 - Beta",
           "Intended Audience :: Developers",
           "License :: OSI Approved :: MIT License",
           "Programming Language :: Python :: 3.8",
