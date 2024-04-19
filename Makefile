@@ -55,7 +55,6 @@ clean-build:
 
 clean-docs:
 	rm -fr docs/_build/
-	rm -fr docs/_diagrams/
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
