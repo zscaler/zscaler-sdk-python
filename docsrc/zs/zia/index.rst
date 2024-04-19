@@ -10,3 +10,6 @@ This package covers the ZIA interface.
 
 .. automodule:: zscaler.zia
     :members:
+    :undoc-members:
+    :show-inheritance:
+
