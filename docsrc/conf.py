@@ -15,7 +15,10 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath("../.."))
+
+# Check if building documentation on RTD
+on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
 
@@ -111,7 +114,7 @@ html_static_path = []
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "Zscalerdoc"
+htmlhelp_basename = "zscalerdoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -137,7 +140,7 @@ latex_documents = [
     (
         master_doc,
         "Zscaler.tex",
-        "Zscaler Documentation",
+        "Zscaler SDK Python Documentation",
         "Zscaler Technology Alliances",
         "manual",
     ),

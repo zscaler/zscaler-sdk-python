@@ -259,7 +259,8 @@
 <span class="target" id="module-zscaler.zia"></span><dl class="py class">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZIAClientHelper</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper" title="Permalink to this definition">#</a></dt>
-<dd><p>A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ZIAClient</span></code></p>
+<p>A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.</p>
 <p>The ZIA object stores the session token and simplifies access to CRUD options within the ZIA platform.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.api_key">
@@ -331,6 +332,11 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.ERROR_MESSAGES">
+<span class="sig-name descname"><span class="pre">ERROR_MESSAGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'EMPTY_RESULTS':</span> <span class="pre">'No</span> <span class="pre">results</span> <span class="pre">found</span> <span class="pre">for</span> <span class="pre">page</span> <span class="pre">{page}.',</span> <span class="pre">'MISSING_DATA_KEY':</span> <span class="pre">&quot;The</span> <span class="pre">key</span> <span class="pre">'{data_key_name}'</span> <span class="pre">was</span> <span class="pre">not</span> <span class="pre">found</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">response</span> <span class="pre">for</span> <span class="pre">page</span> <span class="pre">{page}.&quot;,</span> <span class="pre">'UNEXPECTED_STATUS':</span> <span class="pre">'Unexpected</span> <span class="pre">status</span> <span class="pre">code</span> <span class="pre">{status_code}</span> <span class="pre">received</span> <span class="pre">for</span> <span class="pre">page</span> <span class="pre">{page}.'}</span></em><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.ERROR_MESSAGES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.activate">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">activate</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.activate" title="Permalink to this definition">#</a></dt>
@@ -355,6 +361,11 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <dd><p>The interface object for the <a class="reference internal" href="audit_logs.html#zia-audit-logs"><span class="std std-ref">ZIA Admin Audit Logs interface</span></a>.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.authenticate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.authentication_settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authentication_settings</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.authentication_settings" title="Permalink to this definition">#</a></dt>
@@ -373,6 +384,16 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <dd><p>The interface object for the <a class="reference internal" href="dlp.html#zia-dlp"><span class="std std-ref">ZIA DLP Dictionaries interface</span></a>.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.env_cloud">
+<span class="sig-name descname"><span class="pre">env_cloud</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'zscaler'</span></em><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.env_cloud" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.extractJSessionIDFromHeaders">
+<span class="sig-name descname"><span class="pre">extractJSessionIDFromHeaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.extractJSessionIDFromHeaders" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.firewall">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">firewall</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.firewall" title="Permalink to this definition">#</a></dt>
@@ -384,6 +405,11 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forwarding_control</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.forwarding_control" title="Permalink to this definition">#</a></dt>
 <dd><p>The interface object for the <a class="reference internal" href="forwarding_control.html#zia-forwarding-control"><span class="std std-ref">ZIA Forwarding Control Policies interface</span></a>.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.is_session_expired">
+<span class="sig-name descname"><span class="pre">is_session_expired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.is_session_expired" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.isolation_profile">
@@ -426,6 +452,11 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traffic</span></span><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.traffic" title="Permalink to this definition">#</a></dt>
 <dd><p>The interface object for the <a class="reference internal" href="traffic.html#zia-traffic"><span class="std std-ref">ZIA Traffic Forwarding interface</span></a>.</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://zsapi.zscaler.net/api/v1'</span></em><a class="headerlink" href="#zscaler.zia.ZIAClientHelper.url" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zscaler.zia.ZIAClientHelper.url_categories">
@@ -529,15 +560,20 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.password"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.password</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.cloud"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.cloud</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.override_url"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.override_url</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.ERROR_MESSAGES"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.ERROR_MESSAGES</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.activate"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.activate</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.admin_and_role_management"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.admin_and_role_management</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.apptotal"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.apptotal</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.audit_logs"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.audit_logs</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.authenticate"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.authenticate()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.authentication_settings"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.authentication_settings</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.device_management"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.device_management</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.dlp"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.dlp</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.env_cloud"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.env_cloud</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.extractJSessionIDFromHeaders"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.extractJSessionIDFromHeaders()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.firewall"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.firewall</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.forwarding_control"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.forwarding_control</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.is_session_expired"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.is_session_expired()</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.isolation_profile"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.isolation_profile</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.labels"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.labels</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.locations"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.locations</span></code></a></li>
@@ -545,6 +581,7 @@ i.e. <a class="reference external" href="http://">http://</a> or <a class="refer
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.security"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.security</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.ssl"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.ssl</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.traffic"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.traffic</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.url"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.url</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.url_categories"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.url_categories</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.url_filtering"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.url_filtering</span></code></a></li>
 <li><a class="reference internal" href="#zscaler.zia.ZIAClientHelper.users"><code class="docutils literal notranslate"><span class="pre">ZIAClientHelper.users</span></code></a></li>
