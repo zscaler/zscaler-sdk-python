@@ -10,7 +10,7 @@
    zs/zpa/index
    zs/guides/index
 
-Zscaler SDK Python - Library Reference
+Zscaler SDK Python (Beta) - Library Reference
 =====================================================================
 Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 
