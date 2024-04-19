@@ -9,5 +9,3 @@ Methods are accessible via ``zia.admin_and_role_management``
 
 .. automodule:: zscaler.zia.admin_and_role_management
     :members:
-    :undoc-members:
-    :show-inheritance:
