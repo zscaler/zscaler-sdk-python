@@ -9,3 +9,4 @@ sphinx==7.0.1
 toml==0.10.2
 urllib3<2
 zscaler-sdk-python==0.1.0
+pytz
