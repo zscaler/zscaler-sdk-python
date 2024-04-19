@@ -17,4 +17,4 @@ sphinx:
 # Zscaler doc build requirements
 python:
   install:
-  - requirements: docsrc/dev_requirements.txt
+  - requirements: dev_requirements.txt
