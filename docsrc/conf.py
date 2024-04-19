@@ -15,10 +15,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../../'))
-
-# Check if building documentation on RTD
-on_rtd = os.environ.get("READTHEDOCS", None) == "True"
+sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
