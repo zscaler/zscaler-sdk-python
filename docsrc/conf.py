@@ -16,6 +16,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../../zscaler"))
+print("Base path for docs:", os.path.abspath("../"))
 
 # -- Project information -----------------------------------------------------
 
