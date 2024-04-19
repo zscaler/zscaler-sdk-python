@@ -1,12 +1,6 @@
 import io
-import pathlib
-
 from setuptools import setup, find_packages
 
-version_data = {}
-version_file = pathlib.Path(__file__).parent / './zscaler/__init__.py'
-with version_file.open('r') as f:
-    exec(f.read(), version_data)
 
 packages = [
     "zscaler",
@@ -21,7 +15,7 @@ packages = [
 package_data = {"": ["*"]}
 
 setup(name="zscaler-sdk-python",
-      version=version_data['__version__'],
+      version='0.1.1',
       packages=find_packages(exclude=["tests", "*tests.*", "*tests"]),
       package_data=package_data,
       python_requires=">=3.8,<4.0",
