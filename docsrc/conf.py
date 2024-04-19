@@ -15,8 +15,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../zscaler"))
-print("Base path for docs:", os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
@@ -192,7 +191,6 @@ epub_exclude_files = ["search.html"]
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "restfly": ("https://restfly.readthedocs.io/en/latest/", None),
-    "box": ("https://box.readthedocs.io/en/latest", None),
 }
 
 # -- Options for todo extension ----------------------------------------------
