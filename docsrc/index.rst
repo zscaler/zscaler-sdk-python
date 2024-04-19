@@ -6,9 +6,9 @@
    :hidden:
    :caption: Contents
 
-   zs/zia/index
-   zs/zpa/index
-   zs/guides/index
+   zia/index
+   zpa/index
+   guides/index
 
 Zscaler SDK Python (Beta) - Library Reference
 =====================================================================
@@ -46,8 +46,8 @@ Products
 ---------
 This repository contains the Zscaler SDK for Python. This SDK can be used to interact with several Zscaler services such as:
 
-- :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
-- :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+- :doc:`Zscaler Private Access (ZPA) <zpa/index>`
+- :doc:`Zscaler Internet Access (ZIA) <zia/index>`
 
 * `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
 
