@@ -8,3 +8,5 @@ responses==0.23.1
 sphinx==7.0.1
 toml==0.10.2
 urllib3<2
+pytz
+zscaler-sdk-python
