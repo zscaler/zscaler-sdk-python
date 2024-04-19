@@ -49,7 +49,7 @@ This repository contains the Zscaler SDK for Python. This SDK can be used to int
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
 
-* `Documentation <https://://zscaler-sdk-python.readthedocs.io>`_
+* `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
 
 Installation
 ==============
