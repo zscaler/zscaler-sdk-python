@@ -114,8 +114,8 @@ coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
 	
 build\:dist:
-	python setup.py sdist bdist_wheel
-	pip install dist/zscaler-sdk-python-${VERSION}.tar.gz
+	python3 setup.py sdist bdist_wheel
+	pip3 install dist/zscaler-sdk-python-${VERSION}.tar.gz
 	ls -l dist
 
 publish\:test:
