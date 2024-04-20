@@ -693,10 +693,6 @@ class TrafficForwardingAPI:
             :obj:`Box`: The newly created VPN credential resource record.
         """
 
-        # Generate a random PSK if not provided
-        if not pre_shared_key:
-            pre_shared_key = self.randomize_psk()
-
         payload = {
             "type": authentication_type,
             "preSharedKey": pre_shared_key,

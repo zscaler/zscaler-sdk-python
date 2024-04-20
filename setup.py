@@ -15,7 +15,7 @@ packages = [
 package_data = {"": ["*"]}
 
 setup(name="zscaler-sdk-python",
-      version='0.1.1',
+      version='0.1.2',
       packages=find_packages(exclude=["tests", "*tests.*", "*tests"]),
       package_data=package_data,
       python_requires=">=3.8,<4.0",
