@@ -154,6 +154,27 @@ class CloudSandboxAPI:
         """
         return self.rest.get("behavioralAnalysisAdvancedSettings")
 
+    def get_file_hash_count(self) -> Box:
+        """
+        Retrieves the Cloud Sandbox used and unused quota for blocking MD5 file hashes.
+
+        This method fetches the count of MD5 hashes currently blocked by the Sandbox and the remaining
+        quota available for blocking additional hashes.
+
+        Returns:
+            Box: A Box object containing the used and unused quotas for MD5 hash blocking.
+
+        Examples:
+            >>> file_hash_quota = zia.sandbox.get_file_hash_count()
+            >>> pprint(file_hash_quota)
+
+        The returned Box object contains the following keys:
+        - blocked_file_hashes_count: The number of unique MD5 file hashes that are currently blocked.
+        - remaining_file_hashes: The remaining quota available for blocking additional MD5 file hashes.
+        """
+        response = self.rest.get("behavioralAnalysisAdvancedSettings/fileHashCount")
+        return response
+
     def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> Box:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.

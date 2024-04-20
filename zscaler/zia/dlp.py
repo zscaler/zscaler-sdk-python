@@ -466,11 +466,15 @@ class DLPAPI:
             >>> pprint(zia.dlp.list_dlp_icap_servers('ZS_ICAP'))
 
         """
-        payload = {"search": query}
-        list = self.rest.get(path="/icapServers", params=payload)
-        if isinstance(list, Response):
+        response = self.rest.get("/icapServers")
+        if isinstance(response, Response):
             return None
-        return list
+        return response
+        # payload = {"search": query}
+        # list = self.rest.get(path="/icapServers", params=payload)
+        # if isinstance(list, Response):
+        #     return None
+        # return list
 
     def get_dlp_icap_servers(self, icap_server_id: str) -> Box:
         """
@@ -511,19 +515,18 @@ class DLPAPI:
         Examples:
             Print all incident receivers
 
-            >>> for dlp incident receiver in zia.dlp.list_dlp_incident_receiver():
-            ...    pprint(receiver)
+            >>> for receiver in zia.dlp.list_dlp_incident_receiver():
+            ...    pprint(dlp)
 
             Print Incident Receiver that match the name or description 'ZS_INC_RECEIVER_01'
 
             >>> pprint(zia.dlp.list_dlp_incident_receiver('ZS_INC_RECEIVER_01'))
 
         """
-        payload = {"search": query}
-        response = self.rest.get(path="/incidentReceiverServers", params=payload)
-        if isinstance(response, Response) and response.ok:
-            return response.json()
-        return []  # Return an empty list in case of no data or error
+        response = self.rest.get("/incidentReceiverServers")
+        if isinstance(response, Response):
+            return None
+        return response
 
     def get_dlp_incident_receiver(self, receiver_id: str) -> Box:
         """
