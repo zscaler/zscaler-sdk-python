@@ -119,7 +119,7 @@ build\:dist:
 	ls -l dist
 
 publish\:test:
-	python -m twine upload --repository testpypi dist/*
+	python3 -m twine upload --repository testpypi dist/*
 
 publish\:prod:
 	python3 -m twine upload dist/*
