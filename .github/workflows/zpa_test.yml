@@ -156,7 +156,6 @@ jobs:
                 OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
         needs:
             - zpa-qa1-tenants
-            - zpa-qa2-tenants
 
     zpa-prod-tenants:
         runs-on: ubuntu-latest
