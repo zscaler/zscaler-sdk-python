@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 0.1.3 (April, 24 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Internal Changes
+
+* Removed .devcontainer directory and updated makefile ([#75](https://github.com/zscaler/zscaler-sdk-python/pull/75))
+* Transition from setup.py to Poetry ([#75](https://github.com/zscaler/zscaler-sdk-python/pull/75))
+
 ## 0.1.2 (April, 20 2024)
 
 ### Notes

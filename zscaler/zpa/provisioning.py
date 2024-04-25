@@ -101,9 +101,7 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-        return self.rest.get(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}"
-        )
+        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
 
     def add_provisioning_key(
         self,
@@ -175,9 +173,7 @@ class ProvisioningKeyAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
@@ -219,10 +215,7 @@ class ProvisioningKeyAPI:
         """
 
         # Get the provided provisioning key record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -266,6 +259,4 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-        return self.rest.delete(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}"
-        ).status_code
+        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}").status_code

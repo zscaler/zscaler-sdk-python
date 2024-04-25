@@ -92,9 +92,7 @@ class SCIMGroupsAPI:
             >>> pprint(zpa.scim_groups.get_group('99999'))
 
         """
-        response = self.rest.get(
-            f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1"
-        )
+        response = self.rest.get(f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1")
         return response
 
     def search_group(self, idp_id: str, group_name: str, **kwargs) -> dict:

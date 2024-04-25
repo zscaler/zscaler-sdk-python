@@ -103,8 +103,7 @@ class ZPAGatewayAPI:
 
         if zpa_app_segments:
             payload["zpaAppSegments"] = [
-                {"externalId": segment.get("external_id"), "name": segment.get("name")}
-                for segment in zpa_app_segments
+                {"externalId": segment.get("external_id"), "name": segment.get("name")} for segment in zpa_app_segments
             ]
 
         # Add other optional parameters to payload
@@ -115,9 +114,7 @@ class ZPAGatewayAPI:
         if isinstance(response, Response):
             # Handle error response
             status_code = response.status_code
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_gateway(self, gateway_id: str, **kwargs):
@@ -153,19 +150,14 @@ class ZPAGatewayAPI:
                 value = {snake_to_camel(k): v for k, v in value.items()}
             elif key == "zpa_app_segments" and isinstance(value, list):
                 # Convert nested keys in zpa_app_segments to camelCase
-                value = [
-                    {snake_to_camel(k): v for k, v in item.items()} for item in value
-                ]
+                value = [{snake_to_camel(k): v for k, v in item.items()} for item in value]
 
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"zpaGateways/{gateway_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: "
-                f"{response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: " f"{response.json()}")
 
         # Return the updated object
         return self.get_gateway(gateway_id)

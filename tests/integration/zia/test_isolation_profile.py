@@ -44,30 +44,18 @@ class TestIsolationProfile:
 
                 # Fetch the selected profile by its ID
                 try:
-                    fetched_profile = client.isolation_profile.get_profiles_by_id(
-                        profile_id
-                    )
-                    assert (
-                        fetched_profile is not None
-                    ), "Expected a valid profile object"
-                    assert (
-                        fetched_profile.get("id") == profile_id
-                    ), "Mismatch in profile ID"
+                    fetched_profile = client.isolation_profile.get_profiles_by_id(profile_id)
+                    assert fetched_profile is not None, "Expected a valid profile object"
+                    assert fetched_profile.get("id") == profile_id, "Mismatch in profile ID"
                 except Exception as exc:
                     errors.append(f"Fetching profile by ID failed: {exc}")
 
                 # Attempt to retrieve the profile by name
                 try:
                     profile_name = first_profile.get("name")
-                    profile_by_name = client.isolation_profile.get_profiles_by_name(
-                        profile_name
-                    )
-                    assert (
-                        profile_by_name is not None
-                    ), "Expected a valid profile object when searching by name"
-                    assert (
-                        profile_by_name.get("id") == profile_id
-                    ), "Mismatch in profile ID when searching by name"
+                    profile_by_name = client.isolation_profile.get_profiles_by_name(profile_name)
+                    assert profile_by_name is not None, "Expected a valid profile object when searching by name"
+                    assert profile_by_name.get("id") == profile_id, "Mismatch in profile ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Fetching profile by name failed: {exc}")
 

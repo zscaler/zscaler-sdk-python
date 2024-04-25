@@ -174,9 +174,7 @@ class ForwardingControlAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(
-                    f"API call failed with status {status_code}: {response.json()}"
-                )
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_rule(self, rule_id: str, **kwargs) -> Box:
@@ -247,9 +245,7 @@ class ForwardingControlAPI:
         response = self.rest.put(f"forwardingRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
         # Return the updated object
         return self.get_rule(rule_id)

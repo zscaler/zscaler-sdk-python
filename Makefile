@@ -119,11 +119,21 @@ build\:dist:
 	ls -l dist
 
 publish\:test:
-	python -m twine upload --repository testpypi dist/*
+	python3 -m twine upload --repository testpypi dist/*
 
 publish\:prod:
 	python3 -m twine upload dist/*
 
+sync-deps:
+	poetry export -f requirements.txt > requirements.txt
 
+local-setup:
+ifeq ($(wildcard ~/.local/bin/poetry),)
+	@echo "installing poetry"
+	curl -sSL https://install.python-poetry.org | python3 -
+else
+	@echo "poetry installation found"
+endif
+	~/.local/bin/poetry install
 
-.PHONY: clean-pyc clean-build docs clean local-setup
+.PHONY: clean-pyc clean-build docs clean

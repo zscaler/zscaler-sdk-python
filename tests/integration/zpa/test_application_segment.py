@@ -71,9 +71,7 @@ class TestApplicationSegment:
         # Create a Segment Group
         try:
             segment_group_name = "tests-" + generate_random_string()
-            created_segment_group = client.segment_groups.add_group(
-                name=segment_group_name, enabled=True
-            )
+            created_segment_group = client.segment_groups.add_group(name=segment_group_name, enabled=True)
             segment_group_id = created_segment_group["id"]
         except Exception as exc:
             errors.append(f"Creating Segment Group failed: {exc}")
@@ -87,9 +85,7 @@ class TestApplicationSegment:
                 description=server_group_description,
                 enabled=True,
                 dynamic_discovery=True,
-                app_connector_group_ids=[
-                    app_connector_group_id
-                ],  # List of App Connector Group IDs
+                app_connector_group_ids=[app_connector_group_id],  # List of App Connector Group IDs
             )
             server_group_id = created_server_group["id"]
         except Exception as exc:
@@ -124,18 +120,14 @@ class TestApplicationSegment:
         try:
             # Since you generate a unique name for the segment, you can use it to search
             apps = client.app_segments.list_segments(search=app_segment_name)
-            assert any(
-                app["id"] == app_segment_id for app in apps
-            ), "Newly created app segment should be in the list"
+            assert any(app["id"] == app_segment_id for app in apps), "Newly created app segment should be in the list"
         except Exception as exc:
             errors.append(f"Listing Application Segments failed: {exc}")
 
         # Test updating the Application Segment
         try:
             updated_description = "Updated " + generate_random_string()
-            client.app_segments.update_segment(
-                segment_id=app_segment_id, description=updated_description
-            )
+            client.app_segments.update_segment(segment_id=app_segment_id, description=updated_description)
             updated_app = client.app_segments.get_segment(segment_id=app_segment_id)
             assert updated_app["description"] == updated_description
         except Exception as exc:
@@ -144,9 +136,7 @@ class TestApplicationSegment:
         # Cleanup resources
         if app_segment_id:
             try:
-                client.app_segments.delete_segment(
-                    segment_id=app_segment_id, force_delete=True
-                )
+                client.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
             except Exception as exc:
                 errors.append(f"Deleting Application Segment failed: {exc}")
 
@@ -162,6 +152,4 @@ class TestApplicationSegment:
             except Exception as exc:
                 errors.append(f"Deleting Segment Group failed: {exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the Application Segment lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the Application Segment lifecycle test: {errors}"

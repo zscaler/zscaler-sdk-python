@@ -48,9 +48,7 @@ from zscaler import ZIAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Manage a URL blacklist using the ZIAClientHelper."
-    )
+    parser = argparse.ArgumentParser(description="Manage a URL blacklist using the ZIAClientHelper.")
     parser.add_argument(
         "action",
         choices=["get", "add", "remove", "replace", "erase"],
@@ -88,9 +86,7 @@ def main():
 
     else:
         if not args.urls and args.action != "erase":
-            parser.error(
-                "The '-u/--urls' option is required for the 'add', 'remove', and 'replace' actions."
-            )
+            parser.error("The '-u/--urls' option is required for the 'add', 'remove', and 'replace' actions.")
         url_list = args.urls.split(",") if args.urls else []
 
         if args.action == "add":
