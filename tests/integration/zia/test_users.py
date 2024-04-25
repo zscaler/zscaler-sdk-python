@@ -30,7 +30,7 @@ class TestUsers:
     Integration Tests for the User Management
     """
 
-    #def test_users(self, fs):
+    # def test_users(self, fs):
     #     client = MockZIAClient(fs)
     #     errors = []  # Initialize an empty list to collect errors
     #     user_id = None
@@ -147,9 +147,7 @@ class TestUsers:
         try:
             # List departments with optional parameters
             depts = client.users.list_departments(page_size=2, max_pages=1)
-            assert (
-                len(depts) <= 2
-            ), "More departments returned than expected with page_size=2"
+            assert len(depts) <= 2, "More departments returned than expected with page_size=2"
             assert isinstance(depts, list), "Expected a list of departments"
             if depts:  # If there are any departments
                 # Select the first department for further testing
@@ -159,19 +157,13 @@ class TestUsers:
                 # Fetch the selected department by its ID
                 fetched_dept = client.users.get_department(department_id)
                 assert fetched_dept is not None, "Expected a valid department object"
-                assert (
-                    fetched_dept.get("id") == department_id
-                ), "Mismatch in department ID"
+                assert fetched_dept.get("id") == department_id, "Mismatch in department ID"
 
                 # Attempt to retrieve the department by name
                 dept_name = fetched_dept.get("name")
                 dept_by_name = client.users.get_dept_by_name(dept_name)
-                assert (
-                    dept_by_name is not None
-                ), "Expected a valid department object when searching by name"
-                assert (
-                    dept_by_name.get("id") == department_id
-                ), "Mismatch in department ID when searching by name"
+                assert dept_by_name is not None, "Expected a valid department object when searching by name"
+                assert dept_by_name.get("id") == department_id, "Mismatch in department ID when searching by name"
 
         except Exception as exc:
             errors.append(f"Test failed: {exc}")
@@ -185,12 +177,8 @@ class TestUsers:
 
         try:
             # List groups with optional parameters
-            groups = client.users.list_groups(
-                page_size=2, max_pages=1, sort_order="ASC"
-            )
-            assert (
-                len(groups) <= 2
-            ), "More groups returned than expected with page_size=2"
+            groups = client.users.list_groups(page_size=2, max_pages=1, sort_order="ASC")
+            assert len(groups) <= 2, "More groups returned than expected with page_size=2"
             assert isinstance(groups, list), "Expected a list of groups"
             if groups:
                 first_group = groups[0]
@@ -204,12 +192,8 @@ class TestUsers:
                 # Attempt to retrieve the group by name
                 group_name = fetched_group.get("name")
                 group_by_name = client.users.get_group_by_name(group_name)
-                assert (
-                    group_by_name is not None
-                ), "Expected a valid group object when searching by name"
-                assert (
-                    group_by_name.get("id") == group_id
-                ), "Mismatch in group ID when searching by name"
+                assert group_by_name is not None, "Expected a valid group object when searching by name"
+                assert group_by_name.get("id") == group_id, "Mismatch in group ID when searching by name"
 
         except Exception as exc:
             errors.append(f"Test failed: {exc}")

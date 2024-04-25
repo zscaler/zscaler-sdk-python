@@ -3,9 +3,7 @@ import time
 
 
 class RateLimiter:
-    def __init__(
-        self, get_limit, post_put_delete_limit, get_freq, post_put_delete_freq
-    ):
+    def __init__(self, get_limit, post_put_delete_limit, get_freq, post_put_delete_freq):
         self.lock = threading.Lock()
         self.get_requests = []
         self.post_put_delete_requests = []

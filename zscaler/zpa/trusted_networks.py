@@ -49,9 +49,7 @@ class TrustedNetworksAPI:
             ...    pprint(trusted_network)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/network", **kwargs, api_version="v2"
-        )
+        list, _ = self.rest.get_paginated_data(path="/network", **kwargs, api_version="v2")
         return list
 
     def get_network_by_name(self, name):

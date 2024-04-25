@@ -3,9 +3,7 @@ import logging
 from zscaler.cache.cache import Cache
 
 # Setting up the logger
-logging.basicConfig(
-    level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 class NoOpCache(Cache):

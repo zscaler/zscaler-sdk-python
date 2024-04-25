@@ -106,9 +106,7 @@ class SSLInspectionAPI:
             "signatureAlgorithm": signature,
         }
 
-        return self.rest.post(
-            "sslSettings/generatecsr", json=payload, box=False
-        ).status_code
+        return self.rest.post("sslSettings/generatecsr", json=payload, box=False).status_code
 
     def upload_int_ca_cert(self, cert: tuple) -> int:
         """
@@ -132,9 +130,7 @@ class SSLInspectionAPI:
 
         payload = {"fileUpload": cert}
 
-        return self.rest.post(
-            "sslSettings/uploadcert/text", files=payload, box=False
-        ).status_code
+        return self.rest.post("sslSettings/uploadcert/text", files=payload, box=False).status_code
 
     def upload_int_ca_chain(self, cert: tuple) -> int:
         """
@@ -160,9 +156,7 @@ class SSLInspectionAPI:
 
         payload = {"fileUpload": cert}
 
-        return self.rest.post(
-            "sslSettings/uploadcertchain/text", files=payload, box=False
-        ).status_code
+        return self.rest.post("sslSettings/uploadcertchain/text", files=payload, box=False).status_code
 
     def delete_int_chain(self) -> int:
         """

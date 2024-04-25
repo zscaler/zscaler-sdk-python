@@ -90,16 +90,12 @@ class EmergencyAccessAPI:
         # Append 'activateNow=true' to the URL query parameters if activate_now is True
         query_params = {"activateNow": "true"} if activate_now else {}
 
-        response = self.rest.post(
-            "emergencyAccess/user", params=query_params, json=payload
-        )
+        response = self.rest.post("emergencyAccess/user", params=query_params, json=payload)
         if isinstance(response, Response):
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_user(self, user_id: str, **kwargs) -> Box:
@@ -150,15 +146,11 @@ class EmergencyAccessAPI:
         """
         query_params = {"sendEmail": "true"} if send_email else {}
 
-        response = self.rest.put(
-            f"emergencyAccess/user/{user_id}/activate", params=query_params
-        )
+        response = self.rest.put(f"emergencyAccess/user/{user_id}/activate", params=query_params)
         if response.status_code == 200:
             return self.get_user(user_id)
         else:
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.text}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.text}")
 
     def deactivate_user(self, user_id: str) -> Box:
         """

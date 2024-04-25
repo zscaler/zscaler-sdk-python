@@ -51,12 +51,8 @@ from zscaler import ZPAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Retrieves SAML Attributes from the ZPA cloud."
-    )
-    parser.add_argument(
-        "-l", "--list", action="store_true", help="List all SAML attributes."
-    )
+    parser = argparse.ArgumentParser(description="Retrieves SAML Attributes from the ZPA cloud.")
+    parser.add_argument("-l", "--list", action="store_true", help="List all SAML attributes.")
     parser.add_argument(
         "-g",
         "--get",
@@ -114,9 +110,7 @@ def list_attributes_by_idp_name(client, idp_name):
 
 def search_attribute_by_name(client, attribute_name):
     attributes = client.saml_attributes.list_attributes()
-    filtered_attributes = [
-        attr for attr in attributes if attr["name"] == attribute_name
-    ]
+    filtered_attributes = [attr for attr in attributes if attr["name"] == attribute_name]
     print(
         json.dumps(filtered_attributes, indent=4)
         if filtered_attributes
