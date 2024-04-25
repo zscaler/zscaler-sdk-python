@@ -71,9 +71,7 @@ class TestServerGroup:
                 name=server_group_name,
                 description=server_group_description,
                 dynamic_discovery=True,
-                app_connector_group_ids=[
-                    connector_group_id
-                ],  # Correctly formatted as a list
+                app_connector_group_ids=[connector_group_id],  # Correctly formatted as a list
             )
             server_group_id = created_server_group.get("id", None)
         except Exception as exc:
@@ -98,9 +96,7 @@ class TestServerGroup:
         try:
             # Update the Server Group
             updated_description = "Updated " + generate_random_string()
-            updated_server_group = client.server_groups.update_group(
-                server_group_id, description=updated_description
-            )
+            updated_server_group = client.server_groups.update_group(server_group_id, description=updated_description)
             if updated_server_group["description"] != updated_description:
                 raise AssertionError("Failed to update description for Server Group")
         except Exception as exc:
@@ -110,9 +106,7 @@ class TestServerGroup:
         if server_group_id:
             try:
                 # Cleanup: Delete the Server Group
-                delete_status_server_group = client.server_groups.delete_group(
-                    server_group_id
-                )
+                delete_status_server_group = client.server_groups.delete_group(server_group_id)
                 if delete_status_server_group != 204:
                     raise AssertionError("Failed to delete Server Group")
             except Exception as exc:
@@ -124,6 +118,4 @@ class TestServerGroup:
             except Exception as exc:
                 errors.append(f"Cleanup failed for Connector Group: {exc}")
 
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the server group operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the server group operations test: {errors}"

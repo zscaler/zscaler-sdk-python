@@ -63,7 +63,7 @@ class TestSandbox:
         except Exception as exc:
             pytest.fail(f"Sandbox report retrieval failed: {exc}")
 
-    #def test_sandbox_submit_files(fs):
+    # def test_sandbox_submit_files(fs):
     #     client = MockZIAClient(fs)
     #     errors = []
 
@@ -101,7 +101,7 @@ class TestSandbox:
     # # Assert no errors occurred during the test
     # assert not errors, f"Errors occurred during sandbox file submission: {errors}"
 
-    #def test_submit_file_for_inspection(self, fs):
+    # def test_submit_file_for_inspection(self, fs):
     #     client = MockZIAClient(fs)
     #     errors = []
 

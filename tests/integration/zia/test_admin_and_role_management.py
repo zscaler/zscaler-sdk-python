@@ -54,15 +54,9 @@ class TestAdminRole:
                 # Attempt to retrieve the role by name
                 try:
                     role_name = first_role.get("name")
-                    role_by_name = client.admin_and_role_management.get_roles_by_name(
-                        role_name
-                    )
-                    assert (
-                        role_by_name is not None
-                    ), "Expected a valid role object when searching by name"
-                    assert (
-                        role_by_name.get("id") == role_id
-                    ), "Mismatch in role ID when searching by name"
+                    role_by_name = client.admin_and_role_management.get_roles_by_name(role_name)
+                    assert role_by_name is not None, "Expected a valid role object when searching by name"
+                    assert role_by_name.get("id") == role_id, "Mismatch in role ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Fetching role by name failed: {exc}")
 

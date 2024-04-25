@@ -99,9 +99,7 @@ class TestFirewallRules:
                     description=updated_description,
                 )
                 updated_rule = client.firewall.get_rule(rule_id)
-                assert (
-                    updated_rule["description"] == updated_description
-                ), "Firewall Rule update failed"
+                assert updated_rule["description"] == updated_description, "Firewall Rule update failed"
             except Exception as exc:
                 errors.append(f"Updating Firewall Rule failed: {exc}")
 
@@ -139,6 +137,4 @@ class TestFirewallRules:
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the firewall rule lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the firewall rule lifecycle test: {errors}"

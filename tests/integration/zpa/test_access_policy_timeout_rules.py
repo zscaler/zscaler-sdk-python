@@ -56,18 +56,14 @@ class TestAccessPolicyTimeoutRule:
         try:
             # Test listing Timeout Policy Rules
             all_timeout_rules = client.policies.list_rules("timeout")
-            assert any(
-                rule["id"] == rule_id for rule in all_timeout_rules
-            ), "Timeout Policy Rules not found in list"
+            assert any(rule["id"] == rule_id for rule in all_timeout_rules), "Timeout Policy Rules not found in list"
         except Exception as exc:
             errors.append(f"Failed to list Timeout Policy Rules: {exc}")
 
         try:
             # Test retrieving the specific Timeout Policy Rule
             retrieved_rule = client.policies.get_rule("timeout", rule_id)
-            assert (
-                retrieved_rule["id"] == rule_id
-            ), "Failed to retrieve the correct Timeout Policy Rule"
+            assert retrieved_rule["id"] == rule_id, "Failed to retrieve the correct Timeout Policy Rule"
         except Exception as exc:
             errors.append(f"Failed to retrieve Timeout Policy Rule: {exc}")
 
@@ -101,6 +97,4 @@ class TestAccessPolicyTimeoutRule:
                 errors.append(f"Cleanup failed: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the timeout policy rule operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the timeout policy rule operations test: {errors}"

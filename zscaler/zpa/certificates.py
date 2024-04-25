@@ -83,9 +83,7 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/certificate", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/certificate", **kwargs, api_version="v1")
         return list
 
     def get_certificate_by_name(self, name):
@@ -221,9 +219,7 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/enrollmentCert", **kwargs, api_version="v2"
-        )
+        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", **kwargs, api_version="v2")
         return list
 
     def get_enrolment_cert_by_name(self, name):

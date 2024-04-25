@@ -46,9 +46,7 @@ class AppServersAPI:
         Examples:
             >>> servers = zpa.servers.list_servers()
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/server", **kwargs, api_version="v1"
-        )
+        list, _ = self.rest.get_paginated_data(path="/server", **kwargs, api_version="v1")
         return list
 
     def get_server(self, server_id: str) -> Box:
@@ -80,9 +78,7 @@ class AppServersAPI:
                 return app
         return None
 
-    def add_server(
-        self, name: str, address: str, enabled: bool = True, **kwargs
-    ) -> Box:
+    def add_server(self, name: str, address: str, enabled: bool = True, **kwargs) -> Box:
         """
         Add a new application server.
 

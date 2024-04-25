@@ -15,7 +15,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath(".."))
 
 # Check if building documentation on RTD
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
@@ -28,9 +28,9 @@ author = "Zscaler Technology Alliances"
 html_title = ""
 
 # The short X.Y version
-version = '0.1.2'
+version = "0.1.2"
 # The full version, including alpha/beta/rc tags
-release = '0.1.2'
+release = "0.1.2"
 
 # -- General configuration ---------------------------------------------------
 

@@ -70,9 +70,7 @@ def main():
 
     if args.closest_diverse:
         # Call get_closest_diverse_vip_ids method
-        preferred_vip_id, secondary_vip_id = zia.traffic.get_closest_diverse_vip_ids(
-            ip_address=args.source_ip
-        )
+        preferred_vip_id, secondary_vip_id = zia.traffic.get_closest_diverse_vip_ids(ip_address=args.source_ip)
 
         # Fetch the complete list again to extract detailed information
         vips = zia.traffic.list_vips_recommended(source_ip=args.source_ip)

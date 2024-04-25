@@ -48,9 +48,7 @@ class PostureProfilesAPI:
             >>> for posture_profile in zpa.posture_profiles.list_profiles():
             ...    pprint(posture_profile)
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/posture", **kwargs, api_version="v2"
-        )
+        list, _ = self.rest.get_paginated_data(path="/posture", **kwargs, api_version="v2")
         return list
 
     def get_profile_by_name(self, name):

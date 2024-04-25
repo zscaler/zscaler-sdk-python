@@ -63,9 +63,7 @@ from zscaler import ZIAClientHelper
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Manage Static IPs for Zscaler Internet Access (ZIA)."
-    )
+    parser = argparse.ArgumentParser(description="Manage Static IPs for Zscaler Internet Access (ZIA).")
     parser.add_argument(
         "-a",
         "--add",
@@ -78,12 +76,8 @@ def main():
         metavar="STATIC_IP_ID",
         help="Update an existing static IP by its ID. Requires --ip_address and/or --comment.",
     )
-    parser.add_argument(
-        "-d", "--delete", metavar="STATIC_IP_ID", help="Delete a static IP by its ID."
-    )
-    parser.add_argument(
-        "-l", "--list", action="store_true", help="List all static IPs."
-    )
+    parser.add_argument("-d", "--delete", metavar="STATIC_IP_ID", help="Delete a static IP by its ID.")
+    parser.add_argument("-l", "--list", action="store_true", help="List all static IPs.")
     parser.add_argument(
         "-c",
         "--check",
@@ -117,16 +111,12 @@ def main():
         if not args.ip_address:
             print("Error: Adding a static IP requires an --ip_address argument.")
             return
-        response = zia.traffic.add_static_ip(
-            ip_address=args.ip_address, comment=args.comment
-        )
+        response = zia.traffic.add_static_ip(ip_address=args.ip_address, comment=args.comment)
         print("Static IP added successfully:", json.dumps(response, indent=4))
         changes_made = True
 
     elif args.update:
-        response = zia.traffic.update_static_ip(
-            static_ip_id=args.update, ip_address=args.ip_address, comment=args.comment
-        )
+        response = zia.traffic.update_static_ip(static_ip_id=args.update, ip_address=args.ip_address, comment=args.comment)
         print(f"Static IP {args.update} updated successfully.")
         changes_made = True
 
@@ -151,9 +141,7 @@ def main():
         print("Activating configuration changes. Please wait...")
         time.sleep(5)  # Delay for 5 seconds before activating.
         activation_status = zia.activate.activate()
-        print(
-            "Configuration changes activated successfully. Status:", activation_status
-        )
+        print("Configuration changes activated successfully. Status:", activation_status)
 
 
 if __name__ == "__main__":
