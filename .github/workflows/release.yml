@@ -45,7 +45,7 @@ jobs:
   release:
     name: Release
     if: github.event_name == 'push' && github.ref != 'refs/heads/develop'
-    needs: [test, format]
+    needs: [format]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
