@@ -46,9 +46,7 @@ class TestDLPIcapServer:
                 try:
                     fetched_icap = client.dlp.get_dlp_icap_servers(icap_server_id)
                     assert fetched_icap is not None, "Expected a valid icap object"
-                    assert (
-                        fetched_icap.get("id") == icap_server_id
-                    ), "Mismatch in icap ID"
+                    assert fetched_icap.get("id") == icap_server_id, "Mismatch in icap ID"
                 except Exception as exc:
                     errors.append(f"Fetching icap by ID failed: {exc}")
 
@@ -56,12 +54,8 @@ class TestDLPIcapServer:
                 try:
                     icap_name = first_icap.get("name")
                     icap_by_name = client.dlp.get_dlp_icap_by_name(icap_name)
-                    assert (
-                        icap_by_name is not None
-                    ), "Expected a valid icap object when searching by name"
-                    assert (
-                        icap_by_name.get("id") == icap_server_id
-                    ), "Mismatch in icap ID when searching by name"
+                    assert icap_by_name is not None, "Expected a valid icap object when searching by name"
+                    assert icap_by_name.get("id") == icap_server_id, "Mismatch in icap ID when searching by name"
                 except Exception as exc:
                     errors.append(f"Fetching icap by name failed: {exc}")
 

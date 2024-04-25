@@ -45,9 +45,7 @@ from zscaler import ZPAClientHelper
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Identity Provider for ZPA.")
-    parser.add_argument(
-        "-l", "--list", action="store_true", help="List all Identity Providers."
-    )
+    parser.add_argument("-l", "--list", action="store_true", help="List all Identity Providers.")
     parser.add_argument(
         "-g",
         "--get",

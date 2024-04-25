@@ -48,12 +48,8 @@ class TestCloudFirewallIPDestinationGroup:
                     addresses=["1.1.1.1", "8.8.8.8"],
                     description=group_description,
                 )
-                assert (
-                    created_group.name == group_name
-                ), "Group name mismatch in creation"
-                assert (
-                    created_group.description == group_description
-                ), "Group description mismatch in creation"
+                assert created_group.name == group_name, "Group name mismatch in creation"
+                assert created_group.description == group_description, "Group description mismatch in creation"
                 group_id = created_group.id
             except Exception as exc:
                 errors.append(f"Failed to add IP destination group: {exc}")
@@ -62,9 +58,7 @@ class TestCloudFirewallIPDestinationGroup:
             if group_id:
                 try:
                     group = client.firewall.get_ip_destination_group(group_id)
-                    assert (
-                        group.id == group_id
-                    ), "Failed to retrieve the correct IP destination group"
+                    assert group.id == group_id, "Failed to retrieve the correct IP destination group"
                 except Exception as exc:
                     errors.append(f"Failed to retrieve IP destination group: {exc}")
 
@@ -72,22 +66,16 @@ class TestCloudFirewallIPDestinationGroup:
             if group_id:
                 try:
                     updated_name = "updated-" + generate_random_string()
-                    client.firewall.update_ip_destination_group(
-                        group_id=group_id, name=updated_name
-                    )
+                    client.firewall.update_ip_destination_group(group_id=group_id, name=updated_name)
                     updated_group = client.firewall.get_ip_destination_group(group_id)
-                    assert (
-                        updated_group.name == updated_name
-                    ), "Group name mismatch after update"
+                    assert updated_group.name == updated_name, "Group name mismatch after update"
                 except Exception as exc:
                     errors.append(f"Failed to update IP destination group: {exc}")
 
             # Attempt to list IP destination groups and check if the updated group is in the list
             try:
                 groups = client.firewall.list_ip_destination_groups()
-                assert any(
-                    group.id == group_id for group in groups
-                ), "Updated IP destination group not found in list"
+                assert any(group.id == group_id for group in groups), "Updated IP destination group not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list IP destination groups: {exc}")
 
@@ -101,6 +89,4 @@ class TestCloudFirewallIPDestinationGroup:
                     errors.append(f"Cleanup failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert (
-            len(errors) == 0
-        ), f"Errors occurred during the IP destination group lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the IP destination group lifecycle test: {errors}"

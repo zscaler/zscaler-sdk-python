@@ -58,9 +58,7 @@ class AuthenticationSettingsAPI:
 
         payload = {"urls": url_list}
 
-        resp = self.rest.post(
-            "authSettings/exemptedUrls?action=ADD_TO_LIST", json=payload
-        )
+        resp = self.rest.post("authSettings/exemptedUrls?action=ADD_TO_LIST", json=payload)
 
         # Check if the response object has a 'status_code' attribute before accessing it
         if hasattr(resp, "status_code"):
@@ -89,9 +87,7 @@ class AuthenticationSettingsAPI:
 
         """
         payload = {"urls": url_list}
-        resp = self.rest.post(
-            "authSettings/exemptedUrls?action=REMOVE_FROM_LIST", json=payload
-        )
+        resp = self.rest.post("authSettings/exemptedUrls?action=REMOVE_FROM_LIST", json=payload)
 
         # Return the updated exemption list if the removal was successful.
         if resp == 200:

@@ -118,9 +118,7 @@ class RuleLabelsAPI:
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
             # Handle error response
-            raise Exception(
-                f"API call failed with status {status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_label(self, label_id: str, **kwargs):

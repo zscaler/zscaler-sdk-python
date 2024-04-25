@@ -87,15 +87,9 @@ class LocationsAPI:
             >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
         if location_id and location_name:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
         elif location_name:
-            location = (
-                record
-                for record in self.list_locations(search=location_name)
-                if record.name == location_name
-            )
+            location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
             return next(location, None)
 
         return self.rest.get(f"locations/{location_id}")
@@ -223,9 +217,7 @@ class LocationsAPI:
             # Handle error response
             status_code = response.status_code
             if status_code != 200:
-                raise Exception(
-                    f"API call failed with status {status_code}: {response.json()}"
-                )
+                raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def list_sub_locations(self, location_id: str, **kwargs) -> BoxList:
@@ -435,9 +427,7 @@ class LocationsAPI:
 
         """
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_location(location_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_location(location_id).items()}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -450,9 +440,7 @@ class LocationsAPI:
         response = self.rest.put(f"locations/{location_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
             # Handle error response
-            raise Exception(
-                f"API call failed with status {response.status_code}: {response.json()}"
-            )
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
         # Return the updated object
         return self.get_location(location_id)
@@ -510,9 +498,7 @@ class LocationsAPI:
         """
         return self.rest.get(f"locations/groups/{group_id}")
 
-    def get_location_group_by_name(
-        self, group_name: str, page: int = 1, page_size: int = 100
-    ) -> Box:
+    def get_location_group_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> Box:
         """
         Return a specific location group by its name in ZIA.
 
@@ -567,9 +553,7 @@ class LocationsAPI:
         """
         return self.rest.get(f"locations/groups/lite/{group_id}")
 
-    def get_location_group_lite_by_name(
-        self, group_name: str, page: int = 1, page_size: int = 100
-    ) -> BoxList:
+    def get_location_group_lite_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> BoxList:
         """
         Return specific location groups (lite version) by their name where only name and ID is returned in ZIA.
 
