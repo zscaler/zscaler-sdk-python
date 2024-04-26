@@ -26,19 +26,30 @@ jobs:
                 - ZIA_ZSBETA
         environment: ${{ matrix.environment }}
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+          - name: Checkout code
+            uses: actions/checkout@v4
+            with:
+              token: ${{ secrets.GITHUB_TOKEN }} 
 
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v5
               with:
                 python-version: ${{ matrix.python-version }}
+
+            - name: Cache Python dependencies
+              uses: actions/cache@v4
+              with:
+                path: |
+                  ~/.cache/pip
+                  !~/.cache/pip/log
+                key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+                restore-keys: |
+                  ${{ runner.os }}-pip-
 
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
                 python -m pip install flake8 pytest pytest-cov
-                pip install pytest-cov
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8
@@ -46,7 +57,7 @@ jobs:
                 make lint:zia
 
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 45
@@ -77,30 +88,38 @@ jobs:
               - ZIA_ZS3
         environment: ${{ matrix.environment }}
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+          - name: Checkout code
+            uses: actions/checkout@v4
+            with:
+              token: ${{ secrets.GITHUB_TOKEN }} 
 
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v5
               with:
                 python-version: ${{ matrix.python-version }}
+ 
+            - name: Cache Python dependencies
+              uses: actions/cache@v4
+              with:
+                path: |
+                  ~/.cache/pip
+                  !~/.cache/pip/log
+                key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+                restore-keys: |
+                  ${{ runner.os }}-pip-
 
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
                 python -m pip install flake8 pytest pytest-cov
-                pip install pytest-cov
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8
               run: |
-                # stop the build if there are Python syntax errors or undefined names
-                flake8 zscaler/ --count --select=E9,F63,F7,F82,F401 --show-source --statistics
-                # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-                flake8 zscaler/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
+                make lint:zia
+        
             - name: Run Pytest
-              uses: nick-fields/retry@v2
+              uses: nick-fields/retry@v3
               with:
                 max_attempts: 3
                 timeout_minutes: 45
