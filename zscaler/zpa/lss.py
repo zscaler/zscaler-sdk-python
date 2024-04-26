@@ -88,41 +88,40 @@ class LSSConfigControllerAPI:
 
         return template
 
-    def get_client_types(self) -> Box:
+    def get_client_types(self, client_type=None) -> Box:
         """
-        Returns all available LSS Client Types.
+        Returns all available LSS Client Types or a specific Client Type if specified.
 
-        Client Types are used when creating LSS Receiver configs. ZPA uses an internal code for Client Types, e.g.
-        ``zpn_client_type_ip_anchoring`` is the Client Type for a ZIA Service Edge. zscaler-sdk-python inverts the key/value so
-        that you can perform a lookup using a human-readable name in your code (e.g. ``cloud_connector``).
+        Client Types are used when creating LSS Receiver configs.
+        ZPA uses an internal code for Client Types, e.g.
+        `zpn_client_type_ip_anchoring` is the Client Type for a ZIA Service Edge.
+        The zscaler-sdk-python inverts the key/value so
+        that you can perform a lookup using a human-readable name in your code (e.g. `cloud_connector`).
+
+        Args:
+            client_type_name (str, optional): The human-readable name of the client type to filter for.
 
         Returns:
-            :obj:`Box`: Dictionary containing all LSS Client Types with human-readable name as the key.
+            :obj:`Box`: Dictionary containing all or a specific LSS Client Type with human-readable name as the key.
 
         Examples:
             Print all LSS Client Types:
-
             >>> print(zpa.lss.get_client_types())
 
+            Print only the 'web_browser' Client Type:
+            >>> print(zpa.lss.get_client_types('web_browser'))
         """
-        # ZPA returns a dictionary of client types but the keys are the internal ZPA codes, which our users probably
-        # won't know. This method reverses the dictionary, converts the 'normalised' Client Type name to snake_case
-        # before returning it so that a lookup can be easily performed using the Client Type name in plain english.
-        #
-        # Example before:
-        # {'zpn_client_type_exporter': 'Web Browser'}
-        # Example after:
-        # {'web_browser': 'zpn_client_type_exporter'}
-
-        response = requests.get(f"{self.v2_admin_url}/clientTypes", headers=self.rest.headers)
-
+        response = self.rest.send('GET', "clientTypes", api_version="v2_lss")
         if response.status_code == 200:
-            return response.json()
+            client_types = response.json()
+            reverse_map = {v.lower().replace(" ", "_"): k for k, v in client_types.items()}
+            box = Box(reverse_map)
+
+            if client_type and client_type in box:
+                return Box({client_type: box[client_type]})
+            return box
         else:
             response.raise_for_status()
-
-        reverse_map = {v.lower().replace(" ", "_"): k for k, v in response.items()}
-        return Box(reverse_map)
 
     def list_configs(self, **kwargs) -> BoxList:
         """
@@ -167,32 +166,43 @@ class LSSConfigControllerAPI:
             >>> print(zpa.lss.get_config('99999'))
 
         """
-        response = self.rest.get("/lssConfig/%s" % (lss_id), api_version="v2")
+        response = self.rest.send("GET", "/lssConfig/%s" % (lss_id), api_version="v2")
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
                 return None
         return response
 
-    def get_log_formats(self) -> Box:
+    def get_log_formats(self, log_type=None) -> Box:
         """
-        Returns all available pre-configured LSS Log Formats.
+        Returns all available pre-configured LSS Log Formats or a specific log format if specified.
 
-        LSS Log Formats are provided as either CSV, JSON or TSV. LSS Log Format values can be used when
+        LSS Log Formats are provided as either CSV, JSON, or TSV. The values can be used when
         creating or updating LSS Log Receiver configs.
+
+        Args:
+            log_type_name (str, optional): The name of the log type to retrieve (e.g., 'zpn_ast_comprehensive_stats').
 
         Returns:
             :obj:`Box`: Dictionary containing pre-configured LSS Log Formats.
 
         Examples:
-            >>> for item in zpa.lss.get_log_formats():
-            ...    print(item)
-
+            >>> print(zpa.lss.get_log_formats())
+            >>> print(zpa.lss.get_log_formats('zpn_ast_comprehensive_stats'))
         """
-        response = requests.get(f"{self.v2_admin_url}/logType/formats", headers=self.rest.headers)
-
+        response = self.rest.send("GET", "lssConfig/logType/formats", api_version="v2")
         if response.status_code == 200:
-            return response.json()
+            formats = response.json()
+            if log_type:
+                # Filter and return only the requested log type
+                specific_format = formats.get(log_type, None)
+                if specific_format:
+                    return Box({log_type: specific_format})
+                else:
+                    return Box()  # or raise an Exception if preferred
+            else:
+                # Return all formats
+                return Box(formats)
         else:
             response.raise_for_status()
 
