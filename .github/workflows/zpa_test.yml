@@ -41,6 +41,10 @@ jobs:
         with:
           poetry-version: 1.8.2
 
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
       - name: Cache poetry dependencies
         uses: actions/cache@v4
         with:
@@ -98,7 +102,11 @@ jobs:
       #   uses: Gr1N/setup-poetry@v9
       #   with:
       #     poetry-version: 1.8.2
-  
+
+      # - name: Get poetry cache directory
+      #   id: poetry-cache
+      #   run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
       # - name: Cache poetry dependencies
       #   uses: actions/cache@v4
       #   with:
@@ -156,6 +164,10 @@ jobs:
         uses: Gr1N/setup-poetry@v9
         with:
           poetry-version: 1.8.2
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache poetry dependencies
         uses: actions/cache@v4
