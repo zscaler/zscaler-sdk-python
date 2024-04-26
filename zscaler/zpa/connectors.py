@@ -17,7 +17,7 @@
 
 from box import Box, BoxList
 from requests import Response
-
+import os
 from zscaler.utils import add_id_groups, pick_version_profile, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
@@ -381,7 +381,7 @@ class AppConnectorControllerAPI:
         """
         return self.rest.delete(f"appConnectorGroup/{group_id}").status_code
 
-    def get_connector_schedule(self) -> Box:
+    def get_connector_schedule(self, customer_id=None) -> Box:
         """
         Returns the configured App Connector Schedule frequency.
 
@@ -402,7 +402,16 @@ class AppConnectorControllerAPI:
             >>> pprint(zpa.connectors.get_connector_schedule)
         """
 
-        response = self.rest.get("/assistantSchedule")
+        # Fetch customer_id from environment if not provided
+        if customer_id is None:
+            customer_id = os.getenv("ZPA_CUSTOMER_ID")
+
+        if not customer_id:
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
+
+        response = self.rest.get("/connectorSchedule")
         if isinstance(response, Response):
             return None
         return response
@@ -448,14 +457,14 @@ class AppConnectorControllerAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("assistantSchedule", json=payload)
+        response = self.rest.post("connectorSchedule", json=payload)
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code >= 400:  # Check if status code indicates an error
                 raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-    def update_schedule(self, scheduler_id: str, **kwargs) -> bool:
+    def update_connector_schedule(self, scheduler_id: str, **kwargs) -> bool:
         """
         Updates App Connector schedule frequency to delete the inactive connectors based on
         the configured frequency.
@@ -482,19 +491,22 @@ class AppConnectorControllerAPI:
             >>> result = zpa.connectors.update_schedule('10', frequency_interval='10')
             >>> print(result)  # True if successful, False otherwise
         """
-        # Get the current schedule
-        current_schedule = self.get_connector_schedule(scheduler_id=scheduler_id)
+        # Get the current schedule by customer ID
+        customer_id = kwargs.get("customer_id")
+        if not customer_id:
+            raise ValueError("customer_id must be provided as a keyword argument.")
+
+        current_schedule = self.get_connector_schedule(customer_id=customer_id)
+
+        if not current_schedule:
+            raise ValueError("No existing schedule found for the provided customer ID.")
 
         # Update the schedule with provided arguments
         for key, value in kwargs.items():
-            # Check for customer_id and convert it to int if it's a string
-            if key == "customer_id":
-                value = int(value) if isinstance(value, str) and value.isdigit() else value
-
             current_schedule[snake_to_camel(key)] = value
 
         # Send the updated schedule to the server
-        response = self.rest.put(f"assistantSchedule/{scheduler_id}", json=current_schedule)
+        response = self.rest.put(f"connectorSchedule/{scheduler_id}", json=current_schedule.to_dict())
 
         # Return True if the update was successful (204 No Content), False otherwise
         return response.status_code == 204
