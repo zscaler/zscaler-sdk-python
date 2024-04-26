@@ -404,10 +404,12 @@ class AppConnectorControllerAPI:
 
         # Fetch customer_id from environment if not provided
         if customer_id is None:
-            customer_id = os.getenv('ZPA_CUSTOMER_ID')
+            customer_id = os.getenv("ZPA_CUSTOMER_ID")
 
         if not customer_id:
-            raise ValueError("customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID")
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
 
         response = self.rest.get("/connectorSchedule")
         if isinstance(response, Response):
@@ -490,7 +492,7 @@ class AppConnectorControllerAPI:
             >>> print(result)  # True if successful, False otherwise
         """
         # Get the current schedule by customer ID
-        customer_id = kwargs.get('customer_id')
+        customer_id = kwargs.get("customer_id")
         if not customer_id:
             raise ValueError("customer_id must be provided as a keyword argument.")
 
