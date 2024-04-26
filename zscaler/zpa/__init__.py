@@ -114,6 +114,7 @@ class ZPAClientHelper(ZPAClient):
         self.url = f"{self.baseurl}/mgmtconfig/v1/admin/customers/{customer_id}"
         self.user_config_url = f"{self.baseurl}/userconfig/v1/customers/{customer_id}"
         self.v2_url = f"{self.baseurl}/mgmtconfig/v2/admin/customers/{customer_id}"
+        self.v2_lss_url = f"{self.baseurl}/mgmtconfig/v2/admin/lssConfig/customers/{customer_id}"
         self.cbi_url = f"{self.baseurl}/cbiconfig/cbi/api/customers/{customer_id}"
         self.fail_safe = fail_safe
         # Cache setup
@@ -182,6 +183,8 @@ class ZPAClientHelper(ZPAClient):
             api = self.url
         elif api_version == "v2":
             api = self.v2_url
+        elif api_version == "v2_lss":
+            api = self.v2_lss_url
         elif api_version == "userconfig_v1":
             api = self.user_config_url
 
