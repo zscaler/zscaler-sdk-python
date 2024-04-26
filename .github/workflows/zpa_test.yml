@@ -36,25 +36,31 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache Python dependencies
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: 1.8.2
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache poetry dependencies
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/pip
-            !~/.cache/pip/log
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+          path: ${{ steps.poetry-cache.outputs.dir }}
+          key:
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+            hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pip-
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install flake8 pytest pytest-cov
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: poetry install
 
       - name: Lint with flake8
         run: |
-          make lint:zpa
+          poetry run make lint:zpa
 
       - name: Run Pytest
         uses: nick-fields/retry@v3
@@ -62,7 +68,7 @@ jobs:
           max_attempts: 3
           timeout_minutes: 30
           command: |
-              make coverage:zpa
+              poetry run make coverage:zpa
         env:
           ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -81,52 +87,58 @@ jobs:
     #     environment:
     #       - ZPA_QA2_TENANT01
     # environment: ${{ matrix.environment }}
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v4
-    #     with:
-    #       token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for checkout
+      # steps:
+      #   - name: Checkout code
+      #     uses: actions/checkout@v4
+      #     with:
+      #       token: ${{ secrets.GITHUB_TOKEN }} 
+  
+      # - name: Set up Python ${{ matrix.python-version }}
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: ${{ matrix.python-version }}
+  
+      # - name: Install Poetry
+      #   uses: Gr1N/setup-poetry@v9
+      #   with:
+      #     poetry-version: 1.8.2
 
-    #   - name: Set up Python ${{ matrix.python-version }}
-    #     uses: actions/setup-python@v5
-    #     with:
-    #       python-version: ${{ matrix.python-version }}
+      # - name: Get poetry cache directory
+      #   id: poetry-cache
+      #   run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
-    #   - name: Cache Python dependencies
-    #     uses: actions/cache@v4
-    #     with:
-    #       path: |
-    #         ~/.cache/pip
-    #         !~/.cache/pip/log
-    #       key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
-    #       restore-keys: |
-    #         ${{ runner.os }}-pip-
+      # - name: Cache poetry dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ${{ steps.poetry-cache.outputs.dir }}
+      #     key:
+      #       ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+      #       hashFiles('**/poetry.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+  
+      # - name: Install dependencies
+      #   run: poetry install
 
-    #   - name: Install dependencies
-    #     run: |
-    #       python -m pip install --upgrade pip
-    #       python -m pip install flake8 pytest pytest-cov
-    #       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-    #   - name: Lint with flake8
-    #     run: |
-    #       make lint:zpa
-
-    #   - name: Run Pytest
-    #     uses: nick-fields/retry@v3
-    #     with:
-    #       max_attempts: 3
-    #       timeout_minutes: 30
-    #       command: |
-    #           make coverage:zpa
-    #     env:
-    #       ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
-    #       ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
-    #       ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
-    #       ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-    #       ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
-    #       OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
-    #       OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+      # - name: Lint with flake8
+      #   run: |
+      #     poetry run make lint:zpa
+  
+      # - name: Run Pytest
+      #   uses: nick-fields/retry@v3
+      #   with:
+      #     max_attempts: 3
+      #     timeout_minutes: 30
+      #     command: |
+      #         poetry run make coverage:zpa
+      #   env:
+      #     ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+      #     ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+      #     ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+      #     ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+      #     ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+      #     OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+      #     OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
   
   zpa-beta-tenants:
     runs-on: ubuntu-latest
@@ -141,32 +153,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for checkout
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache Python dependencies
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: 1.8.2
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache poetry dependencies
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/pip
-            !~/.cache/pip/log
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+          path: ${{ steps.poetry-cache.outputs.dir }}
+          key:
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+            hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pip-
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install flake8 pytest pytest-cov
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: poetry install
 
       - name: Lint with flake8
         run: |
-          make lint:zpa
+          poetry run make lint:zpa
 
       - name: Run Pytest
         uses: nick-fields/retry@v3
@@ -174,7 +192,7 @@ jobs:
           max_attempts: 3
           timeout_minutes: 30
           command: |
-              make coverage:zpa
+            poetry run make coverage:zpa
         env:
           ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -199,40 +217,46 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for checkout
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache Python dependencies
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: 1.8.2
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache poetry dependencies
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/pip
-            !~/.cache/pip/log
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+          path: ${{ steps.poetry-cache.outputs.dir }}
+          key:
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+            hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pip-
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install flake8 pytest pytest-cov
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: poetry install
 
       - name: Lint with flake8
         run: |
-          make lint:zpa
-
+          poetry run make lint:zpa
+    
       - name: Run Pytest
         uses: nick-fields/retry@v3
         with:
           max_attempts: 3
-          timeout_minutes: 30
+          timeout_minutes: 45
           command: |
-              make coverage:zpa
+              poetry run make coverage:zpa
         env:
           ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
