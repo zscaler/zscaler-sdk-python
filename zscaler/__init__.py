@@ -16,7 +16,7 @@
 
 """Official Python SDK for the Zscaler Products (Beta)
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use 
+Zscaler SDK Python is an SDK that provides a uniform and easy-to-use
 interface for each of the Zscaler product APIs.
 
 Documentation available at https://zscaler-sdk-python.readthedocs.io
