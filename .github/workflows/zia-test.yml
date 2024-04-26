@@ -36,25 +36,27 @@ jobs:
             with:
               python-version: ${{ matrix.python-version }}
 
-          - name: Cache Python dependencies
+          - name: Install Poetry
+            uses: Gr1N/setup-poetry@v9
+            with:
+              poetry-version: 1.8.2
+
+          - name: Cache poetry dependencies
             uses: actions/cache@v4
             with:
-              path: |
-                ~/.cache/pip
-                !~/.cache/pip/log
-              key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+              path: ${{ steps.poetry-cache.outputs.dir }}
+              key:
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+                hashFiles('**/poetry.lock') }}
               restore-keys: |
-                ${{ runner.os }}-pip-
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
           - name: Install dependencies
-            run: |
-              python -m pip install --upgrade pip
-              python -m pip install flake8 pytest pytest-cov
-              if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            run: poetry install
 
           - name: Lint with flake8
             run: |
-              make lint:zia
+              poetry run make lint:zia
 
           - name: Run Pytest
             uses: nick-fields/retry@v3
@@ -62,7 +64,7 @@ jobs:
               max_attempts: 3
               timeout_minutes: 45
               command: |
-                  make coverage:zia
+                poetry run make coverage:zia
             env:
               ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
               ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
@@ -98,25 +100,27 @@ jobs:
             with:
               python-version: ${{ matrix.python-version }}
 
-          - name: Cache Python dependencies
+          - name: Install Poetry
+            uses: Gr1N/setup-poetry@v9
+            with:
+              poetry-version: 1.8.2
+
+          - name: Cache poetry dependencies
             uses: actions/cache@v4
             with:
-              path: |
-                ~/.cache/pip
-                !~/.cache/pip/log
-              key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/setup.py') }}
+              path: ${{ steps.poetry-cache.outputs.dir }}
+              key:
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+                hashFiles('**/poetry.lock') }}
               restore-keys: |
-                ${{ runner.os }}-pip-
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
           - name: Install dependencies
-            run: |
-              python -m pip install --upgrade pip
-              python -m pip install flake8 pytest pytest-cov
-              if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            run: poetry install
 
           - name: Lint with flake8
             run: |
-              make lint:zia
+              poetry run make lint:zia
         
           - name: Run Pytest
             uses: nick-fields/retry@v3
@@ -124,7 +128,7 @@ jobs:
               max_attempts: 3
               timeout_minutes: 45
               command: |
-                  make coverage:zia
+                  poetry run make coverage:zia
             env:
               ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
               ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}

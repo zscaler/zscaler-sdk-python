@@ -12,7 +12,10 @@ jobs:
     name: Check Code Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,7 +42,10 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Check formatting with black and isort
+      - name: Format Code with black
+        run: poetry run make format
+
+      - name: Check formatting with black
         run: poetry run make check-format
 
   release:
@@ -48,8 +54,10 @@ jobs:
     needs: [format]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5

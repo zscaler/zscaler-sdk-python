@@ -111,7 +111,7 @@ class LSSConfigControllerAPI:
             Print only the 'web_browser' Client Type:
             >>> print(zpa.lss.get_client_types('web_browser'))
         """
-        response = self.rest.send('GET', "clientTypes", api_version="v2_lss")
+        response = self.rest.send("GET", "clientTypes", api_version="v2_lss")
         if response.status_code == 200:
             client_types = response.json()
             reverse_map = {v.lower().replace(" ", "_"): k for k, v in client_types.items()}
