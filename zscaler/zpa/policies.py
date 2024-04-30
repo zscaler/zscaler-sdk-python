@@ -34,12 +34,16 @@ class PolicySetsAPI:
         "client_forwarding": "CLIENT_FORWARDING_POLICY",
         "isolation": "ISOLATION_POLICY",
         "inspection": "INSPECTION_POLICY",
+        "redirection": "REDIRECTION_POLICY",
+        "credential": "CREDENTIAL_POLICY",
+        "capabilities": "CAPABILITIES_POLICY",
         "siem": "SIEM_POLICY",
     }
 
     reformat_params = [
         ("app_server_group_ids", "appServerGroups"),
         ("app_connector_group_ids", "appConnectorGroups"),
+        ("service_edge_group_ids", "serviceEdgeGroups"),
     ]
 
     @staticmethod
@@ -148,7 +152,13 @@ class PolicySetsAPI:
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
+                 |  ``inspection``
+                 |  ``redirection``
+                 |  ``credential``
+                 |  ``capabilities``
                  |  ``siem``
+                 
             rule_id (str): The unique identifier for the policy rule.
 
         Returns:
@@ -197,7 +207,12 @@ class PolicySetsAPI:
                 |  ``access`` - returns Access Policy rules
                 |  ``timeout`` - returns Timeout Policy rules
                 |  ``client_forwarding`` - returns Client Forwarding Policy rules
-
+                |  ``isolation`` - returns Isolation Policy rules
+                |  ``inspection`` - returns Inspection Policy rules
+                |  ``redirection`` - returns Redirection Policy rules
+                |  ``credential`` - returns Credential Policy rules
+                |  ``capabilities`` - returns Capabilities Policy rules
+                |  ``siem`` - returns SIEM Policy rules
         Returns:
             :obj:`list`: A list of all policy rules that match the requested type.
 
@@ -234,7 +249,13 @@ class PolicySetsAPI:
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
+                 |  ``inspection``
+                 |  ``redirection``
+                 |  ``credential``
+                 |  ``capabilities``
                  |  ``siem``
+                 
             rule_id (str):
                 The unique identifier for the policy rule.
 
@@ -753,6 +774,12 @@ class PolicySetsAPI:
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
+                 |  ``inspection``
+                 |  ``redirection``
+                 |  ``credential``
+                 |  ``capabilities``
+                 |  ``siem``
 
         Returns:
              :obj:`Box`: The updated policy rule resource record.
@@ -768,7 +795,7 @@ class PolicySetsAPI:
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}").status_code
+        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}").status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
@@ -803,6 +830,12 @@ class PolicySetsAPI:
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
+                 |  ``inspection``
+                 |  ``redirection``
+                 |  ``credential``
+                 |  ``capabilities``
+                 |  ``siem``
 
         """
         # Get policy id for specified policy type
