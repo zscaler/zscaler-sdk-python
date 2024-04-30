@@ -80,7 +80,7 @@ jobs:
       - name: Publish test coverage
         uses: codecov/codecov-action@v4
         with:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   zia-test-tenants:
     runs-on: ubuntu-latest
@@ -151,4 +151,4 @@ jobs:
       - name: Publish test coverage
         uses: codecov/codecov-action@v4
         with:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
