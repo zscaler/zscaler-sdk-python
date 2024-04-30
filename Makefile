@@ -105,13 +105,14 @@ test-simple:
 	pytest --disable-warnings
 
 coverage:
-	pytest --cov=zscaler --cov-report term
+	pytest --cov=zscaler --cov-report xml --cov-report term
 
 coverage\:zia:
-	pytest tests/integration/zia --cov=zscaler/zia --cov-report term
+	pytest tests/integration/zia --cov=zscaler/zia --cov-report xml --cov-report term
 
 coverage\:zpa:
-	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report term
+	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
+
 	
 build\:dist:
 	python3 setup.py sdist bdist_wheel

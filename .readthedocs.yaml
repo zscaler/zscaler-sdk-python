@@ -1,4 +1,4 @@
-
+---
 # Read the Docs configuration file for Sphinx projects
 
 # Required
@@ -12,9 +12,9 @@ build:
 
 # Build documentation in the "docsrc/" directory with Sphinx
 sphinx:
-   configuration: docsrc/conf.py
+  configuration: docsrc/conf.py
 
 # Zscaler doc build requirements
 python:
   install:
-  - requirements: docsrc/dev_requirements.txt
+    - requirements: docsrc/dev_requirements.txt
