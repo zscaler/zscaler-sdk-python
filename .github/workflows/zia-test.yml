@@ -78,10 +78,9 @@ jobs:
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true # Optional: specify whether CI should fail if Codecov fails.
 
   zia-test-tenants:
     runs-on: ubuntu-latest
@@ -148,8 +147,8 @@ jobs:
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true # Optional: specify whether CI should fail if Codecov fails.
