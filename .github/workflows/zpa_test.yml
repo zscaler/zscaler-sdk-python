@@ -78,6 +78,12 @@ jobs:
           OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
           OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
+
 # zpa-qa2-tenants:
     # runs-on: ubuntu-latest
     # strategy:
@@ -139,70 +145,82 @@ jobs:
       #     ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
       #     OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
       #     OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-  
-  zpa-beta-tenants:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10"]
-        environment:
-          - ZPA_BETA_TENANT01
-    environment: ${{ matrix.environment }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
+
+  # zpa-beta-tenants:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       python-version: ["3.10"]
+  #       environment:
+  #         - ZPA_BETA_TENANT01
+  #   environment: ${{ matrix.environment }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: Set up Python ${{ matrix.python-version }}
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+
+  #     - name: Install Poetry
+  #       uses: Gr1N/setup-poetry@v9
+  #       with:
+  #         poetry-version: 1.8.2
+
+  #     - name: Get poetry cache directory
+  #       id: poetry-cache
+  #       run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+  #     - name: Cache poetry dependencies
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ${{ steps.poetry-cache.outputs.dir }}
+  #         key:
+  #           ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
+  #           hashFiles('**/poetry.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+
+  #     - name: Install dependencies
+  #       run: poetry install
+
+  #     - name: Lint with flake8
+  #       run: |
+  #         poetry run make lint:zpa
+
+  #     - name: Run Pytest
+  #       uses: nick-fields/retry@v3
+  #       with:
+  #         max_attempts: 3
+  #         timeout_minutes: 30
+  #         command: |
+  #           poetry run make coverage:zpa
+  #       env:
+  #         ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
+  #         ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
+  #         ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
+  #         ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+  #         ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+  #         OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
+  #         OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
+  #   needs:
+  #       - zpa-qa1-tenants
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Poetry
-        uses: Gr1N/setup-poetry@v9
-        with:
-          poetry-version: 1.8.2
-
-      - name: Get poetry cache directory
-        id: poetry-cache
-        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache poetry dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.poetry-cache.outputs.dir }}
-          key:
-            ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{
-            hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
-
-      - name: Install dependencies
-        run: poetry install
-
-      - name: Lint with flake8
-        run: |
-          poetry run make lint:zpa
-
-      - name: Run Pytest
-        uses: nick-fields/retry@v3
-        with:
-          max_attempts: 3
-          timeout_minutes: 30
-          command: |
-            poetry run make coverage:zpa
-        env:
-          ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
-          ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
-          ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
-          ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-          ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
-          OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
-          OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
-    needs:
-        - zpa-qa1-tenants
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
 
   zpa-prod-tenants:
     runs-on: ubuntu-latest
@@ -267,5 +285,11 @@ jobs:
           OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
     needs:
         - zpa-qa1-tenants
-        - zpa-beta-tenants
+        # - zpa-beta-tenants
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
           
