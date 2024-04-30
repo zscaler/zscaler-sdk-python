@@ -78,9 +78,9 @@ jobs:
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
 
       - name: Publish test coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   zia-test-tenants:
     runs-on: ubuntu-latest
@@ -149,6 +149,6 @@ jobs:
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
 
       - name: Publish test coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
