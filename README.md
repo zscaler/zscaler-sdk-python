@@ -5,6 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/zscaler-sdk-python/badge/?version=latest)](https://zscaler-sdk-python.readthedocs.io/en/latest/?badge=latest)
 [![Latest version released on PyPi](https://img.shields.io/pypi/v/zscaler-sdk-python.svg)](https://pypi.org/project/zscaler-sdk-python)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/zscaler-sdk-python.svg)](https://pypi.python.org/pypi/zscaler-sdk-python/)
+[![codecov](https://codecov.io/gh/zscaler/zscaler-sdk-python/graph/badge.svg?token=56B53PITU8)](https://codecov.io/gh/zscaler/zscaler-sdk-python)
 [![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
 
 ## Support Disclaimer
