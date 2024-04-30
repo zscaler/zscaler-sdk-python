@@ -216,11 +216,11 @@ jobs:
   #   needs:
   #       - zpa-qa1-tenants
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
+    # - name: Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v4
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    #     fail_ci_if_error: true  # Optional: specify whether CI should fail if Codecov fails.
 
   zpa-prod-tenants:
     runs-on: ubuntu-latest
