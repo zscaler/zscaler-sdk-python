@@ -18,21 +18,21 @@ class TestAppConnectorGroup:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        group_name = "tests-" + generate_random_string(),
-        group_description = "tests-" + generate_random_string(),
-        group_enabled = True,
-        latitude = "37.33874",
-        longitude = "-121.8852525",
-        location = "San Jose, CA, USA",
-        upgrade_day = "SUNDAY",
-        upgrade_time_in_secs = "66600",
-        override_version_profile = True,
-        version_profile_name = "Default",
-        version_profile_id = "0",
-        dns_query_type = "IPV4_IPV6",
-        pra_enabled = True,
-        tcp_quick_ack_app = True,
-        tcp_quick_ack_assistant = True,
+        group_name = "tests-" + generate_random_string()
+        group_description = "tests-" + generate_random_string()
+        group_enabled = True
+        latitude = "37.33874"
+        longitude = "-121.8852525"
+        location = "San Jose, CA, USA"
+        upgrade_day = "SUNDAY"
+        upgrade_time_in_secs = "66600"
+        override_version_profile = True
+        version_profile_name = "Default"
+        version_profile_id = "0"
+        dns_query_type = "IPV4_IPV6"
+        pra_enabled = True
+        tcp_quick_ack_app = True
+        tcp_quick_ack_assistant = True
         tcp_quick_ack_read_assistant = True
 
         try:
