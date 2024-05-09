@@ -34,19 +34,19 @@ class TestServiceEdgeGroup:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        group_name = "tests-" + generate_random_string(),
-        group_description = "tests-" + generate_random_string(),
-        group_enabled = True,
-        latitude = "37.33874",
-        longitude = "-121.8852525",
-        location = "San Jose, CA, USA",
-        upgrade_day = "SUNDAY",
-        upgrade_time_in_secs = "66600",
-        override_version_profile = True,
-        version_profile_name = "Default",
-        version_profile_id = "0",
-        is_public = "TRUE",
-        group_id = None 
+        group_name = ("tests-" + generate_random_string(),)
+        group_description = ("tests-" + generate_random_string(),)
+        group_enabled = (True,)
+        latitude = ("37.33874",)
+        longitude = ("-121.8852525",)
+        location = ("San Jose, CA, USA",)
+        upgrade_day = ("SUNDAY",)
+        upgrade_time_in_secs = ("66600",)
+        override_version_profile = (True,)
+        version_profile_name = ("Default",)
+        version_profile_id = ("0",)
+        is_public = ("TRUE",)
+        group_id = None
 
         try:
             # Create a new service edge group
