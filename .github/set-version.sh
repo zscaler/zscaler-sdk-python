@@ -31,8 +31,9 @@ fi
 NEW_VERSION=$(echo "$1" | sed -e 's/-beta\./.b/' | sed -e 's/-alpha\./.a/')
 
 # Set version in pyproject.toml
-grep -E '^version = ".+"$' "$ROOT/pyproject.toml" >/dev/null
-sed -i.bak -E "s/^version = \".+\"$/version = \"$NEW_VERSION\"/" "$ROOT/pyproject.toml" && rm "$ROOT/pyproject.toml.bak"
+echo "Updating pyproject.toml"
+grep -E '^version = ".+"$' "$ROOT/pyproject.toml" || exit 1
+sed -i.bak -E "s/^version = \".+\"$/version = \"$1\"/" "$ROOT/pyproject.toml" && rm "$ROOT/pyproject.toml.bak"
 
 # Set version in __init__.py
 grep -E '^__version__ = ".+"$' "$ROOT/zscaler/__init__.py" >/dev/null

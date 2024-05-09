@@ -125,12 +125,13 @@ class PrivilegedRemoteAccessAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/praPortal", json=payload)
+        response = self.rest.post("praPortal", json=payload)
         if isinstance(response, Response):
+            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            if status_code > 299:
-                return None
-        return self.get_portal(response.get("id"))
+            # Handle error response
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_portal(self, portal_id: str, **kwargs) -> Box:
         """
@@ -475,12 +476,6 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.get(f"credential/{credential_id}")
-        # response = self.rest.get("/credential/%s" % (credential_id))
-        # if isinstance(response, Response):
-        #     status_code = response.status_code
-        #     if status_code != 200:
-        #         return None
-        # return response
 
     def add_credential(
         self,
