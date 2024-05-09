@@ -158,7 +158,7 @@ class PolicySetsAPI:
                  |  ``credential``
                  |  ``capabilities``
                  |  ``siem``
-                 
+
             rule_id (str): The unique identifier for the policy rule.
 
         Returns:
@@ -255,7 +255,7 @@ class PolicySetsAPI:
                  |  ``credential``
                  |  ``capabilities``
                  |  ``siem``
-                 
+
             rule_id (str):
                 The unique identifier for the policy rule.
 
