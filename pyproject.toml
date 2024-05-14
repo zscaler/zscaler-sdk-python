@@ -50,7 +50,7 @@ pydash = "*"
 flake8 = "*"
 pytz = "*"
 black = "^24.4.1"
-cryptography = "^3.4"
+cryptography = ">=3.4,<43.0"
 
 [tool.poetry.dev-dependencies]
 black = "*"
