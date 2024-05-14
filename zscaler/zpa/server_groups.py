@@ -71,7 +71,6 @@ class ServerGroupsAPI:
             >>> pprint(zpa.server_groups.get_group('99999'))
 
         """
-
         return self.rest.get(f"serverGroup/{group_id}")
 
     def get_server_group_by_name(self, name):

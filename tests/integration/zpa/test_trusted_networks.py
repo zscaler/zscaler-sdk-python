@@ -63,9 +63,18 @@ class TestTrustedNetworks:
                 except Exception as exc:
                     errors.append(f"Failed to fetch network by name: {exc}")
 
+                try:
+                    # Test get_network_udid using the network_id of the first network
+                    network_udid = first_network.get("network_id")
+                    network_by_udid = client.trusted_networks.get_network_udid(network_udid)
+                    assert network_by_udid is not None, "Expected a valid trusted network object when searching by network_id"
+                    assert network_by_udid.get("network_id") == network_udid, "Mismatch in trusted network network_id when searching by network_id"
+                except Exception as exc:
+                    errors.append(f"Failed to fetch network by network_id: {exc}")
+
         # Catch any unexpected errors that might not have been caught by inner try-except blocks
         except Exception as exc:
             errors.append(f"Unexpected error during trusted networks test: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during trusted network operations test: {errors}"
+        assert not errors, f"Errors occurred during trusted network operations test: {'; '.join(errors)}"

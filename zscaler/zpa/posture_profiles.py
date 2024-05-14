@@ -52,6 +52,25 @@ class PostureProfilesAPI:
         return list
 
     def get_profile_by_name(self, name):
+        """
+        Searches for and returns a posture profile based on its name.
+
+        This method performs a case-sensitive search through all posture profiles,
+        returning the first profile that matches the specified name exactly.
+
+        Args:
+            name (str): The name of the posture profile to search for.
+
+        Returns:
+            Box: The posture profile that matches the given name, or None if no match is found.
+
+        Examples:
+            >>> profile = zpa.posture_profiles.get_profile_by_name("Example Profile Name")
+            >>> if profile:
+            ...     print("Profile ID:", profile.id)
+            ... else:
+            ...     print("Profile not found.")
+        """
         profiles = self.list_profiles()
         for profile in profiles:
             if profile.get("name") == name:
@@ -84,14 +103,26 @@ class PostureProfilesAPI:
         """
         Searches for a posture profile by name and returns its posture_udid.
 
+        This function searches through all configured posture profiles, comparing the
+        provided search_name against each profile's name, both exactly and with any cloud suffix removed.
+        It returns the 'posture_udid' of the first matching profile found.
+
         Args:
             search_name (str): The name of the posture profile to search for.
 
         Keyword Args:
-            **kwargs: Additional keyword arguments to pass to the list_profiles method.
+            **kwargs: Additional keyword arguments to pass to the list_profiles method, such as
+                    'max_items', 'max_pages', 'pagesize', and 'search'.
 
         Returns:
             str: The posture_udid of the found posture profile, or None if not found.
+
+        Examples:
+            >>> udid = zpa.posture_profiles.get_udid_by_profile_name("Example Profile")
+            >>> if udid:
+            ...     print(f"Found Profile UDID: {udid}")
+            ... else:
+            ...     print("Profile not found.")
         """
         profiles = self.list_profiles(**kwargs)
         for profile in profiles:

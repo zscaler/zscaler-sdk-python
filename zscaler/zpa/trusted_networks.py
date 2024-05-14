@@ -81,45 +81,25 @@ class TrustedNetworksAPI:
                 return None
         return response
 
-    def get_by_network_id(self, network_id: str, **kwargs) -> Union[Box, None]:
+    def get_network_udid(self, network_udid: str) -> Box:
         """
-        Returns the trusted network based on the networkId.
+        Returns a trusted network based on its 'network_id'.
 
         Args:
-            network_id (str): The unique Network ID for the network ID.
-
-        Keyword Args:
-            **max_items (int): The maximum number of items to request before stopping iteration.
-            **max_pages (int): The maximum number of pages to request before stopping iteration.
-            **pagesize (int): Specifies the page size. The default size is 100, but the maximum size is 500.
-            **search (str, optional): The search string used to match against features and fields.
+            network_udid (str): The unique identifier for the network_id of the trusted network.
 
         Returns:
-            Union[Box, None]: The resource record for the trusted networks.
+            :obj:`Box`: The resource record for the trusted network, or None if not found.
+
+        Examples:
+            >>> network = zpa.trusted_networks.get_network_udid('9432db25-b80b-4b9a-b2e1-e30c67412593')
+            >>> if network:
+            ...     print("Network found:", network)
+            ... else:
+            ...     print("No network found with the given network_id")
         """
-
-        page = 0
-        page_size = kwargs.get("pagesize", 100)  # default page size changed to 100
-        max_pages = kwargs.get("max_pages", None)
-
-        while True:
-            params = {
-                "pagesize": page_size,
-                "page": page,
-                "search": network_id,  # use the search parameter if supported
-                **kwargs,
-            }
-            networks = self.list_networks(**params)
-
-            if not networks:
-                break  # exit if no more networks
-
-            for network in networks:
-                if network.get("networkId") == network_id:
-                    return Box(network)
-
-            page += 1
-            if max_pages and page >= max_pages:
-                break
-
+        networks = self.list_networks()
+        for network in networks:
+            if network.get("network_id") == network_udid:
+                return network
         return None
