@@ -35,18 +35,6 @@ class LSSConfigControllerAPI:
         "web_inspection": "zpn_waf_http_exchanges_log",
     }
 
-    log_type_map = {
-        "web_browser": "zpn_client_type_exporter",
-        "machine_tunnel": "zpn_client_type_machine_tunnel",
-        "zia_service_edge": "zpn_client_type_ip_anchoring",
-        "cloud_connector": "zpn_client_type_edge_connector",
-        "zia_inspection": "zpn_client_type_zia_inspection",
-        "client_connector": "zpn_client_type_zapp",
-        "zpa_lss": "zpn_client_type_slogger",
-        "client_connector_partner": "zpn_client_type_zapp_partner",
-        "branch_connector": "zpn_client_type_branch_connector",
-    }
-
     def __init__(self, client: ZPAClient):
         self.rest = client
 

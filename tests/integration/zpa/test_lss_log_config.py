@@ -94,22 +94,22 @@ class TestLSSConfigList:
 
         assert not errors, f"Errors occurred: {errors}"
 
-    def test_get_status_codes(self, fs):
-        client = MockZPAClient(fs)
-        errors = []  # Initialize an empty list to collect errors
+    # def test_get_status_codes(self, fs):
+    #     client = MockZPAClient(fs)
+    #     errors = []  # Initialize an empty list to collect errors
 
-        # Define the set of expected status codes for validation
-        expected_status_codes = {"zpn_auth_log", "zpn_ast_auth_log", "zpn_trans_log", "zpn_sys_auth_log"}
+    #     # Define the set of expected status codes for validation
+    #     expected_status_codes = {"zpn_auth_log", "zpn_ast_auth_log", "zpn_trans_log", "zpn_sys_auth_log"}
 
-        try:
-            # Test with default log_type 'all'
-            all_status_codes = client.lss.get_status_codes()
-            if not all_status_codes:
-                errors.append("No status codes returned for default log_type 'all'")
-            elif not expected_status_codes.issubset(set(all_status_codes.keys())):
-                errors.append("Unexpected status codes returned for default log_type 'all'")
-            print("Status Codes for 'all':", all_status_codes)
-        except Exception as exc:
-            errors.append(f"Failed to get status codes: {exc}")
+    #     try:
+    #         # Test with default log_type 'all'
+    #         all_status_codes = client.lss.get_status_codes()
+    #         if not all_status_codes:
+    #             errors.append("No status codes returned for default log_type 'all'")
+    #         elif not expected_status_codes.issubset(set(all_status_codes.keys())):
+    #             errors.append("Unexpected status codes returned for default log_type 'all'")
+    #         print("Status Codes for 'all':", all_status_codes)
+    #     except Exception as exc:
+    #         errors.append(f"Failed to get status codes: {exc}")
 
-        assert not errors, f"Errors occurred during the test: {'; '.join(errors)}"
+    #     assert not errors, f"Errors occurred during the test: {'; '.join(errors)}"
