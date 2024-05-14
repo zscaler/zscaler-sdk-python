@@ -1,5 +1,5 @@
-IDP Controller API
--------------------
+idp
+---------------
 
 The following methods allow for interaction with the ZPA IDP Controller API endpoints.
 

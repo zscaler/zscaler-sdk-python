@@ -36,7 +36,7 @@ from zscaler.zpa.connectors import AppConnectorControllerAPI
 from zscaler.zpa.emergency_access import EmergencyAccessAPI
 from zscaler.zpa.idp import IDPControllerAPI
 from zscaler.zpa.inspection import InspectionControllerAPI
-from zscaler.zpa.isolation_profile import IsolationProfileAPI
+from zscaler.zpa.isolation import IsolationAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.policies import PolicySetsAPI
@@ -187,6 +187,8 @@ class ZPAClientHelper(ZPAClient):
             api = self.v2_lss_url
         elif api_version == "userconfig_v1":
             api = self.user_config_url
+        elif api_version == "cbiconfig_v1":
+            api = self.cbi_url
 
         url = f"{api}/{path.lstrip('/')}"
         start_time = time.time()
@@ -456,7 +458,7 @@ class ZPAClientHelper(ZPAClient):
                 params["page"] = page
 
         finally:
-            time.sleep(1)  # Ensure a delay between requests regardless of outcome
+            time.sleep(2)  # Ensure a delay between requests regardless of outcome
 
         if not ret_data:
             error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
@@ -498,12 +500,12 @@ class ZPAClientHelper(ZPAClient):
         return CertificatesAPI(self)
 
     @property
-    def isolation_profile(self):
+    def isolation(self):
         """
-        The interface object for the :ref:`ZPA Isolation Profiles <zpa-isolation_profile>`.
+        The interface object for the :ref:`ZPA Isolation <zpa-isolation>`.
 
         """
-        return IsolationProfileAPI(self)
+        return IsolationAPI(self)
 
     @property
     def cloud_connector_groups(self):

@@ -28,12 +28,12 @@ def fs():
     yield
 
 
-class TestApplicationSegment:
+class TestApplicationSegmentPRA:
     """
-    Integration Tests for the Applications Segment
+    Integration Tests for the Applications Segment PRA
     """
 
-    def test_application_segment(self, fs):
+    def test_application_segment_pra(self, fs):
         client = MockZPAClient(fs)
         errors = []
 
@@ -97,60 +97,77 @@ class TestApplicationSegment:
             try:
                 app_segment_name = "tests-" + generate_random_string()
                 app_segment_description = "tests-" + generate_random_string()
-                app_segment = client.app_segments.add_segment(
+                app_segment = client.app_segments_pra.add_segment_pra(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["test.example.com"],
+                    domain_names=["test" + generate_random_string() + ".example.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["8001", "8001"],
+                    tcp_port_ranges=["22", "3389"],
+                    common_apps_dto={
+                        "apps_config": [
+                            {
+                                "name": "ssh" + app_segment_name,
+                                "description": "ssh" + app_segment_description,
+                                "enabled": True,
+                                "app_types": ["SECURE_REMOTE_ACCESS"],
+                                "application_port": "22",
+                                "application_protocol": "SSH",
+                                "domain": "ssh_pra.bd-redhat.com",
+                            },
+                            {
+                                "name": "rdp" + app_segment_name,
+                                "description": "rdp" + app_segment_description,
+                                "enabled": True,
+                                "app_types": ["SECURE_REMOTE_ACCESS"],
+                                "application_port": "3389",
+                                "application_protocol": "RDP",
+                                "connection_security": "ANY",
+                                "domain": "rdp_pra.bd-redhat.com",
+                            },
+                        ]
+                    },
                 )
                 app_segment_id = app_segment["id"]
             except Exception as exc:
                 errors.append(f"Creating Application Segment failed: {exc}")
 
-            # Test retrieving the specific Application Segment
+            # Test retrieving, listing, and updating operations in the same try block for readability
             try:
-                remote_app = client.app_segments.get_segment(segment_id=app_segment_id)
+                # Retrieve specific Application Segment
+                remote_app = client.app_segments_pra.get_segment_pra(segment_id=app_segment_id)
                 assert remote_app["id"] == app_segment_id
-            except Exception as exc:
-                errors.append(f"Retrieving Application Segment failed: {exc}")
 
-            # Test listing Application Segments - Filter by the unique name
-            try:
-                apps = client.app_segments.list_segments(search=app_segment_name)
+                # List Application Segments
+                apps = client.app_segments_pra.list_segments_pra(search=app_segment_name)
                 assert any(app["id"] == app_segment_id for app in apps), "Newly created app segment should be in the list"
-            except Exception as exc:
-                errors.append(f"Listing Application Segments failed: {exc}")
 
-            # Test updating the Application Segment
-            try:
+                # Update the Application Segment
                 updated_description = "Updated " + generate_random_string()
-                client.app_segments.update_segment(segment_id=app_segment_id, description=updated_description)
-                updated_app = client.app_segments.get_segment(segment_id=app_segment_id)
+                client.app_segments_pra.update_segment_pra(segment_id=app_segment_id, description=updated_description)
+                updated_app = client.app_segments_pra.get_segment_pra(segment_id=app_segment_id)
                 assert updated_app["description"] == updated_description
             except Exception as exc:
-                errors.append(f"Updating Application Segment failed: {exc}")
+                errors.append(f"Operation on Application Segment failed: {exc}")
 
         finally:
             # Cleanup resources
             if app_segment_id:
                 try:
-                    client.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
+                    client.app_segments_pra.delete_segment_pra(segment_id=app_segment_id, force_delete=True)
                 except Exception as exc:
                     errors.append(f"Deleting Application Segment failed: {exc}")
-
             if server_group_id:
                 try:
                     client.server_groups.delete_group(group_id=server_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Server Group failed: {exc}")
-
             if segment_group_id:
                 try:
                     client.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Segment Group failed: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the Application Segment lifecycle test: {errors}"
+        # Assert that no errors occurred during the test
+        assert not errors, f"Errors occurred during the Application Segment lifecycle test: {errors}"
