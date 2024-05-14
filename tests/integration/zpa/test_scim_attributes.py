@@ -27,7 +27,7 @@ def fs():
 
 class TestScimAttributes:
     """
-    Integration Tests for the SCIM attributes
+    Integration Tests for the SCIM attributes.
     """
 
     def test_scim_attributes_operations(self, fs):
@@ -43,21 +43,23 @@ class TestScimAttributes:
             user_idp_id = user_idp["id"]
             resp = client.scim_attributes.list_attributes_by_idp(user_idp_id)
             assert isinstance(resp, list), "Response is not in the expected list format."
-            assert len(resp) > 0, "No SCIM groups were found for the specified IdP."
-        except Exception as exc:
-            errors.append(f"Listing SCIM attributes by IDP failed: {exc}")
+            assert len(resp) > 0, "No SCIM attributes were found for the specified IdP."
 
-        try:
             # Test getting a specific SCIM attribute
-            attributes = client.scim_attributes.list_attributes_by_idp(user_idp_id)
-            assert len(attributes) > 0, "No SCIM attributes found for the specified IdP."
-
-            first_attribute_id = attributes[0]["id"]  # Assuming attributes is a list of dicts
+            attributes = resp  # Using the previously fetched list of attributes
+            first_attribute = attributes[0]  # Assuming attributes is a list of dicts
+            first_attribute_id = first_attribute["id"]
             resp = client.scim_attributes.get_attribute(user_idp_id, first_attribute_id)
             assert isinstance(resp, dict), "Response is not in the expected dict format."
             assert resp["id"] == first_attribute_id, "Retrieved SCIM attribute ID does not match the requested ID."
+
+            # Test getting values for the first SCIM attribute
+            attribute_values = client.scim_attributes.get_values(user_idp_id, first_attribute_id)
+            assert isinstance(attribute_values, list), "Expected a list of values for the SCIM attribute."
+            assert len(attribute_values) > 0, "No values returned for the SCIM attribute."
+
         except Exception as exc:
-            errors.append(f"Getting a specific SCIM attribute failed: {exc}")
+            errors.append(f"SCIM attribute operation failed: {exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during SCIM attributes operations test: {errors}"
