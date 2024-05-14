@@ -68,7 +68,9 @@ class TestTrustedNetworks:
                     network_udid = first_network.get("network_id")
                     network_by_udid = client.trusted_networks.get_network_udid(network_udid)
                     assert network_by_udid is not None, "Expected a valid trusted network object when searching by network_id"
-                    assert network_by_udid.get("network_id") == network_udid, "Mismatch in trusted network network_id when searching by network_id"
+                    assert (
+                        network_by_udid.get("network_id") == network_udid
+                    ), "Mismatch in trusted network network_id when searching by network_id"
                 except Exception as exc:
                     errors.append(f"Failed to fetch network by network_id: {exc}")
 
