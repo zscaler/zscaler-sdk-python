@@ -16,7 +16,7 @@
 
 
 from box import Box, BoxList
-
+import time
 from zscaler.zpa.client import ZPAClient
 
 
@@ -94,40 +94,3 @@ class SCIMGroupsAPI:
         """
         response = self.rest.get(f"/scimgroup/{group_id}", **kwargs, api_version="userconfig_v1")
         return response
-
-    def search_group(self, idp_id: str, group_name: str, **kwargs) -> dict:
-        """
-        Searches and returns the SCIM group with the specified name for the given IdP.
-        """
-        page_size = kwargs.get("pagesize", 500)  # Adjust the page size as needed
-
-        # Calculate the total pages using a synchronous call
-        total_pages = 1
-        page_number = 1
-
-        # Loop over each page to search for the group
-        while True:
-            page = self._get_page(idp_id, page_number, group_name, page_size)
-            total_pages = int(page.get("total_pages", "0"))
-            for group in page.get("list", []):
-                if group.get("name") == group_name:
-                    return group  # Return the found group immediately
-            if page_number >= total_pages:
-                break
-            page_number = page_number + 1
-        return None  # Return None if the group wasn't found
-
-    def _get_page(self, idp_id, page_number, search, page_size):
-        params = {
-            "page": page_number,
-            "search": search,
-            "pagesize": page_size,
-            "sortBy": "name",
-            "sortOrder": "DSC",
-        }
-        page = self.rest.get(
-            path=f"/scimgroup/idpId/{idp_id}",
-            params=params,
-            api_version="userconfig_v1",
-        )
-        return page

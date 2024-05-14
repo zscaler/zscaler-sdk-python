@@ -171,7 +171,9 @@ class CertificatesAPI:
             >>> ba_certificate = zpa.certificates.get_certificate('99999')
 
         """
-        return self.rest.get(f"certificate/{certificate_id}")
+        response = self.rest.delete("/certificate/%s" % (certificate_id))
+        return response.status_code
+        # return self.rest.get(f"certificate/{certificate_id}")
 
     def get_enrolment(self, certificate_id: str) -> Box:
         """

@@ -28,12 +28,12 @@ def fs():
     yield
 
 
-class TestApplicationSegment:
+class TestApplicationSegmentInspection:
     """
-    Integration Tests for the Applications Segment
+    Integration Tests for the Applications Segment Inspection
     """
 
-    def test_application_segment(self, fs):
+    def test_application_segment_inspection(self, fs):
         client = MockZPAClient(fs)
         errors = []
 
@@ -42,8 +42,17 @@ class TestApplicationSegment:
         segment_group_id = None
         server_group_id = None
         app_segment_id = None
+        first_cert_id = None
 
         try:
+            # Retrieve the first certificate
+            try:
+                certs = client.certificates.list_all_certificates()
+                assert certs, "Failed to retrieve certificates"
+                first_cert_id = certs[0]["id"]
+            except Exception as exc:
+                errors.append(f"Retrieving certificates failed: {exc}")
+
             # Create an App Connector Group
             try:
                 app_connector_group_name = "tests-" + generate_random_string()
@@ -97,14 +106,28 @@ class TestApplicationSegment:
             try:
                 app_segment_name = "tests-" + generate_random_string()
                 app_segment_description = "tests-" + generate_random_string()
-                app_segment = client.app_segments.add_segment(
+                app_segment = client.app_segments_inspection.add_segment_inspection(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["test.example.com"],
+                    domain_names=["test" + generate_random_string() + ".example.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["8001", "8001"],
+                    tcp_port_ranges=["443", "443"],
+                    common_apps_dto={
+                        "apps_config": [
+                            {
+                                "name": app_segment_name,
+                                "description": app_segment_description,
+                                "enabled": True,
+                                "app_types": ["INSPECT"],
+                                "application_port": "443",
+                                "application_protocol": "HTTPS",
+                                "certificate_id": first_cert_id,
+                                "domain": "server1.bd-redhat.com",
+                            }
+                        ]
+                    },
                 )
                 app_segment_id = app_segment["id"]
             except Exception as exc:
@@ -112,14 +135,14 @@ class TestApplicationSegment:
 
             # Test retrieving the specific Application Segment
             try:
-                remote_app = client.app_segments.get_segment(segment_id=app_segment_id)
+                remote_app = client.app_segments_inspection.get_segment_inspection(segment_id=app_segment_id)
                 assert remote_app["id"] == app_segment_id
             except Exception as exc:
                 errors.append(f"Retrieving Application Segment failed: {exc}")
 
             # Test listing Application Segments - Filter by the unique name
             try:
-                apps = client.app_segments.list_segments(search=app_segment_name)
+                apps = client.app_segments_inspection.list_segment_inspection(search=app_segment_name)
                 assert any(app["id"] == app_segment_id for app in apps), "Newly created app segment should be in the list"
             except Exception as exc:
                 errors.append(f"Listing Application Segments failed: {exc}")
@@ -127,30 +150,33 @@ class TestApplicationSegment:
             # Test updating the Application Segment
             try:
                 updated_description = "Updated " + generate_random_string()
-                client.app_segments.update_segment(segment_id=app_segment_id, description=updated_description)
-                updated_app = client.app_segments.get_segment(segment_id=app_segment_id)
+                client.app_segments_inspection.update_segment_inspection(
+                    segment_id=app_segment_id, description=updated_description
+                )
+                updated_app = client.app_segments_inspection.get_segment_inspection(segment_id=app_segment_id)
                 assert updated_app["description"] == updated_description
             except Exception as exc:
                 errors.append(f"Updating Application Segment failed: {exc}")
 
         finally:
             # Cleanup resources
+            cleanup_errors = []
             if app_segment_id:
                 try:
-                    client.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
+                    client.app_segments_inspection.delete_segment_inspection(segment_id=app_segment_id, force_delete=True)
                 except Exception as exc:
-                    errors.append(f"Deleting Application Segment failed: {exc}")
-
+                    cleanup_errors.append(f"Deleting Application Segment failed: {exc}")
             if server_group_id:
                 try:
                     client.server_groups.delete_group(group_id=server_group_id)
                 except Exception as exc:
-                    errors.append(f"Deleting Server Group failed: {exc}")
-
+                    cleanup_errors.append(f"Deleting Server Group failed: {exc}")
             if segment_group_id:
                 try:
                     client.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
-                    errors.append(f"Deleting Segment Group failed: {exc}")
+                    cleanup_errors.append(f"Deleting Segment Group failed: {exc}")
+            if cleanup_errors:
+                errors.extend(cleanup_errors)
 
-        assert len(errors) == 0, f"Errors occurred during the Application Segment lifecycle test: {errors}"
+            assert len(errors) == 0, f"Errors occurred during the Application Segment lifecycle test: {errors}"
