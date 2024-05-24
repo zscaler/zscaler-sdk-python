@@ -91,6 +91,40 @@ class ApplicationSegmentAPI:
                 return app
         return None
 
+    def get_segments_by_type(self, application_type: str, expand_all: bool = False, **kwargs) -> Box:
+        """
+        Retrieve all configured application segments of a specified type, optionally expanding all related data.
+
+        Args:
+            application_type (str): Type of application segment to retrieve. Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
+            expand_all (bool, optional): Whether to expand all related data. Defaults to False.
+
+        Keyword Args:
+            max_items (int, optional): The maximum number of items to request before stopping iteration.
+            max_pages (int, optional): The maximum number of pages to request before stopping iteration.
+            pagesize (int, optional): Specifies the page size. The default size is 20, but the maximum size is 500.
+            page (int, optional): Specifies the page number to begin fetching from.
+            search (str, optional): The search string used to match against features and fields.
+
+        Returns:
+            BoxList: List of application segments.
+
+        Examples:
+            >>> app_type = 'BROWSER_ACCESS'
+            >>> expand_all = True
+            >>> search = "ba_server01"
+            >>> app_segments = zpa.app_segments.get_segments_by_type(app_type, expand_all, search=search)
+        """
+        params = {"applicationType": application_type, "expandAll": "true" if expand_all else "false"}
+        # Include additional search parameters if specified
+        if "search" in kwargs:
+            params["search"] = kwargs["search"]
+
+        result, error = self.rest.get_paginated_data(path="/application/getAppsByType", params=params, **kwargs)
+        if error:
+            return BoxList([])  # Return an empty BoxList on failure due to the error
+        return result
+
     def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
         """
         Delete an application segment.
