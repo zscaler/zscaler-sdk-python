@@ -11,7 +11,7 @@ from box import BoxList
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.constants import ZPA_BASE_URLS
+from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL
 from zscaler.errors.http_error import HTTPError, ZscalerAPIError
 from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
@@ -40,6 +40,7 @@ from zscaler.zpa.isolation import IsolationAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.policies import PolicySetsAPI
+from zscaler.zpa.policiesv2 import PolicySetsV2API
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.privileged_remote_access import PrivilegedRemoteAccessAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
@@ -151,7 +152,7 @@ class ZPAClientHelper(ZPAClient):
     @retry_with_backoff(retries=5)
     def login(self):
         """Log in to the ZPA API and set the access token for subsequent requests."""
-        data = urllib.parse.urlencode({"client_id": self.client_id, "client_secret": self.client_secret})
+        params = {"client_id": self.client_id, "client_secret": self.client_secret}
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
@@ -159,6 +160,9 @@ class ZPAClientHelper(ZPAClient):
         }
         try:
             url = f"{self.baseurl}/signin"
+            if self.cloud == "DEV":
+                url = DEV_AUTH_URL + "?grant_type=CLIENT_CREDENTIALS"
+            data = urllib.parse.urlencode(params)
             resp = requests.post(url, data=data, headers=headers, timeout=self.timeout)
             # Avoid logging all data from the response, focus on the status and a summary instead
             logger.info("Login attempt with status: %d", resp.status_code)
@@ -570,6 +574,14 @@ class ZPAClientHelper(ZPAClient):
 
         """
         return PolicySetsAPI(self)
+
+    @property
+    def policiesv2(self):
+        """
+        The interface object for the :ref:`ZPA Policy Sets V2 interface <zpa-policiesv2>`.
+
+        """
+        return PolicySetsV2API(self)
 
     @property
     def posture_profiles(self):
