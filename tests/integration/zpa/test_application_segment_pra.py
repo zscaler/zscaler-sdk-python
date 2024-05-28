@@ -131,7 +131,7 @@ class TestApplicationSegmentPRA:
                 )
                 app_segment_id = app_segment["id"]
             except Exception as exc:
-                errors.append(f"Creating Application Segment failed: {exc}")
+                errors.append(f"Creating PRA Application Segment failed: {exc}")
 
             # Test retrieving, listing, and updating operations in the same try block for readability
             try:
