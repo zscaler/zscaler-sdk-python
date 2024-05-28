@@ -36,7 +36,7 @@ class TestAccessPolicyTimeoutRuleV1:
 
         rule_id = None
         scim_group_ids = []
-        
+
         try:
             # Test listing SCIM groups
             idps = client.idp.list_idps()
@@ -52,7 +52,7 @@ class TestAccessPolicyTimeoutRuleV1:
             scim_group_ids = [(user_idp_id, group["id"]) for group in resp[:2]]
         except Exception as exc:
             errors.append(f"Listing SCIM groups failed: {exc}")
-            
+
         try:
             # Create a Timeout Policy Rule
             rule_name = "tests-" + generate_random_string()

@@ -79,7 +79,7 @@ class TestAccessPolicyRule:
             scim_group_ids = [(user_idp_id, group["id"]) for group in resp[:2]]
         except Exception as exc:
             errors.append(f"Listing SCIM groups failed: {exc}")
-            
+
         try:
             # Create an Access Policy Rule
             rule_name = "tests-" + generate_random_string()

@@ -75,7 +75,7 @@ class PolicySetsAPI:
             "SAML": [],
             "SCIM": [],
             "SCIM_GROUP": [],
-            "COUNTRY_CODE": []
+            "COUNTRY_CODE": [],
         }
 
         for condition in conditions:
@@ -95,10 +95,18 @@ class PolicySetsAPI:
                             "zpn_client_type_ip_anchoring",
                             "zpn_client_type_edge_connector",
                             "zpn_client_type_zapp",
-                            "zpn_client_type_slogger"
+                            "zpn_client_type_slogger",
                         }:
                             object_types_to_operands[object_type].append({"objectType": object_type, "lhs": "id", "rhs": rhs})
-                    elif object_type in ["PLATFORM", "POSTURE", "TRUSTED_NETWORK", "SAML", "SCIM", "SCIM_GROUP", "COUNTRY_CODE"]:
+                    elif object_type in [
+                        "PLATFORM",
+                        "POSTURE",
+                        "TRUSTED_NETWORK",
+                        "SAML",
+                        "SCIM",
+                        "SCIM_GROUP",
+                        "COUNTRY_CODE",
+                    ]:
                         object_types_to_operands[object_type].append({"objectType": object_type, "lhs": lhs, "rhs": rhs})
                     else:
                         object_types_to_operands[object_type].append({"objectType": object_type, "lhs": "id", "rhs": rhs})
@@ -136,18 +144,12 @@ class PolicySetsAPI:
 
         # Combine APP and APP_GROUP operands into one block
         if app_and_app_group_operands:
-            template.append({
-                "operator": "OR",
-                "operands": app_and_app_group_operands
-            })
+            template.append({"operator": "OR", "operands": app_and_app_group_operands})
 
         # Combine other object types into their own blocks
         for object_type, operands in object_types_to_operands.items():
             if operands:
-                template.append({
-                    "operator": "OR",
-                    "operands": operands
-                })
+                template.append({"operator": "OR", "operands": operands})
 
         return template
 
@@ -466,7 +468,7 @@ class PolicySetsAPI:
             payload["conditions"] = self._create_conditions_v1(conditions)
         else:
             payload["conditions"] = []
-            
+
         if app_connector_group_ids:
             payload["appConnectorGroups"] = [{"id": group_id} for group_id in app_connector_group_ids]
 
@@ -535,7 +537,7 @@ class PolicySetsAPI:
 
         # Pre-set the policy_type to "client_forwarding"
         policy_type = "access"
-        
+
         # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
@@ -561,7 +563,7 @@ class PolicySetsAPI:
 
         # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
-        
+
         # Make the PUT request to update the rule
         response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
         if response.status_code == 204:
@@ -804,7 +806,7 @@ class PolicySetsAPI:
             ...         ("scim_group", "idp_id", "scim_group_id"),
             ...     ],
             ... )
-            
+
         """
         # Initialise the payload
         payload = {
@@ -936,7 +938,7 @@ class PolicySetsAPI:
         else:
             # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-        
+
     def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
         """
         Add a new Isolation Policy rule.
@@ -995,16 +997,12 @@ class PolicySetsAPI:
 
         # Ensure CLIENT_TYPE is always included
         client_type_present = any(
-            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" 
-            for cond in payload["conditions"]
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
         )
         if not client_type_present:
-            payload["conditions"].append({
-                "operator": "OR",
-                "operands": [
-                    {"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}
-                ]
-            })
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}
+            )
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("isolation").id
@@ -1107,16 +1105,12 @@ class PolicySetsAPI:
 
         # Ensure CLIENT_TYPE is always included
         client_type_present = any(
-            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" 
-            for cond in payload["conditions"]
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
         )
         if not client_type_present:
-            payload["conditions"].append({
-                "operator": "OR",
-                "operands": [
-                    {"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}
-                ]
-            })
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}
+            )
 
         # Set the action in the payload
         payload["action"] = action
@@ -1135,7 +1129,7 @@ class PolicySetsAPI:
         else:
             # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-        
+
     def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
         """
         Add a new AppProtection Policy rule.
@@ -1308,7 +1302,7 @@ class PolicySetsAPI:
         else:
             # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-        
+
     ############## POLICY V2 ##############
 
     def add_access_rule_v2(
