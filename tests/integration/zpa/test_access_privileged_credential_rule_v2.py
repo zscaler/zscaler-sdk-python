@@ -45,7 +45,7 @@ class TestAccessPrivilegedCredentialV2:
         pra_application_id = None
 
         SDK_PREFIX = "zscaler_python_sdk"
-        
+
         # Generate a random password
         password = generate_random_password()
         try:
@@ -133,12 +133,14 @@ class TestAccessPrivilegedCredentialV2:
             # Get the Application Segment ID for the newly created segment
             try:
                 search_name = app_segment_config_name
-                app_segments = client.app_segments.get_segments_by_type(application_type="SECURE_REMOTE_ACCESS", search=search_name)
+                app_segments = client.app_segments.get_segments_by_type(
+                    application_type="SECURE_REMOTE_ACCESS", search=search_name
+                )
                 assert app_segments and len(app_segments) > 0, "No segments found with the specified name."
                 pra_application_id = app_segments[0]["id"]
             except Exception as exc:
                 errors.append(f"Failed to get Application Segment by type: {exc}")
-                
+
             try:
                 certs = client.certificates.list_issued_certificates()
                 assert isinstance(certs, list), "Expected a list of certificates"
@@ -147,7 +149,7 @@ class TestAccessPrivilegedCredentialV2:
                     certificate_id = first_certificate.get("id")
             except Exception as exc:
                 errors.append(f"Listing certificates failed: {str(exc)}")
-                
+
             try:
                 # Create a new pra portal
                 created_portal = client.privileged_remote_access.add_portal(
@@ -179,7 +181,7 @@ class TestAccessPrivilegedCredentialV2:
 
             except Exception as exc:
                 errors.append(f"Error during console creation: {exc}")
-                                                            
+
             try:
                 # Prerequisite: Create an PRA credential
                 credential_description = "Integration test for pra credential"
@@ -194,7 +196,7 @@ class TestAccessPrivilegedCredentialV2:
                 credential_id = created_credential.get("id", None)
             except Exception as exc:
                 errors.append(f"Creating PRA credential failed: {exc}")
-                
+
             try:
                 # Test listing SCIM groups
                 idps = client.idp.list_idps()
@@ -275,42 +277,42 @@ class TestAccessPrivilegedCredentialV2:
                     client.privileged_remote_access.delete_console(console_id=console_id)
                 except Exception as exc:
                     errors.append(f"Deleting PRA Console failed: {exc}")
-                    
+
             if portal_id:
                 try:
                     client.privileged_remote_access.delete_portal(portal_id=portal_id)
                 except Exception as exc:
                     errors.append(f"Deleting PRA Portal failed: {exc}")
-                    
+
             if credential_id:
                 try:
                     client.privileged_remote_access.delete_credential(credential_id=credential_id)
                 except Exception as exc:
-                    errors.append(f"Deleting PRA Credential failed: {exc}")         
-                                                   
+                    errors.append(f"Deleting PRA Credential failed: {exc}")
+
             if app_segment_id:
                 try:
                     client.app_segments_pra.delete_segment_pra(segment_id=app_segment_id, force_delete=True)
                 except Exception as exc:
                     errors.append(f"Deleting PRA Application Segment failed: {exc}")
-                    
+
             if server_group_id:
                 try:
                     client.server_groups.delete_group(group_id=server_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Server Group failed: {exc}")
-                    
+
             if segment_group_id:
                 try:
                     client.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Segment Group failed: {exc}")
-                    
+
             if app_connector_group_id:
                 try:
                     client.connectors.delete_connector_group(group_id=app_connector_group_id)
                 except Exception as exc:
                     errors.append(f"Cleanup failed for Connector Group: {exc}")
-                                    
+
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during the Credential Policy Rule operations test: {errors}"

@@ -53,7 +53,7 @@ class TestAccessPolicyForwardingRuleV1:
             scim_group_ids = [(user_idp_id, group["id"]) for group in resp[:2]]
         except Exception as exc:
             errors.append(f"Listing SCIM groups failed: {exc}")
-            
+
         try:
             # Test listing Trusted Network Profiles
             networks = client.trusted_networks.list_networks()
@@ -63,7 +63,7 @@ class TestAccessPolicyForwardingRuleV1:
 
         except Exception as exc:
             errors.append(f"Listing Trusted Network Profiles failed: {exc}")
-            
+
         try:
             # Create a Forwarding Policy Rule
             rule_name = "tests-" + generate_random_string()
@@ -114,7 +114,7 @@ class TestAccessPolicyForwardingRuleV1:
             ), "Failed to update description for Forwarding Policy Rule"
         except Exception as exc:
             errors.append(f"Failed to update Forwarding Policy Rule: {exc}")
-        
+
         finally:
             # Ensure cleanup is performed even if there are errors
             if rule_id:

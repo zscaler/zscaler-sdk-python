@@ -68,8 +68,8 @@ class TestAccessPolicyCapabilitiesRuleV2:
                     "clipboard_paste": True,
                     "file_download": True,
                     "file_upload": True,
-                    "record_session": True
-                }
+                    "record_session": True,
+                },
             )
             assert created_rule is not None, "Failed to create Access Capabilities Policy Rule"
             rule_id = created_rule.get("id", None)
@@ -79,7 +79,9 @@ class TestAccessPolicyCapabilitiesRuleV2:
         try:
             # Test listing Access Capabilities Policy Rules
             all_forwarding_rules = client.policies.list_rules("capabilities")
-            assert any(rule["id"] == rule_id for rule in all_forwarding_rules), "Access Capabilities Policy Rules not found in list"
+            assert any(
+                rule["id"] == rule_id for rule in all_forwarding_rules
+            ), "Access Capabilities Policy Rules not found in list"
         except Exception as exc:
             errors.append(f"Failed to list Access Capabilities Policy Rules: {exc}")
 
@@ -103,9 +105,9 @@ class TestAccessPolicyCapabilitiesRuleV2:
                     "clipboard_copy": True,
                     "clipboard_paste": True,
                     "file_download": True,
-                    "file_upload": None,  
+                    "file_upload": None,
                     "record_session": True,
-                }
+                },
             )
             assert (
                 updated_rule["description"] == updated_rule_description
