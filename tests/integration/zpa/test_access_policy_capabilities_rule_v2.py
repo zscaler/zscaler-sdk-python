@@ -111,7 +111,9 @@ class TestAccessPolicyCapabilitiesRuleV2:
             )
             # Fetch the updated rule to verify the changes
             updated_rule = client.policies.get_rule("capabilities", rule_id)
-            assert updated_rule["description"] == updated_rule_description, "Failed to update description for Access Capabilities Policy Rule"
+            assert (
+                updated_rule["description"] == updated_rule_description
+            ), "Failed to update description for Access Capabilities Policy Rule"
         except Exception as exc:
             errors.append(f"Failed to update Access Capabilities Policy Rule: {exc}")
 
