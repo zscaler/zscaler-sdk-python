@@ -21,7 +21,6 @@ import time
 from tests.integration.zpa.conftest import MockZPAClient
 from okta.client import Client as OktaClient
 from pprint import pprint
-import logging
 from tests.test_utils import generate_random_string
 
 
