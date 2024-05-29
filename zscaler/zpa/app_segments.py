@@ -96,7 +96,8 @@ class ApplicationSegmentAPI:
         Retrieve all configured application segments of a specified type, optionally expanding all related data.
 
         Args:
-            application_type (str): Type of application segment to retrieve. Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
+            application_type (str): Type of application segment to retrieve.
+            Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
             expand_all (bool, optional): Whether to expand all related data. Defaults to False.
 
         Keyword Args:
