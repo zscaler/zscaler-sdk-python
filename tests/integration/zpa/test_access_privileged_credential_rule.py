@@ -25,12 +25,12 @@ def fs():
     yield
 
 
-class TestAccessPrivilegedCredentialV2:
+class TestAccessPrivilegedCredential:
     """
     Integration Tests for the Privileged Credential v2
     """
 
-    def test_access_privileged_credential_v2(self, fs):
+    def test_access_privileged_credential(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

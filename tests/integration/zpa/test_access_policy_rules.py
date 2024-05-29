@@ -25,18 +25,17 @@ def fs():
     yield
 
 
-class TestAccessPolicyIsolationRuleV2:
+class TestAccessPolicyRule:
     """
-    Integration Tests for the Access Policy Isolation Rules V2
+    Integration Tests for the Access Policy Rules
     """
 
-    def test_access_policy_isolation_rules_v2(self, fs):
+    def test_access_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         rule_id = None
         scim_group_ids = []
-        profile_id = None
 
         try:
             # Test listing SCIM groups
@@ -55,73 +54,63 @@ class TestAccessPolicyIsolationRuleV2:
             errors.append(f"Listing SCIM groups failed: {exc}")
 
         try:
-            # Test listing Isolation profiles
-            profiles = client.isolation.list_profiles()
-            assert isinstance(profiles, list), "Response is not in the expected list format."
-            assert len(profiles) > 0, "No Isolation profiles were found."
-            profile_id = profiles[0]["id"]
-
-        except Exception as exc:
-            errors.append(f"Listing Isolation profiles failed: {exc}")
-
-        try:
-            # Create an Isolation Policy Rule
+            # Create a Access Policy Rule
             rule_name = "tests-" + generate_random_string()
             rule_description = "updated-" + generate_random_string()
-            created_rule = client.policies.add_isolation_rule_v2(
+            created_rule = client.policies.add_access_rule_v2(
                 name=rule_name,
                 description=rule_description,
-                action="isolate",
-                zpn_isolation_profile_id=profile_id,
+                action="allow",
                 conditions=[
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"]),
                     ("scim_group", scim_group_ids),
                 ],
             )
-            assert created_rule is not None, "Failed to create Isolation Policy Rule"
+            assert created_rule is not None, "Failed to create Access Policy Rule"
             rule_id = created_rule.get("id", None)
         except Exception as exc:
-            errors.append(f"Failed to create Isolation Policy Rule: {exc}")
+            errors.append(f"Failed to create Access Policy Rule: {exc}")
 
         try:
-            # Test listing Isolation Policy Rules
-            all_forwarding_rules = client.policies.list_rules("isolation")
-            assert any(rule["id"] == rule_id for rule in all_forwarding_rules), "Isolation Policy Rules not found in list"
+            # Test listing Access Policy Rules
+            all_forwarding_rules = client.policies.list_rules("access")
+            assert any(rule["id"] == rule_id for rule in all_forwarding_rules), "Access Policy Rules not found in list"
         except Exception as exc:
-            errors.append(f"Failed to list Isolation Policy Rules: {exc}")
+            errors.append(f"Failed to list Access Policy Rules: {exc}")
 
         try:
-            # Test retrieving the specific Isolation Policy Rule
-            retrieved_rule = client.policies.get_rule("isolation", rule_id)
-            assert retrieved_rule["id"] == rule_id, "Failed to retrieve the correct Isolation Policy Rule"
+            # Test retrieving the specific Access Policy Rule
+            retrieved_rule = client.policies.get_rule("access", rule_id)
+            assert retrieved_rule["id"] == rule_id, "Failed to retrieve the correct Access Policy Rule"
         except Exception as exc:
-            errors.append(f"Failed to retrieve Isolation Policy Rule: {exc}")
+            errors.append(f"Failed to retrieve Access Policy Rule: {exc}")
 
         try:
-            # Update the Isolation Policy Rule
+            # Update the Access Policy Rule
             updated_rule_description = "Updated " + generate_random_string()
-            updated_rule = client.policies.update_isolation_rule_v2(
+            updated_rule = client.policies.update_access_rule_v2(
                 rule_id=rule_id,
                 description=updated_rule_description,
-                action="isolate",
-                zpn_isolation_profile_id=profile_id,
+                action="allow",
                 conditions=[
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"]),
                     ("scim_group", scim_group_ids),
                 ],
             )
             assert (
                 updated_rule["description"] == updated_rule_description
-            ), "Failed to update description for Isolation Policy Rule"
+            ), "Failed to update description for Access Policy Rule"
         except Exception as exc:
-            errors.append(f"Failed to update Isolation Policy Rule: {exc}")
+            errors.append(f"Failed to update Access Policy Rule: {exc}")
 
         finally:
             # Ensure cleanup is performed even if there are errors
             if rule_id:
                 try:
-                    delete_status_rule = client.policies.delete_rule("isolation", rule_id)
-                    assert delete_status_rule == 204, "Failed to delete Isolation Policy Rule"
+                    delete_status_rule = client.policies.delete_rule("access", rule_id)
+                    assert delete_status_rule == 204, "Failed to delete Access Policy Rule"
                 except Exception as cleanup_exc:
                     errors.append(f"Cleanup failed: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the Isolation Policy Rule operations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the Access Policy Rule operations test: {errors}"

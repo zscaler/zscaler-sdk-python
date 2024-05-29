@@ -25,12 +25,12 @@ def fs():
     yield
 
 
-class TestAccessPolicyTimeoutRuleV2:
+class TestAccessPolicyTimeoutRule:
     """
     Integration Tests for the Access Policy Timeout Rules V2
     """
 
-    def test_access_policy_timeout_policy_rules_v2(self, fs):
+    def test_access_policy_timeout_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
