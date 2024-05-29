@@ -25,26 +25,46 @@ def fs():
     yield
 
 
-class TestAccessPolicyForwardingRule:
+class TestAccessPolicyForwardingRuleV2:
     """
-    Integration Tests for the Access Policy Forwarding Rules
+    Integration Tests for the Access Policy Forwarding Rules V2
     """
 
-    def test_access_policy_forwarding_rules(self, fs):
+    def test_access_policy_forwarding_rules_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         rule_id = None
+        scim_group_ids = []
+
+        try:
+            # Test listing SCIM groups
+            idps = client.idp.list_idps()
+            user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+            assert user_idp is not None, "No IdP with sso_type 'USER' found."
+
+            user_idp_id = user_idp["id"]
+            resp = client.scim_groups.list_groups(user_idp_id)
+            assert isinstance(resp, list), "Response is not in the expected list format."
+            assert len(resp) >= 2, "Less than 2 SCIM groups were found for the specified IdP."
+
+            # Extract the first two SCIM group IDs
+            scim_group_ids = [(user_idp_id, group["id"]) for group in resp[:2]]
+        except Exception as exc:
+            errors.append(f"Listing SCIM groups failed: {exc}")
 
         try:
             # Create a Forwarding Policy Rule
             rule_name = "tests-" + generate_random_string()
             rule_description = "updated-" + generate_random_string()
-            created_rule = client.policies.add_client_forwarding_rule(
-                policy_type="client_forwarding",
+            created_rule = client.policies.add_client_forwarding_rule_v2(
                 name=rule_name,
                 description=rule_description,
                 action="bypass",
+                conditions=[
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"]),
+                    ("scim_group", scim_group_ids),
+                ],
             )
             assert created_rule is not None, "Failed to create Forwarding Policy Rule"
             rule_id = created_rule.get("id", None)
@@ -53,8 +73,8 @@ class TestAccessPolicyForwardingRule:
 
         try:
             # Test listing Forwarding Policy Rules
-            all_timeout_rules = client.policies.list_rules("client_forwarding")
-            assert any(rule["id"] == rule_id for rule in all_timeout_rules), "Forwarding Policy Rules not found in list"
+            all_forwarding_rules = client.policies.list_rules("client_forwarding")
+            assert any(rule["id"] == rule_id for rule in all_forwarding_rules), "Forwarding Policy Rules not found in list"
         except Exception as exc:
             errors.append(f"Failed to list Forwarding Policy Rules: {exc}")
 
@@ -68,10 +88,14 @@ class TestAccessPolicyForwardingRule:
         try:
             # Update the Forwarding Policy Rule
             updated_rule_description = "Updated " + generate_random_string()
-            updated_rule = client.policies.update_rule(
-                policy_type="client_forwarding",
+            updated_rule = client.policies.update_client_forwarding_rule_v2(
                 rule_id=rule_id,
                 description=updated_rule_description,
+                action="bypass",
+                conditions=[
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"]),
+                    ("scim_group", scim_group_ids),
+                ],
             )
             assert (
                 updated_rule["description"] == updated_rule_description
@@ -79,20 +103,14 @@ class TestAccessPolicyForwardingRule:
         except Exception as exc:
             errors.append(f"Failed to update Forwarding Policy Rule: {exc}")
 
-        try:
-            # Cleanup: Delete the Forwarding Policy Rule
-            delete_status_rule = client.policies.delete_rule("client_forwarding", rule_id)
-            assert delete_status_rule == 204, "Failed to delete Forwarding Policy Rule"
-            rule_id = None  # Ensure ID is reset to prevent reattempt in cleanup
-        except Exception as exc:
-            errors.append(f"Failed to delete Forwarding Policy Rule: {exc}")
-
-        # Ensure cleanup is performed even if there are errors
-        if rule_id:
-            try:
-                client.policies.delete_rule("client_forwarding", rule_id)
-            except Exception as cleanup_exc:
-                errors.append(f"Cleanup failed: {cleanup_exc}")
+        finally:
+            # Ensure cleanup is performed even if there are errors
+            if rule_id:
+                try:
+                    delete_status_rule = client.policies.delete_rule("client_forwarding", rule_id)
+                    assert delete_status_rule == 204, "Failed to delete Forwarding Policy Rule"
+                except Exception as cleanup_exc:
+                    errors.append(f"Cleanup failed: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during the Forwarding Policy Rule operations test: {errors}"

@@ -36,6 +36,7 @@ class TestAccessPolicyRule:
 
         connector_group_id = None
         rule_id = None
+        scim_group_ids = []
 
         try:
             # Prerequisite: Create an App Connector Group
@@ -64,15 +65,34 @@ class TestAccessPolicyRule:
             errors.append(f"Creating App Connector Group failed: {exc}")
 
         try:
+            # Test listing SCIM groups
+            idps = client.idp.list_idps()
+            user_idp = next((idp for idp in idps if "USER" in idp.get("sso_type", [])), None)
+            assert user_idp is not None, "No IdP with sso_type 'USER' found."
+
+            user_idp_id = user_idp["id"]
+            resp = client.scim_groups.list_groups(user_idp_id)
+            assert isinstance(resp, list), "Response is not in the expected list format."
+            assert len(resp) >= 2, "Less than 2 SCIM groups were found for the specified IdP."
+
+            # Extract the first two SCIM group IDs
+            scim_group_ids = [(user_idp_id, group["id"]) for group in resp[:2]]
+        except Exception as exc:
+            errors.append(f"Listing SCIM groups failed: {exc}")
+
+        try:
             # Create an Access Policy Rule
             rule_name = "tests-" + generate_random_string()
             rule_description = "Integration test for access policy rule"
             created_rule = client.policies.add_access_rule(
-                policy_type="access",
                 name=rule_name,
                 description=rule_description,
                 action="allow",
                 app_connector_group_ids=[connector_group_id],
+                conditions=[
+                    ("scim_group", scim_group_ids[0][0], scim_group_ids[0][1]),
+                    ("scim_group", scim_group_ids[1][0], scim_group_ids[1][1]),
+                ],
             )
             rule_id = created_rule.get("id", None)
         except Exception as exc:
@@ -98,29 +118,32 @@ class TestAccessPolicyRule:
             # Update the Access Policy Rule
             updated_rule_description = "Updated " + generate_random_string()
             updated_rule = client.policies.update_access_rule(
-                policy_type="access",
                 rule_id=rule_id,
                 description=updated_rule_description,
+                conditions=[
+                    ("scim_group", scim_group_ids[0][0], scim_group_ids[0][1]),
+                    ("scim_group", scim_group_ids[1][0], scim_group_ids[1][1]),
+                ],
             )
             if updated_rule["description"] != updated_rule_description:
                 raise AssertionError("Failed to update description for Access Policy Rule")
         except Exception as exc:
             errors.append(f"Updating Access Policy Rule failed: {exc}")
 
-        # Cleanup
-        if rule_id:
-            try:
-                # Cleanup: Delete the Access Policy Rule
-                delete_status_rule = client.policies.delete_rule("access", rule_id)
-                if delete_status_rule != 204:
-                    raise AssertionError("Failed to delete Access Policy Rule")
-            except Exception as exc:
-                errors.append(f"Deleting Access Policy Rule failed: {exc}")
+        finally:
+            if rule_id:
+                try:
+                    # Cleanup: Delete the Access Policy Rule
+                    delete_status_rule = client.policies.delete_rule("access", rule_id)
+                    if delete_status_rule != 204:
+                        raise AssertionError("Failed to delete Access Policy Rule")
+                except Exception as exc:
+                    errors.append(f"Deleting Access Policy Rule failed: {exc}")
 
-        if connector_group_id:
-            try:
-                client.connectors.delete_connector_group(connector_group_id)
-            except Exception as exc:
-                errors.append(f"Cleanup failed for Connector Group: {exc}")
+            if connector_group_id:
+                try:
+                    client.connectors.delete_connector_group(connector_group_id)
+                except Exception as exc:
+                    errors.append(f"Cleanup failed for Connector Group: {exc}")
 
-        assert len(errors) == 0, f"Errors occurred during the Access Policy Rule operations test: {errors}"
+            assert len(errors) == 0, f"Errors occurred during the Access Policy Rule operations test: {errors}"
