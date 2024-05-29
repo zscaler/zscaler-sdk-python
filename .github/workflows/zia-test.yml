@@ -76,6 +76,7 @@ jobs:
   #         ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
   #         ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
   #         ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
+  #         ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
 
   #     - name: Publish test coverage
   #       uses: codecov/codecov-action@v4
@@ -149,7 +150,8 @@ jobs:
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-
+          ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
+          
       - name: Publish test coverage
         uses: codecov/codecov-action@v4
         with:

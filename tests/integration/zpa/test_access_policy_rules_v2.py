@@ -25,12 +25,12 @@ def fs():
     yield
 
 
-class TestAccessPolicyRule:
+class TestAccessPolicyRuleV2:
     """
     Integration Tests for the Access Policy Rules
     """
 
-    def test_access_policy_rules(self, fs):
+    def test_access_policy_rules_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 

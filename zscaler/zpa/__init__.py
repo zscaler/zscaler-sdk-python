@@ -254,7 +254,8 @@ class ZPAClientHelper(ZPAClient):
                     time.sleep(5)
 
         if method != "GET":
-            self.cache.delete(cache_key)
+            logger.info(f"Clearing cache for non-GET request: {method} {url}")
+            self.cache.clear()
 
         try:
             response_data = resp.json()
