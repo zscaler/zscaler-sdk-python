@@ -36,7 +36,7 @@ jobs:
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v9
         with:
-          poetry-version: 1.8.2
+          poetry-version: 1.8.3
 
       - name: Get poetry cache directory
         id: poetry-cache
@@ -61,7 +61,7 @@ jobs:
         uses: nick-fields/retry@v3
         with:
           max_attempts: 3
-          timeout_minutes: 30
+          timeout_minutes: 45
           command: |
             poetry run make coverage:zpa
         env:
@@ -70,6 +70,7 @@ jobs:
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
           ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+          ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
           OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
           OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
 
@@ -81,6 +82,7 @@ jobs:
           fail_ci_if_error: true
           
   zpa-prod-tenants:
+    needs: [zpa-qa1-tenants]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -103,7 +105,7 @@ jobs:
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v9
         with:
-          poetry-version: 1.8.2
+          poetry-version: 1.8.3
 
       - name: Get poetry cache directory
         id: poetry-cache
@@ -137,6 +139,7 @@ jobs:
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
           ZPA_SDK_TEST_SWEEP: ${{ secrets.ZPA_SDK_TEST_SWEEP }}
+          ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
           OKTA_CLIENT_ORGURL: ${{ secrets.OKTA_CLIENT_ORGURL }}
           OKTA_CLIENT_TOKEN: ${{ secrets.OKTA_CLIENT_TOKEN }}
 

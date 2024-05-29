@@ -115,8 +115,8 @@ class ZscalerCache(Cache):
         """
         Clear the cache.
         """
+        logger.info("Clearing the entire cache.")
         self._store.clear()
-        logger.info("Cleared the cache.")
 
     def _clean_cache(self):
         """
