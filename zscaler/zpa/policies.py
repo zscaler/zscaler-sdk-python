@@ -153,67 +153,6 @@ class PolicySetsAPI:
 
         return template
 
-    # @staticmethod
-    # def _create_conditions_v1(conditions: list):
-    #     """
-    #     Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
-
-    #     Args:
-    #         conditions (list): List of condition dicts or tuples.
-
-    #     Returns:
-    #         :obj:`dict`: The conditions template.
-
-    #     """
-    #     template = []
-
-    #     for condition in conditions:
-    #         if isinstance(condition, tuple) and len(condition) == 3:
-    #             # Previous tuple logic
-    #             operand = {
-    #                 "operands": [
-    #                     {
-    #                         "objectType": condition[0].upper(),
-    #                         "lhs": condition[1],
-    #                         "rhs": condition[2],
-    #                     }
-    #                 ]
-    #             }
-    #             template.append(operand)
-    #         elif isinstance(condition, dict):
-    #             # New dictionary logic based on Go code schema
-    #             condition_template = {}
-
-    #             # Extracting keys from the condition dictionary
-    #             for key in ["id", "negated", "operator"]:
-    #                 if key in condition:
-    #                     condition_template[key] = condition[key]
-
-    #             # Handling the operands
-    #             operands = condition.get("operands", [])
-    #             condition_template["operands"] = []
-
-    #             for operand in operands:
-    #                 operand_template = {}
-
-    #                 # Extracting keys from the operand dictionary
-    #                 for operand_key in [
-    #                     "id",
-    #                     "idp_id",
-    #                     "name",
-    #                     "lhs",
-    #                     "rhs",
-    #                     "objectType",
-    #                 ]:
-    #                     if operand_key in operand:
-    #                         operand_template[operand_key] = operand[operand_key]
-
-    #                 condition_template["operands"].append(operand_template)
-
-    #             template.append(condition_template)
-
-    #     return template
-
     def _create_conditions_v2(self, conditions: list) -> list:
         """
         Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
@@ -1303,8 +1242,6 @@ class PolicySetsAPI:
             # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-    ############## POLICY V2 ##############
-
     def add_access_rule_v2(
         self,
         name: str,
@@ -1747,7 +1684,12 @@ class PolicySetsAPI:
 
                 .. code-block:: python
 
-                    ("client_type", ['zpn_client_type_edge_connector', 'zpn_client_type_branch_connector', 'zpn_client_type_machine_tunnel', 'zpn_client_type_zapp', 'zpn_client_type_zapp_partner']),
+                    ("client_type",
+                        ['zpn_client_type_edge_connector',
+                        'zpn_client_type_branch_connector',
+                        'zpn_client_type_machine_tunnel',
+                        'zpn_client_type_zapp', 'zpn_client_type_zapp_partner'
+                    ]),
 
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
@@ -1761,9 +1703,14 @@ class PolicySetsAPI:
             ...    description='Update_Redirection_Rule_v2',
             ...    action='redirect_default',
             ...    conditions=[
-            ...         ("client_type", ['zpn_client_type_edge_connector', 'zpn_client_type_branch_connector', 'zpn_client_type_machine_tunnel', 'zpn_client_type_zapp', 'zpn_client_type_zapp_partner']),
+            ...         ("client_type",
+            ...         ['zpn_client_type_edge_connector',
+            ...          'zpn_client_type_branch_connector',
+            ...          'zpn_client_type_machine_tunnel',
+            ...          'zpn_client_type_zapp',
+            ...          'zpn_client_type_zapp_partner']),
             ...     ],
-            ...         )
+            ... )
         """
 
         # Pre-set the policy_type to "timeout"
@@ -2178,7 +2125,8 @@ class PolicySetsAPI:
                 If you are adding multiple values for the same object type then you will need a new entry for each value.
 
                 * `conditions`: This is for providing the set of conditions for the policy
-                    * `object_type`: This is for specifying the policy criteria. The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
+                    * `object_type`: This is for specifying the policy criteria.
+                        The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
                         * `saml`: The unique Identity Provider ID and SAML attribute ID
                         * `scim`: The unique Identity Provider ID and SCIM attribute ID
                         * `scim_group`: The unique Identity Provider ID and SCIM_GROUP ID
@@ -2315,7 +2263,8 @@ class PolicySetsAPI:
         Add a new Capability Access rule.
 
         See the
-        `ZPA Capabilities Policies API reference <https://help.zscaler.com/zpa/configuring-privileged-policies-using-api#postV2cap>`_
+        `ZPA Capabilities Policies API reference:
+        <https://help.zscaler.com/zpa/configuring-privileged-policies-using-api#postV2cap>`_
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -2335,24 +2284,26 @@ class PolicySetsAPI:
                 If you are adding multiple values for the same object type then you will need a new entry for each value.
 
                 - `conditions`: This is for providing the set of conditions for the policy
-                    - `object_type`: This is for specifying the policy criteria. The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
+                    - `object_type`: This is for specifying the policy criteria.
+                        The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
                         - `app`: The unique Application Segment ID
                         - `app_group`: The unique Segment Group ID
                         - `saml`: The unique Identity Provider ID and SAML attribute ID
                         - `scim`: The unique Identity Provider ID and SCIM attribute ID
                         - `scim_group`: The unique Identity Provider ID and SCIM_GROUP ID
 
-            privileged_capabilities (dict): A dictionary specifying the privileged capabilities with boolean values. The supported capabilities are:
+            privileged_capabilities (dict): A dictionary specifying the privileged capabilities with boolean values.
+                The supported capabilities are:
 
                 - clipboard_copy (bool): Indicates the PRA Clipboard Copy function.
                 - clipboard_paste (bool): Indicates the PRA Clipboard Paste function.
                 - file_upload (bool): Indicates the PRA File Transfer capabilities that enables the File Upload function.
                 - file_download (bool): Indicates the PRA File Transfer capabilities that enables the File Download function.
-                - inspect_file_upload (bool): Inspects the file via ZIA sandbox and uploads the file following the inspection.
-                - inspect_file_download (bool): Inspects the file via ZIA sandbox and downloads the file following the inspection.
-                - monitor_session (bool): Indicates the PRA Monitoring Capabilities to enable the PRA Session Monitoring function.
-                - record_session (bool): Indicates the PRA Session Recording capabilities to enable PRA Session Recording.
-                - share_session (bool): Indicates the PRA Session Control and Monitoring capabilities to enable PRA Session Monitoring.
+                - inspect_file_upload (bool): Inspects the file via ZIA sandbox and uploads the file after inspection.
+                - inspect_file_download (bool): Inspects the file via ZIA sandbox and downloads the file after the inspection.
+                - monitor_session (bool): Indicates the PRA Monitoring Capabilities to enable the PRA Session Monitoring.
+                - record_session (bool): Indicates PRA Session Recording capabilities to enable PRA Session Recording.
+                - share_session (bool): Indicates PRA Session Control/Monitoring capabilities to enable PRA Session Monitoring.
 
         Returns:
             :obj:`Box`: The resource record of the newly created Capabilities rule.
@@ -2402,9 +2353,9 @@ class PolicySetsAPI:
                 capabilities.append("FILE_DOWNLOAD")
 
             # Handling the edge case for file_upload
-            if priv_caps_map.get("file_upload") == True:
+            if priv_caps_map.get("file_upload") is True:
                 capabilities.append("FILE_UPLOAD")
-            elif priv_caps_map.get("file_upload") == False:
+            elif priv_caps_map.get("file_upload") is False:
                 capabilities.append("INSPECT_FILE_UPLOAD")
             # If file_upload is not present or set to None, do not append either capability
 
@@ -2441,7 +2392,8 @@ class PolicySetsAPI:
         Update an existing capabilities policy rule.
 
         See the
-        `ZPA Capabilities Policies API reference <https://help.zscaler.com/zpa/configuring-privileged-policies-using-api#postV2cap>`_
+        `ZPA Capabilities Policies API reference:
+        <https://help.zscaler.com/zpa/configuring-privileged-policies-using-api#postV2cap>`_
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -2458,24 +2410,26 @@ class PolicySetsAPI:
                 If you are adding multiple values for the same object type then you will need a new entry for each value.
 
                 - `conditions`: This is for providing the set of conditions for the policy
-                    - `object_type`: This is for specifying the policy criteria. The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
+                    - `object_type`: This is for specifying the policy criteria.
+                        The following values are supported: "app", "app_group", "saml", "scim", "scim_group"
                         - `app`: The unique Application Segment ID
                         - `app_group`: The unique Segment Group ID
                         - `saml`: The unique Identity Provider ID and SAML attribute ID
                         - `scim`: The unique Identity Provider ID and SCIM attribute ID
                         - `scim_group`: The unique Identity Provider ID and SCIM_GROUP ID
 
-            privileged_capabilities (dict): A dictionary specifying the privileged capabilities with boolean values. The supported capabilities are:
+            privileged_capabilities (dict): A dictionary specifying the privileged capabilities with boolean values.
+                The supported capabilities are:
 
                 - clipboard_copy (bool): Indicates the PRA Clipboard Copy function.
                 - clipboard_paste (bool): Indicates the PRA Clipboard Paste function.
                 - file_upload (bool): Indicates the PRA File Transfer capabilities that enables the File Upload function.
                 - file_download (bool): Indicates the PRA File Transfer capabilities that enables the File Download function.
-                - inspect_file_upload (bool): Inspects the file via ZIA sandbox and uploads the file following the inspection.
-                - inspect_file_download (bool): Inspects the file via ZIA sandbox and downloads the file following the inspection.
-                - monitor_session (bool): Indicates the PRA Monitoring Capabilities to enable the PRA Session Monitoring function.
-                - record_session (bool): Indicates the PRA Session Recording capabilities to enable PRA Session Recording.
-                - share_session (bool): Indicates the PRA Session Control and Monitoring capabilities to enable PRA Session Monitoring.
+                - inspect_file_upload (bool): Inspects the file via ZIA sandbox and uploads the file after the inspection.
+                - inspect_file_download (bool): Inspects the file via ZIA sandbox and downloads the file after inspection.
+                - monitor_session (bool): Indicates PRA Monitoring Capabilities to enable the PRA Session Monitoring.
+                - record_session (bool): Indicates PRA Session Recording capabilities to enable PRA Session Recording.
+                - share_session (bool): Indicates PRA Session Control/Monitoring capabilities to enable PRA Session Monitoring.
 
         Returns:
             :obj:`Box`: The updated policy-capability-rule resource record.
@@ -2529,9 +2483,9 @@ class PolicySetsAPI:
                     capabilities.append("FILE_DOWNLOAD")
 
                 # Handling the edge case for file_upload
-                if priv_caps_map.get("file_upload") == True:
+                if priv_caps_map.get("file_upload") is True:
                     capabilities.append("FILE_UPLOAD")
-                elif priv_caps_map.get("file_upload") == False:
+                elif priv_caps_map.get("file_upload") is False:
                     capabilities.append("INSPECT_FILE_UPLOAD")
                 # If file_upload is not present or set to None, do not append either capability
 
@@ -2597,7 +2551,8 @@ class PolicySetsAPI:
                 a new entry for each value.
 
                 * `conditions`: This is for providing the set of conditions for the policy
-                    * `object_type`: This is for specifying the policy criteria. The following values are supported: "app", "app_group", "saml", "scim", "scim_group", "client_type"
+                    * `object_type`: This is for specifying the policy criteria.
+                        The following values are supported: "app", "app_group", "saml", "scim", "scim_group", "client_type"
                         * `client_type`: The client type, must be one of the following:
                             - 'zpn_client_type_edge_connector'
                             - 'zpn_client_type_branch_connector'
@@ -2618,7 +2573,12 @@ class PolicySetsAPI:
                     action='redirect_preferred',
                     service_edge_group_ids=['12345', '67890'],
                     conditions=[
-                        ("client_type", 'zpn_client_type_edge_connector', 'zpn_client_type_branch_connector', 'zpn_client_type_machine_tunnel', 'zpn_client_type_zapp', 'zpn_client_type_zapp_partner'),
+                        ("client_type",
+                            'zpn_client_type_edge_connector',
+                            'zpn_client_type_branch_connector',
+                            'zpn_client_type_machine_tunnel',
+                            'zpn_client_type_zapp',
+                            'zpn_client_type_zapp_partner'),
                     ]
                 )
         """
@@ -2701,7 +2661,13 @@ class PolicySetsAPI:
 
                 .. code-block:: python
 
-                    ("client_type", ['zpn_client_type_edge_connector', 'zpn_client_type_branch_connector', 'zpn_client_type_machine_tunnel', 'zpn_client_type_zapp', 'zpn_client_type_zapp_partner']),
+                    ("client_type", [
+                        'zpn_client_type_edge_connector',
+                        'zpn_client_type_branch_connector',
+                        'zpn_client_type_machine_tunnel',
+                        'zpn_client_type_zapp',
+                        'zpn_client_type_zapp_partner'
+                    ]),
 
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
@@ -2715,9 +2681,14 @@ class PolicySetsAPI:
             ...    description='Update_Redirection_Rule_v2',
             ...    action='redirect_default',
             ...    conditions=[
-            ...         ("client_type", ['zpn_client_type_edge_connector', 'zpn_client_type_branch_connector', 'zpn_client_type_machine_tunnel', 'zpn_client_type_zapp', 'zpn_client_type_zapp_partner']),
+            ...         ("client_type", [
+            ...          'zpn_client_type_edge_connector',
+            ...          'zpn_client_type_branch_connector',
+            ...          'zpn_client_type_machine_tunnel',
+            ...          'zpn_client_type_zapp',
+            ...          'zpn_client_type_zapp_partner']),
             ...     ],
-            ...         )
+            ... )
         """
 
         # Pre-set the policy_type to "access"
