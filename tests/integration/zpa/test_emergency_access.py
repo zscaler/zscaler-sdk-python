@@ -153,9 +153,7 @@ async def delete_user_in_okta(user_id: str):
     token = os.getenv("OKTA_CLIENT_TOKEN")
 
     # Initialize Okta client with environment variables and logging
-    client = OktaClient(
-        {"orgUrl": f"https://{okta_domain}", "token": token}
-    )
+    client = OktaClient({"orgUrl": f"https://{okta_domain}", "token": token})
 
     # Deactivate and delete the user in Okta
     try:

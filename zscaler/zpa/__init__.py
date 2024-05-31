@@ -39,6 +39,7 @@ from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation import IsolationAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
+from zscaler.zpa.microtenants import MicrotenantsAPI
 from zscaler.zpa.policies import PolicySetsAPI
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.privileged_remote_access import PrivilegedRemoteAccessAPI
@@ -81,12 +82,12 @@ class ZPAClientHelper(ZPAClient):
         client_secret,
         customer_id,
         cloud,
+        microtenant_id=None,
         timeout=240,
         cache=None,
         fail_safe=False,
     ):
         # Initialize rate limiter
-        # You may want to adjust these parameters as per your rate limit configuration
         self.rate_limiter = RateLimiter(
             get_limit=20,  # Adjusted to allow 20 GET requests per 10 seconds
             post_put_delete_limit=10,  # Adjusted to allow 10 POST/PUT/DELETE requests per 10 seconds
@@ -94,7 +95,6 @@ class ZPAClientHelper(ZPAClient):
             post_put_delete_freq=10,  # Adjust frequency to 10 seconds
         )
 
-        # Validate cloud value
         if cloud not in ZPA_BASE_URLS:
             valid_clouds = ", ".join(ZPA_BASE_URLS.keys())
             raise ValueError(
@@ -102,15 +102,13 @@ class ZPAClientHelper(ZPAClient):
                 f"Please use one of the following supported values: {valid_clouds}"
             )
 
-        # Continue with existing initialization...
-        # Select the appropriate URL
         self.baseurl = ZPA_BASE_URLS.get(cloud, ZPA_BASE_URLS["PRODUCTION"])
-
         self.timeout = timeout
         self.client_id = client_id
         self.client_secret = client_secret
         self.customer_id = customer_id
         self.cloud = cloud
+        self.microtenant_id = microtenant_id or os.getenv("ZPA_MICROTENANT_ID")
         self.url = f"{self.baseurl}/mgmtconfig/v1/admin/customers/{customer_id}"
         self.user_config_url = f"{self.baseurl}/userconfig/v1/customers/{customer_id}"
         self.v2_url = f"{self.baseurl}/mgmtconfig/v2/admin/customers/{customer_id}"
@@ -118,7 +116,6 @@ class ZPAClientHelper(ZPAClient):
         self.cbi_url = f"{self.baseurl}/cbiconfig/cbi/api/customers/{customer_id}"
         self.fail_safe = fail_safe
 
-        # Cache setup
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
         if cache is None:
             if cache_enabled:
@@ -130,7 +127,6 @@ class ZPAClientHelper(ZPAClient):
         else:
             self.cache = cache
 
-        # Initialize user-agent
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()
         self.access_token = None
@@ -184,7 +180,18 @@ class ZPAClientHelper(ZPAClient):
         elif api_version == "cbiconfig_v1":
             api = self.cbi_url
 
+        if params is None:
+            params = {}
+
+        # Check if microtenant_id is present in params or payload, otherwise use the class attribute
+        microtenant_id = json.pop("microtenant_id", self.microtenant_id) if json else self.microtenant_id
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+
         url = f"{api}/{path.lstrip('/')}"
+        if params:
+            url = f"{url}?{urllib.parse.urlencode(params)}"
+
         start_time = time.time()
         headers_with_user_agent = self.headers.copy()
         headers_with_user_agent["User-Agent"] = self.user_agent
@@ -217,6 +224,7 @@ class ZPAClientHelper(ZPAClient):
                     method,
                     url,
                     json=json,
+                    params=params,
                     headers=headers_with_user_agent,
                     timeout=self.timeout,
                 )
@@ -356,6 +364,7 @@ class ZPAClientHelper(ZPAClient):
             time.sleep(delay)
         return self.send("DELETE", path, json, params, api_version=api_version)
 
+
     def get_paginated_data(
         self,
         path=None,
@@ -373,8 +382,9 @@ class ZPAClientHelper(ZPAClient):
         end_time=None,
         idp_group_id=None,
         scim_user_id=None,
-        page=None,
+        page=1,
         pagesize=20,
+        microtenant_id=None
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -422,10 +432,14 @@ class ZPAClientHelper(ZPAClient):
                 "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
             )
 
+        params["page"] = page  # Default to page 1 if not specified
         params["pagesize"] = min(pagesize, 500)  # Apply maximum constraint and handle default
 
-        if page:
-            params["page"] = page
+        # Check for microtenantId in function arguments first, then environment variable
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+        elif self.microtenant_id and "microtenantId" not in params:
+            params["microtenantId"] = self.microtenant_id
 
         if search:
             api_search_field = snake_to_camel(search_field)
@@ -590,6 +604,14 @@ class ZPAClientHelper(ZPAClient):
 
         """
         return MachineGroupsAPI(self)
+
+    @property
+    def microtenants(self):
+        """
+        The interface object for the :ref:`ZPA Microtenants interface <zpa-microtenants>`.
+
+        """
+        return MicrotenantsAPI(self)
 
     @property
     def policies(self):

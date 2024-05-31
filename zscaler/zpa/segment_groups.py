@@ -39,16 +39,20 @@ class SegmentGroupsAPI:
             ...    pprint(segment_group)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/segmentGroup", **kwargs, api_version="v1")
+        # list, _ = self.rest.get_paginated_data(path="/segmentGroup", **kwargs, api_version="v1")
+        # return list
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        list, _ = self.rest.get_paginated_data(path="/segmentGroup", params=params, **kwargs, api_version="v1")
         return list
 
-    def get_group(self, group_id: str) -> Box:
+    def get_group(self, group_id: str, **kwargs) -> Box:
         """
         Returns information on the specified segment group.
 
         Args:
-            group_id (str):
-                The unique identifier for the segment group.
+            group_id (str): The unique identifier for the segment group.
 
         Returns:
             :obj:`Box`: The resource record for the segment group.
@@ -57,7 +61,11 @@ class SegmentGroupsAPI:
             >>> pprint(zpa.segment_groups.get_group('99999'))
 
         """
-        return self.rest.get(f"segmentGroup/{group_id}")
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"segmentGroup/{group_id}", params=params)
+
 
     def get_segment_group_by_name(self, name):
         apps = self.list_groups()
@@ -71,20 +79,17 @@ class SegmentGroupsAPI:
         Adds a new segment group.
 
         Args:
-            name (str):
-                The name of the new segment group.
-            enabled (bool):
-                Enable the segment group. Defaults to True.
+            name (str): The name of the new segment group.
+            enabled (bool): Enable the segment group. Defaults to True.
             **kwargs:
 
         Keyword Args:
             application_ids (:obj:`list` of :obj:`dict`):
                 Unique application IDs to associate with the segment group.
-            config_space (str):
-                The config space for the segment group. Can either be DEFAULT or SIEM.
             description (str):
                 A description for the segment group.
-            policy_migrated (bool):
+            microtenant_id (str):
+                The microtenant ID to be used for this request.
 
         Returns:
             :obj:`Box`: The resource record for the newly created segment group.
@@ -96,7 +101,6 @@ class SegmentGroupsAPI:
             ...    True)
 
         """
-
         payload = {
             "name": name,
             "enabled": enabled,
@@ -109,7 +113,10 @@ class SegmentGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("segmentGroup", json=payload)
+        # Extract microtenant_id from kwargs if provided
+        microtenant_id = kwargs.pop("microtenant_id", None)
+
+        response = self.rest.post("segmentGroup", json=payload, params={"microtenantId": microtenant_id})
         if isinstance(response, Response):
             # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
@@ -122,22 +129,17 @@ class SegmentGroupsAPI:
         Updates an existing segment group.
 
         Args:
-            group_id (str):
-                The unique identifier for the segment group to be updated.
+            group_id (str): The unique identifier for the segment group to be updated.
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            name (str):
-                The name of the new segment group.
-            enabled (bool):
-                Enable the segment group.
-            application_ids (:obj:`list` of :obj:`dict`):
-                Unique application IDs to associate with the segment group.
-            config_space (str):
-                The config space for the segment group. Can either be DEFAULT or SIEM.
-            description (str):
-                A description for the segment group.
+            name (str): The name of the new segment group.
+            enabled (bool): Enable the segment group.
+            application_ids (:obj:`list` of :obj:`dict`): Unique application IDs to associate with the segment group.
+            config_space (str): The config space for the segment group. Can either be DEFAULT or SIEM.
+            description (str): A description for the segment group.
             policy_migrated (bool):
+            microtenant_id (str): The microtenant ID to be used for this request.
 
         Returns:
             :obj:`Box`: The resource record for the updated segment group.
@@ -159,19 +161,21 @@ class SegmentGroupsAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload).status_code
+        # Extract microtenant_id from kwargs if provided
+        microtenant_id = kwargs.pop("microtenant_id", None)
+
+        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload, params={"microtenantId": microtenant_id}).status_code
 
         # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 
-    def delete_group(self, group_id: str) -> int:
+    def delete_group(self, group_id: str, **kwargs) -> int:
         """
         Deletes the specified segment group.
 
         Args:
-            group_id (str):
-                The unique identifier for the segment group to be deleted.
+            group_id (str): The unique identifier for the segment group to be deleted.
 
         Returns:
             :obj:`int`: The response code for the operation.
@@ -180,4 +184,12 @@ class SegmentGroupsAPI:
             >>> zpa.segment_groups.delete_group('99999')
 
         """
-        return self.rest.delete(f"segmentGroup/{group_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"segmentGroup/{group_id}", params=params).status_code
+
+
+
+
+
