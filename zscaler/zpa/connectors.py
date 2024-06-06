@@ -61,7 +61,7 @@ class AppConnectorControllerAPI:
         list, _ = self.rest.get_paginated_data(path="/connector", **kwargs, api_version="v1")
         return list
 
-    def get_connector(self, connector_id: str) -> Box:
+    def get_connector(self, connector_id: str, **kwargs) -> Box:
         """
         Returns information on the specified App Connector.
 
@@ -75,18 +75,33 @@ class AppConnectorControllerAPI:
             >>> app_connector = zpa.connectors.get_connector('99999')
 
         """
-        response = self.rest.get("/connector/%s" % (connector_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"connector/{connector_id}", params=params)
 
-    def get_connector_by_name(self, name):
-        apps = self.list_connectors()
-        for app in apps:
-            if app.get("name") == name:
-                return app
+    def get_connector_by_name(self, name: str, **kwargs):
+        """
+        Returns information on the app connector with the specified name.
+
+        Args:
+            name (str): The name of the app connector .
+
+        Returns:
+            :obj:`Box` or None: The resource record for the app connector  if found, otherwise None.
+
+        Examples:
+            >>> connector = zpa.connectors.get_connector_by_name('example_name')
+            >>> if connector:
+            ...     pprint(connector)
+            ... else:
+            ...     print("App Connector not found")
+
+        """
+        connectors = self.list_connectors(**kwargs)
+        for connector in connectors:
+            if connector.get("name") == name:
+                return connector
         return None
 
     def update_connector(self, connector_id: str, **kwargs):
@@ -113,21 +128,19 @@ class AppConnectorControllerAPI:
             ...    enabled=False)
 
         """
-        # Set payload to equal existing record
         payload = {snake_to_camel(k): v for k, v in self.get_connector(connector_id).items()}
-
-        # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put("/connector/%s" % (connector_id), json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        resp = self.rest.put(f"connector/{connector_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_connector(connector_id)
 
-    def delete_connector(self, connector_id: str) -> int:
+    def delete_connector(self, connector_id: str, **kwargs) -> int:
         """
         Deletes the specified App Connector from ZPA.
 
@@ -141,9 +154,12 @@ class AppConnectorControllerAPI:
             >>> zpa.connectors.delete_connector('999999')
 
         """
-        return self.rest.delete(f"connector/{connector_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"connector/{connector_id}", params=params).status_code
 
-    def bulk_delete_connectors(self, connector_ids: list) -> int:
+    def bulk_delete_connectors(self, connector_ids: list, **kwargs) -> int:
         """
         Deletes all specified App Connectors from ZPA.
 
@@ -158,7 +174,10 @@ class AppConnectorControllerAPI:
 
         """
         payload = {"ids": connector_ids}
-        return self.rest.post("connector/bulkDelete", json=payload).status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.post("connector/bulkDelete", json=payload)
 
     def list_connector_groups(self, **kwargs) -> BoxList:
         """
@@ -184,7 +203,7 @@ class AppConnectorControllerAPI:
         list, _ = self.rest.get_paginated_data(path="/appConnectorGroup", **kwargs, api_version="v1")
         return list
 
-    def get_connector_group(self, group_id: str) -> Box:
+    def get_connector_group(self, group_id: str, **kwargs) -> Box:
         """
         Gets information for a specified connector group.
 
@@ -200,15 +219,30 @@ class AppConnectorControllerAPI:
             >>> connector_group = zpa.connectors.get_connector_group('99999')
 
         """
-        response = self.rest.get("/appConnectorGroup/%s" % (group_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"appConnectorGroup/{group_id}", params=params)
 
-    def get_connector_group_by_name(self, name):
-        groups = self.list_connector_groups()
+    def get_connector_group_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the app connector group with the specified name.
+
+        Args:
+            name (str): The name of the app connector group.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the app connector group if found, otherwise None.
+
+        Examples:
+            >>> group = zpa.connectors.get_connector_group_by_name('example_name')
+            >>> if group:
+            ...     pprint(group)
+            ... else:
+            ...     print("App Connector Group not found")
+
+        """
+        groups = self.list_connector_groups(**kwargs)
         for group in groups:
             if group.get("name") == name:
                 return group
@@ -274,20 +308,18 @@ class AppConnectorControllerAPI:
             "location": location,
             "longitude": longitude,
         }
-
-        # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
         pick_version_profile(kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("appConnectorGroup", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("appConnectorGroup", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -347,25 +379,21 @@ class AppConnectorControllerAPI:
             ...    enabled=False)
 
         """
-
-        # Set payload to equal existing record
         payload = {snake_to_camel(k): v for k, v in self.get_connector_group(group_id).items()}
-
-        # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
         pick_version_profile(kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"appConnectorGroup/{group_id}", json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Return the object if it was updated successfully
+        resp = self.rest.put(f"appConnectorGroup/{group_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_connector_group(group_id)
 
-    def delete_connector_group(self, group_id: str) -> int:
+    def delete_connector_group(self, group_id: str, **kwargs) -> int:
         """
         Deletes the specified App Connector Group from ZPA.
 
@@ -377,11 +405,13 @@ class AppConnectorControllerAPI:
 
         Examples:
             >>> zpa.connectors.delete_connector_group('1876541121')
-
         """
-        return self.rest.delete(f"appConnectorGroup/{group_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"appConnectorGroup/{group_id}", params=params).status_code
 
-    def get_connector_schedule(self, customer_id=None) -> Box:
+    def get_connector_schedule(self, customer_id=None, **kwargs) -> Box:
         """
         Returns the configured App Connector Schedule frequency.
 
@@ -401,8 +431,6 @@ class AppConnectorControllerAPI:
         Examples:
             >>> pprint(zpa.connectors.get_connector_schedule)
         """
-
-        # Fetch customer_id from environment if not provided
         if customer_id is None:
             customer_id = os.getenv("ZPA_CUSTOMER_ID")
 
@@ -411,12 +439,12 @@ class AppConnectorControllerAPI:
                 "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
             )
 
-        response = self.rest.get("/connectorSchedule")
-        if isinstance(response, Response):
-            return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get("connectorSchedule", params=params)
 
-    def add_connector_schedule(self, frequency, interval, disabled, **kwargs) -> Box:
+    def add_connector_schedule(self, frequency, interval, disabled, enabled, **kwargs) -> Box:
         """
         Configure an App Connector schedule frequency to delete inactive connectors based on
         the configured frequency.
@@ -425,6 +453,7 @@ class AppConnectorControllerAPI:
             frequency (str): Frequency at which disconnected App Connectors are deleted.
             interval (str): Interval for the frequency value, minimum supported is 5.
             disabled (bool): If true, includes connectors for deletion if disconnected.
+            enabled (bool): Enables or disables the deletion setting for App Connectors.
             **kwargs: Optional keyword arguments.
 
         Keyword Args:
@@ -432,7 +461,6 @@ class AppConnectorControllerAPI:
             customer_id (str): Unique identifier of the ZPA tenant.
             delete_disabled (bool): Includes App Connectors for deletion if they are
                 disconnected, based on frequency and interval values.
-            enabled (bool): Enables or disables the deletion setting for App Connectors.
             description (str): Additional information about the Connector Schedule.
 
         Returns:
@@ -440,37 +468,52 @@ class AppConnectorControllerAPI:
 
         Examples:
             >>> schedule = zpa.connectors.add_connector_schedule(
-            ...    frequency='weekly',
+            ...    frequency='days',
             ...    interval='5',
             ...    disabled=False,
-            ...    name='Weekly Deletion',
-            ...    description='Deletes disconnected connectors weekly.'
+            ...    enabled=True,
             )
         """
+        customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
+
+        if not customer_id:
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
+
         payload = {
+            "customerId": customer_id,
             "frequency": frequency,
             "frequencyInterval": interval,
             "deleteDisabled": disabled,
+            "enabled": enabled,
         }
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         response = self.rest.post("connectorSchedule", json=payload)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code >= 400:  # Check if status code indicates an error
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
 
-    def update_connector_schedule(self, scheduler_id: str, **kwargs) -> bool:
+        if response.status_code == 204:
+            return Box(payload)
+        elif response.status_code == 400:
+            error_response = response.json()
+            if error_response.get("id") == "resource.already.exist":
+                print("The schedule is already enabled.")
+                return None
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        else:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+    def update_connector_schedule(self, scheduler_id: str, frequency, interval, disabled, enabled, **kwargs) -> Box:
         """
         Updates App Connector schedule frequency to delete the inactive connectors based on
         the configured frequency.
 
         Args:
             scheduler_id (str): Unique identifier for the scheduler.
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
             customer_id (str): Unique identifier of the ZPA tenant.
             delete_disabled (bool): Include App Connectors for deletion if disconnected,
                 based on frequencyInterval and frequency values.
@@ -478,35 +521,43 @@ class AppConnectorControllerAPI:
             frequency (str): Frequency at which disconnected App Connectors are deleted.
             frequency_interval (str): Interval for the frequency value, minimum is 5.
                 Supported: 5, 7, 14, 30, 60, 90.
-
-        Keyword Args:
             description (str): Additional information about the Connector Schedule.
 
         Returns:
-            bool: True if update was successful, False otherwise.
+            :obj:`Box`: The updated schedule record if successful, otherwise an error.
 
         Examples:
             Updating connector schedule:
 
-            >>> result = zpa.connectors.update_schedule('10', frequency_interval='10')
-            >>> print(result)  # True if successful, False otherwise
+            >>> schedule = zpa.connectors.update_connector_schedule(
+            ...    scheduler_id='10',
+            ...    frequency_interval='10',
+            ...    frequency='days',
+            ...    enabled=True,
+            ...    delete_disabled=False
+            )
+            >>> print(schedule)  # Prints the updated schedule record
         """
-        # Get the current schedule by customer ID
-        customer_id = kwargs.get("customer_id")
+        customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
+
         if not customer_id:
-            raise ValueError("customer_id must be provided as a keyword argument.")
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
 
-        current_schedule = self.get_connector_schedule(customer_id=customer_id)
+        payload = {
+            "customerId": customer_id,
+            "frequency": frequency,
+            "frequencyInterval": interval,
+            "enabled": enabled,
+            "deleteDisabled": disabled,
+        }
 
-        if not current_schedule:
-            raise ValueError("No existing schedule found for the provided customer ID.")
-
-        # Update the schedule with provided arguments
-        for key, value in kwargs.items():
-            current_schedule[snake_to_camel(key)] = value
-
-        # Send the updated schedule to the server
-        response = self.rest.put(f"connectorSchedule/{scheduler_id}", json=current_schedule.to_dict())
-
-        # Return True if the update was successful (204 No Content), False otherwise
-        return response.status_code == 204
+        response = self.rest.put(f"connectorSchedule/{scheduler_id}", json=payload)
+        if response.status_code == 204:
+            updated_schedule = self.get_connector_schedule(customer_id=customer_id)
+            return updated_schedule
+        elif response.status_code == 400:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        else:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")

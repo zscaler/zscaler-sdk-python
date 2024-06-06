@@ -27,7 +27,6 @@ from zscaler.zpa.client import ZPAClient
 
 
 class AppSegmentsPRAAPI:
-    # Params that need reformatting
     reformat_params = [
         ("server_group_ids", "serverGroups"),
     ]
@@ -43,13 +42,13 @@ class AppSegmentsPRAAPI:
             :obj:`BoxList`: List of application segments.
 
         Examples:
-            >>> app_segments = zpa.app_segments.list_segments()
+            >>> app_segments = zpa.app_segments_pra.list_segments()
 
         """
-        list, _ = self.rest.get_paginated_data(path="/application", **kwargs)
+        list, _ = self.rest.get_paginated_data(path="/application", **kwargs, api_version="v1")
         return list
 
-    def get_segment_pra(self, segment_id: str) -> Box:
+    def get_segment_pra(self, segment_id: str, **kwargs) -> Box:
         """
         Get information for an application segment.
 
@@ -61,46 +60,13 @@ class AppSegmentsPRAAPI:
             :obj:`Box`: The application segment resource record.
 
         Examples:
-            >>> app_segment = zpa.app_segments.details('99999')
+            >>> app_segment = zpa.app_segments_pra.details('99999')
 
         """
-        return self.rest.get(f"application/{segment_id}")
-
-    def get_segment_pra_by_name(self, name):
-        apps = self.list_segments_pra()
-        for app in apps:
-            if app.get("name") == name:
-                return app
-        return None
-
-    def delete_segment_pra(self, segment_id: str, force_delete: bool = False) -> int:
-        """
-        Delete an application segment.
-
-        Args:
-            force_delete (bool):
-                Setting this field to true deletes the mapping between Application Segment and Segment Group.
-            segment_id (str):
-                The unique identifier for the application segment.
-
-        Returns:
-            :obj:`int`: The operation response code.
-
-        Examples:
-            Delete an Application Segment with an id of 99999.
-
-            >>> zpa.app_segments.delete('99999')
-
-            Force deletion of an Application Segment with an id of 88888.
-
-            >>> zpa.app_segments.delete('88888', force_delete=True)
-
-        """
-        query = ""
-        if force_delete:
-            query = "forceDelete=true"
-        response = self.rest.delete("/application/%s?%s" % (segment_id, query))
-        return response.status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"application/{segment_id}", params=params)
 
     def add_segment_pra(
         self,
@@ -165,15 +131,12 @@ class AppSegmentsPRAAPI:
         Examples:
             Add a new application segment for example.com, ports 8080-8085.
 
-            >>> zpa.app_segments.add_segment('new_app_segment',
+            >>> zpa.app_segments_pra.add_segment('new_app_segment',
             ...    domain_names=['example.com'],
             ...    segment_group_id='99999',
             ...    tcp_ports=['8080', '8085'],
             ...    server_group_ids=['99999', '88888'])
-
         """
-
-        # Initialise payload
         payload = {
             "name": name,
             "domainNames": domain_names,
@@ -184,7 +147,6 @@ class AppSegmentsPRAAPI:
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
         }
 
-        # Process common_apps_dto if it's provided
         if common_apps_dto:
             camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)
             payload["commonAppsDto"] = camel_common_apps_dto
@@ -194,17 +156,17 @@ class AppSegmentsPRAAPI:
             if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        # Convert the entire payload's keys to camelCase before sending
         camel_payload = recursive_snake_to_camel(payload)
         for key, value in kwargs.items():
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("application", json=camel_payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("application", json=camel_payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -265,11 +227,10 @@ class AppSegmentsPRAAPI:
         Examples:
             Rename the application segment for example.com.
 
-            >>> zpa.app_segments.update('99999',
+            >>> zpa.app_segments_pra.update('99999',
             ...    name='new_app_name',
 
         """
-        # Set payload to value of existing record and recursively convert nested dict keys from snake_case to camelCase.
         payload = convert_keys(self.get_segment_pra(segment_id))
 
         if kwargs.get("tcp_port_ranges"):
@@ -279,18 +240,47 @@ class AppSegmentsPRAAPI:
             payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
 
         if common_apps_dto:
-            camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)  # use the recursive function
-            payload["commonAppsDto"] = camel_common_apps_dto  # ensure commonAppsDto gets added to payload
+            camel_common_apps_dto = recursive_snake_to_camel(common_apps_dto)
+            payload["commonAppsDto"] = camel_common_apps_dto
 
-        # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"application/{segment_id}", json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Return the object if it was updated successfully
+        resp = self.rest.put(f"application/{segment_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_segment_pra(segment_id)
+
+    def delete_segment_pra(self, segment_id: str, force_delete: bool = False, **kwargs) -> int:
+        """
+        Delete an application segment.
+
+        Args:
+            force_delete (bool):
+                Setting this field to true deletes the mapping between Application Segment and Segment Group.
+            segment_id (str):
+                The unique identifier for the application segment.
+
+        Returns:
+            :obj:`int`: The operation response code.
+
+        Examples:
+            Delete an Application Segment with an id of 99999.
+
+            >>> zpa.app_segments_pra.delete('99999')
+
+            Force deletion of an Application Segment with an id of 88888.
+
+            >>> zpa.app_segments_pra.delete('88888', force_delete=True)
+
+        """
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        query = "forceDelete=true" if force_delete else ""
+        response = self.rest.delete(f"/application/{segment_id}?{query}", params=params)
+        return response.status_code

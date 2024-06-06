@@ -39,6 +39,8 @@ class MicrotenantsAPI:
             ...    pprint(microtenant)
 
         """
+        if "pageSize" in kwargs:
+            kwargs.pop("pageSize")
         list, _ = self.rest.get_paginated_data(path="/microtenants", **kwargs)
         return list
 
@@ -57,7 +59,13 @@ class MicrotenantsAPI:
             >>> pprint(zpa.microtenants.get_microtenant('216199618143364393'))
 
         """
-        return self.rest.get(f"microtenants/{microtenant_id}")
+        # return self.rest.get(f"microtenants/{microtenant_id}")
+        response = self.rest.get("/microtenants/%s" % (microtenant_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def get_microtenant_summary(self) -> Box:
         """
@@ -72,10 +80,26 @@ class MicrotenantsAPI:
             >>> pprint(zpa.microtenants.get_microtenant_summary())
 
         """
-        return self.rest.get(f"microtenants/summary")
+        return self.rest.get("microtenants/summary")
 
-    def get_microtenant_by_name(self, name):
-        microtenants = self.list_microtenants()
+    def get_microtenant_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the microtenant with the specified name.
+
+        Args:
+            name (str): The name of the microtenant.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the microtenant if found, otherwise None.
+
+        Examples:
+            >>> microtenant = zpa.microtenants.get_microtenant_by_name('example_name')
+            >>> if microtenant:
+            ...     pprint(microtenant)
+            ... else:
+            ...     print("Microtenant not found")
+        """
+        microtenants = self.list_microtenants(**kwargs)
         for microtenant in microtenants:
             if microtenant.get("name") == name:
                 return microtenant
@@ -118,16 +142,11 @@ class MicrotenantsAPI:
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
-
-        response = self.rest.post("/microtenants", json=payload)
+        response = self.rest.post("microtenants", json=payload)
         if isinstance(response, Response):
             status_code = response.status_code
-            if status_code == 201:
-                return Box(response.json())
-            else:
-                return None
-
-        return None
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def update_microtenant(self, microtenant_id: str, **kwargs) -> Box:
         """
@@ -179,8 +198,7 @@ class MicrotenantsAPI:
             payload[snake_to_camel(key)] = value
 
         resp = self.rest.put(f"microtenants/{microtenant_id}", json=payload).status_code
-
-        if resp == 204:
+        if not isinstance(resp, Response):
             return self.get_microtenant(microtenant_id)
 
     def delete_microtenant(self, microtenant_id: str) -> int:

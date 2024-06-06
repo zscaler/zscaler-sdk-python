@@ -15,8 +15,6 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from typing import Union
-
 from box import Box, BoxList
 from requests import Response
 
@@ -52,14 +50,31 @@ class TrustedNetworksAPI:
         list, _ = self.rest.get_paginated_data(path="/network", **kwargs, api_version="v2")
         return list
 
-    def get_network_by_name(self, name):
-        networks = self.list_networks()
+    def get_network_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the trusted network with the specified name.
+
+        Args:
+            name (str): The name of the trusted network.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the trusted network if found, otherwise None.
+
+        Examples:
+            >>> network = zpa.trusted_networks.get_network_by_name('example_name')
+            >>> if network:
+            ...     pprint(network)
+            ... else:
+            ...     print("Trusted Network not found")
+
+        """
+        networks = self.list_networks(**kwargs)
         for network in networks:
             if network.get("name") == name:
                 return network
         return None
 
-    def get_network(self, network_id: str) -> Box:
+    def get_network(self, network_id: str, **kwargs) -> Box:
         """
         Returns information on the specified trusted network.
 
@@ -74,12 +89,10 @@ class TrustedNetworksAPI:
             >>> pprint(zpa.trusted_networks.get_network('99999'))
 
         """
-        response = self.rest.get("/network/%s" % (network_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"network/{network_id}", params=params)
 
     def get_network_udid(self, network_udid: str) -> Box:
         """

@@ -76,7 +76,7 @@ class ProvisioningKeyAPI:
         )
         return list
 
-    def get_provisioning_key(self, key_id: str, key_type: str) -> Box:
+    def get_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
         """
         Returns information on the specified provisioning key.
 
@@ -85,6 +85,10 @@ class ProvisioningKeyAPI:
             key_type (str): The type of provisioning key, accepted values are:
 
                 ``connector`` and ``service_edge``.
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
+            microtenant_id (str): The unique identifier for the microtenant.
 
         Returns:
             :obj:`Box`: The requested provisioning key resource record.
@@ -100,8 +104,16 @@ class ProvisioningKeyAPI:
             >>> provisioning_key = zpa.provisioning.get_provisioning_key("888888",
             ...    key_type="service_edge")
 
+            Get the specified App Connector key for a microtenant.
+
+            >>> provisioning_key = zpa.provisioning.get_provisioning_key("999999",
+            ...    key_type="connector", microtenant_id="12345")
+
         """
-        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}")
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params)
 
     def add_provisioning_key(
         self,
@@ -130,6 +142,7 @@ class ProvisioningKeyAPI:
 
         Keyword Args:
             enabled (bool): Enable the provisioning key. Defaults to ``True``.
+            microtenant_id (str): The microtenant ID to be used for this request.
 
         Returns:
             :obj:`Box`: The newly created Provisioning Key resource record.
@@ -153,7 +166,6 @@ class ProvisioningKeyAPI:
             ...    enabled=False)
 
         """
-
         payload = {
             "name": name,
             "maxUsage": max_usage,
@@ -165,14 +177,16 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         response = self.rest.post(
             f"associationType/{simplify_key_type(key_type)}/provisioningKey",
             json=payload,
+            params=params
         )
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -195,6 +209,7 @@ class ProvisioningKeyAPI:
             component_id (str):
                 The unique id of the component that this provisioning key will be linked to. For App Connectors, this
                 will be the App Connector Group Id. For Service Edges, this will be the Service Edge Group Id.
+            microtenant_id (str): The microtenant ID to be used for this request.
 
         Returns:
             :obj:`Box`: The updated Provisioning Key resource record.
@@ -221,20 +236,19 @@ class ProvisioningKeyAPI:
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         resp = self.rest.put(
             f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
             json=payload,
+            params=params
         ).status_code
 
-        # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_provisioning_key(key_id, key_type=key_type)
 
-        # Return the object if it was updated successfully
-        if not isinstance(resp, Response):
-            return self.get_provisioning_key(key_id, key_type=key_type)
-
-    def delete_provisioning_key(self, key_id: str, key_type: str) -> int:
+    def delete_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> int:
         """
         Deletes the specified provisioning key from ZPA.
 
@@ -243,6 +257,10 @@ class ProvisioningKeyAPI:
             key_type (str): The type of provisioning key, accepted values are:
 
                 ``connector`` and ``service_edge``.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            microtenant_id (str): The microtenant ID to be used for this request.
 
         Returns:
             :obj:`int`: The status code for the operation.
@@ -259,4 +277,7 @@ class ProvisioningKeyAPI:
             ...    key_type="service_edge")
 
         """
-        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params).status_code
