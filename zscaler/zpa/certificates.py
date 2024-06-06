@@ -47,15 +47,11 @@ class CertificatesAPI:
             :obj:`BoxList`: List of all Browser Access certificates.
 
         Examples:
-            >>> for cert in zpa.certificates.list_browser_access():
+            >>> for cert in zpa.certificates.list_issued_certificates():
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(
-            path="/clientlessCertificate/issued",
-            **kwargs,
-            api_version="v2",
-        )
+        list, _ = self.rest.get_paginated_data(path="/clientlessCertificate/issued", **kwargs, api_version="v2")
         return list
 
     def list_all_certificates(self, **kwargs) -> BoxList:
@@ -86,12 +82,50 @@ class CertificatesAPI:
         list, _ = self.rest.get_paginated_data(path="/certificate", **kwargs, api_version="v1")
         return list
 
-    def get_certificate_by_name(self, name):
-        certs = self.list_all_certificates()
+    def get_certificate_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the certificate with the specified name.
+
+        Args:
+            name (str): The name of the certificate.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the certificate if found, otherwise None.
+
+        Examples:
+            >>> certificate = zpa.certificates.get_certificate_by_name('example_name')
+            >>> if certificate:
+            ...     pprint(certificate)
+            ... else:
+            ...     print("Certificate not found")
+
+        """
+        certs = self.list_all_certificates(**kwargs)
         for cert in certs:
             if cert.get("name") == name:
                 return cert
         return None
+
+    def get_certificate(self, certificate_id: str, **kwargs) -> Box:
+        """
+        Returns information on a specified Browser Access certificate.
+
+        Args:
+            certificate_id (str):
+                The unique identifier for the Browser Access certificate.
+
+        Returns:
+            :obj:`Box`:
+                The Browser Access certificate resource record.
+
+        Examples:
+            >>> ba_certificate = zpa.certificates.get_certificate('99999')
+
+        """
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"clientlessCertificate/{certificate_id}", params=params)
 
     def add_certificate(self, name: str, cert_blob: str, **kwargs) -> Box:
         """
@@ -111,28 +145,29 @@ class CertificatesAPI:
         Examples:
             Create a certificate with minimum required parameters:
 
-            >>> zpa.servers.add_server(
+            >>> zpa.certificates.add_certificate(
             ...   name='myserver.example',
-            ...   cert_blob=("-----BEGIN CERTIFICATE-----\\n"
+            ...   cert_blob=-----BEGIN CERTIFICATE-----\\n"
             ...              "MIIFNzCCBIHNIHIO==\\n"
             ...              "-----END CERTIFICATE-----"),
             )
-
         """
         payload = {"name": name, "certBlob": cert_blob}
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("/certificate", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("/certificate", json=payload, params=params)
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code > 299:
                 return None
         return self.get_certificate(response.get("id"))
 
-    def get_certificate(self, certificate_id: str) -> Box:
+    def delete_certificate(self, certificate_id: str, **kwargs) -> Box:
         """
         Returns information on a specified Browser Access certificate.
 
@@ -145,56 +180,13 @@ class CertificatesAPI:
                 The Browser Access certificate resource record.
 
         Examples:
-            >>> ba_certificate = zpa.certificates.get_browser_access('99999')
+            >>> ba_certificate = zpa.certificates.delete_certificate('99999')
 
         """
-        response = self.rest.get("/clientlessCertificate/%s" % (certificate_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
-
-    def delete_certificate(self, certificate_id: str) -> Box:
-        """
-        Returns information on a specified Browser Access certificate.
-
-        Args:
-            certificate_id (str):
-                The unique identifier for the Browser Access certificate.
-
-        Returns:
-            :obj:`Box`:
-                The Browser Access certificate resource record.
-
-        Examples:
-            >>> ba_certificate = zpa.certificates.get_certificate('99999')
-
-        """
-        response = self.rest.delete("/certificate/%s" % (certificate_id))
-        return response.status_code
-        # return self.rest.get(f"certificate/{certificate_id}")
-
-    def get_enrolment(self, certificate_id: str) -> Box:
-        """
-        Returns information on the specified enrollment certificate.
-
-        Args:
-            certificate_id (str): The unique id of the enrollment certificate.
-
-        Returns:
-            :obj:`Box`: The enrollment certificate resource record.
-
-        Examples:
-            enrolment_cert = zpa.certificates.get_enrolment('99999999')
-
-        """
-        response = self.rest.get("/enrollmentCert/%s" % (certificate_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"certificate/{certificate_id}", params=params).status_code
 
     def list_enrolment(self, **kwargs) -> BoxList:
         """
@@ -221,11 +213,50 @@ class CertificatesAPI:
             ...    print(cert)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", **kwargs, api_version="v2")
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        list, _ = self.rest.get_paginated_data(path="/enrollmentCert", params=params, **kwargs, api_version="v2")
         return list
 
-    def get_enrolment_cert_by_name(self, name):
-        certs = self.list_enrolment()
+    def get_enrolment(self, certificate_id: str, **kwargs) -> Box:
+        """
+        Returns information on the specified enrollment certificate.
+
+        Args:
+            certificate_id (str): The unique id of the enrollment certificate.
+
+        Returns:
+            :obj:`Box`: The enrollment certificate resource record.
+
+        Examples:
+            enrolment_cert = zpa.certificates.get_enrolment('99999999')
+
+        """
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"enrollmentCert/{certificate_id}", params=params, api_version="v1")
+
+    def get_enrolment_cert_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the certificate with the specified name.
+
+        Args:
+            name (str): The name of the certificate.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the certificate if found, otherwise None.
+
+        Examples:
+            >>> certificate = zpa.certificates.get_enrolment_cert_by_name('Root')
+            >>> if certificate:
+            ...     pprint(certificate)
+            ... else:
+            ...     print("Certificate not found")
+
+        """
+        certs = self.list_enrolment(**kwargs)
         for cert in certs:
             if cert.get("name") == name:
                 return cert

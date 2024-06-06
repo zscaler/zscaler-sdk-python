@@ -39,12 +39,7 @@ class SegmentGroupsAPI:
             ...    pprint(segment_group)
 
         """
-        # list, _ = self.rest.get_paginated_data(path="/segmentGroup", **kwargs, api_version="v1")
-        # return list
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        list, _ = self.rest.get_paginated_data(path="/segmentGroup", params=params, **kwargs, api_version="v1")
+        list, _ = self.rest.get_paginated_data(path="/segmentGroup", **kwargs, api_version="v1")
         return list
 
     def get_group(self, group_id: str, **kwargs) -> Box:
@@ -66,12 +61,27 @@ class SegmentGroupsAPI:
             params["microtenantId"] = kwargs.pop("microtenant_id")
         return self.rest.get(f"segmentGroup/{group_id}", params=params)
 
+    def get_segment_group_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the segment group with the specified name.
 
-    def get_segment_group_by_name(self, name):
-        apps = self.list_groups()
-        for app in apps:
-            if app.get("name") == name:
-                return app
+        Args:
+            name (str): The name of the segment group.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the segment group if found, otherwise None.
+
+        Examples:
+            >>> segment_group = zpa.segment_groups.get_segment_group_by_name('example_name')
+            >>> if segment_group:
+            ...     pprint(segment_group)
+            ... else:
+            ...     print("Segment group not found")
+        """
+        groups = self.list_groups(**kwargs)
+        for group in groups:
+            if group.get("name") == name:
+                return group
         return None
 
     def add_group(self, name: str, enabled: bool = True, **kwargs) -> Box:
@@ -109,18 +119,15 @@ class SegmentGroupsAPI:
         if kwargs.get("application_ids"):
             payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # Extract microtenant_id from kwargs if provided
         microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        response = self.rest.post("segmentGroup", json=payload, params={"microtenantId": microtenant_id})
+        response = self.rest.post("segmentGroup", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -151,22 +158,18 @@ class SegmentGroupsAPI:
             ...    name='updated_name')
 
         """
-        # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
         if kwargs.get("application_ids"):
             payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # Extract microtenant_id from kwargs if provided
         microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload, params={"microtenantId": microtenant_id}).status_code
-
-        # Return the object if it was updated successfully
+        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 
@@ -188,8 +191,3 @@ class SegmentGroupsAPI:
         if "microtenant_id" in kwargs:
             params["microtenantId"] = kwargs.pop("microtenant_id")
         return self.rest.delete(f"segmentGroup/{group_id}", params=params).status_code
-
-
-
-
-

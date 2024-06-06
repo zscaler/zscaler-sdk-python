@@ -56,7 +56,7 @@ class ServerGroupsAPI:
         list, _ = self.rest.get_paginated_data(path="/serverGroup", **kwargs, api_version="v1")
         return list
 
-    def get_group(self, group_id: str) -> Box:
+    def get_group(self, group_id: str, **kwargs) -> Box:
         """
         Provides information on the specified server group.
 
@@ -71,9 +71,28 @@ class ServerGroupsAPI:
             >>> pprint(zpa.server_groups.get_group('99999'))
 
         """
-        return self.rest.get(f"serverGroup/{group_id}")
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"serverGroup/{group_id}", params=params)
 
     def get_server_group_by_name(self, name):
+        """
+        Returns information on the server group with the specified name.
+
+        Args:
+            name (str): The name of the server group.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the server group if found, otherwise None.
+
+        Examples:
+            >>> group = zpa.server_groups.get_server_group_by_name('example_name')
+            >>> if group:
+            ...     pprint(group)
+            ... else:
+            ...     print("server group not found")
+        """
         groups = self.list_groups()
         for group in groups:
             if group.get("name") == name:
@@ -123,7 +142,6 @@ class ServerGroupsAPI:
             ...      'enabled': True}])
 
         """
-        # Initialise payload
         payload = {
             "name": name,
             "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
@@ -131,15 +149,15 @@ class ServerGroupsAPI:
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("serverGroup", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("serverGroup", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -179,20 +197,21 @@ class ServerGroupsAPI:
             ...    dynamic_discovery=True)
 
         """
-        # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"serverGroup/{group_id}", json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        resp = self.rest.put(f"serverGroup/{group_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 
-    def delete_group(self, group_id: str) -> int:
+    def delete_group(self, group_id: str, **kwargs) -> int:
         """
         Deletes the specified server group.
 
@@ -207,4 +226,7 @@ class ServerGroupsAPI:
             >>> zpa.server_groups.delete_group('99999')
 
         """
-        return self.rest.delete(f"serverGroup/{group_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"serverGroup/{group_id}", params=params).status_code

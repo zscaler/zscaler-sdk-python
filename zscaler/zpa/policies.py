@@ -207,7 +207,7 @@ class PolicySetsAPI:
 
         return template
 
-    def get_policy(self, policy_type: str) -> Box:
+    def get_policy(self, policy_type: str, **kwargs) -> Box:
         """
         Returns the policy and rule sets for the given policy type.
 
@@ -243,10 +243,12 @@ class PolicySetsAPI:
                 f"Incorrect policy type provided: {policy_type}\n "
                 f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
             )
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"policySet/policyType/{mapped_policy_type}", params=params)
 
-        return self.rest.get(f"policySet/policyType/{mapped_policy_type}")
-
-    def get_rule(self, policy_type: str, rule_id: str) -> Box:
+    def get_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
         """
         Returns the specified policy rule.
 
@@ -274,10 +276,17 @@ class PolicySetsAPI:
             ...    rule_id='88888')
 
         """
-        # Get the policy id for the supplied policy_type
         policy_id = self.get_policy(policy_type).id
 
-        return self.rest.get(f"policySet/{policy_id}/rule/{rule_id}")
+        policy_params = {}
+        if "microtenant_id" in kwargs:
+            policy_params["microtenantId"] = kwargs.pop("microtenant_id")
+        policy_id = self.get_policy(policy_type, **policy_params).id
+
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"policySet/{policy_id}/rule/{rule_id}", params=params)
 
     def get_rule_by_name(self, policy_type: str, rule_name: str) -> Box:
         """
@@ -322,7 +331,7 @@ class PolicySetsAPI:
             :obj:`list`: A list of all policy rules that match the requested type.
 
         Examples:
-            >>> for policy in zpa.policies.list_type('type')
+            >>> for policy in zpa.policies.list_rules('access')
             ...    pprint(policy)
 
         """
@@ -394,14 +403,11 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created access policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
         }
 
-        # Create conditions if provided
         conditions = kwargs.pop("conditions", [])
         if conditions:
             payload["conditions"] = self._create_conditions_v1(conditions)
@@ -415,19 +421,17 @@ class PolicySetsAPI:
             payload["appServerGroups"] = [{"id": group_id} for group_id in app_server_group_ids]
 
         add_id_groups(self.reformat_params, kwargs, payload)
-
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("access").id
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -466,53 +470,45 @@ class PolicySetsAPI:
             Update the name and description of the Access Policy Rule:
 
             >>> zpa.policies.update_access_rule(
+            ...    rule_id="999999",
             ...    name='Update_Access_Policy_Rule_v1',
             ...    description='Update_Access_Policy_Rule_v1',
             ... )
         """
-        # Handle default values for app_connector_group_ids and app_server_group_ids
         app_connector_group_ids = app_connector_group_ids or []
         app_server_group_ids = app_server_group_ids or []
 
-        # Pre-set the policy_type to "client_forwarding"
         policy_type = "access"
 
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
-
-        # Update kwargs with app_connector_group_ids and app_server_group_ids for processing with add_id_groups
         kwargs["app_connector_group_ids"] = app_connector_group_ids
         kwargs["app_server_group_ids"] = app_server_group_ids
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
+            elif key == "action":
+                payload["action"] = value.upper()
             else:
                 payload[snake_to_camel(key)] = value
 
-        # If conditions are not provided, set conditions to an empty list to remove existing conditions
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         if "conditions" not in kwargs:
             payload["conditions"] = []
 
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
-
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v1")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_timeout_rule(self, name: str, **kwargs) -> Box:
@@ -555,30 +551,24 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Timeout Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": "RE_AUTH",
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
-
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("timeout").id
-
-        # Use specified timeouts or default to UI values
         payload["reauthTimeout"] = kwargs.get("re_auth_timeout", 172800)
         payload["reauthIdleTimeout"] = kwargs.get("re_auth_idle_timeout", 600)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -647,46 +637,34 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-        # Pre-set the policy_type to "timeout"
         policy_type = "timeout"
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
-
-        # Pre-set the action to "RE_AUTH"
         payload["action"] = "RE_AUTH"
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # If conditions are not provided, set conditions to an empty list to remove existing conditions
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         if "conditions" not in kwargs:
             payload["conditions"] = []
 
-        # Use specified timeouts or default to UI values
         payload["reauthTimeout"] = kwargs.get("re_auth_timeout", 172800)
         payload["reauthIdleTimeout"] = kwargs.get("re_auth_idle_timeout", 600)
 
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v1")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> Box:
@@ -747,31 +725,27 @@ class PolicySetsAPI:
             ... )
 
         """
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
         }
 
-        # Create conditions if provided
         conditions = kwargs.pop("conditions", [])
         if conditions:
             payload["conditions"] = self._create_conditions_v1(conditions)
         else:
             payload["conditions"] = []
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("client_forwarding").id
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v1")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v1")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -834,48 +808,38 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-        # Pre-set the policy_type to "client_forwarding"
         policy_type = "client_forwarding"
 
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # If conditions are not provided, set conditions to an empty list to remove existing conditions
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         if "conditions" not in kwargs:
             payload["conditions"] = []
 
-        # Set the action in the payload
         payload["action"] = action
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v1")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
@@ -919,22 +883,17 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Client Isolation Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
             "zpnIsolationProfileId": zpn_isolation_profile_id,
         }
-
-        # Create conditions if provided
         conditions = kwargs.pop("conditions", [])
         if conditions:
             payload["conditions"] = self._create_conditions_v1(conditions)
         else:
             payload["conditions"] = []
 
-        # Ensure CLIENT_TYPE is always included
         client_type_present = any(
             cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
         )
@@ -943,18 +902,17 @@ class PolicySetsAPI:
                 {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}
             )
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("isolation").id
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", params=params, json=payload, api_version="v1")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1015,34 +973,26 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-
-        # Pre-set the policy_type to "isolation"
         policy_type = "isolation"
-
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # If conditions are not provided, set conditions to an empty list to remove existing conditions
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         if "conditions" not in kwargs:
             payload["conditions"] = []
 
-        # Ensure CLIENT_TYPE is always included
         client_type_present = any(
             cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
         )
@@ -1050,23 +1000,16 @@ class PolicySetsAPI:
             payload["conditions"].append(
                 {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}
             )
-
-        # Set the action in the payload
         payload["action"] = action
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v1")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
@@ -1110,33 +1053,28 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Client Inspection Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
             "zpnInspectionProfileId": zpn_inspection_profile_id,
         }
 
-        # Create conditions if provided
         conditions = kwargs.pop("conditions", [])
         if conditions:
             payload["conditions"] = self._create_conditions_v1(conditions)
         else:
             payload["conditions"] = []
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("inspection").id
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v1")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1198,48 +1136,37 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-        # Pre-set the policy_type to "client_forwarding"
         policy_type = "inspection"
-
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # If conditions are not provided, set conditions to an empty list to remove existing conditions
         if "conditions" not in kwargs:
             payload["conditions"] = []
 
-        # Set the action in the payload
-        payload["action"] = action
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Get policy id for specified policy type
+        payload["action"] = action
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v1")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v1")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_access_rule_v2(
@@ -1295,8 +1222,6 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created access policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
@@ -1311,18 +1236,16 @@ class PolicySetsAPI:
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("access").id
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1378,24 +1301,17 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-        # Handle default values for app_connector_group_ids and app_server_group_ids
         app_connector_group_ids = app_connector_group_ids or []
         app_server_group_ids = app_server_group_ids or []
 
-        # Pre-set the policy_type to "access"
         policy_type = "access"
 
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add or update optional parameters to the payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -1404,25 +1320,20 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Add id groups to the payload
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         add_id_groups(self.reformat_params, kwargs, payload)
-
-        # Remove the conditions key if it exists but is empty
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
-
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_timeout_rule_v2(self, name: str, **kwargs) -> Box:
@@ -1465,30 +1376,25 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Timeout Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": "RE_AUTH",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("timeout").id
-
-        # Use specified timeouts or default to UI values
         payload["reauthTimeout"] = kwargs.get("re_auth_timeout", 172800)
         payload["reauthIdleTimeout"] = kwargs.get("re_auth_idle_timeout", 600)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1539,24 +1445,16 @@ class PolicySetsAPI:
 
             >>> zpa.policies.update_timeout_rule('888888', description='Updated Description')
         """
-
-        # Pre-set the policy_type to "timeout"
         policy_type = "timeout"
-
-        # Pre-set the action to "RE_AUTH"
         kwargs["action"] = "RE_AUTH"
 
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add or update optional parameters to the payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -1565,22 +1463,19 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Remove the conditions key if it exists but is empty
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
-
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
 
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_client_forwarding_rule_v2(self, name: str, action: str, **kwargs) -> Box:
@@ -1626,26 +1521,22 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Client Forwarding Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("client_forwarding").id
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1712,21 +1603,13 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-
-        # Pre-set the policy_type to "timeout"
         policy_type = "client_forwarding"
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add or update optional parameters to the payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -1735,22 +1618,19 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Remove the conditions key if it exists but is empty
-        payload = {k: v for k, v in payload.items() if k != "conditions" or v}
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Get policy id for specified policy type
+        payload = {k: v for k, v in payload.items() if k != "conditions" or v}
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_isolation_rule_v2(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
@@ -1794,8 +1674,6 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Client Isolation Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
@@ -1803,21 +1681,18 @@ class PolicySetsAPI:
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        # Pre-configure client_type to 'zpn_client_type_exporter'
         payload["conditions"].append({"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]})
-
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("isolation").id
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -1878,48 +1753,37 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-
-        # Pre-set the policy_type to "timeout"
         policy_type = "isolation"
 
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Pre-configure client_type to 'zpn_client_type_exporter'
-        payload["conditions"].append({"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]})
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Set the action in the payload
+        payload["conditions"].append({"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]})
         payload["action"] = action
 
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_app_protection_rule_v2(self, name: str, action: str, zpn_inspection_profile_id: str, **kwargs) -> Box:
@@ -1963,27 +1827,22 @@ class PolicySetsAPI:
             :obj:`Box`: The resource record of the newly created Client Inspection Policy rule.
 
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
             "zpnInspectionProfileId": zpn_inspection_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
-
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("inspection").id
-
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -2045,27 +1904,19 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-
-        # Pre-set the policy_type to "timeout"
         policy_type = "inspection"
 
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add or update optional parameters to the payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -2074,25 +1925,21 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Remove the conditions key if it exists but is empty
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
 
-        # Set the action in the payload
         payload["action"] = action
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_privileged_credential_rule_v2(self, name: str, credential_id: str, **kwargs) -> Box:
@@ -2146,8 +1993,6 @@ class PolicySetsAPI:
         Returns:
             :obj:`Box`: The resource record of the newly created Privileged Remote Access Credential rule.
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": "INJECT_CREDENTIALS",
@@ -2155,18 +2000,17 @@ class PolicySetsAPI:
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("credential").id
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # This is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -2215,20 +2059,14 @@ class PolicySetsAPI:
             ...   name='credential_rule_new_name')
 
         """
-        # Pre-set the policy_type to "timeout"
         policy_type = "credential"
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -2237,25 +2075,20 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Ensure the action is set to CHECK_CAPABILITIES
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         payload["action"] = "INJECT_CREDENTIALS"
-
-        # Remove the conditions key if it exists but is empty
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_capabilities_rule_v2(self, name: str, **kwargs) -> Box:
@@ -2332,15 +2165,12 @@ class PolicySetsAPI:
                     }
                 )
         """
-
-        # Initialise the payload
         payload = {
             "name": name,
             "action": "CHECK_CAPABILITIES",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
-        # Process privileged capabilities
         if "privileged_capabilities" in kwargs:
             capabilities = []
             priv_caps_map = kwargs.pop("privileged_capabilities")
@@ -2372,18 +2202,17 @@ class PolicySetsAPI:
 
             payload["privilegedCapabilities"] = {"capabilities": capabilities}
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # Get the policy id of the provided policy type for the URL.
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         policy_id = self.get_policy("capabilities").id
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # This is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -2453,21 +2282,14 @@ class PolicySetsAPI:
             ... }
             ... )
         """
-
-        # Pre-set the policy_type to "access"
         policy_type = "capabilities"
 
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
-
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
@@ -2504,24 +2326,21 @@ class PolicySetsAPI:
             else:
                 payload[snake_to_camel(key)] = value
 
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         payload["action"] = "CHECK_CAPABILITIES"
 
-        # Remove the conditions key if it exists but is empty
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
     def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> Box:
@@ -2550,10 +2369,10 @@ class PolicySetsAPI:
                 `RHS value`. If you are adding multiple values for the same object type then you will need
                 a new entry for each value.
 
-                * `conditions`: This is for providing the set of conditions for the policy
-                    * `object_type`: This is for specifying the policy criteria.
+                - `conditions`: This is for providing the set of conditions for the policy
+                    - `object_type`: This is for specifying the policy criteria.
                         The following values are supported: "app", "app_group", "saml", "scim", "scim_group", "client_type"
-                        * `client_type`: The client type, must be one of the following:
+                        - `client_type`: The client type, must be one of the following:
                             - 'zpn_client_type_edge_connector'
                             - 'zpn_client_type_branch_connector'
                             - 'zpn_client_type_machine_tunnel'
@@ -2588,7 +2407,6 @@ class PolicySetsAPI:
         elif action.lower() in ["redirect_preferred", "redirect_always"] and not service_edge_group_ids:
             raise ValueError("service_edge_group_ids must be set when action is 'redirect_preferred' or 'redirect_always'.")
 
-        # Initialise the payload
         payload = {
             "name": name,
             "action": action.upper(),
@@ -2612,25 +2430,23 @@ class PolicySetsAPI:
                 if operand["objectType"] == "CLIENT_TYPE" and operand["values"][0] not in valid_client_types:
                     raise ValueError(f"Invalid client_type value: {operand['values'][0]}. Must be one of {valid_client_types}")
 
-        # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("redirection").id
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, api_version="v2")
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"policySet/{policy_id}/rule", json=payload, params=params, api_version="v2")
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
     def update_redirection_rule_v2(self, rule_id: str, **kwargs) -> Box:
         """
         Update an existing policy rule.
-
         Ensure you are using the correct arguments for the policy type that you want to update.
 
         Args:
@@ -2690,152 +2506,175 @@ class PolicySetsAPI:
             ...     ],
             ... )
         """
-
-        # Pre-set the policy_type to "access"
         policy_type = "redirection"
 
-        # Ensure the action is provided and convert to uppercase
         if "action" not in kwargs:
             raise ValueError("The 'action' attribute is mandatory.")
 
         action = kwargs.pop("action").upper()
-
-        # Get the current rule details
         current_rule = self.get_rule(policy_type, rule_id)
 
-        # Initialize the payload with existing rule details
         payload = convert_keys(current_rule)
 
-        # Remove any existing conditions if they are not being updated
         if "conditions" in payload and "conditions" not in kwargs:
             del payload["conditions"]
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v2(value)
             else:
                 payload[snake_to_camel(key)] = value
 
-        # Set the action in the payload
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         payload["action"] = action
-
-        # Remove the conditions key if it exists but is empty
         payload = {k: v for k, v in payload.items() if k != "conditions" or v}
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        # Make the PUT request to update the rule
-        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, api_version="v2")
+        response = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, params=params, api_version="v2")
         if response.status_code == 204:
-            # Return the updated rule if the response was successful
             updated_rule = self.get_rule(policy_type, rule_id)
             if not updated_rule:
                 raise Exception(f"Failed to retrieve the updated rule with ID {rule_id}")
             return updated_rule
         else:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str) -> Box:
+    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str, **kwargs) -> Box:
         """
         Change the order of an existing policy rule.
 
         Args:
-            rule_id (str):
-                The unique id of the rule that will be reordered.
-            rule_order (str):
-                The new order for the rule.
-            policy_type (str):
-                The policy type. Accepted values are:
+            policy_type (str): The policy type. Accepted values are:
 
-                 |  ``access``
-                 |  ``timeout``
-                 |  ``client_forwarding``
-                 |  ``isolation``
-                 |  ``inspection``
-                 |  ``redirection``
-                 |  ``credential``
-                 |  ``capabilities``
-                 |  ``siem``
+                |  ``access``
+                |  ``timeout``
+                |  ``client_forwarding``
+                |  ``isolation``
+                |  ``inspection``
+                |  ``redirection``
+                |  ``credential``
+                |  ``capabilities``
+                |  ``siem``
+
+            rule_id (str): The unique ID of the rule that will be reordered.
+            rule_order (str): The new order for the rule.
+            **kwargs: Optional keyword arguments.
+                microtenant_id (str): The ID of the microtenant, if applicable.
 
         Returns:
-             :obj:`Box`: The updated policy rule resource record.
+            Box: The updated policy rule resource record.
+
+        Raises:
+            Exception: If the API call fails, an exception is raised with the response status code.
 
         Examples:
-            Updates the order for an existing policy rule:
+            Updates the order for an existing access policy rule:
 
-            >>> zpa.policies.reorder_rule(policy_type='access',
-            ...    rule_id='88888',
-            ...    rule_order='2')
+            >>> zpa.policies.reorder_rule(
+            ...     policy_type='access',
+            ...     rule_id='88888',
+            ...     rule_order='2'
+            ... )
 
+            Updates the order for an existing timeout policy rule with a specific microtenant:
+
+            >>> zpa.policies.reorder_rule(
+            ...     policy_type='timeout',
+            ...     rule_id='77777',
+            ...     rule_order='1',
+            ...     microtenant_id='1234567890'
+            ... )
         """
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
 
-        resp = self.rest.put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}").status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+        resp = self.rest.put(
+            f"policySet/{policy_id}/rule/{rule_id}/reorder/{rule_order}", params=params, api_version="v1"
+        ).status_code
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
+        else:
+            raise Exception(f"API call failed with status {resp}")
 
-    def sort_key(self, rules_orders: dict[str, int]):
-        def key(a, b):
-            if a.id in rules_orders and b.id in rules_orders:
-                if rules_orders[a.id] < rules_orders[b.id]:
-                    return -1
-                return 1
-            if a.id in rules_orders:
-                return -1
-            elif b.id in rules_orders:
-                return 1
-
-            if a.rule_order < b.rule_order:
-                return -1
-            return 1
-
-        return key
-
-    def bulk_reorder_rules(self, policy_type: str, rules_orders: dict[str, int]) -> Box:
+    def bulk_reorder_rules(self, policy_type: str, rules_orders: list[str], **kwargs) -> Box:
         """
         Bulk change the order of policy rules.
 
         Args:
-            rules_orders (dict(rule_id=>order)):
-                A map of rule IDs and orders
-            policy_type (str):
-                The policy type. Accepted values are:
+            policy_type (str): The policy type. Accepted values are:
 
-                 |  ``access``
-                 |  ``timeout``
-                 |  ``client_forwarding``
-                 |  ``isolation``
-                 |  ``inspection``
-                 |  ``redirection``
-                 |  ``credential``
-                 |  ``capabilities``
-                 |  ``siem``
+                |  ``access``
+                |  ``timeout``
+                |  ``client_forwarding``
+                |  ``isolation``
+                |  ``inspection``
+                |  ``redirection``
+                |  ``credential``
+                |  ``capabilities``
+                |  ``siem``
 
+            rules_orders (list[str]): A list of rule IDs in the desired order.
+
+            **kwargs: Optional keyword arguments.
+                microtenant_id (str): The ID of the microtenant, if applicable.
+
+        Returns:
+            Box: The response object from the API if the reorder is successful.
+
+        Raises:
+            Exception: If the API call fails, an exception is raised with the response status code and message.
+
+        Examples:
+            Reordering access policy rules:
+
+            >>> zpa.policies.bulk_reorder_rules(
+            ...     policy_type='access',
+            ...     rules_orders=[
+            ...         '216199618143374210',
+            ...         '216199618143374209',
+            ...         '216199618143374208',
+            ...         '216199618143374207',
+            ...         '216199618143374206',
+            ...         '216199618143374205',
+            ...         '216199618143374204',
+            ...         '216199618143374203',
+            ...         '216199618143374202',
+            ...         '216199618143374201',
+            ...     ]
+            ... )
+
+            Reordering timeout policy rules for a specific microtenant:
+
+            >>> zpa.policies.bulk_reorder_rules(
+            ...     policy_type='timeout',
+            ...     rules_orders=[
+            ...         '216199618143374220',
+            ...         '216199618143374219',
+            ...         '216199618143374218',
+            ...         '216199618143374217',
+            ...         '216199618143374216',
+            ...     ],
+            ...     microtenant_id='1234567890'
+            ... )
         """
-        # Get policy id for specified policy type
         policy_set = self.get_policy(policy_type).id
-        all = self.list_rules(policy_type)
-        all.sort(key=functools.cmp_to_key(self.sort_key(rules_orders=rules_orders)))
-        orderedRules = [r.id for r in all]
-
-        # Construct the URL pathx
         path = f"policySet/{policy_set}/reorder"
 
-        # Create a new PUT request
-        resp = self.rest.put(path, json=orderedRules)
-        if resp.status_code <= 299:
-            # Return the updated rule information
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+        response = self.rest.put(path, json=rules_orders, params=params, api_version="v1")
+        if response.status_code == 204:
+            return Box({})
+        elif response.status_code <= 299:
             return None
         else:
-            # Handle the case when the request fails (modify as needed)
-            return resp
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
 
-    def delete_rule(self, policy_type: str, rule_id: str) -> int:
+    def delete_rule(self, policy_type: str, rule_id: str, **kwargs) -> int:
         """
         Deletes the specified policy rule.
 
@@ -2861,12 +2700,12 @@ class PolicySetsAPI:
             :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> zpa.policies.delete_rule(policy_id='99999',
+            >>> zpa.policies.delete_rule(policy_type='access',
             ...    rule_id='88888')
 
         """
-
-        # Get policy id for specified policy type
         policy_id = self.get_policy(policy_type).id
-
-        return self.rest.delete(f"policySet/{policy_id}/rule/{rule_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"policySet/{policy_id}/rule/{rule_id}", params=params).status_code
