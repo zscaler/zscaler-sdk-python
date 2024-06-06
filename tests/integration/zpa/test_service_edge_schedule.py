@@ -15,14 +15,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-
 import pytest
 from pprint import pprint
 from tests.integration.zpa.conftest import MockZPAClient
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestServiceEdgeSchedule:
     """
@@ -82,4 +83,3 @@ class TestServiceEdgeSchedule:
             errors.append(f"Error during update_service_edge_schedule: {exc}")
 
         assert not errors, f"Errors occurred: {errors}"
-
