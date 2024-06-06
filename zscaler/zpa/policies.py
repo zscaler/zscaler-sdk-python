@@ -2364,20 +2364,18 @@ class PolicySetsAPI:
                 Optional keyword args.
 
         Keyword Args:
+            rule_order (str):
+                The new order for the rule.
             conditions (list):
-                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`, `RHS value`.
+                If you are adding multiple values for the same object type then you will need a new entry for each value.
 
                 - `conditions`: This is for providing the set of conditions for the policy
                     - `object_type`: This is for specifying the policy criteria.
-                        The following values are supported: "app", "app_group", "saml", "scim", "scim_group", "client_type"
-                        - `client_type`: The client type, must be one of the following:
-                            - 'zpn_client_type_edge_connector'
-                            - 'zpn_client_type_branch_connector'
-                            - 'zpn_client_type_machine_tunnel'
-                            - 'zpn_client_type_zapp'
-                            - 'zpn_client_type_zapp_partner'
+                        The following values are supported: "client_type", "country_code"
+                    - `client_type`: The client type, must be one of the following:
+                        `zpn_client_type_edge_connector`, `zpn_client_type_branch_connector`,
+                        `zpn_client_type_machine_tunnel`, `zpn_client_type_zapp`, `zpn_client_type_zapp_partner`
 
         Returns:
             :obj:`Box`: The resource record of the newly created Redirection Policy rule.

@@ -181,9 +181,7 @@ class ProvisioningKeyAPI:
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         response = self.rest.post(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey",
-            json=payload,
-            params=params
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey", json=payload, params=params
         )
         if isinstance(response, Response):
             status_code = response.status_code
@@ -240,9 +238,7 @@ class ProvisioningKeyAPI:
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         resp = self.rest.put(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}",
-            json=payload,
-            params=params
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", json=payload, params=params
         ).status_code
 
         if not isinstance(resp, Response):
@@ -280,4 +276,6 @@ class ProvisioningKeyAPI:
         params = {}
         if "microtenant_id" in kwargs:
             params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.delete(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params).status_code
+        return self.rest.delete(
+            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params
+        ).status_code

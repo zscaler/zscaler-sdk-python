@@ -33,17 +33,17 @@ class TestPRACredentialMoveMicrotenant:
     def test_pra_credential_move_microtenant(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
-        
+
         credential_id = None
         microtenant_id = None
 
         microtenant_name = "tests-microtenant" + generate_random_string()
         microtenant_description = "tests-microtenant" + generate_random_string()
-        
+
         credential_description = "tests-" + generate_random_string()
         # Generate a random password
         password = generate_random_password()
-        
+
         # Step 1: Create Microtenant Resource along with a segment_group, app_connector_group, and server_group
         try:
             auth_domains = client.authdomains.get_auth_domains()
@@ -139,5 +139,5 @@ class TestPRACredentialMoveMicrotenant:
                     client.privileged_remote_access.delete_credential(credential_id=credential_id)
                 except Exception as exc:
                     errors.append(f"Deleting credential failed: {exc}")
-                    
+
         assert len(errors) == 0, f"Errors occurred during the Privileged Credential Move test: {errors}"
