@@ -109,3 +109,27 @@ class TestAppProtectionControls:
 
         # Assert that no errors occurred during the test
         assert not errors, f"Errors occurred: {errors}"
+
+    def test_get_predef_control_by_name(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
+        try:
+            control = client.inspection.get_predef_control_by_name(name="Failed to parse request body")
+            assert control is not None, "No predefined control found with the specified name"
+            print("Predefined Control:", control)
+        except Exception as exc:
+            errors.append(f"Failed to get predefined control by name: {exc}")
+
+        assert not errors, f"Errors occurred: {errors}"
+
+    def test_get_predef_control_group_by_name(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
+        try:
+            control_group = client.inspection.get_predef_control_group_by_name(group_name="Anomalies")
+            assert control_group is not None, "No predefined control group found with the specified name"
+            print("Predefined Control Group:", control_group)
+        except Exception as exc:
+            errors.append(f"Failed to get predefined control group by name: {exc}")
+
+        assert not errors, f"Errors occurred: {errors}"
