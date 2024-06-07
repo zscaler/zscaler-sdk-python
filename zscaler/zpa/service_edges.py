@@ -17,7 +17,7 @@
 
 from box import Box, BoxList
 from requests import Response
-
+import os
 from zscaler.utils import add_id_groups, pick_version_profile, snake_to_camel
 from zscaler.zpa.client import ZPAClient
 
@@ -60,7 +60,7 @@ class ServiceEdgesAPI:
         list, _ = self.rest.get_paginated_data(path="/serviceEdge", **kwargs, api_version="v1")
         return list
 
-    def get_service_edge(self, service_edge_id: str) -> Box:
+    def get_service_edge(self, service_edge_id: str, **kwargs) -> Box:
         """
         Returns information on the specified Service Edge.
 
@@ -74,18 +74,33 @@ class ServiceEdgesAPI:
             >>> service_edge = zpa.service_edges.get_service_edge('999999')
 
         """
-        response = self.rest.get("/serviceEdge/%s" % (service_edge_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"serviceEdge/{service_edge_id}", params=params)
 
-    def get_service_edge_by_name(self, name):
-        apps = self.list_service_edges()
-        for app in apps:
-            if app.get("name") == name:
-                return app
+    def get_service_edge_by_name(self, name, **kwargs):
+        """
+        Returns information on the private service edge with the specified name.
+
+        Args:
+            name (str): The name of the private service edge.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the private service edge if found, otherwise None.
+
+        Examples:
+            >>> pse = zpa.service_edges.get_service_edge_by_name('example_name')
+            >>> if pse:
+            ...     pprint(pse)
+            ... else:
+            ...     print("Private Service Edge not found")
+
+        """
+        pses = self.list_service_edges(**kwargs)
+        for pse in pses:
+            if pse.get("name") == name:
+                return pse
         return None
 
     def update_service_edge(self, service_edge_id: str, **kwargs) -> Box:
@@ -110,28 +125,23 @@ class ServiceEdgesAPI:
             ...    name="Updated Name")
 
         """
-
-        # Set payload to equal existing record
         payload = {snake_to_camel(k): v for k, v in self.get_service_edge(service_edge_id).items()}
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
-        resp = self.rest.put("/serviceEdge/%s" % (service_edge_id), json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+        resp = self.rest.put(f"serviceEdge/{service_edge_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_service_edge(service_edge_id)
 
-    def delete_service_edge(self, service_edge_id: str) -> int:
+    def delete_service_edge(self, service_edge_id: str, **kwargs) -> int:
         """
-        Deletes the specified Service Edge from ZPA.
+        Deletes the specified Private Service Edge from ZPA.
 
         Args:
-            service_edge_id (str): The unique id of the ZPA Service Edge that will be deleted.
+            service_edge_id (str): The unique id of the ZPA Private Service that will be deleted.
 
         Returns:
             :obj:`int`: The status code of the operation.
@@ -140,9 +150,12 @@ class ServiceEdgesAPI:
             >>> zpa.service_edges.delete_service_edge('99999')
 
         """
-        return self.rest.delete(f"serviceEdge/{service_edge_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"serviceEdge/{service_edge_id}", params=params).status_code
 
-    def bulk_delete_service_edges(self, service_edge_ids: list) -> int:
+    def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> int:
         """
         Bulk deletes the specified Service Edges from ZPA.
 
@@ -160,7 +173,11 @@ class ServiceEdgesAPI:
             "ids": service_edge_ids,
         }
 
-        return self.rest.post("connector/bulkDelete", json=payload).status_code
+        payload = {"ids": service_edge_ids}
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.post("serviceEdge/bulkDelete", json=payload)
 
     def list_service_edge_groups(self, **kwargs) -> BoxList:
         """
@@ -192,7 +209,7 @@ class ServiceEdgesAPI:
         list, _ = self.rest.get_paginated_data(path="/serviceEdgeGroup", **kwargs, api_version="v1")
         return list
 
-    def get_service_edge_group(self, group_id: str) -> Box:
+    def get_service_edge_group(self, group_id: str, **kwargs) -> Box:
         """
         Returns information on the specified ZPA Service Edge Group.
 
@@ -206,15 +223,29 @@ class ServiceEdgesAPI:
             >>> group = zpa.service_edges.get_service_edge_group("99999")
 
         """
-        response = self.rest.get("/serviceEdgeGroup/%s" % (group_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"serviceEdgeGroup/{group_id}", params=params)
 
-    def get_service_edge_group_by_name(self, name):
-        groups = self.list_service_edge_groups()
+    def get_service_edge_group_by_name(self, name, **kwargs) -> Box:
+        """
+        Returns information on the private service edge group with the specified name.
+
+        Args:
+            name (str): The name of the private service edge group.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the private service edge group if found, otherwise None.
+
+        Examples:
+            >>> group = zpa.service_edges.get_service_edge_group_by_name('example_name')
+            >>> if group:
+            ...     pprint(group)
+            ... else:
+            ...     print("Private Service Edge Group not found")
+        """
+        groups = self.list_service_edge_groups(**kwargs)
         for group in groups:
             if group.get("name") == name:
                 return group
@@ -233,25 +264,25 @@ class ServiceEdgesAPI:
 
         Keyword Args:
             **cityCountry (str):
-                The City and Country for where the App Connectors are located. Format is:
+                The City and Country for where the Service Edges are located. Format is:
 
                 ``<City>, <Country Code>`` e.g. ``Sydney, AU``
             **country_code (str):
-                The ISO<std> Country Code that represents the country where the App Connectors are located.
+                The ISO<std> Country Code that represents the country where the Service Edges are located.
             **enabled (bool):
                 Is the Service Edge Group enabled? Defaults to ``True``.
             **is_public (bool):
                 Is the Service Edge publicly accessible? Defaults to ``False``.
             **override_version_profile (bool):
-                Override the local App Connector version according to ``version_profile``. Defaults to ``False``.
+                Override the local Service Edge version according to ``version_profile``. Defaults to ``False``.
             **service_edge_ids (list):
                 A list of unique ids of ZPA Service Edges that belong to this Service Edge Group.
             **trusted_network_ids (list):
                 A list of unique ids of Trusted Networks that are associated with this Service Edge Group.
             **upgrade_day (str):
-                The day of the week that upgrades will be pushed to the App Connector.
+                The day of the week that upgrades will be pushed to the Service Edge.
             **upgrade_time_in_secs (str):
-                The time of the day that upgrades will be pushed to the App Connector.
+                The time of the day that upgrades will be pushed to the Service Edge.
             **version_profile (str):
                 The version profile to use. This will automatically set ``override_version_profile`` to True.
                 Accepted values are:
@@ -277,20 +308,18 @@ class ServiceEdgesAPI:
             "longitude": longitude,
             "location": location,
         }
-
-        # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
         pick_version_profile(kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("serviceEdgeGroup", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("serviceEdgeGroup", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -304,11 +333,11 @@ class ServiceEdgesAPI:
 
         Keyword Args:
             **cityCountry (str):
-                The City and Country for where the App Connectors are located. Format is:
+                The City and Country for where the Service Edges are located. Format is:
 
                 ``<City>, <Country Code>`` e.g. ``Sydney, AU``
             **country_code (str):
-                The ISO<std> Country Code that represents the country where the App Connectors are located.
+                The ISO<std> Country Code that represents the country where the Service Edges are located.
             **enabled (bool):
                 Is the Service Edge Group enabled? Defaults to ``True``.
             **is_public (bool):
@@ -322,7 +351,7 @@ class ServiceEdgesAPI:
             **name (str):
                 The name of the Service Edge Group.
             **override_version_profile (bool):
-                Override the local App Connector version according to ``version_profile``. Defaults to ``False``.
+                Override the local Service Edge version according to ``version_profile``. Defaults to ``False``.
             **service_edge_ids (list):
                 A list of unique ids of ZPA Service Edges that belong to this Service Edge Group.
             **trusted_network_ids (list):
@@ -350,28 +379,22 @@ class ServiceEdgesAPI:
             ...    upgrade_day="friday")
 
         """
-        # Set payload to equal existing record
         payload = {snake_to_camel(k): v for k, v in self.get_service_edge_group(group_id).items()}
 
-        # Perform formatting on simplified params
         add_id_groups(self.reformat_params, kwargs, payload)
         pick_version_profile(kwargs, payload)
 
-        # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        resp = self.rest.put(f"serviceEdgeGroup/{group_id}", json=payload).status_code
-
-        # Return the object if it was updated successfully
+        resp = self.rest.put(f"serviceEdgeGroup/{group_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_service_edge_group(group_id)
 
-    def delete_service_edge_group(self, service_edge_group_id: str) -> int:
+    def delete_service_edge_group(self, group_id: str, **kwargs) -> int:
         """
         Deletes the specified Service Edge Group from ZPA.
 
@@ -383,6 +406,163 @@ class ServiceEdgesAPI:
 
         Examples:
             >>> zpa.service_edges.delete_service_edge_group("99999")
-
         """
-        return self.rest.delete(f"serviceEdgeGroup/{service_edge_group_id}").status_code
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.delete(f"serviceEdgeGroup/{group_id}", params=params).status_code
+
+    def get_service_edge_schedule(self, customer_id=None, **kwargs) -> Box:
+        """
+        Returns the configured Service Edge Schedule frequency.
+
+        Args:
+            id (str): Unique identifier for the Service Edge auto deletion config.
+                Required for the PUT request to update the Service Edge Settings frequency.
+            customer_id (str): Unique identifier of the ZPA tenant.
+            delete_disabled (bool): If true, includes Service Edges for deletion if
+                they are disconnected, based on frequencyInterval and frequency values.
+            enabled (bool): If true, the deletion of Service Edges setting is enabled.
+            frequency (str): Frequency at which disconnected Service Edges are deleted.
+            frequency_interval (str): Interval for the frequency value, minimum is 5.
+
+        Returns:
+            :obj:`Box`: The Auto Delete frequency of the Service Edge for the specified customer.
+
+        Examples:
+            >>> pprint(zpa.service_edges.get_service_edge_schedule)
+        """
+
+        if customer_id is None:
+            customer_id = os.getenv("ZPA_CUSTOMER_ID")
+
+        if not customer_id:
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
+
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get("serviceEdgeSchedule", params=params)
+
+    def add_service_edge_schedule(self, frequency, interval, disabled, enabled, **kwargs) -> Box:
+        """
+        Configure an Service Edge schedule frequency to delete inactive Service Edge based on
+        the configured frequency.
+
+        Args:
+            frequency (str): Frequency at which disconnected Service Edges are deleted.
+            interval (str): Interval for the frequency value, minimum supported is 5.
+            disabled (bool): If true, includes service edges for deletion if disconnected.
+            enabled (bool): Enables or disables the deletion setting for Service Edges.
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
+            name (str): Name of the schedule.
+            customer_id (str): Unique identifier of the ZPA tenant.
+            delete_disabled (bool): Includes Service Edges for deletion if they are
+                disconnected, based on frequency and interval values.
+            description (str): Additional information about the Service Edge Schedule.
+
+        Returns:
+            :obj:`Box`: Auto Delete frequency of the Service Edge for the specified customer.
+
+        Examples:
+            >>> schedule = zpa.service_edges.add_service_edge_schedule(
+            ...    frequency='days',
+            ...    interval='5',
+            ...    disabled=False,
+            ...    enabled=True,
+            )
+        """
+        customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
+
+        if not customer_id:
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
+
+        payload = {
+            "customerId": customer_id,
+            "frequency": frequency,
+            "frequencyInterval": interval,
+            "deleteDisabled": disabled,
+            "enabled": enabled,
+        }
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        response = self.rest.post("serviceEdgeSchedule", json=payload)
+
+        if response.status_code == 204:
+            return Box(payload)
+        elif response.status_code == 400:
+            error_response = response.json()
+            if error_response.get("id") == "resource.already.exist":
+                print("The schedule is already enabled.")
+                return None
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        else:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+    def update_service_edge_schedule(self, scheduler_id: str, frequency, interval, disabled, enabled, **kwargs) -> Box:
+        """
+        Updates Service Edge schedule frequency to delete the inactive service edges based on
+        the configured frequency.
+
+        Args:
+            scheduler_id (str): Unique identifier for the scheduler.
+            **kwargs: Optional keyword arguments.
+
+        Keyword Args:
+            customer_id (str): Unique identifier of the ZPA tenant.
+            delete_disabled (bool): Include Service Edges for deletion if disconnected,
+                based on frequencyInterval and frequency values.
+            enabled (bool): Enable or disable deletion of Service Edges.
+            frequency (str): Frequency at which disconnected Service Edges are deleted.
+            frequency_interval (str): Interval for the frequency value, minimum is 5.
+                Supported: 5, 7, 14, 30, 60, 90.
+            description (str): Additional information about the Service Edge Schedule.
+
+        Returns:
+            :obj:`Box`: The updated schedule record if successful, otherwise an error.
+
+        Examples:
+            Updating Service Edge schedule:
+
+            >>> schedule = zpa.service_edges.update_service_edge_schedule(
+            ...    scheduler_id='10',
+            ...    frequency_interval='10',
+            ...    frequency='days',
+            ...    enabled=True,
+            ...    delete_disabled=False
+            )
+            >>> print(schedule)  # Prints the updated schedule record
+        """
+        customer_id = kwargs.get("customer_id") or os.getenv("ZPA_CUSTOMER_ID")
+
+        if not customer_id:
+            raise ValueError(
+                "customer_id is required either as a function argument or as an environment variable ZPA_CUSTOMER_ID"
+            )
+
+        payload = {
+            "customerId": customer_id,
+            "frequency": frequency,
+            "frequencyInterval": interval,
+            "enabled": enabled,
+            "deleteDisabled": disabled,
+        }
+
+        response = self.rest.put(f"serviceEdgeSchedule/{scheduler_id}", json=payload)
+
+        if response.status_code == 204:
+            updated_schedule = self.get_service_edge_schedule(customer_id=customer_id)
+            return updated_schedule
+        elif response.status_code == 400:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        else:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")

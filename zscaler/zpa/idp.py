@@ -52,8 +52,24 @@ class IDPControllerAPI:
         list, _ = self.rest.get_paginated_data(path="/idp", **kwargs, api_version="v2")
         return list
 
-    def get_idp_by_name(self, name):
-        idps = self.list_idps()
+    def get_idp_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the identity provider with the specified name.
+
+        Args:
+            name (str): The name of the identity provider.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the identity provider if found, otherwise None.
+
+        Examples:
+            >>> idp = zpa.idp.get_idp_by_name('example_name')
+            >>> if idp:
+            ...     pprint(idp)
+            ... else:
+            ...     print("identity provider not found")
+        """
+        idps = self.list_idps(**kwargs)
         for idp in idps:
             if idp.get("name") == name:
                 return idp
@@ -74,7 +90,6 @@ class IDPControllerAPI:
             >>> pprint(zpa.idp.get_idp('99999'))
 
         """
-
         response = self.rest.get("/idp/%s" % (idp_id))
         if isinstance(response, Response):
             status_code = response.status_code

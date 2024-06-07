@@ -62,7 +62,7 @@ class ApplicationSegmentAPI:
         list, _ = self.rest.get_paginated_data(path="/application", **kwargs, api_version="v1")
         return list
 
-    def get_segment(self, segment_id: str) -> Box:
+    def get_segment(self, segment_id: str, **kwargs) -> Box:
         """
         Get information for an application segment.
 
@@ -77,15 +77,30 @@ class ApplicationSegmentAPI:
             >>> app_segment = zpa.app_segments.details('99999')
 
         """
-        response = self.rest.get("/application/%s" % (segment_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"application/{segment_id}", params=params)
 
-    def get_segment_by_name(self, name):
-        apps = self.list_segments()
+    def get_segment_by_name(self, name: str, **kwargs):
+        """
+        Returns information on the application segment with the specified name.
+
+        Args:
+            name (str): The name of the application segment.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the application segment  if found, otherwise None.
+
+        Examples:
+            >>> appsegment = zpa.app_segments.get_segment_by_name('example_name')
+            >>> if appsegment:
+            ...     pprint(appsegment)
+            ... else:
+            ...     print("Application segment not found")
+
+        """
+        apps = self.list_segments(**kwargs)
         for app in apps:
             if app.get("name") == name:
                 return app
@@ -117,43 +132,13 @@ class ApplicationSegmentAPI:
             >>> app_segments = zpa.app_segments.get_segments_by_type(app_type, expand_all, search=search)
         """
         params = {"applicationType": application_type, "expandAll": "true" if expand_all else "false"}
-        # Include additional search parameters if specified
         if "search" in kwargs:
             params["search"] = kwargs["search"]
 
         result, error = self.rest.get_paginated_data(path="/application/getAppsByType", params=params, **kwargs)
         if error:
-            return BoxList([])  # Return an empty BoxList on failure due to the error
+            return BoxList([])
         return result
-
-    def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
-        """
-        Delete an application segment.
-
-        Args:
-            force_delete (bool):
-                Setting this field to true deletes the mapping between Application Segment and Segment Group.
-            segment_id (str):
-                The unique identifier for the application segment.
-
-        Returns:
-            :obj:`int`: The operation response code.
-
-        Examples:
-            Delete an Application Segment with an id of 99999.
-
-            >>> zpa.app_segments.delete('99999')
-
-            Force deletion of an Application Segment with an id of 88888.
-
-            >>> zpa.app_segments.delete('88888', force_delete=True)
-
-        """
-        query = ""
-        if force_delete:
-            query = "forceDelete=true"
-        response = self.rest.delete("/application/%s?%s" % (segment_id, query))
-        return response.status_code
 
     def add_segment(
         self,
@@ -204,7 +189,6 @@ class ApplicationSegmentAPI:
             ...    tcp_port_ranges=['8080', '8085'],
             ...    server_group_ids=['99999', '88888'])
         """
-        # Initialise payload
         payload = {
             "name": name,
             "domainNames": domain_names,
@@ -213,33 +197,26 @@ class ApplicationSegmentAPI:
             "segmentGroupId": segment_group_id,
             "serverGroups": [{"id": group_id} for group_id in server_group_ids],
         }
-
-        # Handle clientless_app_ids separately
         if "clientless_app_ids" in kwargs:
             clientless_apps = kwargs.pop("clientless_app_ids")
             payload["clientlessApps"] = transform_clientless_apps(clientless_apps)
 
-        # add_id_groups(self.reformat_params, kwargs, payload)
-
-        # # Add optional parameters to payload
-        # for key, value in kwargs.items():
-        #     payload[snake_to_camel(key)] = value
         add_id_groups(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
             if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        # Convert the entire payload's keys to camelCase before sending
         camel_payload = recursive_snake_to_camel(payload)
         for key, value in kwargs.items():
             if value is not None:
                 camel_payload[snake_to_camel(key)] = value
 
-        response = self.rest.post("application", json=payload)
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post("application", json=payload, params=params)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
@@ -306,7 +283,6 @@ class ApplicationSegmentAPI:
             ...    name='new_app_name',
 
         """
-        # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_segment(segment_id))
 
         if kwargs.get("tcp_port_ranges"):
@@ -315,38 +291,143 @@ class ApplicationSegmentAPI:
         if kwargs.get("udp_port_ranges"):
             payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_port_ranges")]
 
-        # Handle the clientless_app_ids directly within this function without a separate helper
         if kwargs.get("clientless_app_ids"):
-            # Here you would implement any necessary formatting directly
             formatted_clientless_apps = [{"id": app.get("id")} for app in kwargs.pop("clientless_app_ids")]
-            payload["clientlessApps"] = formatted_clientless_apps  # use the correct key expected by your API
+            payload["clientlessApps"] = formatted_clientless_apps
 
-        # Convert other keys in payload
         add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"application/{segment_id}", json=payload).status_code
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Return the object if it was updated successfully
+        resp = self.rest.put(f"application/{segment_id}", json=payload, params=params).status_code
         if not isinstance(resp, Response):
             return self.get_segment(segment_id)
 
-    def detach_from_segment_group(self, app_id, seg_group_id):
-        seg_group = self.rest.get("/segmentGroup/%s" % (seg_group_id))
-        if isinstance(seg_group, Response):
-            status_code = seg_group.status_code
-            if status_code > 299:
-                return None
-        apps = seg_group.get("applications", [])
-        addaptedApps = []
-        for app in apps:
-            if app.get("id") != app_id:
-                addaptedApps.append(app)
-        seg_group["applications"] = addaptedApps
-        self.rest.put(
-            "/segmentGroup/%s" % (seg_group_id),
-            json=seg_group,
-        )
+    def delete_segment(self, segment_id: str, force_delete: bool = False, **kwargs) -> int:
+        """
+        Delete an application segment.
+
+        Args:
+            force_delete (bool):
+                Setting this field to true deletes the mapping between Application Segment and Segment Group.
+            segment_id (str):
+                The unique identifier for the application segment.
+
+        Returns:
+            :obj:`int`: The operation response code.
+
+        Examples:
+            Delete an Application Segment with an id of 99999.
+
+            >>> zpa.app_segments.delete('99999')
+
+            Force deletion of an Application Segment with an id of 88888.
+
+            >>> zpa.app_segments.delete_segment('88888', force_delete=True)
+
+        """
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        query = "forceDelete=true" if force_delete else ""
+        response = self.rest.delete(f"/application/{segment_id}?{query}", params=params)
+        return response.status_code
+
+    def app_segment_move(self, application_id: str, **kwargs) -> Box:
+        """
+        Moves application segments from one microtenant to another
+        Note: Application segments can only be moved from a Default Microtenant microtenant_id as 0 to a child tenant
+
+        Args:
+            application_id (str):
+                The unique identifier of the Application Segment.
+            target_segment_group_id (str):
+                The unique identifier of the target segment group that the application segment is being moved to.
+            target_server_group_id (str):
+                The unique identifier of the target server group that the application segment is being moved to.
+            target_microtenant_id (str):
+                The unique identifier of the Microtenant that the application segment is being moved to.
+
+        Keyword Args:
+            ...
+
+        Returns:
+            :obj:`Box`: The resource record for the moved application segment.
+
+        Examples:
+            Moving an application segment to another microtenant:
+
+            >>> zpa.app_segments.app_segment_move(
+            ...    application_id='216199618143373016',
+            ...    target_segment_group_id='216199618143373010',
+            ...    target_server_group_id='216199618143373012',
+            ...    target_microtenant_id='216199618143372994'
+            ... )
+
+        """
+        payload = {
+            "targetSegmentGroupId": kwargs.pop("target_segment_group_id", None),
+            "targetMicrotenantId": kwargs.pop("target_microtenant_id", None),
+            "targetServerGroupId": kwargs.pop("target_server_group_id", None),
+        }
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.post(f"application/{application_id}/move", json=payload, params=params)
+        if response.status_code == 204:
+            return Box({})
+        elif isinstance(response, Response):
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+
+    def app_segment_share(self, application_id: str, **kwargs) -> Box:
+        """
+        Moves application segments from one microtenant to another
+        Note: Application segments can only be shared between child tenants.
+
+        Args:
+            application_id (str):
+                The unique identifier of the Application Segment.
+            share_to_microtenants (:obj:`list` of :obj:`str`):
+                The unique identifier of the Microtenant that the application segment is being shared to.
+                This field is required if you want to share an application segment.
+                To remove the share send the attribute as an empty list.
+        Keyword Args:
+            ...
+
+        Returns:
+            :obj:`Box`: An empty Box object if the operation is successful.
+
+        Examples:
+            Moving an application segment to another microtenant:
+
+            >>> zpa.app_segments.app_segment_share(
+            ...    application_id='216199618143373016',
+            ...    share_to_microtenants=['216199618143373010']
+            ... )
+
+        """
+        payload = {
+            "shareToMicrotenants": kwargs.pop("share_to_microtenants", None),
+        }
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        response = self.rest.put(f"application/{application_id}/share", json=payload, params=params)
+        if response.status_code == 204:
+            return Box({})
+        elif isinstance(response, Response):
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response

@@ -52,10 +52,13 @@ class ZPAClient:
         sort_dir=None,
         start_time=None,
         end_time=None,
+        all_entries=False,
         idp_group_id=None,
         scim_user_id=None,
+        scim_username=None,
         page=None,
         pagesize=20,
+        microtenant_id=None,
     ):
         """
         Send a GET request to the ZPA API to fetch all pages of a resources.
