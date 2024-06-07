@@ -59,7 +59,6 @@ class MicrotenantsAPI:
             >>> pprint(zpa.microtenants.get_microtenant('216199618143364393'))
 
         """
-        # return self.rest.get(f"microtenants/{microtenant_id}")
         response = self.rest.get("/microtenants/%s" % (microtenant_id))
         if isinstance(response, Response):
             status_code = response.status_code

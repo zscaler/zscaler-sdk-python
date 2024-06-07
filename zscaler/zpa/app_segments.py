@@ -337,23 +337,6 @@ class ApplicationSegmentAPI:
         response = self.rest.delete(f"/application/{segment_id}?{query}", params=params)
         return response.status_code
 
-    def detach_from_segment_group(self, app_id, seg_group_id):
-        seg_group = self.rest.get("/segmentGroup/%s" % (seg_group_id))
-        if isinstance(seg_group, Response):
-            status_code = seg_group.status_code
-            if status_code > 299:
-                return None
-        apps = seg_group.get("applications", [])
-        addaptedApps = []
-        for app in apps:
-            if app.get("id") != app_id:
-                addaptedApps.append(app)
-        seg_group["applications"] = addaptedApps
-        self.rest.put(
-            "/segmentGroup/%s" % (seg_group_id),
-            json=seg_group,
-        )
-
     def app_segment_move(self, application_id: str, **kwargs) -> Box:
         """
         Moves application segments from one microtenant to another
