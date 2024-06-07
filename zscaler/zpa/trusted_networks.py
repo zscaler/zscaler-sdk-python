@@ -89,10 +89,12 @@ class TrustedNetworksAPI:
             >>> pprint(zpa.trusted_networks.get_network('99999'))
 
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.get(f"network/{network_id}", params=params)
+        response = self.rest.get("/network/%s" % (network_id))
+        if isinstance(response, Response):
+            status_code = response.status_code
+            if status_code != 200:
+                return None
+        return response
 
     def get_network_udid(self, network_udid: str) -> Box:
         """
