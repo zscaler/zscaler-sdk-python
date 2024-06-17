@@ -1,7 +1,7 @@
 furo==2024.5.6
 pre-commit==3.7.1
 pytest==8.2.2
-python-box==7.1.1
+python-box==7.2.0
 restfly==1.4.7
 requests==2.32.3
 responses==0.25.2
