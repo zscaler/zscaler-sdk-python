@@ -233,10 +233,7 @@ class FirewallPolicyAPI:
 
         response = self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
         return self.get_rule(rule_id)
 
     def delete_rule(self, rule_id: str) -> int:

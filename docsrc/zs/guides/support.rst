@@ -22,6 +22,4 @@ Urgent, production related Terraform issues can be resolved via direct interacti
 Contact
 -------
 
-For questions or requests that cannot be submitted via GitHub Issues, please contact ``devrel@zscaler.com`` with "Zscaler-SDK-GO" in the subject line.
-We also provide a `private Slack channel <https://docs.google.com/forms/d/e/1FAIpQLSfkd3EMkLQdIWMNQ7QCr8TrH_xVSwSYcQshfBPDEZFOaF28qA/viewform?usp=sf_link>`_ 
-where you can submit your questions to the SDK maintainers. Notice that this form will be reviewed and approved by Zscaler Technology Alliances team.
+For questions or requests that cannot be submitted via GitHub Issues, please contact ``devrel@zscaler.com`` with "Zscaler-SDK-Python" in the subject line.
