@@ -40,8 +40,25 @@ def generate_random_ip(subnet):
 
 def generate_random_password(length=12):
     """Generate a random string of letters, digits, and special characters."""
+    if length < 4:
+        raise ValueError("Password length must be at least 4")
+
+    # Ensure the password has at least one lowercase, one uppercase, one digit, and one special character
     characters = string.ascii_letters + string.digits + "!@#$%^&*()"
-    return "".join(random.choice(characters) for i in range(length))
+    password = [
+        random.choice(string.ascii_lowercase),
+        random.choice(string.ascii_uppercase),
+        random.choice(string.digits),
+        random.choice("!@#$%^&*()"),
+    ]
+
+    # Fill the rest of the password length with random characters
+    password += random.choices(characters, k=length - 4)
+
+    # Shuffle to ensure the characters are in random order
+    random.shuffle(password)
+
+    return "".join(password)
 
 
 def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str, str]:
