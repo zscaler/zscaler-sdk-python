@@ -97,7 +97,7 @@ class ZPAGatewayAPI:
         # Add zpa_server_group to kwargs
         if zpa_server_group:
             kwargs["zpa_server_group"] = zpa_server_group
-            
+
         # Define the id groups specific to this function
         zpa_gateway_id_groups = [
             ("zpa_server_group", "zpaServerGroup"),
@@ -148,7 +148,7 @@ class ZPAGatewayAPI:
         ]
 
         transform_common_id_fields(zpa_gateway_id_groups, kwargs, payload)
-        
+
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
@@ -156,7 +156,7 @@ class ZPAGatewayAPI:
         if isinstance(response, Response) and not response.ok:
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
         return self.get_gateway(gateway_id)
-    
+
     def delete_gateway(self, gateway_id):
         """
         Deletes the specified ZPA Gateway.
