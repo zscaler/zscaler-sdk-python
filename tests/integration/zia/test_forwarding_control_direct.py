@@ -77,7 +77,6 @@ class TestForwardingControlRulesDirect:
                     rank=7,
                     type='FORWARDING',
                     forward_method='DIRECT',
-                    groups=['76662385'],
                     src_ip_groups=[src_group_id],
                     dest_ip_groups=[dst_group_id],
                 )
