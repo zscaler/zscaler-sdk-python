@@ -68,10 +68,7 @@ class ForwardingControlAPI:
             ...    pprint(rule)
 
         """
-        response = self.rest.get("/forwardingRules")
-        if isinstance(response, Response):
-            return None
-        return response
+        return self.rest.get("forwardingRules")
 
     def get_rule(self, rule_id: str) -> Box:
         """
@@ -158,18 +155,19 @@ class ForwardingControlAPI:
 
         # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
+
         for key, value in kwargs.items():
             if value is not None:
-                payload[snake_to_camel(key)] = value
+                if key == "state" and isinstance(value, bool):
+                    payload[key] = "ENABLED" if value else "DISABLED"
+                else:
+                    payload[key] = value
 
         # Convert the entire payload's keys to camelCase before sending
         camel_payload = recursive_snake_to_camel(payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                camel_payload[snake_to_camel(key)] = value
 
         # Send POST request to create the rule
-        response = self.rest.post("forwardingRules", json=payload)
+        response = self.rest.post("forwardingRules", json=camel_payload)
         if isinstance(response, Response):
             # Handle error response
             status_code = response.status_code
@@ -227,7 +225,6 @@ class ForwardingControlAPI:
             ...    description="TT#1965232866")
 
         """
-
         # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_rule(rule_id))
 
@@ -240,14 +237,14 @@ class ForwardingControlAPI:
 
         # Add remaining optional parameters to payload
         for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+            if key == "state" and isinstance(value, bool):
+                payload[snake_to_camel(key)] = "ENABLED" if value else "DISABLED"
+            else:
+                payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"forwardingRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
         return self.get_rule(rule_id)
 
     def delete_rule(self, rule_id: str) -> int:
