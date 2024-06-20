@@ -166,6 +166,7 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
 #                 payload[payload_key] = [{"id": int(item)} if isinstance(item, str) and item.isdigit() else item for item in value]
 #     return
 
+
 def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         key, payload_key = entry
@@ -174,7 +175,9 @@ def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
             if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
                 # Handle zpa_gateway, proxy_gateway, and zpa_server_group
                 if isinstance(value, dict):
-                    payload[payload_key] = {snake_to_camel(k): v for k, v in value.items() if k in ['id', 'name', 'external_id']}
+                    payload[payload_key] = {
+                        snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
+                    }
             elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
                 # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
                 if isinstance(value, list):
@@ -575,4 +578,3 @@ def dump_response(
         log_lines.append(f"\n{response_body}")
     log_lines.append("-" * 68)
     logger.info("\n".join(log_lines))
-

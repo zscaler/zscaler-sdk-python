@@ -71,12 +71,12 @@ class TestForwardingControlRulesDirect:
                 rule_name = "tests-" + generate_random_string()
                 created_rule = client.forwarding_control.add_rule(
                     name=rule_name,
-                    description='Integration test Forwarding Control Rule',
+                    description="Integration test Forwarding Control Rule",
                     state=True,
                     order=1,
                     rank=7,
-                    type='FORWARDING',
-                    forward_method='DIRECT',
+                    type="FORWARDING",
+                    forward_method="DIRECT",
                     src_ip_groups=[src_group_id],
                     dest_ip_groups=[dst_group_id],
                 )

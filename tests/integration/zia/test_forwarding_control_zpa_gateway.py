@@ -34,7 +34,7 @@ class TestForwardingControlZPAGateway:
     def test_forwarding_control_zpa_gateway(self, fs):
         ziaClient = MockZIAClient(fs)
         zpaClient = MockZPAClient(fs)
-        
+
         errors = []
         # Initialize IDs for cleanup
         app_connector_group_id = None
@@ -42,7 +42,7 @@ class TestForwardingControlZPAGateway:
         server_group_id = None
         app_segment_id = None
         gateway_id = None
-        
+
         try:
             # Create an App Connector Group
             try:
@@ -103,7 +103,7 @@ class TestForwardingControlZPAGateway:
                     enabled=True,
                     ip_anchored=True,
                     is_cname_enabled=True,
-                    tcp_keep_alive = "1",
+                    tcp_keep_alive="1",
                     icmp_access_type="PING_TRACEROUTING",
                     health_reporting="ON_ACCESS",
                     domain_names=["test.example.com"],
@@ -114,24 +114,24 @@ class TestForwardingControlZPAGateway:
                 app_segment_id = app_segment["id"]
             except Exception as exc:
                 errors.append(f"Creating Application Segment failed: {exc}")
-                
+
             try:
                 # Create a ZPA Gateway
                 gateway_name = "tests-" + generate_random_string()
                 created_gateway = ziaClient.zpa_gateway.add_gateway(
                     name=gateway_name,
-                    description='Integration test ZPA Gateway',
-                    type='ZPA',
+                    description="Integration test ZPA Gateway",
+                    type="ZPA",
                     zpa_server_group={
-                        "external_id":server_group_id,
-                        "name":server_group_name, 
+                        "external_id": server_group_id,
+                        "name": server_group_name,
                     },
                 )
                 gateway_id = created_gateway.get("id", None)
                 assert gateway_id is not None, "ZPA Gateway creation failed"
             except Exception as exc:
                 errors.append(f"ZPA Gateway creation failed: {exc}")
-                
+
             try:
                 # Verify the gateway by retrieving it
                 retrieved_gateway = ziaClient.zpa_gateway.get_gateway(gateway_id)
@@ -188,9 +188,8 @@ class TestForwardingControlZPAGateway:
                     zpaClient.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Segment Group failed: {exc}")
-                    
+
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
         assert len(errors) == 0, f"Errors occurred during the zpa gateway lifecycle test: {errors}"
-
