@@ -65,9 +65,6 @@ class TestLSSConfigList:
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         log_formats_to_validate = [
-            "zpn_sys_auth_log",
-            "zpn_waf_http_exchanges_log",
-            "zpn_http_trans_log",
             "zpn_ast_comprehensive_stats",
             "zpn_auth_log_1id",
             "zpn_auth_log",
@@ -75,6 +72,9 @@ class TestLSSConfigList:
             "zpn_ast_auth_log",
             "zpn_audit_log",
             "zpn_trans_log",
+            "zpn_sys_auth_log",
+            "zpn_waf_http_exchanges_log",
+            "zpn_http_trans_log",
         ]
         try:
             # Test without specifying log_type to get all formats
