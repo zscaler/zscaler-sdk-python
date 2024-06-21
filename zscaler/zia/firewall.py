@@ -920,13 +920,11 @@ class FirewallPolicyAPI:
 
         response = self.rest.post("networkServices", json=payload)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> dict:
         """
         Updates the specified Network Service.
 
@@ -952,7 +950,7 @@ class FirewallPolicyAPI:
             description (str): Additional information on the Network Service.
 
         Returns:
-            :obj:`Box`: The newly created Network Service resource record.
+            :obj:`dict`: The updated Network Service resource record.
 
         Examples:
             Update the name and description for a Network Service:
@@ -963,28 +961,47 @@ class FirewallPolicyAPI:
 
             Updates the ports for a Network Service, leaving other fields intact:
 
-            >>> zia.firewall.add_network_service('959093',
+            >>> zia.firewall.update_network_service('959093',
             ...    ports=[
             ...        ('dest', 'tcp', '500', '510')])
 
         """
-        payload = {snake_to_camel(k): v for k, v in self.get_network_service(service_id).items()}
+        # Fetch the existing network service details
+        existing_service = self.get_network_service(service_id).to_dict()
+
+        # Build the payload
+        payload = {
+            "id": service_id,
+            "name": existing_service["name"],
+            "description": existing_service.get("description", ""),
+            "type": existing_service.get("type", "CUSTOM"),
+        }
 
         # Convert tuple list to dict and add to payload
         if ports is not None:
-            # Clear existing ports and set new values
             for items in ports:
-                port_key = f"{items[0]}{items[1].title()}Ports"
-                payload[port_key] = []
-                payload[port_key].append({"start": items[2]})
+                port_dict = {"start": int(items[2])}
                 if len(items) == 4:
-                    payload[port_key].append({"end": items[3]})
+                    port_dict["end"] = int(items[3])
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
+        else:
+            # Use existing ports if not provided
+            for key in ["src_tcp_ports", "dest_tcp_ports", "src_udp_ports", "dest_udp_ports"]:
+                if key in existing_service:
+                    payload[snake_to_camel(key)] = existing_service[key]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self.rest.put(f"networkServices/{service_id}", json=payload)
+        # Remove invalid attributes from the payload
+        payload.pop("creator_context", None)
+        payload.pop("is_name_l10n_tag", None)
+
+        response = self.rest.put(f"networkServices/{service_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        return self.get_network_service(service_id)
 
     def list_time_windows(self) -> Box:
         """
