@@ -1,6 +1,16 @@
 # Zscaler Python SDK Changelog
 
-## 0.50.1 (June, 20 2024)
+## 0.5.2 (June, 24 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Fixed ZIA Integration Test for Cloud Firewall Network Services ([#113](https://github.com/zscaler/zscaler-sdk-python/pull/113))
+
+## 0.5.1 (June, 20 2024)
 
 ### Notes
 
@@ -10,7 +20,7 @@
 
 * Added and Fixed ZIA integration tests. ([#112](https://github.com/zscaler/zscaler-sdk-python/pull/112))
 
-## 0.50.0 (June, 19 2024)
+## 0.5.0 (June, 19 2024)
 
 ### Notes
 
