@@ -147,11 +147,45 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     return
 
 
+# def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
+#     for entry in id_groups:
+#         if kwargs.get(entry[0]):
+#             # Ensure each ID is treated as an integer before adding it to the payload
+#             payload[entry[1]] = [{"id": int(param_id)} for param_id in kwargs.pop(entry[0])]
+#     return
+
+# ####### Function used in the ZIA Forwarding Control Rule #######
+# def transform_fwd_id_fields(id_groups: list, kwargs: dict, payload: dict):
+#     for entry in id_groups:
+#         key, payload_key = entry
+#         if key in kwargs:
+#             value = kwargs.pop(key)
+#             if isinstance(value, dict):
+#                 payload[payload_key] = {k: v for k, v in value.items() if k in ['id', 'name']}
+#             elif isinstance(value, list):
+#                 payload[payload_key] = [{"id": int(item)} if isinstance(item, str) and item.isdigit() else item for item in value]
+#     return
+
+
 def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
-        if kwargs.get(entry[0]):
-            # Ensure each ID is treated as an integer before adding it to the payload
-            payload[entry[1]] = [{"id": int(param_id)} for param_id in kwargs.pop(entry[0])]
+        key, payload_key = entry
+        if key in kwargs:
+            value = kwargs.pop(key)
+            if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
+                # Handle zpa_gateway, proxy_gateway, and zpa_server_group
+                if isinstance(value, dict):
+                    payload[payload_key] = {
+                        snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
+                    }
+            elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
+                # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
+                if isinstance(value, list):
+                    payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
+            else:
+                # General case for ID transformations
+                if isinstance(value, list):
+                    payload[payload_key] = [{"id": int(item)} if isinstance(item, (str, int)) else item for item in value]
     return
 
 

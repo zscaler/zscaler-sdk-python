@@ -30,115 +30,74 @@ class TestUsers:
     Integration Tests for the User Management
     """
 
-    # def test_users(self, fs):
-    #     client = MockZIAClient(fs)
-    #     errors = []  # Initialize an empty list to collect errors
-    #     user_id = None
+    def test_users(self, fs):
+        client = MockZIAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
+        user_id = None
 
-    #     try:
-    #         # Retrieve the first department's ID
-    #         departments = client.users.list_departments(search='A000')
-    #         department_id = departments[0]["id"] if departments else None
-    #         assert department_id, "No departments available for assignment"
-    #     except Exception as exc:
-    #         errors.append(f"Department retrieval failed: {exc}")
+        try:
+            # Retrieve role ID
+            try:
+                # Retrieve the first department's ID
+                departments = client.users.list_departments(search="A000")
+                department_id = departments[0]["id"] if departments else None
+                assert department_id, "No departments available for assignment"
+            except Exception as exc:
+                errors.append(f"Department retrieval failed: {exc}")
 
-    #     try:
-    #         # Retrieve the first group's ID
-    #         groups = client.users.list_groups(search='A000')
-    #         group_id = groups[0]["id"] if groups else None
-    #         assert group_id, "No groups available for assignment"
-    #     except Exception as exc:
-    #         errors.append(f"Group retrieval failed: {exc}")
+            try:
+                # Retrieve the first group's ID
+                groups = client.users.list_groups(search="A000")
+                group_id = groups[0]["id"] if groups else None
+                assert group_id, "No groups available for assignment"
+            except Exception as exc:
+                errors.append(f"Group retrieval failed: {exc}")
 
-    #         # Generate a random password
-    #         password = generate_random_password()
+            # Create User Account
+            if department_id and group_id:
+                try:
+                    created_user = client.users.add_user(
+                        name="tests-" + generate_random_string(),
+                        email="tests-" + generate_random_string() + "@bd-hashicorp.com",
+                        password=generate_random_password(),
+                        groups=[{"id": group_id}],
+                        department=({"id": department_id}),
+                    )
+                    user_id = created_user.get("id", None)
+                    assert user_id, "User account creation failed"
+                except Exception as exc:
+                    errors.append(f"User creation failed: {exc}")
 
-    #     try:
-    #         # Create a User Account
-    #         created_user = client.users.add_user(
-    #             name='tests-' + generate_random_string(),
-    #             email='tests-' + generate_random_string() + "@bd-hashicorp.com",
-    #             password=password,
-    #             groups=[{'id': group_id}],
-    #             department=({'id': department_id}),
-    #         )
-    #         user_id = created_user.get("id", None)
-    #         assert user_id, "User account creation failed"
+            if user_id:
+                try:
+                    # Fetch and verify the user
+                    retrieved_user = client.users.get_user(user_id)
+                    assert retrieved_user["id"] == user_id, "Incorrect user account retrieved"
+                except Exception as exc:
+                    errors.append(f"Retrieving User Account failed: {exc}")
 
-    #         # Activate Configuration
-    #         activation_response = client.activate.activate()
-    #         assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending"
-    #     except Exception as exc:
-    #         errors.append(f"User creation or activation failed: {exc}")
+            # Update the User Account
+            if user_id:
+                try:
+                    updated_password = generate_random_password()  # Generate a new password
+                    client.users.update_user(
+                        user_id,
+                        password=updated_password,
+                    )
+                except Exception as exc:
+                    errors.append(f"Updating User Account password failed: {exc}")
 
-    #     try:
-    #         # Fetch and verify the user
-    #         retrieved_user = client.users.get_user(user_id)
-    #         assert retrieved_user["id"] == user_id, "Incorrect user account retrieved"
-    #     except Exception as exc:
-    #         errors.append(f"Retrieving User Account failed: {exc}")
+        finally:
+            # Cleanup: Attempt to delete the user
+            if user_id:
+                try:
+                    delete_status = client.users.delete_user(user_id)
+                    assert delete_status == 204, "User Account deletion failed"
+                except Exception as exc:
+                    errors.append(f"Deleting User Account failed: {exc}")
 
-    #     try:
-    #             # Update the User Account
-    #             updated_password = generate_random_password()  # Generate a new password
-    #             client.users.update_user(
-    #                 user_id,
-    #                 password=updated_password,
-    #             )
-    #             # Reactivate Configuration after update
-    #             client.activate.activate()
-    #     except Exception as exc:
-    #         errors.append(f"Updating User Account password failed or activation after update failed: {exc}")
-
-    #     try:
-    #         # Example 1: List users using default settings
-    #         all_users = client.users.list_users()
-    #         assert all_users, "Failed to list users with default settings."
-
-    #         # Example 2: List users, limiting to a maximum of 10 items
-    #         limited_users = client.users.list_users(max_items=10)
-    #         assert len(limited_users) <= 10, "Failed to limit the list of users to max_items=10."
-
-    #         # Example 3: List users, returning 200 items per page for a maximum of 2 pages
-    #         paginated_users = client.users.list_users(page_size=200, max_pages=2)
-    #         # Since we can't directly assert the total pages without fetching all data, we focus on page size
-    #         assert len(paginated_users) <= 400, "Failed to paginate users with page_size=200 and max_pages=2."
-
-    #         # Additional example: Filter by department and group with a `starts with` match
-    #         filtered_users_dept = client.users.list_users(dept="A000")
-    #         assert filtered_users_dept, "Failed to filter users by department name."
-
-    #         filtered_users_group = client.users.list_users(group="A000")
-    #         assert filtered_users_group, "Failed to filter users by group name."
-
-    #         # Additional example: Filter by user name with a `partial` match
-    #         filtered_users_name = client.users.list_users(name="tests")
-    #         assert filtered_users_name, "Failed to filter users by partial name match."
-
-    #         # Check if the newly created user is in one of the lists of users
-    #         found_user_default = any(user["id"] == user_id for user in all_users)
-    #         found_user_limited = any(user["id"] == user_id for user in limited_users)
-    #         found_user_paginated = any(user["id"] == user_id for user in paginated_users)
-    #         assert found_user_default or found_user_limited or found_user_paginated, "Newly created user account not found in any list of users."
-    #     except Exception as exc:
-    #         errors.append(f"Listing users with specific parameters failed: {exc}")
-
-    #     finally:
-    #         if user_id:
-    #             try:
-    #                 # Delete the User Account
-    #                 delete_status = client.users.delete_user(user_id)
-    #                 assert delete_status == 204, "User Account deletion failed"
-
-    #                 # Reactivate Configuration after Deletion
-    #                 activation_response = client.activate.activate()
-    #                 assert activation_response in ["ACTIVE", "PENDING"], "Activation failed or is pending after deletion"
-    #             except Exception as exc:
-    #                 errors.append(f"Deleting User Account or reactivation failed: {exc}")
-
-    #         if errors:
-    #             raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
+            if errors:
+                raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
 
     def test_user_departments(self, fs):
         client = MockZIAClient(fs)

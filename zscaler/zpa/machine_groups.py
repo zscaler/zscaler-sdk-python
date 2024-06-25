@@ -49,7 +49,7 @@ class MachineGroupsAPI:
         list, _ = self.rest.get_paginated_data(path="/machineGroup", **kwargs)
         return list
 
-    def get_group(self, group_id: str) -> Box:
+    def get_group(self, group_id: str, **kwargs) -> Box:
         """
         Returns information on the specified machine group.
 
@@ -64,15 +64,29 @@ class MachineGroupsAPI:
             >>> pprint(zpa.machine_groups.get_group('99999'))
 
         """
-        response = self.rest.get("/machineGroup/%s" % (group_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        params = {}
+        if "microtenant_id" in kwargs:
+            params["microtenantId"] = kwargs.pop("microtenant_id")
+        return self.rest.get(f"machineGroup/{group_id}", params=params)
 
-    def get_machine_group_by_name(self, name):
-        apps = self.list_groups()
+    def get_machine_group_by_name(self, name: str, **kwargs) -> Box:
+        """
+        Returns information on the machine group with the specified name.
+
+        Args:
+            name (str): The name of the machine group.
+
+        Returns:
+            :obj:`Box` or None: The resource record for the machine group if found, otherwise None.
+
+        Examples:
+            >>> group = zpa.machine_groups.get_machine_group_by_name('example_name')
+            >>> if group:
+            ...     pprint(group)
+            ... else:
+            ...     print("machine group not found")
+        """
+        apps = self.list_groups(**kwargs)
         for app in apps:
             if app.get("name") == name:
                 return app

@@ -233,10 +233,7 @@ class FirewallPolicyAPI:
 
         response = self.rest.put(f"firewallFilteringRules/{rule_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
-            # Handle error response
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
         return self.get_rule(rule_id)
 
     def delete_rule(self, rule_id: str) -> int:
@@ -516,11 +513,8 @@ class FirewallPolicyAPI:
             ...    ip_addresses=['192.0.2.0/29', '192.0.2.8/29', '192.0.2.128/25'])
 
         """
-
-        # Set payload to value of existing record
         payload = {snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()}
 
-        # Update payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
@@ -557,30 +551,12 @@ class FirewallPolicyAPI:
 
         Returns:
             :obj:`Box`: The Network Application Group resource record.
-        """
-        response = self.rest.get(f"networkApplicationGroups/{group_id}")
 
-        # If 'response' is a Box, it should contain the response data directly
-        # If 'response' is an HTTP response, it should have a 'status_code' attribute
-        if hasattr(response, "status_code"):
-            # Check if the response is successful and the content is not empty
-            if response.status_code == 200 and response.content:
-                # Convert to Box for consistent return type
-                return Box(response.json())
-            else:
-                # Handle non-200 responses
-                response.raise_for_status()
-        else:
-            # Assume 'response' is a Box and contains the desired data
-            if "ok" in response and response.ok:
-                # 'response' is a Box with the expected data
-                return response
-            else:
-                # Handle cases where the response Box does not contain the expected data
-                # For example, you might want to check for an 'error' or 'message' field
-                # and raise an exception or handle the situation as needed
-                # Example: raise ValueError("Failed to retrieve the network application group.")
-                return Box()  # An empty Box indicates no data was found or an error occurred.
+        Examples:
+            >>> pprint(zia.firewall.get_network_app_group('287342'))
+
+        """
+        return self.rest.get(f"networkApplicationGroups/{group_id}")
 
     def delete_network_app_group(self, group_id: str) -> int:
         """
@@ -598,7 +574,7 @@ class FirewallPolicyAPI:
         """
         return self.rest.delete(f"networkApplicationGroups/{group_id}").status_code
 
-    def add_network_app_group(self, name: str, network_applications: list, description: str = None) -> Box:
+    def add_network_app_group(self, name: str, network_applications: list, **kwargs) -> Box:
         """
         Adds a new Network Application Group.
 
@@ -618,22 +594,16 @@ class FirewallPolicyAPI:
             ...    description='Additional information about the Network Application Group.')
 
         """
-
         payload = {
             "name": name,
             "networkApplications": network_applications,
-            "description": description,
         }
 
-        response = self.rest.post("networkApplicationGroups", json=payload)
-        if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
-            status_code = response.status_code
-            # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
 
-        # return self.rest.post("networkApplicationGroups", json=payload)
+        return self.rest.post("networkApplicationGroups", json=payload)
 
     def update_network_app_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -675,8 +645,6 @@ class FirewallPolicyAPI:
             payload[snake_to_camel(key)] = value
 
         resp = self.rest.put(f"networkApplicationGroups/{group_id}", json=payload).status_code
-
-        # Return the object if it was updated successfully
         if not isinstance(resp, Response):
             return self.get_network_app_group(group_id)
 
@@ -941,10 +909,10 @@ class FirewallPolicyAPI:
         # Convert tuple list to dict and add to payload
         if ports is not None:
             for items in ports:
-                port_range = [{"start": items[2]}]
+                port_dict = {"start": int(items[2])}
                 if len(items) == 4:
-                    port_range.append({"end": items[3]})
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(port_range)
+                    port_dict["end"] = int(items[3])
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -952,13 +920,11 @@ class FirewallPolicyAPI:
 
         response = self.rest.post("networkServices", json=payload)
         if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
             status_code = response.status_code
-            # Handle error response
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> dict:
         """
         Updates the specified Network Service.
 
@@ -984,7 +950,7 @@ class FirewallPolicyAPI:
             description (str): Additional information on the Network Service.
 
         Returns:
-            :obj:`Box`: The newly created Network Service resource record.
+            :obj:`dict`: The updated Network Service resource record.
 
         Examples:
             Update the name and description for a Network Service:
@@ -995,33 +961,47 @@ class FirewallPolicyAPI:
 
             Updates the ports for a Network Service, leaving other fields intact:
 
-            >>> zia.firewall.add_network_service('959093',
+            >>> zia.firewall.update_network_service('959093',
             ...    ports=[
             ...        ('dest', 'tcp', '500', '510')])
 
-
         """
-        payload = {snake_to_camel(k): v for k, v in self.get_network_service(service_id).items()}
+        # Fetch the existing network service details
+        existing_service = self.get_network_service(service_id).to_dict()
+
+        # Build the payload
+        payload = {
+            "id": service_id,
+            "name": existing_service["name"],
+            "description": existing_service.get("description", ""),
+            "type": existing_service.get("type", "CUSTOM"),
+        }
 
         # Convert tuple list to dict and add to payload
         if ports is not None:
-            # Clear existing ports and set new values
             for items in ports:
-                port_key = f"{items[0]}{items[1].title()}Ports"
-                payload[port_key] = []
-                payload[port_key].append({"start": items[2]})
+                port_dict = {"start": int(items[2])}
                 if len(items) == 4:
-                    payload[port_key].append({"end": items[3]})
+                    port_dict["end"] = int(items[3])
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
+        else:
+            # Use existing ports if not provided
+            for key in ["src_tcp_ports", "dest_tcp_ports", "src_udp_ports", "dest_udp_ports"]:
+                if key in existing_service:
+                    payload[snake_to_camel(key)] = existing_service[key]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"networkServices/{service_id}", json=payload).status_code
+        # Remove invalid attributes from the payload
+        payload.pop("creator_context", None)
+        payload.pop("is_name_l10n_tag", None)
 
-        # Return the object if it was updated successfully
-        if not isinstance(resp, Response):
-            return self.get_network_service(service_id)
+        response = self.rest.put(f"networkServices/{service_id}", json=payload)
+        if isinstance(response, Response) and not response.ok:
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        return self.get_network_service(service_id)
 
     def list_time_windows(self) -> Box:
         """
