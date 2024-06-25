@@ -1,6 +1,10 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
+<<<<<<< HEAD
 version = "0.3.0"
+=======
+version = "0.5.2"
+>>>>>>> master
 description = "Official Python SDK for the Zscaler Products (Beta)"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -30,16 +34,15 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
 arrow = "*"
-certifi = "*"
+certifi = ">=2024.2.2"
 charset-normalizer = "*"
 idna = "*"
-python-box = "^7.1.1"
+python-box = "^7.2.0"
 python-dateutil = "*"
-requests = "*"
-responses = "*"
+requests = ">=2.32.0"
+responses = ">=0.25.3"
 restfly = "*"
 six = "*"
-urllib3 = "*"
 flatdict = "*"
 pyyaml = "*"
 xmltodict = "*"
@@ -49,13 +52,15 @@ aenum = "*"
 pydash = "*"
 flake8 = "*"
 pytz = "*"
-black = "^24.4.1"
-cryptography = ">=3.4,<43.0"
+black = ">=24.3.0"
+# cryptography = ">=3.4,<43.0"
+cryptography = ">=42.0.7"
+okta = ">=2.9.7"
 
 [tool.poetry.dev-dependencies]
-black = "*"
-pytest = "*"
-pytest-asyncio = "*"
+black = ">=24.3.0"
+pytest = ">=8.2.1"
+pytest-asyncio = ">=0.23.7"
 pytest-mock = "*"
 pytest-recording = "*"
 pytest-cov = "*"

@@ -287,8 +287,10 @@ Contributors
 - Eddie Parra - [eparra](https://github.com/eparra)
 - Paul Abbot - [abbottp](https://github.com/abbottp)
 
-## License
-MIT License
+Thank you to [Mitch Kelly](https://github.com/mitchos/pyZscaler), creator of the [PyZscaler](https://github.com/mitchos/pyZscaler) SDK, 
+which this SDK was inspired on.
+
+## MIT License
 
 =======
 

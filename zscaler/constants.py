@@ -9,9 +9,12 @@ ZPA_BASE_URLS = {
     "PREVIEW": "https://config.zpapreview.net",
     "QA": "https://config.qa.zpath.net",
     "QA2": "https://pdx2-zpa-config.qa2.zpath.net",
+    "DEV": "https://public-api.dev.zpath.net",
 }
 
-RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+DEV_AUTH_URL = "https://authn1.dev.zpath.net/authn/v1/oauth/token"
+
+RETRYABLE_STATUS_CODES = {409, 429, 500, 502, 503, 504}
 MAX_RETRIES = 5
 BACKOFF_FACTOR = 1
 BACKOFF_BASE_DURATION = 2

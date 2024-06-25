@@ -38,7 +38,7 @@ jobs:
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v9
         with:
-          poetry-version: 1.8.2
+          poetry-version: 1.8.3
 
       - name: Get poetry cache directory
         id: poetry-cache
@@ -76,25 +76,20 @@ jobs:
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-
-      - name: Publish test coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          fail_ci_if_error: true
+          ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
 
   zia-test-tenants:
+    needs: [zia-beta-tenants]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.10"]
         environment:
-          - ZIA_ZSCLOUD
+          # - ZIA_ZSCLOUD
           - ZIA_ZS0
           - ZIA_ZS1
-          # - ZIA_ZS2
+          - ZIA_ZS2
           - ZIA_ZS3
     environment: ${{ matrix.environment }}
     steps:
@@ -111,7 +106,7 @@ jobs:
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v9
         with:
-          poetry-version: 1.8.2
+          poetry-version: 1.8.3
 
       - name: Get poetry cache directory
         id: poetry-cache
@@ -149,7 +144,8 @@ jobs:
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
           ZPA_CUSTOMER_ID: ${{ secrets.ZPA_CUSTOMER_ID }}
           ZPA_CLOUD: ${{ secrets.ZPA_CLOUD }}
-
+          ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
+          
       - name: Publish test coverage
         uses: codecov/codecov-action@v4
         with:

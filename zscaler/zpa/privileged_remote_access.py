@@ -569,18 +569,13 @@ class PrivilegedRemoteAccessAPI:
         if missing_fields:
             raise ValueError(f"Missing required fields for '{credential_type}': {', '.join(missing_fields)}")
 
-        # Prepare the payload with the existing details and updates from kwargs
         payload = {
             **existing_credential.to_dict(),
             **{snake_to_camel(key): value for key, value in kwargs.items()},
         }
-
-        # Execute the update operation
         response = self.rest.put(f"credential/{credential_id}", json=payload)
         if not response.ok:
             raise Exception(f"Failed to update credential {credential_id}: {response.text}")
-
-        # Fetch and return the updated credential details
         return self.get_credential(credential_id)
 
     def delete_credential(self, credential_id: str) -> int:
@@ -598,6 +593,54 @@ class PrivilegedRemoteAccessAPI:
 
         """
         return self.rest.delete(f"credential/{credential_id}").status_code
+
+    def credential_move(self, credential_id: str, **kwargs) -> Box:
+        """
+        Moves privileged remote access credentials between parent tenant and microtenants.
+        Note: Credentials cannot be moved between microtenants.
+
+        Args:
+            credential_id (str):
+                The unique identifier of the privileged remote access credential.
+            target_microtenant_id (str):
+                The unique identifier of the Microtenant that the credential is being moved to.
+
+        Keyword Args:
+            microtenant_id (str, optional):
+                The unique identifier of the parent tenant's Microtenant from which the credential is being moved.
+
+        Returns:
+            :obj:`Box`: An empty Box object if the operation is successful.
+
+        Examples:
+            Moving a privileged remote access credential to another microtenant:
+
+            >>> zpa.privileged_remote_access.credential_move(
+            ...    credential_id='4458',
+            ...    target_microtenant_id='216199618143372924',
+            ...    microtenant_id='0'
+            ... )
+        """
+        payload = {
+            "targetMicrotenantId": kwargs.pop("target_microtenant_id", None),
+        }
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {}
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+        if payload["targetMicrotenantId"]:
+            params["targetMicrotenantId"] = payload["targetMicrotenantId"]
+
+        response = self.rest.post(f"credential/{credential_id}/move", json=payload, params=params)
+        if response.status_code == 204:
+            return Box({})
+        elif isinstance(response, Response):
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
 
     def list_approval(self, **kwargs) -> BoxList:
         """

@@ -15,7 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-from box import Box
+from box import Box, BoxList
 from requests import Response
 
 from zscaler.utils import snake_to_camel
@@ -25,6 +25,21 @@ from zscaler.zpa.client import ZPAClient
 class EmergencyAccessAPI:
     def __init__(self, client: ZPAClient):
         self.rest = client
+
+    def list_users(self, **kwargs) -> BoxList:
+        """
+        Returns a list of all configured Emergency Access Users.
+
+        Returns:
+            :obj:`BoxList`: A list of all configured Emergency Access Users.
+
+        Examples:
+            >>> for users in zpa.emergency_access.list_users():
+            ...    pprint(users)
+
+        """
+        list, _ = self.rest.get_paginated_data(path="/emergencyAccess/users", **kwargs, api_version="v1")
+        return list
 
     def get_user(self, user_id: str) -> Box:
         """

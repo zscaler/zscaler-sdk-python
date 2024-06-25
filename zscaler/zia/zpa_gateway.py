@@ -17,7 +17,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import convert_keys, snake_to_camel
+from zscaler.utils import convert_keys, snake_to_camel, transform_common_id_fields
 from zscaler.zia import ZIAClient
 
 
@@ -68,7 +68,6 @@ class ZPAGatewayAPI:
         self,
         name: str,
         zpa_server_group: dict = None,
-        zpa_app_segments: list = None,
         **kwargs,
     ) -> Box:
         """
@@ -95,24 +94,21 @@ class ZPAGatewayAPI:
         """
         payload = {"name": name, "type": "ZPA"}
 
+        # Add zpa_server_group to kwargs
         if zpa_server_group:
-            payload["zpaServerGroup"] = {
-                "externalId": zpa_server_group.get("external_id"),
-                "name": zpa_server_group.get("name"),
-            }
+            kwargs["zpa_server_group"] = zpa_server_group
 
-        if zpa_app_segments:
-            payload["zpaAppSegments"] = [
-                {"externalId": segment.get("external_id"), "name": segment.get("name")} for segment in zpa_app_segments
-            ]
+        # Define the id groups specific to this function
+        zpa_gateway_id_groups = [
+            ("zpa_server_group", "zpaServerGroup"),
+        ]
+        transform_common_id_fields(zpa_gateway_id_groups, kwargs, payload)
 
-        # Add other optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         response = self.rest.post("zpaGateways", json=payload)
         if isinstance(response, Response):
-            # Handle error response
             status_code = response.status_code
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
@@ -143,23 +139,22 @@ class ZPAGatewayAPI:
         """
         payload = convert_keys(self.get_gateway(gateway_id))
 
-        # Update payload with provided arguments
-        for key, value in kwargs.items():
-            if key == "zpa_server_group" and isinstance(value, dict):
-                # Convert nested keys in zpa_server_group to camelCase
-                value = {snake_to_camel(k): v for k, v in value.items()}
-            elif key == "zpa_app_segments" and isinstance(value, list):
-                # Convert nested keys in zpa_app_segments to camelCase
-                value = [{snake_to_camel(k): v for k, v in item.items()} for item in value]
+        if "zpa_server_group" in kwargs:
+            kwargs["zpa_server_group"] = kwargs["zpa_server_group"]
 
+        # Define the id groups specific to this function
+        zpa_gateway_id_groups = [
+            ("zpa_server_group", "zpaServerGroup"),
+        ]
+
+        transform_common_id_fields(zpa_gateway_id_groups, kwargs, payload)
+
+        for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         response = self.rest.put(f"zpaGateways/{gateway_id}", json=payload)
         if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: " f"{response.json()}")
-
-        # Return the updated object
+            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
         return self.get_gateway(gateway_id)
 
     def delete_gateway(self, gateway_id):

@@ -11,7 +11,7 @@ from box import BoxList
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.constants import ZPA_BASE_URLS
+from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL
 from zscaler.errors.http_error import HTTPError, ZscalerAPIError
 from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
@@ -26,6 +26,7 @@ from zscaler.utils import (
     retry_with_backoff,
     snake_to_camel,
 )
+from zscaler.zpa.authdomains import AuthDomainsAPI
 from zscaler.zpa.app_segments import ApplicationSegmentAPI
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
@@ -39,6 +40,7 @@ from zscaler.zpa.inspection import InspectionControllerAPI
 from zscaler.zpa.isolation import IsolationAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
+from zscaler.zpa.microtenants import MicrotenantsAPI
 from zscaler.zpa.policies import PolicySetsAPI
 from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.privileged_remote_access import PrivilegedRemoteAccessAPI
@@ -81,12 +83,12 @@ class ZPAClientHelper(ZPAClient):
         client_secret,
         customer_id,
         cloud,
+        microtenant_id=None,
         timeout=240,
         cache=None,
         fail_safe=False,
     ):
         # Initialize rate limiter
-        # You may want to adjust these parameters as per your rate limit configuration
         self.rate_limiter = RateLimiter(
             get_limit=20,  # Adjusted to allow 20 GET requests per 10 seconds
             post_put_delete_limit=10,  # Adjusted to allow 10 POST/PUT/DELETE requests per 10 seconds
@@ -94,7 +96,6 @@ class ZPAClientHelper(ZPAClient):
             post_put_delete_freq=10,  # Adjust frequency to 10 seconds
         )
 
-        # Validate cloud value
         if cloud not in ZPA_BASE_URLS:
             valid_clouds = ", ".join(ZPA_BASE_URLS.keys())
             raise ValueError(
@@ -102,22 +103,20 @@ class ZPAClientHelper(ZPAClient):
                 f"Please use one of the following supported values: {valid_clouds}"
             )
 
-        # Continue with existing initialization...
-        # Select the appropriate URL
         self.baseurl = ZPA_BASE_URLS.get(cloud, ZPA_BASE_URLS["PRODUCTION"])
-
         self.timeout = timeout
         self.client_id = client_id
         self.client_secret = client_secret
         self.customer_id = customer_id
         self.cloud = cloud
+        self.microtenant_id = microtenant_id or os.getenv("ZPA_MICROTENANT_ID")
         self.url = f"{self.baseurl}/mgmtconfig/v1/admin/customers/{customer_id}"
         self.user_config_url = f"{self.baseurl}/userconfig/v1/customers/{customer_id}"
         self.v2_url = f"{self.baseurl}/mgmtconfig/v2/admin/customers/{customer_id}"
         self.v2_lss_url = f"{self.baseurl}/mgmtconfig/v2/admin/lssConfig/customers/{customer_id}"
         self.cbi_url = f"{self.baseurl}/cbiconfig/cbi/api/customers/{customer_id}"
         self.fail_safe = fail_safe
-        # Cache setup
+
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
         if cache is None:
             if cache_enabled:
@@ -129,29 +128,29 @@ class ZPAClientHelper(ZPAClient):
         else:
             self.cache = cache
 
-        # Initialize user-agent
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()
+        self.access_token = None
+        self.headers = {}
         self.refreshToken()
 
     def refreshToken(self):
-        # login
-        response = self.login()
-        if response is None or response.status_code > 299 or not response.json():
-            logger.error("Failed to login using provided credentials, response: %s", response)
-            raise Exception("Failed to login using provided credentials.")
-        self.access_token = response.json().get("access_token")
-        self.headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": f"Bearer {self.access_token}",
-            "User-Agent": self.user_agent,
-        }
+        if not self.access_token or is_token_expired(self.access_token):
+            response = self.login()
+            if response is None or response.status_code > 299 or not response.json():
+                logger.error("Failed to login using provided credentials, response: %s", response)
+                raise Exception("Failed to login using provided credentials.")
+            self.access_token = response.json().get("access_token")
+            self.headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": f"Bearer {self.access_token}",
+                "User-Agent": self.user_agent,
+            }
 
     @retry_with_backoff(retries=5)
     def login(self):
-        """Log in to the ZPA API and set the access token for subsequent requests."""
-        data = urllib.parse.urlencode({"client_id": self.client_id, "client_secret": self.client_secret})
+        params = {"client_id": self.client_id, "client_secret": self.client_secret}
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
@@ -159,8 +158,10 @@ class ZPAClientHelper(ZPAClient):
         }
         try:
             url = f"{self.baseurl}/signin"
+            if self.cloud == "DEV":
+                url = DEV_AUTH_URL + "?grant_type=CLIENT_CREDENTIALS"
+            data = urllib.parse.urlencode(params)
             resp = requests.post(url, data=data, headers=headers, timeout=self.timeout)
-            # Avoid logging all data from the response, focus on the status and a summary instead
             logger.info("Login attempt with status: %d", resp.status_code)
             return resp
         except Exception as e:
@@ -168,16 +169,6 @@ class ZPAClientHelper(ZPAClient):
             return None
 
     def send(self, method, path, json=None, params=None, api_version: str = None):
-        """
-        Send a request to the ZPA API.
-
-        Parameters:
-        - method (str): The HTTP method.
-        - path (str): API endpoint path.
-        - json (dict, optional): Request payload. Defaults to None.
-        Returns:
-        - Response: Response object from the request.
-        """
         api = self.url
         if api_version is None:
             api = self.url
@@ -190,23 +181,34 @@ class ZPAClientHelper(ZPAClient):
         elif api_version == "cbiconfig_v1":
             api = self.cbi_url
 
+        if params is None:
+            params = {}
+
+        if json and "microtenant_id" in json:
+            microtenant_id = json.pop("microtenant_id")
+        else:
+            microtenant_id = self.microtenant_id
+
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+
         url = f"{api}/{path.lstrip('/')}"
+        if params:
+            url = f"{url}?{urllib.parse.urlencode(params)}"
+
         start_time = time.time()
-        # Update headers to include the user agent
         headers_with_user_agent = self.headers.copy()
         headers_with_user_agent["User-Agent"] = self.user_agent
-        # Generate a unique UUID for this request
         request_uuid = uuid.uuid4()
-        dump_request(logger, url, method, json, params, headers_with_user_agent, request_uuid)
-        # Check cache before sending request
-        cache_key = self.cache.create_key(url, params)
+        dump_request(logger, url, method, json, None, headers_with_user_agent, request_uuid)
+        cache_key = self.cache.create_key(url, None)
         if method == "GET" and self.cache.contains(cache_key):
             resp = self.cache.get(cache_key)
             dump_response(
                 logger=logger,
                 url=url,
                 method=method,
-                params=params,
+                params=None,
                 resp=resp,
                 request_uuid=request_uuid,
                 start_time=start_time,
@@ -215,59 +217,63 @@ class ZPAClientHelper(ZPAClient):
             return resp
 
         attempts = 0
-        while attempts < 5:  # Trying a maximum of 5 times
+        while attempts < 5:
             try:
-                # If the token is None or expired, fetch a new token
-                if is_token_expired(self.access_token):
-                    logger.warning("The provided or fetched token was already expired. Refreshing...")
-                    self.refreshToken()
+                self.refreshToken()
+                should_wait, delay = self.rate_limiter.wait(method)
+                if should_wait:
+                    logger.warning(f"Rate limit exceeded. Retrying in {delay} seconds.")
+                    time.sleep(delay)
                 resp = requests.request(
                     method,
                     url,
                     json=json,
+                    params=None,
                     headers=headers_with_user_agent,
                     timeout=self.timeout,
                 )
                 dump_response(
                     logger=logger,
                     url=url,
-                    params=params,
+                    params=None,
                     method=method,
                     resp=resp,
                     request_uuid=request_uuid,
                     start_time=start_time,
                 )
-                if resp.status_code == 429:  # HTTP Status code 429 indicates "Too Many Requests"
-                    sleep_time = int(
-                        resp.headers.get("Retry-After", 2)
-                    )  # Default to 60 seconds if 'Retry-After' header is missing
-                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
-                    sleep(sleep_time)
+                if resp.status_code == 429:
+                    retry_after = resp.headers.get("Retry-After")
+                    if retry_after:
+                        try:
+                            sleep_time = int(retry_after)
+                        except ValueError:
+                            sleep_time = int(retry_after[:-1])
+                        logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
+                        time.sleep(sleep_time)
+                    else:
+                        time.sleep(60)
                     attempts += 1
                     continue
                 else:
                     break
             except requests.RequestException as e:
-                if attempts == 4:  # If it's the last attempt, raise the exception
+                if attempts == 4:
                     logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
                     raise e
                 else:
                     logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
                     attempts += 1
-                    sleep(5)  # Sleep for 5 seconds before retrying
+                    time.sleep(5)
 
-        # If Non-GET call, clear the
         if method != "GET":
-            self.cache.delete(cache_key)
+            logger.info(f"Clearing cache for non-GET request: {method} {url}")
+            self.cache.clear()
 
-        # Detailed logging for request and response
         try:
             response_data = resp.json()
-        except ValueError:  # Using ValueError for JSON decoding errors
+        except ValueError:
             response_data = resp.text
-        # check if call was succesful
         if 200 > resp.status_code or resp.status_code > 299:
-            # create errors
             try:
                 error = ZscalerAPIError(url, resp, response_data)
                 if self.fail_safe:
@@ -280,7 +286,6 @@ class ZPAClientHelper(ZPAClient):
                     logger.error(response_data)
                     raise HTTPException(response_data)
             logger.error(error)
-        # Cache the response if it's a successful GET request
         if method == "GET" and resp.status_code == 200:
             self.cache.add(cache_key, resp)
         return resp
@@ -290,23 +295,34 @@ class ZPAClientHelper(ZPAClient):
         Send a GET request to the ZPA API.
 
         Parameters:
-        - path (str): API endpoint path.
-        - data (dict, optional): Request payload. Defaults to None.
-        Returns:
-        - Response: Response object from the request.
-        """
+        path (str): API endpoint path.
+        json (dict, optional): Request payload. Defaults to None.
+        params (dict, optional): Query parameters. Defaults to None.
+        api_version (str, optional): API version to use. Defaults to None.
 
-        # Use rate limiter before making a request
+        Returns:
+        dict: Formatted JSON response from the API.
+        """
         should_wait, delay = self.rate_limiter.wait("GET")
         if should_wait:
             time.sleep(delay)
-
-        # Now proceed with sending the request
         resp = self.send("GET", path, json, params, api_version=api_version)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
     def put(self, path, json=None, params=None, api_version: str = None):
+        """
+        Send a PUT request to the ZPA API.
+
+        Parameters:
+        path (str): API endpoint path.
+        json (dict, optional): Request payload. Defaults to None.
+        params (dict, optional): Query parameters. Defaults to None.
+        api_version (str, optional): API version to use. Defaults to None.
+
+        Returns:
+        dict: Formatted JSON response from the API.
+        """
         should_wait, delay = self.rate_limiter.wait("PUT")
         if should_wait:
             time.sleep(delay)
@@ -315,6 +331,18 @@ class ZPAClientHelper(ZPAClient):
         return formatted_resp
 
     def post(self, path, json=None, params=None, api_version: str = None):
+        """
+        Send a POST request to the ZPA API.
+
+        Parameters:
+        path (str): API endpoint path.
+        json (dict, optional): Request payload. Defaults to None.
+        params (dict, optional): Query parameters. Defaults to None.
+        api_version (str, optional): API version to use. Defaults to None.
+
+        Returns:
+        dict: Formatted JSON response from the API.
+        """
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
@@ -323,6 +351,18 @@ class ZPAClientHelper(ZPAClient):
         return formatted_resp
 
     def delete(self, path, json=None, params=None, api_version: str = None):
+        """
+        Send a DELETE request to the ZPA API.
+
+        Parameters:
+        path (str): API endpoint path.
+        json (dict, optional): Request payload. Defaults to None.
+        params (dict, optional): Query parameters. Defaults to None.
+        api_version (str, optional): API version to use. Defaults to None.
+
+        Returns:
+        Response: Response object from the DELETE request.
+        """
         should_wait, delay = self.rate_limiter.wait("DELETE")
         if should_wait:
             time.sleep(delay)
@@ -338,6 +378,7 @@ class ZPAClientHelper(ZPAClient):
         search_field="name",
         max_pages=None,
         max_items=None,
+        all_entries=False,  # Return all SCIM groups including the deleted ones if set to true
         sort_order=None,
         sort_by=None,
         sort_dir=None,
@@ -345,8 +386,10 @@ class ZPAClientHelper(ZPAClient):
         end_time=None,
         idp_group_id=None,
         scim_user_id=None,
+        scim_username=None,
         page=None,
-        pagesize=20,
+        pagesize=None,
+        microtenant_id=None,
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -389,15 +432,19 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        if (page is not None or pagesize != 20) and (max_pages is not None or max_items is not None):
+        if (page is not None or pagesize is not None) and (max_pages is not None or max_items is not None):
             raise ValueError(
                 "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
             )
 
-        params["pagesize"] = min(pagesize, 500)  # Apply maximum constraint and handle default
+        params["page"] = page if page is not None else 1  # Default to page 1 if not specified
+        params["pagesize"] = min(pagesize if pagesize is not None else 20, 500)  # Apply maximum constraint and handle default
 
-        if page:
-            params["page"] = page
+        # Check for microtenantId in function arguments first, then environment variable
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+        elif self.microtenant_id and "microtenantId" not in params:
+            params["microtenantId"] = self.microtenant_id
 
         if search:
             api_search_field = snake_to_camel(search_field)
@@ -415,6 +462,10 @@ class ZPAClientHelper(ZPAClient):
             params["idpGroupId"] = idp_group_id
         if scim_user_id:
             params["scimUserId"] = scim_user_id
+        if scim_username:
+            params["scimUserName"] = scim_username
+        if all_entries:
+            params["allEntries"] = all_entries
 
         total_collected = 0
         ret_data = []
@@ -428,17 +479,18 @@ class ZPAClientHelper(ZPAClient):
                 if should_wait:
                     time.sleep(delay)
 
-                url = f"{path}?{urllib.parse.urlencode(params)}"
-                response = self.send("GET", url, api_version=api_version)
+                response = self.send("GET", path=path, params=params, api_version=api_version)
 
                 if response.status_code != expected_status_code:
-                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                        status_code=response.status_code, page=params["page"]
+                    )
                     logger.error(error_msg)
                     return BoxList([]), error_msg
 
                 response_data = response.json()
                 data = response_data.get("list", [])
-                if not data and (page is None or page == 1):
+                if not data and (params["page"] == 1):
                     error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
                     logger.warn(error_msg)
                     return BoxList([]), error_msg
@@ -450,12 +502,11 @@ class ZPAClientHelper(ZPAClient):
                 if max_items is not None and total_collected >= max_items:
                     break
 
-                nextPage = response_data.get("nextPage")
-                if not nextPage or (max_pages is not None and page >= max_pages):
+                next_page = response_data.get("nextPage")
+                if not next_page or (max_pages is not None and params["page"] >= max_pages):
                     break
 
-                page = nextPage if page is None else page + 1
-                params["page"] = page
+                params["page"] = next_page if params["page"] is None else params["page"] + 1
 
         finally:
             time.sleep(2)  # Ensure a delay between requests regardless of outcome
@@ -466,6 +517,14 @@ class ZPAClientHelper(ZPAClient):
             return BoxList([]), error_msg
 
         return BoxList(ret_data), None
+
+    @property
+    def authdomains(self):
+        """
+        The interface object for the :ref:`ZPA Auth Domains interface <zpa-authdomains>`.
+
+        """
+        return AuthDomainsAPI(self)
 
     @property
     def app_segments(self):
@@ -562,6 +621,14 @@ class ZPAClientHelper(ZPAClient):
 
         """
         return MachineGroupsAPI(self)
+
+    @property
+    def microtenants(self):
+        """
+        The interface object for the :ref:`ZPA Microtenants interface <zpa-microtenants>`.
+
+        """
+        return MicrotenantsAPI(self)
 
     @property
     def policies(self):
