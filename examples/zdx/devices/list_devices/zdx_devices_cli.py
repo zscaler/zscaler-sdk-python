@@ -46,12 +46,12 @@ def display_table(data, headers):
         return
 
     table = PrettyTable(headers)
-    
+
     # Set column alignments
     table.align["ID"] = "r"
     table.align["Name"] = "l"
     table.align["User ID"] = "r"
-    
+
     for row in data:
         table.add_row(row)
     print(table)
@@ -60,23 +60,23 @@ def display_table(data, headers):
 def extract_devices_data(devices):
     extracted_data = []
     for device in devices:
-        device_id = device.get('id')
-        name = device.get('name')
-        userid = device.get('userid')
+        device_id = device.get("id")
+        name = device.get("name")
+        userid = device.get("userid")
         extracted_data.append([device_id, name, userid])
     return extracted_data
 
 
 def main():
     parser = argparse.ArgumentParser(description="Interact with ZDX Devices API")
-    parser.add_argument('--since', type=int, help="The number of hours to look back for devices")
-    parser.add_argument('--location_id', type=str, help="The unique ID for the location")
-    parser.add_argument('--department_id', type=str, help="The unique ID for the department")
-    parser.add_argument('--geo_id', type=str, help="The unique ID for the geolocation")
-    parser.add_argument('--user_ids', type=str, nargs='+', help="List of user IDs")
-    parser.add_argument('--emails', type=str, nargs='+', help="List of email addresses")
-    parser.add_argument('--mac_address', type=str, help="MAC address of the device")
-    parser.add_argument('--private_ipv4', type=str, help="Private IPv4 address of the device")
+    parser.add_argument("--since", type=int, help="The number of hours to look back for devices")
+    parser.add_argument("--location_id", type=str, help="The unique ID for the location")
+    parser.add_argument("--department_id", type=str, help="The unique ID for the department")
+    parser.add_argument("--geo_id", type=str, help="The unique ID for the geolocation")
+    parser.add_argument("--user_ids", type=str, nargs="+", help="List of user IDs")
+    parser.add_argument("--emails", type=str, nargs="+", help="List of email addresses")
+    parser.add_argument("--mac_address", type=str, help="MAC address of the device")
+    parser.add_argument("--private_ipv4", type=str, help="Private IPv4 address of the device")
 
     args = parser.parse_args()
 
@@ -105,7 +105,7 @@ def main():
         "mac_address": args.mac_address,
         "private_ipv4": args.private_ipv4,
     }
-    
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -113,7 +113,7 @@ def main():
     try:
         devices_iterator = devices_api.list_devices(**kwargs)
         devices = list(devices_iterator)
-        headers = ['ID', 'Name', 'User ID']
+        headers = ["ID", "Name", "User ID"]
         data = extract_devices_data(devices)
         display_table(data, headers)
     except Exception as e:

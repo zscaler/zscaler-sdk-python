@@ -16,6 +16,7 @@ from .zdx_client import ZDXClientHelper  # Import ZDXClientHelper from zdx_clien
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
+
 class ZDX:
     """
     A Controller to access Endpoints in the Zscaler Digital Experience (ZDX) API.
@@ -40,7 +41,7 @@ class ZDX:
 
     def __init__(self, **kw):
         self.client = ZDXClientHelper(**kw)
-    
+
     @property
     def admin(self):
         """The interface object for the :ref:`ZDX Admin interface <zdx-admin>`."""
@@ -50,7 +51,7 @@ class ZDX:
     def alerts(self):
         """The interface object for the :ref:`ZDX Alerts interface <zdx-alerts>`."""
         return AlertsAPI(self.client)
-    
+
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
@@ -65,12 +66,12 @@ class ZDX:
     def inventory(self):
         """The interface object for the :ref:`ZDX Inventory interface <zdx-inventory>`."""
         return InventoryAPI(self.client)
-    
+
     @property
     def troubleshooting(self):
         """The interface object for the :ref:`ZDX Troubleshooting interface <zdx-troubleshooting>`."""
         return TroubleshootingAPI(self.client)
-    
+
     @property
     def users(self):
         """The interface object for the :ref:`ZDX Users interface <zdx-users>`."""

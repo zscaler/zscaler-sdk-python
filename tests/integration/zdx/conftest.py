@@ -19,7 +19,7 @@ import os
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.admin import AdminAPI
 from zscaler.zdx.apps import AppsAPI
-from zscaler.zdx.alerts import AlertsAPI 
+from zscaler.zdx.alerts import AlertsAPI
 from zscaler.zdx.devices import DevicesAPI
 from zscaler.zdx.inventory import InventoryAPI
 from zscaler.zdx.troubleshooting import TroubleshootingAPI

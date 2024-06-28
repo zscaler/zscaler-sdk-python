@@ -24,12 +24,14 @@ from prettytable import PrettyTable
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.apps import AppsAPI
 
+
 def prompt_for_input(prompt_message, required=True):
     while True:
         user_input = input(prompt_message).strip()
         if user_input or not required:
             return user_input
         print("This field is required.")
+
 
 def prompt_for_since():
     try:
@@ -42,16 +44,18 @@ def prompt_for_since():
         print(f"Invalid input: {e}")
         return None
 
+
 def display_metrics(metrics):
     if not metrics:
         print("No metrics data available.")
         return
-    
-    table = PrettyTable(['Metric', 'Unit', 'Datapoints'])
+
+    table = PrettyTable(["Metric", "Unit", "Datapoints"])
     for metric in metrics:
-        table.add_row([metric['metric'], metric['unit'], metric['datapoints']])
-    
+        table.add_row([metric["metric"], metric["unit"], metric["datapoints"]])
+
     print(table)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Retrieve Application Metrics for Zscaler Digital Experience (ZDX)")
@@ -85,9 +89,9 @@ def main():
         "metric_name": metric_name,
         "location_id": location_id,
         "department_id": department_id,
-        "geo_id": geo_id
+        "geo_id": geo_id,
     }
-    
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -98,6 +102,7 @@ def main():
         display_metrics(metrics)
     except Exception as e:
         print(f"An error occurred while fetching metrics: {e}")
+
 
 if __name__ == "__main__":
     main()

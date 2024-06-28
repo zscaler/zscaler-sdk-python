@@ -37,24 +37,24 @@ class RateLimiter:
             return False, 0
 
     def update_limits(self, headers):
-        if 'X-Ratelimit-Limit-Second' in headers:
-            self.get_limit = int(headers['X-Ratelimit-Limit-Second'])
-            self.post_put_delete_limit = int(headers['X-Ratelimit-Limit-Second'])
-        if 'X-Ratelimit-Reset' in headers:
-            self.get_freq = int(headers['X-Ratelimit-Reset'])
-            self.post_put_delete_freq = int(headers['X-Ratelimit-Reset'])
+        if "X-Ratelimit-Limit-Second" in headers:
+            self.get_limit = int(headers["X-Ratelimit-Limit-Second"])
+            self.post_put_delete_limit = int(headers["X-Ratelimit-Limit-Second"])
+        if "X-Ratelimit-Reset" in headers:
+            self.get_freq = int(headers["X-Ratelimit-Reset"])
+            self.post_put_delete_freq = int(headers["X-Ratelimit-Reset"])
 
         # Handle minute, hour, and day limits
-        if 'X-RateLimit-Limit-Minute' in headers:
-            self.minute_limit = int(headers['X-RateLimit-Limit-Minute'])
-        if 'X-RateLimit-Limit-Hour' in headers:
-            self.hour_limit = int(headers['X-RateLimit-Limit-Hour'])
-        if 'X-RateLimit-Limit-Day' in headers:
-            self.day_limit = int(headers['X-RateLimit-Limit-Day'])
-        
-        if 'X-RateLimit-Remaining-Minute' in headers:
-            self.remaining_minute = int(headers['X-RateLimit-Remaining-Minute'])
-        if 'X-RateLimit-Remaining-Hour' in headers:
-            self.remaining_hour = int(headers['X-RateLimit-Remaining-Hour'])
-        if 'X-RateLimit-Remaining-Day' in headers:
-            self.remaining_day = int(headers['X-RateLimit-Remaining-Day'])
+        if "X-RateLimit-Limit-Minute" in headers:
+            self.minute_limit = int(headers["X-RateLimit-Limit-Minute"])
+        if "X-RateLimit-Limit-Hour" in headers:
+            self.hour_limit = int(headers["X-RateLimit-Limit-Hour"])
+        if "X-RateLimit-Limit-Day" in headers:
+            self.day_limit = int(headers["X-RateLimit-Limit-Day"])
+
+        if "X-RateLimit-Remaining-Minute" in headers:
+            self.remaining_minute = int(headers["X-RateLimit-Remaining-Minute"])
+        if "X-RateLimit-Remaining-Hour" in headers:
+            self.remaining_hour = int(headers["X-RateLimit-Remaining-Hour"])
+        if "X-RateLimit-Remaining-Day" in headers:
+            self.remaining_day = int(headers["X-RateLimit-Remaining-Day"])

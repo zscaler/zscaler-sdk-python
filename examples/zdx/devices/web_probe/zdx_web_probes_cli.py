@@ -52,7 +52,7 @@ def display_table(data, headers):
 
     table = PrettyTable(headers)
     table.align = "l"
-    
+
     for row in data:
         table.add_row(row)
     print(table)
@@ -61,11 +61,11 @@ def display_table(data, headers):
 def extract_web_probes_data(probes):
     extracted_data = []
     for probe in probes:
-        probe_id = probe.get('id')
-        name = probe.get('name')
-        avg_pft = probe.get('avg_pft')
-        num_probes = probe.get('num_probes')
-        avg_score = probe.get('avg_score')
+        probe_id = probe.get("id")
+        name = probe.get("name")
+        avg_pft = probe.get("avg_pft")
+        num_probes = probe.get("num_probes")
+        avg_score = probe.get("avg_score")
         extracted_data.append([probe_id, name, avg_pft, num_probes, avg_score])
     return extracted_data
 
@@ -97,14 +97,14 @@ def main():
     kwargs = {
         "since": since,
     }
-    
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
     # Call the API to get web probes
     try:
         web_probes = devices_api.get_web_probes(device_id, app_id, **kwargs)
-        headers = ['ID', 'Name', 'Avg PFT', 'Num Probes', 'Avg Score']
+        headers = ["ID", "Name", "Avg PFT", "Num Probes", "Avg Score"]
         data = extract_web_probes_data(web_probes)
         display_table(data, headers)
     except Exception as e:

@@ -34,6 +34,7 @@ from prettytable import PrettyTable
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.alerts import AlertsAPI
 
+
 def prompt_for_since():
     try:
         since_input = input("Enter the number of hours to look back (optional: Defaults to the previous 2 hours): ").strip()
@@ -45,43 +46,50 @@ def prompt_for_since():
         print(f"Invalid input: {e}")
         exit(1)
 
+
 def display_table(headers, data):
     table = PrettyTable(headers)
     for item in data:
         row = []
         for header in headers:
-            key = header.lower().replace(' ', '_')
-            if key == 'device_id':
-                key = 'id'
-            elif key == 'device_name':
-                key = 'name'
-            elif key == 'user_id':
-                key = 'userid'
+            key = header.lower().replace(" ", "_")
+            if key == "device_id":
+                key = "id"
+            elif key == "device_name":
+                key = "name"
+            elif key == "user_id":
+                key = "userid"
             row.append(item.get(key))
         table.add_row(row)
     print(table)
 
+
 def display_alerts(alerts):
     print(f"Alerts received for display: {alerts}")  # Debugging print statement
-    table = PrettyTable(['ID', 'Rule Name', 'Severity', 'Alert Type', 'Status', 'Num Geolocations', 'Num Devices', 'Started On', 'Ended On'])
+    table = PrettyTable(
+        ["ID", "Rule Name", "Severity", "Alert Type", "Status", "Num Geolocations", "Num Devices", "Started On", "Ended On"]
+    )
     for alert in alerts:
         print(f"Processing alert: {alert}")  # Debugging print statement
-        started_on = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(alert['started_on']))
-        ended_on = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(alert['ended_on'])) if alert['ended_on'] != 0 else 'N/A'
-        num_geolocations = len(alert.get('geolocations', []))
-        num_devices = alert.get('num_devices', 0)
-        table.add_row([
-            alert['id'],
-            alert['rule_name'],
-            alert['severity'],
-            alert['alert_type'],
-            alert['alert_status'],
-            num_geolocations,
-            num_devices,
-            started_on,
-            ended_on
-        ])
+        started_on = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(alert["started_on"]))
+        ended_on = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(alert["ended_on"])) if alert["ended_on"] != 0 else "N/A"
+        num_geolocations = len(alert.get("geolocations", []))
+        num_devices = alert.get("num_devices", 0)
+        table.add_row(
+            [
+                alert["id"],
+                alert["rule_name"],
+                alert["severity"],
+                alert["alert_type"],
+                alert["alert_status"],
+                num_geolocations,
+                num_devices,
+                started_on,
+                ended_on,
+            ]
+        )
     print(table)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Alerts for Zscaler Digital Experience (ZDX)")
@@ -133,22 +141,23 @@ def main():
         display_alerts([alert_details])
         # Display impacted departments, locations, and geolocations
         print("\nImpacted Departments:")
-        display_table(['Name', 'Num Devices'], alert_details.get('departments', []))
+        display_table(["Name", "Num Devices"], alert_details.get("departments", []))
         print("\nImpacted Locations:")
-        display_table(['Name', 'Num Devices'], alert_details.get('locations', []))
+        display_table(["Name", "Num Devices"], alert_details.get("locations", []))
         print("\nGeolocations:")
-        display_table(['Geolocation ID', 'Num Devices'], alert_details.get('geolocations', []))
+        display_table(["Geolocation ID", "Num Devices"], alert_details.get("geolocations", []))
 
     elif choice == "d":
         alert_id = input("Enter alert ID: ").strip()
         affected_devices = alerts_api.list_affected_devices(alert_id, since=since)
         data = [device.to_dict() for device in affected_devices]
-        headers = ['Device ID', 'Device Name', 'User ID', 'User Name', 'User Email']
+        headers = ["Device ID", "Device Name", "User ID", "User Name", "User Email"]
         print(f"Data collected from API (affected devices): {data}")  # Debugging print statement
         display_table(headers, data)
 
     else:
         print(f"Invalid choice: {choice}")
+
 
 if __name__ == "__main__":
     main()

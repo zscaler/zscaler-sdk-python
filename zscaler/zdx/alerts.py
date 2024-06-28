@@ -4,6 +4,7 @@ from zscaler.utils import ZDXIterator, CommonFilters
 from zscaler.zdx.zdx_client import ZDXClientHelper
 from zscaler.utils import zdx_params
 
+
 class AlertsAPI:
     def __init__(self, client: ZDXClientHelper):
         self.rest = client
@@ -36,7 +37,7 @@ class AlertsAPI:
         """
         filters = CommonFilters(**kwargs).to_dict()
         return ZDXIterator(self.rest, "alerts/ongoing", filters)
-    
+
     @zdx_params
     def list_historical(self, **kwargs) -> BoxList:
         """
@@ -65,7 +66,7 @@ class AlertsAPI:
         """
         filters = CommonFilters(**kwargs).to_dict()
         return ZDXIterator(self.rest, "alerts/historical", filters)
-    
+
     @zdx_params
     def get_alert(self, alert_id: str, **kwargs):
         """
@@ -89,7 +90,7 @@ class AlertsAPI:
 
         """
         return self.rest.get(f"alerts/{alert_id}", params=kwargs)
-    
+
     @zdx_params
     def list_affected_devices(self, alert_id, **kwargs) -> BoxList:
         """

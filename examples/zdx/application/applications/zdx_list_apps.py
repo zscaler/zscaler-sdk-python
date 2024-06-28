@@ -25,12 +25,14 @@ from prettytable import PrettyTable
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.apps import AppsAPI
 
+
 def prompt_for_input(prompt_message, required=True):
     while True:
         user_input = input(prompt_message).strip()
         if user_input or not required:
             return user_input
         print("This field is required.")
+
 
 def prompt_for_since():
     try:
@@ -43,22 +45,24 @@ def prompt_for_since():
         print(f"Invalid input: {e}")
         return None
 
+
 def display_apps(apps):
     if not apps:
         print("No application data available.")
         return
 
-    table = PrettyTable(['App ID', 'App Name', 'Score', 'Most Impacted Region', 'Total Users'])
+    table = PrettyTable(["App ID", "App Name", "Score", "Most Impacted Region", "Total Users"])
     for app in apps:
-        app_id = app.get('id')
-        name = app.get('name')
-        score = app.get('score')
-        most_impacted_region = app.get('most_impacted_region', {}).get('country', 'N/A')
-        total_users = app.get('total_users')
+        app_id = app.get("id")
+        name = app.get("name")
+        score = app.get("score")
+        most_impacted_region = app.get("most_impacted_region", {}).get("country", "N/A")
+        total_users = app.get("total_users")
 
         table.add_row([app_id, name, score, most_impacted_region, total_users])
 
     print(table)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Retrieve a list of all active applications configured within the ZDX tenant")
@@ -85,13 +89,8 @@ def main():
     geo_id = prompt_for_input("Enter the geolocation ID (optional): ", required=False)
 
     # Prepare keyword arguments
-    kwargs = {
-        "since": since,
-        "location_id": location_id,
-        "department_id": department_id,
-        "geo_id": geo_id
-    }
-    
+    kwargs = {"since": since, "location_id": location_id, "department_id": department_id, "geo_id": geo_id}
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -103,6 +102,7 @@ def main():
         display_apps(apps)
     except Exception as e:
         print(f"An error occurred while fetching applications: {e}")
+
 
 if __name__ == "__main__":
     main()
