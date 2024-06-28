@@ -1,17 +1,22 @@
-import os
-
-from box import Box
-from restfly.session import APISession
+import logging
 
 from zscaler import __version__
 from zscaler.zdx.admin import AdminAPI
+from zscaler.zdx.alerts import AlertsAPI
 from zscaler.zdx.apps import AppsAPI
 from zscaler.zdx.devices import DevicesAPI
-from zscaler.zdx.session import SessionAPI
+from zscaler.zdx.inventory import InventoryAPI
+from zscaler.zdx.troubleshooting import TroubleshootingAPI
 from zscaler.zdx.users import UsersAPI
 
+from zscaler.logger import setup_logging
+from .zdx_client import ZDXClientHelper  # Import ZDXClientHelper from zdx_client.py
 
-class ZDX(APISession):
+# Setup the logger
+setup_logging(logger_name="zscaler-sdk-python")
+logger = logging.getLogger("zscaler-sdk-python")
+
+class ZDX:
     """
     A Controller to access Endpoints in the Zscaler Digital Experience (ZDX) API.
 
@@ -31,54 +36,42 @@ class ZDX(APISession):
             (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
             attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
             i.e. http:// or https://.
-
     """
 
-    _vendor = "Zscaler"
-    _product = "zscaler"
-    _backoff = 3
-    _build = __version__
-    _box = True
-    _box_attrs = {"camel_killer_box": True}
-    _env_base = "ZDX"
-    _env_cloud = "zdxcloud"
-    _url = "https://api.zdxcloud.net/v1"
-
     def __init__(self, **kw):
-        self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
-        self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
-        self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD", self._env_cloud))
-        self._url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL")) or f"https://api.{self._cloud}.net/v1"
-        self.conv_box = True
-        super(ZDX, self).__init__(**kw)
-
-    def _build_session(self, **kwargs) -> Box:
-        """Creates a ZDX API session."""
-        super(ZDX, self)._build_session(**kwargs)
-        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret).token
-        return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
-
-    @property
-    def session(self):
-        """The interface object for the :ref:`ZDX Session interface <zdx-session>`."""
-        return SessionAPI(self)
-
+        self.client = ZDXClientHelper(**kw)
+    
     @property
     def admin(self):
         """The interface object for the :ref:`ZDX Admin interface <zdx-admin>`."""
-        return AdminAPI(self)
+        return AdminAPI(self.client)
 
+    @property
+    def alerts(self):
+        """The interface object for the :ref:`ZDX Alerts interface <zdx-alerts>`."""
+        return AlertsAPI(self.client)
+    
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
-        return AppsAPI(self)
+        return AppsAPI(self.client)
 
     @property
     def devices(self):
         """The interface object for the :ref:`ZDX Devices interface <zdx-devices>`."""
-        return DevicesAPI(self)
+        return DevicesAPI(self.client)
 
+    @property
+    def inventory(self):
+        """The interface object for the :ref:`ZDX Inventory interface <zdx-inventory>`."""
+        return InventoryAPI(self.client)
+    
+    @property
+    def troubleshooting(self):
+        """The interface object for the :ref:`ZDX Troubleshooting interface <zdx-troubleshooting>`."""
+        return TroubleshootingAPI(self.client)
+    
     @property
     def users(self):
         """The interface object for the :ref:`ZDX Users interface <zdx-users>`."""
-        return UsersAPI(self)
+        return UsersAPI(self.client)

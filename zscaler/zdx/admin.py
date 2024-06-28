@@ -1,12 +1,15 @@
 from box import BoxList
-from restfly.endpoint import APIEndpoint
-
 from zscaler.utils import zdx_params
+from zscaler.utils import ZDXIterator, CommonFilters
+from zscaler.zdx.zdx_client import ZDXClientHelper
 
 
-class AdminAPI(APIEndpoint):
+class AdminAPI:
+    def __init__(self, client: ZDXClientHelper):
+        self.rest = client
+
     @zdx_params
-    def list_departments(self, **kwargs) -> BoxList:
+    def list_departments(self, filters=None, **kwargs) -> BoxList:
         """
         Returns a list of departments that are configured within ZDX.
 
@@ -24,11 +27,11 @@ class AdminAPI(APIEndpoint):
             ...     print(department)
 
         """
-
-        return self._get("administration/departments", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return ZDXIterator(self.rest, "administration/departments", filters)
 
     @zdx_params
-    def list_locations(self, **kwargs) -> BoxList:
+    def list_locations(self, filters=None, **kwargs) -> BoxList:
         """
         Returns a list of locations that are configured within ZDX.
 
@@ -46,27 +49,11 @@ class AdminAPI(APIEndpoint):
             ...     print(location)
 
         """
-        return self._get("administration/locations", params=kwargs)
+        if filters is None:
+            filters = CommonFilters(**kwargs).to_dict()
+        else:
+            filters.update(kwargs)
+        
+        iterator = ZDXIterator(self.rest, "administration/locations", filters)
+        return BoxList(iterator)
 
-    @zdx_params
-    def list_geolocations(self, **kwargs) -> BoxList:
-        """
-        Returns a list of all active geolocations configured within the ZDX tenant.
-
-        Keyword Args:
-            since (int): The number of hours to look back for devices.
-            location_id (str): The unique ID for the location.
-            parent_geo_id (str): The unique ID for the parent geolocation.
-            search (str): The search string to filter by name.
-
-        Returns:
-            :obj:`BoxList`: The list of geolocations in ZDX.
-
-        Examples:
-            List all geolocations in ZDX for the past 2 hours:
-
-            >>> for geolocation in zdx.admin.list_geolocations():
-            ...     print(geolocation)
-
-        """
-        return self._get("active_geo", params=kwargs)
