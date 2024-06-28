@@ -2,11 +2,11 @@ from box import BoxList
 from zscaler.zdx.zdx_client import ZDXClientHelper
 from zscaler.utils import zdx_params, ZDXIterator, CommonFilters
 
+
 class AppsAPI:
     def __init__(self, client: ZDXClientHelper):
         self.rest = client
 
-        
     @zdx_params
     def list_apps(self, filters=None, **kwargs) -> BoxList:
         """

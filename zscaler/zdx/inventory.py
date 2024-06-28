@@ -38,14 +38,8 @@ class InventoryAPI:
 
         """
         filters = GetSoftwareFilters(**kwargs).to_dict()
-        return BoxList(
-            ZDXIterator(
-                self.rest,
-                "inventory/software",
-                filters=filters
-            )
-        )
-        
+        return BoxList(ZDXIterator(self.rest, "inventory/software", filters=filters))
+
     @zdx_params
     def list_software_keys(self, software_key: str, **kwargs) -> BoxList:
         """
@@ -74,10 +68,4 @@ class InventoryAPI:
 
         """
         filters = GetSoftwareFilters(**kwargs).to_dict()
-        return BoxList(
-            ZDXIterator(
-                self.rest,
-                f"inventory/software/{software_key}",
-                filters=filters
-            )
-        )
+        return BoxList(ZDXIterator(self.rest, f"inventory/software/{software_key}", filters=filters))

@@ -185,13 +185,7 @@ class DevicesAPI:
 
         """
         filters = CommonFilters(**kwargs).to_dict()
-        return BoxList(
-            ZDXIterator(
-                self.rest,
-                f"devices/{device_id}/apps/{app_id}/cloudpath-probes",
-                filters=filters
-            )
-        )
+        return BoxList(ZDXIterator(self.rest, f"devices/{device_id}/apps/{app_id}/cloudpath-probes", filters=filters))
 
     @zdx_params
     def get_cloudpath_probe(self, device_id: str, app_id: str, probe_id: str, **kwargs):
@@ -451,10 +445,4 @@ class DevicesAPI:
 
         """
         filters = GeoLocationFilter(**kwargs).to_dict()
-        return BoxList(
-            ZDXIterator(
-                self.rest,
-                "active_geo",
-                filters=filters
-            )
-        )
+        return BoxList(ZDXIterator(self.rest, "active_geo", filters=filters))

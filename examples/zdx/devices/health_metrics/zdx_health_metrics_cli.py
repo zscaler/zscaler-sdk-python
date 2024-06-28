@@ -44,7 +44,7 @@ def display_table(data, headers):
 
     table = PrettyTable(headers)
     table.align = "l"
-    
+
     for row in data:
         table.add_row(row)
     print(table)
@@ -53,28 +53,28 @@ def display_table(data, headers):
 def extract_health_metrics_data(metrics):
     extracted_data = []
     for category in metrics:
-        category_name = category.get('category')
-        instances = category.get('instances', [])
-        
+        category_name = category.get("category")
+        instances = category.get("instances", [])
+
         for instance in instances:
-            instance_name = instance.get('name', 'N/A')
-            metrics = instance.get('metrics', [])
-            
+            instance_name = instance.get("name", "N/A")
+            metrics = instance.get("metrics", [])
+
             for metric in metrics:
-                metric_name = metric.get('metric')
-                unit = metric.get('unit')
-                datapoints = metric.get('datapoints', [])
-                
+                metric_name = metric.get("metric")
+                unit = metric.get("unit")
+                datapoints = metric.get("datapoints", [])
+
                 for datapoint in datapoints:
-                    timestamp = datapoint.get('timestamp')
-                    value = datapoint.get('value')
+                    timestamp = datapoint.get("timestamp")
+                    value = datapoint.get("value")
                     extracted_data.append([category_name, instance_name, metric_name, unit, value, timestamp])
     return extracted_data
 
 
 def main():
     parser = argparse.ArgumentParser(description="Interact with ZDX Devices API to fetch health metrics")
-    parser.add_argument('--since', type=int, help="The number of hours to look back for health metrics")
+    parser.add_argument("--since", type=int, help="The number of hours to look back for health metrics")
 
     args = parser.parse_args()
 
@@ -99,14 +99,14 @@ def main():
     kwargs = {
         "since": args.since,
     }
-    
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
     # Call the API to get health metrics
     try:
         health_metrics = devices_api.get_health_metrics(device_id, **kwargs)
-        headers = ['Category', 'Instance', 'Metric', 'Unit', 'Value', 'Timestamp']
+        headers = ["Category", "Instance", "Metric", "Unit", "Value", "Timestamp"]
         data = extract_health_metrics_data(health_metrics)
         display_table(data, headers)
     except Exception as e:

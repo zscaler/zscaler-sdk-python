@@ -3,10 +3,11 @@ from box import BoxList
 from zscaler.utils import ZDXIterator, CommonFilters
 from zscaler.zdx.zdx_client import ZDXClientHelper
 
+
 class TroubleshootingAPI:
     def __init__(self, client: ZDXClientHelper):
         self.rest = client
-        
+
     def list_deeptraces(self, device_id: str, **kwargs):
         """
         Returns a list of all deep traces for a specific device.

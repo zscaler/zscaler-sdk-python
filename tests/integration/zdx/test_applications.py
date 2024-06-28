@@ -136,11 +136,7 @@ class TestApplications:
             from_time = now - 2 * 60 * 60  # 2 hours ago
             to_time = now
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-                "metric_name": "dns"
-            }
+            kwargs = {"from_time": from_time, "to": to_time, "metric_name": "dns"}
 
             # List applications to get an app ID
             apps_iterator = client.apps.list_apps(**kwargs)
