@@ -25,12 +25,14 @@ from prettytable import PrettyTable
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.apps import AppsAPI
 
+
 def prompt_for_input(prompt_message, required=True):
     while True:
         user_input = input(prompt_message).strip()
         if user_input or not required:
             return user_input
         print("This field is required.")
+
 
 def prompt_for_since():
     try:
@@ -43,22 +45,24 @@ def prompt_for_since():
         print(f"Invalid input: {e}")
         return None
 
+
 def display_scores(scores):
-    if not scores or 'datapoints' not in scores:
+    if not scores or "datapoints" not in scores:
         print("No score data available.")
         return
 
-    datapoints = scores['datapoints']
-    table = PrettyTable(['Metric', 'Unit', 'Timestamp', 'Value'])
-    metric = scores.get('metric', 'score')
-    unit = scores.get('unit', '')
+    datapoints = scores["datapoints"]
+    table = PrettyTable(["Metric", "Unit", "Timestamp", "Value"])
+    metric = scores.get("metric", "score")
+    unit = scores.get("unit", "")
 
     for point in datapoints:
-        timestamp = point['timestamp']
-        value = point['value']
+        timestamp = point["timestamp"]
+        value = point["value"]
         table.add_row([metric, unit, timestamp, value])
 
     print(table)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Retrieve Application Score for Zscaler Digital Experience (ZDX)")
@@ -86,13 +90,8 @@ def main():
     geo_id = prompt_for_input("Enter the geolocation ID (optional): ", required=False)
 
     # Prepare keyword arguments
-    kwargs = {
-        "since": since,
-        "location_id": location_id,
-        "department_id": department_id,
-        "geo_id": geo_id
-    }
-    
+    kwargs = {"since": since, "location_id": location_id, "department_id": department_id, "geo_id": geo_id}
+
     # Remove None values from kwargs
     kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -103,6 +102,7 @@ def main():
         display_scores(scores)
     except Exception as e:
         print(f"An error occurred while fetching scores: {e}")
+
 
 if __name__ == "__main__":
     main()

@@ -53,7 +53,6 @@ class AdminAPI:
             filters = CommonFilters(**kwargs).to_dict()
         else:
             filters.update(kwargs)
-        
+
         iterator = ZDXIterator(self.rest, "administration/locations", filters)
         return BoxList(iterator)
-

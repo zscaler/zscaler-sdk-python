@@ -85,7 +85,7 @@ class TestTroubleshooting:
                     if not probes:
                         errors.append("No web probes found within the specified time range.")
                     else:
-                        probe_id = probes[0]['id']  # Adjusted to match the correct key access
+                        probe_id = probes[0]["id"]  # Adjusted to match the correct key access
                         print(f"Using web probe ID {probe_id} for deep trace session test")
                 else:
                     errors.append("device_id or app_id is not defined")
@@ -97,14 +97,11 @@ class TestTroubleshooting:
                 if device_id and app_id and probe_id:
                     deeptrace_session_name = "Test Deep Trace Session"
                     deeptrace_response = client.troubleshooting.start_deeptrace(
-                        device_id=device_id,
-                        app_id=app_id,
-                        session_name=deeptrace_session_name,
-                        web_probe_id=probe_id
+                        device_id=device_id, app_id=app_id, session_name=deeptrace_session_name, web_probe_id=probe_id
                     )
                     print(f"Deep trace response: {deeptrace_response}")  # Log the response for debugging
                     if deeptrace_response:
-                        trace_id = deeptrace_response.get('trace_id')  # Adjust the key based on actual response
+                        trace_id = deeptrace_response.get("trace_id")  # Adjust the key based on actual response
                         if trace_id:
                             print(f"Deep trace started with ID {trace_id}")
                         else:

@@ -70,11 +70,7 @@ class TestAdministration:
             from_time = now - 2 * 60 * 60  # 2 hours ago
             to_time = now
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-                "search": "Road Warrior"
-            }
+            kwargs = {"from_time": from_time, "to": to_time, "search": "Road Warrior"}
 
             locations_iterator = client.admin.list_locations(**kwargs)
             locations = list(locations_iterator)
