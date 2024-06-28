@@ -290,7 +290,6 @@ class DevicesAPI:
         """
         return self.rest.get(f"devices/{device_id}/health-metrics", params=kwargs)
 
-    @zdx_params
     def get_events(self, device_id: str):
         """
         Returns a list of all events for a specific device.
