@@ -1,11 +1,17 @@
-from restfly.endpoint import APIEndpoint
+from box import BoxList
 
+from zscaler.utils import ZDXIterator, CommonFilters
+from zscaler.zdx.filters import GeoLocationFilter, GetDevicesFilters
+from zscaler.zdx.zdx_client import ZDXClientHelper
 from zscaler.utils import zdx_params
 
 
-class DevicesAPI(APIEndpoint):
+class DevicesAPI:
+    def __init__(self, client: ZDXClientHelper):
+        self.rest = client
+
     @zdx_params
-    def list_devices(self, **kwargs):
+    def list_devices(self, **kwargs) -> BoxList:
         """
         Returns a list of all devices in ZDX.
 
@@ -14,6 +20,10 @@ class DevicesAPI(APIEndpoint):
             location_id (str): The unique ID for the location.
             department_id (str): The unique ID for the department.
             geo_id (str): The unique ID for the geolocation.
+            user_ids (list): List of user IDs.
+            emails (list): List of email addresses.
+            mac_address (str): MAC address of the device.
+            private_ipv4 (str): Private IPv4 address of the device.
 
         Returns:
             :obj:`BoxList`: The list of devices in ZDX.
@@ -28,7 +38,11 @@ class DevicesAPI(APIEndpoint):
             >>> for device in zdx.devices.list_devices(since=24):
 
         """
-        return self._get("devices", params=kwargs)
+        filters = GetDevicesFilters(**kwargs).to_dict()
+        devices = []
+        for device in ZDXIterator(self.rest, "devices", filters=filters):
+            devices.append(device)
+        return BoxList(devices)
 
     @zdx_params
     def get_device(self, device_id: str, **kwargs):
@@ -52,7 +66,7 @@ class DevicesAPI(APIEndpoint):
             >>> device = zdx.devices.get_device('123456789', since=24)
 
         """
-        return self._get(f"devices/{device_id}", params=kwargs)
+        return self.rest.get(f"devices/{device_id}", params=kwargs)
 
     @zdx_params
     def get_device_apps(self, device_id: str, **kwargs):
@@ -80,7 +94,7 @@ class DevicesAPI(APIEndpoint):
             ...     print(app)
 
         """
-        return self._get(f"devices/{device_id}/apps", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/apps", params=kwargs)
 
     def get_device_app(self, device_id: str, app_id: str):
         """
@@ -100,9 +114,9 @@ class DevicesAPI(APIEndpoint):
             ... print(app)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}")
+        return self.rest.get(f"devices/{device_id}/apps/{app_id}")
 
-    def get_web_probes(self, device_id: str, app_id: str):
+    def get_web_probes(self, device_id: str, app_id: str, **kwargs):
         """
         Returns a list of all active web probes for a specific application being used by a device.
 
@@ -116,11 +130,12 @@ class DevicesAPI(APIEndpoint):
         Examples:
             Print a list of web probes for an application.
 
-            >>> for probe in zdx.devices.get_device_app_webprobes('123456789', '987654321'):
+            >>> for probe in zdx.devices.get_web_probes('123456789', '987654321'):
             ...     print(probe)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/web-probes")
+        filters = CommonFilters(**kwargs).to_dict()
+        return ZDXIterator(self.rest, f"devices/{device_id}/apps/{app_id}/web-probes", filters=filters)
 
     @zdx_params
     def get_web_probe(self, device_id: str, app_id: str, probe_id: str, **kwargs):
@@ -145,10 +160,10 @@ class DevicesAPI(APIEndpoint):
             ... print(probe)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/web-probes/{probe_id}", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/apps/{app_id}/web-probes/{probe_id}", params=kwargs)
 
     @zdx_params
-    def list_cloudpath_probes(self, device_id: str, app_id: str, **kwargs):
+    def list_cloudpath_probes(self, device_id: str, app_id: str, **kwargs) -> BoxList:
         """
         Returns a list of all active cloudpath probes for a specific application being used by a device.
 
@@ -169,7 +184,14 @@ class DevicesAPI(APIEndpoint):
             ...     print(probe)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/cloudpath-probes", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return BoxList(
+            ZDXIterator(
+                self.rest,
+                f"devices/{device_id}/apps/{app_id}/cloudpath-probes",
+                filters=filters
+            )
+        )
 
     @zdx_params
     def get_cloudpath_probe(self, device_id: str, app_id: str, probe_id: str, **kwargs):
@@ -194,7 +216,7 @@ class DevicesAPI(APIEndpoint):
             ... print(probe)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}", params=kwargs)
 
     @zdx_params
     def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, **kwargs):
@@ -219,7 +241,7 @@ class DevicesAPI(APIEndpoint):
             ... print(cloudpath)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}/cloudpath", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/apps/{app_id}/cloudpath-probes/{probe_id}/cloudpath", params=kwargs)
 
     @zdx_params
     def get_call_quality_metrics(self, device_id: str, app_id: str, **kwargs):
@@ -243,7 +265,7 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/apps/{app_id}/call-quality-metrics", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/apps/{app_id}/call-quality-metrics", params=kwargs)
 
     @zdx_params
     def get_health_metrics(self, device_id: str, **kwargs):
@@ -266,8 +288,9 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/health-metrics", params=kwargs)
+        return self.rest.get(f"devices/{device_id}/health-metrics", params=kwargs)
 
+    @zdx_params
     def get_events(self, device_id: str):
         """
         Returns a list of all events for a specific device.
@@ -285,99 +308,7 @@ class DevicesAPI(APIEndpoint):
             ...     print(event)
 
         """
-        return self._get(f"devices/{device_id}/events")
-
-    def list_deeptraces(self, device_id: str):
-        """
-        Returns a list of all deep traces for a specific device.
-
-        Args:
-            device_id (str): The unique ID for the device.
-
-        Returns:
-            :obj:`BoxList`: The list of deep traces for the device.
-
-        Examples:
-            Print a list of deep traces for a device.
-
-            >>> for trace in zdx.devices.list_deep_traces('123456789'):
-            ...     print(trace)
-
-        """
-        return self._get(f"devices/{device_id}/deeptraces")
-
-    def start_deeptrace(self, device_id: str, app_id: str, session_name: str, **kwargs):
-        """
-        Starts a deep trace for a specific device and application.
-
-        Args:
-            device_id (str): The unique ID for the device.
-            app_id (str): The unique ID for the application.
-            session_name (str): The name of the deeptrace session.
-
-        Keyword Args:
-            web_probe_id (str): The unique ID for the Web probe.
-            cloudpath_probe_id (str): The unique ID for the Cloudpath probe.
-            session_length_minutes (int): The duration of the deeptrace session in minutes. Defaults to 5.
-            probe_device (bool): Whether to probe the device.
-
-        Returns:
-            :obj:`Box`: The deeptrace resource record.
-
-        Examples:
-            Start a deeptrace for a device.
-
-            >>> trace = zdx.devices.start_deeptrace(device_id='123456789', app_id='1', session_name='My Deeptrace')
-            ... print(trace)
-
-        """
-        payload = {
-            "session_name": session_name,
-            "app_id": app_id,
-        }
-        payload.update(kwargs)
-
-        return self._post(f"devices/{device_id}/deeptraces", json=payload)
-
-    def get_deeptrace(self, device_id: str, trace_id: str):
-        """
-        Returns information on a single deeptrace for a specific device.
-
-        Args:
-            device_id (str): The unique ID for the device.
-            trace_id (str): The unique ID for the deeptrace.
-
-        Returns:
-            :obj:`Box`: The deeptrace resource record.
-
-        Examples:
-            Print a single deeptrace for a device.
-
-            >>> trace = zdx.devices.get_deeptrace('123456789', '987654321')
-            ... print(trace)
-
-        """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}")
-
-    def delete_deeptrace(self, device_id: str, trace_id: str):
-        """
-        Deletes a single deeptrace session and associated data for a specific device.
-
-        Args:
-            device_id (str): The unique ID for the device.
-            trace_id (str): The unique ID for the deeptrace.
-
-        Returns:
-            :obj:`str`: The trace ID that was deleted.
-
-        Examples:
-            Delete a single deeptrace for a device.
-
-            >>> trace = zdx.devices.delete_deeptrace('123456789', '987654321')
-            ... print(trace)
-
-        """
-        return self._delete(f"devices/{device_id}/deeptraces/{trace_id}")
+        return self.rest.get(f"devices/{device_id}/events")
 
     def get_deeptrace_webprobe_metrics(self, device_id: str, trace_id: str):
         """
@@ -397,7 +328,7 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/webprobe-metrics")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/webprobe-metrics")
 
     def get_deeptrace_cloudpath_metrics(self, device_id: str, trace_id: str):
         """
@@ -417,7 +348,7 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/cloudpath-metrics")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/cloudpath-metrics")
 
     def get_deeptrace_cloudpath(self, device_id: str, trace_id: str):
         """
@@ -437,7 +368,7 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/cloudpath")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/cloudpath")
 
     def get_deeptrace_health_metrics(self, device_id: str, trace_id: str):
         """
@@ -457,7 +388,7 @@ class DevicesAPI(APIEndpoint):
             ... print(metrics)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/health-metrics")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/health-metrics")
 
     def get_deeptrace_events(self, device_id: str, trace_id: str):
         """
@@ -477,7 +408,7 @@ class DevicesAPI(APIEndpoint):
             ... print(events)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/events")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/events")
 
     def get_deeptrace_top_processes(self, device_id: str, trace_id: str):
         """
@@ -497,4 +428,34 @@ class DevicesAPI(APIEndpoint):
             ... print(top_processes)
 
         """
-        return self._get(f"devices/{device_id}/deeptraces/{trace_id}/top-processes")
+        return self.rest.get(f"devices/{device_id}/deeptraces/{trace_id}/top-processes")
+
+    @zdx_params
+    def list_geolocations(self, **kwargs) -> BoxList:
+        """
+        Returns a list of all active geolocations configured within the ZDX tenant.
+
+        Keyword Args:
+            since (int): The number of hours to look back for devices.
+            location_id (str): The unique ID for the location.
+            parent_geo_id (str): The unique ID for the parent geolocation.
+            search (str): The search string to filter by name.
+
+        Returns:
+            :obj:`BoxList`: The list of geolocations in ZDX.
+
+        Examples:
+            List all geolocations in ZDX for the past 2 hours:
+
+            >>> for geolocation in zdx.admin.list_geolocations():
+            ...     print(geolocation)
+
+        """
+        filters = GeoLocationFilter(**kwargs).to_dict()
+        return BoxList(
+            ZDXIterator(
+                self.rest,
+                "active_geo",
+                filters=filters
+            )
+        )

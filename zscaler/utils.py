@@ -146,27 +146,6 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
-
-# def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
-#     for entry in id_groups:
-#         if kwargs.get(entry[0]):
-#             # Ensure each ID is treated as an integer before adding it to the payload
-#             payload[entry[1]] = [{"id": int(param_id)} for param_id in kwargs.pop(entry[0])]
-#     return
-
-# ####### Function used in the ZIA Forwarding Control Rule #######
-# def transform_fwd_id_fields(id_groups: list, kwargs: dict, payload: dict):
-#     for entry in id_groups:
-#         key, payload_key = entry
-#         if key in kwargs:
-#             value = kwargs.pop(key)
-#             if isinstance(value, dict):
-#                 payload[payload_key] = {k: v for k, v in value.items() if k in ['id', 'name']}
-#             elif isinstance(value, list):
-#                 payload[payload_key] = [{"id": int(item)} if isinstance(item, str) and item.isdigit() else item for item in value]
-#     return
-
-
 def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         key, payload_key = entry
@@ -342,49 +321,193 @@ class Iterator(APIIterator):
             # we are going to include it here.
             time.sleep(1)
 
-class ZDXIterator(APIIterator):
+def calculate_epoch(hours: int):
+    current_time = int(time.time())
+    past_time = int(current_time - (hours * 3600))
+    return current_time, past_time
+
+
+def zdx_params(func):
     """
-    Iterator class for ZDX endpoints.
+    Decorator to add custom parameter functionality for ZDX API calls.
+
+    Args:
+        func: The function to decorate.
+
+    Returns:
+        The decorated function.
 
     """
 
-    def __init__(self, api, endpoint, limit=None, **kwargs):
-        super().__init__(api, **kwargs)
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        since = kwargs.pop("since", None)
+        search = kwargs.pop("search", None)
+        location_id = kwargs.pop("location_id", None)
+        department_id = kwargs.pop("department_id", None)
+        geo_id = kwargs.pop("geo_id", None)
+
+        if since:
+            current_time, past_time = calculate_epoch(since)
+            kwargs["to"] = current_time
+            kwargs["from"] = past_time
+
+        kwargs["q"] = search or kwargs.get("q")
+        kwargs["loc"] = location_id or kwargs.get("loc")
+        kwargs["dept"] = department_id or kwargs.get("dept")
+        kwargs["geo"] = geo_id or kwargs.get("geo")
+
+        return func(self, *args, **kwargs)
+
+    return wrapper
+
+class CommonFilters:
+    def __init__(self, **kwargs):
+        valid_params = {
+            "from_time": None,
+            "to": None,
+            "score_bucket": None,
+            "app_id": None,
+            "loc": None,
+            "exclude_loc": None,
+            "dept": None,
+            "exclude_dept": None,
+            "geo": None,
+            "exclude_geo": None,
+            "offset": None,
+            "limit": None
+        }
+
+        for key, value in kwargs.items():
+            if key in valid_params:
+                setattr(self, key, value)
+
+    def to_dict(self):
+        return {k: v for k, v in {
+            "from": getattr(self, "from_time", None),
+            "to": getattr(self, "to", None),
+            "score_bucket": getattr(self, "score_bucket", None),
+            "app_id": getattr(self, "app_id", None),
+            "loc": getattr(self, "loc", None),
+            "exclude_loc": getattr(self, "exclude_loc", None),
+            "dept": getattr(self, "dept", None),
+            "exclude_dept": getattr(self, "exclude_dept", None),
+            "geo": getattr(self, "geo", None),
+            "exclude_geo": getattr(self, "exclude_geo", None),
+            "offset": getattr(self, "offset", None),
+            "limit": getattr(self, "limit", None),
+        }.items() if v is not None}
+
+class ZDXIterator:
+    def __init__(self, client, endpoint, filters=None):
+        self.client = client
         self.endpoint = endpoint
-        self.limit = limit
+        self.filters = {k: v for k, v in (filters or {}).items() if v is not None}
         self.next_offset = None
+        self.previous_offset = None
+        self.page = []
+        self.page_count = 0
         self.total = 0
-
-        # Load the first page
+        self.logger = logging.getLogger("zscaler-sdk-python")
         self._get_page()
 
+    def __iter__(self):
+        return self
+
     def __next__(self):
-        try:
-            item = super().__next__()
-        except StopIteration:
+        if self.page_count >= len(self.page):
             if self.next_offset is None:
-                # There is no next page, so we're done iterating
-                raise
-            # There is another page, so get it and continue iterating
+                raise StopIteration
+            if self.next_offset == self.previous_offset:
+                self.logger.warning(f"Detected repeated next_offset: {self.next_offset}, stopping iteration to avoid infinite loop.")
+                raise StopIteration
+            self.previous_offset = self.next_offset
             self._get_page()
-            item = super().__next__()
+            if not self.page:
+                raise StopIteration
+        item = self.page[self.page_count]
+        self.page_count += 1
         return item
 
     def _get_page(self):
-        params = {"limit": self.limit, "offset": self.next_offset} if self.next_offset else {}
+        params = {**self.filters, "offset": self.next_offset} if self.next_offset else self.filters
+        response = self.client.get(self.endpoint, params=params)
+        
+        self.logger.debug(f"API response: {response}")
 
-        # Request the next page
-        response = self._api.get(self.endpoint, params=params)
+        if response is None:
+            self.logger.error(f"Invalid response: {response}")
+            raise StopIteration
 
-        # Extract the next offset and the data items from the response
-        self.next_offset = response.get("next_offset")
-        self.page = response["users"]
+        if isinstance(response, list):
+            self.page = response
+            self.next_offset = None
+        elif isinstance(response, dict):
+            self.next_offset = response.get("next_offset")
+            self.page = response.get("alerts", []) or response.get("items", []) or response.get("devices", []) or response.get("probes", []) or response.get("software", [])
+        else:
+            self.logger.error(f"Unexpected response type: {type(response)}")
+            raise StopIteration
 
-        # Update the total number of records
+        if not self.page:
+            self.next_offset = None
+
         self.total += len(self.page)
-
-        # Reset page_count for the new page
         self.page_count = 0
+
+# class ZDXIterator:
+#     def __init__(self, client, endpoint, filters=None):
+#         self.client = client
+#         self.endpoint = endpoint
+#         self.filters = {k: v for k, v in (filters or {}).items() if v is not None}
+#         self.next_offset = None
+#         self.page = []
+#         self.page_count = 0
+#         self.total = 0
+#         self.logger = logging.getLogger("zscaler-sdk-python")
+#         self._get_page()
+
+#     def __iter__(self):
+#         return self
+
+#     def __next__(self):
+#         if self.page_count >= len(self.page):
+#             if self.next_offset is None:
+#                 raise StopIteration
+#             self._get_page()
+#             if not self.page:
+#                 raise StopIteration
+#         item = self.page[self.page_count]
+#         self.page_count += 1
+#         return item
+
+#     def _get_page(self):
+#         params = {**self.filters, "offset": self.next_offset} if self.next_offset else self.filters
+#         response = self.client.get(self.endpoint, params=params)
+        
+#         self.logger.debug(f"API response: {response}")
+
+#         if response is None:
+#             self.logger.error(f"Invalid response: {response}")
+#             raise StopIteration
+
+#         if isinstance(response, list):
+#             self.page = response
+#             self.next_offset = None
+#         elif isinstance(response, dict):
+#             self.next_offset = response.get("next_offset")
+#             self.page = response.get("devices", []) or response.get("items", []) or response.get("probes", [])
+#         else:
+#             self.logger.error(f"Unexpected response type: {type(response)}")
+#             raise StopIteration
+
+#         if not self.page:
+#             self.next_offset = None
+
+#         self.total += len(self.page)
+#         self.page_count = 0
+
+
         
 def remove_cloud_suffix(str_name: str) -> str:
     """
@@ -576,47 +699,6 @@ zcc_param_map = {
         "quarantined": 6,
     },
 }
-
-def calculate_epoch(hours: int):
-    current_time = int(time.time())
-    past_time = int(current_time - (hours * 3600))
-    return current_time, past_time
-
-
-def zdx_params(func):
-    """
-    Decorator to add custom parameter functionality for ZDX API calls.
-
-    Args:
-        func: The function to decorate.
-
-    Returns:
-        The decorated function.
-
-    """
-
-    @functools.wraps(func)
-    def wrapper(self, *args, **kwargs):
-        since = kwargs.pop("since", None)
-        search = kwargs.pop("search", None)
-        location_id = kwargs.pop("location_id", None)
-        department_id = kwargs.pop("department_id", None)
-        geo_id = kwargs.pop("geo_id", None)
-
-        if since:
-            current_time, past_time = calculate_epoch(since)
-            kwargs["to"] = current_time
-            kwargs["from"] = past_time
-
-        kwargs["q"] = search or kwargs.get("q")
-        kwargs["loc"] = location_id or kwargs.get("loc")
-        kwargs["dept"] = department_id or kwargs.get("dept")
-        kwargs["geo"] = geo_id or kwargs.get("geo")
-
-        return func(self, *args, **kwargs)
-
-    return wrapper
-
 
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
     request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}

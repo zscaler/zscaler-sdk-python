@@ -1,12 +1,14 @@
 from box import BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.zdx.zdx_client import ZDXClientHelper
+from zscaler.utils import zdx_params, ZDXIterator, CommonFilters
 
-from zscaler.utils import ZDXIterator, zdx_params
+class AppsAPI:
+    def __init__(self, client: ZDXClientHelper):
+        self.rest = client
 
-
-class AppsAPI(APIEndpoint):
+        
     @zdx_params
-    def list_apps(self, **kwargs) -> BoxList:
+    def list_apps(self, filters=None, **kwargs) -> BoxList:
         """
         Returns a list of all active applications configured within the ZDX tenant.
 
@@ -26,7 +28,8 @@ class AppsAPI(APIEndpoint):
             ...     print(app)
 
         """
-        return self._get("apps", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return ZDXIterator(self.rest, "apps", filters)
 
     @zdx_params
     def get_app(self, app_id: str, **kwargs):
@@ -51,7 +54,8 @@ class AppsAPI(APIEndpoint):
             >>> zia.apps.get_app(app_id='999999999')
 
         """
-        return self._get(f"apps/{app_id}", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return self.rest.get(f"apps/{app_id}", params=filters)
 
     @zdx_params
     def get_app_score(self, app_id: str, **kwargs):
@@ -76,7 +80,8 @@ class AppsAPI(APIEndpoint):
             >>> zia.apps.get_app_score(app_id='999999999')
 
         """
-        return self._get(f"apps/{app_id}/score", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return self.rest.get(f"apps/{app_id}/score", params=filters)
 
     @zdx_params
     def get_app_metrics(self, app_id: str, **kwargs):
@@ -111,7 +116,8 @@ class AppsAPI(APIEndpoint):
             ...                          geo_id='777777777', department_id='666666666')
 
         """
-        return self._get(f"apps/{app_id}/metrics", params=kwargs)
+        filters = CommonFilters(**kwargs).to_dict()
+        return self.rest.get(f"apps/{app_id}/metrics", params=filters)
 
     @zdx_params
     def list_app_users(self, app_id: str, **kwargs):
@@ -138,18 +144,15 @@ class AppsAPI(APIEndpoint):
         Examples:
             Return a list of users and devices who have accessed the application with the ID of 999999999:
 
-            >>> for user in zia.apps.get_app_users(app_id='999999999'):
+            >>> for user in zdx.apps.list_app_users(app_id='999999999'):
             ...     print(user)
 
         """
-        return BoxList(
-            ZDXIterator(
-                self._api,
-                f"apps/{app_id}/users",
-                pagination="offset_limit",
-                **kwargs,
-            )
-        )
+        filters = CommonFilters(**kwargs).to_dict()
+        users = []
+        for user in ZDXIterator(self.rest, f"apps/{app_id}/users", filters=filters):
+            users.append(user)
+        return BoxList(users)
 
     @zdx_params
     def get_app_user(self, app_id: str, user_id: str, **kwargs):
@@ -174,4 +177,4 @@ class AppsAPI(APIEndpoint):
             >>> zia.apps.get_app_user(app_id='888888888', user_id='999999999')
 
         """
-        return self._get(f"apps/{app_id}/users/{user_id}", params=kwargs)
+        return self.rest.get(f"apps/{app_id}/users/{user_id}", params=kwargs)

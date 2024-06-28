@@ -1,10 +1,14 @@
 from box import BoxList
-from restfly.endpoint import APIEndpoint
+from zscaler.utils import ZDXIterator, CommonFilters
+from zscaler.zdx.zdx_client import ZDXClientHelper
 
 from zscaler.utils import ZDXIterator, zdx_params
 
 
-class UsersAPI(APIEndpoint):
+class UsersAPI:
+    def __init__(self, client: ZDXClientHelper):
+        self.rest = client
+
     @zdx_params
     def list_users(self, **kwargs) -> BoxList:
         """
@@ -26,7 +30,11 @@ class UsersAPI(APIEndpoint):
             ...     print(user)
 
         """
-        return BoxList(ZDXIterator(self._api, "users", **kwargs))
+        filters = CommonFilters(**kwargs).to_dict()
+        devices = []
+        for device in ZDXIterator(self.rest, "users", filters=filters):
+            devices.append(device)
+        return BoxList(devices)
 
     @zdx_params
     def get_user(self, user_id: str, **kwargs):
@@ -51,4 +59,4 @@ class UsersAPI(APIEndpoint):
             >>> zia.users.get_user(user_id='999999999')
 
         """
-        return self._get(f"users/{user_id}")
+        return self.rest.get(f"users/{user_id}", **kwargs)
