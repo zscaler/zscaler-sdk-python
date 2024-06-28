@@ -8,6 +8,7 @@
 
    zs/zia/index
    zs/zpa/index
+   zs/zdx/index
    zs/guides/index
 
 Zscaler SDK Python (Beta) - Library Reference
@@ -48,6 +49,7 @@ This repository contains the Zscaler SDK for Python. This SDK can be used to int
 
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+- :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
 
 * `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
 

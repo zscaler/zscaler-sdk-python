@@ -20,9 +20,11 @@ import time
 from pprint import pprint
 from tests.integration.zdx.conftest import MockZDXClient
 
+
 @pytest.fixture
 def fs():
     yield
+
 
 class TestDevices:
     """
@@ -325,7 +327,7 @@ class TestDevices:
             else:
                 # Ensure that devices[0] is a Box object and not a list
                 device = devices[0]
-                device_id = device.get('id', None) if isinstance(device, dict) else device.id
+                device_id = device.get("id", None) if isinstance(device, dict) else device.id
                 print(f"Using device ID {device_id} to list deeptraces")
 
                 # List deeptraces to get a trace ID
@@ -337,7 +339,7 @@ class TestDevices:
                 else:
                     # Ensure that deeptraces[0] is a Box object and not a list
                     deeptrace = deeptraces[0]
-                    trace_id = deeptrace.get('id', None) if isinstance(deeptrace, dict) else deeptrace.id
+                    trace_id = deeptrace.get("id", None) if isinstance(deeptrace, dict) else deeptrace.id
                     print(f"Using trace ID {trace_id} for get_deeptrace_webprobe_metrics test")
 
                     # Get deeptrace webprobe metrics using the retrieved device ID and trace ID
@@ -347,7 +349,6 @@ class TestDevices:
             errors.append(f"Exception occurred: {e}")
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-
 
     def test_get_deeptrace_cloudpath_metrics(self, fs):
         client = MockZDXClient(fs)
@@ -373,7 +374,7 @@ class TestDevices:
             else:
                 # Ensure that devices[0] is a Box object and not a list
                 device = devices[0]
-                device_id = device.get('id', None) if isinstance(device, dict) else device.id
+                device_id = device.get("id", None) if isinstance(device, dict) else device.id
                 print(f"Using device ID {device_id} to list deeptraces")
 
                 # List deeptraces to get a trace ID
@@ -385,7 +386,7 @@ class TestDevices:
                 else:
                     # Ensure that deeptraces[0] is a Box object and not a list
                     deeptrace = deeptraces[0]
-                    trace_id = deeptrace.get('id', None) if isinstance(deeptrace, dict) else deeptrace.id
+                    trace_id = deeptrace.get("id", None) if isinstance(deeptrace, dict) else deeptrace.id
                     print(f"Using trace ID {trace_id} for get_deeptrace_cloudpath_metrics test")
 
                     # Get deeptrace cloudpath metrics using the retrieved device ID and trace ID
@@ -420,7 +421,7 @@ class TestDevices:
             else:
                 # Ensure that devices[0] is a Box object and not a list
                 device = devices[0]
-                device_id = device.get('id', None) if isinstance(device, dict) else device.id
+                device_id = device.get("id", None) if isinstance(device, dict) else device.id
                 print(f"Using device ID {device_id} to list deeptraces")
 
                 # List deeptraces to get a trace ID
@@ -432,7 +433,7 @@ class TestDevices:
                 else:
                     # Ensure that deeptraces[0] is a Box object and not a list
                     deeptrace = deeptraces[0]
-                    trace_id = deeptrace.get('id', None) if isinstance(deeptrace, dict) else deeptrace.id
+                    trace_id = deeptrace.get("id", None) if isinstance(deeptrace, dict) else deeptrace.id
                     print(f"Using trace ID {trace_id} for get_deeptrace_health_metrics test")
 
                     # Get deeptrace health metrics using the retrieved device ID and trace ID
@@ -442,7 +443,6 @@ class TestDevices:
             errors.append(f"Exception occurred: {e}")
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-
 
     def test_get_deeptrace_events(self, fs):
         client = MockZDXClient(fs)
@@ -468,7 +468,7 @@ class TestDevices:
             else:
                 # Ensure that devices[0] is a Box object and not a list
                 device = devices[0]
-                device_id = device.get('id', None) if isinstance(device, dict) else device.id
+                device_id = device.get("id", None) if isinstance(device, dict) else device.id
                 print(f"Using device ID {device_id} to list deeptraces")
 
                 # List deeptraces to get a trace ID
@@ -480,7 +480,7 @@ class TestDevices:
                 else:
                     # Ensure that deeptraces[0] is a Box object and not a list
                     deeptrace = deeptraces[0]
-                    trace_id = deeptrace.get('id', None) if isinstance(deeptrace, dict) else deeptrace.id
+                    trace_id = deeptrace.get("id", None) if isinstance(deeptrace, dict) else deeptrace.id
                     print(f"Using trace ID {trace_id} for get_deeptrace_events test")
 
                     # Get deeptrace events using the retrieved device ID and trace ID
@@ -490,7 +490,6 @@ class TestDevices:
             errors.append(f"Exception occurred: {e}")
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-
 
     def test_get_deeptrace_top_processes(self, fs):
         client = MockZDXClient(fs)
@@ -516,7 +515,7 @@ class TestDevices:
             else:
                 # Ensure that devices[0] is a Box object and not a list
                 device = devices[0]
-                device_id = device.get('id', None) if isinstance(device, dict) else device.id
+                device_id = device.get("id", None) if isinstance(device, dict) else device.id
                 print(f"Using device ID {device_id} to list deeptraces")
 
                 # List deeptraces to get a trace ID
@@ -528,7 +527,7 @@ class TestDevices:
                 else:
                     # Ensure that deeptraces[0] is a Box object and not a list
                     deeptrace = deeptraces[0]
-                    trace_id = deeptrace.get('id', None) if isinstance(deeptrace, dict) else deeptrace.id
+                    trace_id = deeptrace.get("id", None) if isinstance(deeptrace, dict) else deeptrace.id
                     print(f"Using trace ID {trace_id} for get_deeptrace_top_processes test")
 
                     # Get deeptrace top processes using the retrieved device ID and trace ID
@@ -538,7 +537,6 @@ class TestDevices:
             errors.append(f"Exception occurred: {e}")
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-
 
     def test_list_geolocations(self, fs):
         client = MockZDXClient(fs)

@@ -45,6 +45,7 @@ from prettytable import PrettyTable
 from zscaler.zdx import ZDXClientHelper
 from zscaler.zdx.admin import AdminAPI
 
+
 def main():
     parser = argparse.ArgumentParser(description="Manage Departments and Locations for Zscaler Digital Experience (ZDX)")
     parser.add_argument("-v", "--verbose", action="count", help="Verbose (-vv for extra verbose)")
@@ -76,22 +77,24 @@ def main():
     if args.departments:
         since = args.since if args.since else None
         departments = admin_api.list_departments(since=since)
-        display_table(['ID', 'Name'], departments)
+        display_table(["ID", "Name"], departments)
 
     # Handle --locations
     elif args.locations:
         since = args.since if args.since else None
         locations = admin_api.list_locations(since=since)
-        display_table(['ID', 'Name'], locations)
+        display_table(["ID", "Name"], locations)
 
     else:
         print("Invalid choice. Please use -d for departments or -l for locations.")
+
 
 def display_table(headers, data):
     table = PrettyTable(headers)
     for item in data:
         table.add_row([item.get(header.lower()) for header in headers])
     print(table)
+
 
 if __name__ == "__main__":
     main()

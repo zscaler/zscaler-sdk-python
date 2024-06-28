@@ -21,6 +21,7 @@ from zscaler.cache.zscaler_cache import ZscalerCache
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
+
 class ZDXClientHelper:
     """
     A Controller to access Endpoints in the Zscaler Digital Experience (ZDX) API.
@@ -46,8 +47,6 @@ class ZDXClientHelper:
     _vendor = "Zscaler"
     _product = "zscaler"
     _build = __version__
-    _box = True
-    _box_attrs = {"camel_killer_box": True}
     _env_base = "ZDX"
     env_cloud = "zdxcloud"
     url = "https://api.zdxcloud.net/v1"
@@ -61,12 +60,7 @@ class ZDXClientHelper:
         self.cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD", self.env_cloud))
         self.url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL")) or f"https://api.{self.cloud}.net/v1"
 
-        self.rate_limiter = RateLimiter(
-            get_limit=5,
-            post_put_delete_limit=5,
-            get_freq=60,
-            post_put_delete_freq=60
-        )
+        self.rate_limiter = RateLimiter(get_limit=5, post_put_delete_limit=5, get_freq=60, post_put_delete_freq=60)
 
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()
@@ -83,10 +77,9 @@ class ZDXClientHelper:
     def _build_session(self):
         """Creates a ZDX API session using the requests library."""
         session = requests.Session()
-        session.headers.update({
-            'User-Agent': self.user_agent,
-            'Content-Type': 'application/json'  # Ensure content type is set
-        })
+        session.headers.update(
+            {"User-Agent": self.user_agent, "Content-Type": "application/json"}  # Ensure content type is set
+        )
         token = self.create_token()
         session.headers.update({"Authorization": f"Bearer {token}"})
         return session
@@ -100,14 +93,19 @@ class ZDXClientHelper:
         payload = {
             "key_id": self.client_id,
             "key_secret": api_secret_hash,
-            "timestamp": epoch_time
+            "timestamp": epoch_time,
         }
 
         # Mask the client_id and key_secret for logging
         masked_client_id = f"****{self.client_id[-3:]}" if self.client_id else None
         masked_key_secret = "****"
 
-        self.logger.debug(f"Token request payload: {{'key_id': '{masked_client_id}', 'key_secret': '{masked_key_secret}', 'timestamp': {epoch_time}}}")
+        self.logger.debug(
+            "Token request payload: {'key_id': '%s', 'key_secret': '%s', 'timestamp': %d}",
+            masked_client_id,
+            masked_key_secret,
+            epoch_time,
+        )
         token_url = f"{self.url}/oauth/token"
         self.logger.debug(f"Token request URL: {token_url}")
 
@@ -219,14 +217,7 @@ class ZDXClientHelper:
                     body=True,
                 )
 
-                resp = self.session.request(
-                    method=method,
-                    url=url,
-                    json=json,
-                    data=data,
-                    params=params,
-                    headers=headers
-                )
+                resp = self.session.request(method=method, url=url, json=json, data=data, params=params, headers=headers)
 
                 # Log rate limit headers
                 rate_limit_limit = resp.headers.get("RateLimit-Limit")
@@ -246,7 +237,7 @@ class ZDXClientHelper:
                     if rate_limit_reset_time:
                         sleep_time = rate_limit_reset_time - int(time.time())
                     else:
-                        sleep_time = min(2 ** backoff_factor, 60)  # Exponential backoff with a max limit
+                        sleep_time = min(2**backoff_factor, 60)  # Exponential backoff with a max limit
                     self.logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
                     time.sleep(sleep_time + additional_delay)  # Adding additional delay here too
                     attempts += 1
@@ -282,7 +273,7 @@ class ZDXClientHelper:
                 attempts += 1
                 backoff_factor += 1  # Increment backoff factor
                 self.logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {e}")
-                time.sleep(min(2 ** backoff_factor, 60) + additional_delay)  # Adding additional delay here too
+                time.sleep(min(2**backoff_factor, 60) + additional_delay)  # Adding additional delay here too
 
         return None
 
@@ -298,15 +289,15 @@ class ZDXClientHelper:
         Returns:
         - Response: Response object from the request.
         """
-        
+
         # Use rate limiter before making a request
         should_wait, delay = self.rate_limiter.wait("GET")
         if should_wait:
             time.sleep(delay + 5)
-        
+
         # Now proceed with sending the request
         resp = self.send("GET", path, json, params)
-        
+
         if not isinstance(resp, requests.Response):
             self.logger.error(f"Unexpected response type: {type(resp)}")
             return None
@@ -332,14 +323,14 @@ class ZDXClientHelper:
         Returns:
         - Response: Response object from the request.
         """
-        
+
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
-        
+
         # Now proceed with sending the request
         resp = self.send("POST", path, json, params, data=data, headers=headers)
-        
+
         if not isinstance(resp, requests.Response):
             self.logger.error(f"Unexpected response type: {type(resp)}")
             return None
@@ -363,14 +354,14 @@ class ZDXClientHelper:
         Returns:
         - Response: Response object from the request.
         """
-        
+
         should_wait, delay = self.rate_limiter.wait("DELETE")
         if should_wait:
             time.sleep(delay)
-        
+
         # Now proceed with sending the request
         resp = self.send("DELETE", path, json, params)
-        
+
         if not isinstance(resp, requests.Response):
             self.logger.error(f"Unexpected response type: {type(resp)}")
             return None
