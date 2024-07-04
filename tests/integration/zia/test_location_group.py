@@ -91,8 +91,17 @@ class TestLocationGroup:
                 except Exception as exc:
                     errors.append(f"Fetching lite group by name failed: {exc}")
 
+            # Use lite version to list location groups with minimal details
+            try:
+                lite_count = client.locations.list_location_groups_count()
+                assert isinstance(lite_count, int), "Expected the count of all groups to be an integer"
+            except Exception as exc:
+                errors.append(f"Listing the count of all groups failed: {exc}")
+
         except Exception as exc:
             errors.append(f"Listing groups failed: {exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during groups test: {errors}"
+
+

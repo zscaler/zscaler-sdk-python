@@ -240,6 +240,75 @@ class TestLocationManagement:
             # Assert that no errors occurred during the test
             assert len(errors) == 0, f"Errors occurred during the sublocation management lifecycle test: {errors}"
 
+    def test_bulk_delete_location_management(self, fs):
+        client = MockZIAClient(fs)
+        errors = []
+        vpn_ids = []
+        location_ids = []
+
+        try:
+            # Create 3 VPN Credentials
+            for _ in range(3):
+                try:
+                    email = "tests-" + generate_random_string() + "@bd-hashicorp.com"
+                    created_vpn_credential = client.traffic.add_vpn_credential(
+                        authentication_type="UFQDN",
+                        pre_shared_key="testkey-" + generate_random_string(),
+                        fqdn=email,
+                    )
+                    vpn_id = created_vpn_credential.get("id", None)
+                    assert vpn_id is not None, "VPN Credential creation failed"
+                    vpn_ids.append(vpn_id)
+                except Exception as exc:
+                    errors.append(f"VPN Credential creation failed: {exc}")
+
+            # Create 3 Locations and associate each with a VPN Credential
+            for vpn_id in vpn_ids:
+                try:
+                    location_name = "tests - " + generate_random_string()
+                    created_location = client.locations.add_location(
+                        name=location_name,
+                        tz="UNITED_STATES_AMERICA_LOS_ANGELES",
+                        auth_required=True,
+                        idle_time_in_minutes=720,
+                        display_time_unit="HOUR",
+                        surrogate_ip=True,
+                        xff_forward_enabled=True,
+                        ofw_enabled=True,
+                        ips_control=True,
+                        vpn_credentials=[{"id": vpn_id, "type": "UFQDN"}],
+                    )
+                    location_id = created_location.get("id", None)
+                    assert location_id is not None, "Location creation failed"
+                    location_ids.append(location_id)
+                except Exception as exc:
+                    errors.append(f"Location creation failed: {exc}")
+
+            # Bulk delete the created locations
+            try:
+                status_code = client.locations.bulk_delete_locations(location_ids)
+                assert status_code == 204, f"Bulk deletion failed with status code {status_code}"
+            except Exception as exc:
+                errors.append(f"Bulk deletion of locations failed: {exc}")
+
+        except Exception as exc:
+            errors.append(f"Test setup failed: {exc}")
+
+        finally:
+            # Cleanup operations
+            cleanup_errors = []
+            if vpn_ids:
+                try:
+                    delete_status_vpn = client.traffic.bulk_delete_vpn_credentials(vpn_ids)
+                    assert delete_status_vpn == 204, "VPN Credential deletion failed"
+                except Exception as exc:
+                    cleanup_errors.append(f"Deleting VPN Credential failed: {exc}")
+
+            errors.extend(cleanup_errors)
+
+            # Assert that no errors occurred during the test
+            assert len(errors) == 0, f"Errors occurred during location management test: {errors}"
+
     def test_list_cities_by_name(self, fs):
         client = MockZIAClient(fs)
         errors = []
