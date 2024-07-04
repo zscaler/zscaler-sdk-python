@@ -57,7 +57,7 @@ class ZPAClient:
         scim_user_id=None,
         scim_username=None,
         page=None,
-        pagesize=20,
+        pagesize=500,
         microtenant_id=None,
     ):
         """
