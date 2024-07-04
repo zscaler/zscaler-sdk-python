@@ -9,6 +9,7 @@
 ### Bug Fixes
 
 * Fixed ZPA Pagination pagesize parameter to the maximum supported of `500` ([#118](https://github.com/zscaler/zscaler-sdk-python/pull/118))
+* Fixed ZIA Isolation Profile method misconfiguration ([#118](https://github.com/zscaler/zscaler-sdk-python/pull/118))
 
 ## 0.6.0 (June, 28 2024)
 
