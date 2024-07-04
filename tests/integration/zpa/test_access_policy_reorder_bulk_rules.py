@@ -58,7 +58,7 @@ class TestAccessPolicyBulkReorderRule:
             reordered_rules = client.policies.list_rules(policy_type="access")
             reordered_rule_ids = [rule.id for rule in reordered_rules]
 
-            assert reordered_rule_ids[:10] == reversed_rule_ids, "Rules were not reordered correctly"
+            assert reordered_rule_ids[:5] == reversed_rule_ids, "Rules were not reordered correctly"
 
         except Exception as exc:
             errors.append(f"Error during rule creation or reordering: {exc}")

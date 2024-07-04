@@ -39,8 +39,7 @@ class IsolationProfileAPI:
             >>> isolation_profiles = zia.isolation_profiles.list_isolation_profiles()
 
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-        return self.rest.get("browserIsolation/profiles", json=payload)
+        return self.rest.get("browserIsolation/profiles")
 
     def get_profiles_by_name(self, name: str):
         """
