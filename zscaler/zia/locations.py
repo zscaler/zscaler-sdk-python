@@ -462,7 +462,28 @@ class LocationsAPI:
         """
         return self.rest.delete(f"locations/{location_id}").status_code
 
-    def list_location_groups(self, **kwargs) -> BoxList:
+    def bulk_delete_locations(self, location_ids: list, **kwargs) -> int:
+        """
+        Deletes all specified Location Management from ZIA.
+
+        Args:
+            location_ids (list): The list of unique ids for the ZIA Locations that will be deleted.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.locations.bulk_delete_locations(['111111', '222222', '333333'])
+
+        """
+        payload = {"ids": location_ids}
+        response = self.rest.post("locations/bulkDelete", json=payload).status_code
+        if isinstance(response, Response):
+            status_code = response.status_code
+            raise Exception(f"API call failed with status {status_code}: {response.json()}")
+        return response
+    
+    def list_location_groups(self) -> BoxList:
         """
         Return a list of location groups in ZIA.
 
@@ -479,8 +500,7 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups()
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-        return self.rest.get("locations/groups", json=payload)
+        return self.rest.get("locations/groups")
 
     def get_location_group_by_id(self, group_id: int) -> Box:
         """
@@ -515,9 +535,9 @@ class LocationsAPI:
             >>> location = zia.locations.get_location_group_by_name("Unassigned Locations")
         """
         params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self.rest.get("locations/groups", json=params)
+        return self.rest.get("locations/groups", params=params)
 
-    def list_location_groups_lite(self, **kwargs) -> BoxList:
+    def list_location_groups_lite(self, page: int = 1, page_size: int = 100) -> BoxList:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
 
@@ -534,8 +554,8 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups_lite()
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
-        return self.rest.get("locations/groups/lite", json=payload)
+        params = {"page": page, "pageSize": page_size}
+        return self.rest.get("locations/groups/lite", params=params)
 
     def get_location_group_lite_by_id(self, group_id: int) -> Box:
         """
@@ -570,7 +590,39 @@ class LocationsAPI:
             >>> locations = zia.locations.get_location_group_lite_by_name("Unassigned Locations")
         """
         params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self.rest.get("locations/groups/lite", json=params)
+        return self.rest.get("locations/groups/lite", params=params)
+
+    def list_location_groups_count(self, **kwargs) -> BoxList:
+        """
+        Returns a list of location groups for your organization.
+
+        Args:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            group_type (str): The location group's type (i.e., Static or Dynamic).
+            last_mod_user (str): The admin who modified the location group last.
+            version (int): The version parameter is for Zscaler internal use only. The version is used by the service for backup operations.
+            name (str): The location group's name.
+            comments (str): Additional comments or information about the location group.
+            location_id (int): The unique identifier for a location within a location group.
+
+        Returns:
+            :obj:`BoxList`: A list of location group resource records.
+
+        Examples:
+            Gets the list of location groups for your organization:
+            >>> location = zia.locations.list_location_groups_count(group_type='Static', name='Corporate')
+        """
+        params = {}
+        optional_params = ['group_type', 'last_mod_user', 'version', 'name', 'comments', 'location_id']
+        
+        for key in optional_params:
+            if key in kwargs:
+                params[key] = kwargs[key]
+
+        response = self.rest.get("locations/groups/count", params=params)
+        return int(response.text)
 
     def list_region_geo_coordinates(self, latitude: int, longitude: int) -> Box:
         """
