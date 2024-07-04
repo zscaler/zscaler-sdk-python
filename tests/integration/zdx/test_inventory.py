@@ -37,16 +37,16 @@ class TestInventory:
 
         try:
             # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
+            # now = int(time.time())
+            # from_time = now - 2 * 60 * 60  # 2 hours ago
+            # to_time = now
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
+            # kwargs = {
+            #     "from_time": from_time,
+            #     "to": to_time,
+            # }
 
-            software_iterator = client.inventory.list_softwares(**kwargs)
+            software_iterator = client.inventory.list_softwares()
             softwares = list(software_iterator)
 
             if not softwares:
@@ -66,17 +66,17 @@ class TestInventory:
 
         try:
             # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
+            # now = int(time.time())
+            # from_time = now - 2 * 60 * 60  # 2 hours ago
+            # to_time = now
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
+            # kwargs = {
+            #     "from_time": from_time,
+            #     "to": to_time,
+            # }
 
             # List software to get a software key
-            software_iterator = client.inventory.list_softwares(**kwargs)
+            software_iterator = client.inventory.list_softwares()
             softwares = list(software_iterator)
 
             if not softwares:
@@ -86,7 +86,7 @@ class TestInventory:
                 print(f"Using software key {software_key} for list_software_keys test")
 
                 # List software keys using the retrieved software key
-                software_keys_iterator = client.inventory.list_software_keys(software_key=software_key, **kwargs)
+                software_keys_iterator = client.inventory.list_software_keys(software_key=software_key)
                 software_keys = list(software_keys_iterator)
 
                 if not software_keys:
