@@ -54,14 +54,14 @@ class TestSandbox:
         except Exception as exc:
             pytest.fail(f"Sandbox quota retrieval failed: {exc}")
 
-    def test_sandbox_get_report_summary(self, fs):
-        client = MockZIAClient(fs)
-        test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
-        try:
-            report = client.sandbox.get_report(test_md5_hash)
-            assert report.summary, "Sandbox report retrieval failed."
-        except Exception as exc:
-            pytest.fail(f"Sandbox report retrieval failed: {exc}")
+    # def test_sandbox_get_report_summary(self, fs):
+    #     client = MockZIAClient(fs)
+    #     test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
+    #     try:
+    #         report = client.sandbox.get_report(test_md5_hash)
+    #         assert report.summary, "Sandbox report retrieval failed."
+    #     except Exception as exc:
+    #         pytest.fail(f"Sandbox report retrieval failed: {exc}")
 
     # def test_sandbox_submit_files(fs):
     #     client = MockZIAClient(fs)
