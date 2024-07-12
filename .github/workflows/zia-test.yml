@@ -80,7 +80,7 @@ jobs:
           ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
 
   zia-test-tenants:
-    needs: [zia-beta-tenants]
+    # needs: [zia-beta-tenants]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
