@@ -46,18 +46,28 @@ class TestAccessPolicyBulkReorderRule:
 
             # Step 2: List the created rules
             all_rules = client.policies.list_rules(policy_type="access")
+            all_rule_ids = [rule.id for rule in all_rules]
+
+            # Identify the IDs of the newly created rules
             created_rule_ids = [rule.id for rule in created_rules]
 
-            # Step 3: Reverse the order of the created rules
+            # Step 3: Reverse the order of the created rules within the full list of rule IDs
             reversed_rule_ids = created_rule_ids[::-1]
 
-            # Step 4: Bulk reorder the rules
-            client.policies.bulk_reorder_rules(policy_type="access", rules_orders=reversed_rule_ids)
+            # Step 4: Update the full list of rule IDs to reflect the reversed order of the newly created rules
+            for rule_id in created_rule_ids:
+                all_rule_ids.remove(rule_id)
+
+            new_rule_order = reversed_rule_ids + all_rule_ids
+
+            # Step 5: Bulk reorder the rules
+            client.policies.bulk_reorder_rules(policy_type="access", rules_orders=new_rule_order)
 
             # Verify the order by listing the rules again
             reordered_rules = client.policies.list_rules(policy_type="access")
             reordered_rule_ids = [rule.id for rule in reordered_rules]
 
+            # Check if the top N rule IDs match the reversed order of the created rules
             assert reordered_rule_ids[:5] == reversed_rule_ids, "Rules were not reordered correctly"
 
         except Exception as exc:
