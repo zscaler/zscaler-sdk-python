@@ -27,18 +27,173 @@ class TestSweepUtility:
 
     def run_sweep_functions(self):
         sweep_functions = [
+            self.sweep_all_access_policies,
+            self.sweep_pra_portal,
+            self.sweep_pra_credential,
+            self.sweep_pra_approval,
+            self.sweep_pra_console,
             self.sweep_app_segments,
+            self.sweep_microtenant,
             self.sweep_segment_group,
             self.sweep_server_group,
+            self.sweep_provisioning_key,
+            self.sweep_lss_controller,
             self.sweep_app_connector_group,
             self.sweep_application_server,
             self.sweep_isolation_banner,
+            self.sweep_isolation_certificate,
             self.sweep_isolation_profile,
+            self.sweep_service_edge_group,
         ]
 
         for func in sweep_functions:
             logging.info(f"Executing {func.__name__}")
             func()
+
+    @suppress_warnings
+    def sweep_all_access_policies(self):
+        logging.info("Starting to sweep access policies")
+        policy_types = [
+            "access", "timeout", "client_forwarding", "isolation", "inspection", 
+            "redirection", "credential", "capabilities", "siem"
+        ]
+
+        try:
+            for policy_type in policy_types:
+                logging.info(f"Checking for policies of type '{policy_type}'")
+                policies = self.client.policies.list_rules(policy_type=policy_type)
+                test_policies = [pol for pol in policies if "name" in pol and pol["name"].startswith("tests-")]
+                logging.info(f"Found {len(test_policies)} '{policy_type}' policies named starting with 'tests-' to delete.")
+
+                for policy in test_policies:
+                    logging.info(
+                        f"sweep_all_access_policies: Attempting to delete '{policy_type}' policy: Name='{policy['name']}', ID='{policy['id']}'"
+                    )
+                    response_code = self.client.policies.delete_rule(policy_type=policy_type, rule_id=policy["id"])
+                    if response_code == 204:
+                        logging.info(f"Successfully deleted '{policy_type}' policy with ID: {policy['id']}, Name: {policy['name']}")
+                    else:
+                        logging.error(
+                            f"Failed to delete '{policy_type}' policy with ID: {policy['id']}, Name: {policy['name']} - Status code: {response_code}"
+                        )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping access policies: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_pra_portal(self):
+        logging.info("Starting to sweep pra portal")
+        try:
+            portals = self.client.privileged_remote_access.list_portals()
+            test_portals = [pra for pra in portals if "name" in pra and pra["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_portals)} pra portal named starting with 'tests-' to delete.")
+
+            for portal in test_portals:
+                logging.info(
+                    f"sweep_pra_portal: Attempting to delete pra portal : Name='{portal['name']}', ID='{portal['id']}'"
+                )
+                response_code = self.client.privileged_remote_access.delete_portal(portal_id=portal["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted pra portal with ID: {portal['id']}, Name: {portal['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete pra portal with ID: {portal['id']}, Name: {portal['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping pra portal: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_pra_credential(self):
+        logging.info("Starting to sweep pra credential")
+        try:
+            portals = self.client.privileged_remote_access.list_credentials()
+            test_portals = [pra for pra in portals if "name" in pra and pra["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_portals)} pra credential named starting with 'tests-' to delete.")
+
+            for credential in test_portals:
+                logging.info(
+                    f"sweep_pra_credential: Attempting to delete pra credential : Name='{credential['name']}', ID='{credential['id']}'"
+                )
+                response_code = self.client.privileged_remote_access.delete_credential(credential_id=credential["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted pra credential with ID: {credential['id']}, Name: {credential['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete pra credential with ID: {credential['id']}, Name: {credential['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping pra portal: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_pra_approval(self):
+        logging.info("Starting to sweep pra approval")
+        try:
+            portals = self.client.privileged_remote_access.list_approval()
+            test_portals = [pra for pra in portals if "email_ids" in pra and any("tests-" in email for email in pra["email_ids"])]
+            logging.info(f"Found {len(test_portals)} pra approvals with email IDs containing 'tests-' to delete.")
+
+            for approval in test_portals:
+                logging.info(
+                    f"sweep_pra_approval: Attempting to delete pra approval: Name='{approval['name']}', ID='{approval['id']}'"
+                )
+                response_code = self.client.privileged_remote_access.delete_approval(approval_id=approval["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted pra approval with ID: {approval['id']}, Name: {approval['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete pra approval with ID: {approval['id']}, Name: {approval['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping pra approvals: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_pra_console(self):
+        logging.info("Starting to sweep pra console")
+        try:
+            portals = self.client.privileged_remote_access.list_consoles()
+            test_portals = [pra for pra in portals if "name" in pra and pra["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_portals)} pra console named starting with 'tests-' to delete.")
+
+            for console in test_portals:
+                logging.info(
+                    f"sweep_pra_consoles: Attempting to delete pra console : Name='{console['name']}', ID='{console['id']}'"
+                )
+                response_code = self.client.privileged_remote_access.delete_console(console_id=console["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted pra console with ID: {console['id']}, Name: {console['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete pra console with ID: {console['id']}, Name: {console['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping pra console: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_microtenant(self):
+        logging.info("Starting to sweep microtenant")
+        try:
+            microtenants = self.client.microtenants.list_microtenants()
+            test_microtenants = [mic for mic in microtenants if "name" in mic and mic["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_microtenants)} microtenant named starting with 'tests-' to delete.")
+
+            for microtenant in test_microtenants:
+                logging.info(
+                    f"sweep_microtenant: Attempting to delete microtenant : Name='{microtenant['name']}', ID='{microtenant['id']}'"
+                )
+                response_code = self.client.microtenants.delete_microtenant(console_id=microtenant["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted microtenant with ID: {microtenant['id']}, Name: {microtenant['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete microtenant with ID: {microtenant['id']}, Name: {microtenant['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping microtenants: {str(e)}")
+            raise
 
     @suppress_warnings
     def sweep_app_segments(self):
@@ -105,6 +260,56 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping server groups: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_provisioning_key(self):
+        logging.info("Starting to sweep provisioning keys")
+        key_types = ["connector", "service_edge"]
+
+        try:
+            for key_type in key_types:
+                logging.info(f"Checking for provisioning keys of type '{key_type}'")
+                provisioning_keys = self.client.provisioning.list_provisioning_keys(key_type=key_type)
+                test_provisioning_keys = [key for key in provisioning_keys if "name" in key and key["name"].startswith("tests-")]
+                logging.info(f"Found {len(test_provisioning_keys)} '{key_type}' provisioning keys to delete.")
+
+                for provisioning_key in test_provisioning_keys:
+                    logging.info(
+                        f"sweep_provisioning_key: Attempting to delete '{key_type}' provisioning key: Name='{provisioning_key['name']}', ID='{provisioning_key['id']}'"
+                    )
+                    response_code = self.client.provisioning.delete_provisioning_key(key_id=provisioning_key["id"], key_type=key_type)
+                    if response_code == 204:
+                        logging.info(f"Successfully deleted '{key_type}' provisioning key with ID: {provisioning_key['id']}, Name: {provisioning_key['name']}")
+                    else:
+                        logging.error(
+                            f"Failed to delete '{key_type}' provisioning key with ID: {provisioning_key['id']}, Name: {provisioning_key['name']} - Status code: {response_code}"
+                        )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping provisioning keys: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_lss_controller(self):
+        logging.info("Starting to sweep lss controller")
+        try:
+            list_controllers = self.client.lss.list_configs()
+            test_controllers = [lss for lss in list_controllers if lss["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_controllers)} lss controllers to delete.")
+
+            for controller in test_controllers:
+                logging.info(
+                    f"sweep_lss_controller: Attempting to delete lss controller: Name='{controller['name']}', ID='{controller['id']}'"
+                )
+                response_code = self.client.lss.delete_lss_config(lss_config_id=controller["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted lss controller with ID: {controller['id']}, Name: {controller['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete lss controller with ID: {controller['id']}, Name: {controller['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping lss controllers: {str(e)}")
+            raise
+        
     @suppress_warnings
     def sweep_app_connector_group(self):
         logging.info("Starting to sweep app connector group")
@@ -193,6 +398,49 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping isolation profiles: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_isolation_certificate(self):
+        logging.info("Starting to sweep isolation certificate")
+        try:
+            certificates = self.client.isolation.list_certificates()
+            test_certificates = [cert for cert in certificates if cert["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_certificates)} isolation certificates to delete.")
+
+            for certificate in test_certificates:
+                logging.info(
+                    f"sweep_isolation_certificate: Attempting to delete isolation certificate: Name='{certificate['name']}', ID='{certificate['id']}'"
+                )
+                response_code = self.client.isolation.delete_certificate(certificate_id=certificate["id"])
+                if response_code == 200:
+                    logging.info(f"Successfully deleted isolation certificate with ID: {certificate['id']}, Name: {certificate['name']}")
+                else:
+                    logging.error(f"Failed to delete isolation certificate with ID: {certificate['id']}, Name: {certificate['name']} - Status code: {response_code}")
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping isolation certificates: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_service_edge_group(self):
+        logging.info("Starting to sweep service edge group")
+        try:
+            app_connectors = self.client.service_edges.list_service_edge_groups()
+            test_groups = [grp for grp in app_connectors if grp["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_groups)} service edge groups to delete.")
+
+            for group in test_groups:
+                logging.info(
+                    f"sweep_service_edge_group: Attempting to delete service edge group: Name='{group['name']}', ID='{group['id']}'"
+                )
+                response_code = self.client.service_edges.delete_service_edge_group(group_id=group["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted service edge group with ID: {group['id']}, Name: {group['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete service edge group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping service edge groups: {str(e)}")
+            raise
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
