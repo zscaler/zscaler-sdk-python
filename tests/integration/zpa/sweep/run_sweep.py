@@ -54,8 +54,14 @@ class TestSweepUtility:
     def sweep_all_access_policies(self):
         logging.info("Starting to sweep access policies")
         policy_types = [
-            "access", "timeout", "client_forwarding", "isolation", "inspection", 
-            "redirection", "capabilities", "siem"
+            "access",
+            "timeout",
+            "client_forwarding",
+            "isolation",
+            "inspection",
+            "redirection",
+            "capabilities",
+            "siem",
         ]
 
         try:
@@ -71,7 +77,9 @@ class TestSweepUtility:
                     )
                     response_code = self.client.policies.delete_rule(policy_type=policy_type, rule_id=policy["id"])
                     if response_code == 204:
-                        logging.info(f"Successfully deleted '{policy_type}' policy with ID: {policy['id']}, Name: {policy['name']}")
+                        logging.info(
+                            f"Successfully deleted '{policy_type}' policy with ID: {policy['id']}, Name: {policy['name']}"
+                        )
                     else:
                         logging.error(
                             f"Failed to delete '{policy_type}' policy with ID: {policy['id']}, Name: {policy['name']} - Status code: {response_code}"
@@ -117,7 +125,9 @@ class TestSweepUtility:
                 )
                 response_code = self.client.privileged_remote_access.delete_credential(credential_id=credential["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted pra credential with ID: {credential['id']}, Name: {credential['name']}")
+                    logging.info(
+                        f"Successfully deleted pra credential with ID: {credential['id']}, Name: {credential['name']}"
+                    )
                 else:
                     logging.error(
                         f"Failed to delete pra credential with ID: {credential['id']}, Name: {credential['name']} - Status code: {response_code}"
@@ -131,7 +141,9 @@ class TestSweepUtility:
         logging.info("Starting to sweep pra approval")
         try:
             portals = self.client.privileged_remote_access.list_approval()
-            test_portals = [pra for pra in portals if "email_ids" in pra and any("tests-" in email for email in pra["email_ids"])]
+            test_portals = [
+                pra for pra in portals if "email_ids" in pra and any("tests-" in email for email in pra["email_ids"])
+            ]
             logging.info(f"Found {len(test_portals)} pra approvals with email IDs containing 'tests-' to delete.")
 
             for approval in test_portals:
@@ -234,7 +246,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted segment group with ID: {group['id']}, Name: {group['name']}")
                 else:
-                    logging.error(f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping segment groups: {str(e)}")
             raise
@@ -255,7 +269,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted server group with ID: {group['id']}, Name: {group['name']}")
                 else:
-                    logging.error(f"Failed to delete server group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete server group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping server groups: {str(e)}")
             raise
@@ -269,16 +285,22 @@ class TestSweepUtility:
             for key_type in key_types:
                 logging.info(f"Checking for provisioning keys of type '{key_type}'")
                 provisioning_keys = self.client.provisioning.list_provisioning_keys(key_type=key_type)
-                test_provisioning_keys = [key for key in provisioning_keys if "name" in key and key["name"].startswith("tests-")]
+                test_provisioning_keys = [
+                    key for key in provisioning_keys if "name" in key and key["name"].startswith("tests-")
+                ]
                 logging.info(f"Found {len(test_provisioning_keys)} '{key_type}' provisioning keys to delete.")
 
                 for provisioning_key in test_provisioning_keys:
                     logging.info(
                         f"sweep_provisioning_key: Attempting to delete '{key_type}' provisioning key: Name='{provisioning_key['name']}', ID='{provisioning_key['id']}'"
                     )
-                    response_code = self.client.provisioning.delete_provisioning_key(key_id=provisioning_key["id"], key_type=key_type)
+                    response_code = self.client.provisioning.delete_provisioning_key(
+                        key_id=provisioning_key["id"], key_type=key_type
+                    )
                     if response_code == 204:
-                        logging.info(f"Successfully deleted '{key_type}' provisioning key with ID: {provisioning_key['id']}, Name: {provisioning_key['name']}")
+                        logging.info(
+                            f"Successfully deleted '{key_type}' provisioning key with ID: {provisioning_key['id']}, Name: {provisioning_key['name']}"
+                        )
                     else:
                         logging.error(
                             f"Failed to delete '{key_type}' provisioning key with ID: {provisioning_key['id']}, Name: {provisioning_key['name']} - Status code: {response_code}"
@@ -301,7 +323,9 @@ class TestSweepUtility:
                 )
                 response_code = self.client.lss.delete_lss_config(lss_config_id=controller["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted lss controller with ID: {controller['id']}, Name: {controller['name']}")
+                    logging.info(
+                        f"Successfully deleted lss controller with ID: {controller['id']}, Name: {controller['name']}"
+                    )
                 else:
                     logging.error(
                         f"Failed to delete lss controller with ID: {controller['id']}, Name: {controller['name']} - Status code: {response_code}"
@@ -309,7 +333,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping lss controllers: {str(e)}")
             raise
-        
+
     @suppress_warnings
     def sweep_app_connector_group(self):
         logging.info("Starting to sweep app connector group")
@@ -349,7 +373,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted app servers with ID: {server['id']}, Name: {server['name']}")
                 else:
-                    logging.error(f"Failed to delete app servers with ID: {server['id']}, Name: {server['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete app servers with ID: {server['id']}, Name: {server['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping app servers: {str(e)}")
             raise
@@ -370,7 +396,9 @@ class TestSweepUtility:
                 if response_code == 200:
                     logging.info(f"Successfully deleted isolation banner with ID: {banner['id']}, Name: {banner['name']}")
                 else:
-                    logging.error(f"Failed to delete isolation banner with ID: {banner['id']}, Name: {banner['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete isolation banner with ID: {banner['id']}, Name: {banner['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping isolation banners: {str(e)}")
             raise
@@ -412,9 +440,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.isolation.delete_certificate(certificate_id=certificate["id"])
                 if response_code == 200:
-                    logging.info(f"Successfully deleted isolation certificate with ID: {certificate['id']}, Name: {certificate['name']}")
+                    logging.info(
+                        f"Successfully deleted isolation certificate with ID: {certificate['id']}, Name: {certificate['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete isolation certificate with ID: {certificate['id']}, Name: {certificate['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete isolation certificate with ID: {certificate['id']}, Name: {certificate['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping isolation certificates: {str(e)}")
             raise
@@ -441,6 +473,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping service edge groups: {str(e)}")
             raise
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
