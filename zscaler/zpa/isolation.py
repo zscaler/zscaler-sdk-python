@@ -368,7 +368,7 @@ class IsolationAPI:
                 return profile
         return None
 
-    def list_cbi_profiles(self: str) -> Box:
+    def list_cbi_profiles(self) -> Box:
         """
         Returns information on the specified Cloud browser isolation.
 

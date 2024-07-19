@@ -103,5 +103,3 @@ class TestLocationGroup:
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during groups test: {errors}"
-
-

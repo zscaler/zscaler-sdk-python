@@ -482,7 +482,7 @@ class LocationsAPI:
             status_code = response.status_code
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
-    
+
     def list_location_groups(self) -> BoxList:
         """
         Return a list of location groups in ZIA.
@@ -602,7 +602,7 @@ class LocationsAPI:
         Keyword Args:
             group_type (str): The location group's type (i.e., Static or Dynamic).
             last_mod_user (str): The admin who modified the location group last.
-            version (int): The version parameter is for Zscaler internal use only. The version is used by the service for backup operations.
+            version (int): The version parameter is for Zscaler internal use only. Used by the service for backup operations.
             name (str): The location group's name.
             comments (str): Additional comments or information about the location group.
             location_id (int): The unique identifier for a location within a location group.
@@ -615,8 +615,8 @@ class LocationsAPI:
             >>> location = zia.locations.list_location_groups_count(group_type='Static', name='Corporate')
         """
         params = {}
-        optional_params = ['group_type', 'last_mod_user', 'version', 'name', 'comments', 'location_id']
-        
+        optional_params = ["group_type", "last_mod_user", "version", "name", "comments", "location_id"]
+
         for key in optional_params:
             if key in kwargs:
                 params[key] = kwargs[key]
