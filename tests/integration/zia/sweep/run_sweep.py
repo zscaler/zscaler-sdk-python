@@ -11,9 +11,7 @@ class TestSweepUtility:
         ZIA_API_KEY = os.getenv("ZIA_API_KEY")
         ZIA_CLOUD = os.getenv("ZIA_CLOUD")
 
-        self.client = ZIAClientHelper(
-            username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD
-        )
+        self.client = ZIAClientHelper(username=ZIA_USERNAME, password=ZIA_PASSWORD, api_key=ZIA_API_KEY, cloud=ZIA_CLOUD)
 
     def suppress_warnings(func):
         def wrapper(*args, **kwargs):
@@ -89,7 +87,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted cloud firewall rule with ID: {rule['id']}, Name: {rule['name']}")
                 else:
-                    logging.error(f"Failed to delete cloud firewall rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall rules: {str(e)}")
             raise
@@ -108,9 +108,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.firewall.delete_ip_source_group(group_id=group["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted cloud firewall ip source group with ID: {group['id']}, Name: {group['name']}")
+                    logging.info(
+                        f"Successfully deleted cloud firewall ip source group with ID: {group['id']}, Name: {group['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete cloud firewall ip source group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall ip source group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall ip source groups: {str(e)}")
             raise
@@ -129,9 +133,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.firewall.delete_ip_destination_group(group_id=group["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted cloud firewall ip destination group with ID: {group['id']}, Name: {group['name']}")
+                    logging.info(
+                        f"Successfully deleted cloud firewall ip destination group with ID: {group['id']}, Name: {group['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete cloud firewall ip destination group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall ip destination group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall ip destination groups: {str(e)}")
             raise
@@ -150,9 +158,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.firewall.delete_network_app_group(group_id=group["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted cloud firewall network app group with ID: {group['id']}, Name: {group['name']}")
+                    logging.info(
+                        f"Successfully deleted cloud firewall network app group with ID: {group['id']}, Name: {group['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete cloud firewall network app group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall network app group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall network app groups: {str(e)}")
             raise
@@ -171,9 +183,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.firewall.delete_network_svc_group(group_id=group["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted cloud firewall network service group with ID: {group['id']}, Name: {group['name']}")
+                    logging.info(
+                        f"Successfully deleted cloud firewall network service group with ID: {group['id']}, Name: {group['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete cloud firewall network service group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall network service group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall network service groups: {str(e)}")
             raise
@@ -192,13 +208,17 @@ class TestSweepUtility:
                 )
                 response_code = self.client.firewall.delete_network_service(group_id=group["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted cloud firewall network service with ID: {group['id']}, Name: {group['name']}")
+                    logging.info(
+                        f"Successfully deleted cloud firewall network service with ID: {group['id']}, Name: {group['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete cloud firewall network service with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete cloud firewall network service with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping cloud firewall network services: {str(e)}")
             raise
-        
+
     @suppress_warnings
     def sweep_dlp_web_rule(self):
         logging.info("Starting to sweep dlp web rule")
@@ -215,11 +235,13 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted url dlp web rule with ID: {rule['id']}, Name: {rule['name']}")
                 else:
-                    logging.error(f"Failed to delete dlp web rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete dlp web rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping dlp web rules: {str(e)}")
             raise
-        
+
     @suppress_warnings
     def sweep_forwarding_control_rule(self):
         logging.info("Starting to sweep forwarding control rule")
@@ -236,11 +258,13 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted url forwarding control with ID: {rule['id']}, Name: {rule['name']}")
                 else:
-                    logging.error(f"Failed to delete forwarding control rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete forwarding control rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping forwarding controlrules: {str(e)}")
             raise
-        
+
     @suppress_warnings
     def sweep_url_filtering_rule(self):
         logging.info("Starting to sweep url filtering rule")
@@ -257,7 +281,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted url filtering rule with ID: {rule['id']}, Name: {rule['name']}")
                 else:
-                    logging.error(f"Failed to delete url filtering rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete url filtering rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping url filtering rules: {str(e)}")
             raise
@@ -277,7 +303,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully bulk deleted location management with IDs: {location_ids}")
                 else:
-                    logging.error(f"Failed to bulk delete location management with IDs: {location_ids} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to bulk delete location management with IDs: {location_ids} - Status code: {response_code}"
+                    )
             else:
                 logging.info("No test locations found to delete.")
 
@@ -300,7 +328,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully bulk deleted VPN credentials with IDs: {credential_ids}")
                 else:
-                    logging.error(f"Failed to bulk delete VPN credentials with IDs: {credential_ids} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to bulk delete VPN credentials with IDs: {credential_ids} - Status code: {response_code}"
+                    )
             else:
                 logging.info("No test VPN credentials found to delete.")
 
@@ -322,9 +352,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.traffic.delete_gre_tunnel(tunnel_id=gre_tunnel["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted gre tunnel with ID: {gre_tunnel['id']}, Comment: {gre_tunnel['comment']}")
+                    logging.info(
+                        f"Successfully deleted gre tunnel with ID: {gre_tunnel['id']}, Comment: {gre_tunnel['comment']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete gre tunnel with ID: {gre_tunnel['id']}, Comment: {gre_tunnel['comment']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete gre tunnel with ID: {gre_tunnel['id']}, Comment: {gre_tunnel['comment']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping gre tunnels: {str(e)}")
             raise
@@ -345,7 +379,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted static ip with ID: {static_ip['id']}, Comment: {static_ip['comment']}")
                 else:
-                    logging.error(f"Failed to delete static ipwith ID: {static_ip['id']}, Comment: {static_ip['comment']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete static ipwith ID: {static_ip['id']}, Comment: {static_ip['comment']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping static ips: {str(e)}")
             raise
@@ -366,7 +402,9 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted dlp engine with ID: {engine['id']}, Name: {engine['name']}")
                 else:
-                    logging.error(f"Failed to delete dlp engine with ID: {engine['id']}, Name: {engine['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete dlp engine with ID: {engine['id']}, Name: {engine['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping dlp engines: {str(e)}")
             raise
@@ -385,9 +423,13 @@ class TestSweepUtility:
                 )
                 response_code = self.client.dlp.delete_dict(dict_id=dictionary["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted dlp dictionary with ID: {dictionary['id']}, Name: {dictionary['name']}")
+                    logging.info(
+                        f"Successfully deleted dlp dictionary with ID: {dictionary['id']}, Name: {dictionary['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete dlp dictionary with ID: {dictionary['id']}, Name: {dictionary['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete dlp dictionary with ID: {dictionary['id']}, Name: {dictionary['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping dlp dictionaries: {str(e)}")
             raise
@@ -406,13 +448,17 @@ class TestSweepUtility:
                 )
                 response_code = self.client.dlp.delete_dlp_template(template_id=template["id"])
                 if response_code == 204:
-                    logging.info(f"Successfully deleted dlp notification template with ID: {template['id']}, Name: {template['name']}")
+                    logging.info(
+                        f"Successfully deleted dlp notification template with ID: {template['id']}, Name: {template['name']}"
+                    )
                 else:
-                    logging.error(f"Failed to delete dlp notification template with ID: {template['id']}, Name: {template['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete dlp notification template with ID: {template['id']}, Name: {template['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping dlp notification templates: {str(e)}")
             raise
-        
+
     @suppress_warnings
     def sweep_zpa_gateway(self):
         logging.info("Starting to sweep zpa gateway")
@@ -429,11 +475,14 @@ class TestSweepUtility:
                 if response_code == 204:
                     logging.info(f"Successfully deleted zpa gateway with ID: {gateway['id']}, Name: {gateway['name']}")
                 else:
-                    logging.error(f"Failed to delete zpa gateway with ID: {gateway['id']}, Name: {gateway['name']} - Status code: {response_code}")
+                    logging.error(
+                        f"Failed to delete zpa gateway with ID: {gateway['id']}, Name: {gateway['name']} - Status code: {response_code}"
+                    )
         except Exception as e:
             logging.error(f"An error occurred while sweeping zpa gateways: {str(e)}")
             raise
-               
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 

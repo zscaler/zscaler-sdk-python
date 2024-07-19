@@ -28,7 +28,7 @@ packages = [
 "Bug Tracker" = "https://github.com/zscaler/zscaler-sdk-python/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.9,<4.0"
 arrow = "*"
 certifi = ">=2024.2.2"
 charset-normalizer = "*"
@@ -55,7 +55,7 @@ okta = ">=2.9.7"
 
 [tool.poetry.dev-dependencies]
 black = ">=24.3.0"
-pytest = ">=8.2.1"
+pytest = ">=8.2.2"
 pytest-asyncio = "^0.23.8"
 pytest-mock = "*"
 pytest-recording = "^0.13.2"
@@ -63,7 +63,7 @@ pytest-cov = "*"
 pyfakefs = "^5.6.0"
 isort = "*"
 wheel = "*"
-sphinx = "^7.1.2"
+sphinx = "^7.4.6"
 sphinx-autobuild = "*"
 sphinx_rtd_theme = "*"
 
