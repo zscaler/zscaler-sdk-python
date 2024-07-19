@@ -114,7 +114,7 @@ class TestAccessPrivilegedCredentialV2:
                     common_apps_dto={
                         "apps_config": [
                             {
-                                "name": app_segment_config_name,
+                                "name": "rdp_pra_test.acme.com",
                                 "description": "rdp" + app_segment_description,
                                 "enabled": True,
                                 "app_types": ["SECURE_REMOTE_ACCESS"],
@@ -132,9 +132,9 @@ class TestAccessPrivilegedCredentialV2:
 
             # Get the Application Segment ID for the newly created segment
             try:
-                search_name = app_segment_config_name
+                # search_name = app_segment_config_name
                 app_segments = client.app_segments.get_segments_by_type(
-                    application_type="SECURE_REMOTE_ACCESS", search=search_name
+                    application_type="SECURE_REMOTE_ACCESS",
                 )
                 assert app_segments and len(app_segments) > 0, "No segments found with the specified name."
                 pra_application_id = app_segments[0]["id"]

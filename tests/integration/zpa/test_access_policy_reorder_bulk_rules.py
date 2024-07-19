@@ -38,8 +38,8 @@ class TestAccessPolicyBulkReorderRule:
         try:
             # Step 1: Add 5 access rules with distinct names
             for i in range(5):
-                rule_name = f"New_Policy_Rule_{generate_random_string()}"
-                rule_description = f"New_Policy_Rule_Description_{generate_random_string()}"
+                rule_name = f"tests-{generate_random_string()}"
+                rule_description = f"tests-{generate_random_string()}"
                 response = client.policies.add_access_rule(name=rule_name, description=rule_description, action="allow")
                 created_rules.append(response)
                 pprint(response)
