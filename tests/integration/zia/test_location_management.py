@@ -52,7 +52,7 @@ class TestLocationManagement:
 
             # Create Location Management
             try:
-                location_name = "tests - " + generate_random_string()
+                location_name = "tests-" + generate_random_string()
                 created_location = client.locations.add_location(
                     name=location_name,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
