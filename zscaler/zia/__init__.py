@@ -12,6 +12,7 @@ from box import Box, BoxList
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.constants import MAX_RETRIES
 from zscaler.errors.http_error import HTTPError, ZscalerAPIError
 from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
@@ -118,7 +119,7 @@ class ZIAClientHelper(ZIAClient):
         self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
-        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
+        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
         if cache is None:
             if cache_enabled:
                 ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
@@ -168,13 +169,11 @@ class ZIAClientHelper(ZIAClient):
         if self.auth_details is None:
             return True
         now = datetime.datetime.now()
-        if self.auth_details["passwordExpiryTime"] > 0 and (
-            self.session_refreshed + datetime.timedelta(seconds=-self.session_timeout_offset) < now
-        ):
+        if self.auth_details["passwordExpiryTime"] > 0 and (self.session_refreshed - self.session_timeout_offset < now):
             return True
         return False
 
-    @retry_with_backoff(retries=5)
+    @retry_with_backoff(MAX_RETRIES)
     def authenticate(self) -> Box:
         """
         Creates a ZIA authentication session.
