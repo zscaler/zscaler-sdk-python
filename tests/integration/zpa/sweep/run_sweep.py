@@ -55,7 +55,7 @@ class TestSweepUtility:
         logging.info("Starting to sweep access policies")
         policy_types = [
             "access", "timeout", "client_forwarding", "isolation", "inspection", 
-            "redirection", "credential", "capabilities", "siem"
+            "redirection", "capabilities", "siem"
         ]
 
         try:
