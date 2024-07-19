@@ -63,7 +63,9 @@ jobs:
   #         max_attempts: 3
   #         timeout_minutes: 45
   #         command: |
-  #           poetry run make coverage:zpa
+              # poetry run make sweep:zpa
+              # poetry run make coverage:zpa
+              # poetry run make sweep:zpa
   #       env:
   #         ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
   #         ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}
@@ -125,7 +127,9 @@ jobs:
           max_attempts: 3
           timeout_minutes: 45
           command: |
+            poetry run make sweep:zpa
             poetry run make coverage:zpa
+            poetry run make sweep:zpa
         env:
           ZPA_CLIENT_ID: ${{ secrets.ZPA_CLIENT_ID }}
           ZPA_CLIENT_SECRET: ${{ secrets.ZPA_CLIENT_SECRET }}

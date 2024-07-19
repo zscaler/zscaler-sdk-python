@@ -26,14 +26,14 @@ class WorkloadGroupsAPI:
 
     def list_groups(self, **kwargs) -> BoxList:
         """
-        Returns a list of all firewall filter rules.
+        Returns a list of all workload groups configured in the ZIA Admin Portal.
 
         Returns:
-            :obj:`BoxList`: The list of firewall filter rules
+            :obj:`BoxList`: The list of workload groups
 
         Examples:
-            >>> for rule in zia.workload_groups.list_groups():
-            ...    pprint(rule)
+            >>> for workloads in zia.workload_groups.list_groups():
+            ...    pprint(workloads)
 
         """
         response = self.rest.get("/workloadGroups")
@@ -43,6 +43,19 @@ class WorkloadGroupsAPI:
 
     # Search Workload Group By Name
     def get_group_by_name(self, name):
+        """
+        Retrieves a specific workload group by its name.
+
+        Args:
+            name (str): The name of the workload group  to retrieve.
+
+        Returns:
+            :obj:`Box`: The workload group  if found, otherwise None.
+
+        Examples:
+            >>> workload = zia.workload_groups.get_group_by_name('BD_WORKLOAD_GROUP01')
+            ...    print(workload)
+        """
         groups = self.list_groups()
         for group in groups:
             if group.get("name") == name:
@@ -51,6 +64,19 @@ class WorkloadGroupsAPI:
 
     # Search Workload Group By ID
     def get_group_by_id(self, group_id):
+        """
+        Retrieves a specific workload group by its unique identifier.
+
+        Args:
+            profile_id (str): The ID of the workload group  to retrieve.
+
+        Returns:
+            :obj:`Box`: The workload group if found, otherwise None.
+
+        Examples:
+            >>> workload = zia.get_group_by_name.get_group_by_id('12345')
+            ...    print(workload)
+        """
         groups = self.list_groups()
         for group in groups:
             if group.get("id") == group_id:
