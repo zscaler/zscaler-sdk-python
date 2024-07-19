@@ -11,7 +11,7 @@ from box import BoxList
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL
+from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL, MAX_RETRIES
 from zscaler.errors.http_error import HTTPError, ZscalerAPIError
 from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
@@ -148,7 +148,7 @@ class ZPAClientHelper(ZPAClient):
                 "User-Agent": self.user_agent,
             }
 
-    @retry_with_backoff(retries=5)
+    @retry_with_backoff(MAX_RETRIES)
     def login(self):
         params = {"client_id": self.client_id, "client_secret": self.client_secret}
         headers = {
