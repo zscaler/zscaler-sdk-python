@@ -322,6 +322,19 @@ class AdminAndRoleManagementAPI:
         return admin_role
 
     def get_roles_by_name(self, name):
+        """
+        Retrieves a specific admin roles by its name.
+
+        Args:
+            name (str): The name of the admin roles  to retrieve.
+
+        Returns:
+            :obj:`Box`: The admin roles  if found, otherwise None.
+
+        Examples:
+            >>> role = zia.admin_and_role_management.get_roles_by_name('Super Admin')
+            ...    print(role)
+        """
         roles = self.list_roles()
         for role in roles:
             if role.get("name") == name:
@@ -329,6 +342,19 @@ class AdminAndRoleManagementAPI:
         return None
 
     def get_roles_by_id(self, role_id):
+        """
+        Retrieves a specific admin roles by its ID.
+
+        Args:
+            name (str): The ID of the admin roles  to retrieve.
+
+        Returns:
+            :obj:`Box`: The admin roles  if found, otherwise None.
+
+        Examples:
+            >>> role = zia.admin_and_role_management.get_roles_by_id('123456789')
+            ...    print(role)
+        """
         roles = self.list_roles()
         for role in roles:
             if role.get("id") == role_id:

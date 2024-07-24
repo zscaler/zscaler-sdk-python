@@ -80,7 +80,10 @@ def snake_to_camel(name: str):
         "name_l10n_tag": "nameL10nTag",
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
+        "ec_vms": "ecVMs",
         "is_incomplete_dr_config": "isIncompleteDRConfig",
+         "ipv6_enabled": "ipV6Enabled",
+         "valid_ssl_certificate": "validSSLCertificate",
         "email_ids": "emailIds",
         "page_size": "pageSize",
     }
@@ -96,6 +99,20 @@ def recursive_snake_to_camel(data):
     else:
         return data
 
+def convert_keys(data, direction="to_camel"):
+    converter = camel_to_snake if direction == "to_snake" else snake_to_camel
+
+    if isinstance(data, (list, BoxList)):
+        return [convert_keys(inner_dict, direction=direction) for inner_dict in data]
+    elif isinstance(data, (dict, Box)):
+        new_dict = {}
+        for k in data.keys():
+            v = data[k]
+            new_key = converter(k)
+            new_dict[new_key] = convert_keys(v, direction=direction) if isinstance(v, (dict, list)) else v
+        return new_dict
+    else:
+        return data
 
 def chunker(lst, n):
     """Yield successive n-sized chunks from lst."""

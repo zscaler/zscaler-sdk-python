@@ -1,3 +1,18 @@
+# -*- coding: utf-8 -*-
+
+# Copyright (c) 2023, Zscaler Inc.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
 import datetime
 import logging
 import os
@@ -12,7 +27,6 @@ from box import Box, BoxList
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.constants import MAX_RETRIES
 from zscaler.errors.http_error import HTTPError, ZscalerAPIError
 from zscaler.exceptions.exceptions import HTTPException, ZscalerAPIException
 from zscaler.logger import setup_logging
@@ -26,74 +40,42 @@ from zscaler.utils import (
     obfuscate_api_key,
     retry_with_backoff,
 )
-from zscaler.zia.client import ZIAClient
-from zscaler.zia.activate import ActivationAPI
-from zscaler.zia.admin_and_role_management import AdminAndRoleManagementAPI
-from zscaler.zia.apptotal import AppTotalAPI
-from zscaler.zia.audit_logs import AuditLogsAPI
-from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
-from zscaler.zia.device_management import DeviceManagementAPI
-from zscaler.zia.dlp import DLPAPI
-from zscaler.zia.firewall import FirewallPolicyAPI
-from zscaler.zia.forwarding_control import ForwardingControlAPI
-from zscaler.zia.isolation_profile import IsolationProfileAPI
-from zscaler.zia.labels import RuleLabelsAPI
-from zscaler.zia.locations import LocationsAPI
-from zscaler.zia.sandbox import CloudSandboxAPI
-from zscaler.zia.security import SecurityPolicyAPI
-from zscaler.zia.ssl_inspection import SSLInspectionAPI
-from zscaler.zia.traffic import TrafficForwardingAPI
-from zscaler.zia.url_categories import URLCategoriesAPI
-from zscaler.zia.url_filtering import URLFilteringAPI
-from zscaler.zia.users import UserManagementAPI
-from zscaler.zia.web_dlp import WebDLPAPI
-from zscaler.zia.workload_groups import WorkloadGroupsAPI
-from zscaler.zia.zpa_gateway import ZPAGatewayAPI
+from zscaler.zcon.activation import ActivationService
+from zscaler.zcon.adminroles import AdminRolesService
+from zscaler.zcon.adminusers import AdminUsersService
+from zscaler.zcon.api_keys_provisioning import APIKeyProvisioningService
+from zscaler.zcon.client import ZCONClient
+from zscaler.zcon.ecgroup import EcGroupService
+from zscaler.zcon.location import LocationService
+from zscaler.zcon.location_lite import LocationLiteService
+from zscaler.zcon.location_template import LocationTemplateService
+from zscaler.zcon.public_cloud_account import PublicCloudAccountService
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
 
-class ZIAClientHelper(ZIAClient):
+class ZCONClientHelper(ZCONClient):
     """
-    A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
+    A Controller to access Endpoints in the ZCON API.
 
-    The ZIA object stores the session token and simplifies access to CRUD options within the ZIA platform.
+    The ZCON object stores the session token and simplifies access to CRUD options within the ZCON platform.
 
     Attributes:
-        api_key (str): The ZIA API key generated from the ZIA console.
-        username (str): The ZIA administrator username.
-        password (str): The ZIA administrator password.
-        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
-
-            * ``zscaler``
-            * ``zscloud``
-            * ``zscalerbeta``
-            * ``zspreview``
-            * ``zscalerone``
-            * ``zscalertwo``
-            * ``zscalerthree``
-            * ``zscalergov``
-            * ``zscalerten``
-
-        override_url (str):
-            If supplied, this attribute can be used to override the production URL that is derived
-            from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
-            (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
-            attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
-            i.e. http:// or https://.
-
+        api_key (str): The ZCON API key generated from the ZCON console.
+        username (str): The ZCON administrator username.
+        password (str): The ZCON administrator password.
+        cloud (str): The ZCON cloud for your tenancy, accepted values are:
     """
 
     _vendor = "Zscaler"
-    _product = "Zscaler Internet Access"
+    _product = "Zscaler CON Cloud"
     _build = __version__
-    _env_base = "ZIA"
-    url = "https://zsapi.zscaler.net/api/v1"
+    _env_base = "ZCON"
     env_cloud = "zscaler"
 
-    def __init__(self, cloud, timeout=240, cache=None, fail_safe=False, **kw):
+    def __init__(self, cloud=None, timeout=240, cache=None, fail_safe=False, **kw):
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
         self.username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
         self.password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
@@ -105,21 +87,11 @@ class ZIAClientHelper(ZIAClient):
             )
 
         # URL construction
-        if cloud == "zspreview":
-            self.url = f"https://admin.{self.env_cloud}.net/api/v1"
-        else:
-            # Use override URL if provided, else construct the URL
-            self.url = (
-                kw.get("override_url")
-                or os.getenv(f"{self._env_base}_OVERRIDE_URL")
-                or f"https://zsapi.{self.env_cloud}.net/api/v1"
-            )
-
+        self.url = f"https://connector.{self.env_cloud}.net/api/v1"
         self.conv_box = True
-        self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
-        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
+        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
         if cache is None:
             if cache_enabled:
                 ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
@@ -173,10 +145,10 @@ class ZIAClientHelper(ZIAClient):
             return True
         return False
 
-    @retry_with_backoff(MAX_RETRIES)
+    @retry_with_backoff(retries=5)
     def authenticate(self) -> Box:
         """
-        Creates a ZIA authentication session.
+        Creates a ZCON authentication session.
         """
         api_key_chars = list(self.api_key)
         api_obf = obfuscate_api_key(api_key_chars)
@@ -189,7 +161,7 @@ class ZIAClientHelper(ZIAClient):
         }
         resp = requests.request(
             "POST",
-            self.url + "/authenticatedSession",
+            self.url + "/auth",
             json=payload,
             headers=self.headers,
             timeout=self.timeout,
@@ -201,18 +173,11 @@ class ZIAClientHelper(ZIAClient):
         self.auth_details = resp.json()
         return resp
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        logger.debug("deauthenticating...")
-        self.deauthenticate()
-        
     def deauthenticate(self):
         """
-        Ends the ZIA authentication session.
+        Ends the ZCON authentication session.
         """
-        logout_url = self.url + "/authenticatedSession"
+        logout_url = self.url + "/auth"
 
         headers = self.headers.copy()
         headers.update({"Cookie": f"JSESSIONID={self.session_id}"})
@@ -228,9 +193,20 @@ class ZIAClientHelper(ZIAClient):
         except requests.RequestException as e:
             return False
 
+    def __enter__(self):
+        if self.is_session_expired():
+            resp = self.authenticate()
+            if resp.status_code > 299:
+                raise Exception(f"Error auth:{resp.json()}")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        logger.debug("deauthenticating...")
+        self.deauthenticate()
+
     def send(self, method, path, json=None, params=None, data=None, headers=None):
         """
-        Send a request to the ZIA API.
+        Send a request to the ZCON API.
 
         Parameters:
         - method (str): The HTTP method.
@@ -239,10 +215,7 @@ class ZIAClientHelper(ZIAClient):
         Returns:
         - Response: Response object from the request.
         """
-        is_sandbox = "zscsb" in path
         api = self.url
-        if is_sandbox:
-            api = f"https://csbapi.{self.env_cloud}.net"
         url = f"{api}/{path.lstrip('/')}"
         start_time = time.time()
         # Update headers to include the user agent
@@ -260,7 +233,7 @@ class ZIAClientHelper(ZIAClient):
             params,
             headers_with_user_agent,
             request_uuid,
-            body=not is_sandbox,
+            body=True,
         )
         # Check cache before sending request
         cache_key = self.cache.create_key(url, params)
@@ -354,7 +327,7 @@ class ZIAClientHelper(ZIAClient):
 
     def get(self, path, json=None, params=None):
         """
-        Send a GET request to the ZIA API.
+        Send a GET request to the ZCON API.
 
         Parameters:
         - path (str): API endpoint path.
@@ -403,7 +376,7 @@ class ZIAClientHelper(ZIAClient):
 
     def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
         """
-        Fetch paginated data from the ZIA API.
+        Fetch paginated data from the ZCON API.
         ...
 
         Returns:
@@ -458,178 +431,73 @@ class ZIAClientHelper(ZIAClient):
         return BoxList(ret_data), error_message
 
     @property
-    def admin_and_role_management(self):
+    def activation(self):
         """
-        The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+        The interface object for the :ref:`ZCON Activation Service`.
 
         """
-        return AdminAndRoleManagementAPI(self)
-
-    @property
-    def apptotal(self):
-        """
-        The interface object for the :ref:`ZIA AppTotal interface <zia-apptotal>`.
-
-        """
-        return AppTotalAPI(self)
+        return ActivationService(self)
 
     @property
-    def audit_logs(self):
+    def admin_roles(self):
         """
-        The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
+        The interface object for the :ref:`ZCON Admin Roles Service`.
 
         """
-        return AuditLogsAPI(self)
-
-    @property
-    def activate(self):
-        """
-        The interface object for the :ref:`ZIA Activation interface <zia-activate>`.
-
-        """
-        return ActivationAPI(self)
+        return AdminRolesService(self)
 
     @property
-    def dlp(self):
+    def admin_users(self):
         """
-        The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp>`.
-
-
-        """
-        return DLPAPI(self)
-
-    @property
-    def firewall(self):
-        """
-        The interface object for the :ref:`ZIA Firewall Policies interface <zia-firewall>`.
+        The interface object for the :ref:`ZCON Admin User Service`.
 
         """
-        return FirewallPolicyAPI(self)
+        return AdminUsersService(self)
 
     @property
-    def forwarding_control(self):
+    def ec_group(self):
         """
-        The interface object for the :ref:`ZIA Forwarding Control Policies interface <zia-forwarding_control>`.
+        The interface object for the :ref:`ZCON EC Group Service`.
 
         """
-        return ForwardingControlAPI(self)
-
-    @property
-    def labels(self):
-        """
-        The interface object for the :ref:`ZIA Rule Labels interface <zia-labels>`.
-
-        """
-        return RuleLabelsAPI(self)
+        return EcGroupService(self)
 
     @property
-    def device_management(self):
+    def location(self):
         """
-        The interface object for the :ref:`ZIA device interface <zia-device_management>`.
+        The interface object for the :ref:`ZCON Location Service`.
 
         """
-        return DeviceManagementAPI(self)
-
-    @property
-    def locations(self):
-        """
-        The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
-
-        """
-        return LocationsAPI(self)
+        return LocationService(self)
 
     @property
-    def sandbox(self):
+    def location_lite(self):
         """
-        The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
+        The interface object for the :ref:`ZCON Location Lite Service`.
 
         """
-        return CloudSandboxAPI(self)
-
-    @property
-    def security(self):
-        """
-        The interface object for the :ref:`ZIA Security Policy Settings interface <zia-security>`.
-
-        """
-        return SecurityPolicyAPI(self)
+        return LocationLiteService(self)
 
     @property
-    def authentication_settings(self):
+    def location_template(self):
         """
-        The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-authentication_settings>`.
+        The interface object for the :ref:`ZCON Location Template Service`.
 
         """
-        return AuthenticationSettingsAPI(self)
-
-    @property
-    def ssl(self):
-        """
-        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl_inspection>`.
-
-        """
-        return SSLInspectionAPI(self)
+        return LocationTemplateService(self)
 
     @property
-    def traffic(self):
+    def apikey_provisioning(self):
         """
-        The interface object for the :ref:`ZIA Traffic Forwarding interface <zia-traffic>`.
+        The interface object for the :ref:`ZCON API Key Provisioning Service`.
 
         """
-        return TrafficForwardingAPI(self)
-
-    @property
-    def url_categories(self):
-        """
-        The interface object for the :ref:`ZIA URL Categories interface <zia-url_categories>`.
-
-        """
-        return URLCategoriesAPI(self)
+        return APIKeyProvisioningService(self)
 
     @property
-    def url_filtering(self):
+    def public_cloud_account(self):
         """
-        The interface object for the :ref:`ZIA URL Filtering interface <zia-url_filtering>`.
+        The interface object for the :ref:`ZCON Public Cloud Account Service`.
 
         """
-        return URLFilteringAPI(self)
-
-    @property
-    def users(self):
-        """
-        The interface object for the :ref:`ZIA User Management interface <zia-users>`.
-
-        """
-        return UserManagementAPI(self)
-
-    @property
-    def web_dlp(self):
-        """
-        The interface object for the :ref:`ZIA Web DLP interface <zia-web_dlp>`.
-
-        """
-        return WebDLPAPI(self)
-
-    @property
-    def zpa_gateway(self):
-        """
-        The interface object for the :ref:`ZPA Gateway <zia-zpa_gateway>`.
-
-        """
-        return ZPAGatewayAPI(self)
-
-    @property
-    def isolation_profile(self):
-        """
-        The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-isolation_profile>`.
-
-        """
-        return IsolationProfileAPI(self)
-
-    @property
-    def workload_groups(self):
-        """
-        The interface object for the :ref:`ZIA Workload Groups <zia-workload_groups>`.
-
-        """
-        return WorkloadGroupsAPI(self)
+        return PublicCloudAccountService(self)
