@@ -30,6 +30,7 @@ from zscaler.zia import ZIAClient
 class URLFilteringAPI:
     # URL Filtering Policy rule keys that only require an ID to be provided.
     reformat_params = [
+        ("cbi_profile", "cbiProfile"),
         ("departments", "departments"),
         ("devices", "devices"),
         ("device_groups", "deviceGroups"),
@@ -40,6 +41,7 @@ class URLFilteringAPI:
         ("override_users", "overrideUsers"),
         ("override_groups", "overrideGroups"),
         ("time_windows", "timeWindows"),
+        ("workload_groups", "workloadGroups"),
         ("users", "users"),
     ]
 
@@ -54,7 +56,7 @@ class URLFilteringAPI:
             :obj:`BoxList`: The list of URL Filtering Policy rules.
 
         Examples:
-            >>> for rule in zia.url_filters.list_rules():
+            >>> for rule in zia.url_filtering.list_rules():
             ...    pprint(rule)
 
         """
@@ -74,7 +76,7 @@ class URLFilteringAPI:
             :obj:`Box`: The URL Filtering Policy rule.
 
         Examples:
-            >>> pprint(zia.url_filters.get_rule('977469'))
+            >>> pprint(zia.url_filtering.get_rule('977469'))
 
         """
 
@@ -86,8 +88,6 @@ class URLFilteringAPI:
         name: str,
         action: str,
         protocols: list,
-        # override_users: list,
-        # override_groups: list,
         **kwargs,
     ) -> Box:
         """
@@ -97,7 +97,6 @@ class URLFilteringAPI:
             rank (str): The admin rank of the user who creates the rule.
             name (str): The name of the rule.
             action (str): Action taken when traffic matches rule criteria. Accepted values are:
-
                 `ANY`, `NONE`, `BLOCK`, `CAUTION`, `ALLOW` and `ICAP_RESPONSE`
 
             device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
@@ -128,11 +127,16 @@ class URLFilteringAPI:
             override_groups (:obj:`list` of :obj:`int`): The IDs of groups that this rule can be overridden for.
                 Only applies if ``block_override`` is True and ``action`` is `BLOCK`.
             request_methods (list): The request methods that this rule will apply to. If not specified, the rule will
-                apply to all methods.
+                apply to all methods. Accepted values are:
+                `CONNECT`, `DELETE`, `GET`, `HEAD`, `OPTIONS`, `OTHER`, `POST`, `PUT`, `TRACE`
+            user_agent_types (list): User Agent types on which this rule will be applied. Accepted values are:
+                `OPERA`, `FIREFOX`, `MSIE`, `MSEDGE`, `CHROME`, `SAFARI`, `OTHER`, `MSCHREDGE`
             size_quota (str): Size quota in KB for applying the URL Filtering rule.
             time_quota (str): Time quota in minutes elapsed after the URL Filtering rule is applied.
             time_windows (list): The IDs for the time windows that this rule applies to.
             url_categories (list): The names of URL categories that this rule applies to.
+            url_categories2 (list): The names of URL categories that this rule applies to.
+                Note: The urlCategories and urlCategories2 parameters are connected with a logical AND operator
             users (list): The IDs for the users that this rule applies to.
             validity_start_time (str): Date and time the rule's effects will be valid from. ``enforce_time_validity``
                 must be set to `True` for this to take effect.
@@ -147,14 +151,14 @@ class URLFilteringAPI:
         Examples:
             Add a rule with the minimum required parameters:
 
-            >>> zia.url_filters.add_rule(rank='7',
+            >>> zia.url_filtering.add_rule(rank='7',
             ...    name="Empty URL Filter",
             ...    action="ALLOW",
             ...    protocols=['ANY_RULE']
 
             Add a rule to block HTTP POST to Social Media sites for the Finance department.
 
-            >>> zia.url_filters.add_rule(rank='7',
+            >>> zia.url_filtering.add_rule(rank='7',
             ...    name="Block POST to Social Media",
             ...    action="BLOCK",
             ...    protocols=["HTTP_PROXY", "HTTP_RULE", "HTTPS_RULE"],
@@ -208,13 +212,17 @@ class URLFilteringAPI:
         Keyword Args:
             name (str): The name of the rule.
             action (str): Action taken when traffic matches rule criteria. Accepted values are:
-
                 `ANY`, `NONE`, `BLOCK`, `CAUTION`, `ALLOW` and `ICAP_RESPONSE`
 
             device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
                 `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`, and `HIGH_TRUST`
 
             protocols (list): The protocol criteria for the rule.
+            request_methods (list): The request methods that this rule will apply to. If not specified, the rule will
+                apply to all methods. Accepted values are:
+                `CONNECT`, `DELETE`, `GET`, `HEAD`, `OPTIONS`, `OTHER`, `POST`, `PUT`, `TRACE`
+            user_agent_types (list): User Agent types on which this rule will be applied. Accepted values are:
+                `OPERA`, `FIREFOX`, `MSIE`, `MSEDGE`, `CHROME`, `SAFARI`, `OTHER`, `MSCHREDGE`
             block_override (bool): When set to true, a 'BLOCK' action triggered by the rule could be overridden.
                 Defaults to `False`.
             ciparule (bool): The CIPA compliance rule is enabled if this is set to `True`. Defaults to `False`.
@@ -237,12 +245,12 @@ class URLFilteringAPI:
             override_groups (:obj:`list` of :obj:`int`):
                 The IDs of groups that this rule can be overridden for.
                 Only applies if ``block_override`` is True and ``action`` is `BLOCK`.
-            request_methods (list): The request methods that this rule will apply to. If not specified, the rule will
-                apply to all methods.
             size_quota (str): Size quota in KB for applying the URL Filtering rule.
             time_quota (str): Time quota in minutes elapsed after the URL Filtering rule is applied.
             time_windows (list): The IDs for the time windows that this rule applies to.
             url_categories (list): The names of URL categories that this rule applies to.
+            url_categories2 (list): The names of URL categories that this rule applies to.
+                Note: The urlCategories and urlCategories2 parameters are connected with a logical AND operator
             users (list): The IDs for the users that this rule applies to.
             validity_start_time (str): Date and time the rule's effects will be valid from. ``enforce_time_validity``
                 must be set to `True` for this to take effect.
@@ -257,12 +265,12 @@ class URLFilteringAPI:
         Examples:
             Update the name of a URL Filtering Policy rule:
 
-            >>> zia.url_filters.update_rule('977467',
+            >>> zia.url_filtering.update_rule('977467',
             ...    name="Updated Name")
 
             Add GET to request methods and change action to ALLOW:
 
-            >>> zia.url_filters.update_rule('977468',
+            >>> zia.url_filtering.update_rule('977468',
             ...    request_methods=['POST', 'GET'],
             ...    action="ALLOW")
 
@@ -300,7 +308,7 @@ class URLFilteringAPI:
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.url_filters.delete_rule('977463')
+            >>> zia.url_filtering.delete_rule('977463')
 
         """
         return self.rest.delete(f"urlFilteringRules/{rule_id}").status_code
