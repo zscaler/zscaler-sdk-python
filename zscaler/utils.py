@@ -162,6 +162,18 @@ def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
                 # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
                 if isinstance(value, list):
                     payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
+            elif key == "cbi_profile":
+                # Special handling for cbi_profile
+                if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
+                    payload[payload_key] = {
+                        "id": value["id"],
+                        "name": value["name"],
+                        "url": value["url"]
+                    }
+            elif key == "cloud_app_risk_profile":
+                # Special handling for cloudAppRiskProfile
+                if isinstance(value, dict) and "id" in value:
+                    payload[payload_key] = {"id": value["id"]}
             else:
                 # General case for ID transformations
                 if isinstance(value, list):
