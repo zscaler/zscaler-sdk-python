@@ -33,3 +33,4 @@ __version__ = "0.6.2"
 
 from zscaler.zia import ZIAClientHelper  # noqa
 from zscaler.zpa import ZPAClientHelper  # noqa
+from zscaler.zdx import ZDXClientHelper  # noqa
