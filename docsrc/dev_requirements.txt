@@ -1,5 +1,5 @@
 furo==2024.7.18
-pre-commit==3.7.1
+pre-commit==3.8.0
 pytest==8.2.2
 python-box==7.2.0
 restfly==1.4.7
