@@ -36,6 +36,7 @@ from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
+from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.isolation_profile import IsolationProfileAPI
 from zscaler.zia.labels import RuleLabelsAPI
 from zscaler.zia.locations import LocationsAPI
@@ -586,6 +587,14 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return URLFilteringAPI(self)
+
+    @property
+    def cloudappcontrol(self):
+        """
+        The interface object for the :ref:`ZIA Cloud App Control <zia-cloudappcontrol>`.
+
+        """
+        return CloudAppControlAPI(self)
 
     @property
     def users(self):

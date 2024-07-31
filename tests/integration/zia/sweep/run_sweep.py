@@ -95,6 +95,29 @@ class TestSweepUtility:
             raise
 
     @suppress_warnings
+    def sweep_cloud_app_control_rule(self, rule_type: str):
+        logging.info("Starting to sweep cloud app control rule")
+        try:
+            rules = self.client.cloudappcontrol.list_rules(rule_type)
+            test_rules = [fw for fw in rules if fw["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_rules)} cloud app control rules to delete.")
+
+            for rule in test_rules:
+                logging.info(
+                    f"sweep_cloud_app_control_rule: Attempting to delete cloud app control rule: Name='{rule['name']}', ID='{rule['id']}'"
+                )
+                response_code = self.client.cloudappcontrol.delete_rule(rule_type, rule["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted cloud app control rule with ID: {rule['id']}, Name: {rule['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete cloud app control rule with ID: {rule['id']}, Name: {rule['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping cloud app control rules: {str(e)}")
+            raise
+
+    @suppress_warnings
     def sweep_cloud_firewall_ip_source_group(self):
         logging.info("Starting to sweep cloud firewall ip source group")
         try:
