@@ -34,7 +34,7 @@ class TestSweepUtility:
             self.sweep_pra_console,
             self.sweep_app_segments,
             self.sweep_microtenant,
-            self.sweep_segment_group,
+            # self.sweep_segment_group,
             self.sweep_server_group,
             self.sweep_provisioning_key,
             self.sweep_lss_controller,
@@ -230,28 +230,28 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping app segments: {str(e)}")
             raise
 
-    @suppress_warnings
-    def sweep_segment_group(self):
-        logging.info("Starting to sweep segment group")
-        try:
-            segment_groups = self.client.segment_groups.list_groups()
-            test_groups = [grp for grp in segment_groups if grp["name"].startswith("tests-")]
-            logging.info(f"Found {len(test_groups)} segment group to delete.")
+    # @suppress_warnings
+    # def sweep_segment_group(self):
+    #     logging.info("Starting to sweep segment group")
+    #     try:
+    #         segment_groups = self.client.segment_groups.list_groups()
+    #         test_groups = [grp for grp in segment_groups if grp["name"].startswith("tests-")]
+    #         logging.info(f"Found {len(test_groups)} segment group to delete.")
 
-            for group in test_groups:
-                logging.info(
-                    f"sweep_segment_group: Attempting to delete segment group: Name='{group['name']}', ID='{group['id']}'"
-                )
-                response_code = self.client.segment_groups.delete_group(group_id=group["id"])
-                if response_code == 204:
-                    logging.info(f"Successfully deleted segment group with ID: {group['id']}, Name: {group['name']}")
-                else:
-                    logging.error(
-                        f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
-                    )
-        except Exception as e:
-            logging.error(f"An error occurred while sweeping segment groups: {str(e)}")
-            raise
+    #         for group in test_groups:
+    #             logging.info(
+    #                 f"sweep_segment_group: Attempting to delete segment group: Name='{group['name']}', ID='{group['id']}'"
+    #             )
+    #             response_code = self.client.segment_groups.delete_group(group_id=group["id"])
+    #             if response_code == 204:
+    #                 logging.info(f"Successfully deleted segment group with ID: {group['id']}, Name: {group['name']}")
+    #             else:
+    #                 logging.error(
+    #                     f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+    #                 )
+    #     except Exception as e:
+    #         logging.error(f"An error occurred while sweeping segment groups: {str(e)}")
+    #         raise
 
     @suppress_warnings
     def sweep_server_group(self):
@@ -311,27 +311,29 @@ class TestSweepUtility:
 
     @suppress_warnings
     def sweep_lss_controller(self):
-        logging.info("Starting to sweep lss controller")
+        logging.info("Starting to sweep LSS controllers")
         try:
             list_controllers = self.client.lss.list_configs()
-            test_controllers = [lss for lss in list_controllers if lss["name"].startswith("tests-")]
-            logging.info(f"Found {len(test_controllers)} lss controllers to delete.")
+            test_controllers = [
+                lss for lss in list_controllers if lss["config"]["name"].startswith("tests-")
+            ]
+            logging.info(f"Found {len(test_controllers)} LSS controllers to delete.")
 
             for controller in test_controllers:
                 logging.info(
-                    f"sweep_lss_controller: Attempting to delete lss controller: Name='{controller['name']}', ID='{controller['id']}'"
+                    f"sweep_lss_controller: Attempting to delete LSS controller: Name='{controller['config']['name']}', ID='{controller['id']}'"
                 )
                 response_code = self.client.lss.delete_lss_config(lss_config_id=controller["id"])
                 if response_code == 204:
                     logging.info(
-                        f"Successfully deleted lss controller with ID: {controller['id']}, Name: {controller['name']}"
+                        f"Successfully deleted LSS controller with ID: {controller['id']}, Name: {controller['config']['name']}"
                     )
                 else:
                     logging.error(
-                        f"Failed to delete lss controller with ID: {controller['id']}, Name: {controller['name']} - Status code: {response_code}"
+                        f"Failed to delete LSS controller with ID: {controller['id']}, Name: {controller['config']['name']} - Status code: {response_code}"
                     )
         except Exception as e:
-            logging.error(f"An error occurred while sweeping lss controllers: {str(e)}")
+            logging.error(f"An error occurred while sweeping LSS controllers: {str(e)}")
             raise
 
     @suppress_warnings
