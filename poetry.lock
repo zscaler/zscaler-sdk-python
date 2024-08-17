@@ -1814,6 +1814,22 @@ files = [
 
 [[package]]
 name = "urllib3"
+version = "1.26.19"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+files = [
+    {file = "urllib3-1.26.19-py2.py3-none-any.whl", hash = "sha256:37a0344459b199fce0e80b0d3569837ec6b6937435c5244e7fd73fa6006830f3"},
+    {file = "urllib3-1.26.19.tar.gz", hash = "sha256:3e3d753a8618b86d7de333b4223005f68720bcd6a7d2bcb9fbd2229ec7c1e429"},
+]
+
+[package.extras]
+brotli = ["brotli (==1.0.9)", "brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
+socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+
+[[package]]
+name = "urllib3"
 version = "2.2.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
@@ -1850,33 +1866,18 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 
 [[package]]
 name = "vcrpy"
-version = "4.3.0"
-description = "Automatically mock your HTTP interactions to simplify and speed up testing"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "vcrpy-4.3.0-py2.py3-none-any.whl", hash = "sha256:8fbd4be412e8a7f35f623dd61034e6380a1c8dbd0edf6e87277a3289f6e98093"},
-    {file = "vcrpy-4.3.0.tar.gz", hash = "sha256:49c270ce67e826dba027d83e20d25b67a5885487697e97bca6dbdf53d750a0ac"},
-]
-
-[package.dependencies]
-PyYAML = "*"
-six = ">=1.5"
-wrapt = "*"
-yarl = "*"
-
-[[package]]
-name = "vcrpy"
 version = "6.0.1"
 description = "Automatically mock your HTTP interactions to simplify and speed up testing"
 optional = false
 python-versions = ">=3.8"
 files = [
+    {file = "vcrpy-6.0.1-py2.py3-none-any.whl", hash = "sha256:621c3fb2d6bd8aa9f87532c688e4575bcbbde0c0afeb5ebdb7e14cac409edfdd"},
     {file = "vcrpy-6.0.1.tar.gz", hash = "sha256:9e023fee7f892baa0bbda2f7da7c8ac51165c1c6e38ff8688683a12a4bde9278"},
 ]
 
 [package.dependencies]
 PyYAML = "*"
+urllib3 = {version = "<2", markers = "platform_python_implementation == \"PyPy\" or python_version < \"3.10\""}
 wrapt = "*"
 yarl = "*"
 
@@ -2291,4 +2292,4 @@ dev = ["aenum", "black", "pydash"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "670f361d4f922eea6c59e6a9a11000258ef8bb80e8394869feee9a35ed64e095"
+content-hash = "36c5726698603b55c8fbf87d521db1c6b98a3c8b51eed691bdc179a548bfb3bc"
