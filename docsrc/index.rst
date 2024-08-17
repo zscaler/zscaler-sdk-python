@@ -8,6 +8,7 @@
 
    zs/zia/index
    zs/zpa/index
+   zs/zcon/index
    zs/zdx/index
    zs/guides/index
 
@@ -49,6 +50,7 @@ This repository contains the Zscaler SDK for Python. This SDK can be used to int
 
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+- :doc:`Zscaler Cloud Connector Portal (ZCON) <zs/zcon/index>`
 - :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
 
 * `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
@@ -94,6 +96,18 @@ Quick ZPA Example
     zpa = ZPAClientHelper(client_id='ZPA_CLIENT_ID', client_secret='ZPA_CLIENT_SECRET', customer_id='ZPA_CUSTOMER_ID')
     for app_segment in zpa.app_segments.list_segments():
         pprint(app_segment)
+
+Quick ZCON Example
+^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from zscaler import ZCONClientHelper
+    from pprint import pprint
+
+    zcon = ZCON(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+    for group in zcon.location.get():
+        pprint(group)
 
 .. automodule:: zscaler
    :members:

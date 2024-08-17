@@ -29,8 +29,9 @@ __license__ = "MIT"
 __contributors__ = [
     "William Guilherme",
 ]
-__version__ = "0.6.2"
+__version__ = "0.7.0"
 
+from zscaler.zdx import ZDXClientHelper  # noqa
 from zscaler.zia import ZIAClientHelper  # noqa
 from zscaler.zpa import ZPAClientHelper  # noqa
-from zscaler.zdx import ZDXClientHelper  # noqa
+from zscaler.zcon import ZCONClientHelper  # noqa
