@@ -52,7 +52,7 @@ class DLPAPI:
         if isinstance(list, Response):
             return None
         return list
-    
+
     def get_dict(self, dict_id: str) -> Box:
         """
         Returns the DLP Dictionary that matches the specified DLP Dictionary id.
@@ -398,13 +398,7 @@ class DLPAPI:
         else:
             return response
 
-    def add_dlp_engine(
-        self,
-        name: str,
-        engine_expression=None,
-        custom_dlp_engine=None,
-        **kwargs
-    ) -> Box:
+    def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, **kwargs) -> Box:
         """
         Adds a new dlp engine.
         Args:
@@ -888,7 +882,7 @@ class DLPAPI:
         if isinstance(response, Response):
             return None
         return response
-    
+
     def list_edm_schema_lite(self, schema_name: str = None, active_only: bool = None, fetch_tokens: bool = None) -> BoxList:
         """
         Returns the list of active EDM templates (or EDM schemas) and their criteria (or token details), only.
@@ -911,11 +905,11 @@ class DLPAPI:
         """
         params = {}
         if schema_name is not None:
-            params['schemaName'] = schema_name
+            params["schemaName"] = schema_name
         if active_only is not None:
-            params['activeOnly'] = active_only
+            params["activeOnly"] = active_only
         if fetch_tokens is not None:
-            params['fetchTokens'] = fetch_tokens
+            params["fetchTokens"] = fetch_tokens
 
         response = self.rest.get("/dlpExactDataMatchSchemas/lite", params=params)
         if isinstance(response, Response):
