@@ -47,13 +47,63 @@ class URLCategoriesAPI:
         if len(urls) > 100:
             results = BoxList()
             for chunk in chunker(urls, 100):
-                results.extend(self._post("urlLookup", json=chunk))
+                results.extend(self.rest.post("urlLookup", json=chunk))
                 time.sleep(1)
             return results
 
         else:
             payload = urls
             return self.rest.post("urlLookup", json=payload)
+
+    def review_domains_post(self, urls: list) -> BoxList:
+        """
+        For the specified list of URLs, finds matching entries present in existing custom URL categories.
+        This endpoint allows you to review URLs for potential matches in existing categories to group related entries in a single category.
+
+        Args:
+            urls (list): A list of URLs to perform a category lookup on. Maximum 100 URLs per request.
+
+        Returns:
+            :obj:`BoxList`: A list of URL category reports.
+
+        Examples:
+            >>> zia.url_categories.review_domains_post(['example.com', 'test.com'])
+        """
+
+        if len(urls) > 100:
+            results = BoxList()
+            for chunk in chunker(urls, 100):
+                response = self.rest.post("urlCategories/review/domains", json=chunk)
+                results.extend(response)
+                time.sleep(1)
+            return results
+        else:
+            return self.rest.post("urlCategories/review/domains", json=urls)
+
+    def review_domains_put(self, urls: list) -> BoxList:
+        """
+        Adds the list of matching URLs fetched by POST via the review_domains_post method.
+
+        Args:
+            urls (list): A list of URLs to perform a category lookup on. Maximum 100 URLs per request.
+
+        Returns:
+            :obj:`BoxList`: A list of URL category reports.
+
+        Examples:
+            >>> zia.url_categories.review_domains_put(['example.com', 'test.com'])
+        """
+
+        if len(urls) > 100:
+            results = BoxList()
+            for chunk in chunker(urls, 100):
+                response = self.rest.put("urlCategories/review/domains", json=chunk)
+                results.extend(response)
+                time.sleep(1)
+            return results
+        else:
+            return self.rest.put("urlCategories/review/domains", json=urls)
+
 
     def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
         """
@@ -86,6 +136,19 @@ class URLCategoriesAPI:
         return self.rest.get("urlCategories", params=payload)
 
     def get_category_by_name(self, name):
+        """
+        Retrieves a specific custom url category by its name.
+
+        Args:
+            name (str): The name of the custom url category to retrieve.
+
+        Returns:
+            :obj:`Box`: The custom url category if found, otherwise None.
+
+        Examples:
+            >>> category = zia.url_categories.get_category_by_name('Financial_Sites')
+            ...    print(category)
+        """
         categories = self.list_categories()
         for category in categories:
             if category.get("configured_name") == name:
@@ -101,7 +164,6 @@ class URLCategoriesAPI:
 
         Examples:
             >>> zia.url_categories.get_quota()
-
         """
 
         return self.rest.get("urlCategories/urlQuota")
