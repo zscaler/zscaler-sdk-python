@@ -207,7 +207,7 @@ class ZIAClientHelper(ZIAClient):
     def __exit__(self, exc_type, exc_val, exc_tb):
         logger.debug("deauthenticating...")
         self.deauthenticate()
-        
+
     def deauthenticate(self):
         """
         Ends the ZIA authentication session.
