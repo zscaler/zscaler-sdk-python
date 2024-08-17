@@ -1,0 +1,142 @@
+---
+    # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+    # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+    
+    name: ZCON Test
+    on:
+      pull_request:
+        types: [opened, synchronize]
+      merge_group:
+        types: [checks_requested]
+      push:
+        branches:
+          - master
+      schedule:
+        - cron: "0 14 * * 1-5" # UTC
+      workflow_dispatch:
+    
+    jobs:
+      zcon-beta-tenants:
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.10"]
+            environment:
+              - ZCON_ZSCALER_BETA
+        environment: ${{ matrix.environment }}
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+            with:
+              token: ${{ secrets.GITHUB_TOKEN }}
+    
+          - name: Set up Python ${{ matrix.python-version }}
+            uses: actions/setup-python@v5
+            with:
+              python-version: ${{ matrix.python-version }}
+    
+          - name: Install Poetry
+            uses: Gr1N/setup-poetry@v9
+            with:
+              poetry-version: 1.8.3
+    
+          - name: Get poetry cache directory
+            id: poetry-cache
+            run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+    
+          - name: Cache poetry dependencies
+            uses: actions/cache@v4
+            with:
+              path: ${{ steps.poetry-cache.outputs.dir }}
+              key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+              restore-keys: |
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+    
+          - name: Install dependencies
+            run: poetry install
+    
+          - name: Lint with flake8
+            run: |
+              poetry run make lint:zcon
+    
+          - name: Run Pytest
+            uses: nick-fields/retry@v3
+            with:
+              max_attempts: 3
+              timeout_minutes: 45
+              command: |
+                poetry run make coverage:zcon
+            env:
+              ZCON_USERNAME: ${{ secrets.ZCON_USERNAME }}
+              ZCON_PASSWORD: ${{ secrets.ZCON_PASSWORD }}
+              ZCON_API_KEY: ${{ secrets.ZCON_API_KEY }}
+              ZCON_CLOUD: ${{ secrets.ZCON_CLOUD }}
+              ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
+    
+      zcon-tests-tenants:
+        needs: [zcon-beta-tenants]
+        runs-on: ubuntu-latest
+        strategy:
+          fail-fast: false
+          matrix:
+            python-version: ["3.10"]
+            environment:
+                - ZCON_ZSCLOUD
+                - ZCON_ZSCALER_THREE
+        environment: ${{ matrix.environment }}
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+            with:
+              token: ${{ secrets.GITHUB_TOKEN }}
+    
+          - name: Set up Python ${{ matrix.python-version }}
+            uses: actions/setup-python@v5
+            with:
+              python-version: ${{ matrix.python-version }}
+    
+          - name: Install Poetry
+            uses: Gr1N/setup-poetry@v9
+            with:
+              poetry-version: 1.8.3
+    
+          - name: Get poetry cache directory
+            id: poetry-cache
+            run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+    
+          - name: Cache poetry dependencies
+            uses: actions/cache@v4
+            with:
+              path: ${{ steps.poetry-cache.outputs.dir }}
+              key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+              restore-keys: |
+                ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+    
+          - name: Install dependencies
+            run: poetry install
+    
+          - name: Lint with flake8
+            run: |
+              poetry run make lint:zcon
+    
+          - name: Run Pytest
+            uses: nick-fields/retry@v3
+            with:
+              max_attempts: 3
+              timeout_minutes: 45
+              command: |
+                poetry run make coverage:zcon
+            env:
+              ZCON_USERNAME: ${{ secrets.ZCON_USERNAME }}
+              ZCON_PASSWORD: ${{ secrets.ZCON_PASSWORD }}
+              ZCON_API_KEY: ${{ secrets.ZCON_API_KEY }}
+              ZCON_CLOUD: ${{ secrets.ZCON_CLOUD }}
+              ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
+              
+          - name: Publish test coverage
+            uses: codecov/codecov-action@v4
+            with:
+              token: ${{ secrets.CODECOV_TOKEN }}
+              file: ./coverage.xml
+              fail_ci_if_error: true
