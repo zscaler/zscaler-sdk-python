@@ -126,9 +126,7 @@
               max_attempts: 3
               timeout_minutes: 45
               command: |
-                poetry run make sweep:zcon
                 poetry run make coverage:zcon
-                poetry run make sweep:zcon
             env:
               ZCON_USERNAME: ${{ secrets.ZCON_USERNAME }}
               ZCON_PASSWORD: ${{ secrets.ZCON_PASSWORD }}
