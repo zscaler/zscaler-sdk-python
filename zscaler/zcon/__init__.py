@@ -40,16 +40,13 @@ from zscaler.utils import (
     obfuscate_api_key,
     retry_with_backoff,
 )
-from zscaler.zcon.activation import ActivationService
-from zscaler.zcon.adminroles import AdminRolesService
-from zscaler.zcon.adminusers import AdminUsersService
-from zscaler.zcon.api_keys_provisioning import APIKeyProvisioningService
+
 from zscaler.zcon.client import ZCONClient
-from zscaler.zcon.ecgroup import EcGroupService
-from zscaler.zcon.location import LocationService
-from zscaler.zcon.location_lite import LocationLiteService
-from zscaler.zcon.location_template import LocationTemplateService
-from zscaler.zcon.public_cloud_account import PublicCloudAccountService
+from zscaler.zcon.activation import ActivationAPI
+from zscaler.zcon.admin_and_role_management import AdminAndRoleManagementAPI
+from zscaler.zcon.provisioning import ProvisioningAPI
+from zscaler.zcon.ecgroups import EcGroupAPI
+from zscaler.zcon.locations import LocationAPI
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -89,6 +86,7 @@ class ZCONClientHelper(ZCONClient):
         # URL construction
         self.url = f"https://connector.{self.env_cloud}.net/api/v1"
         self.conv_box = True
+        self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
@@ -141,7 +139,9 @@ class ZCONClientHelper(ZCONClient):
         if self.auth_details is None:
             return True
         now = datetime.datetime.now()
-        if self.auth_details["passwordExpiryTime"] > 0 and (self.session_refreshed - self.session_timeout_offset < now):
+        if self.auth_details["passwordExpiryTime"] > 0 and (
+            self.session_refreshed + datetime.timedelta(seconds=-self.session_timeout_offset) < now
+        ):
             return True
         return False
 
@@ -336,37 +336,52 @@ class ZCONClientHelper(ZCONClient):
         - Response: Response object from the request.
         """
 
-        # Use rate limiter before making a request
         should_wait, delay = self.rate_limiter.wait("GET")
         if should_wait:
             time.sleep(delay)
-
-        # Now proceed with sending the request
-        resp = self.send("GET", path, json, params)
-        formatted_resp = format_json_response(resp, box_attrs=dict())
-        return formatted_resp
-
-    def put(self, path, json=None, params=None):
-        should_wait, delay = self.rate_limiter.wait("PUT")
-        if should_wait:
-            time.sleep(delay)
-        resp = self.send("PUT", path, json, params)
-        formatted_resp = format_json_response(resp, box_attrs=dict())
-        return formatted_resp
+        response = self.send("GET", path, json, params)
+        if not response.ok:
+            raise Exception(f"GET request failed with status {response.status_code}: {response.json()}")
+        return format_json_response(response, box_attrs=dict())
 
     def post(self, path, json=None, params=None, data=None, headers=None):
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
-        resp = self.send("POST", path, json, params, data=data, headers=headers)
-        formatted_resp = format_json_response(resp, box_attrs=dict())
-        return formatted_resp
+        response = self.send("POST", path, json, params, data=data, headers=headers)
+        if not response.ok:
+            raise Exception(f"POST request failed with status {response.status_code}: {response.json()}")
+        return format_json_response(response, box_attrs=dict())
+
+    def put(self, path, json=None, params=None):
+        should_wait, delay = self.rate_limiter.wait("PUT")
+        if should_wait:
+            time.sleep(delay)
+        response = self.send("PUT", path, json, params)
+
+        # Handle 204 No Content separately
+        if response.status_code == 204:
+            return response
+
+        # Handle 200 OK with content
+        if response.status_code == 200 and response.headers.get("content-type", "").startswith("application/json"):
+            return format_json_response(response, box_attrs=dict())
+
+        # Raise an exception for any other unexpected status codes
+        if not response.ok:
+            raise Exception(f"PUT request failed with status {response.status_code}: {response.json()}")
+
+        return response
 
     def delete(self, path, json=None, params=None):
         should_wait, delay = self.rate_limiter.wait("DELETE")
         if should_wait:
             time.sleep(delay)
-        return self.send("DELETE", path, json, params)
+        response = self.send("DELETE", path, json, params)
+        if not response.ok:
+            raise Exception(f"DELETE request failed with status {response.status_code}: {response.json()}")
+        # Since DELETE typically returns 204 No Content, we don't need to format the response.
+        return response
 
     ERROR_MESSAGES = {
         "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
@@ -433,71 +448,39 @@ class ZCONClientHelper(ZCONClient):
     @property
     def activation(self):
         """
-        The interface object for the :ref:`ZCON Activation Service`.
+        The interface object for the :ref:`ZCON Activation Service <zcon-activation>`.
 
         """
-        return ActivationService(self)
-
-    @property
-    def admin_roles(self):
-        """
-        The interface object for the :ref:`ZCON Admin Roles Service`.
-
-        """
-        return AdminRolesService(self)
+        return ActivationAPI(self)
 
     @property
-    def admin_users(self):
+    def admin_and_role_management(self):
         """
-        The interface object for the :ref:`ZCON Admin User Service`.
+        The interface object for the :ref:`ZCON Admin and Role Management interface <zcon-admin_and_role_management>`.
 
         """
-        return AdminUsersService(self)
-
-    @property
-    def ec_group(self):
-        """
-        The interface object for the :ref:`ZCON EC Group Service`.
-
-        """
-        return EcGroupService(self)
+        return AdminAndRoleManagementAPI(self)
 
     @property
-    def location(self):
+    def ecgroups(self):
         """
-        The interface object for the :ref:`ZCON Location Service`.
+        The interface object for the :ref:`ZCON EC Group Service <zcon-ecgroups>`.
 
         """
-        return LocationService(self)
-
-    @property
-    def location_lite(self):
-        """
-        The interface object for the :ref:`ZCON Location Lite Service`.
-
-        """
-        return LocationLiteService(self)
+        return EcGroupAPI(self)
 
     @property
-    def location_template(self):
+    def locations(self):
         """
-        The interface object for the :ref:`ZCON Location Template Service`.
+        The interface object for the :ref:`ZCON Location Service <zcon-locations>`.
 
         """
-        return LocationTemplateService(self)
-
-    @property
-    def apikey_provisioning(self):
-        """
-        The interface object for the :ref:`ZCON API Key Provisioning Service`.
-
-        """
-        return APIKeyProvisioningService(self)
+        return LocationAPI(self)
 
     @property
-    def public_cloud_account(self):
+    def provisioning(self):
         """
-        The interface object for the :ref:`ZCON Public Cloud Account Service`.
+        The interface object for the :ref:`ZCON API Key Provisioning Service <zcon-provisioning>`.
 
         """
-        return PublicCloudAccountService(self)
+        return ProvisioningAPI(self)

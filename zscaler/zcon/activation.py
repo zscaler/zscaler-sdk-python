@@ -13,96 +13,50 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Dict, Any, Optional, Union
-
-from requests import Response
-
-from zscaler.utils import snake_to_camel
+from box import Box
 from zscaler.zcon.client import ZCONClient
 
 
-class ECAdminActivation:
-    def __init__(
-        self,
-        org_edit_status: Optional[str] = None,
-        org_last_activate_status: Optional[str] = None,
-        admin_status_map: Optional[Dict[str, Any]] = None,
-        admin_activate_status: Optional[str] = None,
-    ):
-        self.org_edit_status = org_edit_status
-        self.org_last_activate_status = org_last_activate_status
-        self.admin_status_map = admin_status_map
-        self.admin_activate_status = admin_activate_status
-
-    def to_api_payload(self):
-        payload = {}
-        for key, value in self.__dict__.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
-        return payload
-
-
-class ActivationService:
-    ec_admin_activate_status_endpoint = "/ecAdminActivateStatus"
-    ec_admin_activate_endpoint = "/ecAdminActivateStatus/activate"
-    ec_admin_force_activate_endpoint = "/ecAdminActivateStatus/forcedActivate"
-
+class ActivationAPI:
     def __init__(self, client: ZCONClient):
-        self.client = client
+        self.rest = client
 
-    def _check_response(self, response: Response) -> Union[None, dict]:
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code > 299:
-                raise Exception(f"Request failed with status code: {status_code}")
-        return response
-
-    def get_activation_status(self) -> Optional[ECAdminActivation]:
+    def activate(self, force: bool = False) -> Box:
         """
-        Returns the activation status for a configuration change.
+        Activate the configuration.
+
+        Args:
+            force (bool): If set to True, forces the activation. Default is False.
 
         Returns:
-            :obj:`str`
-                Configuration status.
+            :obj:`Box`: The status code of the operation.
 
         Examples:
-            >>> status = zcon.activation.get_activation_status()
+            Activate the configuration without forcing::
+
+                zcon.config.activate()
+
+            Forcefully activate the configuration::
+
+                zcon.config.activate(force=True)
 
         """
-        response = self.client.get(self.ec_admin_activate_status_endpoint)
-        data = self._check_response(response)
-        return ECAdminActivation(**data)
+        if force:
+            return self.rest.put("ecAdminActivateStatus/forcedActivate")
+        else:
+            return self.rest.put("ecAdminActivateStatus/activate")
 
-    def update_activation_status(self, activation: ECAdminActivation) -> Optional[ECAdminActivation]:
+    def get_status(self):
         """
-        Activates configuration changes.
+        Get the status of the configuration.
 
         Returns:
-            :obj:`str`
-                Activates configuration changes.
+            :obj:`Box`: The status of the configuration.
 
         Examples:
-            >>> activate = zcon.activation.update_activation_status()
+            Get the status of the configuration::
+
+                print(zcon.config.get_status())
 
         """
-        payload = activation.to_api_payload()
-        response = self.client.put(self.ec_admin_activate_endpoint, json=payload)
-        data = self._check_response(response)
-        return ECAdminActivation(**data)
-
-    def force_activation_status(self, activation: ECAdminActivation) -> Optional[ECAdminActivation]:
-        """
-        Force activates configuration changes.
-
-        Returns:
-            :obj:`str`
-                Force activates.
-
-        Examples:
-            >>> activate = zcon.activation.force_activation_status()
-
-        """
-        payload = activation.to_api_payload()
-        response = self.client.put(self.ec_admin_force_activate_endpoint, json=payload)
-        data = self._check_response(response)
-        return ECAdminActivation(**data)
+        return self.rest.get("ecAdminActivateStatus")
