@@ -139,10 +139,6 @@ coverage\:zia:
 coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
 
-sweep\:zcon:
-	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
-	ZCON_SDK_TEST_SWEEP=true python tests/integration/zcon/sweep/run_sweep.py --sweep
-
 sweep\:zia:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZIA_SDK_TEST_SWEEP=true python tests/integration/zia/sweep/run_sweep.py --sweep

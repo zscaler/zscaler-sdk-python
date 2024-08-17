@@ -75,7 +75,7 @@
               ZSCALER_CLIENT_CACHE_ENABLED: ${{ secrets.ZSCALER_CLIENT_CACHE_ENABLED }}
     
       zcon-tests-tenants:
-        # needs: [zcon-beta-tenants]
+        needs: [zcon-beta-tenants]
         runs-on: ubuntu-latest
         strategy:
           fail-fast: false
