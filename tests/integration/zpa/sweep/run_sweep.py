@@ -314,9 +314,7 @@ class TestSweepUtility:
         logging.info("Starting to sweep LSS controllers")
         try:
             list_controllers = self.client.lss.list_configs()
-            test_controllers = [
-                lss for lss in list_controllers if lss["config"]["name"].startswith("tests-")
-            ]
+            test_controllers = [lss for lss in list_controllers if lss["config"]["name"].startswith("tests-")]
             logging.info(f"Found {len(test_controllers)} LSS controllers to delete.")
 
             for controller in test_controllers:

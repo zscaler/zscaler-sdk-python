@@ -71,6 +71,17 @@ class TestSegmentGroup:
         except Exception as exc:
             errors.append(exc)
 
+        # REQUIRES DEPLOYMENT OF ET-76506 IN PRODUCTION BEFORE ENABLING IT.
+        # try:
+        #     # Update the segment group
+        #     updated_name = segment_group_name + " Updated"
+        #     client.segment_groups.update_group_v2(group_id, name=updated_name)
+
+        #     updated_group = client.segment_groups.get_group(group_id)
+        #     assert updated_group.name == updated_name
+        # except Exception as exc:
+        #     errors.append(exc)
+
         try:
             # List segment groups and ensure the updated group is in the list
             groups_list = client.segment_groups.list_groups()

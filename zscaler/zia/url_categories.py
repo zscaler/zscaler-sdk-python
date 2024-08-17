@@ -104,7 +104,6 @@ class URLCategoriesAPI:
         else:
             return self.rest.put("urlCategories/review/domains", json=urls)
 
-
     def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
         """
         Returns information on URL categories.

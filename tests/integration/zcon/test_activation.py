@@ -48,7 +48,7 @@ class TestActivation:
                 "CAC_ACTV_SUPERADMIN",
                 "CAC_ACTV_AUTOSYNC",
                 "CAC_ACTV_TIMER",
-                "CAC_ACTV_SESSION_LOGOUT"
+                "CAC_ACTV_SESSION_LOGOUT",
             ], f"Unexpected org_last_activate_status: {status.org_last_activate_status}"
         except Exception as e:
             errors.append(f"Failed to get activation status: {e}")
