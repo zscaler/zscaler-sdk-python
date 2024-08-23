@@ -130,7 +130,7 @@ class CloudAppControlAPI:
             if rule.get("name") == rule_name:
                 return rule
         return None
-    
+
     def add_rule(self, rule_type: str, name: str, **kwargs) -> Box:
         """
         Adds a new cloud app control filter rule.
