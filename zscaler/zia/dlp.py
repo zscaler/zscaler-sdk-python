@@ -890,7 +890,7 @@ class DLPAPI:
         Args:
             schema_name (str): The EDM schema name.
             active_only (bool): If set to true, only active EDM templates (or schemas) are returned in the response.
-            fetch_tokens (bool): If set to true, the criteria (i.e., token details) for the active templates are returned in the response.
+            fetch_tokens (bool): If set to true, the criteria for the active templates are returned in the response.
 
         Returns:
             :obj:`BoxList`: A list containing ZIA DLP Engines.
