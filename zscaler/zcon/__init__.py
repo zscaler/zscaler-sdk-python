@@ -67,7 +67,7 @@ class ZCONClientHelper(ZCONClient):
     """
 
     _vendor = "Zscaler"
-    _product = "Zscaler CON Cloud"
+    _product = "Zscaler Cloud and Branch Connector"
     _build = __version__
     _env_base = "ZCON"
     env_cloud = "zscaler"
