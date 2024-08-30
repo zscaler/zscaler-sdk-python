@@ -173,6 +173,49 @@ class SegmentGroupsAPI:
         if not isinstance(resp, Response):
             return self.get_group(group_id)
 
+    # REQUIRES DEPLOYMENT OF ET-76506 IN PRODUCTION BEFORE ENABLING IT.
+    def update_group_v2(self, group_id: str, **kwargs) -> Box:
+        """
+        Updates an existing segment group using v2 endpoint.
+
+        Args:
+            group_id (str): The unique identifier for the segment group to be updated.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            name (str): The name of the new segment group.
+            enabled (bool): Enable the segment group.
+            application_ids (:obj:`list` of :obj:`dict`): Unique application IDs to associate with the segment group.
+            config_space (str): The config space for the segment group. Can either be DEFAULT or SIEM.
+            description (str): A description for the segment group.
+            policy_migrated (bool):
+            microtenant_id (str): The microtenant ID to be used for this request.
+
+        Returns:
+            :obj:`Box`: The resource record for the updated segment group.
+
+        Examples:
+            Updating the name of a segment group:
+
+            >>> zpa.segment_groups.update_group_v2('99999',
+            ...    name='updated_name')
+
+        """
+        payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
+
+        if kwargs.get("application_ids"):
+            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
+
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        microtenant_id = kwargs.pop("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        resp = self.rest.put(f"segmentGroup/{group_id}", json=payload, params=params, api_version="v2").status_code
+        if not isinstance(resp, Response):
+            return self.get_group(group_id)
+
     def delete_group(self, group_id: str, **kwargs) -> int:
         """
         Deletes the specified segment group.
