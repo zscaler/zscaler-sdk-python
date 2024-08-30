@@ -86,6 +86,16 @@ class TestCloudApplicationRules:
             except Exception as exc:
                 errors.append(f"Listing rules failed: {exc}")
 
+            try:
+                # Test get_rule_by_name
+                first_rule_name = rules[0]["name"] if rules else None
+                if first_rule_name:
+                    rule_by_name = client.cloudappcontrol.get_rule_by_name(rule_type, first_rule_name)
+                    assert rule_by_name is not None, "Failed to retrieve rule by name"
+                    assert rule_by_name["name"] == first_rule_name, "Mismatch in rule name"
+            except Exception as exc:
+                errors.append(f"Retrieving rule by name failed: {exc}")
+
         finally:
             cleanup_errors = []
             try:

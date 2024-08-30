@@ -58,7 +58,7 @@ class URLCategoriesAPI:
     def review_domains_post(self, urls: list) -> BoxList:
         """
         For the specified list of URLs, finds matching entries present in existing custom URL categories.
-        This endpoint allows you to review URLs for potential matches in existing categories to group related entries in a single category.
+        Allows the review of URLs for matches in existing categories to group related entries in a single category.
 
         Args:
             urls (list): A list of URLs to perform a category lookup on. Maximum 100 URLs per request.

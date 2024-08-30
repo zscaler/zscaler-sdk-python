@@ -110,6 +110,27 @@ class CloudAppControlAPI:
         """
         return self.rest.get(f"webApplicationRules/{rule_type}/{rule_id}")
 
+    def get_rule_by_name(self, rule_type: str, rule_name: str) -> Box:
+        """
+        Retrieves a specific Cloud App Control rule by its name and type.
+
+        Args:
+            rule_type (str): The type of rules to search within (e.g., "WEBMAIL").
+            rule_name (str): The name of the rule to retrieve.
+
+        Returns:
+            :obj:`Box`: The Cloud App Control rule if found, otherwise None.
+
+        Examples:
+            >>> rule = zia.cloudappcontrol.get_rule_by_name('WEBMAIL', 'Webmail Rule-1')
+            ...    print(rule)
+        """
+        rules = self.list_rules(rule_type)
+        for rule in rules:
+            if rule.get("name") == rule_name:
+                return rule
+        return None
+
     def add_rule(self, rule_type: str, name: str, **kwargs) -> Box:
         """
         Adds a new cloud app control filter rule.
@@ -473,10 +494,6 @@ class CloudAppControlAPI:
         """
         # Set payload to value of existing record and convert nested dict keys.
         payload = convert_keys(self.get_rule(rule_type, rule_id))
-
-        # Convert enabled to API format if present in kwargs
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
         # Convert enabled to API format if present in kwargs
         if "enabled" in kwargs:
