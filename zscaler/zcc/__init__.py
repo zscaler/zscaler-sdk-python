@@ -25,6 +25,7 @@ from zscaler.zcc.client import ZCCClient
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
+
 class ZCCClientHelper(ZCCClient):
     """
     A Controller to access Endpoints in the Zscaler Mobile Admin Portal API.
@@ -57,7 +58,7 @@ class ZCCClientHelper(ZCCClient):
     _build = __version__
     _env_base = "ZCC"
     _env_cloud = "zscaler"
-    
+
     RATE_LIMIT = 100  # 100 API calls per hour
     DOWNLOAD_DEVICES_LIMIT = 3  # 3 calls per day
     RATE_LIMIT_RESET_TIME = timedelta(hours=1)
@@ -66,7 +67,9 @@ class ZCCClientHelper(ZCCClient):
     def __init__(self, **kw):
         self._apikey = kw.get("apikey", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._secret_key = kw.get("secret_key", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
-        self._env_cloud = os.getenv(f"{self._env_base}_CLOUD") if os.getenv(f"{self._env_base}_CLOUD") is not None else kw.get("cloud")
+        self._env_cloud = (
+            os.getenv(f"{self._env_base}_CLOUD") if os.getenv(f"{self._env_base}_CLOUD") is not None else kw.get("cloud")
+        )
         self.login_url = f"https://api-mobile.{self._env_cloud}.net/papi/auth/v1/login"
         self.url = f"https://api-mobile.{self._env_cloud}.net/papi/public/v1"
 
@@ -82,7 +85,6 @@ class ZCCClientHelper(ZCCClient):
         # Track specific download devices endpoint usage
         self.download_devices_count = 0
         self.download_devices_last_reset = datetime.utcnow()
-
 
     def __enter__(self):
         self.refreshToken()
@@ -100,7 +102,7 @@ class ZCCClientHelper(ZCCClient):
             self.auth_token = response.json().get("jwtToken")
             self.headers = {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
+                "Accept": "*/*",
                 "auth-token": f"{self.auth_token}",
                 "User-Agent": self.user_agent,
             }
@@ -251,7 +253,7 @@ class ZCCClientHelper(ZCCClient):
         resp = self.send("POST", path, json, params)
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
-    
+
     @property
     def devices(self):
         """The interface object for the :ref:`ZCC Devices interface <zcc-devices>`."""

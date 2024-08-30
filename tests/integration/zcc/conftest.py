@@ -14,25 +14,27 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-"""Official Python SDK for the Zscaler Products (Beta)
+import os
 
-Zscaler SDK Python is an SDK that provides a uniform and easy-to-use
-interface for each of the Zscaler product APIs.
+from zscaler.zcc import ZCCClientHelper
 
-Documentation available at https://zscaler-sdk-python.readthedocs.io
+PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
-"""
 
-__author__ = "Zscaler Inc"
-__email__ = "devrel@zscaler.com"
-__license__ = "MIT"
-__contributors__ = [
-    "William Guilherme",
-]
-__version__ = "0.9.1"
+class MockZCCClient(ZCCClientHelper):
+    def __init__(self, fs):
+        # Fetch credentials from environment variables
+        apikey = os.environ.get("ZCC_CLIENT_ID")
+        secret_key = os.environ.get("ZCC_CLIENT_SECRET")
+        cloud = os.environ.get("ZCC_CLOUD")
 
-from zscaler.zdx import ZDXClientHelper  # noqa
-from zscaler.zia import ZIAClientHelper  # noqa
-from zscaler.zpa import ZPAClientHelper  # noqa
-from zscaler.zcon import ZCONClientHelper  # noqa
-from zscaler.zcc import ZCCClientHelper  # noqa
+        if PYTEST_MOCK_CLIENT in os.environ:
+            fs.pause()
+            super().__init__()
+            fs.resume()
+        else:
+            super().__init__(
+                apikey=apikey,
+                secret_key=secret_key,
+                cloud=cloud,
+            )

@@ -4,8 +4,9 @@ from box import BoxList
 from zscaler.zcc.client import ZCCClient
 from zscaler.utils import convert_keys, zcc_param_map
 
+
 class DevicesAPI:
-    
+
     def __init__(self, client: ZCCClient):
         self.rest = client
 
@@ -71,17 +72,17 @@ class DevicesAPI:
         if not filename:
             filename = f"zcc-devices-{datetime.now().strftime('%Y%m%d-%H_%M_%S')}.csv"
 
-        payload = {
-            "osTypes": [],
-            "registrationTypes": [],
-        }
+        params = {}
 
         # Simplify the os_type argument, raise an error if the user supplies the wrong one.
         if os_types:
             for item in os_types:
                 os_type = zcc_param_map["os"].get(item, None)
                 if os_type:
-                    payload["osTypes"].append(os_type)
+                    if "osTypes" not in params:
+                        params["osTypes"] = str(os_type)
+                    else:
+                        params["osTypes"] += "," + str(os_type)
                 else:
                     raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
@@ -90,7 +91,10 @@ class DevicesAPI:
             for item in registration_types:
                 reg_type = zcc_param_map["reg_type"].get(item, None)
                 if reg_type:
-                    payload["registrationTypes"].append(reg_type)
+                    if "registrationTypes" not in params:
+                        params["registrationTypes"] = str(reg_type)
+                    else:
+                        params["registrationTypes"] += "," + str(reg_type)
                 else:
                     raise ValueError(
                         "Invalid registration_type specified. Check the pyZscaler documentation for valid "
@@ -98,9 +102,9 @@ class DevicesAPI:
                     )
 
         # Create the local file and stream the device list csv to it
-        with self.rest.get("public/v1/downloadDevices", params=payload, stream=True) as r:
+        with self.rest.get("downloadDevices", params=params, stream=True) as r:
             with open(filename, "wb") as f:
-                shutil.copyfileobj(r.raw, f)
+                f.write(r.content)
 
         return filename
 
@@ -142,7 +146,7 @@ class DevicesAPI:
             if os_type:
                 payload["osType"] = os_type
             else:
-                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
+                raise ValueError("Invalid os_type specified. Check the Zscaler documentation for valid os_type options.")
 
         return self.rest.get("getDevices", **payload)
 
@@ -211,6 +215,6 @@ class DevicesAPI:
                 raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
         if force:
-            return self.rest.post("public/v1/forceRemoveDevices", json=payload)
+            return self.rest.post("forceRemoveDevices", json=payload)
         else:
-            return self.rest.post("public/v1/removeDevices", json=payload)
+            return self.rest.post("removeDevices", json=payload)
