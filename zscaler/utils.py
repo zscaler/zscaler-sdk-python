@@ -184,11 +184,7 @@ def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
             elif key == "cbi_profile":
                 # Special handling for cbi_profile
                 if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
-                    payload[payload_key] = {
-                        "id": value["id"],
-                        "name": value["name"],
-                        "url": value["url"]
-                    }
+                    payload[payload_key] = {"id": value["id"], "name": value["name"], "url": value["url"]}
             elif key == "cloud_app_risk_profile":
                 # Special handling for cloudAppRiskProfile
                 if isinstance(value, dict) and "id" in value:

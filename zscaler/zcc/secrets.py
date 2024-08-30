@@ -1,10 +1,11 @@
 from zscaler.zcc.client import ZCCClient
 from zscaler.utils import zcc_param_map
 
+
 class SecretsAPI:
     def __init__(self, client: ZCCClient):
         self.rest = client
-        
+
     def get_otp(self, device_id: str):
         """
         Returns the OTP code for the specified device id.
@@ -25,7 +26,7 @@ class SecretsAPI:
 
         payload = {"udid": device_id}
 
-        return self.rest.get("public/v1/getOtp", params=payload)
+        return self.rest.get("getOtp", params=payload)
 
     def get_passwords(self, username: str, os_type: str = "windows"):
         """
@@ -62,4 +63,4 @@ class SecretsAPI:
             "osType": os_type,
         }
 
-        return self.rest.get("public/v1/getPasswords", params=params)
+        return self.rest.get("getPasswords", params=params)
