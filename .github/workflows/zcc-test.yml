@@ -1,0 +1,128 @@
+name: ZCC Test
+on:
+  pull_request:
+    types: [opened, synchronize]
+  merge_group:
+    types: [checks_requested]
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 14 * * 1-5' # UTC
+  workflow_dispatch:
+
+jobs:
+  zcc-beta-tenants:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        environment:
+          - ZCC_ZSBETA
+    environment: ${{ matrix.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: 1.8.3
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.poetry-cache.outputs.dir }}
+          key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-${{ matrix.python_version }}-
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Lint with flake8
+        run: |
+          poetry run make lint:zcc
+
+      - name: Run Pytest
+        uses: nick-fields/retry@v3
+        with:
+          max_attempts: 3
+          timeout_minutes: 45
+          command: |
+            poetry run make coverage:zcc
+        env:
+            ZCC_CLIENT_ID: ${{ secrets.ZCC_CLIENT_ID }}
+            ZCC_CLIENT_SECRET: ${{ secrets.ZCC_CLIENT_SECRET }}
+            ZCC_CLOUD: ${{ secrets.ZCC_CLOUD }}
+
+  zcc-test-tenants:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        environment:
+            - ZCC_ZS0
+            # - ZCC_ZS1
+            - ZCC_ZS2
+            # - ZCC_ZS3
+    environment: ${{ matrix.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: 1.8.3
+
+      - name: Get poetry cache directory
+        id: poetry-cache
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.poetry-cache.outputs.dir }}
+          key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-${{ matrix.python_version }}-
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Lint with flake8
+        run: |
+          poetry run make lint:zcc
+
+      - name: Run Pytest
+        uses: nick-fields/retry@v3
+        with:
+          max_attempts: 3
+          timeout_minutes: 45
+          command: |
+            poetry run make coverage:zcc
+        env:
+            ZCC_CLIENT_ID: ${{ secrets.ZCC_CLIENT_ID }}
+            ZCC_CLIENT_SECRET: ${{ secrets.ZCC_CLIENT_SECRET }}
+            ZCC_CLOUD: ${{ secrets.ZCC_CLOUD }}

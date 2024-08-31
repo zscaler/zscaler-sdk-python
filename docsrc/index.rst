@@ -9,6 +9,7 @@
    zs/zia/index
    zs/zpa/index
    zs/zcon/index
+   zs/zcc/index
    zs/zdx/index
    zs/guides/index
 
@@ -50,6 +51,7 @@ This repository contains the Zscaler SDK for Python. This SDK can be used to int
 
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
+- :doc:`Zscaler Mobile Admin Portal <zs/zcc/index>`
 - :doc:`Zscaler Cloud Connector Portal (ZCON) <zs/zcon/index>`
 - :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
 
