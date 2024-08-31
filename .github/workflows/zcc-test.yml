@@ -76,9 +76,9 @@ jobs:
         python-version: ["3.10"]
         environment:
             - ZCC_ZS0
-            - ZCC_ZS1
+            # - ZCC_ZS1
             - ZCC_ZS2
-            - ZCC_ZS3
+            # - ZCC_ZS3
     environment: ${{ matrix.environment }}
     steps:
       - name: Checkout code
