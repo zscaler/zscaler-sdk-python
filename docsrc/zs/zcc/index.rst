@@ -1,6 +1,6 @@
-ZCON
+ZCC
 ==========
-This package covers the ZCON interface.
+This package covers the ZCC interface.
 
 .. toctree::
     :glob:
@@ -8,7 +8,7 @@ This package covers the ZCON interface.
 
     *
 
-.. automodule:: zscaler.zcon
+.. automodule:: zscaler.zcc
     :members:
     :undoc-members:
     :show-inheritance:
