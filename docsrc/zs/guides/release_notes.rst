@@ -18,7 +18,7 @@ Bug Fixes
 ------------
 
 
-- Added Zscaler Mobile Admin Portal package(`#142 <https://github.com/zscaler/zscaler-sdk-python/pull/142>`_)
+- Added Zscaler Mobile Admin Portal package(`#154 <https://github.com/zscaler/zscaler-sdk-python/pull/154>`_)
 
 0.9.1 (August, 31 2024)
 ------------------------

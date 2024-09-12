@@ -8,7 +8,7 @@
 
 ### Bug Fixes
 
-* Fixed ZIA DLP Engine `description` missing attribute in payload construction ([#142](https://github.com/zscaler/zscaler-sdk-python/pull/142))
+* Fixed ZIA DLP Engine `description` missing attribute in payload construction ([#154](https://github.com/zscaler/zscaler-sdk-python/pull/154))
 
 ## 0.9.1 (August, 31 2024)
 
