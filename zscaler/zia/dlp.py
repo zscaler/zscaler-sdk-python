@@ -398,38 +398,9 @@ class DLPAPI:
         else:
             return response
 
-    def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, **kwargs) -> Box:
+    def add_dlp_engine(self, name: str, engine_expression=None, custom_dlp_engine=None, description=None, **kwargs) -> Box:
         """
         Adds a new dlp engine.
-        Args:
-            name (str): The order of the rule, defaults to adding rule to bottom of list.
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            description (str): The admin rank of the rule.
-            engine_expression (str, optional): The logical expression defining a DLP engine by
-                combining DLP dictionaries using logical operators: All (AND), Any (OR), Exclude (NOT),
-                and Sum (total number of content matches).
-            custom_dlp_engine (bool, optional): If true, indicates a custom DLP engine.
-            description (str, optional): The DLP engine description.
-
-        Returns:
-            :obj:`Box`: The updated dlp engine resource record.
-
-        Examples:
-            Update the dlp engine:
-
-            >>> zia.dlp.add_dlp_engine(name='new_dlp_engine',
-            ...    description='TT#1965432122',
-            ...    engine_expression="((D63.S > 1))",
-            ...    custom_dlp_engine=False)
-
-            Update a rule to enable custom dlp engine:
-
-            >>> zia.dlp.add_dlp_engine(name='new_dlp_engine',
-            ...    custom_dlp_engine=True,
-            ...    engine_expression="((D63.S > 1))",
-            ...    description="TT#1965232866")
         """
         payload = {
             "name": name,
@@ -440,6 +411,9 @@ class DLPAPI:
 
         if custom_dlp_engine is not None:
             payload["customDlpEngine"] = custom_dlp_engine
+
+        if description is not None:
+            payload["description"] = description
 
         # Convert the payload keys to camelCase
         camel_payload = {snake_to_camel(key): value for key, value in payload.items()}
