@@ -6,6 +6,68 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+0.9.2 (August, 31 2024)
+------------------------
+
+Notes
+^^^^^
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+------------
+
+
+- Added Zscaler Mobile Admin Portal package(`#154 <https://github.com/zscaler/zscaler-sdk-python/pull/154>`_)
+
+0.9.1 (August, 31 2024)
+------------------------
+
+Notes
+^^^^^
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+------------
+
+Zscaler Mobile Portal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Added Zscaler Mobile Admin Portal package(`#142 <https://github.com/zscaler/zscaler-sdk-python/pull/142>`_)
+
+0.9.0 (August, 23 2024)
+------------------------
+
+Notes
+^^^^^
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+------------
+
+ZPA Segment Group
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Added new ZPA PUT v2 Endpoint for Segment Group Updates (`#136 <https://github.com/zscaler/zscaler-sdk-python/pull/136>`_)
+
+0.8.0 (August, 17 2024)
+------------------------
+
+Notes
+^^^^^
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+------------
+
+ZIA Cloud App Control Rules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Added new ZIA Cloud App Control Rule and URL Domain Review Endpoints (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
+
 0.7.0 (July, 26 2024)
 ----------------------
 
@@ -20,11 +82,11 @@ Enhancements
 ZIA Cloud App Control Rules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- `GET /webApplicationRules/{rule_type}` to Get the list of Web Application Rule by type (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
-- `GET /webApplicationRules/{rule_type}/{ruleId}` to Get a Web Application Rule by type and id (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
-- `POST /webApplicationRules/{rule_type}` to Adds a new Web Application rule (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
-- `PUT /webApplicationRules/{rule_type}/{ruleId}` to Update a new Web Application rule (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
-- `DELETE /webApplicationRules/{rule_type}/{ruleId}` to Delete a new Web Application rule (`#132 <https://github.com/zscaler/zscaler-sdk-python/pull/132>`_)
+- `GET /webApplicationRules/{rule_type}` to Get the list of Web Application Rule by type (`#135 <https://github.com/zscaler/zscaler-sdk-python/pull/135>`_)
+- `GET /webApplicationRules/{rule_type}/{ruleId}` to Get a Web Application Rule by type and id (`#135 <https://github.com/zscaler/zscaler-sdk-python/pull/135>`_)
+- `POST /webApplicationRules/{rule_type}` to Adds a new Web Application rule (`#135 <https://github.com/zscaler/zscaler-sdk-python/pull/135>`_)
+- `PUT /webApplicationRules/{rule_type}/{ruleId}` to Update a new Web Application rule (`#135 <https://github.com/zscaler/zscaler-sdk-python/pull/135>`_)
+- `DELETE /webApplicationRules/{rule_type}/{ruleId}` to Delete a new Web Application rule (`#135 <https://github.com/zscaler/zscaler-sdk-python/pull/135>`_)
 
 ZIA URL Categories
 ^^^^^^^^^^^^^^^^^^
