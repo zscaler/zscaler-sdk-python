@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "0.9.1"
+version = "0.9.2"
 description = "Official Python SDK for the Zscaler Products (Beta)"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -47,7 +47,7 @@ pycryptodomex = "*"
 aenum = "*"
 pydash = ">=8.0.3"
 flake8 = "*"
-pytz = "*"
+pytz = ">=2024.2"
 black = ">=24.3.0"
 # cryptography = ">=3.4,<43.0"
 cryptography = ">=43.0.0"
