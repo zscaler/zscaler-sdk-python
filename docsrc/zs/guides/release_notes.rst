@@ -18,8 +18,6 @@ Notes
 
 * Added function `list_version_profiles` to ZPA `connectors` package  (`156 <https://github.com/zscaler/zscaler-sdk-python/pull/156>`_)
 
-
-
 0.9.2 (August, 31 2024)
 ------------------------
 
