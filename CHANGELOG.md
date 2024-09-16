@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 0.9.3 (September, 16 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Added function `list_version_profiles` to ZPA `connectors` package  ([#156](https://github.com/zscaler/zscaler-sdk-python/pull/156))
+
+
 ## 0.9.2 (September, 12 2024)
 
 ### Notes
