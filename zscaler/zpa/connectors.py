@@ -561,3 +561,33 @@ class AppConnectorControllerAPI:
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
         else:
             raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+    def list_version_profiles(self, **kwargs) -> BoxList:
+        """
+        Returns a list of all visible version profiles.
+
+        Args:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to match against a department's name or comments attributes.
+
+        Returns:
+            :obj:`BoxList`: List containing all visibile version profiles.
+
+        Examples:
+            List all visibile version profiles:
+
+            >>> for profile in zpa.connectors.list_version_profiles():
+            ...    print(profile)
+
+        """
+        list, _ = self.rest.get_paginated_data(path="/visible/versionProfiles", **kwargs, api_version="v1")
+        return list
