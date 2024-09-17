@@ -109,3 +109,32 @@ class TestAppConnectorGroup:
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during the app connector group lifecycle test: {errors}"
+
+class TestCustomerVersionProfile:
+    def test_version_profiles(self, fs):
+        client = MockZPAClient(fs)
+        errors = []  # Initialize an empty list to collect errors
+
+        # Step 1: Test to retrieve all version profiles without any filters
+        try:
+            profiles = client.connectors.list_version_profiles()
+            assert isinstance(profiles, list), "Expected a list of version profiles"
+            assert len(profiles) > 0, "Expected non-empty list of profiles"
+        except AssertionError as e:
+            errors.append(f"Error retrieving all profiles: {str(e)}")
+
+        # Profile names to test
+        profile_names = ["Default", "Previous Default", "New Release"]
+
+        # Step 2: Test to retrieve version profiles by specific names
+        for profile_name in profile_names:
+            try:
+                profiles_by_name = client.connectors.list_version_profiles(search=profile_name)
+                found_profiles = [profile for profile in profiles_by_name if profile.get('name') == profile_name]
+                assert found_profiles, f"No profiles found with the name {profile_name}"
+            except AssertionError as e:
+                errors.append(f"Error retrieving profile by name '{profile_name}': {str(e)}")
+
+        # Assert that no errors occurred during the test
+        assert not errors, f"Errors occurred during the tests: {errors}"
+

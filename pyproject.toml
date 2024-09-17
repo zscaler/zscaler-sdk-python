@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "0.9.2"
+version = "0.9.3"
 description = "Official Python SDK for the Zscaler Products (Beta)"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -32,7 +32,7 @@ python = ">=3.9,<4.0"
 arrow = "*"
 certifi = ">=2024.2.2"
 charset-normalizer = "*"
-idna = "*"
+idna = ">=3.10"
 python-box = ">=7.2.0"
 python-dateutil = "*"
 requests = ">=2.32.3"
