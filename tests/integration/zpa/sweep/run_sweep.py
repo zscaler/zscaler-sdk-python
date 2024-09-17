@@ -34,7 +34,7 @@ class TestSweepUtility:
             self.sweep_pra_console,
             self.sweep_app_segments,
             self.sweep_microtenant,
-            # self.sweep_segment_group,
+            self.sweep_segment_group,
             self.sweep_server_group,
             self.sweep_provisioning_key,
             self.sweep_lss_controller,
@@ -230,28 +230,28 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping app segments: {str(e)}")
             raise
 
-    # @suppress_warnings
-    # def sweep_segment_group(self):
-    #     logging.info("Starting to sweep segment group")
-    #     try:
-    #         segment_groups = self.client.segment_groups.list_groups()
-    #         test_groups = [grp for grp in segment_groups if grp["name"].startswith("tests-")]
-    #         logging.info(f"Found {len(test_groups)} segment group to delete.")
+    @suppress_warnings
+    def sweep_segment_group(self):
+        logging.info("Starting to sweep segment group")
+        try:
+            segment_groups = self.client.segment_groups.list_groups()
+            test_groups = [grp for grp in segment_groups if grp["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_groups)} segment group to delete.")
 
-    #         for group in test_groups:
-    #             logging.info(
-    #                 f"sweep_segment_group: Attempting to delete segment group: Name='{group['name']}', ID='{group['id']}'"
-    #             )
-    #             response_code = self.client.segment_groups.delete_group(group_id=group["id"])
-    #             if response_code == 204:
-    #                 logging.info(f"Successfully deleted segment group with ID: {group['id']}, Name: {group['name']}")
-    #             else:
-    #                 logging.error(
-    #                     f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
-    #                 )
-    #     except Exception as e:
-    #         logging.error(f"An error occurred while sweeping segment groups: {str(e)}")
-    #         raise
+            for group in test_groups:
+                logging.info(
+                    f"sweep_segment_group: Attempting to delete segment group: Name='{group['name']}', ID='{group['id']}'"
+                )
+                response_code = self.client.segment_groups.delete_group(group_id=group["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted segment group with ID: {group['id']}, Name: {group['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete segment group with ID: {group['id']}, Name: {group['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping segment groups: {str(e)}")
+            raise
 
     @suppress_warnings
     def sweep_server_group(self):
