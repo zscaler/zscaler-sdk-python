@@ -1641,13 +1641,13 @@ test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=8.0)", "setuptools 
 
 [[package]]
 name = "sphinx-autobuild"
-version = "2024.9.17"
+version = "2024.9.18"
 description = "Rebuild Sphinx documentation on changes, with hot reloading in the browser."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "sphinx_autobuild-2024.9.17-py3-none-any.whl", hash = "sha256:18f74618ad434018b9c52eab2526dfeb813e89fc14021361f26d8ca84c98458d"},
-    {file = "sphinx_autobuild-2024.9.17.tar.gz", hash = "sha256:a8e6e888283c2cc599d0dbc073f89be95628ca2d6c5c41ed086ab206bb7c9b99"},
+    {file = "sphinx_autobuild-2024.9.18-py3-none-any.whl", hash = "sha256:06b550d0bfb71bbc1e27c6c28c404f7f8932599cb9a3f748d0cf5f906193b1f5"},
+    {file = "sphinx_autobuild-2024.9.18.tar.gz", hash = "sha256:af6e7ba5456c3b9473b1c03b8ce160c657f90851b28718429b33b5552e677b94"},
 ]
 
 [package.dependencies]
