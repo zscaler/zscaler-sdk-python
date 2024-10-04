@@ -60,10 +60,14 @@ class MicrotenantsAPI:
 
         """
         response = self.rest.get("/microtenants/%s" % (microtenant_id))
+
+        # If the response is not a Box (indicating an error), return None or handle the error
         if isinstance(response, Response):
             status_code = response.status_code
             if status_code != 200:
-                return None
+                raise Exception(f"Failed to retrieve microtenant: {status_code} - {response.text}")
+
+        # Otherwise, return the formatted Box object
         return response
 
     def get_microtenant_summary(self) -> Box:
@@ -189,16 +193,43 @@ class MicrotenantsAPI:
             ... )
 
         """
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_microtenant(microtenant_id).items()}
+        # Retrieve existing microtenant data
+        existing_microtenant_response = self.get_microtenant(microtenant_id)
 
-        # Add optional parameters to payload
+        # Handle Response object (in case of error)
+        if isinstance(existing_microtenant_response, Response):
+            if existing_microtenant_response.status_code != 200:
+                raise Exception(f"Failed to retrieve microtenant: {existing_microtenant_response.status_code}")
+            # If there's content, parse the response as JSON
+            if existing_microtenant_response.text.strip():
+                existing_microtenant = existing_microtenant_response.json()
+            else:
+                existing_microtenant = {}  # Treat as empty, no error
+        else:
+            existing_microtenant = existing_microtenant_response
+
+        # Prepare the payload
+        payload = {snake_to_camel(k): v for k, v in existing_microtenant.items()}
+
+        # Add optional parameters from kwargs
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self.rest.put(f"microtenants/{microtenant_id}", json=payload).status_code
-        if not isinstance(resp, Response):
+        # Send the PUT request to update the microtenant
+        resp = self.rest.put(f"microtenants/{microtenant_id}", json=payload)
+
+        # Handle 204 No Content as success
+        if resp.status_code == 204:
+            print(f"Update successful for microtenant {microtenant_id} (204 No Content).")
             return self.get_microtenant(microtenant_id)
+
+        # Handle 200 OK as success
+        if resp.status_code == 200:
+            print(f"Update successful for microtenant {microtenant_id} (200 OK).")
+            return self.get_microtenant(microtenant_id)
+
+        # Raise exception for any other status code
+        raise Exception(f"Failed to update microtenant: {resp.status_code}, {resp.text}")
 
     def delete_microtenant(self, microtenant_id: str) -> int:
         """
