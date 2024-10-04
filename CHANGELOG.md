@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 0.9.4 (October, 3 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Fixed ZPA Microtenant Update method response processing.  ([#173](https://github.com/zscaler/zscaler-sdk-python/pull/173))
+* Fixed ZIA `check_static_ip` text parsing  ([#173](https://github.com/zscaler/zscaler-sdk-python/pull/173))
+
 ## 0.9.3 (September, 16 2024)
 
 ### Notes

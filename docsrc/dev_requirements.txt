@@ -2,7 +2,7 @@ furo==2024.7.18
 pre-commit==3.8.0
 pytest==8.3.3
 python-box==7.2.0
-restfly==1.4.7
+restfly==1.5.0
 requests==2.32.3
 responses==0.25.3
 sphinx==7.4.7
