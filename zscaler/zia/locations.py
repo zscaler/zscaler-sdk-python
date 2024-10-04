@@ -43,8 +43,6 @@ class LocationsAPI:
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to partially match against a location's name and port attributes.
-            **xff_enabled (bool, optional):
-                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
             :obj:`BoxList`: List of configured locations.
@@ -188,7 +186,8 @@ class LocationsAPI:
             description (str, optional):
                 Additional notes or information regarding the location or sub-location. The description cannot
                 exceed 1024 characters.
-
+            static_location_groups (list): IDs for static location groups.
+            
         Returns:
             :obj:`Box`: The newly created location resource record
 
@@ -693,5 +692,4 @@ class LocationsAPI:
 
         """
         return BoxList(Iterator(self.rest, "region/search", **kwargs))
-        # data, _ = self.rest.get_paginated_data(path="region/search", params=kwargs)
-        # return BoxList([Box(city) for city in data])
+

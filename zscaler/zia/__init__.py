@@ -382,13 +382,16 @@ class ZIAClientHelper(ZIAClient):
         formatted_resp = format_json_response(resp, box_attrs=dict())
         return formatted_resp
 
-    def post(self, path, json=None, params=None, data=None, headers=None):
+    def post(self, path, json=None, params=None, data=None, headers=None, parse_json=True):
         should_wait, delay = self.rate_limiter.wait("POST")
         if should_wait:
             time.sleep(delay)
         resp = self.send("POST", path, json, params, data=data, headers=headers)
-        formatted_resp = format_json_response(resp, box_attrs=dict())
-        return formatted_resp
+        if parse_json:
+            formatted_resp = format_json_response(resp, box_attrs=dict())
+            return formatted_resp
+        else:
+            return resp
 
     def delete(self, path, json=None, params=None):
         should_wait, delay = self.rate_limiter.wait("DELETE")
