@@ -155,7 +155,7 @@ class ServiceEdgesAPI:
             params["microtenantId"] = kwargs.pop("microtenant_id")
         return self.rest.delete(f"serviceEdge/{service_edge_id}", params=params).status_code
 
-    def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> int:
+    def bulk_delete_service_edges(self, service_edge_ids: list, **kwargs) -> Box:
         """
         Bulk deletes the specified Service Edges from ZPA.
 

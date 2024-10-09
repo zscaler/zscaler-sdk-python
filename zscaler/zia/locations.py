@@ -482,7 +482,7 @@ class LocationsAPI:
             raise Exception(f"API call failed with status {status_code}: {response.json()}")
         return response
 
-    def list_location_groups(self) -> BoxList:
+    def list_location_groups(self, **kwargs) -> BoxList:
         """
         Return a list of location groups in ZIA.
 
@@ -499,7 +499,15 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups()
         """
-        return self.rest.get("locations/groups")
+        # return self.rest.get("locations/groups")
+        return BoxList(
+        Iterator(
+            self.rest,
+            f"locations/groups",
+            max_pages=1,
+            **kwargs,
+        )
+    )
 
     def get_location_group_by_id(self, group_id: int) -> Box:
         """
