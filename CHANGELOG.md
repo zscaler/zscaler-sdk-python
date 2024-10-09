@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 0.9.5 (October, 9 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Fixed ZPA App Connector and Service Edge Bulk Delete functions due to return error ([#182](https://github.com/zscaler/zscaler-sdk-python/pull/182))
+
+
 ## 0.9.4 (October, 3 2024)
 
 ### Notes

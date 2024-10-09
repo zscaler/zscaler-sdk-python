@@ -159,7 +159,7 @@ class AppConnectorControllerAPI:
             params["microtenantId"] = kwargs.pop("microtenant_id")
         return self.rest.delete(f"connector/{connector_id}", params=params).status_code
 
-    def bulk_delete_connectors(self, connector_ids: list, **kwargs) -> int:
+    def bulk_delete_connectors(self, connector_ids: list, **kwargs) -> Box:
         """
         Deletes all specified App Connectors from ZPA.
 
@@ -177,7 +177,16 @@ class AppConnectorControllerAPI:
         params = {}
         if "microtenant_id" in kwargs:
             params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.post("connector/bulkDelete", json=payload)
+
+        response = self.rest.post("connector/bulkDelete", json=payload, params=params)
+
+        if isinstance(response, Response):
+            # Check for HTTP status and handle errors
+            if response.status_code != 200:
+                raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+
+        # If successful, return the response
+        return response
 
     def list_connector_groups(self, **kwargs) -> BoxList:
         """
