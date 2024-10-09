@@ -490,7 +490,11 @@ class LocationsAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            groupType (str): The location group's type (i.e., Static or Dynamic).
+            name (str): The location group's name.
+            comments (str): Additional comments or information about the location group.
+            groupType (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
+            location_id (int): The unique identifier for a location within a location group.
+            last_mod_user (str): The admin who modified the location group last.
 
         Returns:
             :obj:`BoxList`: A list of location group resource records.
@@ -499,7 +503,6 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups()
         """
-        # return self.rest.get("locations/groups")
         return BoxList(
         Iterator(
             self.rest,
@@ -525,25 +528,6 @@ class LocationsAPI:
         """
         return self.rest.get(f"locations/groups/{group_id}")
 
-    def get_location_group_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> Box:
-        """
-        Return a specific location group by its name in ZIA.
-
-        Args:
-            group_name (str): The name of the location group.
-            page (int, optional): Page number to retrieve. Defaults to 1.
-            page_size (int, optional): Number of records per page. Defaults to 100.
-
-        Returns:
-            :obj:`Box`: A location group resource record.
-
-        Examples:
-            Get a specific location group by its name:
-            >>> location = zia.locations.get_location_group_by_name("Unassigned Locations")
-        """
-        params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self.rest.get("locations/groups", params=params)
-
     def list_location_groups_lite(self, page: int = 1, page_size: int = 100) -> BoxList:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
@@ -552,7 +536,7 @@ class LocationsAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            groupType (str): The location group's type (i.e., Static or Dynamic).
+            groupType (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
 
         Returns:
             :obj:`BoxList`: A list of location group resource records.
@@ -580,25 +564,6 @@ class LocationsAPI:
         """
         return self.rest.get(f"locations/groups/lite/{group_id}")
 
-    def get_location_group_lite_by_name(self, group_name: str, page: int = 1, page_size: int = 100) -> BoxList:
-        """
-        Return specific location groups (lite version) by their name where only name and ID is returned in ZIA.
-
-        Args:
-            group_name (str): The name of the location group.
-            page (int, optional): Page number to retrieve. Defaults to 1.
-            page_size (int, optional): Number of records per page. Defaults to 100.
-
-        Returns:
-            :obj:`BoxList`: A list of location group resource records with only ID and name.
-
-        Examples:
-            Get specific location groups (lite version) by name:
-            >>> locations = zia.locations.get_location_group_lite_by_name("Unassigned Locations")
-        """
-        params = {"page": page, "pageSize": page_size, "search": group_name}
-        return self.rest.get("locations/groups/lite", params=params)
-
     def list_location_groups_count(self, **kwargs) -> BoxList:
         """
         Returns a list of location groups for your organization.
@@ -607,7 +572,7 @@ class LocationsAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            group_type (str): The location group's type (i.e., Static or Dynamic).
+            group_type (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
             last_mod_user (str): The admin who modified the location group last.
             version (int): The version parameter is for Zscaler internal use only. Used by the service for backup operations.
             name (str): The location group's name.
@@ -619,7 +584,7 @@ class LocationsAPI:
 
         Examples:
             Gets the list of location groups for your organization:
-            >>> location = zia.locations.list_location_groups_count(group_type='Static', name='Corporate')
+            >>> location = zia.locations.list_location_groups_count(group_type='STATIC_GROUP', name='Corporate')
         """
         params = {}
         optional_params = ["group_type", "last_mod_user", "version", "name", "comments", "location_id"]
