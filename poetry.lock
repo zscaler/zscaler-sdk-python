@@ -1955,6 +1955,22 @@ files = [
 
 [[package]]
 name = "urllib3"
+version = "1.26.20"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+files = [
+    {file = "urllib3-1.26.20-py2.py3-none-any.whl", hash = "sha256:0ed14ccfbf1c30a9072c7ca157e4319b70d65f623e91e7b32fadb2853431016e"},
+    {file = "urllib3-1.26.20.tar.gz", hash = "sha256:40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32"},
+]
+
+[package.extras]
+brotli = ["brotli (==1.0.9)", "brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
+socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+
+[[package]]
+name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
@@ -1991,23 +2007,6 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 
 [[package]]
 name = "vcrpy"
-version = "4.3.0"
-description = "Automatically mock your HTTP interactions to simplify and speed up testing"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "vcrpy-4.3.0-py2.py3-none-any.whl", hash = "sha256:8fbd4be412e8a7f35f623dd61034e6380a1c8dbd0edf6e87277a3289f6e98093"},
-    {file = "vcrpy-4.3.0.tar.gz", hash = "sha256:49c270ce67e826dba027d83e20d25b67a5885487697e97bca6dbdf53d750a0ac"},
-]
-
-[package.dependencies]
-PyYAML = "*"
-six = ">=1.5"
-wrapt = "*"
-yarl = "*"
-
-[[package]]
-name = "vcrpy"
 version = "6.0.2"
 description = "Automatically mock your HTTP interactions to simplify and speed up testing"
 optional = false
@@ -2019,7 +2018,10 @@ files = [
 
 [package.dependencies]
 PyYAML = "*"
-urllib3 = {version = "*", markers = "platform_python_implementation != \"PyPy\" and python_version >= \"3.10\""}
+urllib3 = [
+    {version = "*", markers = "platform_python_implementation != \"PyPy\" and python_version >= \"3.10\""},
+    {version = "<2", markers = "platform_python_implementation == \"PyPy\" or python_version < \"3.10\""},
+]
 wrapt = "*"
 yarl = "*"
 
@@ -2311,13 +2313,13 @@ files = [
 
 [[package]]
 name = "xmltodict"
-version = "0.14.1"
+version = "0.14.2"
 description = "Makes working with XML feel like you are working with JSON"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "xmltodict-0.14.1-py2.py3-none-any.whl", hash = "sha256:3ef4a7b71c08f19047fcbea572e1d7f4207ab269da1565b5d40e9823d3894e63"},
-    {file = "xmltodict-0.14.1.tar.gz", hash = "sha256:338c8431e4fc554517651972d62f06958718f6262b04316917008e8fd677a6b0"},
+    {file = "xmltodict-0.14.2-py2.py3-none-any.whl", hash = "sha256:20cc7d723ed729276e808f26fb6b3599f786cbc37e06c65e192ba77c40f20aac"},
+    {file = "xmltodict-0.14.2.tar.gz", hash = "sha256:201e7c28bb210e374999d1dde6382923ab0ed1a8a5faeece48ab525b7810a553"},
 ]
 
 [[package]]
