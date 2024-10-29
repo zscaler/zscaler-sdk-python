@@ -402,7 +402,9 @@ class PolicySetsAPI:
                     ('app', 'id', '88888'),
                     ('app_group', 'id', '77777),
                     ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True)]
+                    ("OR", 'trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True))
+                    ("OR", ("posture", "d019df8b-ec97-4087-a892-749b5abca54c", "false")),
+                    ]
             custom_msg (str):
                 A custom message.
             description (str):
