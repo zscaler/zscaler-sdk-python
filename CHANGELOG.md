@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 0.9.6 (October,28 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Fixed ZPA Policy Set Controller Conditions template to support nested conditions and operators ([#194](https://github.com/zscaler/zscaler-sdk-python/pull/194))
+
+
 ## 0.9.5 (October, 9 2024)
 
 ### Notes
