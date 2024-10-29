@@ -399,67 +399,99 @@ class ZIAClientHelper(ZIAClient):
             time.sleep(delay)
         return self.send("DELETE", path, json, params)
 
-    ERROR_MESSAGES = {
-        "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
-        "MISSING_DATA_KEY": "The key '{data_key_name}' was not found in the response for page {page}.",
-        "EMPTY_RESULTS": "No results found for page {page}.",
-    }
-
-    def get_paginated_data(self, path=None, data_key_name=None, data_per_page=5, expected_status_code=200):
+    def get_paginated_data(
+        self,
+        path=None,
+        expected_status_code=200,
+        page=None,
+        pagesize=None,
+        search=None,
+    ):
         """
-        Fetch paginated data from the ZIA API.
-        ...
+        Fetches paginated data from the API based on specified parameters and handles pagination.
+
+        Args:
+            path (str): The API endpoint path to send requests to.
+            expected_status_code (int): The expected HTTP status code for a successful request. Defaults to 200.
+            page (int): Specific page number to fetch. Defaults to 1 if not provided.
+            pagesize (int): Number of items per page, default is 100, with a maximum of 1000.
+            search (str): Search query to filter the results.
 
         Returns:
-        - list: List of fetched items.
-        - str: Error message, if any occurred.
+            tuple: A tuple containing:
+                - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+                - str: An error message if any occurred during the data fetching process.
         """
+        logger = logging.getLogger(__name__)
 
-        page = 1
+        ERROR_MESSAGES = {
+            "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+            "EMPTY_RESULTS": "No results found for page {page}.",
+        }
+    
+        params = {}
+        params["page"] = page if page is not None else 1  # Default to page 1
+        params["pagesize"] = min(pagesize if pagesize is not None else 100, 1000)  # Default pagesize is 100, max 1000
+
+        if search:
+            params["search"] = search
+
         ret_data = []
-        error_message = None
 
-        while True:
-            required_url = f"{path}"
-            should_wait, delay = self.rate_limiter.wait("GET")
-            if should_wait:
-                time.sleep(delay)
+        try:
+            while True:
+                # Apply rate-limiting if necessary
+                should_wait, delay = self.rate_limiter.wait("GET")
+                if should_wait:
+                    time.sleep(delay)
 
-            # Now proceed with sending the request
-            response = self.send(
-                method="GET",
-                path=required_url,
-                params={"page": page, "pageSize": data_per_page},
-            )
+                # Send the request to the API
+                response = self.send("GET", path=path, params=params)
 
-            if response.status_code != expected_status_code:
-                error_message = self.ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=page)
-                logger.error(error_message)
-                break
-            data_json = response.json()
-            if isinstance(data_json, list):
-                data = data_json
-            else:
-                data = data_json.get(data_key_name)
+                # Check for unexpected status code
+                if response.status_code != expected_status_code:
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                        status_code=response.status_code, page=params["page"]
+                    )
+                    logger.error(error_msg)
+                    return BoxList([]), error_msg
 
-            if data is None:
-                error_message = self.ERROR_MESSAGES["MISSING_DATA_KEY"].format(data_key_name=data_key_name, page=page)
-                logger.error(error_message)
-                break
+                # Parse the response as a flat list of items
+                response_data = response.json()
+                if not isinstance(response_data, list):
+                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+                    logger.warn(error_msg)
+                    return BoxList([]), error_msg
 
-            if not data:  # Checks for empty data
-                logger.info(self.ERROR_MESSAGES["EMPTY_RESULTS"].format(page=page))
-                break
+                data = convert_keys_to_snake(response_data)
+                
+                # If searching for a specific item, stop if we find a match
+                if search:
+                    for item in data:
+                        if item.get("name") == search:
+                            ret_data.append(item)
+                            return BoxList(ret_data), None
+                
+                # If no search, collect all data from the current page
+                ret_data.extend(data)
 
-            ret_data.extend(convert_keys_to_snake(data))
+                # Stop if we've processed all available pages
+                if len(data) < params["pagesize"]:
+                    break
 
-            # Check for more pages
-            if len(data) == 0 or isinstance(data_json, dict) and int(response.json().get("totalPages")) <= page + 1:
-                break
+                # Move to the next page
+                params["page"] += 1
 
-            page += 1
+        finally:
+            time.sleep(2)  # Ensure a delay between requests regardless of outcome
 
-        return BoxList(ret_data), error_message
+        if not ret_data:
+            error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+            logger.warn(error_msg)
+            return BoxList([]), error_msg
+
+        return BoxList(ret_data), None
+
 
     @property
     def admin_and_role_management(self):

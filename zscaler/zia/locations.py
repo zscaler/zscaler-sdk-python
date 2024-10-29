@@ -64,7 +64,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        return BoxList(Iterator(self.rest, "locations", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/locations", **kwargs)
+        return list
 
     def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """
