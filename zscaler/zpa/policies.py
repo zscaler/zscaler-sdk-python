@@ -78,7 +78,14 @@ class PolicySetsAPI:
             "COUNTRY_CODE": [],
         }
 
+        current_operator = "OR"  # Default operator
+        
         for condition in conditions:
+            # Check if the first item is an operator, like "AND" or "OR"
+            if isinstance(condition, tuple) and isinstance(condition[0], str) and condition[0].upper() in ["AND", "OR"]:
+                current_operator = condition[0].upper()  # Set the current operator
+                condition = condition[1]  # The second element is the actual condition
+
             if isinstance(condition, tuple) and len(condition) == 3:
                 # Handle each object type according to its pattern
                 object_type = condition[0].upper()
@@ -110,10 +117,15 @@ class PolicySetsAPI:
                         object_types_to_operands[object_type].append({"objectType": object_type, "lhs": lhs, "rhs": rhs})
                     else:
                         object_types_to_operands[object_type].append({"objectType": object_type, "lhs": "id", "rhs": rhs})
+                        
             elif isinstance(condition, dict):
+                # This part allows passing operator explicitly through conditions
+                if "operator" in condition:
+                    current_operator = condition["operator"]
+                    continue  # Move to the next condition after setting the operator
+
                 # Handle the dictionary logic based on the Go code schema
                 condition_template = {}
-
                 # Extracting keys from the condition dictionary
                 for key in ["id", "negated", "operator"]:
                     if key in condition:
@@ -144,12 +156,12 @@ class PolicySetsAPI:
 
         # Combine APP and APP_GROUP operands into one block
         if app_and_app_group_operands:
-            template.append({"operator": "OR", "operands": app_and_app_group_operands})
+            template.append({"operator": current_operator, "operands": app_and_app_group_operands})
 
         # Combine other object types into their own blocks
         for object_type, operands in object_types_to_operands.items():
             if operands:
-                template.append({"operator": "OR", "operands": operands})
+                template.append({"operator": current_operator, "operands": operands})
 
         return template
 
@@ -390,7 +402,9 @@ class PolicySetsAPI:
                     ('app', 'id', '88888'),
                     ('app_group', 'id', '77777),
                     ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True)]
+                    ("OR", 'trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True))
+                    ("OR", ("posture", "d019df8b-ec97-4087-a892-749b5abca54c", "false")),
+                    ]
             custom_msg (str):
                 A custom message.
             description (str):

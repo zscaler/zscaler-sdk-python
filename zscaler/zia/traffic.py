@@ -642,7 +642,8 @@ class TrafficForwardingAPI:
             >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
             ...    print(credential)
         """
-        return BoxList(Iterator(self.rest, "vpnCredentials", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/vpnCredentials", **kwargs)
+        return list
 
     def add_vpn_credential(self, authentication_type: str, pre_shared_key: str = None, **kwargs) -> Box:
         """
