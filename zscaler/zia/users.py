@@ -69,7 +69,8 @@ class UserManagementAPI:
             >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
             ...    print(department)
         """
-        return BoxList(Iterator(self.rest, "departments", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/departments", **kwargs)
+        return list
 
     def get_department(self, department_id: str) -> Box:
         """
@@ -127,7 +128,8 @@ class UserManagementAPI:
             ...    print(group)
 
         """
-        return BoxList(Iterator(self.rest, "groups", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/groups", **kwargs)
+        return list
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -194,7 +196,8 @@ class UserManagementAPI:
             ...    print(user)
 
         """
-        return BoxList(Iterator(self.rest, "users", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/users", **kwargs)
+        return list
 
     def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
         """

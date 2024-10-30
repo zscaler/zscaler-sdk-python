@@ -48,7 +48,8 @@ class AdminAndRoleManagementAPI:
             >>> users = zia.admin_and_role_management.list_users('admin@example.com')
 
         """
-        return BoxList(Iterator(self.rest, "adminUsers", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/adminUsers", **kwargs)
+        return list
 
     def get_user(self, user_id: str) -> Box:
         """
