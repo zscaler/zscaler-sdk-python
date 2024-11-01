@@ -163,11 +163,23 @@ class SecurityPolicyAPI:
 
         payload = {"blacklistUrls": url_list}
 
-        resp = self.rest.post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).status_code
+        try:
+            # Send the POST request to add URLs to the blacklist
+            response = self.rest.post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload)
+            
+            # Check if the response includes an empty 'blacklistUrls', signaling no update
+            if "blacklistUrls" in response and not response["blacklistUrls"]:
+                raise Exception("Failed to add URLs to blacklist: The API response returned an empty 'blacklistUrls' list.")
 
-        # Return the object if it was updated successfully
-        if resp == 204:
-            return self.get_blacklist()
+            # Verify the URLs were added by checking the current blacklist
+            updated_blacklist = self.get_blacklist()
+            if all(url in updated_blacklist for url in url_list):
+                return updated_blacklist
+            else:
+                raise Exception("Failed to add URLs to blacklist: URLs were not present in the updated blacklist.")
+                
+        except Exception as exc:
+            raise Exception(f"Failed to add URLs to blacklist: {exc}")
 
     def replace_blacklist(self, url_list: list) -> BoxList:
         """

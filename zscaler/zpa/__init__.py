@@ -432,13 +432,16 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        if (page is not None or pagesize is not None) and (max_pages is not None or max_items is not None):
-            raise ValueError(
-                "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
-            )
+        # Only set page and pagesize if they were provided explicitly
+        if page is not None:
+            params["page"] = page
+        else:
+            params["page"] = 1  # Start with page 1 if not provided
 
-        params["page"] = page if page is not None else 1  # Default to page 1 if not specified
-        params["pagesize"] = min(pagesize if pagesize is not None else 20, 500)  # Apply maximum constraint and handle default
+        if pagesize is not None:
+            params["pagesize"] = min(pagesize, 500)  # Apply maximum constraint if pagesize is specified
+        else:
+            params["pagesize"] = 500  # Set to maximum if pagesize not specified
 
         # Check for microtenantId in function arguments first, then environment variable
         if microtenant_id:
@@ -472,7 +475,8 @@ class ZPAClientHelper(ZPAClient):
 
         try:
             while True:
-                if max_pages is not None and (page is not None and page > max_pages):
+                # Apply max_pages limit if set
+                if max_pages is not None and params["page"] > max_pages:
                     break
 
                 should_wait, delay = self.rate_limiter.wait("GET")
@@ -490,23 +494,27 @@ class ZPAClientHelper(ZPAClient):
 
                 response_data = response.json()
                 data = response_data.get("list", [])
-                if not data and (params["page"] == 1):
+                if not data and params["page"] == 1:
                     error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
                     logger.warn(error_msg)
                     return BoxList([]), error_msg
 
+                # Convert and extend the collected data
                 data = convert_keys_to_snake(data)
                 ret_data.extend(data[: max_items - total_collected] if max_items is not None else data)
                 total_collected += len(data)
 
+                # Check if we’ve collected the max_items
                 if max_items is not None and total_collected >= max_items:
                     break
 
+                # Get next page or break if no more data
                 next_page = response_data.get("nextPage")
                 if not next_page or (max_pages is not None and params["page"] >= max_pages):
                     break
 
-                params["page"] = next_page if params["page"] is None else params["page"] + 1
+                # Move to the next page
+                params["page"] += 1
 
         finally:
             time.sleep(2)  # Ensure a delay between requests regardless of outcome
