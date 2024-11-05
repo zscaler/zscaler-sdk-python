@@ -434,9 +434,10 @@ class ZIAClientHelper(ZIAClient):
             "EMPTY_RESULTS": "No results found for page {page}.",
         }
 
+        # Initialize pagination parameters
         params = {
-            "page": page if page is not None else 1,  # Default to page 1
-            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size)  # Respect max_page_size limit
+            "page": page if page is not None else 1,  # Start at page 1 if not specified
+            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size)  # Apply max_page_size limit
         }
 
         if search:
@@ -471,7 +472,7 @@ class ZIAClientHelper(ZIAClient):
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(response_data)
-                
+
                 # If searching for a specific item, stop if we find a match
                 if search:
                     for item in data:
@@ -487,7 +488,7 @@ class ZIAClientHelper(ZIAClient):
 
                 # Check if we've reached max_items or max_pages limits
                 if (max_items is not None and total_collected >= max_items) or \
-                (max_pages is not None and params["page"] >= max_pages):
+                   (max_pages is not None and params["page"] >= max_pages):
                     break
 
                 # Stop if we've processed all available pages (i.e., less than requested page size)
