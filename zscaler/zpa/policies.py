@@ -56,7 +56,7 @@ class PolicySetsAPI:
             conditions (list): List of condition dicts or tuples.
 
         Returns:
-            :obj:`dict`: The conditions template.
+            :obj:`list`: The conditions template.
 
         """
         template = []
@@ -78,75 +78,47 @@ class PolicySetsAPI:
             "COUNTRY_CODE": [],
         }
 
-        current_operator = "OR"  # Default operator
-        
-        for condition in conditions:
-            # Check if the first item is an operator, like "AND" or "OR"
-            if isinstance(condition, tuple) and isinstance(condition[0], str) and condition[0].upper() in ["AND", "OR"]:
-                current_operator = condition[0].upper()  # Set the current operator
-                condition = condition[1]  # The second element is the actual condition
+        operators_for_types = {}  # Dictionary to store specific operators for each object type
 
+        for condition in conditions:
+            # Check if the first item in a tuple is an operator, like "AND" or "OR"
+            if isinstance(condition, tuple) and isinstance(condition[0], str) and condition[0].upper() in ["AND", "OR"]:
+                operator = condition[0].upper()
+                condition = condition[1]  # The second element is the actual condition
+            else:
+                operator = "OR"  # Default operator if none specified
+
+            # Process each condition and categorize by object type and operator
             if isinstance(condition, tuple) and len(condition) == 3:
-                # Handle each object type according to its pattern
                 object_type = condition[0].upper()
                 lhs = condition[1]
                 rhs = condition[2]
+                operand = {"objectType": object_type, "lhs": lhs, "rhs": rhs}
+
+                # Track the operator for the current object type
+                operators_for_types[object_type] = operator
 
                 if object_type in ["APP", "APP_GROUP"]:
-                    app_and_app_group_operands.append({"objectType": object_type, "lhs": "id", "rhs": rhs})
+                    app_and_app_group_operands.append(operand)
                 elif object_type in object_types_to_operands:
-                    if object_type == "CLIENT_TYPE":
-                        if rhs in {
-                            "zpn_client_type_exporter",
-                            "zpn_client_type_machine_tunnel",
-                            "zpn_client_type_ip_anchoring",
-                            "zpn_client_type_edge_connector",
-                            "zpn_client_type_zapp",
-                            "zpn_client_type_slogger",
-                        }:
-                            object_types_to_operands[object_type].append({"objectType": object_type, "lhs": "id", "rhs": rhs})
-                    elif object_type in [
-                        "PLATFORM",
-                        "POSTURE",
-                        "TRUSTED_NETWORK",
-                        "SAML",
-                        "SCIM",
-                        "SCIM_GROUP",
-                        "COUNTRY_CODE",
-                    ]:
-                        object_types_to_operands[object_type].append({"objectType": object_type, "lhs": lhs, "rhs": rhs})
-                    else:
-                        object_types_to_operands[object_type].append({"objectType": object_type, "lhs": "id", "rhs": rhs})
-                        
-            elif isinstance(condition, dict):
-                # This part allows passing operator explicitly through conditions
-                if "operator" in condition:
-                    current_operator = condition["operator"]
-                    continue  # Move to the next condition after setting the operator
+                    object_types_to_operands[object_type].append(operand)
 
-                # Handle the dictionary logic based on the Go code schema
+            elif isinstance(condition, dict):
+                if "operator" in condition:
+                    operators_for_types["default"] = condition["operator"]
+                    continue  # Skip to the next condition after setting the operator
+
                 condition_template = {}
-                # Extracting keys from the condition dictionary
                 for key in ["id", "negated", "operator"]:
                     if key in condition:
                         condition_template[key] = condition[key]
 
-                # Handling the operands
                 operands = condition.get("operands", [])
                 condition_template["operands"] = []
 
                 for operand in operands:
                     operand_template = {}
-
-                    # Extracting keys from the operand dictionary
-                    for operand_key in [
-                        "id",
-                        "idp_id",
-                        "name",
-                        "lhs",
-                        "rhs",
-                        "objectType",
-                    ]:
+                    for operand_key in ["id", "idp_id", "name", "lhs", "rhs", "objectType"]:
                         if operand_key in operand:
                             operand_template[operand_key] = operand[operand_key]
 
@@ -154,14 +126,16 @@ class PolicySetsAPI:
 
                 template.append(condition_template)
 
-        # Combine APP and APP_GROUP operands into one block
+        # Combine APP and APP_GROUP operands with their specific operator
         if app_and_app_group_operands:
-            template.append({"operator": current_operator, "operands": app_and_app_group_operands})
+            app_group_operator = operators_for_types.get("APP", "OR")
+            template.append({"operator": app_group_operator, "operands": app_and_app_group_operands})
 
-        # Combine other object types into their own blocks
+        # Combine other object types into their blocks with their respective operator
         for object_type, operands in object_types_to_operands.items():
             if operands:
-                template.append({"operator": current_operator, "operands": operands})
+                operator = operators_for_types.get(object_type, "OR")
+                template.append({"operator": operator, "operands": operands})
 
         return template
 

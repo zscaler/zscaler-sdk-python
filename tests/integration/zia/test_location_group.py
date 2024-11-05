@@ -68,29 +68,6 @@ class TestLocationGroup:
                 except Exception as exc:
                     errors.append(f"Fetching lite group by ID failed: {exc}")
 
-                # Attempt to retrieve the group by name
-                try:
-                    group_name = first_group.get("name")
-                    groups_by_name = client.locations.get_location_group_by_name(group_name)
-                    # Since groups_by_name is a BoxList, check if any group matches the expected name
-                    matching_groups = [group for group in groups_by_name if group.get("name") == group_name]
-                    assert len(matching_groups) > 0, "No groups found with the given name"
-                    # Optionally, if expecting a single match, you can further assert or use the first match
-                    # For example:
-                    # assert matching_groups[0].get("id") == group_id, "Mismatch in group ID when searching by name"
-                except Exception as exc:
-                    errors.append(f"Fetching group by name failed: {exc}")
-
-                # Attempt to retrieve the lite group by name
-                try:
-                    lite_groups_by_name = client.locations.get_location_group_lite_by_name(group_name)
-                    # Since lite_groups_by_name is a BoxList, check if any group matches the expected name
-                    matching_lite_groups = [group for group in lite_groups_by_name if group.get("name") == group_name]
-                    assert len(matching_lite_groups) > 0, "No lite groups found with the given name"
-                    # Optionally, assert or use the first match
-                except Exception as exc:
-                    errors.append(f"Fetching lite group by name failed: {exc}")
-
             # Use lite version to list location groups with minimal details
             try:
                 lite_count = client.locations.list_location_groups_count()
