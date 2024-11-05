@@ -369,27 +369,27 @@ class ZPAClientHelper(ZPAClient):
         return self.send("DELETE", path, json, params, api_version=api_version)
 
     def get_paginated_data(
-        self,
-        path=None,
-        params=None,
-        expected_status_code=200,
-        api_version: str = None,
-        search=None,
-        search_field="name",
-        max_pages=None,
-        max_items=None,
-        all_entries=False,  # Return all SCIM groups including the deleted ones if set to true
-        sort_order=None,
-        sort_by=None,
-        sort_dir=None,
-        start_time=None,
-        end_time=None,
-        idp_group_id=None,
-        scim_user_id=None,
-        scim_username=None,
-        page=None,
-        pagesize=None,
-        microtenant_id=None,
+    self,
+    path=None,
+    params=None,
+    expected_status_code=200,
+    api_version: str = None,
+    search=None,
+    search_field="name",
+    max_pages=None,
+    max_items=None,
+    all_entries=False,
+    sort_order=None,
+    sort_by=None,
+    sort_dir=None,
+    start_time=None,
+    end_time=None,
+    idp_group_id=None,
+    scim_user_id=None,
+    scim_username=None,
+    page=None,
+    pagesize=None,
+    microtenant_id=None,
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -432,18 +432,10 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        # Only set page and pagesize if they were provided explicitly
-        if page is not None:
-            params["page"] = page
-        else:
-            params["page"] = 1  # Start with page 1 if not provided
+        # Set initial pagination params
+        params["page"] = page or 1
+        params["pagesize"] = min(pagesize, 500) if pagesize else 500
 
-        if pagesize is not None:
-            params["pagesize"] = min(pagesize, 500)  # Apply maximum constraint if pagesize is specified
-        else:
-            params["pagesize"] = 500  # Set to maximum if pagesize not specified
-
-        # Check for microtenantId in function arguments first, then environment variable
         if microtenant_id:
             params["microtenantId"] = microtenant_id
         elif self.microtenant_id and "microtenantId" not in params:
@@ -475,7 +467,7 @@ class ZPAClientHelper(ZPAClient):
 
         try:
             while True:
-                # Apply max_pages limit if set
+                # Stop if max_pages reached
                 if max_pages is not None and params["page"] > max_pages:
                     break
 
@@ -508,9 +500,9 @@ class ZPAClientHelper(ZPAClient):
                 if max_items is not None and total_collected >= max_items:
                     break
 
-                # Get next page or break if no more data
-                next_page = response_data.get("nextPage")
-                if not next_page or (max_pages is not None and params["page"] >= max_pages):
+                # Determine if there is a next page based on totalPages, converting totalPages to an integer if present
+                total_pages = int(response_data.get("totalPages", 0))  # Default to 0 if not provided
+                if not total_pages or params["page"] >= total_pages:
                     break
 
                 # Move to the next page
