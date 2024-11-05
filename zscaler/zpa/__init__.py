@@ -369,27 +369,27 @@ class ZPAClientHelper(ZPAClient):
         return self.send("DELETE", path, json, params, api_version=api_version)
 
     def get_paginated_data(
-        self,
-        path=None,
-        params=None,
-        expected_status_code=200,
-        api_version: str = None,
-        search=None,
-        search_field="name",
-        max_pages=None,
-        max_items=None,
-        all_entries=False,  # Return all SCIM groups including the deleted ones if set to true
-        sort_order=None,
-        sort_by=None,
-        sort_dir=None,
-        start_time=None,
-        end_time=None,
-        idp_group_id=None,
-        scim_user_id=None,
-        scim_username=None,
-        page=None,
-        pagesize=None,
-        microtenant_id=None,
+    self,
+    path=None,
+    params=None,
+    expected_status_code=200,
+    api_version: str = None,
+    search=None,
+    search_field="name",
+    max_pages=None,
+    max_items=None,
+    all_entries=False,
+    sort_order=None,
+    sort_by=None,
+    sort_dir=None,
+    start_time=None,
+    end_time=None,
+    idp_group_id=None,
+    scim_user_id=None,
+    scim_username=None,
+    page=None,
+    pagesize=None,
+    microtenant_id=None,
     ):
         """
         Fetches paginated data from the ZPA API based on specified parameters and handles various types of API pagination.
@@ -432,15 +432,10 @@ class ZPAClientHelper(ZPAClient):
         if params is None:
             params = {}
 
-        if (page is not None or pagesize is not None) and (max_pages is not None or max_items is not None):
-            raise ValueError(
-                "Do not mix 'page' or 'pagesize' with 'max_pages' or 'max_items'. Choose either set of parameters."
-            )
+        # Set initial pagination params
+        params["page"] = page or 1
+        params["pagesize"] = min(pagesize, 500) if pagesize else 500
 
-        params["page"] = page if page is not None else 1  # Default to page 1 if not specified
-        params["pagesize"] = min(pagesize if pagesize is not None else 20, 500)  # Apply maximum constraint and handle default
-
-        # Check for microtenantId in function arguments first, then environment variable
         if microtenant_id:
             params["microtenantId"] = microtenant_id
         elif self.microtenant_id and "microtenantId" not in params:
@@ -472,7 +467,8 @@ class ZPAClientHelper(ZPAClient):
 
         try:
             while True:
-                if max_pages is not None and (page is not None and page > max_pages):
+                # Stop if max_pages reached
+                if max_pages is not None and params["page"] > max_pages:
                     break
 
                 should_wait, delay = self.rate_limiter.wait("GET")
@@ -490,23 +486,27 @@ class ZPAClientHelper(ZPAClient):
 
                 response_data = response.json()
                 data = response_data.get("list", [])
-                if not data and (params["page"] == 1):
+                if not data and params["page"] == 1:
                     error_msg = ERROR_MESSAGES["EMPTY_RESULTS"]
                     logger.warn(error_msg)
                     return BoxList([]), error_msg
 
+                # Convert and extend the collected data
                 data = convert_keys_to_snake(data)
                 ret_data.extend(data[: max_items - total_collected] if max_items is not None else data)
                 total_collected += len(data)
 
+                # Check if we’ve collected the max_items
                 if max_items is not None and total_collected >= max_items:
                     break
 
-                next_page = response_data.get("nextPage")
-                if not next_page or (max_pages is not None and params["page"] >= max_pages):
+                # Determine if there is a next page based on totalPages, converting totalPages to an integer if present
+                total_pages = int(response_data.get("totalPages", 0))  # Default to 0 if not provided
+                if not total_pages or params["page"] >= total_pages:
                     break
 
-                params["page"] = next_page if params["page"] is None else params["page"] + 1
+                # Move to the next page
+                params["page"] += 1
 
         finally:
             time.sleep(2)  # Ensure a delay between requests regardless of outcome

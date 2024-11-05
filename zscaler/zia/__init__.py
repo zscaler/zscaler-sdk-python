@@ -406,6 +406,9 @@ class ZIAClientHelper(ZIAClient):
         page=None,
         pagesize=None,
         search=None,
+        max_page_size=1000,  # Default to 1000, can be adjusted based on endpoint constraints
+        max_items=None,  # Maximum number of items to retrieve across pages
+        max_pages=None,  # Maximum number of pages to retrieve
     ):
         """
         Fetches paginated data from the API based on specified parameters and handles pagination.
@@ -416,6 +419,8 @@ class ZIAClientHelper(ZIAClient):
             page (int): Specific page number to fetch. Defaults to 1 if not provided.
             pagesize (int): Number of items per page, default is 100, with a maximum of 1000.
             search (str): Search query to filter the results.
+            max_items (int): Maximum number of items to retrieve.
+            max_pages (int): Maximum number of pages to fetch.
 
         Returns:
             tuple: A tuple containing:
@@ -428,15 +433,18 @@ class ZIAClientHelper(ZIAClient):
             "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
             "EMPTY_RESULTS": "No results found for page {page}.",
         }
-    
-        params = {}
-        params["page"] = page if page is not None else 1  # Default to page 1
-        params["pagesize"] = min(pagesize if pagesize is not None else 100, 1000)  # Default pagesize is 100, max 1000
+
+        # Initialize pagination parameters
+        params = {
+            "page": page if page is not None else 1,  # Start at page 1 if not specified
+            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size)  # Apply max_page_size limit
+        }
 
         if search:
             params["search"] = search
 
         ret_data = []
+        total_collected = 0  # Track total items collected
 
         try:
             while True:
@@ -464,18 +472,26 @@ class ZIAClientHelper(ZIAClient):
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(response_data)
-                
+
                 # If searching for a specific item, stop if we find a match
                 if search:
                     for item in data:
                         if item.get("name") == search:
                             ret_data.append(item)
                             return BoxList(ret_data), None
-                
-                # If no search, collect all data from the current page
-                ret_data.extend(data)
 
-                # Stop if we've processed all available pages
+                # Limit data collection based on max_items
+                if max_items is not None:
+                    data = data[:max_items - total_collected]  # Limit items on the current page
+                ret_data.extend(data)
+                total_collected += len(data)
+
+                # Check if we've reached max_items or max_pages limits
+                if (max_items is not None and total_collected >= max_items) or \
+                   (max_pages is not None and params["page"] >= max_pages):
+                    break
+
+                # Stop if we've processed all available pages (i.e., less than requested page size)
                 if len(data) < params["pagesize"]:
                     break
 

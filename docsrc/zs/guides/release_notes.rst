@@ -6,6 +6,17 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 0.9.7 (November,1 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes
+
+* Fixed ZPA Policy Set Controller complex Conditions template to support inner `AND/OR` operators (`199 <https://github.com/zscaler/zscaler-sdk-python/pull/199>`_). Issue (`198 <https://github.com/zscaler/zscaler-sdk-python/pull/198>`_)
+
+
 0.9.6 (October, 28 2024)
 ------------------------
 
