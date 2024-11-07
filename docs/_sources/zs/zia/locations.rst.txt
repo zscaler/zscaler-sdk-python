@@ -8,5 +8,7 @@ Methods are accessible via ``zia.locations``
 
 .. _zia-locations:
 
-.. automodule:: pyzscaler.zia.locations
+.. automodule:: zscaler.zia.locations
     :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,669 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="device_management" href="device_management.html" /><link rel="prev" title="authentication_settings" href="authentication_settings.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>cloud_apps</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Zscaler SDK Python</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">ZIA</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ZIA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="activate.html">activate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apptotal.html">apptotal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication_settings.html">authentication_settings</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">cloud_apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device_management.html">device_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forwarding_control.html">forwarding_control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_filtering.html">url_filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workload_groups.html">workload_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zpa_gateway.html">zpa_gateway</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zpa/index.html">ZPA</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ZPA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/app_segments.html">app_segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/app_segments_inspection.html">app_segments_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/app_segments_pra.html">app_segments_pra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/certificates.html">certificates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/cloud_connector_groups.html">cloud_connector_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/connectors.html">connectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/emergency_access.html">emergency_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/idp.html">IDP Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/inspection.html">inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/lss.html">lss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/machine_groups.html">machine_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/policies.html">policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/posture_profiles.html">posture_profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/privileged_remote_access.html">privileged_remote_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/provisioning.html">provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/saml_attributes.html">saml_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/scim_attributes.html">scim_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/scim_groups.html">scim_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/segment_groups.html">segment_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/server_groups.html">server_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/servers.html">servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/service_edges.html">service_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zpa/trusted_networks.html">trusted_networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="cloud-apps">
+<h1>cloud_apps<a class="headerlink" href="#cloud-apps" title="Permalink to this heading">#</a></h1>
+<p>The following methods allow for interaction with the ZIA
+Cloud Applications API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.cloud_apps</span></code></p>
+<span class="target" id="module-zscaler.zia.cloud_apps"><span id="zia-cloud-apps"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CloudAppsAPI</span></span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI.bulk_update">
+<span class="sig-name descname"><span class="pre">bulk_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sanction_state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI.bulk_update" title="Permalink to this definition">#</a></dt>
+<dd><p>Updates application status and tag information for predefined or custom cloud applications based on the
+IDs specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sanction_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>The sanction state to apply to the cloud applications.</p>
+<p>Accepted values are:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">sanctioned</span></code>: The cloud application is sanctioned.
+<code class="docutils literal notranslate"><span class="pre">unsanctioned</span></code>: The cloud application is unsanctioned.
+<code class="docutils literal notranslate"><span class="pre">any</span></code>: The cloud application is either sanctioned or unsanctioned.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>application_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of cloud application IDs to update.</p></li>
+<li><p><strong>custom_tag_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of custom tag IDs to apply to the cloud applications.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The response from the ZIA API.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update the sanction state of a cloud application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zia</span><span class="o">.</span><span class="n">cloud_apps</span><span class="o">.</span><span class="n">bulk_update</span><span class="p">(</span><span class="s2">&quot;sanctioned&quot;</span><span class="p">,</span> <span class="n">application_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;12345&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Update the sanction state and custom tags of a cloud application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zia</span><span class="o">.</span><span class="n">cloud_apps</span><span class="o">.</span><span class="n">bulk_update</span><span class="p">(</span><span class="s2">&quot;sanctioned&quot;</span><span class="p">,</span> <span class="n">application_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;12345&quot;</span><span class="p">],</span> <span class="n">custom_tag_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;67890&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_csv">
+<span class="sig-name descname"><span class="pre">export_shadow_it_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LAST_1_DAYS'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_csv" title="Permalink to this definition">#</a></dt>
+<dd><p>Export the Shadow IT Report (in CSV format) for the list of users or known locations
+identified with using the cloud applications specified in the request. The report
+includes details such as user interactions, application category, application usage,
+number of transactions, last accessed time, etc.</p>
+<p>You can customize the report using various filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>application</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The cloud application for which user or location data must be retrieved.
+Note: Only one cloud application can be specified at a time.</p></li>
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Filters the data using predefined timeframes. Defaults to last day.</p></li>
+<li><p><strong>values</strong> (<em>Possible</em>) – <code class="docutils literal notranslate"><span class="pre">LAST_1_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_7_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_15_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_MONTH</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_QUARTER</span></code>.</p></li>
+<li><p><strong>entity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The entity type that the Shadow IT Report will be generated for.</p></li>
+<li><p><strong>values</strong> – <code class="docutils literal notranslate"><span class="pre">USER</span></code>, <code class="docutils literal notranslate"><span class="pre">LOCATION</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>Sorts the list in increasing or decreasing order based on the specified attribute.</p>
+<p>Example format for this parameter:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">order={&quot;on&quot;:</span> <span class="pre">&quot;RISK_SCORE&quot;,</span> <span class="pre">&quot;by&quot;:</span> <span class="pre">&quot;INCREASING&quot;}</span></code></p>
+</div></blockquote>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">on</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RISK_SCORE</span></code>, <code class="docutils literal notranslate"><span class="pre">APPLICATION</span></code>, <code class="docutils literal notranslate"><span class="pre">APPLICATION_CATEGORY</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SANCTIONED_STATE</span></code>, <code class="docutils literal notranslate"><span class="pre">TOTAL_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">UPLOAD_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">DOWNLOAD_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTHENTICATED_USERS</span></code>,
+<code class="docutils literal notranslate"><span class="pre">TRANSACTION_COUNT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNAUTH_LOCATION</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_ACCESSED</span></code>.</p>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">by</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">INCREASING</span></code>, <code class="docutils literal notranslate"><span class="pre">DECREASING</span></code>.</p>
+</p></li>
+<li><p><strong>download_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by the amount of data (in bytes) downloaded from the application.
+<code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> fields specify the range.</p></li>
+<li><p><strong>upload_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by the amount of data (in bytes) uploaded to the application.
+<code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> fields specify the range.</p></li>
+<li><p><strong>data_consumed</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by the total amount of data uploaded and downloaded from the application.
+<code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> fields specify the range.</p></li>
+<li><p><strong>users</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by user.
+<code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code> fields specify the user information.</p></li>
+<li><p><strong>locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by location.
+<code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code> fields specify the location information.</p></li>
+<li><p><strong>departments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Filters by department.
+<code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code> fields specify the department information.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Shadow IT Report in CSV format.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Export the Shadow IT Report for GitHub the last 15 days:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">report</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">shadow_it</span><span class="o">.</span><span class="n">export_shadow_it_report</span><span class="p">(</span><span class="n">application</span><span class="o">=</span><span class="s2">&quot;Github&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="s2">&quot;LAST_15_DAYS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Zscaler has a rate limit of 1 report per-minute, ensure you take this into account when calling this method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_report">
+<span class="sig-name descname"><span class="pre">export_shadow_it_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LAST_1_DAYS'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_report" title="Permalink to this definition">#</a></dt>
+<dd><p>Export the Shadow IT Report (in CSV format) for the cloud applications recognized by Zscaler
+based on their usage in your organisation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the data by using predefined time frames. Defaults to last day.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">LAST_1_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_7_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_15_DAYS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_MONTH</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_QUARTER</span></code></p>
+</p></li>
+<li><p><strong>**kwargs</strong> – Arbitrary keyword arguments for filtering the report.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>app_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Filters the data based on the cloud application name that matches the specified string.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>Sorts the list in increasing or decreasing order based on the specified attribute.</p>
+<p>Example format for this parameter:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">order={&quot;on&quot;:</span> <span class="pre">&quot;RISK_SCORE&quot;,</span> <span class="pre">&quot;by&quot;:</span> <span class="pre">&quot;INCREASING&quot;}</span></code></p>
+</div></blockquote>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">on</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RISK_SCORE</span></code>, <code class="docutils literal notranslate"><span class="pre">APPLICATION</span></code>, <code class="docutils literal notranslate"><span class="pre">APPLICATION_CATEGORY</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SANCTIONED_STATE</span></code>, <code class="docutils literal notranslate"><span class="pre">TOTAL_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">UPLOAD_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">DOWNLOAD_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTHENTICATED_USERS</span></code>,
+<code class="docutils literal notranslate"><span class="pre">TRANSACTION_COUNT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNAUTH_LOCATION</span></code>, <code class="docutils literal notranslate"><span class="pre">LAST_ACCESSED</span></code>.</p>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">by</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">INCREASING</span></code>, <code class="docutils literal notranslate"><span class="pre">DECREASING</span></code>.</p>
+</p></li>
+<li><p><strong>application_category</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the data based on the cloud application category.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">ANY</span></code>, <code class="docutils literal notranslate"><span class="pre">NONE</span></code>, <code class="docutils literal notranslate"><span class="pre">WEB_MAIL</span></code>, <code class="docutils literal notranslate"><span class="pre">SOCIAL_NETWORKING</span></code>, <code class="docutils literal notranslate"><span class="pre">STREAMING</span></code>, <code class="docutils literal notranslate"><span class="pre">P2P</span></code>,
+<code class="docutils literal notranslate"><span class="pre">INSTANT_MESSAGING</span></code>, <code class="docutils literal notranslate"><span class="pre">WEB_SEARCH</span></code>, <code class="docutils literal notranslate"><span class="pre">GENERAL_BROWSING</span></code>, <code class="docutils literal notranslate"><span class="pre">ADMINISTRATION</span></code>, <code class="docutils literal notranslate"><span class="pre">ENTERPRISE_COLLABORATION</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BUSINESS_PRODUCTIVITY</span></code>, <code class="docutils literal notranslate"><span class="pre">SALES_AND_MARKETING</span></code>, <code class="docutils literal notranslate"><span class="pre">SYSTEM_AND_DEVELOPMENT</span></code>, <code class="docutils literal notranslate"><span class="pre">CONSUMER</span></code>, <code class="docutils literal notranslate"><span class="pre">FILE_SHARE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">HOSTING_PROVIDER</span></code>, <code class="docutils literal notranslate"><span class="pre">IT_SERVICES</span></code>, <code class="docutils literal notranslate"><span class="pre">DNS_OVER_HTTPS</span></code>, <code class="docutils literal notranslate"><span class="pre">HUMAN_RESOURCES</span></code>, <code class="docutils literal notranslate"><span class="pre">LEGAL</span></code>, <code class="docutils literal notranslate"><span class="pre">HEALTH_CARE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">FINANCE</span></code>, <code class="docutils literal notranslate"><span class="pre">CUSTOM_CAPP</span></code></p>
+</p></li>
+<li><p><strong>data_consumed</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>Filters the data by cloud application usage in terms of total data uploaded and downloaded.</p>
+<p>Example format for this parameter:</p>
+<blockquote>
+<div><p>data_consumed={“min”: 100, “max”: 1000}</p>
+<p><code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> fields specify the range respectively.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>risk_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – <p>Filters the data based on the risk index assigned to cloud applications.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code></p>
+</p></li>
+<li><p><strong>sanctioned_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the data based on the status of cloud applications.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">UN_SANCTIONED</span></code>, <code class="docutils literal notranslate"><span class="pre">SANCTIONED</span></code>, <code class="docutils literal notranslate"><span class="pre">ANY</span></code></p>
+</p></li>
+<li><p><strong>employees</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the data based on the employee count of the cloud application vendor.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">NONE</span></code>, <code class="docutils literal notranslate"><span class="pre">RANGE_1_100</span></code>, <code class="docutils literal notranslate"><span class="pre">RANGE_100_1000</span></code>, <code class="docutils literal notranslate"><span class="pre">RANGE_1000_10000</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RANGE_10000_INF</span></code></p>
+</p></li>
+<li><p><strong>supported_certifications</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>Filters the cloud applications by security certifications.</p>
+<p>Example format for this parameter:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">supported_certifications={&quot;operation&quot;:</span> <span class="pre">&quot;INCLUDE&quot;,</span> <span class="pre">&quot;value&quot;:</span> <span class="pre">[&quot;ISO_27001&quot;,</span> <span class="pre">&quot;HIPAA&quot;]}</span></code></p>
+</div></blockquote>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">operation</span></code> field: <code class="docutils literal notranslate"><span class="pre">INCLUDE</span></code> and <code class="docutils literal notranslate"><span class="pre">EXCLUDE</span></code>.</p>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">value</span></code> field: <code class="docutils literal notranslate"><span class="pre">NONE</span></code>, <code class="docutils literal notranslate"><span class="pre">CSA_STAR</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_27001</span></code>, <code class="docutils literal notranslate"><span class="pre">HIPAA</span></code>, <code class="docutils literal notranslate"><span class="pre">FISMA</span></code>,
+<code class="docutils literal notranslate"><span class="pre">FEDRAMP</span></code>, <code class="docutils literal notranslate"><span class="pre">SOC2</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_27018</span></code>, <code class="docutils literal notranslate"><span class="pre">PCI_DSS</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_27017</span></code>, <code class="docutils literal notranslate"><span class="pre">SOC1</span></code>, <code class="docutils literal notranslate"><span class="pre">SOC3</span></code>, <code class="docutils literal notranslate"><span class="pre">GDPR</span></code>,
+<code class="docutils literal notranslate"><span class="pre">CCPA</span></code>, <code class="docutils literal notranslate"><span class="pre">FERPA</span></code>, <code class="docutils literal notranslate"><span class="pre">COPPA</span></code>, <code class="docutils literal notranslate"><span class="pre">HITECH</span></code>, <code class="docutils literal notranslate"><span class="pre">EU_US_SWISS_PRIVACY_SHIELD</span></code>,
+<code class="docutils literal notranslate"><span class="pre">EU_US_PRIVACY_SHIELD_FRAMEWORK</span></code>, <code class="docutils literal notranslate"><span class="pre">CISP</span></code>, <code class="docutils literal notranslate"><span class="pre">AICPA</span></code>, <code class="docutils literal notranslate"><span class="pre">FIPS</span></code>, <code class="docutils literal notranslate"><span class="pre">SAFE_BIOPHARMA</span></code>, <code class="docutils literal notranslate"><span class="pre">ISAE_3000</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SSAE_18</span></code>, <code class="docutils literal notranslate"><span class="pre">NIST</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_14001</span></code>, <code class="docutils literal notranslate"><span class="pre">SOC</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUSTE</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_26262</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_20252</span></code>, <code class="docutils literal notranslate"><span class="pre">RGPD</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ISO_20243</span></code>, <code class="docutils literal notranslate"><span class="pre">ISO_10002</span></code>, <code class="docutils literal notranslate"><span class="pre">JIS_Q_15001_2017</span></code>, <code class="docutils literal notranslate"><span class="pre">ISMAP</span></code>.</p>
+</p></li>
+<li><p><strong>source_ip_restriction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they have source IP restrictions.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>mfa_support</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support multi-factor authentication.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>admin_audit_logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support admin audit logging.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>had_breach_in_last_3_years</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on data breaches in the last three years.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>have_poor_items_of_service</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on their terms of service.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>password_strength</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they require strong passwords.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>ssl_pinned</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they use SSL Pinning.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>evasive</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on their capability to bypass traditional firewalls.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>have_http_security_header_support</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications by the presence of security headers.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>dns_caa_policy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications by the presence of DNS CAA policy.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>have_weak_cipher_support</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on the cryptographic keys used.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>ssl_certification_validity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on SSL certificate validity.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>file_sharing</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they include file-sharing provision.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>malware_scanning_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they include malware content.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>remote_access_screen_sharing</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support remote access and screen sharing.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>sender_policy_framework</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support Sender Policy Framework.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>domain_keys_identified_mail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support DomainKeys Identified Mail.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>domain_based_message_authentication</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support Domain-based Message Authentication.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>vulnerable_disclosure_program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support Vulnerability Disclosure Policy.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>waf_support</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether WAF is enabled for the applications.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>vulnerability</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they have published Common Vulnerabilities and
+Exposures (CVE).</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>valid_ssl_certificate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they have a valid SSL certificate.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>data_encryption_in_transit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they support data encryption in transit.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>vulnerable_to_heart_bleed</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they are vulnerable to Heartbleed attack.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>vulnerable_to_poodle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they are vulnerable to Poodle attack.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>vulnerable_to_log_jam</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Filters the cloud applications based on whether they are vulnerable to Logjam attack.</p>
+<p>Possible values: <code class="docutils literal notranslate"><span class="pre">YES</span></code>, <code class="docutils literal notranslate"><span class="pre">NO</span></code>, <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code>.</p>
+</p></li>
+<li><p><strong>cert_key_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>Filters the data by the size of the SSL certificate public keys used by the cloud applications.</p>
+<p>Example format for this parameter:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">cert_key_size={&quot;operation&quot;:</span> <span class="pre">&quot;INCLUDE&quot;,</span> <span class="pre">&quot;value&quot;:</span> <span class="pre">[&quot;BITS_2048&quot;,</span> <span class="pre">&quot;BITS_256&quot;]}</span></code></p>
+</div></blockquote>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">operation</span></code> field:</p>
+<p><code class="docutils literal notranslate"><span class="pre">INCLUDE</span></code>, <code class="docutils literal notranslate"><span class="pre">EXCLUDE</span></code>.</p>
+<p>Possible values for <code class="docutils literal notranslate"><span class="pre">value</span></code> field:</p>
+<p><code class="docutils literal notranslate"><span class="pre">NONE</span></code>, <code class="docutils literal notranslate"><span class="pre">UN_KNOWN</span></code>, <code class="docutils literal notranslate"><span class="pre">BITS_2048</span></code>, <code class="docutils literal notranslate"><span class="pre">BITS_256</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BITS_3072</span></code>, <code class="docutils literal notranslate"><span class="pre">BITS_384</span></code>, <code class="docutils literal notranslate"><span class="pre">BITS_4096</span></code>, <code class="docutils literal notranslate"><span class="pre">BITS_1024</span></code>.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Shadow IT Report in CSV format.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Export the Shadow IT Report for the last 7 days:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">report</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">shadow_it</span><span class="o">.</span><span class="n">export_shadow_it_report</span><span class="p">(</span><span class="s1">&#39;LAST_7_DAYS&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Zscaler has a rate limit of 1 report per-minute, ensure you take this into account when calling this method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI.list_apps">
+<span class="sig-name descname"><span class="pre">list_apps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI.list_apps" title="Permalink to this definition">#</a></dt>
+<dd><p>List all predefined and custom cloud applications by name and id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of cloud applications.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>List all cloud applications:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apps</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">cloud_apps</span><span class="o">.</span><span class="n">list_apps</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">apps</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zia.cloud_apps.CloudAppsAPI.list_custom_tags">
+<span class="sig-name descname"><span class="pre">list_custom_tags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zia.cloud_apps.CloudAppsAPI.list_custom_tags" title="Permalink to this definition">#</a></dt>
+<dd><p>List all custom tags by name and id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of custom tags available to assign to cloud applications.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>List all custom tags:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tags</span> <span class="o">=</span> <span class="n">zia</span><span class="o">.</span><span class="n">cloud_apps</span><span class="o">.</span><span class="n">list_custom_tags</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="device_management.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">device_management</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="authentication_settings.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">authentication_settings</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Zscaler Inc.
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">cloud_apps</a><ul>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI</span></code></a><ul>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI.bulk_update"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI.bulk_update()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_csv"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI.export_shadow_it_csv()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI.export_shadow_it_report"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI.export_shadow_it_report()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI.list_apps"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI.list_apps()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zia.cloud_apps.CloudAppsAPI.list_custom_tags"><code class="docutils literal notranslate"><span class="pre">CloudAppsAPI.list_custom_tags()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
+</html>

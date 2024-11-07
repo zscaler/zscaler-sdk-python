@@ -7,5 +7,7 @@ Methods are accessible via ``zia.audit_logs``
 
 .. _zia-audit_logs:
 
-.. automodule:: pyzscaler.zia.audit_logs
+.. automodule:: zscaler.zia.audit_logs
     :members:
+    :undoc-members:
+    :show-inheritance:

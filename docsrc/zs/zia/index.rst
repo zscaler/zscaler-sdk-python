@@ -8,5 +8,8 @@ This package covers the ZIA interface.
 
     *
 
-.. automodule:: pyzscaler.zia
+.. automodule:: zscaler.zia
     :members:
+    :undoc-members:
+    :show-inheritance:
+

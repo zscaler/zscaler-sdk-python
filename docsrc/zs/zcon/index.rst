@@ -3,11 +3,12 @@ ZCON
 This package covers the ZCON interface.
 
 .. toctree::
-    :maxdepth: 1
     :glob:
     :hidden:
 
     *
 
-.. automodule:: pyzscaler.zcon
+.. automodule:: zscaler.zcon
     :members:
+    :undoc-members:
+    :show-inheritance:

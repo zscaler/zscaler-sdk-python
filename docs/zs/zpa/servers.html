@@ -1,553 +1,503 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en">
-<head>
-    <meta charset="utf-8"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>servers</title>
-
-
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
-
-
-    <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-    <![endif]-->
-
-
-    <script type="text/javascript" id="documentation_options" data-url_root="../../"
-            src="../../_static/documentation_options.js"></script>
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-
-    <link rel="index" title="Index" href="../../genindex.html"/>
-    <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="next" title="trusted_networks" href="trusted_networks.html"/>
-    <link rel="prev" title="server_groups" href="server_groups.html"/>
-</head>
-
-<body class="wy-body-for-nav">
-
-
-<div class="wy-grid-for-nav">
-
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="wy-side-scroll">
-            <div class="wy-side-nav-search">
-
-
-                <a href="../../index.html" class="icon icon-home"> pyZscaler
-
-
-                </a>
-
-
-                <div class="version">
-                    0.7
-                </div>
-
-
-                <div role="search">
-                    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-                        <input type="text" name="q" placeholder="Search docs"/>
-                        <input type="hidden" name="check_keywords" value="yes"/>
-                        <input type="hidden" name="area" value="default"/>
-                    </form>
-                </div>
-
-
-            </div>
-
-
-            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-
-
-                <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
-                    <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a>
-                        <ul class="current">
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="app_segments.html">app_segments</a></li>
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="certificates.html">certificates</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="connector_groups.html">connector_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="idp.html">idp</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="server_groups.html">server_groups</a></li>
-                            <li class="toctree-l2 current"><a class="current reference internal" href="#">servers</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-
-            </div>
-
-        </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-
-        <nav class="wy-nav-top" aria-label="top navigation">
-
-            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-            <a href="../../index.html">pyZscaler</a>
-
-        </nav>
-
-
-        <div class="wy-nav-content">
-
-            <div class="rst-content">
-
-
-                <div role="navigation" aria-label="breadcrumbs navigation">
-
-                    <ul class="wy-breadcrumbs">
-
-                        <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-
-                        <li><a href="index.html">ZPA</a> &raquo;</li>
-
-                        <li>servers</li>
-
-
-                        <li class="wy-breadcrumbs-aside">
-
-
-                            <a href="../../_sources/zs/zpa/servers.rst.txt" rel="nofollow"> View page source</a>
-
-
-                        </li>
-
-                    </ul>
-
-
-                    <hr/>
-                </div>
-                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-                    <div itemprop="articleBody">
-
-                        <div class="section" id="servers">
-                            <h1>servers<a class="headerlink" href="#servers" title="Permalink to this headline">¶</a>
-                            </h1>
-                            <p>The following methods allow for interaction with the ZPA
-                                Application Servers API endpoints.</p>
-                            <p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zpa.servers</span></code>
-                            </p>
-                            <span class="target" id="module-pyzscaler.zpa.servers"><span
-                                    id="zpa-app-servers"></span></span>
-                            <dl class="py class">
-                                <dt class="sig sig-object py" id="pyzscaler.zpa.servers.AppServersAPI">
-                                    <em class="property"><span class="pre">class</span> </em><span
-                                        class="sig-name descname"><span class="pre">AppServersAPI</span></span><a
-                                        class="headerlink" href="#pyzscaler.zpa.servers.AppServersAPI"
-                                        title="Permalink to this definition">¶</a></dt>
-                                <dd>
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.servers.AppServersAPI.add_server">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">add_server</span></span><span class="sig-paren">(</span><em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span
-                                                class="default_value"><span class="pre">None</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">address</span></span><span class="o"><span
-                                                class="pre">=</span></span><span class="default_value"><span
-                                                class="pre">None</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">enabled</span></span><span class="o"><span
-                                                class="pre">=</span></span><span class="default_value"><span
-                                                class="pre">False</span></span></em>, <em class="sig-param"><span
-                                                class="o"><span class="pre">**</span></span><span class="n"><span
-                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zpa.servers.AppServersAPI.add_server"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Add a new application server.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd">
-                                                    <ul class="simple">
-                                                        <li><p><strong>name</strong> (<a class="reference external"
-                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                         title="(in Python v3.9)"><em>str</em></a><em>, </em><em>required</em>)
-                                                            – The name of the server.</p></li>
-                                                        <li><p><strong>address</strong> (<a class="reference external"
-                                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                            title="(in Python v3.9)"><em>str</em></a><em>, </em><em>required</em>)
-                                                            – The IP address of the server.</p></li>
-                                                        <li><p><strong>enabled</strong> (<a class="reference external"
-                                                                                            href="https://docs.python.org/3/library/functions.html#bool"
-                                                                                            title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>required</em>)
-                                                            – Should the server be enabled. Defaults to False.</p></li>
-                                                        <li><p><strong>**kwargs</strong> – </p></li>
-                                                    </ul>
-                                                </dd>
-                                                <dt class="field-even">Keyword Arguments</dt>
-                                                <dd class="field-even">
-                                                    <ul class="simple">
-                                                        <li><p><strong>description</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – A description for the server.</p></li>
-                                                        <li><p><strong>appServerGroupIds</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                                title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">list</span></code></a> of <a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">str</span></code></a>), optional) – Unique
-                                                            identifiers for the server groups the server belongs to.</p>
-                                                        </li>
-                                                        <li><p><strong>configSpace</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – The configuration space for the server. Defaults to
-                                                            DEFAULT.</p></li>
-                                                    </ul>
-                                                </dd>
-                                                <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>The resource record for the newly created
-                                                    server.</p>
-                                                </dd>
-                                                <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference external"
-                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                                             title="(in Python v3.9)"><code
-                                                        class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">dict</span></code></a></p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <p>Create a server with the minimum required parameters:</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
-                                                        class="o">.</span><span class="n">servers</span><span class="o">.</span><span
-                                                        class="n">add_server</span><span class="p">(</span>
-<span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;myserver.example&#39;</span><span
-                                                            class="p">,</span>
-<span class="gp">... </span>  <span class="n">address</span><span class="o">=</span><span class="s1">&#39;192.0.2.10&#39;</span><span
-                                                            class="p">,</span>
-<span class="gp">... </span>  <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span
-                                                            class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.servers.AppServersAPI.delete_server">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">delete_server</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">server_id</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zpa.servers.AppServersAPI.delete_server"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Delete the specified server.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>server_id</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
-                                                    identifier for the server to be deleted.</p>
-                                                </dd>
-                                                <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>The response code for the operation.</p>
-                                                </dd>
-                                                <dt class="field-odd">Return type</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                            title="(in Python v3.9)"><code
-                                                        class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">str</span></code></a></p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
-                                                        class="o">.</span><span class="n">servers</span><span class="o">.</span><span
-                                                        class="n">delete_server</span><span class="p">(</span><span
-                                                        class="s1">&#39;32&#39;</span><span class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.servers.AppServersAPI.get_server">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">get_server</span></span><span class="sig-paren">(</span><em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">server_id</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zpa.servers.AppServersAPI.get_server"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Get information for the specified server id.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>server_id</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
-                                                    identifier for the server.</p>
-                                                </dd>
-                                                <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>The resource record for the server.</p>
-                                                </dd>
-                                                <dt class="field-odd">Return type</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                                            title="(in Python v3.9)"><code
-                                                        class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">dict</span></code></a></p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span
-                                                        class="n">server</span> <span class="o">=</span> <span
-                                                        class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span
-                                                        class="o">.</span><span class="n">get_server</span><span
-                                                        class="p">(</span><span class="s1">&#39;12&#39;</span><span
-                                                        class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.servers.AppServersAPI.list_servers">
-                                            <span class="sig-name descname"><span class="pre">list_servers</span></span><span
-                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zpa.servers.AppServersAPI.list_servers"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Returns all configured servers.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>List of all configured servers.</p>
-                                                </dd>
-                                                <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference external"
-                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                                             title="(in Python v3.9)"><code
-                                                        class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">list</span></code></a></p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span
-                                                        class="n">servers</span> <span class="o">=</span> <span
-                                                        class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span
-                                                        class="o">.</span><span class="n">list_servers</span><span
-                                                        class="p">()</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.servers.AppServersAPI.update_server">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">update_server</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">server_id</span></span></em>, <em class="sig-param"><span
-                                                class="o"><span class="pre">**</span></span><span class="n"><span
-                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zpa.servers.AppServersAPI.update_server"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Updates the specified server</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd">
-                                                    <ul class="simple">
-                                                        <li><p><strong>server_id</strong> (<a class="reference external"
-                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                              title="(in Python v3.9)"><em>str</em></a>)
-                                                            – The unique identifier for the server being updated.</p>
-                                                        </li>
-                                                        <li><p><strong>**kwargs</strong> – </p></li>
-                                                    </ul>
-                                                </dd>
-                                                <dt class="field-even">Keyword Arguments</dt>
-                                                <dd class="field-even">
-                                                    <ul class="simple">
-                                                        <li><p><strong>name</strong> (<a class="reference external"
-                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                         title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – The name of the server.</p></li>
-                                                        <li><p><strong>address</strong> (<a class="reference external"
-                                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                            title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – The IP address of the server.</p></li>
-                                                        <li><p><strong>enabled</strong> (<a class="reference external"
-                                                                                            href="https://docs.python.org/3/library/functions.html#bool"
-                                                                                            title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>)
-                                                            – Should the server be enabled.</p></li>
-                                                        <li><p><strong>description</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – A description for the server.</p></li>
-                                                        <li><p><strong>appServerGroupIds</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                                title="(in Python v3.9)"><em>list</em></a><em>(</em><a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a><em>)</em><em>, </em><em>optional</em>)
-                                                            – Unique identifiers for the server groups the server
-                                                            belongs to.</p></li>
-                                                        <li><p><strong>configSpace</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
-                                                            – The configuration space for the server.</p></li>
-                                                    </ul>
-                                                </dd>
-                                                <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>The resource record for the updated server.</p>
-                                                </dd>
-                                                <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference external"
-                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                                             title="(in Python v3.9)"><code
-                                                        class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">dict</span></code></a></p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <p>Update the name of a server:</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
-                                                        class="o">.</span><span class="n">servers</span><span class="o">.</span><span
-                                                        class="n">update_server</span><span class="p">(</span>
-<span class="gp">... </span>  <span class="s1">&#39;23483234823484&#39;</span><span class="p">,</span>
-<span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;newname.example&#39;</span><span
-                                                            class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                            <p>Update the address and enable a server:</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
-                                                        class="o">.</span><span class="n">servers</span><span class="o">.</span><span
-                                                        class="n">update_server</span><span class="p">(</span>
-<span class="gp">... </span>   <span class="s1">&#39;23483234823484&#39;</span><span class="p">,</span>
-<span class="gp">... </span>   <span class="n">address</span><span class="o">=</span><span class="s1">&#39;192.0.2.20&#39;</span><span
-                                                            class="p">,</span>
-<span class="gp">... </span>   <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span
-                                                            class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                </dd>
-                            </dl>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-                <footer>
-                    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-                        <a href="trusted_networks.html" class="btn btn-neutral float-right" title="trusted_networks"
-                           accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"
-                                                               aria-hidden="true"></span></a>
-                        <a href="server_groups.html" class="btn btn-neutral float-left" title="server_groups"
-                           accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span>
-                            Previous</a>
-                    </div>
-
-                    <hr/>
-
-                    <div role="contentinfo">
-                        <p>
-                            &#169; Copyright 2021, Mitch Kelly.
-
-                        </p>
-                    </div>
-
-
-                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-
-                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-
-                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
-                </footer>
-            </div>
-        </div>
-
-    </section>
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="service_edges" href="service_edges.html" /><link rel="prev" title="server_groups" href="server_groups.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>servers</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Zscaler SDK Python</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zia/index.html">ZIA</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ZIA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zia/activate.html">activate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/apptotal.html">apptotal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/authentication_settings.html">authentication_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/cloud_apps.html">cloud_apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/device_management.html">device_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/forwarding_control.html">forwarding_control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_filtering.html">url_filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/workload_groups.html">workload_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/zpa_gateway.html">zpa_gateway</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">ZPA</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ZPA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app_segments.html">app_segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_segments_inspection.html">app_segments_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_segments_pra.html">app_segments_pra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="certificates.html">certificates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connectors.html">connectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emergency_access.html">emergency_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idp.html">IDP Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspection.html">inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lss.html">lss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="privileged_remote_access.html">privileged_remote_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="provisioning.html">provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="server_groups.html">server_groups</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_edges.html">service_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+</ul>
 
 </div>
+</div>
 
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="servers">
+<h1>servers<a class="headerlink" href="#servers" title="Permalink to this heading">#</a></h1>
+<p>The following methods allow for interaction with the ZPA
+Application Servers API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zpa.servers</span></code></p>
+<span class="target" id="module-zscaler.zpa.servers"><span id="zpa-app-servers"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AppServersAPI</span></span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.add_server">
+<span class="sig-name descname"><span class="pre">add_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.add_server" title="Permalink to this definition">#</a></dt>
+<dd><p>Add a new application server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the server.</p></li>
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The IP address of the server.</p></li>
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable the server. Defaults to True.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A description for the server.</p></li>
+<li><p><strong>app_server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Unique identifiers for the server groups the server belongs to.</p></li>
+<li><p><strong>config_space</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The configuration space for the server. Defaults to DEFAULT.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resource record for the newly created server.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Create a server with the minimum required parameters:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">add_server</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;myserver.example&#39;</span><span class="p">,</span>
+<span class="gp">... </span>  <span class="n">address</span><span class="o">=</span><span class="s1">&#39;192.0.2.10&#39;</span><span class="p">,</span>
+<span class="gp">... </span>  <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
-<script type="text/javascript">
-    jQuery(function () {
-        SphinxRtdTheme.Navigation.enable(true);
-    });
-</script>
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.delete_server">
+<span class="sig-name descname"><span class="pre">delete_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.delete_server" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete the specified server.</p>
+<p>The server must not be assigned to any Server Groups or the operation will fail.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>server_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the server to be deleted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response code for the operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">delete_server</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.get_server">
+<span class="sig-name descname"><span class="pre">get_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.get_server" title="Permalink to this definition">#</a></dt>
+<dd><p>Gets information on the specified server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>server_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the server.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resource record for the server.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">server</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">get_server</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
-</body>
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.get_server_by_name">
+<span class="sig-name descname"><span class="pre">get_server_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.get_server_by_name" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.list_servers">
+<span class="sig-name descname"><span class="pre">list_servers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.list_servers" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns all configured servers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>**max_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of items to request before stopping iteration.</p></li>
+<li><p><strong>**max_pages</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum number of pages to request before stopping iteration.</p></li>
+<li><p><strong>**pagesize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specifies the page size. The default size is 20, but the maximum size is 500.</p></li>
+<li><p><strong>**search</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The search string used to match against features and fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all configured servers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">servers</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">list_servers</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.servers.AppServersAPI.update_server">
+<span class="sig-name descname"><span class="pre">update_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.servers.AppServersAPI.update_server" title="Permalink to this definition">#</a></dt>
+<dd><p>Updates the specified server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the server being updated.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the server.</p></li>
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The IP address of the server.</p></li>
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable the server.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A description for the server.</p></li>
+<li><p><strong>app_server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Unique identifiers for the server groups the server belongs to.</p></li>
+<li><p><strong>config_space</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The configuration space for the server.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resource record for the updated server.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Update the name of a server:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">update_server</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="s1">&#39;99999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;newname.example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Update the address and enable a server:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">update_server</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s1">&#39;99999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">address</span><span class="o">=</span><span class="s1">&#39;192.0.2.20&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="service_edges.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">service_edges</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="server_groups.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">server_groups</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Zscaler Inc.
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">servers</a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI"><code class="docutils literal notranslate"><span class="pre">AppServersAPI</span></code></a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.add_server"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.add_server()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.delete_server"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.delete_server()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.get_server"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.get_server()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.get_server_by_name"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.get_server_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.list_servers"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.list_servers()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.servers.AppServersAPI.update_server"><code class="docutils literal notranslate"><span class="pre">AppServersAPI.update_server()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
 </html>

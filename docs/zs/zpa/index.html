@@ -1,470 +1,567 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en">
-<head>
-    <meta charset="utf-8"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>ZPA</title>
-
-
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
-
-
-    <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-    <![endif]-->
-
-
-    <script type="text/javascript" id="documentation_options" data-url_root="../../"
-            src="../../_static/documentation_options.js"></script>
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-
-    <link rel="index" title="Index" href="../../genindex.html"/>
-    <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="next" title="app_segments" href="app_segments.html"/>
-    <link rel="prev" title="users" href="../zia/users.html"/>
-</head>
-
-<body class="wy-body-for-nav">
-
-
-<div class="wy-grid-for-nav">
-
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="wy-side-scroll">
-            <div class="wy-side-nav-search">
-
-
-                <a href="../../index.html" class="icon icon-home"> pyZscaler
-
-
-                </a>
-
-
-                <div class="version">
-                    0.7
-                </div>
-
-
-                <div role="search">
-                    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-                        <input type="text" name="q" placeholder="Search docs"/>
-                        <input type="hidden" name="check_keywords" value="yes"/>
-                        <input type="hidden" name="area" value="default"/>
-                    </form>
-                </div>
-
-
-            </div>
-
-
-            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-
-
-                <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
-                    <li class="toctree-l1 current"><a class="current reference internal" href="#">ZPA</a>
-                        <ul>
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="app_segments.html">app_segments</a></li>
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="certificates.html">certificates</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="connector_groups.html">connector_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="idp.html">idp</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a>
-                            </li>
-                            <li class="toctree-l2"><a class="reference internal"
-                                                      href="server_groups.html">server_groups</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="servers.html">servers</a></li>
-                            <li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-
-            </div>
-
-        </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-
-        <nav class="wy-nav-top" aria-label="top navigation">
-
-            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-            <a href="../../index.html">pyZscaler</a>
-
-        </nav>
-
-
-        <div class="wy-nav-content">
-
-            <div class="rst-content">
-
-
-                <div role="navigation" aria-label="breadcrumbs navigation">
-
-                    <ul class="wy-breadcrumbs">
-
-                        <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-
-                        <li>ZPA</li>
-
-
-                        <li class="wy-breadcrumbs-aside">
-
-
-                            <a href="../../_sources/zs/zpa/index.rst.txt" rel="nofollow"> View page source</a>
-
-
-                        </li>
-
-                    </ul>
-
-
-                    <hr/>
-                </div>
-                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-                    <div itemprop="articleBody">
-
-                        <div class="section" id="zpa">
-                            <h1>ZPA<a class="headerlink" href="#zpa" title="Permalink to this headline">¶</a></h1>
-                            <p>This package covers the ZPA interface.</p>
-                            <div class="toctree-wrapper compound">
-                            </div>
-                            <span class="target" id="module-pyzscaler.zpa"></span>
-                            <dl class="py class">
-                                <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA">
-                                    <em class="property"><span class="pre">class</span> </em><span
-                                        class="sig-name descname"><span class="pre">ZPA</span></span><a
-                                        class="headerlink" href="#pyzscaler.zpa.ZPA"
-                                        title="Permalink to this definition">¶</a></dt>
-                                <dd><p>A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.</p>
-                                    <p>The ZPA object stores the session token and simplifies access to API interfaces
-                                        within ZPA.</p>
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA._client_id">
-                                            <span class="sig-name descname"><span class="pre">_client_id</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA._client_id"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The ZPA API client ID generated from the ZPA console.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Type</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                            title="(in Python v3.9)">str</a></p>
-                                                </dd>
-                                            </dl>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA._client_secret">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">_client_secret</span></span><a class="headerlink"
-                                                                                               href="#pyzscaler.zpa.ZPA._client_secret"
-                                                                                               title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The ZPA API client secret generated from the ZPA console.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Type</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                            title="(in Python v3.9)">str</a></p>
-                                                </dd>
-                                            </dl>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py attribute">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA._customer_id">
-                                            <span class="sig-name descname"><span class="pre">_customer_id</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA._customer_id"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The ZPA tenant ID found in the Administration &gt; Company menu in the
-                                            ZPA console.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Type</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                            title="(in Python v3.9)">str</a></p>
-                                                </dd>
-                                            </dl>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.__init__">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">__init__</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="o"><span
-                                                class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span
-                                                class="sig-paren">)</span><a class="headerlink"
-                                                                             href="#pyzscaler.zpa.ZPA.__init__"
-                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd></dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.app_segments">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">app_segments</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.app_segments"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="app_segments.html#zpa-app-segments"><span
-                                                class="std std-ref">ZPA Application Segments interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.certificates">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">certificates</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.certificates"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="certificates.html#zpa-certificates"><span
-                                                class="std std-ref">ZPA Browser Access Certificates interface</span></a>.
-                                        </p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.cloud_connector_groups">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">cloud_connector_groups</span></span><a class="headerlink"
-                                                                                                   href="#pyzscaler.zpa.ZPA.cloud_connector_groups"
-                                                                                                   title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="cloud_connector_groups.html#zpa-cloud-connector-groups"><span
-                                                class="std std-ref">ZPA Cloud Connector Groups interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.connector_groups">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">connector_groups</span></span><a class="headerlink"
-                                                                                             href="#pyzscaler.zpa.ZPA.connector_groups"
-                                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="connector_groups.html#zpa-connector-groups"><span
-                                                class="std std-ref">ZPA Connector Groups interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.idp">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">idp</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.idp"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="idp.html#zpa-idp"><span
-                                                class="std std-ref">ZPA IDP interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.machine_groups">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">machine_groups</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.machine_groups"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="machine_groups.html#zpa-machine-groups"><span
-                                                class="std std-ref">ZPA Machine Groups interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.policies">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">policies</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.policies"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="policies.html#zpa-policies"><span
-                                                class="std std-ref">ZPA Policy Sets interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.posture_profiles">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">posture_profiles</span></span><a class="headerlink"
-                                                                                             href="#pyzscaler.zpa.ZPA.posture_profiles"
-                                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="posture_profiles.html#zpa-posture-profiles"><span
-                                                class="std std-ref">ZPA Posture Profiles interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.saml_attributes">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">saml_attributes</span></span><a class="headerlink"
-                                                                                            href="#pyzscaler.zpa.ZPA.saml_attributes"
-                                                                                            title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="saml_attributes.html#zpa-saml-attributes"><span
-                                                class="std std-ref">ZPA SAML Attributes interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.scim_attributes">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">scim_attributes</span></span><a class="headerlink"
-                                                                                            href="#pyzscaler.zpa.ZPA.scim_attributes"
-                                                                                            title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="scim_attributes.html#zpa-scim-attributes"><span
-                                                class="std std-ref">ZPA SCIM Attributes interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.scim_groups">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">scim_groups</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.scim_groups"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="scim_groups.html#zpa-scim-groups"><span
-                                                class="std std-ref">ZPA SCIM Groups interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.server_groups">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">server_groups</span></span><a class="headerlink"
-                                                                                          href="#pyzscaler.zpa.ZPA.server_groups"
-                                                                                          title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="server_groups.html#zpa-server-groups"><span
-                                                class="std std-ref">ZPA Server Groups interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.servers">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span class="pre">servers</span></span><a
-                                                class="headerlink" href="#pyzscaler.zpa.ZPA.servers"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="servers.html#zpa-app-servers"><span
-                                                class="std std-ref">ZPA Application Servers interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py property">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.ZPA.trusted_networks">
-                                            <em class="property"><span class="pre">property</span> </em><span
-                                                class="sig-name descname"><span
-                                                class="pre">trusted_networks</span></span><a class="headerlink"
-                                                                                             href="#pyzscaler.zpa.ZPA.trusted_networks"
-                                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
-                                        <dd><p>The interface object for the <a class="reference internal"
-                                                                               href="trusted_networks.html#zpa-trusted-networks"><span
-                                                class="std std-ref">ZPA Trusted Networks interface</span></a>.</p>
-                                        </dd>
-                                    </dl>
-
-                                </dd>
-                            </dl>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-                <footer>
-                    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-                        <a href="app_segments.html" class="btn btn-neutral float-right" title="app_segments"
-                           accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"
-                                                               aria-hidden="true"></span></a>
-                        <a href="../zia/users.html" class="btn btn-neutral float-left" title="users" accesskey="p"
-                           rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-                    </div>
-
-                    <hr/>
-
-                    <div role="contentinfo">
-                        <p>
-                            &#169; Copyright 2021, Mitch Kelly.
-
-                        </p>
-                    </div>
-
-
-                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-
-                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-
-                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
-                </footer>
-            </div>
-        </div>
-
-    </section>
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="app_segments" href="app_segments.html" /><link rel="prev" title="zpa_gateway" href="../zia/zpa_gateway.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>ZPA</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Zscaler SDK Python</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zia/index.html">ZIA</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ZIA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zia/activate.html">activate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/apptotal.html">apptotal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/authentication_settings.html">authentication_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/cloud_apps.html">cloud_apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/device_management.html">device_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/forwarding_control.html">forwarding_control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_filtering.html">url_filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/workload_groups.html">workload_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/zpa_gateway.html">zpa_gateway</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">ZPA</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ZPA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="app_segments.html">app_segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_segments_inspection.html">app_segments_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_segments_pra.html">app_segments_pra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="certificates.html">certificates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connectors.html">connectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emergency_access.html">emergency_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idp.html">IDP Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspection.html">inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lss.html">lss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="privileged_remote_access.html">privileged_remote_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="provisioning.html">provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="server_groups.html">server_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servers.html">servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_edges.html">service_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+</ul>
 
 </div>
+</div>
 
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="zpa">
+<h1>ZPA<a class="headerlink" href="#zpa" title="Permalink to this heading">#</a></h1>
+<p>This package covers the ZPA interface.</p>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-zscaler.zpa"></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZPAClientHelper</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ZPAClient</span></code></p>
+<p>A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.</p>
+<p>The ZPA object stores the session token and simplifies access to API interfaces within ZPA.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.client_id">
+<span class="sig-name descname"><span class="pre">client_id</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.client_id" title="Permalink to this definition">#</a></dt>
+<dd><p>The ZPA API client ID generated from the ZPA console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
 
-<script type="text/javascript">
-    jQuery(function () {
-        SphinxRtdTheme.Navigation.enable(true);
-    });
-</script>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.client_secret">
+<span class="sig-name descname"><span class="pre">client_secret</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.client_secret" title="Permalink to this definition">#</a></dt>
+<dd><p>The ZPA API client secret generated from the ZPA console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.customer_id">
+<span class="sig-name descname"><span class="pre">customer_id</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.customer_id" title="Permalink to this definition">#</a></dt>
+<dd><p>The ZPA tenant ID found in the Administration &gt; Company menu in the ZPA console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
 
-</body>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.cloud">
+<span class="sig-name descname"><span class="pre">cloud</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.cloud" title="Permalink to this definition">#</a></dt>
+<dd><p>The Zscaler cloud for your tenancy, accepted values are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">production</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">beta</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gov</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">govus</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zpatwo</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.app_segments">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">app_segments</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.app_segments" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="app_segments.html#zpa-app-segments"><span class="std std-ref">ZPA Application Segments interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.app_segments_inspection">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">app_segments_inspection</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.app_segments_inspection" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="app_segments_inspection.html#zpa-app-segments-inspection"><span class="std std-ref">ZPA Application Segments PRA interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.app_segments_pra">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">app_segments_pra</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.app_segments_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="app_segments_pra.html#zpa-app-segments-pra"><span class="std std-ref">ZPA Application Segments PRA interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.certificates">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">certificates</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.certificates" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="certificates.html#zpa-certificates"><span class="std std-ref">ZPA Browser Access Certificates interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.cloud_connector_groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cloud_connector_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.cloud_connector_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="cloud_connector_groups.html#zpa-cloud-connector-groups"><span class="std std-ref">ZPA Cloud Connector Groups interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.connectors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connectors</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.connectors" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="connectors.html#zpa-connectors"><span class="std std-ref">ZPA Connectors interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.emergency_access">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emergency_access</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.emergency_access" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="emergency_access.html#zpa-emergency-access"><span class="std std-ref">ZPA Emergency Access interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.idp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">idp</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.idp" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="idp.html#zpa-idp"><span class="std std-ref">ZPA IDP interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.inspection">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inspection</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.inspection" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="inspection.html#zpa-inspection"><span class="std std-ref">ZPA Inspection interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.isolation_profile">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">isolation_profile</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.isolation_profile" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="isolation_profile.html#zpa-isolation-profile"><span class="std std-ref">ZPA Isolation Profiles</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.lss">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lss</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.lss" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="lss.html#zpa-lss"><span class="std std-ref">ZIA Log Streaming Service Config interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.machine_groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">machine_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.machine_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="machine_groups.html#zpa-machine-groups"><span class="std std-ref">ZPA Machine Groups interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.policies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">policies</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.policies" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="policies.html#zpa-policies"><span class="std std-ref">ZPA Policy Sets interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.posture_profiles">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">posture_profiles</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.posture_profiles" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="posture_profiles.html#zpa-posture-profiles"><span class="std std-ref">ZPA Posture Profiles interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.privileged_remote_access">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">privileged_remote_access</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.privileged_remote_access" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="privileged_remote_access.html#zpa-privileged-remote-access"><span class="std std-ref">ZPA Privileged Remote Access interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.provisioning">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">provisioning</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.provisioning" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="provisioning.html#zpa-provisioning"><span class="std std-ref">ZPA Provisioning interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.saml_attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">saml_attributes</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.saml_attributes" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="saml_attributes.html#zpa-saml-attributes"><span class="std std-ref">ZPA SAML Attributes interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.scim_attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scim_attributes</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.scim_attributes" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="scim_attributes.html#zpa-scim-attributes"><span class="std std-ref">ZPA SCIM Attributes interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.scim_groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scim_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.scim_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="scim_groups.html#zpa-scim-groups"><span class="std std-ref">ZPA SCIM Groups interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.segment_groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segment_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.segment_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="segment_groups.html#zpa-segment-groups"><span class="std std-ref">ZPA Segment Groups interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.server_groups">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">server_groups</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.server_groups" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="server_groups.html#zpa-server-groups"><span class="std std-ref">ZPA Server Groups interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.servers">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">servers</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.servers" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="servers.html#zpa-app-servers"><span class="std std-ref">ZPA Application Servers interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.service_edges">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">service_edges</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.service_edges" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="service_edges.html#zpa-service-edges"><span class="std std-ref">ZPA Service Edges interface</span></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zscaler.zpa.ZPAClientHelper.trusted_networks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trusted_networks</span></span><a class="headerlink" href="#zscaler.zpa.ZPAClientHelper.trusted_networks" title="Permalink to this definition">#</a></dt>
+<dd><p>The interface object for the <a class="reference internal" href="trusted_networks.html#zpa-trusted-networks"><span class="std std-ref">ZPA Trusted Networks interface</span></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="app_segments.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">app_segments</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../zia/zpa_gateway.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">zpa_gateway</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Zscaler Inc.
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">ZPA</a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper</span></code></a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.client_id"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.client_id</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.client_secret"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.client_secret</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.customer_id"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.customer_id</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.cloud"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.cloud</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments_inspection"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments_inspection</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.app_segments_pra"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.app_segments_pra</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.certificates"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.certificates</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.cloud_connector_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.cloud_connector_groups</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.connectors"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.connectors</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.emergency_access"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.emergency_access</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.idp"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.idp</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.inspection"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.inspection</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.isolation_profile"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.isolation_profile</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.lss"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.lss</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.machine_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.machine_groups</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.policies"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.policies</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.posture_profiles"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.posture_profiles</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.privileged_remote_access"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.privileged_remote_access</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.provisioning"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.provisioning</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.saml_attributes"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.saml_attributes</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.scim_attributes"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.scim_attributes</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.scim_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.scim_groups</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.segment_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.segment_groups</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.server_groups"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.server_groups</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.servers"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.servers</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.service_edges"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.service_edges</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.ZPAClientHelper.trusted_networks"><code class="docutils literal notranslate"><span class="pre">ZPAClientHelper.trusted_networks</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
 </html>

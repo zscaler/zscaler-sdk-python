@@ -8,5 +8,7 @@ Methods are accessible via ``zia.traffic``
 
 .. _zia-traffic:
 
-.. automodule:: pyzscaler.zia.traffic
+.. automodule:: zscaler.zia.traffic
     :members:
+    :undoc-members:
+    :show-inheritance:

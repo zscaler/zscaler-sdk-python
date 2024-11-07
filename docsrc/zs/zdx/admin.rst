@@ -8,5 +8,7 @@ Methods are accessible via ``zdx.admin``
 
 .. _zdx-admin:
 
-.. automodule:: pyzscaler.zdx.admin
+.. automodule:: zscaler.zdx.admin
     :members:
+    :undoc-members:
+    :show-inheritance:

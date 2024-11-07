@@ -8,5 +8,7 @@ Methods are accessible via ``zpa.saml_attributes``
 
 .. _zpa-saml_attributes:
 
-.. automodule:: pyzscaler.zpa.saml_attributes
+.. automodule:: zscaler.zpa.saml_attributes
     :members:
+    :undoc-members:
+    :show-inheritance:

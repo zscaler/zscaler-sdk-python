@@ -7,5 +7,7 @@ Methods are accessible via ``zpa.policies``
 
 .. _zpa-policies:
 
-.. automodule:: pyzscaler.zpa.policies
+.. automodule:: zscaler.zpa.policies
     :members:
+    :undoc-members:
+    :show-inheritance:
