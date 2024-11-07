@@ -3,20 +3,13 @@ ZIA
 This package covers the ZIA interface.
 
 .. toctree::
-    :maxdepth: 2
+    :glob:
+    :hidden:
 
-    audit_logs
-    config
-    firewall
-    locations
-    sandbox
-    security
-    session
-    ssl
-    traffic
-    url_categories
-    url_filters
-    users
+    *
 
-.. automodule:: pyzscaler.zia
+.. automodule:: zscaler.zia
     :members:
+    :undoc-members:
+    :show-inheritance:
+

@@ -1,34 +1,41 @@
 .. meta::
    :description lang=en:
-        pyZscaler is an SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
+        Official Zscaler Python  SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
    :caption: Contents
 
    zs/zia/index
    zs/zpa/index
+   zs/zcon/index
    zs/zcc/index
    zs/zdx/index
-   zs/zcon/index
+   zs/guides/index
 
-pyZscaler SDK - Library Reference
+Zscaler SDK Python (Beta) - Library Reference
 =====================================================================
-pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+
+Support Disclaimer
+========================
+
+-> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider. 
+You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_ for guidance on typical problems.
+
+.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
 
 Quick Links
 --------------
-- `pyZscaler User Documentation and Examples <https://mitchos.github.io/pyZscaler>`_
-- `pyZscaler SDK on GitHub <https://github.com/mitchos/pyZscaler>`_
-
-.. attention:: This SDK is not affiliated with, nor supported by Zscaler in any way.
+- `Zscaler SDK Python User Documentation and Examples <htthttps://zscaler-sdk-python.readthedocs.io/en/latest/>`_
+- `Zscaler SDK Python SDK on GitHub <https://zscaler-sdk-python.readthedocs.io/en/latest/>`_
 
 
 Overview
 ==========
-This site is the library reference for the pyZscaler SDK and describes every class and method in detail. If you are
+This site is the library reference for the Zscaler SDK Python and describes every class and method in detail. If you are
 looking for user documentation with explanations and examples then you might be looking for the
-`pyZscaler User Documentation <https://mitchos.github.io/pyZscaler>`_
+`Zscaler SDK Python User Documentation <https://zscaler-sdk-python.readthedocs.io/en/latest/>`_
 
 Features
 ----------
@@ -40,11 +47,15 @@ Features
 
 Products
 ---------
+This repository contains the Zscaler SDK for Python. This SDK can be used to interact with several Zscaler services such as:
+
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
 - :doc:`Zscaler Mobile Admin Portal <zs/zcc/index>`
+- :doc:`Zscaler Cloud Connector Portal (ZCON) <zs/zcon/index>`
 - :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
-- :doc:`Zscaler Connector Portal (ZCON) <zs/zcon/index>`
+
+* `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
 
 Installation
 ==============
@@ -53,12 +64,12 @@ The most recent version can be installed from pypi as per below.
 
 .. code-block:: console
 
-    $ pip install pyzscaler
+    $ pip install zscaler-sdk-python
 
 Usage
 ========
 Before you can interact with any of the Zscaler APIs, you may need to generate API keys or retrieve tenancy information
-for each product that you are interfacing with. Once you have the requirements and you have installed pyZscaler,
+for each product that you are interfacing with. Once you have the requirements and you have installed Zscaler SDK Python,
 you're ready to go.
 
 Getting started
@@ -69,78 +80,60 @@ Quick ZIA Example
 
 .. code-block:: python
 
-    from pyzscaler import ZIA
+    from zscaler import ZIAClientHelper
+    from pprint import pprint
 
-    zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+    zia = ZIAClientHelper(api_key='ZIA_API_KEY', cloud='ZIA_CLOUD', username='ZIA_USERNAME', password='ZIA_PASSWORD')
     for user in zia.users.list_users():
-        print(user)
+        pprint(user)
 
 Quick ZPA Example
 ^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    from pyzscaler import ZPA
+    from zscaler import ZPAClientHelper
+    from pprint import pprint
 
-    zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
+    zpa = ZPAClientHelper(client_id='ZPA_CLIENT_ID', client_secret='ZPA_CLIENT_SECRET', customer_id='ZPA_CUSTOMER_ID')
     for app_segment in zpa.app_segments.list_segments():
-        print(app_segment)
-
-
-Quick ZCC Example
-^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from pyzscaler import ZCC
-
-    zcc = ZCC(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', company_id='COMPANY_ID)
-    for device in zcc.devices.list_devices():
-        print(device)
-
-Quick ZDX Example
-^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from pyzscaler import ZDX
-
-    zdx = ZDX(client_id='CLIENT_ID', client_secret='CLIENT_SECRET')
-    for device in zdx.devices.list_devices():
-        print(device)
+        pprint(app_segment)
 
 Quick ZCON Example
 ^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    from pyzscaler import ZCON
+    from zscaler import ZCONClientHelper
+    from pprint import pprint
 
     zcon = ZCON(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-    for group in zcon.connectors.list_groups():
-        print(group)
+    for group in zcon.location.get():
+        pprint(group)
 
-
-.. automodule:: pyzscaler
+.. automodule:: zscaler
    :members:
 
 Contributing
 ==============
-Contributions to pyZscaler are absolutely welcome. At the moment, we could use more tests and documentation/examples.
-Please see the `Contribution Guidelines <https://github.com/mitchos/pyZscaler/blob/main/CONTRIBUTING.md>`_ for more information.
-
-`Poetry <https://python-poetry.org/docs/>`_ is currently being used for builds and management. You'll want to have
-poetry installed and available in your environment.
-
+At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in future releases.
 Issues
-=========
-Please feel free to open an issue using `Github Issues <https://github.com/mitchos/pyZscaler/issues>`_ if you run into any problems using pyZscaler.
+
+Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ 
+if you run into any problems using Zscaler SDK Python or please refer to our `General Support Statement <docs/guides/support.rst>`_
+
+Contributors
+------------
+
+* William Guilherme - `willguibr <https://github.com/willguibr>`_
+* Eddie Parra - `eparra <https://github.com/eparra>`_
+* Paul Abbot - `abbottp <https://github.com/abbottp>`_
 
 License
 =========
 MIT License
 
-Copyright (c) 2021 Mitch Kelly
+Copyright (c) 2023 Zscaler Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,0 +1,8 @@
+include CHANGELOG.md LICENSE.md README.md tox.ini requirements.txt
+
+recursive-include tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+
+recursive-include docsrc *.rst conf.py Makefile
+

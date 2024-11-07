@@ -3,11 +3,12 @@ ZCC
 This package covers the ZCC interface.
 
 .. toctree::
-    :maxdepth: 1
     :glob:
     :hidden:
 
     *
 
-.. automodule:: pyzscaler.zcc
+.. automodule:: zscaler.zcc
     :members:
+    :undoc-members:
+    :show-inheritance:

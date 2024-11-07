@@ -7,5 +7,7 @@ Methods are accessible via ``zpa.certificates``
 
 .. _zpa-certificates:
 
-.. automodule:: pyzscaler.zpa.certificates
+.. automodule:: zscaler.zpa.certificates
     :members:
+    :undoc-members:
+    :show-inheritance:

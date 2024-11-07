@@ -1,0 +1,535 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="certificates" href="certificates.html" /><link rel="prev" title="app_segments_inspection" href="app_segments_inspection.html" />
+
+    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>app_segments_pra</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Zscaler SDK Python</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../zia/index.html">ZIA</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ZIA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../zia/activate.html">activate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/admin_and_role_management.html">admin_and_role_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/apptotal.html">apptotal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/audit_logs.html">audit_logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/authentication_settings.html">authentication_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/cloud_apps.html">cloud_apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/device_management.html">device_management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/dlp.html">dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/firewall.html">firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/forwarding_control.html">forwarding_control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/locations.html">locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/rule_labels.html">labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/sandbox.html">sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/security.html">security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/ssl_inspection.html">ssl_inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/traffic.html">traffic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_categories.html">url_categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/url_filtering.html">url_filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/users.html">users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/web_dlp.html">web_dlp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/workload_groups.html">workload_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zia/zpa_gateway.html">zpa_gateway</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">ZPA</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ZPA</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app_segments.html">app_segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_segments_inspection.html">app_segments_inspection</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">app_segments_pra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="certificates.html">certificates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloud_connector_groups.html">cloud_connector_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connectors.html">connectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emergency_access.html">emergency_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idp.html">IDP Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspection.html">inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="isolation_profile.html">isolation_profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lss.html">lss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine_groups.html">machine_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policies.html">policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="posture_profiles.html">posture_profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="privileged_remote_access.html">privileged_remote_access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="provisioning.html">provisioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="saml_attributes.html">saml_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_attributes.html">scim_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scim_groups.html">scim_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment_groups.html">segment_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="server_groups.html">server_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servers.html">servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_edges.html">service_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trusted_networks.html">trusted_networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/support.html">Support Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="app-segments-pra">
+<h1>app_segments_pra<a class="headerlink" href="#app-segments-pra" title="Permalink to this heading">#</a></h1>
+<p>The following methods allow for interaction with the ZPA
+Privileged Remote Access Application Segment API endpoints.</p>
+<p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zpa.app_segments_pra</span></code></p>
+<span class="target" id="module-zscaler.zpa.app_segments_pra"><span id="zpa-app-segments-pra"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AppSegmentsPRAAPI</span></span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.add_segment_pra">
+<span class="sig-name descname"><span class="pre">add_segment_pra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_group_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tcp_port_ranges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">udp_port_ranges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_apps_dto</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.add_segment_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>Create an application segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>segment_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifer for the segment group this application segment belongs to.</p></li>
+<li><p><strong>udp_ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of udp port range pairs, e.g. [‘35000’, ‘35000’] for port 35000.</p></li>
+<li><p><strong>tcp_ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of tcp port range pairs, e.g. [‘22’, ‘22’] for port 22-22, [‘80’, ‘100’] for 80-100.</p></li>
+<li><p><strong>domain_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of domain names or IP addresses for the application segment.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the application segment.</p></li>
+<li><p><strong>server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The list of server group IDs that belong to this application segment.</p></li>
+<li><p><strong>**kwargs</strong> – Optional keyword args.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>bypass_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of bypass for the Application Segment. Accepted values are <cite>ALWAYS</cite>, <cite>NEVER</cite> and <cite>ON_NET</cite>.</p></li>
+<li><p><strong>config_space</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The config space for this Application Segment. Accepted values are <cite>DEFAULT</cite> and <cite>SIEM</cite>.</p></li>
+<li><p><strong>default_idle_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The Default Idle Timeout for the Application Segment.</p></li>
+<li><p><strong>default_max_age</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The Default Max Age for the Application Segment.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Additional information about this Application Segment.</p></li>
+<li><p><strong>double_encrypt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Double Encrypt the Application Segment micro-tunnel.</p></li>
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable the Application Segment.</p></li>
+<li><p><strong>health_check_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the Health Check Type. Accepted values are <cite>DEFAULT</cite> and <cite>NONE</cite>.</p></li>
+<li><p><strong>health_reporting</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the Health Reporting. Accepted values are <cite>NONE</cite>, <cite>ON_ACCESS</cite> and <cite>CONTINUOUS</cite>.</p></li>
+<li><p><strong>ip_anchored</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable IP Anchoring for this Application Segment.</p></li>
+<li><p><strong>is_cname_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable CNAMEs for this Application Segment.</p></li>
+<li><p><strong>passive_health_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable Passive Health Checks for this Application Segment.</p></li>
+<li><p><strong>icmp_access_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Sets ICMP access type for ZPA clients.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The newly created application segment resource record.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Add a new application segment for example.com, ports 8080-8085.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">add_segment</span><span class="p">(</span><span class="s1">&#39;new_app_segment&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">domain_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">],</span>
+<span class="gp">... </span>   <span class="n">segment_group_id</span><span class="o">=</span><span class="s1">&#39;99999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">tcp_ports</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;8080&#39;</span><span class="p">,</span> <span class="s1">&#39;8085&#39;</span><span class="p">],</span>
+<span class="gp">... </span>   <span class="n">server_group_ids</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;99999&#39;</span><span class="p">,</span> <span class="s1">&#39;88888&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.delete_segment_pra">
+<span class="sig-name descname"><span class="pre">delete_segment_pra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.delete_segment_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>Delete an application segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>force_delete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Setting this field to true deletes the mapping between Application Segment and Segment Group.</p></li>
+<li><p><strong>segment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the application segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The operation response code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Delete an Application Segment with an id of 99999.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Force deletion of an Application Segment with an id of 88888.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;88888&#39;</span><span class="p">,</span> <span class="n">force_delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra">
+<span class="sig-name descname"><span class="pre">get_segment_pra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>Get information for an application segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the application segment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The application segment resource record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app_segment</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">details</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra_by_name">
+<span class="sig-name descname"><span class="pre">get_segment_pra_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra_by_name" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.list_segments_pra">
+<span class="sig-name descname"><span class="pre">list_segments_pra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.list_segments_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>Retrieve all configured application segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of application segments.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoxList</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app_segments</span> <span class="o">=</span> <span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">list_segments</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.reformat_params">
+<span class="sig-name descname"><span class="pre">reformat_params</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('server_group_ids',</span> <span class="pre">'serverGroups')]</span></em><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.reformat_params" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.update_segment_pra">
+<span class="sig-name descname"><span class="pre">update_segment_pra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_apps_dto</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.update_segment_pra" title="Permalink to this definition">#</a></dt>
+<dd><p>Update an application segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>segment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the application segment.</p></li>
+<li><p><strong>**kwargs</strong> – Optional params.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>bypass_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of bypass for the Application Segment. Accepted values are <cite>ALWAYS</cite>, <cite>NEVER</cite> and <cite>ON_NET</cite>.</p></li>
+<li><p><strong>config_space</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The config space for this Application Segment. Accepted values are <cite>DEFAULT</cite> and <cite>SIEM</cite>.</p></li>
+<li><p><strong>default_idle_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The Default Idle Timeout for the Application Segment.</p></li>
+<li><p><strong>default_max_age</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The Default Max Age for the Application Segment.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Additional information about this Application Segment.</p></li>
+<li><p><strong>domain_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – List of domain names or IP addresses for the application segment.</p></li>
+<li><p><strong>double_encrypt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Double Encrypt the Application Segment micro-tunnel.</p></li>
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable the Application Segment.</p></li>
+<li><p><strong>health_check_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the Health Check Type. Accepted values are <cite>DEFAULT</cite> and <cite>NONE</cite>.</p></li>
+<li><p><strong>health_reporting</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Set the Health Reporting. Accepted values are <cite>NONE</cite>, <cite>ON_ACCESS</cite> and <cite>CONTINUOUS</cite>.</p></li>
+<li><p><strong>ip_anchored</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable IP Anchoring for this Application Segment.</p></li>
+<li><p><strong>is_cname_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable CNAMEs for this Application Segment.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the application segment.</p></li>
+<li><p><strong>passive_health_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable Passive Health Checks for this Application Segment.</p></li>
+<li><p><strong>segment_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifer for the segment group this application segment belongs to.</p></li>
+<li><p><strong>server_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The list of server group IDs that belong to this application segment.</p></li>
+<li><p><strong>tcp_ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>) – <dl class="simple">
+<dt>List of TCP port ranges specified as a tuple pair, e.g. for ports 21-23, 8080-8085 and 443:</dt><dd><p>[(21, 23), (8080, 8085), (443, 443)]</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>udp_ports</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>) – <dl class="simple">
+<dt>List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:</dt><dd><p>[(34000, 35000), (36000, 36000)]</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>icmp_access_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Sets ICMP access type for ZPA clients.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated application segment resource record.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Box</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Rename the application segment for example.com.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;99999&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;new_app_name&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="certificates.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">certificates</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="app_segments_inspection.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">app_segments_inspection</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Zscaler Inc.
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">app_segments_pra</a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI</span></code></a><ul>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.add_segment_pra"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.add_segment_pra()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.delete_segment_pra"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.delete_segment_pra()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.get_segment_pra()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.get_segment_pra_by_name"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.get_segment_pra_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.list_segments_pra"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.list_segments_pra()</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.reformat_params"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.reformat_params</span></code></a></li>
+<li><a class="reference internal" href="#zscaler.zpa.app_segments_pra.AppSegmentsPRAAPI.update_segment_pra"><code class="docutils literal notranslate"><span class="pre">AppSegmentsPRAAPI.update_segment_pra()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
+</html>

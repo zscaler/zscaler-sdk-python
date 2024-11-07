@@ -8,5 +8,7 @@ Methods are accessible via ``zpa.segment_groups``
 
 .. _zpa-segment_groups:
 
-.. automodule:: pyzscaler.zpa.segment_groups
+.. automodule:: zscaler.zpa.segment_groups
     :members:
+    :undoc-members:
+    :show-inheritance:

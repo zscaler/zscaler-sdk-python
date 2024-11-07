@@ -7,5 +7,7 @@ Methods are accessible via ``zcc.secrets``
 
 .. _zcc-secrets:
 
-.. automodule:: pyzscaler.zcc.secrets
+.. automodule:: zscaler.zcc.secrets
     :members:
+    :undoc-members:
+    :show-inheritance:

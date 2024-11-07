@@ -9,5 +9,7 @@ This package covers the ZDX interface.
 
     *
 
-.. automodule:: pyzscaler.zdx
+.. automodule:: zscaler.zdx
     :members:
+    :undoc-members:
+    :show-inheritance:
