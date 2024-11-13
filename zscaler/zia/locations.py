@@ -188,7 +188,7 @@ class LocationsAPI:
                 Additional notes or information regarding the location or sub-location. The description cannot
                 exceed 1024 characters.
             static_location_groups (list): IDs for static location groups.
-            
+
         Returns:
             :obj:`Box`: The newly created location resource record
 
@@ -505,13 +505,13 @@ class LocationsAPI:
             >>> location = zia.locations.list_location_groups()
         """
         return BoxList(
-        Iterator(
-            self.rest,
-            f"locations/groups",
-            max_pages=1,
-            **kwargs,
+            Iterator(
+                self.rest,
+                f"locations/groups",
+                max_pages=1,
+                **kwargs,
+            )
         )
-    )
 
     def get_location_group_by_id(self, group_id: int) -> Box:
         """
@@ -666,4 +666,3 @@ class LocationsAPI:
 
         """
         return BoxList(Iterator(self.rest, "region/search", **kwargs))
-
