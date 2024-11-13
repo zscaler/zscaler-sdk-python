@@ -130,16 +130,21 @@ class PacFilesAPI:
             Exception: If the API call fails with a non-2xx status code.
 
         Example:
-            pac_file_content = \"\"\"
+            To validate PAC file content:
+
+            .. code-block:: python
+
+                pac_file_content = '''
                 function FindProxyForURL(url, host) {
                     return "PROXY gateway.example.com:80";
                 }
-            \"\"\"
-            response = client.validate_pac_file(pac_file_content=pac_file_content)
-            if response["success"]:
-                print("PAC file is valid.")
-            else:
-                print("PAC file validation failed.")
+                '''
+                
+                response = client.validate_pac_file(pac_file_content=pac_file_content)
+                if response["success"]:
+                    print("PAC file is valid.")
+                else:
+                    print("PAC file validation failed.")
         """
         # Send only the PAC content as the raw body
         response = self.rest.post("pacFiles/validate", data=pac_file_content)
