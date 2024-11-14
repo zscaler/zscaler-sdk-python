@@ -18,7 +18,7 @@
 from box import Box, BoxList
 from requests import Response
 
-from zscaler.utils import Iterator, snake_to_camel
+from zscaler.utils import snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -258,14 +258,8 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        return BoxList(
-            Iterator(
-                self.rest,
-                f"locations/{location_id}/sublocations",
-                max_pages=1,
-                **kwargs,
-            )
-        )
+        list, _ = self.rest.get_paginated_data(path="/locations/{location_id}/sublocations", **kwargs)
+        return list
 
     def list_locations_lite(self, **kwargs) -> BoxList:
         """
@@ -305,7 +299,8 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        return BoxList(Iterator(self.rest, "locations/lite", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/locations/lite", **kwargs)
+        return list
 
     def update_location(self, location_id: str, **kwargs) -> Box:
         """
@@ -504,14 +499,8 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups()
         """
-        return BoxList(
-            Iterator(
-                self.rest,
-                f"locations/groups",
-                max_pages=1,
-                **kwargs,
-            )
-        )
+        list, _ = self.rest.get_paginated_data(path="/locations/groups", **kwargs)
+        return list
 
     def get_location_group_by_id(self, group_id: int) -> Box:
         """
@@ -665,4 +654,5 @@ class LocationsAPI:
             returned. Ensure you narrow your search result as much as possible to avoid this.
 
         """
-        return BoxList(Iterator(self.rest, "region/search", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/region/search", **kwargs)
+        return list
