@@ -410,6 +410,10 @@ class ZIAClientHelper(ZIAClient):
         max_page_size=1000,  # Default to 1000, can be adjusted based on endpoint constraints
         max_items=None,  # Maximum number of items to retrieve across pages
         max_pages=None,  # Maximum number of pages to retrieve
+        type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
+        include_only_without_location=None,  # Include only VPN credentials not associated with any location
+        location_id=None,  # VPN credentials for a specific location ID
+        managed_by=None,  # VPN credentials managed by a given partner
     ):
         """
         Fetches paginated data from the API based on specified parameters and handles pagination.
@@ -422,6 +426,11 @@ class ZIAClientHelper(ZIAClient):
             search (str): Search query to filter the results.
             max_items (int): Maximum number of items to retrieve.
             max_pages (int): Maximum number of pages to fetch.
+            type (str, optional): Type of VPN credentials (e.g., CN, IP, UFQDN, XAUTH).
+            include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
+            location_id (int, optional): Retrieve VPN credentials for the specified location ID.
+            managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
+
 
         Returns:
             tuple: A tuple containing:
@@ -441,11 +450,20 @@ class ZIAClientHelper(ZIAClient):
             "pagesize": min(pagesize if pagesize is not None else 100, max_page_size),  # Apply max_page_size limit
         }
 
+        # Add optional filters to the params if provided
         if search:
             params["search"] = search
+        if type:
+            params["type"] = type
+        if include_only_without_location is not None:
+            params["includeOnlyWithoutLocation"] = include_only_without_location
+        if location_id:
+            params["locationId"] = location_id
+        if managed_by:
+            params["managedBy"] = managed_by
 
         ret_data = []
-        total_collected = 0  # Track total items collected
+        total_collected = 0
 
         try:
             while True:
