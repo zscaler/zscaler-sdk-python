@@ -17,7 +17,7 @@
 
 from box import Box, BoxList
 
-from zscaler.utils import Iterator, convert_keys, snake_to_camel
+from zscaler.utils import convert_keys, snake_to_camel
 from zscaler.zia import ZIAClient
 
 
@@ -71,7 +71,7 @@ class UserManagementAPI:
         """
         list, _ = self.rest.get_paginated_data(path="/departments", **kwargs)
         return list
-    
+
     def get_department(self, department_id: str) -> Box:
         """
         Returns the department details for a given department.
