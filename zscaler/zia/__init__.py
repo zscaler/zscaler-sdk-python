@@ -414,6 +414,7 @@ class ZIAClientHelper(ZIAClient):
         include_only_without_location=None,  # Include only VPN credentials not associated with any location
         location_id=None,  # VPN credentials for a specific location ID
         managed_by=None,  # VPN credentials managed by a given partner
+        prefix=None,  # VPN credentials managed by a given partner
     ):
         """
         Fetches paginated data from the API based on specified parameters and handles pagination.
@@ -430,7 +431,7 @@ class ZIAClientHelper(ZIAClient):
             include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
             location_id (int, optional): Retrieve VPN credentials for the specified location ID.
             managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
-
+            prefix (int, optional): Retrieve VPN credentials managed by the specified partner.
 
         Returns:
             tuple: A tuple containing:
@@ -461,6 +462,8 @@ class ZIAClientHelper(ZIAClient):
             params["locationId"] = location_id
         if managed_by:
             params["managedBy"] = managed_by
+        if prefix:
+            params["prefix"] = prefix
 
         ret_data = []
         total_collected = 0
