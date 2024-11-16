@@ -258,7 +258,7 @@ class LocationsAPI:
             ...    pprint(sub_location)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/locations/{location_id}/sublocations", **kwargs)
+        list, _ = self.rest.get_paginated_data(path=f"/locations/{location_id}/sublocations", **kwargs)
         return list
 
     def list_locations_lite(self, **kwargs) -> BoxList:

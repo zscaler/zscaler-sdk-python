@@ -42,6 +42,7 @@ class TestSweepUtility:
             self.sweep_dlp_dictionary,
             self.sweep_dlp_template,
             self.sweep_zpa_gateway,
+            self.sweep_pac_file,
         ]
 
         for func in sweep_functions:
@@ -505,6 +506,28 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping zpa gateways: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_pac_file(self):
+        logging.info("Starting to sweep zpa gateway")
+        try:
+            files = self.client.pac_files.list_pac_files()
+            test_pac_files = [gw for gw in files if "name" in gw and gw["name"].startswith("tests-")]
+            logging.info(f"Found {len(test_pac_files)} pac file to delete.")
+
+            for pac in test_pac_files:
+                logging.info(
+                    f"sweep_pac_file: Attempting to delete pac file: Name='{pac['name']}', ID='{pac['id']}'"
+                )
+                response_code = self.client.pac_files.delete_pac_file(pac_id=pac["id"])
+                if response_code == 204:
+                    logging.info(f"Successfully deleted pac file with ID: {pac['id']}, Name: {pac['name']}")
+                else:
+                    logging.error(
+                        f"Failed to delete pac file with ID: {pac['id']}, Name: {pac['name']} - Status code: {response_code}"
+                    )
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping pac files: {str(e)}")
+            raise
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

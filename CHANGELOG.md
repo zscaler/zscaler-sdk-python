@@ -1,6 +1,6 @@
 # Zscaler Python SDK Changelog
 
-## 1.0.0 (November,13 2024)
+## 1.0.0 (November,15 2024)
 
 ### Notes
 
