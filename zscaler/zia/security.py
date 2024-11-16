@@ -166,7 +166,7 @@ class SecurityPolicyAPI:
         try:
             # Send the POST request to add URLs to the blacklist
             response = self.rest.post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload)
-            
+
             # Check if the response includes an empty 'blacklistUrls', signaling no update
             if "blacklistUrls" in response and not response["blacklistUrls"]:
                 raise Exception("Failed to add URLs to blacklist: The API response returned an empty 'blacklistUrls' list.")
@@ -177,7 +177,7 @@ class SecurityPolicyAPI:
                 return updated_blacklist
             else:
                 raise Exception("Failed to add URLs to blacklist: URLs were not present in the updated blacklist.")
-                
+
         except Exception as exc:
             raise Exception(f"Failed to add URLs to blacklist: {exc}")
 
