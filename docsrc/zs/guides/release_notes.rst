@@ -6,6 +6,27 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 1.0.0 (November,13 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+------------
+
+ZIA PAC Files
+^^^^^^^^^^^^^^
+
+- `GET /pacFiles` to Retrieves the list of all PAC files which are in deployed state (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `GET /pacFiles/{pacId}/version` to Retrieves all versions of a PAC file based on the specified ID (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `GET /pacFiles/{pacId}/version/{pacVersion}` to Retrieves a specific version of a PAC file based on the specified ID (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `POST /pacFiles` to Adds a new custom PAC file.(`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `DELETE /pacFiles/{pacId}` to Deletes an existing PAC file including all of its versions based on the specified ID (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `PUT /pacFiles/{pacId}/version/{pacVersion}/action/{pacVersionAction}` to Performs the specified action on the PAC file version and updates the file status (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `POST /pacFiles/validate` to send the PAC file content for validation and returns the validation result (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+- `POST /pacFiles/{pacId}/version/{clonedPacVersion}` to Adds a new PAC file version by branching an existing version based on the specified ID (`#203 <https://github.com/zscaler/zscaler-sdk-python/pull/203>`_)
+
 ## 0.9.7 (November,1 2024)
 
 ### Notes

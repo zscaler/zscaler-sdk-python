@@ -90,16 +90,16 @@ class TestUsers:
             try:
                 # List departments and collect up to 2 items to simulate a limited view
                 depts = client.users.list_departments(pagesize=2)
-                
+
                 # Limit the department count we work with to 2 for testing purposes
                 if len(depts) > 2:
                     depts = depts[:2]  # Take only the first 2 items if more are returned
-                
+
                 assert isinstance(depts, list), "Expected a list of departments"
-                
+
                 # Check that we are testing with a maximum of 2 departments
                 assert len(depts) <= 2, f"Expected 2 or fewer departments, got {len(depts)}"
-                
+
                 if depts:  # If there are any departments
                     # Select the first department for further testing
                     first_dept = depts[0]
@@ -125,16 +125,16 @@ class TestUsers:
             try:
                 # List departments and collect up to 2 items to simulate a limited view
                 groups = client.users.list_groups(pagesize=2)
-                
+
                 # Limit the department count we work with to 2 for testing purposes
                 if len(groups) > 2:
                     groups = groups[:2]  # Take only the first 2 items if more are returned
-                
+
                 assert isinstance(groups, list), "Expected a list of groups"
-                
+
                 # Check that we are testing with a maximum of 2 groups
                 assert len(groups) <= 2, f"Expected 2 or fewer groups, got {len(groups)}"
-                
+
                 if groups:  # If there are any groups
                     # Select the first group for further testing
                     first_group = groups[0]
@@ -156,7 +156,7 @@ class TestUsers:
 
             # Assert that no errors occurred during the test
             assert len(errors) == 0, f"Errors occurred during groups test: {errors}"
-        
+
         finally:
             # Cleanup: Attempt to delete the user
             if user_id:
@@ -168,5 +168,3 @@ class TestUsers:
 
             if errors:
                 raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
-
-

@@ -39,6 +39,7 @@ from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.isolation_profile import IsolationProfileAPI
 from zscaler.zia.labels import RuleLabelsAPI
+from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
 from zscaler.zia.security import SecurityPolicyAPI
@@ -409,6 +410,11 @@ class ZIAClientHelper(ZIAClient):
         max_page_size=1000,  # Default to 1000, can be adjusted based on endpoint constraints
         max_items=None,  # Maximum number of items to retrieve across pages
         max_pages=None,  # Maximum number of pages to retrieve
+        type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
+        include_only_without_location=None,  # Include only VPN credentials not associated with any location
+        location_id=None,  # VPN credentials for a specific location ID
+        managed_by=None,  # VPN credentials managed by a given partner
+        prefix=None,  # VPN credentials managed by a given partner
     ):
         """
         Fetches paginated data from the API based on specified parameters and handles pagination.
@@ -421,6 +427,11 @@ class ZIAClientHelper(ZIAClient):
             search (str): Search query to filter the results.
             max_items (int): Maximum number of items to retrieve.
             max_pages (int): Maximum number of pages to fetch.
+            type (str, optional): Type of VPN credentials (e.g., CN, IP, UFQDN, XAUTH).
+            include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
+            location_id (int, optional): Retrieve VPN credentials for the specified location ID.
+            managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
+            prefix (int, optional): Retrieve VPN credentials managed by the specified partner.
 
         Returns:
             tuple: A tuple containing:
@@ -437,14 +448,25 @@ class ZIAClientHelper(ZIAClient):
         # Initialize pagination parameters
         params = {
             "page": page if page is not None else 1,  # Start at page 1 if not specified
-            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size)  # Apply max_page_size limit
+            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size),  # Apply max_page_size limit
         }
 
+        # Add optional filters to the params if provided
         if search:
             params["search"] = search
+        if type:
+            params["type"] = type
+        if include_only_without_location is not None:
+            params["includeOnlyWithoutLocation"] = include_only_without_location
+        if location_id:
+            params["locationId"] = location_id
+        if managed_by:
+            params["managedBy"] = managed_by
+        if prefix:
+            params["prefix"] = prefix
 
         ret_data = []
-        total_collected = 0  # Track total items collected
+        total_collected = 0
 
         try:
             while True:
@@ -482,13 +504,14 @@ class ZIAClientHelper(ZIAClient):
 
                 # Limit data collection based on max_items
                 if max_items is not None:
-                    data = data[:max_items - total_collected]  # Limit items on the current page
+                    data = data[: max_items - total_collected]  # Limit items on the current page
                 ret_data.extend(data)
                 total_collected += len(data)
 
                 # Check if we've reached max_items or max_pages limits
-                if (max_items is not None and total_collected >= max_items) or \
-                   (max_pages is not None and params["page"] >= max_pages):
+                if (max_items is not None and total_collected >= max_items) or (
+                    max_pages is not None and params["page"] >= max_pages
+                ):
                     break
 
                 # Stop if we've processed all available pages (i.e., less than requested page size)
@@ -507,7 +530,6 @@ class ZIAClientHelper(ZIAClient):
             return BoxList([]), error_msg
 
         return BoxList(ret_data), None
-
 
     @property
     def admin_and_role_management(self):
@@ -693,3 +715,11 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return WorkloadGroupsAPI(self)
+
+    @property
+    def pac_files(self):
+        """
+        The interface object for the :ref:`ZIA Pac Files interface <zia-pac_files>`.
+
+        """
+        return PacFilesAPI(self)
