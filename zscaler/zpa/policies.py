@@ -61,6 +61,7 @@ class PolicySetsAPI:
         """
         template = []
         app_and_app_group_operands = []
+        scim_and_scim_group_operands = []
         object_types_to_operands = {
             "CONSOLE": [],
             "MACHINE_GRP": [],
@@ -100,6 +101,8 @@ class PolicySetsAPI:
 
                 if object_type in ["APP", "APP_GROUP"]:
                     app_and_app_group_operands.append(operand)
+                elif object_type in ["SCIM","SCIM_GROUP"]:
+                    scim_and_scim_group_operands.append(operand)
                 elif object_type in object_types_to_operands:
                     object_types_to_operands[object_type].append(operand)
 
@@ -130,6 +133,11 @@ class PolicySetsAPI:
         if app_and_app_group_operands:
             app_group_operator = operators_for_types.get("APP", "OR")
             template.append({"operator": app_group_operator, "operands": app_and_app_group_operands})
+
+        # Combine SCIM and SCIM_GROUP operands with their specific operator
+        if scim_and_scim_group_operands:
+            scim_group_operator = operators_for_types.get("APP", "OR")
+            template.append({"operator": scim_group_operator, "operands": scim_and_scim_group_operands})
 
         # Combine other object types into their blocks with their respective operator
         for object_type, operands in object_types_to_operands.items():
