@@ -170,7 +170,7 @@ class UserManagementAPI:
             **name (str, optional):
                 Filters by user name. This is a `partial` match.
             **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
+                Specifies the page size. The default size is 100, but the maximum size is 10000.
             **sort_by (str):
                 The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
             **sort_order (str):
