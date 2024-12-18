@@ -42,6 +42,7 @@ from zscaler.zia.labels import RuleLabelsAPI
 from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
+from zscaler.zia.sandbox_rules import SandboxRulesAPI
 from zscaler.zia.security import SecurityPolicyAPI
 from zscaler.zia.ssl_inspection import SSLInspectionAPI
 from zscaler.zia.traffic import TrafficForwardingAPI
@@ -407,7 +408,6 @@ class ZIAClientHelper(ZIAClient):
         page=None,
         pagesize=None,
         search=None,
-        max_page_size=1000,  # Default to 1000, can be adjusted based on endpoint constraints
         max_items=None,  # Maximum number of items to retrieve across pages
         max_pages=None,  # Maximum number of pages to retrieve
         type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
@@ -446,11 +446,16 @@ class ZIAClientHelper(ZIAClient):
         }
 
         # Initialize pagination parameters
+        # params = {
+        #     "page": page if page is not None else 1,  # Start at page 1 if not specified
+        #     "pagesize": min(pagesize if pagesize is not None else 100, max_page_size),  # Apply max_page_size limit
+        # }
+
         params = {
             "page": page if page is not None else 1,  # Start at page 1 if not specified
-            "pagesize": min(pagesize if pagesize is not None else 100, max_page_size),  # Apply max_page_size limit
+            "pagesize": max(100, min(pagesize or 100, 10000)),  # Ensure pagesize is within API limits
         }
-
+        
         # Add optional filters to the params if provided
         if search:
             params["search"] = search
@@ -620,6 +625,14 @@ class ZIAClientHelper(ZIAClient):
         """
         return CloudSandboxAPI(self)
 
+    @property
+    def sandbox_rules(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
+
+        """
+        return SandboxRulesAPI(self)
+    
     @property
     def security(self):
         """
