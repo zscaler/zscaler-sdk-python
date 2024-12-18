@@ -42,7 +42,6 @@ from zscaler.zia.labels import RuleLabelsAPI
 from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
-from zscaler.zia.sandbox_rules import SandboxRulesAPI
 from zscaler.zia.security import SecurityPolicyAPI
 from zscaler.zia.ssl_inspection import SSLInspectionAPI
 from zscaler.zia.traffic import TrafficForwardingAPI
@@ -624,14 +623,6 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return CloudSandboxAPI(self)
-
-    @property
-    def sandbox_rules(self):
-        """
-        The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
-
-        """
-        return SandboxRulesAPI(self)
     
     @property
     def security(self):
