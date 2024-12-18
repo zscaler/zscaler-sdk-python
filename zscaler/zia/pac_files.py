@@ -39,23 +39,13 @@ class PacFilesAPI:
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            :obj:`BoxList`: The list of Rule Labels configured in ZIA.
+            :obj:`BoxList`: The list of PAC Files configured in ZIA.
 
         Examples:
-            List Rule Labels using default settings:
+            List PAC Files using default settings:
 
-            >>> for label in zia.labels.list_labels():
-            ...   print(label)
-
-            List labels, limiting to a maximum of 10 items:
-
-            >>> for label in zia.labels.list_labels(max_items=10):
-            ...    print(label)
-
-            List labels, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for label in zia.labels.list_labels(page_size=200, max_pages=2):
-            ...    print(label)
+            >>> for pac_files in zia.pac_files.list_pac_files():
+            ...   print(pac_files)
 
         """
         list, _ = self.rest.get_paginated_data(path="/pacFiles", **kwargs)
