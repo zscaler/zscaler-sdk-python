@@ -6,7 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-## 1.0.0 (November,13 2024)
+## 0.10.1 (December,18 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+------------
+
+* Fixed ZPA policy condition template to support object_type aggregation. (`225 <https://github.com/zscaler/zscaler-sdk-python/pull/225>`_). 
+* Fixed ZIA PAC file `list_pac_files` docstring documentation. (`225 <https://github.com/zscaler/zscaler-sdk-python/pull/225>`_).  Issue #214  (`214 <https://github.com/zscaler/zscaler-sdk-python/pull/214>`_)
+
+## 0.10.0 (November,13 2024)
 
 ### Notes
 
