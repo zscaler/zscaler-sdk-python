@@ -1,5 +1,19 @@
 # Zscaler Python SDK Changelog
 
+## 0.10.2 (January,6 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+* ([#231](https://github.com/zscaler/zscaler-sdk-python/pull/231)) - Improved ZIA pagination logic to enhance flexibility and address user-reported issues. The changes include:
+  - Fixed behavior where `pagesize` was being ignored, defaulting to 100. The SDK now respects the user-specified `pagesize` value within API limits (100-10,000).
+  - Added explicit handling for the `page` parameter. When provided, the SDK fetches data from only the specified page without iterating through all pages.
+  - Updated docstrings and documentation to clarify the correct usage of `page` and `pagesize` parameters.
+
+
 ## 0.10.1 (December,18 2024)
 
 ### Notes
