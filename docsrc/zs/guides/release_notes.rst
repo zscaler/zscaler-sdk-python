@@ -6,6 +6,16 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 0.10.3 (January,8 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+* Added missing `cloud_apps` property resource to ZIA package. (`235 <https://github.com/zscaler/zscaler-sdk-python/pull/235>`_). 
+
 ## 0.10.2 (January,6 2024)
 
 ### Notes
@@ -17,7 +27,7 @@ Bug Fixes
 
 * Fixed behavior where `pagesize` was being ignored, defaulting to 100. The SDK now respects the user-specified `pagesize` value within API limits (100-10,000). (`231 <https://github.com/zscaler/zscaler-sdk-python/pull/231>`_). 
 * Added explicit handling for the `page` parameter. When provided, the SDK fetches data from only the specified page without iterating through all pages. (`231 <https://github.com/zscaler/zscaler-sdk-python/pull/231>`_). 
-* Updated docstrings and documentation to clarify the correct usage of `page` and `pagesize` parameters.. (`231 <https://github.com/zscaler/zscaler-sdk-python/pull/231>`_). 
+* Updated docstrings and documentation to clarify the correct usage of `page` and `pagesize` parameters. (`231 <https://github.com/zscaler/zscaler-sdk-python/pull/231>`_). 
 
 
 ## 0.10.1 (December,18 2024)
