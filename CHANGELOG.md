@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 0.10.3 (January,8 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+* ([#235](https://github.com/zscaler/zscaler-sdk-python/pull/235)) - Added missing `cloud_apps` property resource to ZIA package.
+
 ## 0.10.2 (January,6 2024)
 
 ### Notes
