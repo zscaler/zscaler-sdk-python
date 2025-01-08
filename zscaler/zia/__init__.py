@@ -32,6 +32,7 @@ from zscaler.zia.admin_and_role_management import AdminAndRoleManagementAPI
 from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
+from zscaler.zia.cloud_apps import CloudAppsAPI
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.dlp import DLPAPI
 from zscaler.zia.firewall import FirewallPolicyAPI
@@ -709,6 +710,14 @@ class ZIAClientHelper(ZIAClient):
         """
         return ActivationAPI(self)
 
+    @property
+    def cloud_apps(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Applications interface <zia-cloud_apps>`.
+
+        """
+        return CloudAppsAPI(self)
+    
     @property
     def dlp(self):
         """
