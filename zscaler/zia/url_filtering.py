@@ -1,22 +1,21 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from box import Box, BoxList
-from requests import Response
+from zscaler.zia.models.url_filtering_rules import URLFilteringRule
+from zscaler.request_executor import RequestExecutor
 
 from zscaler.utils import (
     convert_keys,
@@ -24,11 +23,14 @@ from zscaler.utils import (
     snake_to_camel,
     transform_common_id_fields,
 )
-from zscaler.zia import ZIAClient
+from zscaler.api_client import APIClient
 
 
-class URLFilteringAPI:
-    # URL Filtering Policy rule keys that only require an ID to be provided.
+class URLFilteringAPI(APIClient):
+    """
+    A Client object for the URL Filtering Rule resources.
+    """
+
     reformat_params = [
         ("cbi_profile", "cbiProfile"),
         ("departments", "departments"),
@@ -45,27 +47,33 @@ class URLFilteringAPI:
         ("users", "users"),
     ]
 
-    def __init__(self, client: ZIAClient):
-        self.rest = client
+    _zia_base_endpoint = "/zia/api/v1"
 
-    def list_rules(self) -> BoxList:
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+
+    def list_rules(self) -> tuple:
         """
         Returns the list of URL Filtering Policy rules
-
-        Returns:
-            :obj:`BoxList`: The list of URL Filtering Policy rules.
-
-        Examples:
-            >>> for rule in zia.url_filtering.list_rules():
-            ...    pprint(rule)
-
         """
-        response = self.rest.get("urlFilteringRules")
-        if isinstance(response, Response):
-            return None
-        return response
+        http_method = "get".upper()
+        api_url = f"{self._zia_base_endpoint}/urlFilteringRules"
 
-    def get_rule(self, rule_id: str) -> Box:
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, None, error)
+        try:
+            results = [URLFilteringRule(item) for item in response.get_results()]
+        except Exception as error:
+            return (None, response, error)
+        return (results, response, None)
+
+    def get_rule(self, rule_id: str) -> tuple:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -79,17 +87,24 @@ class URLFilteringAPI:
             >>> pprint(zia.url_filtering.get_rule('977469'))
 
         """
+        http_method = "get".upper()
+        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
 
-        return self.rest.get(f"urlFilteringRules/{rule_id}")
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        if error:
+            return (None, None, error)
 
-    def add_rule(
-        self,
-        rank: str,
-        name: str,
-        action: str,
-        protocols: list,
-        **kwargs,
-    ) -> Box:
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, None, error)
+
+        try:
+            result = URLFilteringRule(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs) -> tuple:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -167,11 +182,9 @@ class URLFilteringAPI:
             ...    url_categories=["SOCIAL_NETWORKING"])
 
         """
-        # Convert enabled to API format if present
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        http_method = "post".upper()
+        api_url = f"{self._zia_base_endpoint}/urlFilteringRules"
 
-        # Initialize the payload with required parameters
         payload = {
             "rank": rank,
             "name": name,
@@ -180,28 +193,26 @@ class URLFilteringAPI:
             "order": kwargs.pop("order", len(self.list_rules())),
         }
 
-        # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
             if value is not None:
                 payload[snake_to_camel(key)] = value
 
-        # Convert the entire payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                camel_payload[snake_to_camel(key)] = value
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
 
-        # Send POST request to create the rule
-        response = self.rest.post("urlFilteringRules", json=payload)
-        if isinstance(response, Response):
-            # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, None, error)
 
-    def update_rule(self, rule_id: str, **kwargs) -> Box:
+        try:
+            result = URLFilteringRule(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_rule(self, rule_id: str, **kwargs) -> tuple:
         """
         Updates the specified URL Filtering Policy rule.
 
@@ -275,40 +286,42 @@ class URLFilteringAPI:
             ...    action="ALLOW")
 
         """
-        # Set payload to value of existing record and convert nested dict keys.
-        payload = convert_keys(self.get_rule(rule_id))
+        http_method = "put".upper()
+        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
 
-        # Convert enabled to API format if present in kwargs
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        payload = convert_keys(self.get_rule(rule_id).__dict__)
 
-        # Transform ID fields in kwargs
         transform_common_id_fields(self.reformat_params, kwargs, payload)
-
-        # Add remaining optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        response = self.rest.put(f"urlFilteringRules/{rule_id}", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
 
-        # Return the updated object
-        return self.get_rule(rule_id)
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, None, error)
 
-    def delete_rule(self, rule_id: str) -> int:
+        try:
+            result = URLFilteringRule(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_rule(self, rule_id: str) -> tuple:
         """
         Deletes the specified URL Filtering Policy rule.
-
-        Args:
-            rule_id (str): The unique ID for the URL Filtering Policy rule.
-
-        Returns:
-            :obj:`int`: The status code for the operation.
-
-        Examples:
-            >>> zia.url_filtering.delete_rule('977463')
-
         """
-        return self.rest.delete(f"urlFilteringRules/{rule_id}").status_code
+        http_method = "delete".upper()
+        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
+
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, None, error)
+
+        return (response.get_status(), response, None)

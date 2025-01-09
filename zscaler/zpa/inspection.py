@@ -1,34 +1,44 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from box import Box, BoxList
-from requests import Response
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.inspection import InspectionProfile
+from zscaler.zpa.models.inspection import AppProtectionCustomControl
+from zscaler.zpa.models.inspection import PredefinedInspectionControl
+from zscaler.utils import format_url, snake_to_camel
 from requests.utils import quote
 
-from zscaler.utils import convert_keys, snake_to_camel
-from zscaler.zpa.client import ZPAClient
 
+class InspectionControllerAPI(APIClient):
+    """
+    A client object for the ZPA Inspection Profiles resource.
+    """
 
-class InspectionControllerAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
     @staticmethod
     def _create_rule(rule: dict) -> dict:
+        if not isinstance(rule, dict):
+            raise TypeError(f"Expected rule to be a dictionary, got {type(rule).__name__}: {rule}")
+
         rule_set = {
             "type": rule["type"],
             "conditions": [],
@@ -44,899 +54,947 @@ class InspectionControllerAPI:
                 }
             )
         return rule_set
-
-    def list_profiles(self, **kwargs) -> BoxList:
+    
+    def list_profiles(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
-        Returns the list of ZPA Inspection Profiles.
+        Enumerates App Protection Profile in your organization with pagination.
+        A subset of App Protection Profile can be returned that match a supported
+        filter expression or query.
 
         Args:
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            **pagesize (int):
-                Specifies the page size. The default size is 20 and the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Returns:
-            :obj:`BoxList`: The list of ZPA Inspection Profile resource records.
-
-        Examples:
-            Iterate over all ZPA Inspection Profiles and print them:
-
-            .. code-block:: python
-
-                for profile in zpa.inspection.list_profiles():
-                    print(profile)
-
+            tuple: A tuple containing (list of InspectionProfile instances, Response, error)
         """
-        list, _ = self.rest.get_paginated_data(path="/inspectionProfile", **kwargs, api_version="v1")
-        return list
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionProfile
+        """)
 
-    def get_profile(self, profile_id: str) -> Box:
-        """
-        Returns the specified ZPA Inspection Profile.
+        query_params = query_params or {}
 
-        Args:
-            profile_id (str):
-                The unique id of the ZPA Inspection Profile
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
 
-        Returns:
-            :obj:`Box`: The specified ZPA Inspection Profile resource record.
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
 
-        Examples:
-            Print the ZPA Inspection Profile with an id of `99999`:
-
-            .. code-block:: python
-
-                print(zpa.inspection.get_profile("99999"))
-
-        """
-        response = self.rest.get("/inspectionProfile/%s" % (profile_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
-
-    def add_profile(self, name: str, paranoia_level: int, predef_controls_version: str, **kwargs):
-        """
-        Adds a ZPA Inspection Profile.
-
-        Args:
-            name (str):
-                The name of the Inspection Profile.
-            paranoia_level (int):
-                The paranoia level for the Inspection Profile.
-            predef_controls_version (str):
-                The version of the predefined controls that will be added.
-            **kwargs:
-                Additional keyword args.
-
-        Keyword Args:
-            **description (str):
-                Additional information about the Inspection Profile.
-            **custom_controls (list):
-                A tuple list of custom controls to be added to the Inspection profile.
-
-                Custom control tuples must follow the convention below:
-
-                ``(control_id, action)``
-
-                e.g.
-
-                .. code-block:: python
-
-                    custom_controls = [(99999, "BLOCK"), (88888, "PASS")]
-            **predef_controls (list):
-                A tuple list of predefined controls to be added to the Inspection profile.
-
-                Predefined control tuples must follow the convention below:
-
-                ``(control_id, action)``
-
-                e.g.
-
-                .. code-block:: python
-
-                    predef_controls = [(77777, "BLOCK"), (66666, "PASS")]
-
-        Returns:
-            :obj:`Box`: The newly created Inspection Profile resource record.
-
-        Examples:
-            Add a new ZPA Inspection Profile with the minimum required parameters, printing the object to
-            console after creation:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.add_profile(
-                        name="predefined_controls",
-                        paranoia_level=3,
-                        predef_controls_version="OWASP_CRS/3.3.0",
-                    )
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(InspectionProfile(
+                    self.form_response_body(item))
                 )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-            Add a new ZPA Inspection Profile that uses additional predefined controls and custom controls, printing the
-            object to console after creation:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.add_profile(
-                        name="block_common_xss",
-                        paranoia_level=2,
-                        predefined_controls=[("99999", "BLOCK")],
-                        predef_controls_version="OWASP_CRS/3.3.0",
-                        custom_controls=[("88888", "BLOCK")],
-                    )
-                )
-
+    def get_profile(self, profile_id: str, **kwargs) -> tuple:
         """
-        # Fetch the Preprocessors control group
-        preprocessors_group = self.get_predef_control_group_by_name("Preprocessors")
-        preprocessors_controls = [
-            (control["id"], control["default_action"]) for control in preprocessors_group["predefined_inspection_controls"]
-        ]
+        Gets information on the specified inspection profile.
 
+        Args:
+            profile_id (str): The unique identifier for the inspection profile.
+
+        Returns:
+            InspectionProfile: The corresponding inspection profile object.
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /inspectionProfile/{profile_id}
+            """
+        )
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, {}, kwargs)
+        if error:
+            return None
+
+        response, error = self._request_executor\
+            .execute(request, InspectionProfile)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = InspectionProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_profile(self, **kwargs) -> tuple:
+        """
+        Adds a new inspection profile.
+
+        Args:
+            kwargs (dict): A dictionary of attributes to create the inspection profile.
+
+        Returns:
+            InspectionProfile: The created inspection profile object.
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionProfile
+        """)
+
+        # Fetch all predefined control groups
+        control_groups, _, err = self.list_predef_controls()
+        if err or not control_groups:
+            return (None, None, f"Failed to retrieve predefined control groups: {err}")
+
+        # Aggregate controls from all groups marked as `defaultGroup`
+        predefined_controls = []
+        for group in control_groups:
+            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+                for control in group.predefined_inspection_controls:
+                    predefined_controls.append(
+                        {
+                            "id": control["id"],
+                            "action": control["defaultAction"],
+                            "default_action": control["defaultAction"],
+                        }
+                    )
+
+        # Debugging: Ensure predefined_controls is populated
+        if not predefined_controls:
+            return (None, None, "Default predefined controls are missing or empty.")
+
+        # Construct the payload starting with predefined controls and predefinedControlsVersion
         payload = {
-            "name": name,
-            "paranoiaLevel": paranoia_level,
-            "predefinedControlsVersion": predef_controls_version,
-            "predefinedControls": [{"id": control[0], "action": control[1]} for control in preprocessors_controls],
+            "predefinedControls": predefined_controls,
+            "predefinedControlsVersion": "OWASP_CRS/3.3.0",
         }
 
+        # Add predefined controls if provided
         if kwargs.get("predef_controls"):
-            controls = kwargs.pop("predef_controls")
-            for control in controls:
-                payload["predefinedControls"].append({"id": control[0], "action": control[1]})
+            predef_controls = kwargs.pop("predef_controls")
+            payload["predefinedControls"].extend(
+                [{"id": control[0], "action": control[1], "default_action": control[1]} for control in predef_controls]
+            )
 
+        # Add custom controls if provided
         if kwargs.get("custom_controls"):
-            controls = kwargs.pop("custom_controls")
-            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in controls]
+            custom_controls = kwargs.pop("custom_controls")
+            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in custom_controls]
 
-        for key, value in kwargs.items():
-            payload[key] = value
+        # Add additional parameters
+        payload.update(kwargs)
 
-        payload = convert_keys(payload)
+        # Debugging: Log the payload before sending the request
+        print("Payload being sent:", payload)
 
-        response = self.rest.post("inspectionProfile", json=payload)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        # Create the request
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body=payload, headers={}, params={}
+        )
+        if error:
+            return (None, None, error)
 
-    def update_profile(self, profile_id: str, **kwargs):
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, InspectionProfile)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = InspectionProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_profile(self, profile_id: str, **kwargs) -> tuple:
         """
-        Updates the specified ZPA Inspection Profile.
+        Updates the specified inspection profile.
 
         Args:
-            profile_id (str):
-                The unique id for the ZPA Inspection Profile that will be updated.
-            predef_controls_version (str):
-                The predefined controls version for the ZPA Inspection Profile. Defaults to `OWASP_CRS/3.3.0`.
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            **custom_controls (list):
-                A tuple list of custom controls to be added to the Inspection profile.
-
-                Custom control tuples must follow the convention below:
-
-                ``(control_id, action)``
-
-                e.g.
-
-                .. code-block:: python
-
-                    custom_controls = [(99999, "BLOCK"), (88888, "PASS")]
-            **description (str):
-                Additional information about the Inspection Profile.
-            **name (str):
-                The name of the Inspection Profile.
-            **paranoia_level (int):
-                The paranoia level for the Inspection Profile.
-            **predef_controls (list):
-                A tuple list of predefined controls to be added to the Inspection profile.
-
-                Predefined control tuples must follow the convention below:
-
-                ``(control_id, action)``
-
-                e.g.
-
-                .. code-block:: python
-
-                    predef_controls = [(77777, "BLOCK"), (66666, "PASS")]
-            **predef_controls_version (str):
-                The version of the predefined controls that will be added.
+            profile_id (str): The unique ID of the profile to be updated.
 
         Returns:
-            :obj:`Box`: The updated ZPA Inspection Profile resource record.
-
-        Examples:
-            Update the name and description of a ZPA Inspection Profile with the id 99999:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.update_profile(
-                        "99999",
-                        name="inspect_common_predef_controls",
-                        description="Inspects common controls from the Predefined set.",
-                    )
-                )
-
-            Add a custom control to the ZPA Inspection Profile with the id 88888:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.update_profile(
-                        "88888",
-                        custom_controls=[("2", "BLOCK")],
-                    )
-                )
-
+            InspectionProfile: The updated inspection profile object.
         """
-        payload = self.get_profile(profile_id)
-        payload["predefinedControlsVersion"] = kwargs.get("predef_controls_version", "OWASP_CRS/3.3.0")
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}
+        """)
 
-        # Fetch the Preprocessors control group
-        preprocessors_group = self.get_predef_control_group_by_name("Preprocessors")
-        preprocessors_controls = [
-            {"id": control["id"], "action": control["default_action"]}
-            for control in preprocessors_group["predefined_inspection_controls"]
-        ]
+        # Fetch all predefined control groups
+        control_groups, _, err = self.list_predef_controls()
+        if err or not control_groups:
+            return (None, None, f"Failed to retrieve predefined control groups: {err}")
 
-        # Ensure the Preprocessors control group is always present
-        existing_predef_controls = payload.get("predefinedControls", [])
-        for predef_control in preprocessors_controls:
-            if predef_control not in existing_predef_controls:
-                existing_predef_controls.append(predef_control)
-        payload["predefinedControls"] = existing_predef_controls
+        # Aggregate controls from all groups marked as `defaultGroup`
+        predefined_controls = []
+        for group in control_groups:
+            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+                for control in group.predefined_inspection_controls:
+                    predefined_controls.append(
+                        {
+                            "id": control["id"],
+                            "action": control["defaultAction"],
+                            "default_action": control["defaultAction"],
+                        }
+                    )
 
+        # Debugging: Ensure predefined_controls is populated
+        if not predefined_controls:
+            return (None, None, "Default predefined controls are missing or empty.")
+
+        # Construct the payload starting with predefined controls and predefinedControlsVersion
+        payload = {
+            "predefinedControls": predefined_controls,
+            "predefinedControlsVersion": "OWASP_CRS/3.3.0",
+        }
+
+        # Add predefined controls if provided
         if kwargs.get("predef_controls"):
-            controls = kwargs.pop("predef_controls")
-            for control in controls:
-                payload["predefinedControls"].append({"id": control[0], "action": control[1]})
+            predef_controls = kwargs.pop("predef_controls")
+            payload["predefinedControls"].extend(
+                [{"id": control[0], "action": control[1], "default_action": control[1]} for control in predef_controls]
+            )
 
+        # Add custom controls if provided
         if kwargs.get("custom_controls"):
-            controls = kwargs.pop("custom_controls")
-            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in controls]
+            custom_controls = kwargs.pop("custom_controls")
+            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in custom_controls]
 
-        for key, value in kwargs.items():
-            payload[key] = value
+        # Add additional parameters
+        payload.update(kwargs)
 
-        payload = convert_keys(payload)
+        # Debugging: Log the payload before sending the request
+        print("Payload being sent:", payload)
 
-        resp = self.rest.put(f"inspectionProfile/{profile_id}", json=payload).status_code
-        if not isinstance(resp, Response):
-            return self.get_profile(profile_id)
 
-    def delete_profile(self, profile_id: str):
+        # Create the request
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body=payload, headers={}, params={}
+        )
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, InspectionProfile)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            return (InspectionProfile({"id": profile_id}), None, None)
+
+        # Parse the response into an InspectionProfile instance
+        try:
+            result = InspectionProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_profile(self, profile_id: str) -> int:
         """
-        Deletes the specified Inspection Profile.
+        Deletes the specified inspection profile.
 
         Args:
-            profile_id (str):
-                The unique id for the Inspection Profile that will be deleted.
+            profile_id (str): The unique identifier for the inspection profile to be deleted.
 
         Returns:
-            :obj:`int`: The status code for the operation.
-
-        Examples:
-            Delete an Inspection Profile with an id of *999999*:
-
-            .. code-block:: python
-
-                zpa.inspection.delete_profile("999999")
-
+            int: Status code of the delete operation.
         """
-        return self.rest.delete(f"inspectionProfile/{profile_id}").status_code
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}
+        """)
 
-    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> Box:
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> tuple:
         """
         Attaches or detaches all predefined ZPA Inspection Controls to a ZPA Inspection Profile.
 
         Args:
-            profile_id (str):
-                The unique id for the ZPA Inspection Profile that will be modified.
-            action (str):
-                The association action that will be taken, accepted values are:
-
+            profile_id (str): The unique ID for the ZPA Inspection Profile that will be modified.
+            action (str): The association action that will be taken, accepted values are:
                 * ``attach``: Attaches all predefined controls to the Inspection Profile with the specified version.
                 * ``detach``: Detaches all predefined controls from the Inspection Profile.
-            **kwargs:
-                Additional keyword arguments.
+            **kwargs: Additional keyword arguments.
 
         Keyword Args:
-            profile_version (str):
-                The version of the Predefined Controls to attach. Only required when using the
+            profile_version (str): The version of the Predefined Controls to attach. Only required when using the
                 attach action. Defaults to ``OWASP_CRS/3.3.0``.
 
         Returns:
-            :obj:`Box`: The updated ZPA Inspection Profile resource record.
-
-        Examples:
-            Attach all predefined controls to a ZPA Inspection Profile with an id of 99999:
-
-            .. code-block:: python
-
-                updated_profile = zpa.inspection.profile_control_attach("99999", action="attach")
-
-            Attach all predefined controls to a ZPA Inspection Profile with an id of 99999 and specified version:
-
-            .. code-block:: python
-
-                updated_profile = zpa.inspection.profile_control_attach(
-                    "99999",
-                    action="attach",
-                    profile_version="OWASP_CRS/3.2.0",
-                )
-
-            Detach all predefined controls from a ZPA Inspection Profile with an id of 99999:
-
-            .. code-block:: python
-
-                updated_profile = zpa.inspection.profile_control_attach(
-                    "99999",
-                    action="detach",
-                )
-
-        Raises:
-            ValueError: If an incorrect value is supplied for `action`.
-
+            InspectionProfile: The updated ZPA Inspection Profile resource record.
         """
+        http_method = "put".upper()
         if action == "attach":
+            api_url = format_url(f"{self._zpa_base_endpoint}/inspectionProfile/{profile_id}/associateAllPredefinedControls")
             payload = {"version": kwargs.pop("profile_version", "OWASP_CRS/3.3.0")}
-            resp = self.rest.put(
-                f"inspectionProfile/{profile_id}/associateAllPredefinedControls",
-                params=payload,
-            )
-            return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
         elif action == "detach":
-            resp = self.rest.put(f"inspectionProfile/{profile_id}/deAssociateAllPredefinedControls")
-            return self.get_profile(profile_id) if resp.status_code == 204 else resp.status_code
+            api_url = format_url(f"{self._zpa_base_endpoint}/inspectionProfile/{profile_id}/deAssociateAllPredefinedControls")
+            payload = {}
         else:
             raise ValueError("Unknown action provided. Valid actions are 'attach' or 'detach'.")
 
-    def update_profile_and_controls(self, profile_id: str, inspection_profile: dict, **kwargs):
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, payload)
+        if error:
+            return None
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, InspectionProfile)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            return (InspectionProfile({"id": profile_id}), None, None)
+
+        try:
+            result = InspectionProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_profile_and_controls(self, profile_id: str, **kwargs) -> tuple:
         """
         Updates the inspection profile and controls for the specified ID.
 
-        Note:
-            This method has not been fully implemented and will not be maintained. There seems to be functionality
-            duplication with the default Inspection Profile update API call. `**kwargs` has been provided as a parameter
-            for you to be able to add any additional args that Zscaler may add.
-
-            If you feel that this is in error and that this functionality should be correctly implemented by zscaler-sdk-python
-            `raise an issue <https://github.com/zscaler/zscaler-sdk-python/issues>` in the zscaler-sdk-python Github repo
-
         Args:
-            profile_id (str):
-                The unique id of the inspection profile.
-            inspection_profile (dict):
-                The new inspection profile object.
-            **kwargs:
-                Additional keyword args.
-
-        """
-
-        payload = {
-            "inspection_profile_id": profile_id,
-            "inspection_profile": inspection_profile,
-        }
-
-        payload = convert_keys(payload)
-
-        resp = self.rest.put("inspectionProfile/{profile_id}/patch", json=payload).status_code
-        if not isinstance(resp, Response):
-            return self.get_profile(profile_id)
-
-    def list_custom_controls(self, **kwargs) -> BoxList:
-        """
-        Returns a list of all custom ZPA Inspection Controls.
-
-        Args:
-            **kwargs: Optional keyword arguments.
-
-        Keyword Args:
-            **search (str):
-                The string used to search for a custom control by features and fields.
-            **sortdir (str):
-                Specifies the sorting order for the search results.
-
-                Accepted values are:
-
-                - ``ASC`` - ascending order
-                - ``DESC`` - descending order
+            profile_id (str): The unique ID of the inspection profile.
+            inspection_profile (dict): The new inspection profile object.
+            **kwargs: Additional keyword arguments.
 
         Returns:
-            :obj:`BoxList`: A list containing all custom ZPA Inspection Controls.
-
-        Examples:
-            Print a list of all custom ZPA Inspection Controls:
-
-            .. code-block:: python
-
-                for control in zpa.inspection.list_custom_controls():
-                    print(control)
-
+            InspectionProfile: The updated ZPA Inspection Profile resource record.
         """
-        list, _ = self.rest.get_paginated_data(path="/inspectionControls/custom", **kwargs, api_version="v1")
-        return list
+        http_method = "patch".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}/patch
+        """
+        )
 
-    def get_predef_control(self, control_id: str):
+        # Fetch all predefined control groups
+        control_groups, _, err = self.list_predef_controls()
+        if err or not control_groups:
+            return (None, None, f"Failed to retrieve predefined control groups: {err}")
+
+        # Aggregate controls from all groups marked as `defaultGroup`
+        predefined_controls = []
+        for group in control_groups:
+            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+                for control in group.predefined_inspection_controls:
+                    predefined_controls.append(
+                        {
+                            "id": control["id"],
+                            "action": control["defaultAction"],
+                            "default_action": control["defaultAction"],
+                        }
+                    )
+
+        # Debugging: Ensure predefined_controls is populated
+        if not predefined_controls:
+            return (None, None, "Default predefined controls are missing or empty.")
+
+        # Construct the payload starting with predefined controls and predefinedControlsVersion
+        payload = {
+            "predefinedControls": predefined_controls,
+            "predefinedControlsVersion": "OWASP_CRS/3.3.0",
+        }
+
+        # Add predefined controls if provided
+        if kwargs.get("predef_controls"):
+            predef_controls = kwargs.pop("predef_controls")
+            payload["predefinedControls"].extend(
+                [{"id": control[0], "action": control[1], "default_action": control[1]} for control in predef_controls]
+            )
+
+        # Add custom controls if provided
+        if kwargs.get("custom_controls"):
+            custom_controls = kwargs.pop("custom_controls")
+            payload["customControls"] = [{"id": control[0], "action": control[1]} for control in custom_controls]
+
+        # Add additional parameters
+        payload.update(kwargs)
+
+        # Debugging: Log the payload before sending the request
+        print("Payload being sent:", payload)
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body=payload, headers={}, params={}
+        )
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, InspectionProfile)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            return (InspectionProfile({"id": profile_id}), None, None)
+
+        # Parse the response into an InspectionProfile instance
+        try:
+            result = InspectionProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_custom_controls(
+        self,
+        query_params=None,
+    ) -> tuple:
+        """
+        Enumerates App Protection Custom Control in your organization with pagination.
+        A subset of App Protection Custom Control can be returned that match a supported
+        filter expression or query.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
+        Returns:
+            tuple: A tuple containing (list of AppProtectionCustomControl instances, Response, error)
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/custom
+        """)
+
+        query_params = query_params or {}
+
+        # Prepare request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(AppProtectionCustomControl(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_predef_control(self, control_id: str) -> tuple:
         """
         Returns the specified predefined ZPA Inspection Control.
 
         Args:
-            control_id (str):
-                The unique id of the predefined ZPA Inspection Control to be returned.
+            control_id (str): The unique ID of the predefined control.
 
         Returns:
-            :obj:`Box`: The ZPA Inspection Predefined Control resource record.
-
-        Examples:
-            Print the ZPA Inspection Predefined Control with an id of `99999`:
-
-            .. code-block:: python
-
-                print(zpa.inspection.get_predef_control("99999"))
+            AppProtectionCustomControl: The corresponding predefined control object.
         """
-        response = self.rest.get("/inspectionControls/predefined/%s" % (control_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        http_method = "get".upper()
+        api_url = format_url(f""""
+            {self._zpa_base_endpoint}/inspectionControls/predefined/{control_id}
+        """)
 
-    def get_custom_control(self, control_id: str) -> Box:
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, {})
+        if error:
+            return None
+
+        response, error = self._request_executor\
+            .execute(request, AppProtectionCustomControl)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AppProtectionCustomControl(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_custom_control(self, control_id: str) -> tuple:
         """
         Returns the specified custom ZPA Inspection Control.
 
         Args:
-            control_id (str):
-                The unique id of the custom ZPA Inspection Control to be returned.
+            control_id (str): The unique ID of the custom control.
 
         Returns:
-            :obj:`Box`: The custom ZPA Inspection Control resource record.
-
-        Examples:
-            Print the Custom Inspection Control with an id of `99999`:
-
-            .. code-block:: python
-
-                print(zpa.inspection.get_custom_control("99999"))
-
+            AppProtectionCustomControl: The corresponding custom control object.
         """
-        response = self.rest.get("/inspectionControls/custom/%s" % (control_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
+        """)
 
-    def add_custom_control(
-        self,
-        name: str,
-        default_action: str,
-        severity: str,
-        type: str,
-        rules: list,
-        **kwargs,
-    ) -> Box:
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, {})
+        if error:
+            return None
+
+        response, error = self._request_executor\
+            .execute(request, AppProtectionCustomControl)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AppProtectionCustomControl(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_custom_control(self, **kwargs) -> tuple:
         """
         Adds a new ZPA Inspection Custom Control.
 
         Args:
-            name (str): The name of the custom control.
-            default_action (str): The default action to take for matches against this custom control.
-            severity (str): The severity for events that match this custom control.
-            type (str): The type of HTTP message this control matches.
-            rules (list): A list of Inspection Control rule objects.
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            description (str): Additional information about the custom control.
-            paranoia_level (int): The paranoia level for the custom control.
+            kwargs (dict): A dictionary of attributes to create the custom control.
 
         Returns:
-            :obj:`Box`: The newly created custom Inspection Control resource record.
-
-        Examples:
-            Create a new custom Inspection Control with the minimum required parameters
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.add_custom_control(
-                        "test8",
-                        severity="INFO",
-                        description="test descr",
-                        paranoia_level="3",
-                        type="REQUEST",
-                        default_action="BLOCK",
-                        rules=[
-                            {
-                                "names": ["test"],
-                                "type": "REQUEST_HEADERS",
-                                "conditions": [("SIZE", "GE", "10"), ("VALUE", "CONTAINS", "test")],
-                            }
-                        ],
-                    )
-                )
+            AppProtectionCustomControl: The newly created custom control object.
         """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/custom
+        """)
 
-        payload = {
-            "name": name,
-            "defaultAction": default_action,
-            "severity": severity,
-            "rules": [],
-            "type": type,
-        }
+        # Extract rules from kwargs
+        rules = kwargs.pop("rules", [])
+        kwargs["rules"] = [self._create_rule(rule) for rule in rules]
 
-        # Handle default_action_value
-        if "default_action_value" in kwargs:
-            payload["defaultActionValue"] = kwargs["default_action_value"]
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, kwargs)
+        if error:
+            return (None, None, error)
 
-        # Use the _create_rule method to restructure the Inspection Control rule and add to the payload.
-        for rule in rules:
-            payload["rules"].append(self._create_rule(rule))
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, AppProtectionCustomControl)
+        if error:
+            return (None, response, error)
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            if key == "paranoia_level":
-                payload["paranoiaLevel"] = int(value)
-            elif key == "description":
-                payload["description"] = value
-            # Add other optional parameters if necessary
+        try:
+            result = AppProtectionCustomControl(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-            # Convert snake to camelcase
-            payload = convert_keys(payload)
-
-        response = self.rest.post("inspectionControls/custom", json=payload)
-        if isinstance(response, Response):
-            # this is only true when the creation failed (status code is not 2xx)
-            status_code = response.status_code
-            # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
-
-    def update_custom_control(self, control_id: str, **kwargs) -> Box:
+    def update_custom_control(self, control_id: str, **kwargs) -> tuple:
         """
         Updates the specified custom ZPA Inspection Control.
 
         Args:
-            control_id (str):
-                The unique id for the custom control that will be updated.
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            **description (str):
-                Additional information about the custom control.
-            **default_action (str):
-                The default action to take for matches against this custom control. Valid options are:
-
-                - ``PASS``
-                - ``BLOCK``
-                - ``REDIRECT``
-            **name (str):
-                The name of the custom control.
-            **paranoia_level (int):
-                The paranoia level for the custom control.
-            **rules (list):
-                A list of Inspection Control rule objects, with each object using the format::
-
-                    {
-                        "names": ["name1", "name2"],
-                        "type": "rule_type",
-                        "conditions": [
-                            ("LHS", "OP", "RHS"),
-                            ("LHS", "OP", "RHS"),
-                        ],
-                    }
-            **severity (str):
-                The severity for events that match this custom control. Valid options are:
-
-                - ``CRITICAL``
-                - ``ERROR``
-                - ``WARNING``
-                - ``INFO``
-            **type (str):
-                The type of HTTP message this control matches. Valid options are:
-
-                - ``REQUEST``
-                - ``RESPONSE``
+            control_id (str): The unique ID of the custom control.
+            kwargs (dict): A dictionary of attributes to update the custom control.
 
         Returns:
-            :obj:`Box`: The updated custom ZPA Inspection Control resource record.
-
-        Examples:
-            Update the description of a custom ZPA Inspection Control with an id of 99999:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.update_custom_control(
-                        "99999",
-                        description="Updated description",
-                    )
-                )
-
-            Update the rules of a custom ZPA Inspection Control with an id of 88888:
-
-            .. code-block:: python
-
-                print(
-                    zpa.inspection.update_custom_control(
-                        "88888",
-                        rules=[
-                            {
-                                "names": ["xforwardedfor_ge_20"],
-                                "type": "REQUEST_HEADERS",
-                                "conditions": [
-                                    ("SIZE", "GE", "20"),
-                                    ("VALUE", "CONTAINS", "X-Forwarded-For"),
-                                ],
-                            }
-                        ],
-                    )
-                )
+            AppProtectionCustomControl: The updated custom control object.
         """
-        # Set payload to value of existing record and recursively convert nested dict keys from snake_case
-        # to camelCase.
-        payload = convert_keys(self.get_custom_control(control_id))
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
+        """)
 
-        # If the user provides rules for an update, clear the current rules then use the create_rule method to
-        # restructure the Inspection Control rule and add to the payload.
-        if kwargs.get("rules"):
-            payload["rules"] = []
-            for rule in kwargs.pop("rules"):
-                payload["rules"].append(self._create_rule(rule))
+        # Fetch existing control and handle errors
+        existing_control, _, err = self.get_custom_control(control_id)
+        if err or not existing_control:
+            return (None, None, f"Failed to retrieve custom control with ID {control_id}: {err}")
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload_key = snake_to_camel(key)
-            payload[payload_key] = value
+        # Prepare the payload using the existing control
+        payload = existing_control.request_format()
 
-            # Special handling for default_action_value
-            if key == "default_action_value":
-                payload["defaultActionValue"] = value
+        # Update rules if provided
+        if "rules" in kwargs:
+            rules = kwargs.pop("rules")
+            payload["rules"] = [self._create_rule(rule) for rule in rules]
 
-        resp = self.rest.put(f"inspectionControls/custom/{control_id}", json=payload).status_code
+        # Add other attributes from kwargs
+        payload.update(kwargs)
 
-        # Return the object if it was updated successfully
-        if not isinstance(resp, Response):
-            return self.get_custom_control(control_id)
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, payload)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request, AppProtectionCustomControl)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            return (AppProtectionCustomControl({"id": control_id}), None, None)
+
+        try:
+            result = AppProtectionCustomControl(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def delete_custom_control(self, control_id: str) -> int:
         """
         Deletes the specified custom ZPA Inspection Control.
 
         Args:
-            control_id (str):
-                The unique id for the custom control that will be deleted.
+            control_id (str): The unique ID for the custom control.
 
         Returns:
-            :obj:`int`: The status code for the operation.
-
-        Examples:
-            Delete a custom ZPA Inspection Control with an id of `99999`.
-
-            .. code-block:: python
-
-                zpa.inspection.delete_custom_control("99999")
-
+            int: The status code for the operation.
         """
-        return self.rest.delete(f"inspectionControls/custom/{control_id}").status_code
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
+        """)
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, {})
+        if error:
+            return None
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
 
     def list_predef_controls(
-        self, search: str = None, search_field: str = "name", version: str = "OWASP_CRS/3.3.0", **kwargs
-    ) -> BoxList:
+        self,
+        query_params=None,
+    ) -> tuple:
         """
         Returns a list of predefined ZPA Inspection Controls.
 
         Args:
-            version (str):
-                The version of the predefined controls to return. Default is "OWASP_CRS/3.3.0".
-            search (str, optional):
-                The string used to search for predefined inspection controls by features and fields.
-                The function will automatically add the "{search_field}+EQ+" prefix to the search string.
-            search_field (str, optional):
-                The field to search by. Default is "name".
+            query_params {dict}: Additional query parameters for the request. 
+                Includes:
+                    - search: The field name to search for.
+                    - search_field: The value to search for within the field.
 
         Returns:
-            :obj:`BoxList`: A list containing all predefined ZPA Inspection Controls that match the Version and Search
-            string.
+            tuple: A tuple containing (list of PredefinedInspectionControl objects, Response, error).
 
         Examples:
-            Return all predefined ZPA Inspection Controls for the given version:
+            >>> for control in zpa.inspection.list_predef_controls():
+            ...     print(control)
 
-            .. code-block:: python
-
-                for control in zpa.inspection.list_predef_controls():
-                    print(control)
-
-            Return predefined ZPA Inspection Controls matching a search string:
-
-            .. code-block:: python
-
-                for control in zpa.inspection.list_predef_controls(search="Failed to parse request body"):
-                    print(control)
-
+            >>> for control in zpa.inspection.list_predef_controls(
+                    query_params={"search": "controlGroup", "search_field": "Protocol Issues"}):
+            ...     print(control)
         """
-        encoded_version = quote(version, safe="")
-        url = f"/inspectionControls/predefined?version={encoded_version}"
-        if search:
-            encoded_search = quote(f"{search_field}+EQ+{search}", safe="")
-            url += f"&search={encoded_search}"
+        # Initialize URL and HTTP method
+        http_method = "get".upper()
+        encoded_version = quote("OWASP_CRS/3.3.0", safe="")
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/predefined?version={encoded_version}
+        """)
 
-        if kwargs:
-            additional_params = "&".join(f"{key}={quote(str(value))}" for key, value in kwargs.items())
-            url += f"&{additional_params}"
+        # Handle query parameters
+        query_params = query_params or {}
+        search_field = query_params.pop("search_field", None)
+        if "search" in query_params and search_field:
+            # Construct the search query: field +EQ+ value
+            query_params["search"] = f"{query_params['search']}+EQ+{search_field}"
 
-        response = self.rest.get(url)
+        # Add additional query parameters to the URL
+        if query_params:
+            additional_params = "&".join(f"{key}={quote(str(value))}" for key, value in query_params.items())
+            api_url = f"{api_url}&{additional_params}"
 
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(
+            http_method, api_url
+        )
+        if error:
+            return (None, None, error)
 
-    def get_predef_control_by_name(self, name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
-        """
-        Returns the specified predefined ZPA Inspection Control by its name.
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
 
-        Args:
-            name (str):
-                The name of the predefined ZPA Inspection Control to be returned.
-            version (str):
-                The version of the predefined control to return. Default is "OWASP_CRS/3.3.0".
+        try:
+            result = [
+                PredefinedInspectionControl(
+                    self.form_response_body(item)
+                )
+                for item in response.get_results()
+            ]
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-        Returns:
-            :obj:`Box`: The ZPA Inspection Predefined Control resource record.
-
-        Examples:
-            Print the ZPA Inspection Predefined Control with the name `Failed to parse request body`:
-
-            .. code-block:: python
-
-                print(inspection.get_predef_control_by_name("Failed to parse request body"))
-
-        """
-        controls = self.list_predef_controls(search=name, version=version)
-
-        for control_group in controls:
-            for control in control_group.get("predefined_inspection_controls", []):
-                if control["name"] == name:
-                    return control
-
-        raise ValueError(f"No predefined control named '{name}' found")
-
-    def get_predef_control_group_by_name(self, group_name: str, version: str = "OWASP_CRS/3.3.0") -> Box:
-        """
-        Returns the specified predefined ZPA Inspection Control Group by its name.
-
-        Args:
-            group_name (str):
-                The name of the predefined ZPA Inspection Control Group to be returned.
-            version (str):
-                The version of the predefined control to return (default is "OWASP_CRS/3.3.0").
-
-        Returns:
-            :obj:`Box`: The ZPA Inspection Predefined Control Group resource record.
-
-        Examples:
-            Print the ZPA Inspection Predefined Control Group with the name `Protocol Issues`:
-
-            .. code-block:: python
-
-                print(zpa.inspection.get_predef_control_group_by_name("Protocol Issues"))
-
-        """
-        controls = self.list_predef_controls(search=group_name, search_field="controlGroup", version=version)
-
-        for control_group in controls:
-            if control_group.get("control_group") == group_name:
-                return control_group
-
-            for control in control_group.get("predefinedInspectionControls", []):
-                if control.get("controlGroup") == group_name:
-                    return control_group
-
-        raise ValueError(f"No predefined control group named '{group_name}' found")
-
-    def list_control_action_types(self) -> Box:
+    def list_control_action_types(self) -> tuple:
         """
         Returns a list of ZPA Inspection Control Action Types.
 
         Returns:
-            :obj:`BoxList`: A list containing the ZPA Inspection Control Action Types.
+            tuple: A tuple containing (list of action types, Response, error).
 
         Examples:
-            Iterate over the ZPA Inspection Control Action Types and print each one:
-
-            .. code-block:: python
-
-                for action_type in zpa.inspection.list_control_action_types():
-                    print(action_type)
+            >>> for action_type in zpa.inspection.list_control_action_types():
+            ...     print(action_type)
 
         """
-        return self.rest.get("inspectionControls/actionTypes")
+        # Initialize URL and HTTP method
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/actionTypes
+        """)
 
-    def list_control_severity_types(self) -> BoxList:
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+        form = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, form)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, str)  # Expecting a list of strings
+
+        if error:
+            return (None, response, error)
+
+        # Parse the response
+        try:
+            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_control_severity_types(self) -> tuple:
         """
         Returns a list of Inspection Control Severity Types.
 
         Returns:
-            :obj:`BoxList`: A list containing all valid Inspection Control Severity Types.
+            tuple: A dictionary containing all valid Inspection Control Severity Types.
 
         Examples:
-            Print all Inspection Control Severity Types
-
-            .. code-block:: python
-
-                for severity in zpa.inspection.list_control_severity_types():
-                    print(severity)
+            >>> for severity in zpa.inspection.list_control_severity_types():
+            ...     print(severity)
 
         """
-        return self.rest.get("inspectionControls/severityTypes")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/severityTypes
+        """)
 
-    def list_control_types(self) -> BoxList:
+        body = {}
+        headers = {}
+        form = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, form)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, str)  # Expecting a list of strings
+
+        if error:
+            return (None, response, error)
+
+        # Parse the response
+        try:
+            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_control_types(self) -> tuple:
         """
         Returns a list of ZPA Inspection Control Types.
 
         Returns:
-            :obj:`BoxList`: A list containing ZPA Inspection Control Types.
+            tuple: A dictionary containing ZPA Inspection Control Types.
 
         Examples:
-            Print all ZPA Inspection Control Types:
-
-            .. code-block:: python
-
-                for control_type in zpa.inspection.list_control_types():
-                    print(control_type)
+            >>> for control_type in zpa.inspection.list_control_types():
+            ...     print(control_type)
 
         """
-        return self.rest.get("inspectionControls/controlTypes")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/controlTypes
+        """)
 
-    def list_custom_http_methods(self) -> BoxList:
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+        form = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, form)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, str)  # Expecting a list of strings
+
+        if error:
+            return (None, response, error)
+
+        # Parse the response
+        try:
+            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_custom_http_methods(self) -> tuple:
         """
         Returns a list of custom ZPA Inspection Control HTTP Methods.
 
         Returns:
-            :obj:`BoxList`: A list containing custom ZPA Inspection Control HTTP Methods.
+            tuple: A dictionary containing custom ZPA Inspection Control HTTP Methods.
 
         Examples:
-
-            Print all custom ZPA Inspection Control HTTP Methods:
-
-            .. code-block:: python
-
-                for method in zpa.inspection.list_custom_http_methods():
-                    print(method)
+            >>> for method in zpa.inspection.list_custom_http_methods():
+            ...     print(method)
 
         """
-        return self.rest.get("inspectionControls/custom/httpMethods")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /inspectionControls/custom/httpMethods
+        """)
 
-    def list_predef_control_versions(self) -> BoxList:
+        body = {}
+        headers = {}
+        form = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, form)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, str)  # Expecting a list of strings
+
+        if error:
+            return (None, response, error)
+
+        # Parse the response
+        try:
+            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_predef_control_versions(self) -> tuple:
         """
         Returns a list of predefined ZPA Inspection Control versions.
 
         Returns:
-            :obj:`BoxList`: A list containing all predefined ZPA Inspection Control versions.
+            tuple: A dictionary containing all predefined ZPA Inspection Control versions.
 
         Examples:
-            Print all predefined ZPA Inspection Control versions::
-
-                for version in zpa.inspection.list_predef_control_versions():
-                    print(version)
+            >>> for version in zpa.inspection.list_predef_control_versions():
+            ...     print(version)
 
         """
-        return self.rest.get("inspectionControls/predefined/versions")
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}/inspectionControls/predefined/versions
+        """)
+
+        body = {}
+        headers = {}
+        form = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, form)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, str)  # Expecting a list of strings
+
+        if error:
+            return (None, response, error)
+
+        # Parse the response
+        try:
+            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

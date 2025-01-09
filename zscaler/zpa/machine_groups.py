@@ -1,93 +1,131 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-from box import Box, BoxList
-from requests import Response
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from . import ZPAClient
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.machine_groups import MachineGroup
+from zscaler.utils import format_url
 
 
-class MachineGroupsAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
+class MachineGroupsAPI(APIClient):
+    """
+    A Client object for the Machine Groups resource.
+    """
 
-    def list_groups(self, **kwargs) -> BoxList:
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+
+    def list_machine_groups(self, query_params=None) -> tuple:
         """
-        Returns a list of all configured machine groups.
-
-        Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
-
-        Returns:
-            :obj:`list`: A list of all configured machine groups.
-
-        Examples:
-            >>> for machine_group in zpa.machine_groups.list_groups():
-            ...    pprint(machine_group)
-
-        """
-        list, _ = self.rest.get_paginated_data(path="/machineGroup", **kwargs)
-        return list
-
-    def get_group(self, group_id: str, **kwargs) -> Box:
-        """
-        Returns information on the specified machine group.
+        Enumerates machine groups in your organization with pagination.
+        A subset of machine groups can be returned that match a supported
+        filter expression or query.
 
         Args:
-            group_id (str):
-                The unique identifier for the machine group.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Returns:
-            :obj:`Box`: The resource record for the machine group.
+            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
 
-        Examples:
-            >>> pprint(zpa.machine_groups.get_group('99999'))
-
+        Example:
+            >>> machine_groups = zpa.machine_groups.list_machine_groups(search="example")
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.get(f"machineGroup/{group_id}", params=params)
-
-    def get_machine_group_by_name(self, name: str, **kwargs) -> Box:
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /machineGroup
         """
-        Returns information on the machine group with the specified name.
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        # Prepare request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(MachineGroup(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_group(self, group_id: str, query_params=None) -> tuple:
+        """
+        Fetches information on the specified machine group.
 
         Args:
-            name (str): The name of the machine group.
+            group_id (str): The ID of the machine group.
+            query_params (dict): Optional query parameters for the request.
 
         Returns:
-            :obj:`Box` or None: The resource record for the machine group if found, otherwise None.
-
-        Examples:
-            >>> group = zpa.machine_groups.get_machine_group_by_name('example_name')
-            >>> if group:
-            ...     pprint(group)
-            ... else:
-            ...     print("machine group not found")
+            dict: The machine group object.
         """
-        apps = self.list_groups(**kwargs)
-        for app in apps:
-            if app.get("name") == name:
-                return app
-        return None
+        http_method = "get".upper()
+        api_url = format_url(f"""{
+            self._zpa_base_endpoint}
+            /machineGroup/{group_id}
+        """)
+
+        # Handle optional query parameters
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, MachineGroup)
+        if error:
+            return (None, response, error)
+
+        # Parse the response into an AppConnectorGroup instance
+        try:
+            result = MachineGroup(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

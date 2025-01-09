@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
 import os
@@ -49,7 +49,7 @@ class TestSandbox:
     def test_sandbox_get_quota(self, fs):
         client = MockZIAClient(fs)
         try:
-            quota = client.sandbox.get_quota()
+            quota = client.zia.sandbox.get_quota()
             assert quota.allowed > 0, "Sandbox quota retrieval failed."
         except Exception as exc:
             pytest.fail(f"Sandbox quota retrieval failed: {exc}")
@@ -83,7 +83,7 @@ class TestSandbox:
     #                 f.write(response.content)
 
     #             # Submit the file to the sandbox
-    #             submission_response = client.sandbox.submit_file(
+    #             submission_response = client.zia.sandbox.submit_file(
     #                 local_file_path, force=True
     #             )
     #             assert (
@@ -121,7 +121,7 @@ class TestSandbox:
     #                 f.write(response.content)
 
     #             # Submit the file to the sandbox
-    #             submission_response = client.sandbox.submit_file_for_inspection(
+    #             submission_response = client.zia.sandbox.submit_file_for_inspection(
     #                 local_file_path
     #             )
     #             assert (
@@ -142,7 +142,7 @@ class TestSandbox:
     def test_get_behavioral_analysis(self, fs):
         client = MockZIAClient(fs)
         try:
-            behavioral_analysis = client.sandbox.get_behavioral_analysis()
+            behavioral_analysis = client.zia.sandbox.get_behavioral_analysis()
             assert behavioral_analysis, "Retrieving behavioral analysis failed."
         except Exception as exc:
             pytest.fail(f"Retrieving behavioral analysis failed: {exc}")
@@ -154,7 +154,7 @@ class TestSandbox:
             "c0202cf6aeab8437c638533d14563d35",
         ]
         try:
-            updated_list = client.sandbox.add_hash_to_custom_list(test_hashes)
+            updated_list = client.zia.sandbox.add_hash_to_custom_list(test_hashes)
             assert all(
                 hash in updated_list.file_hashes_to_be_blocked for hash in test_hashes
             ), "Adding hashes to custom list failed."

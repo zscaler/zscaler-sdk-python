@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 from pprint import pprint
@@ -27,59 +27,96 @@ def fs():
 
 class TestAccessPolicyBulkReorderRule:
     """
-    Integration Tests for the Rule Reorder
+    Integration Tests for the Access Policy Bulk Reorder Rules.
     """
 
     def test_bulk_reorder_access_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
-        created_rules = []
+        created_rules = []  # Store created rule objects
 
         try:
             # Step 1: Add 5 access rules with distinct names
-            for i in range(5):
-                rule_name = f"tests-{generate_random_string()}"
-                rule_description = f"tests-{generate_random_string()}"
-                response = client.policies.add_access_rule(name=rule_name, description=rule_description, action="allow")
-                created_rules.append(response)
-                pprint(response)
+            try:
+                for i in range(5):
+                    rule_name = f"tests-{generate_random_string()}"
+                    rule_description = f"tests-{generate_random_string()}"
+                    created_rule, _, err = client.zpa.policies.add_access_rule(
+                        name=rule_name,
+                        description=rule_description,
+                        action="allow"
+                    )
+                    assert err is None, f"Error creating access rule: {err}"
+                    assert created_rule is not None, "Created rule is None"
+                    created_rules.append(created_rule.as_dict())  # Store as dictionaries for consistency
+                    print(f"Created Rule: {created_rule.as_dict()}")
+            except Exception as exc:
+                errors.append(f"Failed to create access rules: {exc}")
 
-            # Step 2: List the created rules
-            all_rules = client.policies.list_rules(policy_type="access")
-            all_rule_ids = [rule.id for rule in all_rules]
-
-            # Identify the IDs of the newly created rules
-            created_rule_ids = [rule.id for rule in created_rules]
+            # Step 2: List all access rules
+            all_rule_ids = []
+            try:
+                all_rules, _, err = client.zpa.policies.list_rules(policy_type="access")
+                assert err is None, f"Error listing access rules: {err}"
+                assert all_rules is not None, "No rules returned from list_rules"
+                all_rules = [rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in all_rules]
+                all_rule_ids = [rule["id"] for rule in all_rules]
+                print(f"All Rules: {all_rules}")
+            except Exception as exc:
+                errors.append(f"Listing Access Rules failed: {exc}")
 
             # Step 3: Reverse the order of the created rules within the full list of rule IDs
-            reversed_rule_ids = created_rule_ids[::-1]
+            try:
+                created_rule_ids = [rule["id"] for rule in created_rules]
+                reversed_rule_ids = created_rule_ids[::-1]
 
-            # Step 4: Update the full list of rule IDs to reflect the reversed order of the newly created rules
-            for rule_id in created_rule_ids:
-                all_rule_ids.remove(rule_id)
+                # Update the full list of rule IDs to reflect the reversed order
+                for rule_id in created_rule_ids:
+                    if rule_id in all_rule_ids:
+                        all_rule_ids.remove(rule_id)
+                    else:
+                        raise ValueError(f"Rule ID {rule_id} not found in all_rule_ids.")
+                new_rule_order = reversed_rule_ids + all_rule_ids
+            except Exception as exc:
+                errors.append(f"Reversing rule order failed: {exc}")
 
-            new_rule_order = reversed_rule_ids + all_rule_ids
+            # Step 4: Bulk reorder the rules
+            try:
+                _, _, err = client.zpa.policies.bulk_reorder_rules(
+                    policy_type="access",
+                    rules_orders=new_rule_order
+                )
+                assert err is None, f"Error reordering access rules: {err}"
+                print(f"Rules reordered successfully: {reversed_rule_ids}")
+            except Exception as exc:
+                errors.append(f"Bulk reordering rules failed: {exc}")
 
-            # Step 5: Bulk reorder the rules
-            client.policies.bulk_reorder_rules(policy_type="access", rules_orders=new_rule_order)
+            # Step 5: Verify the order by listing the rules again
+            try:
+                reordered_rules, _, err = client.zpa.policies.list_rules(policy_type="access")
+                assert err is None, f"Error listing reordered rules: {err}"
+                reordered_rules = [
+                    rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in reordered_rules
+                ]
+                reordered_rule_ids = [rule["id"] for rule in reordered_rules]
 
-            # Verify the order by listing the rules again
-            reordered_rules = client.policies.list_rules(policy_type="access")
-            reordered_rule_ids = [rule.id for rule in reordered_rules]
-
-            # Check if the top N rule IDs match the reversed order of the created rules
-            assert reordered_rule_ids[:5] == reversed_rule_ids, "Rules were not reordered correctly"
-
-        except Exception as exc:
-            errors.append(f"Error during rule creation or reordering: {exc}")
+                # Validate if the top N rule IDs match the reversed order of the created rules
+                assert reordered_rule_ids[:5] == reversed_rule_ids, (
+                    "Rules were not reordered correctly"
+                )
+                print(f"Reordered Rules: {reordered_rules[:5]}")
+            except Exception as exc:
+                errors.append(f"Reordered rules validation failed: {exc}")
 
         finally:
-            # Clean up: delete the created rules
+            # Clean up: Delete the created rules
             for rule in created_rules:
                 try:
-                    client.policies.delete_rule(policy_type="access", rule_id=rule.id)
+                    _, _, err = client.zpa.policies.delete_rule(policy_type="access", rule_id=rule["id"])
+                    assert err is None, f"Error deleting rule {rule['id']}: {err}"
+                    print(f"Rule deleted successfully with ID: {rule['id']}")
                 except Exception as exc:
-                    errors.append(f"Deleting rule {rule.id} failed: {exc}")
+                    errors.append(f"Cleanup failed for rule ID {rule['id']}: {exc}")
 
             # Assert that no errors occurred during the process
-            assert len(errors) == 0, f"Errors occurred during the test: {errors}"
+            assert len(errors) == 0, f"Errors occurred during the bulk reorder test: {errors}"

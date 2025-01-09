@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -42,7 +42,7 @@ class TestFirewallRules:
                 # Prerequisite: Create a Destination IP Group
                 dst_group_name = "tests-" + generate_random_string()
                 dst_group_description = "tests-" + generate_random_string()
-                created_dst_group = client.firewall.add_ip_destination_group(
+                created_dst_group = client.zia.cloud_firewall_rules.add_ip_destination_group(
                     name=dst_group_name,
                     description=dst_group_description,
                     type="DSTN_IP",
@@ -56,7 +56,7 @@ class TestFirewallRules:
             try:
                 # Prerequisite: Create a Source IP Group
                 src_group_name = "tests-" + generate_random_string()
-                created_src_group = client.firewall.add_ip_source_group(
+                created_src_group = client.zia.cloud_firewall_rules.add_ip_source_group(
                     name=src_group_name,
                     description="Integration test source group",
                     ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
@@ -69,7 +69,7 @@ class TestFirewallRules:
             try:
                 # Create a Firewall Rule
                 rule_name = "tests-" + generate_random_string()
-                created_rule = client.firewall.add_rule(
+                created_rule = client.zia.cloud_firewall_rules.add_rule(
                     name=rule_name,
                     description="Integration test firewall rule",
                     state="ENABLED",
@@ -86,7 +86,7 @@ class TestFirewallRules:
 
             try:
                 # Verify the rule by retrieving it
-                retrieved_rule = client.firewall.get_rule(rule_id)
+                retrieved_rule = client.zia.cloud_firewall_rules.get_rule(rule_id)
                 assert retrieved_rule["id"] == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Firewall Rule failed: {exc}")
@@ -98,14 +98,14 @@ class TestFirewallRules:
                     rule_id,
                     description=updated_description,
                 )
-                updated_rule = client.firewall.get_rule(rule_id)
+                updated_rule = client.zia.cloud_firewall_rules.get_rule(rule_id)
                 assert updated_rule["description"] == updated_description, "Firewall Rule update failed"
             except Exception as exc:
                 errors.append(f"Updating Firewall Rule failed: {exc}")
 
             try:
                 # Retrieve the list of all rules
-                rules = client.firewall.list_rules()
+                rules = client.zia.cloud_firewall_rules.list_rules()
                 # Check if the newly created location is in the list of rules
                 found_rule = any(rule["id"] == rule_id for rule in rules)
                 assert found_rule, "Newly created rule not found in the list of rules."
@@ -117,20 +117,20 @@ class TestFirewallRules:
             try:
                 # Attempt to delete resources created during the test
                 if rule_id:
-                    delete_status = client.firewall.delete_rule(rule_id)
+                    delete_status = client.zia.cloud_firewall_rules.delete_rule(rule_id)
                     assert delete_status == 204, "Firewall Rule deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Firewall Rule failed: {exc}")
 
             try:
                 if dst_group_id:
-                    client.firewall.delete_ip_destination_group(dst_group_id)
+                    client.zia.cloud_firewall_rules.delete_ip_destination_group(dst_group_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Destination IP Group failed: {exc}")
 
             try:
                 if src_group_id:
-                    client.firewall.delete_ip_source_group(src_group_id)
+                    client.zia.cloud_firewall_rules.delete_ip_source_group(src_group_id)
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Source IP Group failed: {exc}")
 

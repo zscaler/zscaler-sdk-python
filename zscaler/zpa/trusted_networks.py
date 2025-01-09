@@ -1,56 +1,133 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.trusted_network import TrustedNetwork
+from zscaler.utils import format_url
 
 
-from box import Box, BoxList
-from requests import Response
+class TrustedNetworksAPI(APIClient):
+    """
+    A client object for the Trusted Networks resource.
+    """
 
-from zscaler.zpa.client import ZPAClient
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-
-class TrustedNetworksAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
-
-    def list_networks(self, **kwargs) -> BoxList:
+    def list_trusted_networks(self, query_params=None) -> tuple:
         """
         Returns a list of all configured trusted networks.
 
         Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+            max_items (int): The maximum number of items to request before stopping iteration.
+            max_pages (int): The maximum number of pages to request before stopping iteration.
+            pagesize (int): Specifies the page size. The default size is 20, but the maximum size is 500.
 
         Returns:
-            :obj:`BoxList`: A list of all configured trusted networks.
+            list: A list of `TrustedNetwork` instances.
 
-        Examples:
-            >>> for trusted_network in zpa.trusted_networks.list_networks():
-            ...    pprint(trusted_network)
-
+        Example:
+            >>> trusted_networks = zpa.trusted_networks.list_trusted_networks(search="example")
         """
-        list, _ = self.rest.get_paginated_data(path="/network", **kwargs, api_version="v2")
-        return list
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v2}
+            /network
+        """
+        )
 
-    def get_network_by_name(self, name: str, **kwargs) -> Box:
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Prepare request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, params=query_params)
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(TrustedNetwork(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_network(self, network_id: str) -> tuple:
+        """
+        Returns information on the specified trusted network.
+
+        Args:
+            network_id (str): The unique identifier for the trusted network.
+
+        Returns:
+            TrustedNetwork: The corresponding trusted network object.
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /network/{network_id}
+        """
+        )
+
+        # Prepare request body, headers, and form (if needed)
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, TrustedNetwork)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = TrustedNetwork(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_network_by_name(self, name: str, query_params=None):
         """
         Returns information on the trusted network with the specified name.
 
@@ -58,63 +135,34 @@ class TrustedNetworksAPI:
             name (str): The name of the trusted network.
 
         Returns:
-            :obj:`Box` or None: The resource record for the trusted network if found, otherwise None.
-
-        Examples:
-            >>> network = zpa.trusted_networks.get_network_by_name('example_name')
-            >>> if network:
-            ...     pprint(network)
-            ... else:
-            ...     print("Trusted Network not found")
-
+            TrustedNetwork or None: The resource record for the trusted network if found, otherwise None.
         """
-        networks = self.list_networks(**kwargs)
+        networks, response, error = self.list_trusted_networks(query_params=query_params)
+        if error:
+            return (None, response, error)
+
         for network in networks:
-            if network.get("name") == name:
-                return network
-        return None
+            if network.name == name:
+                return network, response, None
 
-    def get_network(self, network_id: str, **kwargs) -> Box:
-        """
-        Returns information on the specified trusted network.
+        return None, response, None
 
-        Args:
-            network_id (str):
-                The unique identifier for the trusted network.
-
-        Returns:
-            :obj:`Box`: The resource record for the trusted network.
-
-        Examples:
-            >>> pprint(zpa.trusted_networks.get_network('99999'))
-
-        """
-        response = self.rest.get("/network/%s" % (network_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
-
-    def get_network_udid(self, network_udid: str) -> Box:
+    def get_network_by_udid(self, search_id: str, query_params={}) -> tuple:
         """
         Returns a trusted network based on its 'network_id'.
 
         Args:
-            network_udid (str): The unique identifier for the network_id of the trusted network.
+            search_id (str): The unique identifier for the network_udid of the trusted network.
 
         Returns:
-            :obj:`Box`: The resource record for the trusted network, or None if not found.
-
-        Examples:
-            >>> network = zpa.trusted_networks.get_network_udid('9432db25-b80b-4b9a-b2e1-e30c67412593')
-            >>> if network:
-            ...     print("Network found:", network)
-            ... else:
-            ...     print("No network found with the given network_id")
+            TrustedNetwork: The resource record for the trusted network, or None if not found.
         """
-        networks = self.list_networks()
+        networks, response, error = self.list_trusted_networks(query_params=query_params)
+        if error:
+            return (None, response, error)
+
         for network in networks:
-            if network.get("network_id") == network_udid:
-                return network
-        return None
+            if network.network_id == search_id:  # Assuming `network_id` is the UDID field
+                return network, response, None  # Return the full TrustedNetwork object
+
+        return None, response, None

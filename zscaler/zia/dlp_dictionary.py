@@ -1,0 +1,420 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zia.models.dlp_dictionary import DLPDictionary, DLPPatternValidation
+from zscaler.utils import format_url, snake_to_camel
+
+
+class DLPDictionaryAPI(APIClient):
+    """
+    A Client object for the DLP Dictionary resource.
+    """
+
+    _zia_base_endpoint = "/zia/api/v1"
+
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+
+    def list_dicts(
+        self,
+        query_params=None,
+    ) -> tuple:
+        """
+        Returns a list of all custom and predefined ZIA DLP Dictionaries.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.page] {int}: Specifies the page offset.
+                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
+        Returns:
+            tuple: A tuple containing (list of DLPTemplates instances, Response, error)
+
+        Examples:
+            Print all dictionaries
+
+            >>> for dictionary in zia.dlp.list_dicts():
+            ...    pprint(dictionary)
+
+            Print dictionaries that match the name or description 'GDPR'
+
+            >>> pprint(zia.dlp.list_dicts('GDPR'))
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpDictionaries
+        """
+        )
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(DLPDictionary(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_dict(self, dict_id: int) -> tuple:
+        """
+        Returns the DLP Dictionary that matches the specified DLP Dictionary id.
+
+        Args:
+            dict_id (str): The unique id for the DLP Dictionary.
+
+        Returns:
+            :obj:`Box`: The ZIA DLP Dictionary resource record.
+
+        Examples:
+            >>> pprint(zia.dlp.get_dict('3'))
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpDictionaries/{dict_id}
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = DLPDictionary(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> tuple:
+        """
+        Add a new Patterns and Phrases DLP Dictionary to ZIA.
+
+        Args:
+            name (str): The name of the DLP Dictionary.
+            match_type (str): The DLP custom phrase/pattern match type. Accepted values are ``all`` or ``any``.
+
+        Keyword Args:
+            description (str): Additional information about the DLP Dictionary.
+            phrases (list):
+                A list of DLP phrases, with each phrase provided by a tuple following the convention
+                (`action`, `pattern`). Accepted actions are ``all`` or ``unique``. E.g.
+
+                .. code-block:: python
+
+                    ('all', 'TOP SECRET')
+                    ('unique', 'COMMERCIAL-IN-CONFIDENCE')
+
+            patterns (list):
+                A list of DLP patterns, with each pattern provided by a tuple following the convention
+                (`action`, `pattern`). Accepted actions are ``all`` or ``unique``. E.g.
+
+                .. code-block:: python
+
+                    ('all', '\d{2} \d{3} \d{3} \d{3}')
+                    ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
+
+        Returns:
+            :obj:`Box`: The newly created DLP Dictionary resource record.
+
+        Examples:
+            Match text found that contains an IPv4 address using patterns:
+
+            >>> zia.dlp.add_dict(name='IPv4 Addresses',
+            ...                description='Matches IPv4 address pattern.',
+            ...                match_type='all',
+            ...                patterns=[
+            ...                    ('all', '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/(\d|[1-2]\d|3[0-2]))?')
+            ...                ]))
+
+            Match text found that contains government document caveats using phrases.
+
+            >>> zia.dlp.add_dict(name='Gov Document Caveats',
+            ...                description='Matches government classification caveats.',
+            ...                match_type='any',
+            ...                phrases=[
+            ...                    ('all', 'TOP SECRET'),
+            ...                    ('all', 'SECRET'),
+            ...                    ('all', 'CONFIDENTIAL')
+            ...                ]))
+
+            Match text found that meets the criteria for a Secret Project's document markings using phrases and
+            patterns:
+
+            >>> zia.dlp.add_dict(name='Secret Project Documents',
+            ...                description='Matches documents created for the Secret Project.',
+            ...                match_type='any',
+            ...                phrases=[
+            ...                    ('all', 'Project Umbrella'),
+            ...                    ('all', 'UMBRELLA')
+            ...                ],
+            ...                patterns=[
+            ...                    ('unique', '\d{1,2}-\d{1,2}-[A-Z]{5}')
+            ...                ]))
+
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}/dlpDictionaries
+        """)
+
+        payload = {
+            "name": name,
+            "customPhraseMatchType": custom_phrase_match_type,
+            "dictionaryType": dictionary_type,
+        }
+
+        # Process additional keyword arguments
+        for key, value in kwargs.items():
+            # Convert the key to camelCase and assign the value
+            camel_key = snake_to_camel(key)
+            payload[camel_key] = value
+
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, DLPDictionary)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = DLPDictionary(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def update_dict(self, dict_id: int, **kwargs) -> tuple:
+        """
+        Updates the specified DLP Dictionary.
+
+        Args:
+            dict_id (str): The unique id of the DLP Dictionary.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            description (str): Additional information about the DLP Dictionary.
+            match_type (str): The DLP custom phrase/pattern match type. Accepted values are ``all`` or ``any``.
+            name (str): The name of the DLP Dictionary.
+            phrases (list):
+                A list of DLP phrases, with each phrase provided by a tuple following the convention
+                (`action`, `pattern`). Accepted actions are ``all`` or ``unique``. E.g.
+
+                .. code-block:: python
+
+                    ('all', 'TOP SECRET')
+                    ('unique', 'COMMERCIAL-IN-CONFIDENCE')
+
+            patterns (list):
+                A list of DLP pattersn, with each pattern provided by a tuple following the convention
+                (`action`, `pattern`). Accepted actions are ``all`` or ``unique``. E.g.
+
+                .. code-block:: python
+
+                    ('all', '\d{2} \d{3} \d{3} \d{3}')
+                    ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
+
+        Returns:
+            tuple: The updated DLP Dictionary resource record.
+
+        Examples:
+            Update the name of a DLP Dictionary:
+
+            >>> zia.dlp.update_dict('3',
+            ...                name='IPv4 and IPv6 Addresses')
+
+            Update the description and phrases for a DLP Dictionary.
+
+            >>> zia.dlp.update_dict('4',
+            ...        description='Updated government caveats.'
+            ...        phrases=[
+            ...                    ('all', 'TOP SECRET'),
+            ...                    ('all', 'SECRET'),
+            ...                    ('all', 'PROTECTED')
+            ...                ])
+
+        """
+        http_method = "put".upper()
+        api_url = format_url(f"{self._zia_base_endpoint}/dlpDictionaries/{dict_id}")
+
+        # Construct the payload using the provided kwargs
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+
+        # Create and send the request
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, DLPDictionary)
+        if error:
+            return (None, response, error)
+
+        try:
+            # Parse and return the updated object from the API response
+            result = DLPDictionary(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_dict(self, dict_id: str) -> tuple:
+        """
+        Deletes the DLP Dictionary that matches the specified DLP Dictionary id.
+
+        Args:
+            dict_id (str): The unique id for the DLP Dictionary.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.dlp.delete_dict('8')
+
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}/dlpDictionaries/{dict_id}
+            """
+        )
+
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def validate_dict(self, pattern: str) -> tuple:
+        """
+        Validates the provided pattern for usage in a DLP Dictionary.
+
+        Note: The ZIA API documentation doesn't provide information on how to structure a request for this API endpoint.
+        This endpoint is returning a valid response but validation isn't failing for obvious wrong patterns. Use at
+        own risk.
+
+        Args:
+            pattern (str): DLP Pattern for evaluation.
+
+        Returns:
+            tuple: A tuple containing the validation result (DLPPatternValidation instance), response, and error.
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"{self._zia_base_endpoint}/dlpDictionaries/validateDlpPattern")
+
+        # Construct the payload
+        payload = {"data": pattern}
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request, DLPPatternValidation)
+        if error:
+            return (None, response, error)
+
+        try:
+            # Parse the response into the DLPPatternValidation model
+            result = DLPPatternValidation(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_dict_predefined_identifiers(self, dict_name: str) -> tuple:
+        """
+        Returns a list of predefined identifiers for a specific DLP dictionary by its name.
+
+        Args:
+            dict_name (str): The name of the predefined DLP dictionary. Supported Predefined Identifiers are:
+                `ASPP_LEAKAGE`, `CRED_LEAKAGE`, `EUIBAN_LEAKAGE`, `PPEU_LEAKAGE`, `USDL_LEAKAGE`
+
+        Returns:
+            tuple: A tuple containing (list of predefined identifiers, Response, error)
+        Examples:
+            List predefined identifiers for the 'USDL_LEAKAGE' dictionary
+
+            >>> pprint(zia.dlp.list_dict_predefined_identifiers('USDL_LEAKAGE'))
+
+        """
+        # Search for dictionaries
+        dictionaries, response, error = self.list_dicts()
+        if error:
+            return (None, response, error)
+
+        # Find the dictionary with the exact name match
+        dictionary = next((d for d in dictionaries if d.name == dict_name), None)
+        if not dictionary:
+            return (None, response, ValueError(f"No dictionary found with the name: {dict_name}"))
+
+        dict_id = dictionary.id
+
+        http_method = "get".upper()
+        api_url = f"{self._zia_base_endpoint}/dlpDictionaries/{dict_id}/predefinedIdentifiers"
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, DLPDictionary)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

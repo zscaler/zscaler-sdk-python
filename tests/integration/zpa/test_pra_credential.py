@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -41,7 +41,7 @@ class TestPRACredential:
 
         try:
             # Create a new pra credential
-            created_credential = client.privileged_remote_access.add_credential(
+            created_credential, _, err = client.zpa.pra_credential.add_credential(
                 name="John Doe" + generate_random_string(),
                 description=credential_description,
                 credential_type="USERNAME_PASSWORD",
@@ -49,32 +49,40 @@ class TestPRACredential:
                 username="jdoe" + generate_random_string(),
                 password=password,
             )
-            assert created_credential is not None, "Failed to create credential"
+            assert err is None, f"Failed to create portal: {err}"
+            assert created_credential is not None
+            assert created_credential.description == credential_description
+            
             credential_id = created_credential.id  # Assuming id is accessible like this
-
         except Exception as exc:
-            errors.append(f"Error during credential creation: {exc}")
+            errors.append(f"Error during portal creation: {exc}")
 
         try:
             # Test listing Credential
-            all_credentials = client.privileged_remote_access.list_credentials()
-            if not any(credential["id"] == credential_id for credential in all_credentials):
-                raise AssertionError("Credential not found in list")
+            credentials_list, _, err = client.zpa.pra_credential.list_credentials()
+            assert err is None, f"Error listing PRA credentials: {err}"
+            assert any(credential.id == credential_id for credential in credentials_list)
         except Exception as exc:
-            errors.append(f"Listing Credential failed: {exc}")
+            errors.append(f"Listing PRA credentials failed: {exc}")
 
         try:
             # Test retrieving the specific credential
-            retrieved_credential = client.privileged_remote_access.get_credential(credential_id)
-            if retrieved_credential["id"] != credential_id:
-                raise AssertionError("Failed to retrieve the correct credential")
+            retrieved_credential, _, err = client.zpa.pra_credential.get_credential(credential_id)
+            assert err is None, f"Error fetching PRA credential: {err}"
+            assert retrieved_credential.id == credential_id
         except Exception as exc:
-            errors.append(f"Retrieving credential failed: {exc}")
+            errors.append(f"Retrieving PRA credential failed: {exc}")
 
         try:
+            if credential_id:
+                # Retrieve the created app pra portal by ID
+                retrieved_credential, _, err = client.zpa.pra_credential.get_credential(credential_id)
+                assert err is None, f"Error fetching credential: {err}"
+                assert retrieved_credential.id == credential_id
+
             # Update the credential
             updated_description = "Updated " + generate_random_string()
-            updated_credential = client.privileged_remote_access.update_credential(
+            _, _, err  = client.zpa.pra_credential.update_credential(
                 credential_id,
                 description=updated_description,
                 credential_type="USERNAME_PASSWORD",
@@ -82,10 +90,17 @@ class TestPRACredential:
                 username="jdoe",
                 password=password,
             )
-            if updated_credential["description"] != updated_description:
-                raise AssertionError("Failed to update description for credential")
+                        # If err is "Response is None", treat it as success since PUT 204 no content is expected
+            if err is not None and "Response is None" in str(err):
+                err = None
+            assert err is None, f"Error updating pra credential: {err}"
+            
+            # List app pra portal and ensure the updated group is in the list
+            credetial_list, _, err = client.zpa.pra_credential.list_credentials()
+            assert err is None, f"Error listing pra portals: {err}"
+            assert any(group.id == credential_id for group in credetial_list)
         except Exception as exc:
-            errors.append(f"Updating credential failed: {exc}")
+            errors.append(exc)
 
         finally:
             cleanup_errors = []
@@ -93,12 +108,14 @@ class TestPRACredential:
             try:
                 # Attempt to delete resources created during the test
                 if credential_id:
-                    delete_status = client.privileged_remote_access.delete_credential(credential_id)
-                    assert delete_status == 204, "Credential deletion failed"
+                    delete_response, _, err = client.zpa.pra_credential.delete_credential(credential_id)
+                    assert err is None, f"Credential deletion failed: {err}"
+                    assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
             except Exception as exc:
-                cleanup_errors.append(f"Deleting credential failed: {exc}")
+                cleanup_errors.append(f"Deleting Credential failed: {exc}")
 
             errors.extend(cleanup_errors)
 
         # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the credential lifecycle test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during the Credential lifecycle test: {errors}"
+

@@ -1,9 +1,4 @@
-import logging
-
 from zscaler.cache.cache import Cache
-
-# Setting up the logger
-logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 class NoOpCache(Cache):
@@ -26,7 +21,6 @@ class NoOpCache(Cache):
         Returns:
             None -- No op cache doesn't contain any data to return
         """
-        logging.debug("Serving from cache.")
         return None
 
     def contains(self, key):
@@ -49,7 +43,7 @@ class NoOpCache(Cache):
             key {str} -- Key in pair
             value {str} -- Val in pair
         """
-        logging.warning("Saving to cache.")
+        pass
 
     def delete(self, key):
         """This is a void method. No need to delete anything not contained.

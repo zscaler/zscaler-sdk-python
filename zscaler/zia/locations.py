@@ -1,34 +1,47 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zia.models.location_management import LocationManagement
+from zscaler.zia.models.location_group import LocationGroup
+from zscaler.utils import format_url
 
 
-from box import Box, BoxList
-from requests import Response
+class LocationsAPI(APIClient):
+    """
+    A Client object for the Locations resource.
+    """
 
-from zscaler.utils import snake_to_camel
-from zscaler.zia import ZIAClient
+    _zia_base_endpoint = "/zia/api/v1"
 
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
 
-class LocationsAPI:
-    def __init__(self, client: ZIAClient):
-        self.rest = client
-
-    def list_locations(self, **kwargs) -> BoxList:
+    def list_locations(self, query_params=None) -> tuple:
         """
         Returns a list of locations.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Keyword Args:
             **auth_required (bool, optional):
@@ -43,9 +56,11 @@ class LocationsAPI:
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to partially match against a location's name and port attributes.
+            **xff_enabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
-            :obj:`BoxList`: List of configured locations.
+            tuple: List of configured locations.
 
         Examples:
             List locations using default settings:
@@ -64,42 +79,91 @@ class LocationsAPI:
             ...    print(location)
 
         """
-        list, _ = self.rest.get_paginated_data(path="/locations", **kwargs)
-        return list
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations
+        """
+        )
 
-    def get_location(self, location_id: str = None, location_name: str = None) -> Box:
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationManagement(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_location(self, location_id: int) -> tuple:
         """
         Returns information for the specified location based on the location id or location name.
 
         Args:
-            location_id (str, optional):
-                The unique identifier for the location.
-            location_name (str, optional):
-                The unique name for the location.
+            location_id (int): The unique identifier for the location.
 
         Returns:
-            :obj:`Box`: The requested location resource record.
+           tuple: A tuple containing (Location instance, Response, error).
 
         Examples:
             >>> location = zia.locations.get_location('97456691')
 
             >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
-        if location_id and location_name:
-            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
-        elif location_name:
-            location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
-            return next(location, None)
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/{location_id}
+        """
+        )
 
-        return self.rest.get(f"locations/{location_id}")
+        body = {}
+        headers = {}
 
-    def add_location(self, name: str, **kwargs) -> Box:
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, LocationManagement)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = LocationManagement(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_location(self, location) -> tuple:
         """
         Adds a new location.
 
         Args:
-            name (str):
-                Location name.
+            location (dict or object):
+                The label data to be sent in the request.
 
         Keyword Args:
             parent_id (int, optional):
@@ -187,10 +251,9 @@ class LocationsAPI:
             description (str, optional):
                 Additional notes or information regarding the location or sub-location. The description cannot
                 exceed 1024 characters.
-            static_location_groups (list): IDs for static location groups.
 
         Returns:
-            :obj:`Box`: The newly created location resource record
+            :obj:`tuple`: The newly created location resource record
 
         Examples:
             Add a new location with an IP address.
@@ -204,105 +267,43 @@ class LocationsAPI:
             ...    vpn_credentials=[{'id': '99999', 'type': 'UFQDN'}])
 
         """
-        payload = {
-            "name": name,
-        }
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
-        response = self.rest.post("locations", json=payload)
-        if isinstance(response, Response):
-            # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
-
-    def list_sub_locations(self, location_id: str, **kwargs) -> BoxList:
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations
         """
-        Returns sub-location information for the specified location ID.
+        )
 
-        Args:
-            location_id (str):
-                The unique identifier for the parent location.
-            **kwargs:
-                Optional keyword args.
+        # Ensure the label is in dictionary format
+        if isinstance(location, dict):
+            body = location
+        else:
+            body = location.as_dict()
 
-        Keyword Args:
-            **auth_required (bool, optional):
-                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
-            **bw_enforced (bool, optional):
-                Filter based on whether Bandwith Control is being enforced for a location.
-            **enable_firewall (bool, optional):
-                Filter based on whether Enable Firewall setting is enabled or disabled for a sub-location.
-            **enforce_aup (bool, optional):
-                Filter based on whether Enforce AUP setting is enabled or disabled for a sub-location.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
-            **search (str, optional):
-                The search string used to partially match against a location's name and port attributes.
-            **xff_enabled (bool, optional):
-                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+        # Create the request with no empty param handling logic
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        Returns:
-            :obj:`BoxList`: A list of sub-locations configured for the parent location.
+        if error:
+            return (None, None, error)
 
-        Examples:
-            >>> for sub_location in zia.locations.list_sub_locations('97456691'):
-            ...    pprint(sub_location)
+        # Execute the request
+        response, error = self._request_executor.execute(request, LocationManagement)
 
-        """
-        list, _ = self.rest.get_paginated_data(path=f"/locations/{location_id}/sublocations", **kwargs)
-        return list
+        if error:
+            return (None, response, error)
 
-    def list_locations_lite(self, **kwargs) -> BoxList:
-        """
-        Returns only the name and ID of all configured locations.
+        try:
+            result = LocationManagement(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-        Keyword Args:
-            **include_parent_locations (bool, optional):
-                Only locations with sub-locations will be included in the response if `True`.
-            **include_sub_locations (bool, optional):
-                Sub-locations will be included in the response if `True`.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
-            **search (str, optional):
-                The search string used to partially match against a location's name and port attributes.
-
-        Returns:
-            :obj:`BoxList`: A list of configured locations.
-
-        Examples:
-            List locations with default settings:
-
-            >>> for location in zia.locations.list_locations_lite():
-            ...    print(location)
-
-            List locations, limiting to a maximum of 10 items:
-
-            >>> for location in zia.locations.list_locations_lite(max_items=10):
-            ...    print(location)
-
-            List locations, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
-            ...    print(location)
-
-        """
-        list, _ = self.rest.get_paginated_data(path="/locations/lite", **kwargs)
-        return list
-
-    def update_location(self, location_id: str, **kwargs) -> Box:
+    def update_location(self, location_id: int, location) -> tuple:
         """
         Update the specified location.
 
@@ -402,7 +403,7 @@ class LocationsAPI:
                 1024 characters.
 
         Returns:
-            :obj:`Box`: The updated resource record.
+            :obj:`tuple`: The updated resource record.
 
         Examples:
             Update the name of a location:
@@ -421,31 +422,43 @@ class LocationsAPI:
             ...    vpn_credentials=[{'id': '88888', 'type': 'UFQDN'}])
 
         """
-        # Set payload to value of existing record
-        payload = {snake_to_camel(k): v for k, v in self.get_location(location_id).items()}
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/{location_id}
+        """
+        )
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        # If label is already a dictionary, use it, otherwise convert the label object to a dictionary
+        if isinstance(location, dict):
+            body = location
+        else:
+            body = location.as_dict()
 
-        # Fixes edge case where the sublocation object is missing displayTimeUnit, which will result in a 500 error.
-        if not payload.get("displayTimeUnit"):
-            payload["displayTimeUnit"] = "MINUTE"
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
 
-        response = self.rest.put(f"locations/{location_id}", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+        # Execute the request
+        response, error = self._request_executor.execute(request, LocationManagement)
+        if error:
+            return (None, response, error)
 
-        # Return the updated object
-        return self.get_location(location_id)
+        # Parse the response into a RuleLabels instance
+        try:
+            result = LocationManagement(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def delete_location(self, location_id: str) -> int:
+    def delete_location(self, location_id: int) -> tuple:
         """
         Deletes the location or sub-location for the specified ID
 
         Args:
-            location_id (str):
+            location_id (int):
                 The unique identifier for the location or sub-location.
 
         Returns:
@@ -455,9 +468,26 @@ class LocationsAPI:
             >>> zia.locations.delete_location('97456691')
 
         """
-        return self.rest.delete(f"locations/{location_id}").status_code
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/{location_id}
+        """
+        )
 
-    def bulk_delete_locations(self, location_ids: list, **kwargs) -> int:
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+        return (None, response, None)
+
+    def bulk_delete_locations(self, location_ids: list) -> tuple:
         """
         Deletes all specified Location Management from ZIA.
 
@@ -471,26 +501,195 @@ class LocationsAPI:
             >>> zia.locations.bulk_delete_locations(['111111', '222222', '333333'])
 
         """
-        payload = {"ids": location_ids}
-        response = self.rest.post("locations/bulkDelete", json=payload).status_code
-        if isinstance(response, Response):
-            status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/bulkDelete
+        """
+        )
 
-    def list_location_groups(self, **kwargs) -> BoxList:
+        payload = {"ids": location_ids}
+
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        return (response.get_body(), response, None)
+
+    def list_sub_locations(self, location_id: int, query_params: dict = None) -> tuple:
+        """
+        Returns sub-location information for the specified location ID.
+
+        Args:
+
+            location_id (int): The unique identifier for the parent location.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
+
+        Keyword Args:
+            **auth_required (bool, optional):
+                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
+            **bw_enforced (bool, optional):
+                Filter based on whether Bandwith Control is being enforced for a location.
+            **enable_firewall (bool, optional):
+                Filter based on whether Enable Firewall setting is enabled or disabled for a sub-location.
+            **enforce_aup (bool, optional):
+                Filter based on whether Enforce AUP setting is enabled or disabled for a sub-location.
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
+            **xff_enabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+
+        Returns:
+            :obj:`BoxList`: A list of sub-locations configured for the parent location.
+
+        Examples:
+            >>> for sub_location in zia.locations.list_sub_locations('97456691'):
+            ...    pprint(sub_location)
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/{location_id}/sublocations
+        """
+        )
+
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationManagement(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_locations_lite(self, query_params=None) -> tuple:
+        """
+        Returns only the name and ID of all configured locations.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
+        Keyword Args:
+            **include_parent_locations (bool, optional):
+                Only locations with sub-locations will be included in the response if `True`.
+            **include_sub_locations (bool, optional):
+                Sub-locations will be included in the response if `True`.
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
+
+        Returns:
+            :obj:`BoxList`: A list of configured locations.
+
+        Examples:
+            List locations with default settings:
+
+            >>> for location in zia.locations.list_locations_lite():
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_locations_lite(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
+            ...    print(location)
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/lite
+        """
+        )
+
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationManagement(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_location_groups(self, query_params=None) -> tuple:
         """
         Return a list of location groups in ZIA.
 
         Args:
-            **kwargs: Optional keyword args.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Keyword Args:
-            name (str): The location group's name.
-            comments (str): Additional comments or information about the location group.
-            groupType (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
-            location_id (int): The unique identifier for a location within a location group.
-            last_mod_user (str): The admin who modified the location group last.
+            groupType (str): The location group's type (i.e., Static or Dynamic).
 
         Returns:
             :obj:`BoxList`: A list of location group resource records.
@@ -499,26 +698,41 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups()
         """
-        list, _ = self.rest.get_paginated_data(path="/locations/groups", **kwargs)
-        return list
-
-    def get_location_group_by_id(self, group_id: int) -> Box:
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/groups
         """
-        Return a specific location group by ID in ZIA.
+        )
 
-        Args:
-            group_id (int): The ID of the location group.
+        query_params = query_params or {}
 
-        Returns:
-            :obj:`Box`: A location group resource record.
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-        Examples:
-            Get a specific location group by its ID:
-            >>> location = zia.locations.get_location_group_by_id(24326827)
-        """
-        return self.rest.get(f"locations/groups/{group_id}")
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-    def list_location_groups_lite(self, page: int = 1, page_size: int = 100) -> BoxList:
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_location_groups_lite(self, query_params=None) -> tuple:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
 
@@ -526,7 +740,7 @@ class LocationsAPI:
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            groupType (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
+            groupType (str): The location group's type (i.e., Static or Dynamic).
 
         Returns:
             :obj:`BoxList`: A list of location group resource records.
@@ -535,34 +749,54 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups_lite()
         """
-        params = {"page": page, "pageSize": page_size}
-        return self.rest.get("locations/groups/lite", params=params)
-
-    def get_location_group_lite_by_id(self, group_id: int) -> Box:
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/groups/lite
         """
-        Return specific location groups (lite version) by their ID where only name and ID is returned in ZIA.
+        )
 
-        Args:
-            group_id (int): The ID of the location group.
+        query_params = query_params or {}
 
-        Returns:
-            :obj:`Box`: A location group resource record.
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-        Examples:
-            Get a specific location group by its ID:
-            >>> location = zia.locations.get_location_group_lite_by_id(24326827)
-        """
-        return self.rest.get(f"locations/groups/lite/{group_id}")
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
-    def list_location_groups_count(self, **kwargs) -> BoxList:
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_location_groups_count(self, query_params=None) -> tuple:
         """
         Returns a list of location groups for your organization.
 
         Args:
-            **kwargs: Optional keyword args.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.search] {str}: Search string for filtering results.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
 
         Keyword Args:
-            group_type (str): The location group's type (i.e., STATIC_GROUP or DYNAMIC_GROUP).
+            group_type (str): The location group's type (i.e., Static or Dynamic).
             last_mod_user (str): The admin who modified the location group last.
             version (int): The version parameter is for Zscaler internal use only. Used by the service for backup operations.
             name (str): The location group's name.
@@ -574,30 +808,54 @@ class LocationsAPI:
 
         Examples:
             Gets the list of location groups for your organization:
-            >>> location = zia.locations.list_location_groups_count(group_type='STATIC_GROUP', name='Corporate')
+            >>> location = zia.locations.list_location_groups_count(group_type='Static', name='Corporate')
         """
-        params = {}
-        optional_params = ["group_type", "last_mod_user", "version", "name", "comments", "location_id"]
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/groups/count
+        """
+        )
 
-        for key in optional_params:
-            if key in kwargs:
-                params[key] = kwargs[key]
+        query_params = query_params or {}
 
-        response = self.rest.get("locations/groups/count", params=params)
-        return int(response.text)
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-    def list_region_geo_coordinates(self, latitude: int, longitude: int) -> Box:
+        # Create the request
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(LocationGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> tuple:
         """
         Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
         coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
         state, etc.
 
         Args:
-            latitude (int): The latitude of the location.
-            longitude (int): The longitude of the location.
+            latitude (float): The latitude of the location.
+            longitude (float): The longitude of the location.
 
         Returns:
-            :obj:`Box`: The geographical data of the region or city that is located in the specified coordinates.
+            :obj:`tuple`: The geographical data of the region or city that is located in the specified coordinates.
 
         Examples:
             Get the geographical data of the region or city that is located in the specified coordinates::
@@ -605,10 +863,48 @@ class LocationsAPI:
                 print(zia.locations.get_geo_by_coordinates(37.3860517, -122.0838511))
 
         """
-        payload = {"latitude": latitude, "longitude": longitude}
-        return self.rest.get("region/byGeoCoordinates", params=payload)
+        # Validate that both latitude and longitude are provided
+        if latitude is None or longitude is None:
+            return (None, None, ValueError("Both latitude and longitude must be provided"))
 
-    def get_geo_by_ip(self, ip: str) -> Box:
+        # Define the HTTP method and API endpoint
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /region/byGeoCoordinates
+        """
+        )
+
+        # Build query parameters with latitude and longitude
+        query_params = {"latitude": latitude, "longitude": longitude}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = self.form_response_body(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_geo_by_ip(self, ip: str) -> tuple:
         """
         Retrieves the geographical data of the region or city that is located in the specified IP address. The
         geographical data includes the city name, state, country, geographical ID of the city and state, etc.
@@ -617,42 +913,114 @@ class LocationsAPI:
             ip (str): The IP address of the location.
 
         Returns:
-            :obj:`Box`: The geographical data of the region or city that is located in the specified IP address.
+            :obj:`tuple`: The geographical data of the region or city that is located in the specified IP address.
 
         Examples:
             Get the geographical data of the region or city that is located in the specified IP address::
 
-                print(zia.locations.get_geo_by_ip("8.8.8.8")
+                print(zia.locations.get_geo_by_ip("8.8.8.8"))
         """
-        return self.rest.get(f"region/byIPAddress/{ip}")
+        # Validate that IP is provided
+        if not ip:
+            return (None, None, ValueError("IP address must be provided"))
 
-    def list_cities_by_name(self, **kwargs) -> BoxList:
+        # Define the HTTP method and API endpoint
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /region/byIPAddress/{ip}
+        """
+        )
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method, endpoint=api_url, body=body, headers=headers
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = self.form_response_body(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def list_cities_by_name(self, query_params=None) -> tuple:
         """
         Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
         data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
         country, postal code, etc.
 
         Args:
-            **kwargs: Optional keyword arguments including 'prefix', 'page', and 'page_size'.
-
-        Keyword Args:
-            prefix (str): The prefix string to search for cities.
-            page (int): The page number of the results.
-            page_size (int): The number of results per page.
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.page] {int}: Specifies the page offset.
+                [query_params.pagesize] {int}: Page size for pagination.
+                [query_params.prefix] {str}: The string used in the prefix search of the city or region. It can contain names of city, state, country in the following format: city name, state name, country name.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Returns:
-            :obj:`BoxList`: The list of cities (along with their geographical data) that match the prefix search.
+            :obj:`tuple`: A list of dictionaries containing the cities' geographical data and the raw response.
 
         Examples:
             Get the list of cities (along with their geographical data) that match the prefix search::
 
-                for city in zia.locations.list_cities_by_name(prefix="San Jose"):
-                    print(city)
+                result, response, error = zia.locations.list_cities_by_name(query_params={"prefix": "San Jose"})
+                if not error:
+                    for city in result:
+                        print(city)
 
         Notes:
             Very broad or generic search terms may return a large number of results which can take a long time to be
             returned. Ensure you narrow your search result as much as possible to avoid this.
 
         """
-        list, _ = self.rest.get_paginated_data(path="/region/search", **kwargs)
-        return list
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /region/search
+        """
+        )
+
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method, endpoint=api_url, body=body, headers=headers, params=query_params
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                # Directly append the dictionary response as we are moving to a dictionary-based approach
+                result.append(self.form_response_body(item))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

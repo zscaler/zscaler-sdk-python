@@ -37,6 +37,7 @@ class ZscalerCache(Cache):
             str -- Corresponding value to given key
             None -- Unable to find value for this key
         """
+        logger.debug(f'Attempting to retrieve key "{key}" from cache.')
         # Get current time
         now = self._get_current_time()
         # Check if key is in cache and valid
@@ -46,12 +47,12 @@ class ZscalerCache(Cache):
             entry["tti"] = now + self._time_to_idle
             # Return desired value and update cache
             self._clean_cache()
-            logger.info(f'Got value from cache for key "{key}".')
             logger.debug(f'Cached value for key {key}: {entry["value"]}')
             return entry["value"]
 
         # Return None if key isn't in cache and update cache
         self._clean_cache()
+        logger.warning(f'Key "{key}" not found in cache.')
         return None
 
     def contains(self, key):
@@ -74,7 +75,10 @@ class ZscalerCache(Cache):
             key {str} -- Key in pair
             value {tuple} -- Tuple of response and response body
         """
-        if type(key) == str and (type(value) != list or type(value[1]) != list):
+        logger.debug(f'Attempting to add key "{key}" to cache with value: {value}.')
+        # Update cache
+        self._clean_cache()
+        if isinstance(key, str) and (not isinstance(value, list) or not isinstance(value[1], list)):
             # Get current time
             now = self._get_current_time()
 
@@ -84,10 +88,10 @@ class ZscalerCache(Cache):
                 "tti": now + self._time_to_idle,
                 "ttl": now + self._time_to_live,
             }
-            logger.info(f'Added to cache value for key "{key}".')
+            logger.info(f'Successfully added key "{key}" to cache.')
             logger.debug(f"Cached value for key {key}: {value}.")
-        # Update cache
-        self._clean_cache()
+        else:
+            logger.error(f'Failed to add key "{key}" to cache. Invalid key or value type.')
 
     def delete(self, key):
         """
@@ -96,12 +100,14 @@ class ZscalerCache(Cache):
         Arguments:
             key {str} -- Desired key
         """
-        logger.info(f'Removing value from cache for key "{key}".')
+        logger.debug(f'Attempting to delete key "{key}" from cache.')
         # Make sure key is in cache
         if key in self._store:
             # Delete entry
             del self._store[key]
-            logger.info(f'Removed value from cache for key "{key}".')
+            logger.info(f'Successfully deleted key "{key}" from cache.')
+        else:
+            logger.warning(f'Key "{key}" not found in cache. Nothing to delete.')
         url_object = urlparse(key)
         base_url = f"{url_object.netloc}{url_object.path}"
         for other_key in self._store.keys():
@@ -115,13 +121,15 @@ class ZscalerCache(Cache):
         """
         Clear the cache.
         """
-        logger.info("Clearing the entire cache.")
+        logger.debug("Attempting to clear the entire cache.")
         self._store.clear()
+        logger.info("Cache cleared successfully.")
 
     def _clean_cache(self):
         """
         Updates cache by removing expired entries at time of call
         """
+        logger.debug("Cleaning cache by removing expired entries.")
         expired = []
         # Check every entry
         for key in self._store.keys():
@@ -131,6 +139,10 @@ class ZscalerCache(Cache):
         # Delete keys
         for expired_key in expired:
             self.delete(expired_key)
+        if expired:
+            logger.info(f"Removed expired keys from cache: {expired}")
+        else:
+            logger.debug("No expired entries found during cache cleaning.")
 
     def _is_valid_entry(self, entry):
         """

@@ -25,6 +25,8 @@ import re
 import time
 from typing import Dict, Optional
 from urllib.parse import urlencode
+from urllib.parse import urlsplit, urlunsplit
+from datetime import datetime as dt
 
 import pytz
 from box import Box, BoxList
@@ -32,9 +34,9 @@ from dateutil import parser
 from requests import Response
 from restfly import APIIterator
 
-from zscaler.constants import RETRYABLE_STATUS_CODES
+from zscaler.constants import RETRYABLE_STATUS_CODES, DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR
 
-logger = logging.getLogger("zscaler-sdk-python")
+logger = logging.getLogger(__name__)
 
 
 # Recursive function to convert all keys and nested keys from camel case
@@ -199,7 +201,6 @@ def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
 def transform_clientless_apps(clientless_app_ids):
     transformed_apps = []
     for app in clientless_app_ids:
-        # Transform each attribute in app as needed by your API
         transformed_apps.append(
             {
                 "name": app["name"],
@@ -725,6 +726,53 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     return start_epoch, end_epoch
 
 
+def convert_date_time_to_seconds(date_time):
+    """
+    Takes in a date time string and returns the number of seconds
+    since the epoch (Unix timestamp).
+
+    Args:
+        date_time (str): Date time string in the datetime format
+
+    Returns:
+        float: Number of seconds since the epoch
+    """
+    dt_obj = dt.strptime(date_time, DATETIME_FORMAT)
+    return float((dt_obj - dt(EPOCH_YEAR, EPOCH_MONTH, EPOCH_DAY)).total_seconds())
+
+
+def format_url(base_string):
+    """
+    Turns multiline strings in generated clients into
+    simple one-line string
+
+    Args:
+        base_string (str): multiline URL
+
+    Returns:
+        str: single line URL
+    """
+    return "".join([line.strip() for line in base_string.splitlines()])
+
+
+def convert_absolute_url_into_relative_url(absolute_url):
+    """
+    Converts absolute url into relative url.
+
+    Args:
+        absolute_url (str): URL
+
+    Returns:
+        str: URL
+
+    Example:
+        >>> convert_absolute_url_into_relative_url('https://test.okta.com/api/v1/users')
+        '/api/v1/users'
+    """
+    url_parts = urlsplit(absolute_url)
+    return urlunsplit(("", "", url_parts[2], url_parts[3], url_parts[4]))
+
+
 # Maps ZCC numeric os_type and registration_type arguments to a human-readable string
 zcc_param_map = {
     "os": {
@@ -743,67 +791,3 @@ zcc_param_map = {
         "quarantined": 6,
     },
 }
-
-
-def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
-    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
-    # Log the request details before sending the request
-    request_data = {
-        "url": url,
-        "method": method,
-        "params": jsonp.dumps(params),
-        "uuid": str(request_uuid),
-        "request_headers": jsonp.dumps(request_headers_filtered),
-    }
-    log_lines = []
-    request_body = ""
-    if body:
-        request_body = jsonp.dumps(json)
-    log_lines.append(f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------")
-    log_lines.append(f"{method} {url}")
-    for key, value in headers.items():
-        log_lines.append(f"{key}: {value}")
-    if body and request_body != "" and request_body != "null":
-        log_lines.append(f"\n{request_body}")
-    log_lines.append("--------------------------------------------------------------------")
-    logger.info("\n".join(log_lines))
-
-
-def dump_response(
-    logger,
-    url: str,
-    method: str,
-    resp,
-    params,
-    request_uuid: str,
-    start_time,
-    from_cache: bool = None,
-):
-    # Calculate the duration in seconds
-    end_time = time.time()
-    duration_seconds = end_time - start_time
-    # Convert the duration to milliseconds
-    duration_ms = duration_seconds * 1000
-    # Convert the headers to a regular dictionary
-    response_headers_dict = dict(resp.headers)
-    full_url = url
-    if params:
-        full_url += "?" + urlencode(params)
-    log_lines = []
-    response_body = ""
-    if resp.text:
-        response_body = resp.text
-
-    if from_cache:
-        log_lines.append(
-            f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | " f"FROM CACHE | DURATION:{duration_ms}ms ]" + "-" * 31
-        )
-    else:
-        log_lines.append(f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | " f"DURATION:{duration_ms}ms ]" + "-" * 46)
-    log_lines.append(f"{method} {full_url}")
-    for key, value in response_headers_dict.items():
-        log_lines.append(f"{key}: {value}")
-    if response_body and response_body != "" and response_body != "null":
-        log_lines.append(f"\n{response_body}")
-    log_lines.append("-" * 68)
-    logger.info("\n".join(log_lines))

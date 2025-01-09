@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -40,7 +40,7 @@ class TestLocationManagement:
             # Create VPN Credential IP Type
             try:
                 email = "tests-" + generate_random_string() + "@bd-hashicorp.com"
-                created_vpn_credential = client.traffic.add_vpn_credential(
+                created_vpn_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                     authentication_type="UFQDN",
                     pre_shared_key="testkey-" + generate_random_string(),
                     fqdn=email,
@@ -53,7 +53,7 @@ class TestLocationManagement:
             # Create Location Management
             try:
                 location_name = "tests-" + generate_random_string()
-                created_location = client.locations.add_location(
+                created_location = client.zia.locations.add_location(
                     name=location_name,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
                     auth_required=True,
@@ -72,7 +72,7 @@ class TestLocationManagement:
 
             try:
                 # Verify the location management by retrieving it
-                retrieved_location = client.locations.get_location(location_id)
+                retrieved_location = client.zia.locations.get_location(location_id)
                 assert retrieved_location["id"] == location_id, "Incorrect location retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Location Management failed: {exc}")
@@ -80,18 +80,18 @@ class TestLocationManagement:
             try:
                 # Update the Location Management
                 updated_description = "Updated integration test location management"
-                client.locations.update_location(
+                client.zia.locations.update_location(
                     location_id,
                     description=updated_description,
                 )
-                updated_location = client.locations.get_location(location_id)
+                updated_location = client.zia.locations.get_location(location_id)
                 assert updated_location["description"] == updated_description, "Location Management update failed"
             except Exception as exc:
                 errors.append(f"Updating Location Management failed: {exc}")
 
             try:
                 # Retrieve the list of all locations
-                locations = client.locations.list_locations()
+                locations = client.zia.locations.list_locations()
                 # Check if the newly created location is in the list of locations
                 found_location = any(location["id"] == location_id for location in locations)
                 assert found_location, "Newly created location not found in the list of locations."
@@ -103,14 +103,14 @@ class TestLocationManagement:
             cleanup_errors = []
             if location_id:
                 try:
-                    delete_status_location = client.locations.delete_location(location_id)
+                    delete_status_location = client.zia.locations.delete_location(location_id)
                     assert delete_status_location == 204, "Location deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting location failed: {exc}")
 
             if vpn_id:
                 try:
-                    delete_status_vpn = client.traffic.delete_vpn_credential(vpn_id)
+                    delete_status_vpn = client.zia.traffic_vpn_credentials.delete_vpn_credential(vpn_id)
                     assert delete_status_vpn == 204, "VPN Credential deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting VPN Credential failed: {exc}")
@@ -130,7 +130,7 @@ class TestLocationManagement:
             # Create VPN Credential IP Type
             try:
                 email = "tests-" + generate_random_string() + "@bd-hashicorp.com"
-                created_vpn_credential = client.traffic.add_vpn_credential(
+                created_vpn_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                     authentication_type="UFQDN",
                     pre_shared_key="testkey-" + generate_random_string(),
                     fqdn=email,
@@ -143,7 +143,7 @@ class TestLocationManagement:
             # Create Location Management (Parent Location)
             try:
                 parent_location_name = "tests - " + generate_random_string()
-                created_location = client.locations.add_location(
+                created_location = client.zia.locations.add_location(
                     name=parent_location_name,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
                     auth_required=True,
@@ -163,7 +163,7 @@ class TestLocationManagement:
             # Create Sublocation Management
             try:
                 sublocation_name = "tests - " + generate_random_string()
-                created_sublocation = client.locations.add_location(
+                created_sublocation = client.zia.locations.add_location(
                     name=sublocation_name,
                     description=sublocation_name,
                     country="UNITED_STATES",
@@ -188,7 +188,7 @@ class TestLocationManagement:
 
             try:
                 # Verify the sublocation management by retrieving it
-                retrieved_sublocation = client.locations.get_location(sub_location_id)
+                retrieved_sublocation = client.zia.locations.get_location(sub_location_id)
                 assert retrieved_sublocation["id"] == sub_location_id, "Incorrect SubLocation retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving SubLocation Management failed: {exc}")
@@ -196,11 +196,11 @@ class TestLocationManagement:
             try:
                 # Update the Location Management
                 updated_description = "Updated integration test SubLocation management"
-                client.locations.update_location(
+                client.zia.locations.update_location(
                     sub_location_id,
                     description=updated_description,
                 )
-                updated_sublocation = client.locations.get_location(sub_location_id)
+                updated_sublocation = client.zia.locations.get_location(sub_location_id)
                 assert updated_sublocation["description"] == updated_description, "SubLocation Management update failed"
             except Exception as exc:
                 errors.append(f"Updating SubLocation Management failed: {exc}")
@@ -208,7 +208,7 @@ class TestLocationManagement:
             # Additional try-except block to test list_sub_locations
             try:
                 # Retrieve the list of sub-locations for the parent location
-                sub_locations = client.locations.list_sub_locations(parent_location_id)
+                sub_locations = client.zia.locations.list_sub_locations(parent_location_id)
                 # Check if the newly created sub-location is in the list of sub-locations
                 found_sub_location = any(sub_location["id"] == sub_location_id for sub_location in sub_locations)
                 assert found_sub_location, "Newly created sub-location not found in the list of sub-locations."
@@ -222,7 +222,7 @@ class TestLocationManagement:
             # First, attempt to delete the sublocation if it was created
             if sub_location_id:
                 try:
-                    delete_status_sublocation = client.locations.delete_location(sub_location_id)
+                    delete_status_sublocation = client.zia.locations.delete_location(sub_location_id)
                     assert delete_status_sublocation == 204, "SubLocation deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting SubLocation failed: {exc}")
@@ -230,7 +230,7 @@ class TestLocationManagement:
             # Next, attempt to delete the parent location if it was created
             if parent_location_id:
                 try:
-                    delete_status_parent_location = client.locations.delete_location(parent_location_id)
+                    delete_status_parent_location = client.zia.locations.delete_location(parent_location_id)
                     assert delete_status_parent_location == 204, "Parent Location deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting Parent Location failed: {exc}")
@@ -251,7 +251,7 @@ class TestLocationManagement:
             for _ in range(3):
                 try:
                     email = "tests-" + generate_random_string() + "@bd-hashicorp.com"
-                    created_vpn_credential = client.traffic.add_vpn_credential(
+                    created_vpn_credential = client.zia.traffic_vpn_credentials.add_vpn_credential(
                         authentication_type="UFQDN",
                         pre_shared_key="testkey-" + generate_random_string(),
                         fqdn=email,
@@ -266,7 +266,7 @@ class TestLocationManagement:
             for vpn_id in vpn_ids:
                 try:
                     location_name = "tests - " + generate_random_string()
-                    created_location = client.locations.add_location(
+                    created_location = client.zia.locations.add_location(
                         name=location_name,
                         tz="UNITED_STATES_AMERICA_LOS_ANGELES",
                         auth_required=True,
@@ -286,7 +286,7 @@ class TestLocationManagement:
 
             # Bulk delete the created locations
             try:
-                status_code = client.locations.bulk_delete_locations(location_ids)
+                status_code = client.zia.locations.bulk_delete_locations(location_ids)
                 assert status_code == 204, f"Bulk deletion failed with status code {status_code}"
             except Exception as exc:
                 errors.append(f"Bulk deletion of locations failed: {exc}")
@@ -299,7 +299,7 @@ class TestLocationManagement:
             cleanup_errors = []
             if vpn_ids:
                 try:
-                    delete_status_vpn = client.traffic.bulk_delete_vpn_credentials(vpn_ids)
+                    delete_status_vpn = client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(vpn_ids)
                     assert delete_status_vpn == 204, "VPN Credential deletion failed"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting VPN Credential failed: {exc}")
@@ -314,7 +314,7 @@ class TestLocationManagement:
         errors = []
 
         try:
-            cities_list = client.locations.list_cities_by_name(prefix="San Jose")
+            cities_list = client.zia.locations.list_cities_by_name(prefix="San Jose")
             assert isinstance(cities_list, list), "Expected cities list not received"
         except Exception as exc:
             errors.append(f"Listing cities by name failed: {exc}")
@@ -327,7 +327,7 @@ class TestLocationManagement:
 
         try:
             # Attempt to retrieve geographical data by IP
-            geo_data = client.locations.get_geo_by_ip(ip="8.8.8.8")
+            geo_data = client.zia.locations.get_geo_by_ip(ip="8.8.8.8")
             assert geo_data is not None, "Expected geographical data not received"
 
             assert "city_name" in geo_data, "City name information is missing in geographical data"
@@ -344,7 +344,7 @@ class TestLocationManagement:
         errors = []
 
         try:
-            region_data = client.locations.list_region_geo_coordinates(latitude=37.3860517, longitude=-122.0838511)
+            region_data = client.zia.locations.list_region_geo_coordinates(latitude=37.3860517, longitude=-122.0838511)
             assert region_data is not None, "Expected region geographical data not received"
 
             assert "city_name" in region_data, "City name information is missing in region geographical data"

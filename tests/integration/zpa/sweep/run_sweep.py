@@ -1,19 +1,53 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
 import os
 import sys
 import logging
-from zscaler.zpa import ZPAClientHelper
+from zscaler import ZscalerClient
 
 
 class TestSweepUtility:
-    def __init__(self):
-        ZPA_CLIENT_ID = os.getenv("ZPA_CLIENT_ID")
-        ZPA_CLIENT_SECRET = os.getenv("ZPA_CLIENT_SECRET")
-        ZPA_CUSTOMER_ID = os.getenv("ZPA_CUSTOMER_ID")
-        ZPA_CLOUD = os.getenv("ZPA_CLOUD")
+    def __init__(self, config=None):
+        """
+        Initialize the MockZPAClient with support for environment variables and
+        optional inline config.
+        
+        Args:
+            fs: Fixture to pause/resume the filesystem mock for pyfakefs.
+            config: Optional dictionary containing client configuration (clientId, clientSecret, etc.).
+        """
+        # If config is not provided, initialize it as an empty dictionary
+        config = config or {}
 
-        self.client = ZPAClientHelper(
-            client_id=ZPA_CLIENT_ID, client_secret=ZPA_CLIENT_SECRET, customer_id=ZPA_CUSTOMER_ID, cloud=ZPA_CLOUD
-        )
+        # Fetch credentials from environment variables, allowing them to be overridden by the config dictionary
+        clientId = config.get("clientId", os.getenv("ZSCALER_CLIENT_ID"))
+        clientSecret = config.get("clientSecret", os.getenv("ZSCALER_CLIENT_SECRET"))
+        customerId = config.get("customerId", os.getenv("ZPA_CUSTOMER_ID"))
+        vanityDomain = config.get("vanityDomain", os.getenv("ZSCALER_VANITY_DOMAIN"))
+        cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
+
+        # Set up the client config dictionary
+        client_config = {
+            "clientId": clientId,
+            "clientSecret": clientSecret,
+            "customerId": customerId,
+            "vanityDomain": vanityDomain,
+            "cloud": cloud,
+        }
 
     def suppress_warnings(func):
         def wrapper(*args, **kwargs):

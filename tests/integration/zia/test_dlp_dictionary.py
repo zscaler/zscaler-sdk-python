@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
 import pytest
@@ -43,7 +43,7 @@ class TestDLPDictionary:
 
         # Attempt to add a DLP dictionary
         try:
-            dlp_dict = client.dlp.add_dict(
+            dlp_dict = client.zia.dlp_dictionary.add_dict(
                 name="tests-" + generate_random_string(),
                 description="updated-" + generate_random_string(),
                 custom_phrase_match_type=custom_phrase_match_type,
@@ -60,7 +60,7 @@ class TestDLPDictionary:
         if dict_id:
             try:
                 updated_name = "updated-" + generate_random_string()
-                updated_dict = client.dlp.update_dict(
+                updated_dict = client.zia.dlp_dictionary.update_dict(
                     dict_id=dict_id,
                     name=updated_name,
                     description=updated_name,
@@ -75,7 +75,7 @@ class TestDLPDictionary:
 
         # Attempt to list DLP dictionaries
         try:
-            dicts = client.dlp.list_dicts()
+            dicts = client.zia.dlp_dictionary.list_dicts()
             assert isinstance(dicts, list), "Failed to list DLP Dictionaries"
         except Exception as exc:
             errors.append(f"Listing DLP Dictionaries failed: {exc}")
@@ -83,7 +83,7 @@ class TestDLPDictionary:
         # Attempt to get the specific DLP dictionary
         if dict_id:
             try:
-                specific_dict = client.dlp.get_dict(dict_id)
+                specific_dict = client.zia.dlp_dictionary.get_dict(dict_id)
                 assert specific_dict.get("id") == dict_id, "Failed to retrieve specific DLP Dictionary"
             except Exception as exc:
                 errors.append(f"Retrieving specific DLP Dictionary failed: {exc}")
@@ -91,7 +91,7 @@ class TestDLPDictionary:
         # Attempt to delete the DLP dictionary
         if dict_id:
             try:
-                delete_response = client.dlp.delete_dict(dict_id)
+                delete_response = client.zia.dlp_dictionary.delete_dict(dict_id)
                 assert delete_response == 204, "Failed to delete DLP Dictionary"
             except Exception as exc:
                 errors.append(f"Deleting DLP Dictionary failed: {exc}")

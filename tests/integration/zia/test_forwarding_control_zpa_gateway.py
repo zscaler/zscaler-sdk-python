@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -48,7 +48,7 @@ class TestForwardingControlZPAGateway:
             try:
                 app_connector_group_name = "tests-" + generate_random_string()
                 app_connector_group_description = "tests-" + generate_random_string()
-                created_app_connector_group = zpaClient.connectors.add_connector_group(
+                created_app_connector_group = zpaClient.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
                     enabled=True,
@@ -73,7 +73,7 @@ class TestForwardingControlZPAGateway:
             # Create a Segment Group
             try:
                 segment_group_name = "tests-" + generate_random_string()
-                created_segment_group = zpaClient.segment_groups.add_group(name=segment_group_name, enabled=True)
+                created_segment_group = zpaClient.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 segment_group_id = created_segment_group["id"]
             except Exception as exc:
                 errors.append(f"Creating Segment Group failed: {exc}")
@@ -82,7 +82,7 @@ class TestForwardingControlZPAGateway:
             try:
                 server_group_name = "tests-" + generate_random_string()
                 server_group_description = "tests-" + generate_random_string()
-                created_server_group = zpaClient.server_groups.add_group(
+                created_server_group = zpaClient.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
                     enabled=True,
@@ -97,7 +97,7 @@ class TestForwardingControlZPAGateway:
             try:
                 app_segment_name = "tests-" + generate_random_string()
                 app_segment_description = "tests-" + generate_random_string()
-                app_segment = zpaClient.app_segments.add_segment(
+                app_segment = zpaClient.zpa.app_segments.add_segment(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
@@ -118,7 +118,7 @@ class TestForwardingControlZPAGateway:
             try:
                 # Create a ZPA Gateway
                 gateway_name = "tests-" + generate_random_string()
-                created_gateway = ziaClient.zpa_gateway.add_gateway(
+                created_gateway = ziaClient.zia.zpa_gateway.add_gateway(
                     name=gateway_name,
                     description="Integration test ZPA Gateway",
                     type="ZPA",
@@ -134,7 +134,7 @@ class TestForwardingControlZPAGateway:
 
             try:
                 # Verify the gateway by retrieving it
-                retrieved_gateway = ziaClient.zpa_gateway.get_gateway(gateway_id)
+                retrieved_gateway = ziaClient.zia.zpa_gateway.get_gateway(gateway_id)
                 assert retrieved_gateway["id"] == gateway_id, "Incorrect gateway retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving ZPA Gateway failed: {exc}")
@@ -146,14 +146,14 @@ class TestForwardingControlZPAGateway:
                     gateway_id,
                     description=updated_description,
                 )
-                updated_gateway = ziaClient.zpa_gateway.get_gateway(gateway_id)
+                updated_gateway = ziaClient.zia.zpa_gateway.get_gateway(gateway_id)
                 assert updated_gateway["description"] == updated_description, "ZPA Gateway update failed"
             except Exception as exc:
                 errors.append(f"Updating ZPA Gateway failed: {exc}")
 
             try:
                 # Retrieve the list of all gateways
-                gateways = ziaClient.zpa_gateway.list_gateways()
+                gateways = ziaClient.zia.zpa_gateway.list_gateways()
                 # Check if the newly created gateway is in the list of gateways
                 found_gateway = any(gateway["id"] == gateway_id for gateway in gateways)
                 assert found_gateway, "Newly created gateway not found in the list of gateways."
@@ -165,7 +165,7 @@ class TestForwardingControlZPAGateway:
             try:
                 # Attempt to delete resources created during the test
                 if gateway_id:
-                    delete_status = ziaClient.zpa_gateway.delete_gateway(gateway_id)
+                    delete_status = ziaClient.zia.zpa_gateway.delete_gateway(gateway_id)
                     assert delete_status == 204, "ZPA Gateway deletion failed"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting ZPA Gateway failed: {exc}")
@@ -173,19 +173,19 @@ class TestForwardingControlZPAGateway:
             # Cleanup resources
             if app_segment_id:
                 try:
-                    zpaClient.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
+                    zpaClient.zpa.app_segments.delete_segment(segment_id=app_segment_id, force_delete=True)
                 except Exception as exc:
                     errors.append(f"Deleting Application Segment failed: {exc}")
 
             if server_group_id:
                 try:
-                    zpaClient.server_groups.delete_group(group_id=server_group_id)
+                    zpaClient.zpa.server_groups.delete_group(group_id=server_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Server Group failed: {exc}")
 
             if segment_group_id:
                 try:
-                    zpaClient.segment_groups.delete_group(group_id=segment_group_id)
+                    zpaClient.zpa.segment_groups.delete_group(group_id=segment_group_id)
                 except Exception as exc:
                     errors.append(f"Deleting Segment Group failed: {exc}")
 

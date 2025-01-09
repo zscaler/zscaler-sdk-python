@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -39,45 +39,116 @@ class TestAppProtectionProfile:
 
         try:
             # Fetch predefined controls by control group name
-            control_group_name = "Protocol Issues"
-            control_group = client.inspection.get_predef_control_group_by_name(control_group_name)
-            predefined_controls = [
-                (control["id"], control["default_action"]) for control in control_group["predefined_inspection_controls"]
-            ]
+            try:
+                control_group_name = "Protocol Issues"
+                control_groups, _, err = client.zpa.inspection.list_predef_controls(
+                    query_params={"search": "controlGroup", "search_field": control_group_name}
+                )
+                if err or not control_groups:
+                    errors.append(f"Failed to fetch predefined controls for group {control_group_name}: {err}")
+                    return
+
+                # Extract predefined controls from the specified control group
+                predefined_controls = []
+                for group in control_groups:
+                    if group.control_group == control_group_name:
+                        for control in group.predefined_inspection_controls:
+                            predefined_controls.append(
+                                (control["id"], control["defaultAction"])  # Tuple format (id, action)
+                            )
+            except Exception as exc:
+                errors.append(f"Error fetching predefined controls: {exc}")
+                return
 
             # Create a new app protection security profile with predefined controls
-            created_profile = client.inspection.add_profile(
-                name=profile_name,
-                paranoia_level=1,
-                predef_controls_version="OWASP_CRS/3.3.0",
-                predef_controls=predefined_controls,
-            )
-            if created_profile and "id" in created_profile:
+            try:
+                created_profile, _, err = client.zpa.inspection.add_profile(
+                    name=profile_name,
+                    paranoia_level=1,
+                    predef_controls=predefined_controls,
+                    incarnation_number=6,
+                    global_control_actions=["PREDEFINED:PASS", "CUSTOM:NONE", "OVERRIDE_ACTION:COMMON"],
+                    control_info_resource={
+                        "control_type": "CUSTOM"
+                    },
+                    common_global_override_actions_config={
+                        "PREDEF_CNTRL_GLOBAL_ACTION": "PASS",
+                        "IS_OVERRIDE_ACTION_COMMON": "TRUE"
+                    }
+                )
+                if err or not created_profile:
+                    errors.append("App protection security profile creation failed or returned unexpected data")
+                    return
+
                 profile_id = created_profile.id
                 assert profile_id is not None  # Asserting that a non-null ID is returned
-            else:
-                errors.append("App protection security profile creation failed or returned unexpected data")
+            except Exception as exc:
+                errors.append(f"Error creating profile: {exc}")
+                return
 
-            # Assuming profile_id is valid and the profile was created successfully
-            if profile_id:
-                # Update the app protection security profile
+            # Update the app protection security profile
+            try:
                 updated_name = profile_name + " Updated"
-                client.inspection.update_profile(profile_id, name=updated_name)
-                updated_profile = client.inspection.get_profile(profile_id)
+                client.zpa.inspection.update_profile(
+                    profile_id, name=updated_name,
+                    global_control_actions=["PREDEFINED:PASS", "CUSTOM:NONE", "OVERRIDE_ACTION:COMMON"],
+                    control_info_resource={
+                        "control_type": "CUSTOM"
+                    },
+                    common_global_override_actions_config={
+                        "PREDEF_CNTRL_GLOBAL_ACTION": "PASS",
+                        "IS_OVERRIDE_ACTION_COMMON": "TRUE"
+                    }
+                )
+            except Exception as exc:
+                errors.append(f"Error updating profile: {exc}")
+                return
+
+            # Update the app protection security profile
+            try:
+                updated_name = profile_name + " Updated"
+                client.zpa.inspection.update_profile_and_controls(
+                    profile_id, name=updated_name,
+                    global_control_actions=["PREDEFINED:PASS", "CUSTOM:NONE", "OVERRIDE_ACTION:COMMON"],
+                    control_info_resource={
+                        "control_type": "CUSTOM"
+                    },
+                    common_global_override_actions_config={
+                        "PREDEF_CNTRL_GLOBAL_ACTION": "PASS",
+                        "IS_OVERRIDE_ACTION_COMMON": "TRUE"
+                    }
+                )
+            except Exception as exc:
+                errors.append(f"Error updating profile: {exc}")
+                return
+
+            # Fetch the updated profile
+            try:
+                updated_profile, _, err = client.zpa.inspection.get_profile(profile_id)
+                if err or not updated_profile:
+                    errors.append(f"Failed to retrieve updated profile: {err}")
+                    return
                 assert updated_profile.name == updated_name  # Verify update by checking the updated attribute
+            except Exception as exc:
+                errors.append(f"Error fetching updated profile: {exc}")
+                return
 
-                # List app protection security profiles and ensure the updated profile is in the list
-                profiles_list = client.inspection.list_profiles()
+            # List app protection security profiles and ensure the updated profile is in the list
+            try:
+                profiles_list, _, err = client.zpa.inspection.list_profiles()
+                if err:
+                    errors.append(f"Failed to list profiles: {err}")
+                    return
                 assert any(profile.id == profile_id for profile in profiles_list)
-
-        except Exception as exc:
-            errors.append(exc)
+            except Exception as exc:
+                errors.append(f"Error listing profiles: {exc}")
+                return
 
         finally:
             # Cleanup resources
             if profile_id:
                 try:
-                    client.inspection.delete_profile(profile_id=profile_id)
+                    client.zpa.inspection.delete_profile(profile_id=profile_id)
                 except Exception as exc:
                     errors.append(f"Deleting app protection security profile failed: {exc}")
 

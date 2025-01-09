@@ -1,84 +1,88 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-from box import BoxList
-from requests import Response
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from zscaler.zia import ZIAClient
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zia.models.workload_groups import WorkloadGroups
+from zscaler.utils import format_url
 
 
-class WorkloadGroupsAPI:
-    def __init__(self, client: ZIAClient):
-        self.rest = client
+class WorkloadGroupsAPI(APIClient):
+    """
+    A Client object for the Workload Groups API resource.
+    """
 
-    def list_groups(self, **kwargs) -> BoxList:
+    _zia_base_endpoint = "/zia/api/v1"
+
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+
+    def list_groups(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
-        Returns a list of all workload groups configured in the ZIA Admin Portal.
+        Returns the list of workload groups configured in the ZIA Admin Portal.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                [query_params.page] {int}: Specifies the page offset.
+                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
+                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Returns:
-            :obj:`BoxList`: The list of workload groups
+            tuple: A tuple containing (list of WorkloadGroups instances, Response, error)
+
 
         Examples:
             >>> for workloads in zia.workload_groups.list_groups():
             ...    pprint(workloads)
 
         """
-        response = self.rest.get("/workloadGroups")
-        if isinstance(response, Response):
-            return None
-        return response
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}/workloadGroups
+        """)
 
-    # Search Workload Group By Name
-    def get_group_by_name(self, name):
-        """
-        Retrieves a specific workload group by its name.
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-        Args:
-            name (str): The name of the workload group  to retrieve.
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, params=query_params)
 
-        Returns:
-            :obj:`Box`: The workload group  if found, otherwise None.
+        if error:
+            return (None, None, error)
 
-        Examples:
-            >>> workload = zia.workload_groups.get_group_by_name('BD_WORKLOAD_GROUP01')
-            ...    print(workload)
-        """
-        groups = self.list_groups()
-        for group in groups:
-            if group.get("name") == name:
-                return group
-        return None
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request)
 
-    # Search Workload Group By ID
-    def get_group_by_id(self, group_id):
-        """
-        Retrieves a specific workload group by its unique identifier.
+        if error:
+            return (None, response, error)
 
-        Args:
-            profile_id (str): The ID of the workload group  to retrieve.
-
-        Returns:
-            :obj:`Box`: The workload group if found, otherwise None.
-
-        Examples:
-            >>> workload = zia.get_group_by_name.get_group_by_id('12345')
-            ...    print(workload)
-        """
-        groups = self.list_groups()
-        for group in groups:
-            if group.get("id") == group_id:
-                return group
-        return None
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(WorkloadGroups(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

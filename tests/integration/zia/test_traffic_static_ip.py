@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
 import pytest
@@ -42,7 +42,7 @@ class TestTrafficStaticIP:
         try:
             # Attempt to create a new static IP
             try:
-                created_static_ip = client.traffic.add_static_ip(
+                created_static_ip = client.zia.traffic_static_ip.add_static_ip(
                     comment=comment,
                     ip_address=randomIP,
                 )
@@ -56,7 +56,7 @@ class TestTrafficStaticIP:
             # Attempt to retrieve the created static IP by ID
             if static_ip_id:
                 try:
-                    retrieved_ip = client.traffic.get_static_ip(static_ip_id)
+                    retrieved_ip = client.zia.traffic_static_ip.get_static_ip(static_ip_id)
                     assert retrieved_ip.id == static_ip_id, "Retrieved IP ID mismatch"
                     assert retrieved_ip.comment == comment, "Retrieved comment mismatch"
                 except Exception as exc:
@@ -66,15 +66,15 @@ class TestTrafficStaticIP:
             if static_ip_id:
                 try:
                     updated_comment = comment + " Updated"
-                    client.traffic.update_static_ip(static_ip_id, comment=updated_comment)
-                    updated_static_ip = client.traffic.get_static_ip(static_ip_id)
+                    client.zia.traffic_static_ip.update_static_ip(static_ip_id, comment=updated_comment)
+                    updated_static_ip = client.zia.traffic_static_ip.get_static_ip(static_ip_id)
                     assert updated_static_ip.comment == updated_comment, "Failed to update comment"
                 except Exception as exc:
                     errors.append(f"Failed to update static IP: {exc}")
 
             # Attempt to list static IPs and check if the updated IP is in the list
             try:
-                ip_list = client.traffic.list_static_ips()
+                ip_list = client.zia.traffic_static_ip.list_static_ips()
                 assert any(ip.id == static_ip_id for ip in ip_list), "Updated IP not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list static IPs: {exc}")
@@ -83,7 +83,7 @@ class TestTrafficStaticIP:
             # Cleanup: Attempt to delete the static IP
             if static_ip_id:
                 try:
-                    delete_response_code = client.traffic.delete_static_ip(static_ip_id)
+                    delete_response_code = client.zia.traffic_static_ip.delete_static_ip(static_ip_id)
                     assert str(delete_response_code) == "204", "Failed to delete static IP"
                 except Exception as exc:
                     errors.append(f"Cleanup failed: {exc}")
