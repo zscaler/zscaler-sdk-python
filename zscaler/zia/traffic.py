@@ -58,7 +58,8 @@ class TrafficForwardingAPI:
             ...    print(tunnel)
 
         """
-        return BoxList(Iterator(self.rest, "greTunnels", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/greTunnels", **kwargs)
+        return list
 
     def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
@@ -230,11 +231,9 @@ class TrafficForwardingAPI:
             **include (str, optional):
                 Include all, private, or public VIPs in the list. Available choices are `all`, `private`, `public`.
                 Defaults to `public`.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            **page (int, optional):
+                Specifies the page offset.
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **region (str, optional):
                 Filter based on region.
@@ -259,7 +258,8 @@ class TrafficForwardingAPI:
             ...    print(vip)
 
         """
-        return BoxList(Iterator(self.rest, "vips", **kwargs))
+        list, _ = self.rest.get_paginated_data(path="/vips", **kwargs)
+        return list
 
     def add_gre_tunnel(
         self,

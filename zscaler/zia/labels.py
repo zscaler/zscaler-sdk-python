@@ -31,11 +31,9 @@ class RuleLabelsAPI:
         Returns the list of ZIA Rule Labels.
 
         Keyword Args:
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            **page (int, optional):
+                Specifies the page offset.
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:

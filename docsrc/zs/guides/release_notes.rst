@@ -6,6 +6,16 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 0.10.4 (January,9 2024)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+* Fixed pagination parameters on ZIA `cloud_apps` resource. Cloud Apps use the following parameters during pagination: `limit` and `page_number`. (`237 <https://github.com/zscaler/zscaler-sdk-python/pull/237>`_). 
+
 ## 0.10.3 (January,8 2024)
 
 ### Notes
