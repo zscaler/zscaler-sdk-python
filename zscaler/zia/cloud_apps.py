@@ -367,9 +367,15 @@ class CloudAppsAPI:
 
         return self.rest.post(f"shadowIT/applications/{entity}/exportCsv", json=payload).text
 
-    def list_apps(self):
+    def list_apps(self, **kwargs):
         """
         List all predefined and custom cloud applications by name and id.
+
+        Keyword Args:
+            **limit (int, optional):
+                Specifies the maximum number of cloud applications that must be retrieved in a page. The maximum size is 1000
+            **page_number (int, optional):
+                Specifies the page number. The numbering starts at 0.
 
         Returns:
             :obj:`BoxList` of :obj:`Box`: A list of cloud applications.
@@ -382,7 +388,8 @@ class CloudAppsAPI:
                     print(app.name)
 
         """
-        return self.rest.get("cloudApplications/lite")
+        list, _ = self.rest.get_paginated_data(path="/cloudApplications/lite", **kwargs)
+        return list
 
     def list_custom_tags(self):
         """
