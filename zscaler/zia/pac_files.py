@@ -415,3 +415,71 @@ class PacFilesAPI:
         """
         return self.rest.delete(f"pacFiles/{pac_id}").status_code
 
+ def create_new_pac_version(
+            self,
+            pac_id: str,
+            pac_version: str,
+            pac_commit_message: str,
+            pac_verification_status: str,
+            pac_version_status: str,
+            pac_content: str,
+            **kwargs,
+        ) -> Box:
+            """
+            Performs to create a new PAC Version from an already deployed PAC. 
+
+            Args:
+                pac_id (str): The unique identifier of the PAC file to be updated.
+                pac_version (str): The specific version of the PAC file to be updated.
+                pac_commit_message (str): Commit message for the PAC file.
+                pac_verification_status (str): Verification status of the PAC file.
+                                            Supported Values: `VERIFY_NOERR`, `VERIFY_ERR`, `NOVERIFY`
+                pac_version_status (str): Version status of the PAC file.
+                                        Supported Values: `DEPLOYED`, `STAGE`, `LKG`
+                pac_content (str): The actual PAC file content to be updated.
+
+
+            Keyword Args:
+                Additional optional parameters as key-value pairs.
+
+            Returns:
+                Box: The updated PAC file resource record.
+
+
+            Example:
+                >>> pac_file = zia.update_pac_file(
+                        pac_id="12345",
+                        pac_version="2",
+                        pac_commit_message="This change is done via SDK",
+                        pac_verification_status="VERIFY_NOERR",
+                        pac_version_status="DEPLOYED",
+                        pac_content="This needs to be your PAC
+                        )
+            """
+            # Step 1: Validate the PAC content
+            validation_result = self.validate_pac_file(pac_content)
+            if not validation_result.success:
+                raise Exception("PAC content validation failed: {}".format(validation_result))
+
+            # Step 2: Construct the URL with mandatory parameters and optional newLKGVer
+            url = f"/pacFiles/{pac_id}/version/{pac_version}"
+
+            # Step 3: Construct the payload with required fields
+            payload = {
+                "pacCommitMessage": pac_commit_message,
+                "pacVerificationStatus": pac_verification_status,
+                "pacVersionStatus": pac_version_status,
+                "pacContent": pac_content,
+            }
+
+            # Add any additional optional parameters
+            for key, value in kwargs.items():
+                payload[snake_to_camel(key)] = value
+
+            # Step 4: Make the request to update the PAC file
+            response = self.rest.post(url, json=payload)
+            if isinstance(response, Response):
+                if response.status_code != 200:
+                    raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+                return Box(response.json())
+            return response
