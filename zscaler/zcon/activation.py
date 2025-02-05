@@ -29,7 +29,7 @@ class ActivationAPI:
             force (bool): If set to True, forces the activation. Default is False.
 
         Returns:
-            :obj:`Box`: The status code of the operation.
+            :obj:`Tuple`: The status code of the operation.
 
         Examples:
             Activate the configuration without forcing::
@@ -51,7 +51,7 @@ class ActivationAPI:
         Get the status of the configuration.
 
         Returns:
-            :obj:`Box`: The status of the configuration.
+            :obj:`Tuple`: The status of the configuration.
 
         Examples:
             Get the status of the configuration::

@@ -42,9 +42,11 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         Args:
             customer_id (str, optional): Unique identifier of the ZPA tenant. If not provided, will look up from env var.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
+            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -75,7 +77,9 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         try:
             # Expect a single object, not a list
-            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
+            result = ServiceEdgeSchedule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -86,13 +90,13 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         Args:
             schedule (dict): Dictionary containing:
-                frequency (str): Frequency at which disconnected Service Edges are deleted.
-                interval (str): Interval for the frequency value.
-                disabled (bool, optional): Whether to include disconnected connectors for deletion.
-                enabled (bool, optional): Whether the deletion setting is enabled.
-
+                ``frequency`` (str): Frequency at which disconnected Service Edges are deleted.
+                ``interval`` (str): Interval for the frequency value.
+                ``disabled`` (bool, optional): Whether to include disconnected connectors for deletion.
+                ``enabled`` (bool, optional): Whether the deletion setting is enabled.
+                ``microtenant_id`` (str): The unique identifier of the Microtenant for the ZPA tenant.
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
+            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -131,17 +135,21 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body=payload, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
+        response, error = self._request_executor.\
+            execute(request, ServiceEdgeSchedule)
         if error:
             return (None, response, error)
 
         try:
-            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
+            result = ServiceEdgeSchedule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -151,14 +159,15 @@ class ServiceEdgeScheduleAPI(APIClient):
         Updates Service Edge schedule frequency to delete inactive connectors based on the configured frequency.
 
         Args:
-            scheduler_id (str): Unique identifier for the schedule.
-            frequency (str): Frequency at which disconnected Service Edges are deleted.
-            interval (str): Interval for the frequency value.
-            disabled (bool): Whether to include disconnected connectors for deletion.
-            enabled (bool): Whether the deletion setting is enabled.
+            **scheduler_id (str): Unique identifier for the schedule.
+            **frequency (str): Frequency at which disconnected Service Edges are deleted.
+            **interval (str): Interval for the frequency value.
+            **disabled (bool): Whether to include disconnected connectors for deletion.
+            **enabled (bool): Whether the deletion setting is enabled.
+            **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (AppConnectorSchedule, Response, error)
+            tuple: A tuple containing (ServiceEdgeSchedule, Response, error)
         """
 
         http_method = "put".upper()
@@ -198,12 +207,14 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
+        response, error = self._request_executor.\
+            execute(request, ServiceEdgeSchedule)
         if error:
             return (None, response, error)
 
@@ -214,7 +225,9 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
+            result = ServiceEdgeSchedule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

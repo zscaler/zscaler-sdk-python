@@ -46,7 +46,7 @@ class AppsAPI:
             geo_id (str): The unique ID for the geolocation.
 
         Returns:
-            :obj:`Box`: The application information.
+            :obj:`Tuple`: The application information.
 
         Examples:
             Return information on the application with the ID of 999999999:
@@ -72,7 +72,7 @@ class AppsAPI:
             geo_id (str): The unique ID for the geolocation.
 
         Returns:
-            :obj:`Box`: The application's ZDX score trend.
+            :obj:`Tuple`: The application's ZDX score trend.
 
         Examples:
             Return the ZDX score trend for the application with the ID of 999999999:
@@ -102,7 +102,7 @@ class AppsAPI:
                 * `availability`
 
         Returns:
-            :obj:`Box`: The application's ZDX metrics.
+            :obj:`Tuple`: The application's ZDX metrics.
 
         Examples:
             Return the ZDX metrics for the application with the ID of 999999999:
@@ -168,7 +168,7 @@ class AppsAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The user and device information.
+            :obj:`Tuple`: The user and device information.
 
         Examples:
             Return information on the user with the ID of 999999999 who has accessed the application with the ID of

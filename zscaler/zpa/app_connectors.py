@@ -44,11 +44,10 @@ class AppConnectorControllerAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             tuple: A tuple containing (list of App Connector instances, Response, error)
@@ -99,7 +98,7 @@ class AppConnectorControllerAPI(APIClient):
             connector_id (str): The unique id for the ZPA App Connector.
 
         Returns:
-            :obj:`Box`: The specified App Connector resource record.
+            :obj:`Tuple`: The specified App Connector resource record.
 
         Examples:
             >>> app_connector = zpa.connectors.get_connector('99999')
@@ -152,7 +151,7 @@ class AppConnectorControllerAPI(APIClient):
             **name (str): The name of the App Connector.
 
         Returns:
-            :obj:`Box`: The updated App Connector resource record.
+            :obj:`Tuple`: The updated App Connector resource record.
 
         Examples:
             Update an App Connector name and disable it.

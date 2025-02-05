@@ -52,7 +52,7 @@ class ProvisioningAPI:
             api_key_id (str): The ID of the API key to regenerate.
 
         Returns:
-            :obj:`Box`: The regenerated API key.
+            :obj:`Tuple`: The regenerated API key.
 
         Examples:
             Regenerate an API key::
@@ -98,7 +98,7 @@ class ProvisioningAPI:
             provision_id (str): ID of Cloud & Branch Connector provisioning template.
 
         Returns:
-            :obj:`Box`: The provisiong template url details.
+            :obj:`Tuple`: The provisiong template url details.
 
         Examples:
             Print the details of a provisioning template url:
@@ -146,7 +146,7 @@ class ProvisioningAPI:
             **platform_id (string): Public cloud platform (AWS or Azure).
 
         Returns:
-            :obj:`Box`: The requested public account record.
+            :obj:`Tuple`: The requested public account record.
 
         Examples:
             >>> location = zcon.provisioning.get_public_account_details('97456691')
@@ -218,7 +218,7 @@ class ProvisioningAPI:
             sub_id_enabled (bool): Indicates whether public cloud subscription is enabled.
 
         Returns:
-            :obj:`Box`: The updated public account status details.
+            :obj:`Tuple`: The updated public account status details.
 
         Examples:
             Update the public account status::

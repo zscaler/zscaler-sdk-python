@@ -37,7 +37,7 @@ class CloudNSSAPI(APIClient):
         
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.feed_type] {str}: The cloud NSS feed type
+                ``[query_params.feed_type]`` {str}: The cloud NSS feed type
 
         Returns:
             tuple: A tuple containing (Retries the cloud nss feed instances, Response, error)
@@ -533,9 +533,9 @@ class CloudNSSAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.type] {str}: The type of logs that you are streaming
-                [query_params.multi_feed_type] {str}: This field is used to set the multi-feed type to Tunnel
-                [query_params.field_format] {str}: The feed output type of your SIEM
+                ``[query_params.type]`` {str}: The type of logs that you are streaming
+               ``[query_params.multi_feed_type]`` {str}: This field is used to set the multi-feed type to Tunnel
+                ``[query_params.field_format]`` {str}: The feed output type of your SIEM
 
         Returns:
             tuple: A tuple containing (Retrieve the default cloud NSS feed output format, Response, error)

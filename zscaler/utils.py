@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import argparse
 import base64
@@ -38,6 +38,41 @@ from zscaler.constants import RETRYABLE_STATUS_CODES, DATETIME_FORMAT, EPOCH_DAY
 
 logger = logging.getLogger(__name__)
 
+# 1) Single global reformat_params
+reformat_params = [
+    ("app_services", "appServices"),
+    ("app_service_groups", "appServiceGroups"),
+    ("devices", "devices"),
+    ("device_groups", "deviceGroups"),
+    ("departments", "departments"),
+    ("auditor", "auditor"),
+    ("dlp_engines", "dlpEngines"),
+    ("excluded_departments", "excludedDepartments"),
+    ("excluded_groups", "excludedGroups"),
+    ("excluded_users", "excludedUsers"),
+    ("source_ip_groups", "source_ip_groups"),
+    ("dest_ip_groups", "destIpGroups"),
+    ("dest_ipv6_groups", "destIpv6Groups"),
+    ("groups", "groups"),
+    ("users", "users"),
+    ("labels", "labels"),
+    ("notification_template", "notificationTemplate"),
+    ("locations", "locations"),
+    ("location_groups", "locationGroups"),
+    ("nw_application_groups", "nwApplicationGroups"),
+    ("nw_service_groups", "nwServiceGroups"),
+    ("src_ip_groups", "srcIpGroups"),
+    ("src_ipv6_groups", "srcIpv6Groups"),
+    ("proxy_gateway", "proxyGateway"),
+    ("time_windows", "timeWindows"),
+    ("tenancy_profile_ids", "tenancyProfileIds"),
+    ("sharing_domain_profiles", "sharingDomainProfiles"),
+    ("form_sharing_domain_profiles", "formSharingDomainProfiles"),
+    ("url_categories", "urlCategories"),
+    ("zpa_app_segments", "zpaAppSegments"),
+    ("workload_groups", "workloadGroups"),
+    # etc. expand as needed
+]
 
 # Recursive function to convert all keys and nested keys from camel case
 # to snake case.
@@ -167,37 +202,90 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
+#### Working function
+# def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
+#     """
+#     For each (key, payload_key) in 'id_groups':
+#       - If 'key' is found in source_dict,
+#       - pop that value,
+#       - insert it into target_dict with name 'payload_key',
+#       - converting each item in the list to { "id": int(item) } if it's a string or int.
+    
+#     Additional domain logic can be placed here, e.g. for zpa_app_segments or cbi_profile, etc.
+#     """
+#     for (key, payload_key) in id_groups:
+#         if key in source_dict:
+#             value = source_dict.pop(key)
+#             # Example logic: if it's a list, do the ID transform
+#             if isinstance(value, list):
+#                 target_dict[payload_key] = [
+#                     {"id": int(item)} if isinstance(item, (str, int)) else item 
+#                     for item in value
+#                 ]
+#             elif isinstance(value, dict) and "id" in value:
+#                 # single dict with ID
+#                 target_dict[payload_key] = {"id": int(value["id"])}
+#     return
 
-def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
-    for entry in id_groups:
-        key, payload_key = entry
-        if key in kwargs:
-            value = kwargs.pop(key)
-            if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
-                # Handle zpa_gateway, proxy_gateway, and zpa_server_group
-                if isinstance(value, dict):
-                    payload[payload_key] = {
-                        snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
-                    }
-            elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
-                # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
-                if isinstance(value, list):
-                    payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
-            elif key == "cbi_profile":
-                # Special handling for cbi_profile
-                if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
-                    payload[payload_key] = {"id": value["id"], "name": value["name"], "url": value["url"]}
-            elif key == "cloud_app_risk_profile":
-                # Special handling for cloudAppRiskProfile
-                if isinstance(value, dict) and "id" in value:
-                    payload[payload_key] = {"id": value["id"]}
-            else:
-                # General case for ID transformations
-                if isinstance(value, list):
-                    payload[payload_key] = [{"id": int(item)} if isinstance(item, (str, int)) else item for item in value]
+def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
+    """
+    For each (key, payload_key) in 'id_groups':
+      - If 'key' in source_dict, pop it out,
+      - convert that list/dict to the final "id" structure,
+      - store in target_dict[payload_key].
+    """
+    for (key, payload_key) in id_groups:
+        if key in source_dict:
+            value = source_dict.pop(key)
+            if isinstance(value, list):
+                # 1) Convert list-of-str-or-int => [{ "id":... }, ...]
+                final_list = []
+                for item in value:
+                    if isinstance(item, (str, int)):
+                        final_list.append({"id": int(item)})
+                    elif isinstance(item, dict) and "id" in item:
+                        # Possibly user gave { "id": 123, ... }
+                        item["id"] = int(item["id"])
+                        final_list.append(item)
+                    else:
+                        final_list.append(item)
+                target_dict[payload_key] = final_list
+            elif isinstance(value, dict) and "id" in value:
+                # single dict with ID
+                value["id"] = int(value["id"])
+                target_dict[payload_key] = value
     return
 
+# def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
+#     for entry in id_groups:
+#         key, payload_key = entry
+#         if key in kwargs:
+#             value = kwargs.pop(key)
+#             if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
+#                 # Handle zpa_gateway, proxy_gateway, and zpa_server_group
+#                 if isinstance(value, dict):
+#                     payload[payload_key] = {
+#                         snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
+#                     }
+#             elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
+#                 # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
+#                 if isinstance(value, list):
+#                     payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
+#             elif key == "cbi_profile":
+#                 # Special handling for cbi_profile
+#                 if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
+#                     payload[payload_key] = {"id": value["id"], "name": value["name"], "url": value["url"]}
+#             elif key == "cloud_app_risk_profile":
+#                 # Special handling for cloudAppRiskProfile
+#                 if isinstance(value, dict) and "id" in value:
+#                     payload[payload_key] = {"id": value["id"]}
+#             else:
+#                 # General case for ID transformations
+#                 if isinstance(value, list):
+#                     payload[payload_key] = [{"id": int(item)} if isinstance(item, (str, int)) else item for item in value]
+#     return
 
+    
 def transform_clientless_apps(clientless_app_ids):
     transformed_apps = []
     for app in clientless_app_ids:
@@ -791,3 +879,65 @@ zcc_param_map = {
         "quarantined": 6,
     },
 }
+
+def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
+    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
+    # Log the request details before sending the request
+    request_data = {
+        "url": url,
+        "method": method,
+        "params": jsonp.dumps(params),
+        "uuid": str(request_uuid),
+        "request_headers": jsonp.dumps(request_headers_filtered),
+    }
+    log_lines = []
+    request_body = ""
+    if body:
+        request_body = jsonp.dumps(json)
+    log_lines.append(f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------")
+    log_lines.append(f"{method} {url}")
+    for key, value in headers.items():
+        log_lines.append(f"{key}: {value}")
+    if body and request_body != "" and request_body != "null":
+        log_lines.append(f"\n{request_body}")
+    log_lines.append("--------------------------------------------------------------------")
+    logger.info("\n".join(log_lines))
+    
+def dump_response(
+    logger,
+    url: str,
+    method: str,
+    resp,
+    params,
+    request_uuid: str,
+    start_time,
+    from_cache: bool = None,
+):
+    # Calculate the duration in seconds
+    end_time = time.time()
+    duration_seconds = end_time - start_time
+    # Convert the duration to milliseconds
+    duration_ms = duration_seconds * 1000
+    # Convert the headers to a regular dictionary
+    response_headers_dict = dict(resp.headers)
+    full_url = url
+    if params:
+        full_url += "?" + urlencode(params)
+    log_lines = []
+    response_body = ""
+    if resp.text:
+        response_body = resp.text
+
+    if from_cache:
+        log_lines.append(
+            f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | " f"FROM CACHE | DURATION:{duration_ms}ms ]" + "-" * 31
+        )
+    else:
+        log_lines.append(f"\n---[ ZSCALER SDK RESPONSE | ID:{request_uuid} | " f"DURATION:{duration_ms}ms ]" + "-" * 46)
+    log_lines.append(f"{method} {full_url}")
+    for key, value in response_headers_dict.items():
+        log_lines.append(f"{key}: {value}")
+    if response_body and response_body != "" and response_body != "null":
+        log_lines.append(f"\n{response_body}")
+    log_lines.append("-" * 68)
+    logger.info("\n".join(log_lines))

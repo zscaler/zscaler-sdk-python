@@ -56,7 +56,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The ZDX device resource record.
+            :obj:`Tuple`: The ZDX device resource record.
 
         Examples:
             Get information for the device with an ID of 123456789.
@@ -105,7 +105,7 @@ class DevicesAPI:
             app_id (str): The unique ID for the application.
 
         Returns:
-            :obj:`Box`: The application resource record.
+            :obj:`Tuple`: The application resource record.
 
         Examples:
             Print a single application for a device.
@@ -151,7 +151,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The web probe resource record.
+            :obj:`Tuple`: The web probe resource record.
 
         Examples:
             Print a single web probe for an application.
@@ -201,7 +201,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The cloudpath probe resource record.
+            :obj:`Tuple`: The cloudpath probe resource record.
 
         Examples:
             Print a single cloudpath probe for an application.
@@ -226,7 +226,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The cloudpath resource record.
+            :obj:`Tuple`: The cloudpath resource record.
 
         Examples:
             Print a single cloudpath for an application.
@@ -250,7 +250,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The call quality metrics resource record.
+            :obj:`Tuple`: The call quality metrics resource record.
 
         Examples:
             Print call quality metrics for an application.
@@ -273,7 +273,7 @@ class DevicesAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The health metrics resource record.
+            :obj:`Tuple`: The health metrics resource record.
 
         Examples:
             Print health metrics for an application.
@@ -312,7 +312,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace web probe metrics.
+            :obj:`Tuple`: The deeptrace web probe metrics.
 
         Examples:
             Print web probe metrics for a deeptrace.
@@ -332,7 +332,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace cloudpath metrics.
+            :obj:`Tuple`: The deeptrace cloudpath metrics.
 
         Examples:
             Print cloudpath metrics for a deeptrace.
@@ -352,7 +352,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace cloudpath.
+            :obj:`Tuple`: The deeptrace cloudpath.
 
         Examples:
             Print cloudpath for a deeptrace.
@@ -372,7 +372,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace health metrics.
+            :obj:`Tuple`: The deeptrace health metrics.
 
         Examples:
             Print health metrics for a deeptrace.
@@ -392,7 +392,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace events.
+            :obj:`Tuple`: The deeptrace events.
 
         Examples:
             Print events for a deeptrace.
@@ -412,7 +412,7 @@ class DevicesAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace top processes.
+            :obj:`Tuple`: The deeptrace top processes.
 
         Examples:
             Print top processes for a deeptrace.

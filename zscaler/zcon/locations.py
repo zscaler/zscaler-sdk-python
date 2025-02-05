@@ -54,7 +54,7 @@ class LocationAPI:
             template_id (str): The ID of the location template to retrieve.
 
         Returns:
-            :obj:`Box`: The location template details.
+            :obj:`Tuple`: The location template details.
 
         Examples:
             Get details of a specific location template::
@@ -94,7 +94,7 @@ class LocationAPI:
             description (str): The description of the location template.
 
         Returns:
-            :obj:`Box`: The location template details.
+            :obj:`Tuple`: The location template details.
 
         Examples:
             Add a new location template with minimal settings::
@@ -161,7 +161,7 @@ class LocationAPI:
                 - ``surrogate_ip`` (bool): Enable the IP Surrogate feature.
 
         Returns:
-            :obj:`Box`: The updated location template details.
+            :obj:`Tuple`: The updated location template details.
 
         Note:
             - Any provided keys will update existing keys.
@@ -271,7 +271,7 @@ class LocationAPI:
             location_id (str): The ID of the location to retrieve.
 
         Returns:
-            :obj:`Box`: The location details.
+            :obj:`Tuple`: The location details.
 
         Examples:
             Get details of a specific location::

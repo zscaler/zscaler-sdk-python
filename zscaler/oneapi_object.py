@@ -1,4 +1,4 @@
-from zscaler.helpers import to_snake_case
+from zscaler.helpers import to_snake_case 
 
 
 class ZscalerObject:

@@ -27,7 +27,6 @@ from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import location_group as location_group
 from zscaler.zia.models import location_management as location
 from zscaler.zia.models import user_management as user_management
-from zscaler.zia.models import urlcategory as urlcategory
 from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import workload_groups as workload_groups
 
@@ -139,8 +138,11 @@ class CloudApplicationControl(ZscalerObject):
                 config["cloudAppRiskProfile"] if "cloudAppRiskProfile" in config else [], common_reference.ResourceReference
             )
 
-            self.cbi_profile = isolation.CBIProfile(config["cbiProfile"])\
-                if "cbiProfile" in config else None
+            # Assign the cbi_profile as-is; conversions are handled by ZscalerObject
+            self.cbi_profile = config.get("cbiProfile", {})
+            
+            # self.cbi_profile = isolation.CBIProfile(config["cbiProfile"])\
+            #     if "cbiProfile" in config else None
 
         else:
             # Defaults if config is None
@@ -182,7 +184,7 @@ class CloudApplicationControl(ZscalerObject):
             self.sharing_domain_profiles = []
             self.form_sharing_domain_profiles = []
             self.cloud_app_risk_profile = None
-            self.cbi_profile = None
+            self.cbi_profile = {}
 
     def request_format(self):
         """

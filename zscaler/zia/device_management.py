@@ -41,10 +41,9 @@ class DeviceManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.include_device_info]`` {bool}: Include or exclude device information.
+                
+                ``[query_params.include_pseudo_groups]`` {bool}: Include or exclude Zscaler Client Connector and Cloud Browser Isolation-related device groups.
 
         Returns:
             tuple: A tuple containing (list of Device Group instances, Response, error)
@@ -52,12 +51,12 @@ class DeviceManagementAPI(APIClient):
         Examples:
             Print all device groups
 
-            >>> for device group in zia.device_groups.list_device_groups():
+            >>> for device group in zia.device_management.list_device_groups():
             ...    pprint(device)
 
             Print Device Groups that match the name or description 'Windows'
 
-            >>> pprint(zia.device_groups.list_device_groups('Windows'))
+            >>> pprint(zia.device_management.list_device_groups('Windows'))
 
         """
         http_method = "get".upper()
@@ -105,14 +104,15 @@ class DeviceManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.name] {str}: The device group name. This is a `starts with` match.
-                [query_params.user_ids] {list}: Used to list devices for specific users.
-                [query_params.include_all] {bool}: Used to include or exclude Cloud Browser Isolation devices.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
-            keep_empty_params {bool}: Whether to include empty parameters in the query string.
+                ``[query_params.name]`` {str}: The device group name. This is a `starts with` match.
+                
+                ``[query_params.user_ids]`` {list}: Used to list devices for specific users.
+                
+                ``[query_params.include_all]`` {bool}: Used to include or exclude Cloud Browser Isolation devices.
+                
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of Devices instances, Response, error)
@@ -120,12 +120,12 @@ class DeviceManagementAPI(APIClient):
         Examples:
             Print all devices
 
-            >>> for dlp device in zia.device_groups.list_devices():
+            >>> for dlp device in zia.device_management.list_devices():
             ...    pprint(device)
 
             Print Devices that match the name or description 'WINDOWS_OS'
 
-            >>> pprint(zia.device_groups.list_devices('WINDOWS_OS'))
+            >>> pprint(zia.device_management.list_devices('WINDOWS_OS'))
 
         """
         http_method = "get".upper()

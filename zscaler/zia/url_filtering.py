@@ -81,7 +81,7 @@ class URLFilteringAPI(APIClient):
             rule_id (str): The unique ID for the URL Filtering Policy rule.
 
         Returns:
-            :obj:`Box`: The URL Filtering Policy rule.
+            :obj:`Tuple`: The URL Filtering Policy rule.
 
         Examples:
             >>> pprint(zia.url_filtering.get_rule('977469'))
@@ -161,7 +161,7 @@ class URLFilteringAPI(APIClient):
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`Box`: The newly created URL Filtering Policy rule.
+            :obj:`Tuple`: The newly created URL Filtering Policy rule.
 
         Examples:
             Add a rule with the minimum required parameters:
@@ -271,7 +271,7 @@ class URLFilteringAPI(APIClient):
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`Box`: The updated URL Filtering Policy rule.
+            :obj:`Tuple`: The updated URL Filtering Policy rule.
 
         Examples:
             Update the name of a URL Filtering Policy rule:

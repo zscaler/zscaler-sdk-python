@@ -38,11 +38,10 @@ class PRACredentialAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessCredential instances, Response, error)
@@ -60,18 +59,22 @@ class PRACredentialAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(PrivilegedRemoteAccessCredential(self.form_response_body(item)))
+                result.append(PrivilegedRemoteAccessCredential(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -82,6 +85,8 @@ class PRACredentialAPI(APIClient):
 
         Args:
             credential_id (str): The unique identifier of the credential.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             PrivilegedRemoteAccessCredential: The resource record for the credential.
@@ -99,16 +104,20 @@ class PRACredentialAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessCredential)
+        response, error = self._request_executor.\
+            execute(request, PrivilegedRemoteAccessCredential)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessCredential(self.form_response_body(response.get_body()))
+            result = PrivilegedRemoteAccessCredential(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -169,17 +178,21 @@ class PRACredentialAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessCredential)
+        response, error = self._request_executor.\
+            execute(request, PrivilegedRemoteAccessCredential)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessCredential(self.form_response_body(response.get_body()))
+            result = PrivilegedRemoteAccessCredential(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -285,11 +298,13 @@ class PRACredentialAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

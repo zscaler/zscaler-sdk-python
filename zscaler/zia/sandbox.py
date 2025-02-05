@@ -38,7 +38,7 @@ class CloudSandboxAPI:
             force (bool): Force ZIA to analyse the file even if it has been submitted previously.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox submission response information.
+            :obj:`Tuple`: The Cloud Sandbox submission response information.
 
         Examples:
             Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.

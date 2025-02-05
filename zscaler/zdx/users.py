@@ -49,7 +49,7 @@ class UsersAPI:
             geo_id (str): The unique ID for the geolocation.
 
         Returns:
-            :obj:`Box`: The user information.
+            :obj:`Tuple`: The user information.
 
         Examples:
             Return information on the user with the ID of 999999999:

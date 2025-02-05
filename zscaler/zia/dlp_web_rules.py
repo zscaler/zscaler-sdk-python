@@ -17,31 +17,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_web_rules import DLPWebRules
-
-from zscaler.utils import convert_keys, recursive_snake_to_camel, snake_to_camel, transform_common_id_fields, format_url
-
+from zscaler.utils import transform_common_id_fields, format_url, reformat_params
 
 class DLPWebRuleAPI(APIClient):
     """
     A Client object for the DLP Web Rule resource.
     """
-
-    reformat_params = [
-        ("auditor", "auditor"),
-        ("dlp_engines", "dlpEngines"),
-        ("departments", "departments"),
-        ("excluded_departments", "excludedDepartments"),
-        ("excluded_groups", "excludedGroups"),
-        ("excluded_users", "excludedUsers"),
-        ("groups", "groups"),
-        ("labels", "labels"),
-        ("locations", "locations"),
-        ("location_groups", "locationGroups"),
-        ("notification_template", "notificationTemplate"),
-        ("time_windows", "timeWindows"),
-        ("users", "users"),
-        ("url_categories", "urlCategories"),
-    ]
 
     _zia_base_endpoint = "/zia/api/v1"
 
@@ -49,7 +30,10 @@ class DLPWebRuleAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_rules(self, query_params=None) -> tuple:
+    def list_rules(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
         Enumerates dlp web rules in your organization with pagination.
         A subset of dlp web rules can be returned that match a supported
@@ -57,10 +41,8 @@ class DLPWebRuleAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: A tuple containing (list of DLP Web Rules instances, Response, error)
@@ -75,7 +57,11 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules")
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /webDlpRules
+        """)
+
         query_params = query_params or {}
 
         # Prepare request body and headers
@@ -83,18 +69,19 @@ class DLPWebRuleAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response, error = self._request_executor\
+            .execute(request, DLPWebRules)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into AppConnectorGroup instances
         try:
             result = []
             for item in response.get_results():
@@ -104,7 +91,10 @@ class DLPWebRuleAPI(APIClient):
 
         return (result, response, None)
 
-    def get_rule(self, rule_id: str) -> tuple:
+    def get_rule(
+        self,
+        rule_id: int,
+    ) -> tuple:
         """
         Returns a DLP policy rule, excluding SaaS Security API DLP policy rules.
 
@@ -112,7 +102,7 @@ class DLPWebRuleAPI(APIClient):
             rule_id (str): The unique id for the Web DLP rule.
 
         Returns:
-            :obj:`Box`: The Web DLP Rule resource record.
+            :obj:`Tuple`: The Web DLP Rule resource record.
 
         Examples:
             Get information on a Web DLP item by ID
@@ -122,26 +112,35 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules/{rule_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /webDlpRules/{rule_id}
+            """
+        )
 
         body = {}
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response, error = self._request_executor\
+            .execute(request, DLPWebRules)
 
         if error:
             return (None, response, error)
 
         # Parse the response
         try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
+            result = DLPWebRules(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -163,7 +162,13 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules/lite")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /webDlpRules/lite
+            """
+        )
+
         query_params = query_params or {}
 
         # Prepare request body and headers
@@ -171,13 +176,15 @@ class DLPWebRuleAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response, error = self._request_executor.\
+            execute(request, DLPWebRules)
 
         if error:
             return (None, response, error)
@@ -186,13 +193,15 @@ class DLPWebRuleAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DLPWebRules(self.form_response_body(item)))
+                result.append(DLPWebRules(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def add_rule(self, name: str, action: str, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> tuple:
         """
         Adds a new DLP policy rule.
 
@@ -231,7 +240,7 @@ class DLPWebRuleAPI(APIClient):
             zcc_notifications_enabled (bool): True enables Zscaler Client Connector notification.
 
         Returns:
-            :obj:`Box`: The new dlp web rule resource record.
+            :obj:`Tuple`: The new dlp web rule resource record.
 
         Examples:
             Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
@@ -252,41 +261,40 @@ class DLPWebRuleAPI(APIClient):
             ...    description='TT#1965432122')
         """
         http_method = "post".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /webDlpRules
+        """
+        )
 
-        # Convert enabled to API format if present
+        body = kwargs
+        
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        transform_common_id_fields(reformat_params, body, body)
 
-        payload = {
-            "name": name,
-            "action": action,
-            "order": kwargs.pop("order", len(self.list_rules())),
-        }
-
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
-
-        # Convert the entire payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                camel_payload[snake_to_camel(key)] = value
-
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response, error = self._request_executor.\
+            execute(request, DLPWebRules)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
+            result = DLPWebRules(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -331,7 +339,7 @@ class DLPWebRuleAPI(APIClient):
             zcc_notifications_enabled (bool): True enables ZCC notification for block action.
 
         Returns:
-            :obj:`Box`: The updated web dlp rule resource record.
+            :obj:`Tuple`: The updated web dlp rule resource record.
 
         Examples:
             Update a Web DLP Policy Rule:
@@ -345,33 +353,38 @@ class DLPWebRuleAPI(APIClient):
                 >>> zia.web_dlp.update_rule('976597', description="TT#1965232866")
         """
         http_method = "put".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules/{rule_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /webDlpRules/{rule_id}
+        """
+        )
 
-        # Set payload to value of existing record and convert nested dict keys.
-        payload = convert_keys(self.get_rule(rule_id))
+        body = kwargs
 
-        # Convert enabled to API format if present in kwargs
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        transform_common_id_fields(reformat_params, body, body)
 
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        # Add remaining optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, DLPWebRules)
+        response, error = self._request_executor.\
+            execute(request, DLPWebRules)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPWebRules(self.form_response_body(response.get_body()))
+            result = DLPWebRules(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -384,7 +397,7 @@ class DLPWebRuleAPI(APIClient):
             rule_id (str): Unique id of the Web DLP Policy Rule that will be deleted.
 
         Returns:
-            :obj:`Box`: Response message from the ZIA API endpoint.
+            :obj:`Tuple`: Response message from the ZIA API endpoint.
 
         Examples:
             Delete a rule with an id of 9999.
@@ -395,15 +408,23 @@ class DLPWebRuleAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/webDlpRules/{rule_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /webDlpRules/{rule_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
-            return (None, error)
+            return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
-
+        response, error = self._request_executor.\
+            execute(request)
         if error:
-            return (None, error)
+            return (None, response, error)
 
-        return (response, None)
+        return (None, response, None)

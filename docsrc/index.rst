@@ -1,6 +1,6 @@
 .. meta::
    :description lang=en:
-        Official Zscaler Python  SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
+        Official Zscaler Python SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 .. toctree::
    :maxdepth: 2
    :hidden:
@@ -23,7 +23,7 @@ Support Disclaimer
 -> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider. 
 You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_ for guidance on typical problems.
 
-.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
+.. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team in partnership with Zscaler Engineering.
 
 Quick Links
 --------------

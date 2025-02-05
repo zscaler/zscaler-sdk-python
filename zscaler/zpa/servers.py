@@ -22,7 +22,10 @@ from zscaler.utils import format_url
 
 
 class AppServersAPI(APIClient):
-
+    """
+    A Client object for the Application Server resource.
+    """
+    
     def __init__(self, request_executor, config):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
@@ -37,17 +40,17 @@ class AppServersAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            tuple: A tuple containing (list of ApplicationServer instances, Response, error)
 
         Example:
-            >>> servers = zpa.servers.list_servers(search="Example 100", pagesize=100, microtenant_id="216199618143464722")
+            >>> servers = zpa.servers.list_servers(
+                query_params={"search": "Example100", "pagesize": 100}
+                microtenant_id="216199618143464722")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -129,9 +132,14 @@ class AppServersAPI(APIClient):
         Add a new application server.
 
         Args:
-            name (str): The name of the server.
-            address (str): The IP address of the server.
-            enabled (bool): Enable the server. Defaults to True.
+            **name (str): The name of the server.
+            **description (str): The name of the server.
+            **address (str): The IP address of the server.
+            **enabled (bool): Enable the server. Defaults to True.
+            **app_server_group_ids (list):
+                The list of unique identifiers for the Server Group.
+            **config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
+            **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -158,7 +166,9 @@ class AppServersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = AppServers(self.form_response_body(response.get_body()))
+            result = AppServers(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -169,6 +179,7 @@ class AppServersAPI(APIClient):
 
         Args:
             server_id (str): The unique identifier for the server being updated.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -218,6 +229,7 @@ class AppServersAPI(APIClient):
 
         Args:
             server_id (str): The unique identifier for the server to be deleted.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
             int: Status code of the delete operation.

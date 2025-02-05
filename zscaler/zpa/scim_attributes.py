@@ -40,10 +40,10 @@ class ScimAttributeHeaderAPI(APIClient):
             idp_id (str): The unique id of the IdP to retrieve SCIM attributes for.
 
         Keyword Args:
-            max_items (int): The maximum number of items to request before stopping iteration.
-            max_pages (int): The maximum number of pages to request before stopping iteration.
-            pagesize (int): The page size, default is 20, but the maximum is 500.
-            search (str, optional): The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
             list: A list of SCIMAttributeHeader instances.
@@ -139,8 +139,6 @@ class ScimAttributeHeaderAPI(APIClient):
             attribute_id (str): The unique identifier for the attribute.
 
         Keyword Args:
-            max_items (int): The maximum number of items to request before stopping iteration.
-            max_pages (int): The maximum number of pages to request before stopping iteration.
             pagesize (int): Specifies the page size, default is 20, maximum is 500.
             search (str, optional): The search string used to match against features and fields.
 

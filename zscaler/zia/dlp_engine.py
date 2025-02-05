@@ -37,10 +37,8 @@ class DLPEngineAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of DLP Engines instances, Response, error)
@@ -102,7 +100,7 @@ class DLPEngineAPI(APIClient):
             engine_id (str): The unique identifier for the DLP Engine.
 
         Returns:
-            :obj:`Box`: The DLP Engine resource record.
+            :obj:`Tuple`: The DLP Engine resource record.
 
         Examples:
             >>> engine = zia.dlp.get_dlp_engines('99999')

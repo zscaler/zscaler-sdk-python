@@ -40,10 +40,8 @@ class DLPTemplatesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of DLPTemplates instances, Response, error)
@@ -103,7 +101,7 @@ class DLPTemplatesAPI(APIClient):
             template_id (int): The unique identifer for the DLP notification template.
 
         Returns:
-            :obj:`Box`: The DLP template resource record.
+            :obj:`Tuple`: The DLP template resource record.
 
         Examples:
             >>> template = zia.dlp.get_dlp_templates('99999')
@@ -153,7 +151,7 @@ class DLPTemplatesAPI(APIClient):
             html_message (str): Template for the HTML message body displayed in the DLP notification email.
 
         Returns:
-            :obj:`Box`: The newly created DLP Notification Template resource record.
+            :obj:`Tuple`: The newly created DLP Notification Template resource record.
 
         Examples:
             Create a new DLP Notification Template:

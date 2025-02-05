@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.oneapi_object import ZscalerObject
 
 class UserManagement(ZscalerObject):
@@ -33,36 +34,32 @@ class UserManagement(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.email = config["email"] if "email" in config else None
+            self.comments = config["comments"] if "comments" in config else None
+            self.temp_auth_email = config["tempAuthEmail"] if "tempAuthEmail" in config else None
+            self.password = config["password"] if "password" in config else None
+            self.admin_user = config["adminUser"] if "adminUser" in config else False
+            self.type = config["type"] if "type" in config else None
+            
+            self.groups = ZscalerCollection.form_list(
+                config["groups"] if "groups" in config else [], Groups
+            )
 
-            # Groups object list
-            if "groups" in config:
-                self.groups = [Groups(group) for group in config["groups"]]
-            else:
-                self.groups = []
-
-            # Department object
+            # SINGLE department object
             if "department" in config:
-                if isinstance(config["department"], Department):
-                    self.department = config["department"]
-                elif config["department"] is not None:
-                    self.department = Department(config["department"])
-                else:
-                    self.department = None
+                self.department = Department(config["department"])
             else:
                 self.department = None
-
-            self.admin_user = config["adminUser"] if "adminUser" in config else False
-            self.is_non_editable = config["isNonEditable"] if "isNonEditable" in config else False
-            self.deleted = config["deleted"] if "deleted" in config else False
         else:
             self.id = None
             self.name = None
             self.email = None
-            self.groups = []
-            self.department = None
+            self.comments = None
+            self.temp_auth_email = None
+            self.password = None
             self.admin_user = False
-            self.is_non_editable = False
-            self.deleted = False
+            self.type = None
+            self.groups = []
+            self.department = {}
 
     def request_format(self):
         """
@@ -73,11 +70,13 @@ class UserManagement(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "email": self.email,
+            "comments": self.comments,
+            "tempAuthEmail": self.temp_auth_email,
+            "password": self.password,
+            "adminUser": self.admin_user,
+            "type": self.type,
             "groups": [group.request_format() for group in self.groups] if self.groups else [],
             "department": self.department.request_format() if self.department else None,
-            "adminUser": self.admin_user,
-            "isNonEditable": self.is_non_editable,
-            "deleted": self.deleted,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

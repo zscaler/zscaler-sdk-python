@@ -117,7 +117,7 @@ class SCIMGroupsAPI(APIClient):
         Args:
             group_id (str): The unique identifier for the SCIM group.
             query_params (dict, optional): Map of query parameters for the request.
-                [query_params.allEntries] {bool}: Return all SCIM groups including the deleted ones if set to true.
+                ``[query_params.allEntries]`` {bool}: Return all SCIM groups including the deleted ones if set to true.
 
         Returns:
             SCIMGroup: The SCIMGroup resource object.

@@ -39,11 +39,10 @@ class AppConnectorGroupAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
@@ -88,7 +87,7 @@ class AppConnectorGroupAPI(APIClient):
         Args:
             group_id (str): The unique identifier for the connector group.
             query_params (dict, optional): Map of query parameters for the request.
-                [query_params.microtenantId] {str}: The microtenant ID, if applicable.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             tuple: A tuple containing (AppConnectorGroup instance, Response, error).

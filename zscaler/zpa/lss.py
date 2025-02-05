@@ -96,11 +96,9 @@ class LSSConfigControllerAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
             tuple: A tuple containing (list of LSS Config instances, Response, error)

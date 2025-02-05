@@ -18,6 +18,8 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_map
 from zscaler.zcc.models.devices import Device
+from zscaler.zcc.models.devices import ForceRemoveDevices
+from zscaler.zcc.models.devices import SetDeviceCleanupInfo
 from datetime import datetime
 
 
@@ -27,7 +29,6 @@ class DevicesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-
 
     def download_devices(
         self,
@@ -66,7 +67,7 @@ class DevicesAPI(APIClient):
             params["registrationTypes"] = ",".join(reg_types_resolved)
 
         # Correct the API URL
-        http_method = "GET"
+        http_method = "get".upper()
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadDevices")
 
         # Create the request properly
@@ -145,7 +146,8 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -162,58 +164,227 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def remove_devices(self, remove) -> tuple:
+    def get_device_cleanup_info(self) -> tuple:
         """
-        Removes the specified devices from the Zscaler Client Connector Portal.
-
-        Notes:
-            You must be using API credentials with the `Write` role.
-            You must specify at least one criterion from `Keyword Args` to remove devices.
+        Returns device cleanup sync information from the Client Connector Portal.
 
         Args:
-            force (bool):
-                Setting force to ``True`` removes the enrolled device from the portal. You can only remove devices that
-                are in the `registered` or `device removal pending` state.
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            client_connector_version (list):
-                A list of client connector versions that will be removed. You must supply the exact version number, i.e.
-                if the Client Connector version is `3.2.0.18` you must specify `3.2.0.18` and not `3.2`.
-            os_type (str):
-                The OS Type for the devices to be removed. Valid options are:
-
-                - ios
-                - android
-                - windows
-                - macos
-                - linux
-            udids (list):
-                A list of Unique Device IDs.
-            user_name (str):
-                The username of the user whose devices will be removed.
-
+            N/A
+                
         Returns:
-            :obj:`Box`: Server response containing the total number of devices removed.
+            :obj:`list`: Returns device cleanup sync information in the Client Connector Portal.
 
         Examples:
-            Soft-remove devices using ZCC version 3.7.1.44 from the Client Connector Portal:
+            Prints all devices in the Client Connector Portal to the console:
 
-            >>> zcc.devices.remove_devices(client_connector_version=["3.7.1.44"])
+            >>> for device in zcc.devices.get_device_cleanup_info():
+            ...    print(device)
 
-            Soft-remove Android devices from the Client Connector Portal:
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zcc_base_endpoint}
+            /getDeviceCleanupInfo
+        """
+        )
 
-            >>> zcc.devices.remove_devices(os_type="android")
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-            Hard-remove devices from the Client Connector Portal by UDID:
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
-            >>> zcc.devices.remove_devices(force=True, udids=["99999", "88888", "77777"])
+        if error:
+            return (None, None, error)
 
-            Hard-remove Android devices for johnno@widgets.co from the Client Connector Portal:
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
 
-            >>> zcc.devices.remove_devices(force=True, os_type="android",
-            ...     user_name="johnno@widgets.co")
+        try:
+            result = []
+            for item in response.get_results():
+                result.append((self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_device_cleanup_info(self, **kwargs) -> tuple:
+        """
+        Set Device Cleaup Information
+
+        Args:
+           N/A
+
+        Returns:
+            tuple: A tuple containing the updated Device Cleaup Information, response, and error.
+        """
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zcc_base_endpoint}
+            /setDeviceCleanupInfo
+        """)
+        body = {}
+
+        body.update(kwargs)
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, SetDeviceCleanupInfo)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = SetDeviceCleanupInfo(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def get_device_details(self) -> tuple:
+        """
+        Returns device detail information from the Client Connector Portal.
+
+        Args:
+            N/A
+                
+        Returns:
+            :obj:`list`: Returns device detail information  in the Client Connector Portal.
+
+        Examples:
+            Prints all devices in the Client Connector Portal to the console:
+
+            >>> for device in zcc.devices.get_device_details():
+            ...    print(device)
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zcc_base_endpoint}
+            /getDeviceDetails
+        """
+        )
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append((self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def download_service_status(
+        self,
+        filename: str = None,
+        os_types: list = None,
+        registration_types: list = None,
+    ):
+        """
+        Downloads service status for all devices from the ZCC portal.
+        """
+        if not filename:
+            filename = f"zcc-devices-{datetime.now().strftime('%Y%m%d-%H_%M_%S')}.csv"
+
+        params = {}
+
+        # Handle OS types
+        if os_types:
+            os_types_resolved = [
+                str(zcc_param_map["os"].get(item))
+                for item in os_types
+                if zcc_param_map["os"].get(item)
+            ]
+            if not os_types_resolved:
+                raise ValueError("Invalid os_type specified.")
+            params["osTypes"] = ",".join(os_types_resolved)
+
+        # Handle Registration types
+        if registration_types:
+            reg_types_resolved = [
+                str(zcc_param_map["reg_type"].get(item))
+                for item in registration_types
+                if zcc_param_map["reg_type"].get(item)
+            ]
+            if not reg_types_resolved:
+                raise ValueError("Invalid registration_type specified.")
+            params["registrationTypes"] = ",".join(reg_types_resolved)
+
+        # Correct the API URL
+        http_method = "get".upper()
+        api_url = format_url(f"{self._zcc_base_endpoint}/downloadServiceStatus")
+
+        # Create the request properly
+        request, error = self._request_executor.create_request(
+            http_method, api_url, params=params
+        )
+        if error:
+            raise Exception("Error creating request for downloading devices.")
+
+        # Execute request and download file
+        response, error = self._request_executor.execute(
+            request, return_raw_response=True
+        )
+        if error or response is None:
+            raise Exception("Error executing request for downloading devices.")
+
+        # Validate the response content
+        content_type = response.headers.get("Content-Type", "").lower()
+
+        # Check for valid CSV-like content
+        if (
+            not content_type.startswith("application/octet-stream")
+            and not response.text.startswith('"User","Device type"')
+        ):
+            raise Exception(
+                "Invalid response content type or unexpected response format."
+            )
+
+        # Save file to disk
+        with open(filename, "wb") as f:
+            f.write(response.content)
+
+        return filename
+
+    def remove_devices(self, query_params=None) -> tuple:
+        """
+        Remove of the devices from the Client Connector Portal.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+
+        Returns:
+            :obj:`list`: Remove devices from the Client Connector Portal.
+
+        Examples:
+            Prints all removed devices in the Client Connector Portal to the console:
+
+            >>> for device in zcc.devices.remove_devices():
+            ...    print(device)
 
         """
         http_method = "post".upper()
@@ -224,24 +395,123 @@ class DevicesAPI(APIClient):
         """
         )
 
-        # payload = convert_keys(dict(kwargs))
+        query_params = query_params or {}
 
-        if isinstance(remove, dict):
-            body = remove
-        else:
-            body = remove.as_dict()
+        # Prepare request body and headers
+        body = {}
+        headers = {}
 
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-        )
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
-            return None, None, error
+            return (None, None, error)
 
         response, error = self._request_executor.execute(request)
         if error:
-            return None, response, error
+            return (None, response, error)
 
-        return None, response, None
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(ForceRemoveDevices(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def force_remove_devices(self, query_params=None) -> tuple:
+        """
+        Force remove of the devices from the Client Connector Portal.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+
+        Returns:
+            :obj:`list`:Remove devices from the Client Connector Portal.
+
+        Examples:
+            Prints all admin roles in the Client Connector Portal to the console:
+
+            >>> for role in zcc.devices.force_remove_devices():
+            ...    print(role)
+
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zcc_base_endpoint}
+            /forceRemoveDevices
+        """
+        )
+
+        query_params = query_params or {}
+
+        # Prepare request body and headers
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(ForceRemoveDevices(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def remove_machine_tunnel(self) -> tuple:
+        """
+        Remove machine tunnel devices from the Client Connector Portal.
+
+        Keyword Args:
+            hostnames (str): The hostname of the machine tunnel to be removed.
+            machine_token (str): The machine tunnel token to be removed.
+
+        Returns:
+            :obj:`list`: Remove machine tunnel devices from the Client Connector Portal.
+
+        Examples:
+            Prints all removed machine tunnel devices in the Client Connector Portal to the console:
+
+            >>> for tunnel in zcc.devices.remove_machine_tunnel():
+            ...    print(tunnel)
+
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zcc_base_endpoint}
+            /removeMachineTunnel
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, {})
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append((self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

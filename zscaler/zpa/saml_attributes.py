@@ -37,11 +37,10 @@ class SAMLAttributesAPI(APIClient):
         Returns a list of all configured SAML attributes.
 
         Keyword Args:
-            max_items (int): The maximum number of items to request before stopping iteration.
-            max_pages (int): The maximum number of pages to request before stopping iteration.
-            pagesize (int): Specifies the page size. The default size is 20, but the maximum size is 500.
-            search (str, optional): The search string used to match against features and fields.
-            **keep_empty_params (bool): Whether to include empty parameters in the query string.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
             list: A list of SAMLAttribute instances.
@@ -60,18 +59,22 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(SAMLAttribute(self.form_response_body(item)))
+                result.append(SAMLAttribute(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -84,11 +87,10 @@ class SAMLAttributesAPI(APIClient):
             idp_id (str): The unique id of the IdP to retrieve SAML attributes from.
 
         Keyword Args:
-            max_items (int): The maximum number of items to request before stopping iteration.
-            max_pages (int): The maximum number of pages to request before stopping iteration.
-            pagesize (int): Specifies the page size. The default size is 20, but the maximum size is 500.
-            search (str, optional): The search string used to match against features and fields.
-            **keep_empty_params (bool): Whether to include empty parameters in the query string.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
             list: A list of SAMLAttribute instances.
@@ -107,18 +109,22 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(SAMLAttribute(self.form_response_body(item)))
+                result.append(
+                    SAMLAttribute(self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -148,11 +154,13 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 

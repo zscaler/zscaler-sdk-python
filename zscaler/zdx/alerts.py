@@ -79,7 +79,7 @@ class AlertsAPI:
             since (int): The number of hours to look back for devices.
 
         Returns:
-            :obj:`Box`: The ZDX device resource record.
+            :obj:`Tuple`: The ZDX device resource record.
 
         Examples:
             Get information for the device with an ID of 123456789.

@@ -1,14 +1,12 @@
 import logging
 import os
 import urllib.parse
-import uuid
 import time
 import requests
 from datetime import datetime, timedelta
 
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
     is_token_expired,
@@ -20,7 +18,7 @@ setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
 
-class LegacyZCCClientHelper():
+class LegacyZCCClientHelper:
     """
     A Controller to access Endpoints in the Zscaler Mobile Admin Portal API.
 
@@ -58,49 +56,35 @@ class LegacyZCCClientHelper():
     RATE_LIMIT_RESET_TIME = timedelta(hours=1)
     DOWNLOAD_DEVICES_RESET_TIME = timedelta(days=1)
 
-    def __init__(self, apikey=None, secret_key=None, cloud=None, timeout=240, cache=None):
+    def __init__(self, api_key=None, secret_key=None, cloud=None, timeout=240, cache=None):
         from zscaler.request_executor import RequestExecutor
 
-        self._apikey = apikey or os.getenv("apikey", os.getenv(f"{self._env_base}_CLIENT_ID"))
+        self._api_key = api_key or os.getenv("api_key", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._secret_key = secret_key or os.getenv("secret_key", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._env_cloud = cloud or os.getenv(f"{self._env_base}_CLOUD", "zscaler")
         self.login_url = f"https://api-mobile.{self._env_cloud}.net/papi/auth/v1/login"
         self.url = f"https://api-mobile.{self._env_cloud}.net"
-        
+
         self.timeout = timeout
-        
-        # Correct cache initialization
-        cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        if cache is None:
-            if cache_enabled:
-                ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
-                tti = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTI", 1800))
-                self.cache = ZscalerCache(ttl=ttl, tti=tti)
-            else:
-                self.cache = NoOpCache()
-        else:
-            self.cache = cache
+
+        self.cache = NoOpCache()
 
         # Correct `config` initialization with required keys
         self.config = {
             "client": {
-                "apikey": self._apikey,
-                "secret_key": self._secret_key or "",
+                "apiKey": self._api_key,
+                "secretKey": self._secret_key or "",
                 "cloud": self._env_cloud,
                 "requestTimeout": self.timeout,
-                "rateLimit": {
-                    "maxRetries": 3
-                },
+                "rateLimit": {"maxRetries": 3},
                 "cache": {
-                    "enabled": cache_enabled,
+                    "enabled": False,
                 },
             }
         }
 
         # Correct initialization of the request executor
-        self.request_executor = RequestExecutor(
-            self.config, self.cache, zcc_legacy_client=self
-        )
+        self.request_executor = RequestExecutor(self.config, self.cache, zcc_legacy_client=self)
 
         self.user_agent = UserAgent().get_user_agent_string()
         self.auth_token = None
@@ -114,7 +98,6 @@ class LegacyZCCClientHelper():
         # Track specific download devices endpoint usage
         self.download_devices_count = 0
         self.download_devices_last_reset = datetime.utcnow()
-
 
     def __enter__(self):
         self.refreshToken()
@@ -139,7 +122,7 @@ class LegacyZCCClientHelper():
 
     # @retry_with_backoff(retries=5)
     def login(self):
-        data = {"apiKey": self._apikey, "secretKey": self._secret_key}
+        data = {"apiKey": self._api_key, "secretKey": self._secret_key}
         headers = {
             "Content-Type": "application/json",
             "Accept": "*/*",
@@ -187,7 +170,7 @@ class LegacyZCCClientHelper():
 
     def get_base_url(self, endpoint):
         return self.url
-    
+
     def send(self, method, path, json=None, params=None, stream=False):
         """
         Sends a request using the legacy client.
@@ -260,5 +243,88 @@ class LegacyZCCClientHelper():
 
         """
         from zscaler.zcc.devices import DevicesAPI
+
         return DevicesAPI(self.request_executor)
+
+    @property
+    def admin_user(self):
+        """
+        The interface object for the :ref:`ZCC admin user interface <zcc-admin_user>`.
+
+        """
+        from zscaler.zcc.admin_user import AdminUserAPI
+
+        return AdminUserAPI(self.request_executor)
+
+    @property
+    def company(self):
+        """
+        The interface object for the :ref:`ZCC admin user interface <zcc-company_info>`.
+
+        """
+        from zscaler.zcc.company import CompanyInfoAPI
+
+        return CompanyInfoAPI(self.request_executor)
     
+    @property
+    def entitlements(self):
+        """
+        The interface object for the :ref:`ZCC admin user interface <zcc-entitlements>`.
+
+        """
+        from zscaler.zcc.entitlements import EntitlementAPI
+        return EntitlementAPI(self.request_executor)
+
+    @property
+    def forwarding_profile(self):
+        """
+        The interface object for the :ref:`ZCC web forwarding profile interface <zcc-forwarding_profile>`.
+
+        """
+        from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
+        return ForwardingProfileAPI(self.request_executor)
+
+    @property
+    def fail_open_policy(self):
+        """
+        The interface object for the :ref:`ZCC fail open policy interface <zcc-fail_open_policy>`.
+
+        """
+        from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
+        return FailOpenPolicyAPI(self.request_executor)
+    
+    @property
+    def web_policy(self):
+        """
+        The interface object for the :ref:`ZCC web policy interface <zcc-web_policy>`.
+
+        """
+        from zscaler.zcc.web_policy import WebPolicyAPI
+        return WebPolicyAPI(self.request_executor)
+
+    @property
+    def web_app_service(self):
+        """
+        The interface object for the :ref:`ZCC web app service interface <zcc-web_app_service>`.
+
+        """
+        from zscaler.zcc.web_app_service import WebAppServiceAPI
+        return WebAppServiceAPI(self.request_executor)
+    
+    @property
+    def web_privacy(self):
+        """
+        The interface object for the :ref:`ZCC web privacy interface <zcc-web_privacy>`.
+
+        """
+        from zscaler.zcc.web_privacy import WebPrivacyAPI
+        return WebPrivacyAPI(self.request_executor)
+    
+    @property
+    def trusted_networks(self):
+        """
+        The interface object for the :ref:`ZCC trusted networks interface <zcc-trusted_networks>`.
+
+        """
+        from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+        return TrustedNetworksAPI(self.request_executor)

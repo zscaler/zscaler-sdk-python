@@ -41,11 +41,9 @@ class ServiceEdgeControllerAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
             tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
@@ -65,33 +63,38 @@ class ServiceEdgeControllerAPI(APIClient):
         form = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, form, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, form, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, ServiceEdge)
+        response, error = self._request_executor.\
+            execute(request, ServiceEdge)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into AppConnectorGroup instances
         try:
             result = []
             for item in response.get_results():
-                result.append(ServiceEdge(self.form_response_body(item)))
+                result.append(ServiceEdge(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def get_service_edge(self, service_edge_id: str, **kwargs) -> ServiceEdge:
+    def get_service_edge(self, service_edge_id: str, **kwargs) -> tuple:
         """
         Returns information on the specified Service Edge.
 
         Args:
             service_edge_id (str): The unique ID of the ZPA Service Edge.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             ServiceEdge: The corresponding Service Edge object.
@@ -106,38 +109,25 @@ class ServiceEdgeControllerAPI(APIClient):
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return None
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return None
 
         return ServiceEdge(response.get_body())
 
-    def get_service_edge_by_name(self, name: str, **kwargs) -> ServiceEdge:
-        """
-        Returns information on the service edge with the specified name.
-
-        Args:
-            name (str): The name of the service edge.
-
-        Returns:
-            ServiceEdge: The corresponding Service Edge object or None if not found.
-        """
-        service_edges = self.list_service_edges(**kwargs)
-        for edge in service_edges:
-            if edge.name == name:
-                return edge
-        return None
-
-    def update_service_edge(self, service_edge_id: str, **kwargs) -> ServiceEdge:
+    def update_service_edge(self, service_edge_id: str, **kwargs) -> tuple:
         """
         Updates the specified ZPA Service Edge.
 
         Args:
             service_edge_id (str): The unique ID of the Service Edge.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
             ServiceEdge: The updated Service Edge object.

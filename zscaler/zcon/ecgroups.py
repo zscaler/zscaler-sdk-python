@@ -54,7 +54,7 @@ class EcGroupAPI:
             group_id (str): ID of Cloud or Branch Connector group.
 
         Returns:
-            :obj:`Box`: The ec group details.
+            :obj:`Tuple`: The ec group details.
 
         Examples:
             Get details of a specific ec group:
@@ -125,7 +125,7 @@ class EcGroupAPI:
             ``vm_id`` (str): Cloud or Branch Connector VM ID.
 
         Returns:
-            :obj:`Box`: The ec group VM details.
+            :obj:`Tuple`: The ec group VM details.
 
         Examples:
             Get details of a specific ec group VM:

@@ -36,11 +36,15 @@ class CloudApplicationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.search] {str}: Filter application by name
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
-                [query_params.app_class] {str}: Filter application by application category
-                [query_params.group_results] {bool}: Show count of applications grouped by application category
+                ``[query_params.search]`` {str}: Filter application by name
+                
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
+                
+                **[query_params.app_class] {str}: Filter application by application category
+                
+                **[query_params.group_results] {bool}: Show count of applications grouped by application category
 
         Returns:
             tuple: A tuple containing (list of Cloud Application Policies instances, Response, error)
@@ -90,11 +94,11 @@ class CloudApplicationsAPI(APIClient):
         
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.search] {str}: Filter application by name
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
-                [query_params.app_class] {str}: Filter application by application category
-                [query_params.group_results] {bool}: Show count of applications grouped by application category
+                ``[query_params.search]`` {str}: Filter application by name
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
+                **[query_params.app_class] {str}: Filter application by application category
+                **[query_params.group_results] {bool}: Show count of applications grouped by application category
 
         Returns:
             tuple: A tuple containing (list of Cloud Application SSL Policies instances, Response, error)

@@ -66,11 +66,9 @@ class InspectionControllerAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: A tuple containing (list of InspectionProfile instances, Response, error)
@@ -140,13 +138,83 @@ class InspectionControllerAPI(APIClient):
 
     def add_profile(self, **kwargs) -> tuple:
         """
-        Adds a new inspection profile.
+        Create a new inspection profile.
 
         Args:
-            kwargs (dict): A dictionary of attributes to create the inspection profile.
+            name (str):
+                The name of the inspection profile.
+
+            description (str):
+                The description of the inspection profile.
+
+            check_control_deployment_status (bool):
+                Indicates whether or not the service needs to perform additional validations.
+
+            paranoia_level (str):
+                The OWASP Predefined Paranoia Level.
+
+            incarnation_number (str):
+                A version or incarnation marker for the inspection profile.
+
+            global_control_actions (list):
+                The actions of the predefined, custom, or override controls.
+
+            predefined_controls_version (list):
+                The protocol for the AppProtection application.
+
+            zs_defined_control_choice (str):
+                Indicates the user's choice for the ThreatLabZ Controls.
+
+                Supported values:
+                - ``ALL``: Zscaler handles the ThreatLabZ Controls for the AppProtection profile.
+                - ``SPECIFIC``: User handles the ThreatLabZ Controls for the AppProtection profile.
+
+            custom_controls (list):
+                The set of AppProtection controls used to define how inspections are managed.
+
+                Each control item may include:
+                - **action** (str):
+                Action of the custom control. Supported values: ``PASS``, ``BLOCK``, or ``REDIRECT``.
+                - **action_value** (str):
+                The value for the defined control's action; only required if the action is ``REDIRECT``.
+                - **default_action_value** (str):
+                The redirect URL if the default action is set to ``REDIRECT``.
+
+            controls_info (list):
+                A list of server group IDs for the control set.
+
+                Each item may include:
+                - **control_type** (str):
+                The control type. Supported values: ``WEBSOCKET_PREDEFINED``, ``WEBSOCKET_CUSTOM``,
+                ``THREATLABZ``, ``CUSTOM``, ``PREDEFINED``.
+                - **count** (int):
+                The count of controls in this set.
+
+            threat_labz_controls (list):
+                The ThreatLabZ predefined controls.
+
+                Each item may include:
+                - **action** (str):
+                Supported values: ``PASS``, ``BLOCK``, or ``REDIRECT``.
+                - **action_value** (str):
+                Required only if the action is ``REDIRECT``.
+                - **default_action_value** (str):
+                Redirect URL if the default action is ``REDIRECT``.
+
+            websocket_controls (list):
+                The WebSocket controls.
+
+                Each item may include:
+                - **action** (str):
+                Supported values: ``PASS``, ``BLOCK``, or ``REDIRECT``.
+                - **action_value** (str):
+                Required only if the action is ``REDIRECT``.
+                - **default_action_value** (str):
+                Redirect URL if the default action is ``REDIRECT``.
 
         Returns:
-            InspectionProfile: The created inspection profile object.
+            tuple:
+                A tuple containing the `InspectionProfile` instance, the response object, and an error (if any).
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -489,11 +557,10 @@ class InspectionControllerAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.sort_dir]`` {str}: Specifies the sorting order (ascending/descending) for the search results. Available values : ASC, DESC
 
         Returns:
             tuple: A tuple containing (list of AppProtectionCustomControl instances, Response, error)
@@ -712,28 +779,28 @@ class InspectionControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def list_predef_controls(
-        self,
-        query_params=None,
-    ) -> tuple:
+    def list_predef_controls(self, query_params=None) -> tuple:
         """
         Returns a list of predefined ZPA Inspection Controls.
 
         Args:
-            query_params {dict}: Additional query parameters for the request. 
+            query_params (dict):
+                Additional query parameters for the request.
+
                 Includes:
-                    - search: The field name to search for.
-                    - search_field: The value to search for within the field.
+                    - ``search`` (str): The field name to search for.
+                    - ``search_field`` (str): The value to search for within the field.
 
         Returns:
-            tuple: A tuple containing (list of PredefinedInspectionControl objects, Response, error).
+            tuple:
+                A tuple containing (list of PredefinedInspectionControl objects, Response, error).
 
         Examples:
             >>> for control in zpa.inspection.list_predef_controls():
             ...     print(control)
 
             >>> for control in zpa.inspection.list_predef_controls(
-                    query_params={"search": "controlGroup", "search_field": "Protocol Issues"}):
+            ...         query_params={"search": "controlGroup", "search_field": "Protocol Issues"}):
             ...     print(control)
         """
         # Initialize URL and HTTP method

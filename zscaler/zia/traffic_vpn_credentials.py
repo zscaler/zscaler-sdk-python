@@ -37,15 +37,13 @@ class TrafficVPNCredentialAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.type] {str}: The type of VPN credential. Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
-                [query_params.include_only_without_location] {bool}: Include VPN credential only if not associated with any location.
-                [query_params.location_id] {int}: Gets the VPN credentials for the specified location ID.
-                [query_params.managedBy] {int}: Gets the VPN credentials managed by the given partner.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.type]`` {str}: The type of VPN credential. Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
+                ``[query_params.include_only_without_location]`` {bool}: Include VPN credential only if not associated with any location.
+                ``[query_params.location_id]`` {int}: Gets the VPN credentials for the specified location ID.
+                ``[query_params.managed_by]`` {int}: Gets the VPN credentials managed by the given partner.
 
         Returns:
             tuple: A tuple containing (list of VPN credentials instances, Response, error)
@@ -168,24 +166,26 @@ class TrafficVPNCredentialAPI(APIClient):
         Args:
             credential (dict):
                 A dictionary representing the VPN credential to be created.
-                It must include `type` (either `IP` or `UFQDN`) and `pre_shared_key`.
+                It must include ``type`` (either ``IP`` or ``UFQDN``) and ``pre_shared_key``.
 
-                For example:
-                {
-                    "type": "UFQDN",
-                    "fqdn": "example@domain.com",
-                    "pre_shared_key": "my_key",
-                    "comments": "Optional comments",
-                    "location_id": 12345
-                }
+                For example::
+
+                    {
+                        "type": "UFQDN",
+                        "fqdn": "example@domain.com",
+                        "pre_shared_key": "my_key",
+                        "comments": "Optional comments",
+                        "location_id": 12345
+                    }
 
         Returns:
-            :obj:`tuple`: The newly created VPN credential resource record.
+            tuple:
+                The newly created VPN credential resource record, accompanied by the response object and any error.
 
         Raises:
-            ValueError: If required arguments are not provided or invalid.
+            ValueError:
+                If required arguments are not provided or invalid.
         """
-
         # Validate the `type`
         valid_types = ["IP", "UFQDN"]
         if "type" not in credential or credential["type"] not in valid_types:

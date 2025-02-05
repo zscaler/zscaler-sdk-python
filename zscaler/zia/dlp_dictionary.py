@@ -40,10 +40,7 @@ class DLPDictionaryAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.search]`` {str}: The search string used to match against a DLP dictionary's name or description attributes.
 
         Returns:
             tuple: A tuple containing (list of DLPTemplates instances, Response, error)
@@ -51,12 +48,12 @@ class DLPDictionaryAPI(APIClient):
         Examples:
             Print all dictionaries
 
-            >>> for dictionary in zia.dlp.list_dicts():
+            >>> for dictionary in zia.dlp_dictionary.list_dicts():
             ...    pprint(dictionary)
 
             Print dictionaries that match the name or description 'GDPR'
 
-            >>> pprint(zia.dlp.list_dicts('GDPR'))
+            >>> pprint(zia.dlp_dictionary.list_dicts('GDPR'))
 
         """
         http_method = "get".upper()
@@ -72,12 +69,14 @@ class DLPDictionaryAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
 
         if error:
             return (None, response, error)
@@ -98,10 +97,10 @@ class DLPDictionaryAPI(APIClient):
             dict_id (str): The unique id for the DLP Dictionary.
 
         Returns:
-            :obj:`Box`: The ZIA DLP Dictionary resource record.
+            :obj:`Tuple`: The ZIA DLP Dictionary resource record.
 
         Examples:
-            >>> pprint(zia.dlp.get_dict('3'))
+            >>> pprint(zia.dlp_dictionary.get_dict('3'))
 
         """
         http_method = "get".upper()
@@ -160,12 +159,12 @@ class DLPDictionaryAPI(APIClient):
                     ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
 
         Returns:
-            :obj:`Box`: The newly created DLP Dictionary resource record.
+            :obj:`Tuple`: The newly created DLP Dictionary resource record.
 
         Examples:
             Match text found that contains an IPv4 address using patterns:
 
-            >>> zia.dlp.add_dict(name='IPv4 Addresses',
+            >>> zia.dlp_dictionary.add_dict(name='IPv4 Addresses',
             ...                description='Matches IPv4 address pattern.',
             ...                match_type='all',
             ...                patterns=[
@@ -174,7 +173,7 @@ class DLPDictionaryAPI(APIClient):
 
             Match text found that contains government document caveats using phrases.
 
-            >>> zia.dlp.add_dict(name='Gov Document Caveats',
+            >>> zia.dlp_dictionary.add_dict(name='Gov Document Caveats',
             ...                description='Matches government classification caveats.',
             ...                match_type='any',
             ...                phrases=[
@@ -186,7 +185,7 @@ class DLPDictionaryAPI(APIClient):
             Match text found that meets the criteria for a Secret Project's document markings using phrases and
             patterns:
 
-            >>> zia.dlp.add_dict(name='Secret Project Documents',
+            >>> zia.dlp_dictionary.add_dict(name='Secret Project Documents',
             ...                description='Matches documents created for the Secret Project.',
             ...                match_type='any',
             ...                phrases=[
@@ -267,12 +266,12 @@ class DLPDictionaryAPI(APIClient):
         Examples:
             Update the name of a DLP Dictionary:
 
-            >>> zia.dlp.update_dict('3',
+            >>> zia.dlp_dictionary.update_dict('3',
             ...                name='IPv4 and IPv6 Addresses')
 
             Update the description and phrases for a DLP Dictionary.
 
-            >>> zia.dlp.update_dict('4',
+            >>> zia.dlp_dictionary.update_dict('4',
             ...        description='Updated government caveats.'
             ...        phrases=[
             ...                    ('all', 'TOP SECRET'),
@@ -314,7 +313,7 @@ class DLPDictionaryAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.dlp.delete_dict('8')
+            >>> zia.dlp_dictionary.delete_dict('8')
 
         """
         http_method = "delete".upper()
@@ -387,7 +386,7 @@ class DLPDictionaryAPI(APIClient):
         Examples:
             List predefined identifiers for the 'USDL_LEAKAGE' dictionary
 
-            >>> pprint(zia.dlp.list_dict_predefined_identifiers('USDL_LEAKAGE'))
+            >>> pprint(zia.dlp_dictionary.list_dict_predefined_identifiers('USDL_LEAKAGE'))
 
         """
         # Search for dictionaries

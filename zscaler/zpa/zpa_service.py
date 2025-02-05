@@ -2,8 +2,8 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.authdomains import AuthDomainsAPI
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.application_segment import ApplicationSegmentAPI
-from zscaler.zpa.application_segment_inspection import AppSegmentsInspectionAPI
-from zscaler.zpa.application_segment_pra import AppSegmentsPRAAPI
+from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
+from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.app_connector_groups import AppConnectorGroupAPI
 from zscaler.zpa.app_connectors import AppConnectorControllerAPI
 from zscaler.zpa.app_connector_schedule import AppConnectorScheduleAPI
@@ -33,7 +33,7 @@ from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.segment_groups import SegmentGroupsAPI
 from zscaler.zpa.server_groups import ServerGroupsAPI
 from zscaler.zpa.service_edges import ServiceEdgeControllerAPI
-from zscaler.zpa.service_edge_groups import ServiceEdgeGroupAPI
+from zscaler.zpa.service_edge_group import ServiceEdgeGroupAPI
 from zscaler.zpa.service_edge_schedule import ServiceEdgeScheduleAPI
 from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_groups import SCIMGroupsAPI
@@ -65,9 +65,9 @@ class ZPAService:
         return ApplicationSegmentByTypeAPI(self._request_executor, self._config)
     
     @property
-    def app_segments(self):
+    def application_segment(self):
         """
-        The interface object for the :ref:`ZPA Application Segments interface <zpa-app_segments>`.
+        The interface object for the :ref:`ZPA Application Segments interface <zpa-application_segment>`.
 
         """
         return ApplicationSegmentAPI(self._request_executor, self._config)
@@ -161,9 +161,9 @@ class ZPAService:
         return AppConnectorGroupAPI(self._request_executor, self._config)
 
     @property
-    def connectors(self):
+    def app_connectors(self):
         """
-        The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
+        The interface object for the :ref:`ZPA Connectors interface <zpa-app_connectors>`.
 
         """
         return AppConnectorControllerAPI(self._request_executor, self._config)
@@ -347,7 +347,7 @@ class ZPAService:
     @property
     def service_edge_group(self):
         """
-        The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_groups>`.
+        The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_group>`.
 
         """
         return ServiceEdgeGroupAPI(self._request_executor, self._config)

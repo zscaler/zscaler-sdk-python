@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import snake_to_camel, format_url
+from zscaler.utils import snake_to_camel, format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_rules import FirewallRule
 from zscaler.zia.models.cloud_firewall_destination_groups import IPDestinationGroups
@@ -28,26 +28,6 @@ from zscaler.zia.models.cloud_firewall_time_windows import TimeWindows
 import logging
 
 class FirewallPolicyAPI(APIClient):
-    # Firewall filter rule keys that only require an ID to be provided.
-    reformat_params = [
-        ("app_services", "appServices"),
-        ("app_service_groups", "appServiceGroups"),
-        ("departments", "departments"),
-        ("devices", "devices"),
-        ("device_groups", "deviceGroups"),
-        ("dest_ip_groups", "destIpGroups"),
-        ("dest_ipv6_groups", "destIpv6Groups"),
-        ("groups", "groups"),
-        ("labels", "labels"),
-        ("locations", "locations"),
-        ("location_groups", "locationGroups"),
-        ("nw_application_groups", "nwApplicationGroups"),
-        ("nw_service_groups", "nwServiceGroups"),
-        ("src_ip_groups", "srcIpGroups"),
-        ("src_ipv6_groups", "srcIpv6Groups"),
-        ("time_windows", "timeWindows"),
-        ("users", "users"),
-    ]
 
     _zia_base_endpoint = "/zia/api/v1"
 
@@ -66,10 +46,8 @@ class FirewallPolicyAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: A tuple containing (list of firewall rules instances, Response, error)
@@ -125,7 +103,7 @@ class FirewallPolicyAPI(APIClient):
             rule_id (str): The unique identifier for the firewall filter rule.
 
         Returns:
-            :obj:`Box`: The resource record for the firewall filter rule.
+            :obj:`Tuple`: The resource record for the firewall filter rule.
 
         Examples:
             >>> pprint(zia.firewall.get_rule('431233'))
@@ -161,7 +139,7 @@ class FirewallPolicyAPI(APIClient):
 
     def add_rule(
         self,
-        rule: dict,
+        **kwargs,
     ) -> tuple:
         """
         Adds a new firewall filter rule.
@@ -204,7 +182,7 @@ class FirewallPolicyAPI(APIClient):
             users (list): IDs for users the rule applies to.
 
         Returns:
-            :obj:`Box`: New firewall filter rule resource record.
+            :obj:`Tuple`: New firewall filter rule resource record.
 
         Examples:
             Add a rule to allow all traffic to Google DNS:
@@ -226,18 +204,17 @@ class FirewallPolicyAPI(APIClient):
         """
         )
 
-        # Ensure the rule is passed as a dictionary
-        if isinstance(rule, dict):
-            body = rule
-        else:
-            body = rule.as_dict()
+        body = kwargs
 
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
-        if "enabled" in body:
-            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(
+        request, error = self._request_executor\
+            .create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -247,14 +224,17 @@ class FirewallPolicyAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, FirewallRule)
+        response, error = self._request_executor\
+            .execute(request, FirewallRule)
 
         if error:
             return (None, response, error)
 
         try:
             # Parse the response and return it as a FirewallRule object
-            result = FirewallRule(self.form_response_body(response.get_body()))
+            result = FirewallRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -298,7 +278,7 @@ class FirewallPolicyAPI(APIClient):
             users (list): IDs for users the rule applies to.
 
         Returns:
-            :obj:`Box`: The updated firewall filter rule resource record.
+            :obj:`Tuple`: The updated firewall filter rule resource record.
 
         Examples:
             Update the destination IP addresses for a rule:
@@ -325,10 +305,10 @@ class FirewallPolicyAPI(APIClient):
         body = kwargs
 
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
-        if "enabled" in body:
-            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
-
-        # transform_common_id_fields(self.reformat_params, payload, payload)
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
         request, error = self._request_executor\
@@ -391,33 +371,29 @@ class FirewallPolicyAPI(APIClient):
         Returns a list of IP Destination Groups.
 
         Args:
-            exclude_type (str): Exclude all groups that match the specified IP destination group's type.
-                Accepted values are: `DSTN_IP`, `DSTN_FQDN`, `DSTN_DOMAIN`, and `DSTN_OTHER`.
-            query_params (dict, optional): Additional query parameters for pagination or filtering.
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.exclude_type]`` (str):
+                    Exclude all groups that match the specified IP destination group's type.
+                    Accepted values: ``DSTN_IP``, ``DSTN_FQDN``, ``DSTN_DOMAIN``, ``DSTN_OTHER``.
 
         Returns:
-            tuple: A tuple containing (list of IP Destination Group records, Response object, error).
-
-            The list of IP Destination Group records is a list of dictionaries, each representing a group.
-            Example:
-            [
-                {'id': 2590357, 'name': 'example100', 'type': 'DSTN_IP', 'addresses': ['1.1.1.1'], 'countries': [], 'ipCategories': []}
-            ]
+            tuple:
+                A tuple containing (list of IPDestinationGroups instances, Response, error)
 
         Examples:
             >>> for group in zia.firewall.list_ip_destination_groups():
-            ...    pprint(group)
-
-        Raises:
-            ValueError: If the exclude_type is not one of the supported values.
-
+            ...     pprint(group)
         """
+        
         # Define supported values for exclude_type
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
         # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(f"Invalid exclude_type: {exclude_type}. Supported values are: {', '.join(valid_exclude_types)}")
+            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}")
 
         http_method = "get".upper()
         api_url = format_url(
@@ -523,7 +499,7 @@ class FirewallPolicyAPI(APIClient):
             countries (list): Destination IP address counties.
 
         Returns:
-            :obj:`Box`: The newly created IP Destination Group resource record.
+            :obj:`Tuple`: The newly created IP Destination Group resource record.
 
         Examples:
             Add a Destination IP Group with IP addresses:
@@ -601,7 +577,7 @@ class FirewallPolicyAPI(APIClient):
             countries (list): Destination IP address countries.
 
         Returns:
-            :obj:`Box`: The updated IP Destination Group resource record.
+            :obj:`Tuple`: The updated IP Destination Group resource record.
 
         Examples:
             Update the name of an IP Destination Group:
@@ -692,10 +668,8 @@ class FirewallPolicyAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of IP Source Groups instances, Response, error)
@@ -864,7 +838,7 @@ class FirewallPolicyAPI(APIClient):
             description (str): Additional information for the IP Source Group.
 
         Returns:
-            :obj:`Box`: The updated IP Source Group resource record.
+            :obj:`Tuple`: The updated IP Source Group resource record.
 
         Examples:
             Update the name of an IP Source Group:
@@ -952,19 +926,22 @@ class FirewallPolicyAPI(APIClient):
         Returns a list of all Network Application Groups.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.page]`` (int):
+                    Specifies the page offset.
+
+                ``[query_params.page_size]`` (int):
+                    Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            tuple: A tuple containing (list of Network Application Group instances, Response, error)
+            tuple:
+                A tuple containing (list of NetworkApplicationGroups instances, Response, error).
 
         Examples:
             >>> for group in zia.firewall.list_network_app_groups():
-            ...    pprint(group)
-
+            ...     pprint(group)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -1061,7 +1038,7 @@ class FirewallPolicyAPI(APIClient):
             network_applications (list): A list of Application IDs to add to the group.
 
         Returns:
-            :obj:`Box`: The newly created Network Application Group resource record.
+            :obj:`Tuple`: The newly created Network Application Group resource record.
 
         Examples:
             Add a new Network Application Group:
@@ -1125,7 +1102,7 @@ class FirewallPolicyAPI(APIClient):
             description (str): Additional information for the Network Application Group.
 
         Returns:
-            :obj:`Box`: The updated Network Application Group resource record.
+            :obj:`Tuple`: The updated Network Application Group resource record.
 
         Examples:
             Update the name of an Network Application Group:
@@ -1210,32 +1187,34 @@ class FirewallPolicyAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_network_apps(
-        self,
-        query_params=None,
-    ) -> tuple:
+    def list_network_apps(self, query_params=None) -> tuple:
         """
         Lists Network Applications in your organization with pagination.
         A subset of Network Applications can be returned that match a supported
         filter expression or query.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.locale] {str}: When set to one of the supported locales
-                    (i.e., en-US, de-DE, es-ES, fr-FR, ja-JP, zh-CN), the network application
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.page_size]`` (int):
+                    Page size for pagination.
+
+                ``[query_params.search]`` (str):
+                    Search string for filtering results.
+
+                ``[query_params.locale]`` (str):
+                    When set to one of the supported locales (e.g., ``en-US``, ``de-DE``, 
+                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application 
                     description is localized into the requested language.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
 
         Returns:
-            tuple: A tuple containing (list of firewall rules instances, Response, error)
+            tuple:
+                A tuple containing (list of firewall rules instances, Response, error).
 
         Examples:
             >>> for app in zia.firewall.list_network_apps():
-            ...    pprint(app)
-
+            ...     pprint(app)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -1326,10 +1305,8 @@ class FirewallPolicyAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: List of Network Service Group resource records.
@@ -1429,7 +1406,7 @@ class FirewallPolicyAPI(APIClient):
             description (str): Additional information about the Network Service Group.
 
         Returns:
-            :obj:`Box`: The newly created Network Service Group resource record.
+            :obj:`Tuple`: The newly created Network Service Group resource record.
 
         Examples:
             Add a new Network Service Group:
@@ -1492,7 +1469,7 @@ class FirewallPolicyAPI(APIClient):
             description (str): Additional information about the Network Service Group.
 
         Returns:
-            :obj:`Box`: The updated Network Service Group resource record.
+            :obj:`Tuple`: The updated Network Service Group resource record.
 
         Examples:
             Update the name Network Service Group:
@@ -1576,10 +1553,8 @@ class FirewallPolicyAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: A tuple containing (list of network services instances, Response, error)
@@ -1634,7 +1609,7 @@ class FirewallPolicyAPI(APIClient):
             service_id (str): The unique ID for the Network Service.
 
         Returns:
-            :obj:`Box`: The Network Service resource record.
+            :obj:`Tuple`: The Network Service resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_network_service('762398'))
@@ -1699,7 +1674,7 @@ class FirewallPolicyAPI(APIClient):
             description (str): Additional information on the Network Service.
 
         Returns:
-            :obj:`Box`: The newly created Network Service resource record.
+            :obj:`Tuple`: The newly created Network Service resource record.
 
         Examples:
             Add Network Service for Microsoft Exchange:

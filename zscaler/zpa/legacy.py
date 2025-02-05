@@ -231,9 +231,9 @@ class LegacyZPAClientHelper():
         return ApplicationSegmentByTypeAPI(self.request_executor, self.config)
 
     @property
-    def app_segments(self):
+    def application_segment(self):
         """
-        The interface object for the :ref:`ZPA Application Segments interface <zpa-app_segments>`.
+        The interface object for the :ref:`ZPA Application Segments interface <zpa-application_segment>`.
 
         """
         from zscaler.zpa.application_segment import ApplicationSegmentAPI
@@ -245,7 +245,7 @@ class LegacyZPAClientHelper():
         The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_pra>`.
 
         """
-        from zscaler.zpa.application_segment_pra import AppSegmentsPRAAPI
+        from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
         return AppSegmentsPRAAPI(self.request_executor, self.config)
 
     @property
@@ -254,7 +254,7 @@ class LegacyZPAClientHelper():
         The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_inspection>`.
 
         """
-        from zscaler.zpa.application_segment_inspection import AppSegmentsInspectionAPI
+        from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
         return AppSegmentsInspectionAPI(self.request_executor, self.config)
 
     @property
@@ -539,10 +539,10 @@ class LegacyZPAClientHelper():
     @property
     def service_edge_group(self):
         """
-        The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_groups>`.
+        The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_group>`.
 
         """
-        from zscaler.zpa.service_edge_groups import ServiceEdgeGroupAPI
+        from zscaler.zpa.service_edge_group import ServiceEdgeGroupAPI
         return ServiceEdgeGroupAPI(self.request_executor, self.config)
 
     @property

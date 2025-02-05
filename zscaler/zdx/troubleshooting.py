@@ -47,7 +47,7 @@ class TroubleshootingAPI:
             probe_device (bool): Whether to probe the device.
 
         Returns:
-            :obj:`Box`: The deeptrace resource record.
+            :obj:`Tuple`: The deeptrace resource record.
 
         Examples:
             Start a deeptrace for a device.
@@ -73,7 +73,7 @@ class TroubleshootingAPI:
             trace_id (str): The unique ID for the deeptrace.
 
         Returns:
-            :obj:`Box`: The deeptrace resource record.
+            :obj:`Tuple`: The deeptrace resource record.
 
         Examples:
             Print a single deeptrace for a device.

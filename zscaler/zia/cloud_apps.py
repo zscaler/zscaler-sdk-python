@@ -49,7 +49,7 @@ class CloudAppsAPI(APIClient):
         List all predefined and custom cloud applications by name and id.
 
         Returns:
-            :obj:`BoxList` of :obj:`Box`: A list of cloud applications.
+            obj:`Tuple`: A list of cloud applications.
 
         Examples:
             List all cloud applications::
@@ -71,7 +71,8 @@ class CloudAppsAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, {}, headers, {}, params=query_params)
 
         if error:
             return (None, None, error)
@@ -86,7 +87,9 @@ class CloudAppsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudapplicationsAndTags(self.form_response_body(item)))
+                result.append(CloudapplicationsAndTags(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 
@@ -97,7 +100,7 @@ class CloudAppsAPI(APIClient):
         List all custom tags by name and id.
 
         Returns:
-            :obj:`BoxList` of :obj:`Box`: A list of custom tags available to assign to cloud applications.
+            :obj:`Tuple`: A list of custom tags available to assign to cloud applications.
 
         Examples:
             List all custom tags::

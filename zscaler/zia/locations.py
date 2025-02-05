@@ -37,47 +37,56 @@ class LocationsAPI(APIClient):
         Returns a list of locations.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+            query_params (dict):
+                Map of query parameters for the request.
 
-        Keyword Args:
-            **auth_required (bool, optional):
-                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
-            **bw_enforced (bool, optional):
-                Filter based on whether Bandwith Control is being enforced for a location.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
-            **search (str, optional):
-                The search string used to partially match against a location's name and port attributes.
-            **xff_enabled (bool, optional):
-                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+                ``[query_params.page]`` (str):
+                    Specifies the page offset.
+
+                ``[query_params.page_size]`` (str):
+                    Specifies the page size. The default size is 100, but the maximum size is 1000.
+
+                ``[query_params.search]`` (str):
+                    The search string used to partially match against a location's name and port attributes.
+
+                ``[query_params.ssl_scan_enabled]`` (bool):
+                    This parameter was deprecated and no longer has an effect on SSL policy.
+
+                ``[query_params.xff_enabled]`` (bool):
+                    Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled
+                    for a location.
+
+                ``[query_params.auth_required]`` (bool):
+                    Filter based on whether the Enforce Authentication setting is enabled or disabled
+                    for a location.
+
+                ``[query_params.bw_enforced]`` (bool):
+                    Filter based on whether Bandwidth Control is being enforced for a location.
+
+                ``[query_params.enable_iot]`` (bool):
+                    If set to true, the city field (containing IoT-enabled location IDs, names, latitudes,
+                    and longitudes) and the iotDiscoveryEnabled filter are included in the response.
+                    Otherwise, they are not included.
 
         Returns:
-            tuple: List of configured locations.
+            tuple:
+                List of configured locations as (LocationManagement, Response, error).
 
         Examples:
             List locations using default settings:
 
             >>> for location in zia.locations.list_locations():
-            ...    print(location)
+            ...     print(location)
 
             List locations, limiting to a maximum of 10 items:
 
             >>> for location in zia.locations.list_locations(max_items=10):
-            ...    print(location)
+            ...     print(location)
 
             List locations, returning 200 items per page for a maximum of 2 pages:
 
             >>> for location in zia.locations.list_locations(page_size=200, max_pages=2):
-            ...    print(location)
-
+            ...     print(location)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -530,11 +539,8 @@ class LocationsAPI(APIClient):
 
             location_id (int): The unique identifier for the parent location.
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
-
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
             **auth_required (bool, optional):
@@ -604,10 +610,8 @@ class LocationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
             **include_parent_locations (bool, optional):
@@ -683,10 +687,8 @@ class LocationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
             groupType (str): The location group's type (i.e., Static or Dynamic).
@@ -789,11 +791,8 @@ class LocationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
-
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
             group_type (str): The location group's type (i.e., Static or Dynamic).
@@ -966,11 +965,9 @@ class LocationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.prefix] {str}: The string used in the prefix search of the city or region. It can contain names of city, state, country in the following format: city name, state name, country name.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.prefix]`` {str}: The string used in the prefix search of the city or region. It can contain names of city, state, country in the following format: city name, state name, country name.
 
         Returns:
             :obj:`tuple`: A list of dictionaries containing the cities' geographical data and the raw response.

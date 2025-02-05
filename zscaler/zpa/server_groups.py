@@ -44,11 +44,10 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: A tuple containing (list of ServerGroups instances, Response, error)
@@ -70,19 +69,23 @@ class ServerGroupsAPI(APIClient):
             query_params["microtenantId"] = microtenant_id
 
         # Prepare request
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ServerGroup(self.form_response_body(item)))
+                result.append(ServerGroup(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -93,6 +96,8 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             group_id (str): The unique id for the server group.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             tuple: A tuple containing (ServerGroup, Response, error)
@@ -112,18 +117,22 @@ class ServerGroupsAPI(APIClient):
             query_params["microtenantId"] = microtenant_id
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, ServerGroup)
+        response, error = self._request_executor.\
+            execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = ServerGroup(self.form_response_body(response.get_body()))
+            result = ServerGroup(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -134,10 +143,46 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             name (str): The name for the server group.
-            app_connector_group_ids (list of str): A list of application connector IDs that will be attached to the server group.
+            app_connector_group_ids (list of str): 
+                A list of application connector IDs that will be attached to the server group.
+                
+            **kwargs:
+                Optional params.
+
+        Keyword Args:
+            **application_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of applications to associate with this server group.
+            **config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
+            **description (str): Additional information about the server group.
+            **enabled (bool): Enable the server group.
+            **ip_anchored (bool): Enable IP Anchoring.
+            **dynamic_discovery (bool): Enable Dynamic Discovery.
+            **server_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of servers to associate with this server group.
+            **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
             tuple: A tuple containing (ServerGroup, Response, error)
+            
+        Examples:
+            Create a server group with the minimum params:
+
+            >>> zpa.server_groups.add_group(
+            ...    name='new_server_group',
+            ...    app_connector_group_ids=['99999'],
+
+            Create a server group and define a new application server on the fly:
+
+            >>> zpa.server_groups.add_group(
+            ...    name='new_server_group',
+            ...    description='new_server_group',
+            ...    enabled=True,
+            ...    dynamic_discovery=True,
+            ...    app_connector_group_ids=['99999'],
+            ...    servers=[{
+            ...      'name': 'new_server',
+            ...      'address': '10.0.0.30',
+            ...      'enabled': True}])
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -147,7 +192,6 @@ class ServerGroupsAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
         # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
@@ -164,17 +208,21 @@ class ServerGroupsAPI(APIClient):
         add_id_groups(self.reformat_params, kwargs, body)
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, ServerGroup)
+        response, error = self._request_executor.\
+            execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = ServerGroup(self.form_response_body(response.get_body()))
+            result = ServerGroup(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -185,6 +233,7 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             group_id (str): The unique identifier for the server group.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
             tuple: A tuple containing (ServerGroup, Response, error)
@@ -258,6 +307,7 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             group_id (str): The unique id for the server group to be deleted.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
             tuple: A tuple containing (None, Response, error)
@@ -274,12 +324,14 @@ class ServerGroupsAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

@@ -14,7 +14,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
+from zscaler.zia.models.forwarding_control_policy import ForwardingControlRule
+from zscaler.zia.models.proxy_gatways import ProxyGatways
 from zscaler.utils import format_url
 from zscaler.utils import (
     convert_keys,
@@ -22,8 +25,8 @@ from zscaler.utils import (
     snake_to_camel,
     transform_common_id_fields,
 )
-from zscaler.api_client import APIClient
-from zscaler.zia.models.forwarding_control_policy import ForwardingControlRule
+
+
 
 
 class ForwardingControlAPI(APIClient):
@@ -61,16 +64,26 @@ class ForwardingControlAPI(APIClient):
 
     def list_rules(self) -> tuple:
         """
-        Returns a list of all forwarding control rules.
+        Lists forwarding control rules rules in your organization with pagination.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+
+        Returns:
+            tuple: A tuple containing (list of forwarding control rules instances, Response, error).
         """
         http_method = "get".upper()
         api_url = f"{self._zia_base_endpoint}/forwardingRules"
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, {}, {})
         if error:
             return error
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
@@ -89,15 +102,19 @@ class ForwardingControlAPI(APIClient):
         http_method = "get".upper()
         api_url = f"{self._zia_base_endpoint}/forwardingRules/{rule_id}"
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, ForwardingControlRule)
+        response, error = self._request_executor.\
+            execute(request, ForwardingControlRule)
         if error:
             return (None, response, error)
         try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+            result = ForwardingControlRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -136,7 +153,9 @@ class ForwardingControlAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+            result = ForwardingControlRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -157,16 +176,20 @@ class ForwardingControlAPI(APIClient):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload, {})
         if error:
             return error
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+            result = ForwardingControlRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -178,11 +201,13 @@ class ForwardingControlAPI(APIClient):
         http_method = "delete".upper()
         api_url = f"{self._zia_base_endpoint}/forwardingRules/{rule_id}"
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, {}, {})
         if error:
             return (None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (response, error)
 
@@ -190,18 +215,15 @@ class ForwardingControlAPI(APIClient):
 
     def get_proxy_gateways(self) -> tuple:
         """
-        Retrieves a list of URLs bypassed in ATP security exceptions.
+        Retrieves a list of Proxy Gateways.
 
         Returns:
             tuple: A tuple containing:
-                - list[str]: List of bypassed URLs.
-                - Response: The raw HTTP response from the API.
-                - error: Error details if the request fails.
+                N/A
 
         Examples:
-            >>> bypass_urls, response, err = client.zia.atp_policy.get_atp_security_exceptions()
-            >>> if not err:
-            ...     print("Bypassed URLs:", bypass_urls)
+            >>> proxy, response, err = client.zia.forwarding_control.get_proxy_gateways()
+
         """
 
         http_method = "get".upper()
@@ -212,20 +234,25 @@ class ForwardingControlAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
-        if error:
-            return (None, None, error)
+        body = {}
+        headers = {}
 
-        response, error = self._request_executor\
-            .execute(request)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
+
         if error:
-            return (None, response, error)
+            return None
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return None
 
         try:
-            bypass_urls = response.get_body().get("bypassUrls", [])
-            if not isinstance(bypass_urls, list):
-                raise ValueError("Unexpected response format: bypassUrls should be a list.")
-            return (bypass_urls, response, None)
-        except Exception as ex:
-            return (None, response, ex)
+            result = []
+            for item in response.get_results():
+                result.append(ProxyGatways(self.form_response_body(item))
+            )
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

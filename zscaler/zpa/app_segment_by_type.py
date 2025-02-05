@@ -47,12 +47,10 @@ class ApplicationSegmentByTypeAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.expand_all] {bool}: Additional information related to the applications
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.expand_all]`` {bool}: Additional information related to the applications
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: List of application segments.

@@ -56,12 +56,12 @@ class ProvisioningKeyAPI(APIClient):
         Args:
             key_type (str): The type of provisioning key. Accepted values are:
                 ``connector`` and ``service_edge``.
-            query_params (dict, optional): Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: A tuple containing (list of ProvisioningKey instances, Response, error)
@@ -119,15 +119,13 @@ class ProvisioningKeyAPI(APIClient):
         Args:
             key_id (str): The unique id of the provisioning key.
             key_type (str): The type of provisioning key, accepted values are:
-
                 ``connector`` and ``service_edge``.
-            **kwargs: Optional keyword arguments.
 
-        Keyword Args:
-            microtenant_id (str): The unique identifier for the microtenant.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Box`: The requested provisioning key resource record.
+            :obj:`Tuple`: The requested provisioning key resource record.
 
         Examples:
             Get the specified App Connector key.
@@ -189,10 +187,11 @@ class ProvisioningKeyAPI(APIClient):
             enrollment_cert_id (str): The unique id of the enrollment certificate for this provisioning key.
             component_id (str): The unique id of the component linked to this provisioning key.
             microtenant_id (str, optional): The microtenant ID if applicable.
+            
             **kwargs: Additional optional attributes.
 
         Returns:
-            :obj:`Box`: The newly created Provisioning Key resource record.
+            :obj:`Tuple`: The newly created Provisioning Key resource record.
         """
         if not key_type:
             raise ValueError("key_type must be provided.")
@@ -264,7 +263,7 @@ class ProvisioningKeyAPI(APIClient):
             microtenant_id (str, optional): The microtenant ID.
 
         Returns:
-            :obj:`Box`: The updated Provisioning Key resource record.
+            :obj:`Tuple`: The updated Provisioning Key resource record.
         """
         if not key_type:
             raise ValueError("key_type must be provided.")

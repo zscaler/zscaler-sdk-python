@@ -318,6 +318,8 @@ class PolicySetControllerAPI(APIClient):
                 |  ``timeout``
 
             rule_id (str): The unique identifier for the policy rule.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             PolicySetControllerV1: The resource record for the requested rule.
@@ -383,6 +385,13 @@ class PolicySetControllerAPI(APIClient):
                 |  ``capabilities`` - returns Capabilities Policy rules
                 |  ``siem`` - returns SIEM Policy rules
 
+        Keyword Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
+
         Returns:
             list: A list of PolicySetControllerV1 objects.
 
@@ -421,7 +430,9 @@ class PolicySetControllerAPI(APIClient):
 
         try:
             # Directly return the results as a list of dictionaries
-            result = [self.form_response_body(item) for item in response.get_results()]
+            result = [
+                self.form_response_body(item) for item in response.get_results()
+            ]
         except Exception as error:
             return (None, response, error)
 
@@ -525,16 +536,20 @@ class PolicySetControllerAPI(APIClient):
             payload[snake_to_camel(key)] = value
 
         # Create and execute the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body=payload, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, PolicySetControllerV1)
+        response, error = self._request_executor.\
+            execute(request, PolicySetControllerV1)
         if error:
             return (None, response, error)
 
         try:
-            result = PolicySetControllerV1(self.form_response_body(response.get_body()))
+            result = PolicySetControllerV1(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -1561,7 +1576,7 @@ class PolicySetControllerAPI(APIClient):
                     ('trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True)]
 
         Returns:
-            :obj:`Box`: The resource record of the newly created access policy rule.
+            :obj:`Tuple`: The resource record of the newly created access policy rule.
 
         """
         # Retrieve policy_set_id explicitly
@@ -2830,7 +2845,7 @@ class PolicySetControllerAPI(APIClient):
                 - share_session (bool): Indicates PRA Session Control/Monitoring capabilities to enable PRA Session Monitoring.
 
         Returns:
-            :obj:`Box`: The resource record of the newly created Capabilities rule.
+            :obj:`Tuple`: The resource record of the newly created Capabilities rule.
 
         Example:
             Add a new capability rule with various capabilities and conditions:
@@ -2993,7 +3008,7 @@ class PolicySetControllerAPI(APIClient):
                 - share_session (bool): Indicates PRA Session Control/Monitoring capabilities to enable PRA Session Monitoring.
 
         Returns:
-            :obj:`Box`: The updated policy-capability-rule resource record.
+            :obj:`Tuple`: The updated policy-capability-rule resource record.
 
         Examples:
             Updates the name and capabilities for an existing Capability Policy rule:
@@ -3153,7 +3168,7 @@ class PolicySetControllerAPI(APIClient):
                         `zpn_client_type_machine_tunnel`, `zpn_client_type_zapp`, `zpn_client_type_zapp_partner`
 
         Returns:
-            :obj:`Box`: The resource record of the newly created Redirection Policy rule.
+            :obj:`Tuple`: The resource record of the newly created Redirection Policy rule.
 
         Example:
             Add a new redirection rule with various conditions and service edge group IDs:
@@ -3294,7 +3309,7 @@ class PolicySetControllerAPI(APIClient):
                     ]),
 
         Returns:
-            :obj:`Box`: The updated policy-rule resource record.
+            :obj:`Tuple`: The updated policy-rule resource record.
 
         Examples:
             Updates the name only for an Access Policy rule:
@@ -3470,24 +3485,34 @@ class PolicySetControllerAPI(APIClient):
     ) -> tuple:
         """
         Change the order of an existing policy rule.
-        Args:
-            policy_type (str): The policy type. Accepted values are:
 
-                |  ``access``
-                |  ``timeout``
-                |  ``client_forwarding``
-                |  ``isolation``
-                |  ``inspection``
-                |  ``redirection``
-                |  ``credential``
-                |  ``capabilities``
-                |  ``siem``
-            rule_id (str): The unique ID of the rule that will be reordered.
-            rule_order (str): The new order for the rule.
-            **kwargs: Optional keyword arguments.
-                microtenant_id (str): The ID of the microtenant, if applicable.
+        Args:
+            policy_type (str):
+                The policy type. Accepted values:
+                
+                - ``access``
+                - ``timeout``
+                - ``client_forwarding``
+                - ``isolation``
+                - ``inspection``
+                - ``redirection``
+                - ``credential``
+                - ``capabilities``
+                - ``siem``
+
+            rule_id (str):
+                The unique ID of the rule that will be reordered.
+            rule_order (str):
+                The new order for the rule.
+
+            **kwargs:
+                Optional keyword arguments.
+                - **microtenant_id** (str):
+                The ID of the microtenant, if applicable.
+
         Returns:
-            tuple: (Updated rule, response, error)
+            tuple:
+                (Updated rule, response, error)
 
         Examples:
             Updates the order for an existing access policy rule:
@@ -3507,7 +3532,6 @@ class PolicySetControllerAPI(APIClient):
             ...     microtenant_id='1234567890'
             ... )
         """
-
         http_method = "put".upper()
         policy_set_id, response, error = self.get_policy(
             policy_type, query_params={"microtenantId": kwargs.get("microtenantId")}

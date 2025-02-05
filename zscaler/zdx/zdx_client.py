@@ -122,7 +122,7 @@ class ZDXClientHelper:
         Validates the current ZDX JWT token.
 
         Returns:
-            :obj:`Box`: The validated session information.
+            :obj:`Tuple`: The validated session information.
 
         Examples:
             >>> validation = zdx.session.validate()
@@ -136,7 +136,7 @@ class ZDXClientHelper:
         Returns a JSON Web Key Set (JWKS) that contains the public keys that can be used to verify the JWT tokens.
 
         Returns:
-            :obj:`Box`: The JSON Web Key Set (JWKS).
+            :obj:`Tuple`: The JSON Web Key Set (JWKS).
 
         Examples:
             >>> jwks = zdx.session.get_jwks()

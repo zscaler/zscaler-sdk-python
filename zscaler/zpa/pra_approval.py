@@ -38,11 +38,12 @@ class PRAApprovalAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.sort_by]`` {str}: The sort string used to support sorting on the given field for the API.
+                ``[query_params.sort_dir]`` {str}: Specifies the sort direction (i.e., ascending or descending order). Available values : ASC, DESC                
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessApproval instances, Response, error)
@@ -87,7 +88,7 @@ class PRAApprovalAPI(APIClient):
         Args:
             approval_id (str): The unique identifier for the pra approval.
             query_params (dict, optional): Map of query parameters for the request.
-                [query_params.microtenantId] {str}: The microtenant ID, if applicable.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             tuple: A tuple containing (PrivilegedRemoteAccessApproval instance, Response, error).

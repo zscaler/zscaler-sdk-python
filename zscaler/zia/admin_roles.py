@@ -40,13 +40,15 @@ class AdminRolesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.include_auditor_role] {bool}: Include or exclude auditor user information in the list.
-                [query_params.include_partner_role] {bool}: Include or exclude admin user information in the list. Default is True.
-                [query_params.search] {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
-                [query_params.page] {int}: Specifies the page offset.
-                [query_params.pagesize] {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.include_auditor_role]`` {bool}: Include or exclude auditor user information in the list.
+                
+                ``[query_params.include_partner_role]`` {bool}: Include or exclude admin user information in the list. Default is True.
+                
+                ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
+                
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of AdminRole instances, Response, error)
@@ -102,7 +104,7 @@ class AdminRolesAPI(APIClient):
             name (str): The name of the admin roles  to retrieve.
 
         Returns:
-            :obj:`Box`: The admin roles  if found, otherwise None.
+            :obj:`Tuple`: The admin roles  if found, otherwise None.
 
         Examples:
             >>> role = zia.admin_and_role_management.get_roles_by_name('Super Admin')
@@ -122,7 +124,7 @@ class AdminRolesAPI(APIClient):
             name (str): The ID of the admin roles  to retrieve.
 
         Returns:
-            :obj:`Box`: The admin roles  if found, otherwise None.
+            :obj:`Tuple`: The admin roles  if found, otherwise None.
 
         Examples:
             >>> role = zia.admin_and_role_management.get_roles_by_id('123456789')

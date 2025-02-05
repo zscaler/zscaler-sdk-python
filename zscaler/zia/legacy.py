@@ -2,13 +2,9 @@ import datetime
 import logging
 import os
 import re
-import time
-import uuid
 from time import sleep
 
 import requests
-# from zscaler.errors.http_error import ZscalerAPIError
-# from zscaler.exceptions.exceptions import ZscalerAPIException
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
@@ -481,9 +477,9 @@ class LegacyZIAClientHelper():
         The interface object for the :ref:`ZIA End user Notification interface <zia-end_user_notification>`.
 
         """
-        from zscaler.zia.endusernotification import EndUserNotificationAPI
+        from zscaler.zia.end_user_notification import EndUserNotificationAPI
         return EndUserNotificationAPI(self.request_executor)
-
+    
     @property
     def file_type_control_rule(self):
         """
@@ -530,11 +526,20 @@ class LegacyZIAClientHelper():
         return PacFilesAPI(self.request_executor)
 
     @property
+    def policy_export(self):
+        """
+        The interface object for the :ref:`ZIA Policy Export interface <zia-policy_export>`.
+
+        """
+        from zscaler.zia.policy_export import PolicyExportAPI
+        return PolicyExportAPI(self.request_executor)
+    
+    @property
     def remote_assistance(self):
         """
         The interface object for the ZIA Remote Assistance interface.
         """
-        from zscaler.zia.remoteassistance import RemoteAssistanceAPI
+        from zscaler.zia.remote_assistance import RemoteAssistanceAPI
         return RemoteAssistanceAPI(self.request_executor)
                 
     @property
@@ -572,6 +577,24 @@ class LegacyZIAClientHelper():
         from zscaler.zia.security_policy_settings import SecurityPolicyAPI
         return SecurityPolicyAPI(self.request_executor)
     
+    @property
+    def ssl_inspection_rules(self):
+        """
+        The interface object for the :ref:`ZIA SSL Inspection Rules interface <zia-security_policy_settings>`.
+
+        """
+        from zscaler.zia.ssl_inspection_rules import SSLInspectionAPI
+        return SSLInspectionAPI(self.request_executor)
+
+    @property
+    def traffic_extranet(self):
+        """
+        The interface object for the :ref:`ZIA Extranet interface <zia-traffic_extranet>`.
+
+        """
+        from zscaler.zia.traffic_extranet import TrafficExtranetAPI
+        return TrafficExtranetAPI(self.request_executor)
+
     @property
     def traffic_gre_tunnel(self):
         """

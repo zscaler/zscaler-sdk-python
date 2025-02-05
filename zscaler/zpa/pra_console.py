@@ -37,11 +37,10 @@ class PRAConsoleAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                [query_params.pagesize] {int}: Page size for pagination.
-                [query_params.search] {str}: Search string for filtering results.
-                [query_params.microtenant_id] {str}: ID of the microtenant, if applicable.
-                [query_params.max_items] {int}: Maximum number of items to fetch before stopping.
-                [query_params.max_pages] {int}: Maximum number of pages to request before stopping.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             list: A list of `PrivilegedRemoteAccessConsole` instances.
@@ -59,18 +58,22 @@ class PRAConsoleAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(PrivilegedRemoteAccessConsole(self.form_response_body(item)))
+                result.append(PrivilegedRemoteAccessConsole(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -81,6 +84,8 @@ class PRAConsoleAPI(APIClient):
 
         Args:
             console_id (str): The unique identifier for the PRA console.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
             PrivilegedRemoteAccessConsole: The corresponding console object.
