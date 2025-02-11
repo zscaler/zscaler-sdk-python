@@ -60,20 +60,22 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        # Create the request with the query params
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request and parse the response into the AppTotal object
-        response, error = self._request_executor.execute(request, AppTotal)
+        response, error = self._request_executor.\
+            execute(request, AppTotal)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotal(self.form_response_body(response.get_body()))
+            result = AppTotal(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -97,23 +99,32 @@ class AppTotalAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/apps/app")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /apps/app
+        """
+        )
 
         payload = {
             "appId": app_id,
         }
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, AppTotal)
+        response, error = self._request_executor.\
+            execute(request, AppTotal)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotal(self.form_response_body(response.get_body()))
+            result = AppTotal(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -137,30 +148,36 @@ class AppTotalAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/apps/search")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /apps/search
+        """
+        )
 
-        # Include app_name in query parameters
         query_params = {
-            "appName": app_name,  # Ensure correct parameter naming as per API documentation
+            "appName": app_name,
         }
 
         body = {}
         headers = {}
 
-        # Create the request with query params
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request and parse the response into the AppTotalSearch object
-        response, error = self._request_executor.execute(request, AppTotalSearch)
+        response, error = self._request_executor.\
+            execute(request, AppTotalSearch)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotalSearch(self.form_response_body(response.get_body()))
+            result = AppTotalSearch(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -184,30 +201,36 @@ class AppTotalAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/app_views/{app_view_id}/apps")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /app_views/{app_view_id}/apps
+        """
+        )
 
-        # Include app_name in query parameters
         query_params = {
-            "appViewId": app_view_id,  # Ensure correct parameter naming as per API documentation
+            "appViewId": app_view_id,
         }
 
         body = {}
         headers = {}
 
-        # Create the request with query params
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request and parse the response into the AppTotalSearch object
-        response, error = self._request_executor.execute(request, AppTotalSearch)
+        response, error = self._request_executor.\
+            execute(request, AppTotalSearch)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotalSearch(self.form_response_body(response.get_body()))
+            result = AppTotalSearch(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 

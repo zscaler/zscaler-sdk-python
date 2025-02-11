@@ -30,23 +30,21 @@ class PolicyExportAPI(APIClient):
 
     def policy_export(self, policy_types=None, output_file=None) -> tuple:
         """
-        Exports the rules for the specified policy types to JSON (or ZIP) files, 
-        depending on the API response. One file is created per policy type.
+        Exports the rules for the specified policy types. The server typically returns 
+        a ZIP file containing one JSON file per policy type.
 
         Args:
-            policy_types (list[str]): A list of policy types to export. For example:
-                ["BA", "URL_FILTERING", "CUSTOM_CAPP", ...].
-                If omitted or None, you may get a default set (check your API doc).
-            output_file (str): Optional. If provided, the raw response is saved 
-                to a file with this name.
+            policy_types (list[str]): A list of policy types, e.g. ["BA", "URL_FILTERING", ...].
+            output_file (str): Optional. If provided, the ZIP is saved to disk at this file path.
 
         Returns:
-            tuple: A tuple of (export_content, error).
-                - export_content (bytes or dict or str): The raw response body,
-                  or None if error.
-                - error (str): Any error message. If None, the operation succeeded.
+            tuple:
+                (export_content, error)
 
-        Examples:
+                - export_content (bytes): The raw ZIP file bytes from the server (or raw JSON if only one type).
+                - error (str): Any error message, or None on success.
+
+        Example:
             >>> export_content, err = client.zia.policy_export.policy_export(
             ...     policy_types=["BA","URL_FILTERING"],
             ...     output_file="policy_export.zip"
@@ -57,54 +55,38 @@ class PolicyExportAPI(APIClient):
             ...     print("Policies exported successfully.")
         """
         http_method = "POST"
-        api_url = format_url(
-            f"""
-            {self._zia_base_endpoint}
-            /exportPolicies
-            """
-        )
+        api_url = format_url(f"{self._zia_base_endpoint}/exportPolicies")
 
-        # The API definition says: "body param is an array of strings"
-        # e.g. ["BA", "URL_FILTERING"]
-        # So we build the JSON body as that list.
-        # Or if no policy_types provided, pass empty list or omit if your API allows.
+        # Body must be an array of policy type strings
         body = policy_types if policy_types else []
 
-        # Depending on your API doc, the Accept might be "application/octet-stream"
-        # or maybe "application/zip" if it returns multiple policy files zipped up.
-        # Some endpoints may also respond with "application/json" if only one type is requested.
         headers = {
             "Accept": "application/octet-stream",
             "Content-Type": "application/json",
         }
 
-        # We want raw bytes if it's a file, so we might do `return_raw_response=True`
-        # in the request_executor call.
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
             headers=headers,
-            use_raw_data_for_body=False,  # Because we pass a Python list as JSON
+            use_raw_data_for_body=False,  # We'll let JSON be formed from the Python list
         )
         if error:
             return (None, error)
 
+        # We want raw bytes so we can save them if it's a ZIP
         response, error = self._request_executor.execute(
             request, return_raw_response=True
         )
         if error:
-            # If request failed, return the error and possibly the response body
             return (None, f"Request failed: {error}")
 
-        # The raw response might contain binary data (e.g. a .zip file)
-        # or possibly JSON. We'll store it in `content`.
-        content = response.content
+        content = response.content  # raw bytes (likely a .zip)
 
-        # If the user specified an output_file, write it to disk.
+        # If user asked for a file, write it
         if output_file:
             with open(output_file, "wb") as f:
                 f.write(content)
 
-        # Return the raw content as well.
         return (content, None)

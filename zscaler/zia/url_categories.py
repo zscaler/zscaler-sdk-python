@@ -42,7 +42,7 @@ class URLCategoriesAPI(APIClient):
                 The list of URLs to perform a category lookup on.
 
         Returns:
-            :obj:`BoxList`: A list of URL category reports.
+            :obj:`Tuple`: A list of URL category reports.
 
         Examples:
             >>> zia.url_categories.lookup(['example.com', 'test.com'])

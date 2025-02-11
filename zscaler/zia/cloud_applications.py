@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.zia.models.cloud_app_policy import CloudApplicationPolicy
 
 class CloudApplicationsAPI(APIClient):
     """
@@ -36,15 +37,16 @@ class CloudApplicationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+            
                 ``[query_params.search]`` {str}: Filter application by name
                 
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
                 
-                **[query_params.app_class] {str}: Filter application by application category
+                ``[query_params.app_class]`` {str}: Filter application by application category
                 
-                **[query_params.group_results] {bool}: Show count of applications grouped by application category
+                ``[query_params.group_results]`` {bool}: Show count of applications grouped by application category
 
         Returns:
             tuple: A tuple containing (list of Cloud Application Policies instances, Response, error)
@@ -52,7 +54,25 @@ class CloudApplicationsAPI(APIClient):
 
         Examples:
             Get a list of all cloud application policies:
-            >>> roles = zia.cloud_applications.list_cloud_app_policy()
+            
+            >>> applications_list, response, error = client.zia.cloud_applications.list_cloud_app_policy()
+            ... if error:
+            ...     print(f"Error listing applications list: {error}")
+            ...     return
+            ... print(f"Total applications found: {len(applications_list)}")
+            ... for app in applications_list:
+            ...     print(app.as_dict())
+
+            Get a list of cloud application policies using pagination and application class:
+            
+            >>> applications_list, response, error = client.zia.cloud_applications.list_cloud_app_policy(
+                query_params={"app_class": "WEB_MAIL", 'page': 1, 'page_size': 10})
+            ... if error:
+            ...     print(f"Error listing applications list: {error}")
+            ...     return
+            ... print(f"Total applications found: {len(applications_list)}")
+            ... for app in applications_list:
+            ...     print(app.as_dict())
 
         """
         http_method = "get".upper()
@@ -65,7 +85,6 @@ class CloudApplicationsAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
         
@@ -80,10 +99,13 @@ class CloudApplicationsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = response.get_results()  # No need for extra processing
+            result = []
+            for item in response.get_results():
+                result.append(CloudApplicationPolicy(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
         
     def list_cloud_app_ssl_policy(self, query_params=None) -> tuple:
@@ -94,19 +116,41 @@ class CloudApplicationsAPI(APIClient):
         
         Args:
             query_params {dict}: Map of query parameters for the request.
+            
                 ``[query_params.search]`` {str}: Filter application by name
+                
                 ``[query_params.page]`` {int}: Specifies the page offset.
+                
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 200, but the maximum size is 1000.
-                **[query_params.app_class] {str}: Filter application by application category
-                **[query_params.group_results] {bool}: Show count of applications grouped by application category
+                
+                ``[query_params.app_class]`` {str}: Filter application by application category.
+                
+                ``[query_params.group_results]`` {bool}: Show count of applications grouped by application category
 
         Returns:
             tuple: A tuple containing (list of Cloud Application SSL Policies instances, Response, error)
 
-
         Examples:
             Get a list of all cloud application policies:
-            >>> roles = zia.cloud_applications.list_cloud_app_ssl_policy()
+            
+            >>> applications_list, response, error = client.zia.cloud_applications.list_cloud_app_policy()
+            ... if error:
+            ...     print(f"Error listing applications list: {error}")
+            ...     return
+            ... print(f"Total applications found: {len(applications_list)}")
+            ... for app in applications_list:
+            ...     print(app.as_dict())
+
+            Get a list of cloud application policies using pagination and application class:
+            
+            >>> applications_list, response, error = client.zia.cloud_applications.list_cloud_app_policy(
+                query_params={"app_class": "WEB_MAIL", 'page': 1, 'page_size': 10})
+            ... if error:
+            ...     print(f"Error listing applications list: {error}")
+            ...     return
+            ... print(f"Total applications found: {len(applications_list)}")
+            ... for app in applications_list:
+            ...     print(app.as_dict())
 
         """
         http_method = "get".upper()
@@ -119,7 +163,6 @@ class CloudApplicationsAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
         
@@ -134,8 +177,11 @@ class CloudApplicationsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = response.get_results()  # No need for extra processing
+            result = []
+            for item in response.get_results():
+                result.append(CloudApplicationPolicy(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)

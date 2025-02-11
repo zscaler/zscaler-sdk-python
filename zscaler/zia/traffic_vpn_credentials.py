@@ -56,13 +56,9 @@ class TrafficVPNCredentialAPI(APIClient):
 
             List VPN credentials, limiting to a maximum of 10 items:
 
-            >>> for credential in zia.traffic.list_vpn_credentials(query_params={"max_items": 10}):
+            >>> for credential in zia.traffic.list_vpn_credentials(query_params={"page": 1, "page_size": 10}):
             ...    print(credential)
 
-            List VPN credentials, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for credential in zia.traffic.list_vpn_credentials(query_params={"pagesize": 200, "max_pages": 2}):
-            ...    print(credential)
         """
         http_method = "get".upper()
         api_url = format_url(f"""

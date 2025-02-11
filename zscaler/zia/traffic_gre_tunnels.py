@@ -40,7 +40,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
                 ``[query_params.page_size]`` {int, optional}: Specifies the page size. The default size is 100, but the maximum size is 1000.
                 
         Returns:
-            :obj:`BoxList`: A list of GRE tunnels configured in ZIA.
+            :obj:`Tuple`: A list of GRE tunnels configured in ZIA.
 
         Examples:
             List GRE tunnels with default settings:

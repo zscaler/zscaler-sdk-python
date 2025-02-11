@@ -563,7 +563,7 @@ class LocationsAPI(APIClient):
                 Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
-            :obj:`BoxList`: A list of sub-locations configured for the parent location.
+            :obj:`Tuple`: A list of sub-locations configured for the parent location.
 
         Examples:
             >>> for sub_location in zia.locations.list_sub_locations('97456691'):
@@ -628,7 +628,7 @@ class LocationsAPI(APIClient):
                 The search string used to partially match against a location's name and port attributes.
 
         Returns:
-            :obj:`BoxList`: A list of configured locations.
+            :obj:`Tuple`: A list of configured locations.
 
         Examples:
             List locations with default settings:
@@ -694,7 +694,7 @@ class LocationsAPI(APIClient):
             groupType (str): The location group's type (i.e., Static or Dynamic).
 
         Returns:
-            :obj:`BoxList`: A list of location group resource records.
+            :obj:`Tuple`: A list of location group resource records.
 
         Examples:
             Get a list of all configured location groups:
@@ -745,7 +745,7 @@ class LocationsAPI(APIClient):
             groupType (str): The location group's type (i.e., Static or Dynamic).
 
         Returns:
-            :obj:`BoxList`: A list of location group resource records.
+            :obj:`Tuple`: A list of location group resource records.
 
         Examples:
             Get a list of all configured location groups:
@@ -803,7 +803,7 @@ class LocationsAPI(APIClient):
             location_id (int): The unique identifier for a location within a location group.
 
         Returns:
-            :obj:`BoxList`: A list of location group resource records.
+            :obj:`Tuple`: A list of location group resource records.
 
         Examples:
             Gets the list of location groups for your organization:

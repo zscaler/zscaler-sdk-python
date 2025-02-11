@@ -33,25 +33,37 @@ class FirewallDNSRulesAPI(APIClient):
         query_params=None,
     ) -> tuple:
         """
-        Lists cloud firewall dns rules in your organization with pagination.
-        A subset of cloud firewall dns rules  can be returned that match a supported
-        filter expression or query.
+        List firewall dns rules in your organization.
+        If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
             tuple: A tuple containing (list of cloud firewall dns rules instances, Response, error).
 
         Example:
-            List all cloud firewall dns rules with a specific page size:
+            List all cloud firewall dns rules:
 
-            >>> rules_list, response, error = zia.cloud_firewall_dns.list_rules(
-            ...    query_params={"pagesize": 50}
-            ... )
-            >>> for rule in rules_list:
+            >>> rules_list, response, error = client.zia.cloud_firewall_dns.list_rules()
+            ... if error:
+            ...    print(f"Error listing cloud firewall dns: {error}")
+            ...    return
+            ... print(f"Total rules found: {len(rules_list)}")
+            ... for rule in rules_list:
+            ...    print(rule.as_dict())
+            
+            filtering rule results by rule name :
+
+            >>> rules_list, response, error = client.zia.cloud_firewall_dns.list_rules(
+                query_params={"search": Rule01}
+            )
+            ... if error:
+            ...    print(f"Error listing cloud firewall dns: {error}")
+            ...    return
+            ... print(f"Total rules found: {len(rules_list)}")
+            ... for rule in rules_list:
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
@@ -62,33 +74,43 @@ class FirewallDNSRulesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
-
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(FirewallDNSRules(self.form_response_body(item))
-            )
-        except Exception as error:
-            return (None, response, error)
+                results.append(FirewallDNSRules(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_rule(
         self,
@@ -106,9 +128,12 @@ class FirewallDNSRulesAPI(APIClient):
         Example:
             Retrieve a cloud firewall dns rule by its ID:
 
-            >>> rule, response, error = zia.cloud_firewall_dns.get_rule(rule_id=123456)
-            >>> if not error:
-            ...    print(rule.as_dict())
+        >>> fetched_rule, response, error = client.zia.cloud_firewall_dns.get_rule('960061')
+        ... if error:
+        ...     print(f"Error fetching rule by ID: {error}")
+        ...     return
+        ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
+
         """
         http_method = "get".upper()
         api_url = format_url(

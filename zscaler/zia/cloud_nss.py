@@ -45,7 +45,7 @@ class CloudNSSAPI(APIClient):
 
         Examples:
             Get the cloud nss feed:
-            >>> roles = zia.cloud_nss.list_nss_feed()
+            >>> nss = zia.cloud_nss.list_nss_feed()
 
         """
         http_method = "get".upper()
@@ -58,7 +58,6 @@ class CloudNSSAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
         
@@ -95,7 +94,7 @@ class CloudNSSAPI(APIClient):
         Example:
             Retrieve a cloud NSS feed by its feed_id:
 
-            >>> feed, response, error = zia.cloud_nss.get_nss_feed(rule_id=123456)
+            >>> feed, response, error = zia.cloud_nss.get_nss_feed(feed_id=123456)
             >>> if not error:
             ...    print(feed.as_dict())
         """
@@ -104,7 +103,7 @@ class CloudNSSAPI(APIClient):
             f"""
             {self._zia_base_endpoint}
             /nssFeeds/{feed_id}
-            """
+        """
         )
 
         body = {}
@@ -311,7 +310,11 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_nss_feed(self, feed_id: int, **kwargs) -> tuple:
+    def update_nss_feed(
+        self,
+        feed_id: int, 
+        **kwargs
+    ) -> tuple:
         """
         Updates cloud NSS feed configuration based on the specified ID
 
@@ -491,7 +494,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
     
-    def delete_rule(self, feed_id: int) -> tuple:
+    def delete_feed(self, feed_id: int) -> tuple:
         """
         Deletes cloud NSS feed configuration based on the specified ID
 
@@ -502,7 +505,7 @@ class CloudNSSAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.cloud_nss.delete_rule('278454')
+            >>> zia.cloud_nss.delete_feed('278454')
 
         """
         http_method = "delete".upper()
@@ -533,8 +536,11 @@ class CloudNSSAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+            
                 ``[query_params.type]`` {str}: The type of logs that you are streaming
+                
                ``[query_params.multi_feed_type]`` {str}: This field is used to set the multi-feed type to Tunnel
+               
                 ``[query_params.field_format]`` {str}: The feed output type of your SIEM
 
         Returns:
@@ -571,7 +577,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = response.get_results()  # No need for extra processing
+            result = response.get_results()
         except Exception as error:
             return (None, response, error)
 
@@ -602,7 +608,7 @@ class CloudNSSAPI(APIClient):
             f"""
             {self._zia_base_endpoint}
             /nssFeeds/testConnectivity/{feed_id}
-            """
+        """
         )
 
         body = {}
@@ -614,7 +620,6 @@ class CloudNSSAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, NSSTestConnectivity)
 
@@ -629,7 +634,10 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
     
-    def validate_feed_format(self, feed_type: str = None) -> tuple:
+    def validate_feed_format(
+        self,
+        feed_type: str = None
+    ) -> tuple:
         """
         Validates the cloud NSS feed format and returns the validation result.
 
@@ -652,7 +660,6 @@ class CloudNSSAPI(APIClient):
             """
         )
 
-        # Prepare query parameters if feed_type is provided
         query_params = {"type": feed_type} if feed_type else {}
 
         # Create the request with no empty payload

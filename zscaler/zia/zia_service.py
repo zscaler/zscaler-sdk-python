@@ -15,7 +15,7 @@ from zscaler.zia.sandbox import CloudSandboxAPI
 from zscaler.zia.dlp_dictionary import DLPDictionaryAPI
 from zscaler.zia.dlp_engine import DLPEngineAPI
 from zscaler.zia.dlp_web_rules import DLPWebRuleAPI
-from zscaler.zia.dlp_templates import DLPTemplates
+from zscaler.zia.dlp_templates import DLPTemplatesAPI
 from zscaler.zia.dlp_resources import DLPResourcesAPI
 from zscaler.zia.device_management import DeviceManagementAPI
 from zscaler.zia.end_user_notification import EndUserNotificationAPI
@@ -23,6 +23,7 @@ from zscaler.zia.file_type_control_rule import FileTypeControlRuleAPI
 from zscaler.zia.cloud_firewall_dns import FirewallDNSRulesAPI
 from zscaler.zia.cloud_firewall_ips import FirewallIPSRulesAPI
 from zscaler.zia.cloud_firewall_rules import FirewallPolicyAPI
+from zscaler.zia.cloud_firewall import FirewallResourcesAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
 from zscaler.zia.malware_protection_policy import MalwareProtectionPolicyAPI
 from zscaler.zia.locations import LocationsAPI
@@ -166,6 +167,15 @@ class ZIAService:
         return FirewallPolicyAPI(self._request_executor)
 
     @property
+    def cloud_firewall(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Firewall resources interface <zia-cloud_firewall>`.
+
+        """
+
+        return FirewallResourcesAPI(self._request_executor)
+
+    @property
     def dlp_dictionary(self):
         """
         The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp_dictionary>`.
@@ -195,7 +205,7 @@ class ZIAService:
         The interface object for the :ref:`ZIA DLP Templates interface <zia-dlp_templates>`.
 
         """
-        return DLPTemplates(self._request_executor)
+        return DLPTemplatesAPI(self._request_executor)
 
     @property
     def dlp_resources(self):

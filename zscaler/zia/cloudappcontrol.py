@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloudappcontrol import CloudApplicationControl
-from zscaler.zia.models.cloudappcontrol import Application
 from zscaler.utils import transform_common_id_fields, format_url, reformat_params
 
 

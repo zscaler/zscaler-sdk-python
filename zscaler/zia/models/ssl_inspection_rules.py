@@ -101,7 +101,7 @@ class SSLInspectionRules(ZscalerObject):
             )
 
             self.proxy_gateways = ZscalerCollection.form_list(
-                config["proxyGateways"] if "proxyGateways" in config else [], proxy_gatways.Proxygatways
+                config["proxyGateways"] if "proxyGateways" in config else [], proxy_gatways.ProxyGatways
             )
             self.user_agent_types = ZscalerCollection.form_list(
                 config["userAgentTypes"] if "userAgentTypes" in config else [], str

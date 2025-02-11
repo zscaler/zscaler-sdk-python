@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_templates import DLPTemplates
-from zscaler.utils import format_url, snake_to_camel
+from zscaler.utils import format_url
 
 
 class DLPTemplatesAPI(APIClient):
@@ -36,12 +36,13 @@ class DLPTemplatesAPI(APIClient):
         query_params=None,
     ) -> tuple:
         """
-        Returns the list of ZIA DLP Notification Templates.
+        Lists DLP Notification Templates. in your organization.
+        If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+            query_params {dict}: Map of query parameters for the request. 
+                       
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             tuple: A tuple containing (list of DLPTemplates instances, Response, error)
@@ -49,12 +50,23 @@ class DLPTemplatesAPI(APIClient):
         Examples:
             Print all dlp templates
 
-            >>> for dlp templates in zia.dlp.list_dlp_templates():
-            ...    pprint(engine)
+            >>> template_list, response, error = client.zia.dlp_templates.list_dlp_templates()
+            ... if error:
+            ...     print(f"Error listing templates: {error}")
+            ...     return
+            ... print(f"Total templates found: {len(template_list)}")
+            ... for template in template_list:
+            ...     print(template.as_dict())
 
-            Print templates that match the name or description 'Standard_Template'
+            Print templates that match the name 'Standard_Template'
 
-            >>> pprint(zia.dlp.list_dlp_templates('Standard_Template'))
+            >>> template_list, response, error = client.zia.dlp_templates.list_dlp_templates(query_params={"search": 'Standard_Template'})
+            ... if error:
+            ...     print(f"Error listing templates: {error}")
+            ...     return
+            ... print(f"Total templates found: {len(template_list)}")
+            ... for template in template_list:
+            ...     print(template.as_dict())
 
         """
         http_method = "get".upper()
@@ -67,31 +79,43 @@ class DLPTemplatesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
+        request, error = self._request_executor.create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
-
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
-        # Parse the response into AdminUser instances
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(DLPTemplates(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
+                results.append(DLPTemplates(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_dlp_templates(self, template_id: int) -> tuple:
         """
@@ -104,7 +128,11 @@ class DLPTemplatesAPI(APIClient):
             :obj:`Tuple`: The DLP template resource record.
 
         Examples:
-            >>> template = zia.dlp.get_dlp_templates('99999')
+            >>> fetched_template, response, error = client.zia.dlp_templates.get_dlp_templates('63578')
+            ... if error:
+            ...     print(f"Error fetching Template by ID: {error}")
+            ...     return
+            ... print(f"Fetched Template by ID: {fetched_template.as_dict()}")
 
         """
         http_method = "get".upper()
@@ -119,7 +147,8 @@ class DLPTemplatesAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -129,7 +158,6 @@ class DLPTemplatesAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
             result = DLPTemplates(self.form_response_body(response.get_body()))
         except Exception as error:
@@ -137,7 +165,15 @@ class DLPTemplatesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_dlp_template(self, name: str, subject: str, **kwargs) -> tuple:
+    def add_dlp_template(
+        self,
+        name: str, 
+        subject: str,
+        plain_text_message: str,
+        html_message: str,
+        attach_content: bool,
+        **kwargs
+    ) -> tuple:
         """
         Adds a new DLP notification template to ZIA.
 
@@ -149,6 +185,7 @@ class DLPTemplatesAPI(APIClient):
             attach_content (bool): If true, the content in violation is attached to the DLP notification email.
             plain_text_message (str): Template for the plain text UTF-8 message body displayed in the DLP notification email.
             html_message (str): Template for the HTML message body displayed in the DLP notification email.
+            tls_enabled (bool): If true, enables TLS for the notification template.
 
         Returns:
             :obj:`Tuple`: The newly created DLP Notification Template resource record.
@@ -163,36 +200,57 @@ class DLPTemplatesAPI(APIClient):
             ...                         html_message="<html><body>HTML message content</body></html>")
         """
         http_method = "post".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/dlpNotificationTemplates")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpNotificationTemplates
+        """
+        )
 
         payload = {
             "name": name,
             "subject": subject,
+            "attachContent": attach_content,
+            "plainTextMessage": plain_text_message,
+            "htmlMessage": html_message,
         }
 
-        # Process additional keyword arguments
-        for key, value in kwargs.items():
-            # Convert the key to camelCase and assign the value
-            camel_key = snake_to_camel(key)
-            payload[camel_key] = value
+        payload.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=payload,
+        )
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DLPTemplates)
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, DLPTemplates)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPTemplates(self.form_response_body(response.get_body()))
+            result = DLPTemplates(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
-    def update_dlp_template(self, template_id: str, **kwargs) -> tuple:
+    def update_dlp_template(
+        self, 
+        template_id: str,
+        name: str, 
+        subject: str,
+        plain_text_message: str,
+        html_message: str,
+        attach_content: bool,
+    ) -> tuple:
         """
         Updates the specified DLP Notification Template.
 
@@ -210,31 +268,49 @@ class DLPTemplatesAPI(APIClient):
         Returns:
             tuple: A tuple containing the updated DLP Notification Template resource record, response, and error if any.
 
+        Examples:
+            Create a new DLP Notification Template:
+
+            >>> zia.dlp.add_dlp_template('63578'
+            ...                         name="New DLP Template",
+            ...                         subject="Alert: DLP Violation Detected",
+            ...                         attach_content=True,
+            ...                         plain_text_message="Text message content",
+            ...                         html_message="<html><body>HTML message content</body></html>")
         """
         http_method = "put".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/dlpNotificationTemplates/{template_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpNotificationTemplates/{template_id}
+        """
+        )
 
-        # Construct the payload using the provided kwargs
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        payload = {
+            "name": name,
+            "subject": subject,
+            "attachContent": attach_content,
+            "plainTextMessage": plain_text_message,
+            "htmlMessage": html_message,
+        }
 
-        # Ensure mandatory fields are included if they were not provided
-        mandatory_fields = ["plainTextMessage", "htmlMessage"]
-        for field in mandatory_fields:
-            if field not in payload:
-                payload[field] = None  # Add default value if necessary
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=payload,
+        )
 
-        # Create and send the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
-        if error:
-            return (None, None, error)
-
-        response, error = self._request_executor.execute(request, DLPTemplates)
+        response, error = self._request_executor\
+            .execute(request, DLPTemplates)
         if error:
             return (None, response, error)
 
         try:
-            # Parse and return the updated object from the API response
-            result = DLPTemplates(self.form_response_body(response.get_body()))
+            result = DLPTemplates(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -250,19 +326,31 @@ class DLPTemplatesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.dlp.delete_dlp_template(template_id=4370)
+            >>> _, response, error = client.zia.dlp_templates.delete_dlp_template('63578')
+            ... if error:
+            ...     print(f"Error deleting Template: {error}")
+            ...     return
+            ...print(f"Template with ID {'63578'} deleted successfully.")
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/dlpNotificationTemplates/{template_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpNotificationTemplates/{template_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
-            return (None, error)
+            return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
-
+        response, error = self._request_executor.\
+            execute(request)
         if error:
-            return (None, error)
+            return (None, response, error)
 
-        return (response, None)
+        return (None, response, None)

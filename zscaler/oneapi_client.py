@@ -252,7 +252,7 @@ class LegacyZPAClient(Client):
             cache=cache,
             fail_safe=fail_safe,
         )
-        super().__init__(config, zpa_legacy_client=legacy_helper)
+        super().__init__(config, zpa_legacy_client=legacy_helper, use_legacy_client=True)
 
 
 class LegacyZIAClient(Client):
@@ -278,7 +278,7 @@ class LegacyZIAClient(Client):
             cache=cache,
             fail_safe=fail_safe,
         )
-        super().__init__(config, zia_legacy_client=legacy_helper)
+        super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
 
 
 class LegacyZCCClient(Client):

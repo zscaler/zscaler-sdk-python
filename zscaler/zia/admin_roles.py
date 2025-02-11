@@ -31,107 +31,77 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(
-        self,
-        query_params=None,
-    ) -> tuple:
+    def list_roles(self, query_params=None) -> tuple:
         """
         Return a list of the configured admin roles in ZIA.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
+            query_params {dict}: Optional query parameters.
+            
                 ``[query_params.include_auditor_role]`` {bool}: Include or exclude auditor user information in the list.
                 
                 ``[query_params.include_partner_role]`` {bool}: Include or exclude admin user information in the list. Default is True.
                 
-                ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
+                ``[query_params.include_api_role]`` {bool}: Include or exclude API role information in the list. Default is True.
                 
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.search]`` {str}: Search string for filtering results by admin role name.
 
         Returns:
-            tuple: A tuple containing (list of AdminRole instances, Response, error)
-
+            tuple: (list of AdminRoles instances, Response, error)
 
         Examples:
-            Get a list of all configured admin roles:
-            >>> roles = zia.admin_and_management_roles.list_roles()
+            Get a list of all admin roles:
 
+            >>>  roles, response, error = client.zia.admin_roles.list_roles()
+            ...  if error:
+            ...     print(f"Error fetching roles: {error}")
+            ...  return
+            ...  print(f"Fetched roles: {[role.as_dict() for role in roles]}")
+
+            Search for a specific admin role by name:
+
+            >>>  role, response, error = client.zia.admin_roles.list_roles(
+                query_params={"search": 'Super Admin'})
+            ...  if error:
+            ...     print(f"Error fetching role: {error}")
+            ...  return
+            ...  print(f"Fetched roles: {[role.as_dict() for role in role]}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/adminRoles/lite")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /adminRoles/lite
+        """
+        )
+
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params,
+            http_method, api_url, body, headers, params=query_params
         )
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AdminRoles)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
-        # Parse the response into AdminUser instances
         try:
-            result = []
-            # this endpoint does not support pagination
-            for item in response.get_results():
-                result.append(AdminRoles(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
+            results = [AdminRoles(
+                self.form_response_body(item)) for item in response.get_results()
+            ]
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
 
-    def get_roles_by_name(self, name):
-        """
-        Retrieves a specific admin roles by its name.
-
-        Args:
-            name (str): The name of the admin roles  to retrieve.
-
-        Returns:
-            :obj:`Tuple`: The admin roles  if found, otherwise None.
-
-        Examples:
-            >>> role = zia.admin_and_role_management.get_roles_by_name('Super Admin')
-            ...    print(role)
-        """
-        roles = self.list_roles()
-        for role in roles:
-            if role.get("name") == name:
-                return role
-        return None
-
-    def get_roles_by_id(self, role_id):
-        """
-        Retrieves a specific admin roles by its ID.
-
-        Args:
-            name (str): The ID of the admin roles  to retrieve.
-
-        Returns:
-            :obj:`Tuple`: The admin roles  if found, otherwise None.
-
-        Examples:
-            >>> role = zia.admin_and_role_management.get_roles_by_id('123456789')
-            ...    print(role)
-        """
-        roles = self.list_roles()
-        for role in roles:
-            if role.get("id") == role_id:
-                return role
-        return None
+        return (results, response, None)

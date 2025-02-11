@@ -41,6 +41,7 @@ class DeviceManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+            
                 ``[query_params.include_device_info]`` {bool}: Include or exclude device information.
                 
                 ``[query_params.include_pseudo_groups]`` {bool}: Include or exclude Zscaler Client Connector and Cloud Browser Isolation-related device groups.

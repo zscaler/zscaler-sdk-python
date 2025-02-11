@@ -17,8 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_users import AdminUser
-from zscaler.utils import format_url
-from zscaler.utils import snake_to_camel
+from zscaler.utils import format_url, snake_to_camel
 
 
 class AdminUsersAPI(APIClient):
@@ -38,13 +37,20 @@ class AdminUsersAPI(APIClient):
     ) -> tuple:
         """
         Returns a list of admin users.
+        
+        `Note:` For tenants migrated to Zidentity this endpoint will return an empty list.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+            
                 ``[query_params.include_auditor_users]`` {bool}: Include or exclude auditor user information in the list.
+                
                 ``[query_params.include_admin_users]`` {bool}: Include or exclude admin user information in the list. Default is True.
+                
                 ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
+                
                 ``[query_params.page]`` {int}: Specifies the page offset.
+                
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
@@ -63,22 +69,25 @@ class AdminUsersAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, AdminUser)
+        response, error = self._request_executor.\
+            execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into AdminUser instances
         try:
             result = []
             for item in response.get_results():
-                result.append(AdminUser(self.form_response_body(item)))
+                result.append(AdminUser(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 

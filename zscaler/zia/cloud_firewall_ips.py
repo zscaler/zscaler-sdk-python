@@ -33,25 +33,37 @@ class FirewallIPSRulesAPI(APIClient):
         query_params=None,
     ) -> tuple:
         """
-        Lists sandbox rules in your organization with pagination.
-        A subset of sandbox rules  can be returned that match a supported
-        filter expression or query.
+        List firewall ips rules in your organization.
+        If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
             tuple: A tuple containing (list of sandbox rules instances, Response, error).
 
         Example:
-            List all sandbox rules with a specific page size:
+            List all cloud firewall ips rules:
 
-            >>> rules_list, response, error = zia.cloudfirewallipsrules.list_rules(
-            ...    query_params={"pagesize": 50}
-            ... )
-            >>> for rule in rules_list:
+            >>> rules_list, response, error = client.zia.cloud_firewall_ips.list_rules()
+            ... if error:
+            ...    print(f"Error listing cloud firewall ips: {error}")
+            ...    return
+            ... print(f"Total rules found: {len(rules_list)}")
+            ... for rule in rules_list:
+            ...    print(rule.as_dict())
+            
+            filtering rule results by rule name :
+
+            >>> rules_list, response, error = client.zia.cloud_firewall_ips.list_rules(
+                query_params={"search": Rule01}
+            )
+            ... if error:
+            ...    print(f"Error listing cloud firewall ips: {error}")
+            ...    return
+            ... print(f"Total rules found: {len(rules_list)}")
+            ... for rule in rules_list:
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
@@ -62,53 +74,65 @@ class FirewallIPSRulesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
-
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(FirewallIPSrules(self.form_response_body(item))
-            )
-        except Exception as error:
-            return (None, response, error)
+                results.append(FirewallIPSrules(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_rule(
         self,
         rule_id: int,
     ) -> tuple:
         """
-        Returns information for the specified sandbox filter rule.
+        Returns information for the specified firewall ips rule.
 
         Args:
-            rule_id (str): The unique identifier for the sandbox filter rule.
+            rule_id (str): The unique identifier for the firewall ips rule.
 
         Returns:
-            tuple: A tuple containing (sandbox rule instance, Response, error).
+            tuple: A tuple containing (firewall ips rule instance, Response, error).
 
         Example:
-            Retrieve a sandbox rule by its ID:
+            Retrieve a cloud firewall ips rule by its ID:
 
-            >>> rule, response, error = zia.cloudfirewallipsrules.get_rule(rule_id=123456)
-            >>> if not error:
-            ...    print(rule.as_dict())
+        >>> fetched_rule, response, error = client.zia.cloud_firewall_ips.get_rule('960061')
+        ... if error:
+        ...     print(f"Error fetching rule by ID: {error}")
+        ...     return
+        ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -189,10 +213,10 @@ class FirewallIPSRulesAPI(APIClient):
             zpa_app_segments (list): The IDs for the network service groups that this rule applies to.
             
         Returns:
-            :obj:`tuple`: New firewall ip rule resource record.
+            :obj:`tuple`: New firewall ips rule resource record.
 
         Example:
-            Add a firewall ip rule to block specific file types:
+            Add a firewall ips rule to block specific file types:
 
             >>> zia.cloudfirewallipsrules.add_rule(
             ...    name='BLOCK_EXE_FILES',
@@ -245,7 +269,7 @@ class FirewallIPSRulesAPI(APIClient):
 
     def update_rule(self, rule_id: int, **kwargs) -> tuple:
         """
-        Updates an existing sandbox filter rule.
+        Updates an existing firewall ips rule.
 
         Args:
             rule_id (str): The unique ID for the rule that is being updated.
@@ -344,10 +368,10 @@ class FirewallIPSRulesAPI(APIClient):
     
     def delete_rule(self, rule_id: int) -> tuple:
         """
-        Deletes the specified sandbox filter rule.
+        Deletes the specified firewall ips rule.
 
         Args:
-            rule_id (str): The unique identifier for the sandbox rule.
+            rule_id (str): The unique identifier for the firewall ips rule.
 
         Returns:
             :obj:`int`: The status code for the operation.

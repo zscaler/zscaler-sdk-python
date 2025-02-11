@@ -16,13 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.zia.models.url_filtering_rules import URLFilteringRule
 from zscaler.request_executor import RequestExecutor
-
-from zscaler.utils import (
-    convert_keys,
-    recursive_snake_to_camel,
-    snake_to_camel,
-    transform_common_id_fields,
-)
+from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 
 
@@ -53,27 +47,80 @@ class URLFilteringAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_rules(self) -> tuple:
+    def list_rules(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
-        Returns the list of URL Filtering Policy rules
+        Lists url filtering rules in your organization.
+        If the `search` parameter is provided, the function filters the rules client-side.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: Search string for filtering results by rule name.
+
+        Returns:
+            tuple: A tuple containing (list of url filtering rules instances, Response, error)
+
+        Examples:
+        >>> rules, response, error = zia.url_filtering.list_rules()
+        ...    pprint(rule)
+
+        >>> rules, response, error = zia.url_filtering.list_rules(
+            query_params={"search": "Block malicious IPs and domains"})
+        ...    pprint(rule)
         """
         http_method = "get".upper()
-        api_url = f"{self._zia_base_endpoint}/urlFilteringRules"
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules
+        """)
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
-            return (None, None, error)
-        try:
-            results = [URLFilteringRule(item) for item in response.get_results()]
-        except Exception as error:
             return (None, response, error)
+
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(URLFilteringRule(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
         return (results, response, None)
 
-    def get_rule(self, rule_id: str) -> tuple:
+    def get_rule(
+        self,
+        rule_id: int,
+    ) -> tuple:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -88,23 +135,38 @@ class URLFilteringAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
+            """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
+
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
+
         if error:
-            return (None, None, error)
+            return (None, response, error)
 
         try:
-            result = URLFilteringRule(response.get_body())
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> tuple:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -183,31 +245,44 @@ class URLFilteringAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = f"{self._zia_base_endpoint}/urlFilteringRules"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules
+        """
+        )
 
-        payload = {
-            "rank": rank,
-            "name": name,
-            "action": action,
-            "protocols": protocols,
-            "order": kwargs.pop("order", len(self.list_rules())),
-        }
+        body = kwargs
 
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
+        
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
         if error:
-            return (None, None, error)
+            return (None, response, error)
 
         try:
-            result = URLFilteringRule(response.get_body())
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -287,41 +362,80 @@ class URLFilteringAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
+        """
+        )
+        
+        body = kwargs
 
-        payload = convert_keys(self.get_rule(rule_id).__dict__)
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
+        if "enabled" in body:
+            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
 
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
+        
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
         if error:
-            return (None, None, error)
+            return (None, response, error)
 
         try:
-            result = URLFilteringRule(response.get_body())
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     def delete_rule(self, rule_id: str) -> tuple:
         """
-        Deletes the specified URL Filtering Policy rule.
+        Deletes the specified url filtering filter rule.
+
+        Args:
+            rule_id (str): The unique identifier for the url filtering rule.
+
+        Returns:
+            :obj:`int`: The status code for the operation.
+
+        Examples:
+            >>> zia.url_filtering.delete_rule('278454')
+
         """
         http_method = "delete".upper()
-        api_url = f"{self._zia_base_endpoint}/urlFilteringRules/{rule_id}"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
-            return (None, None, error)
+            return (None, response, error)
 
-        return (response.get_status(), response, None)
+        return (None, response, None)

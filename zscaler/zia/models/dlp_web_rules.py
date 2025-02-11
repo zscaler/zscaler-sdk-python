@@ -29,6 +29,7 @@ from zscaler.zia.models import urlcategory as urlcategory
 from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import workload_groups as workload_groups
+from zscaler.zia.models import common as common_reference
 
 
 class DLPWebRules(ZscalerObject):
@@ -76,7 +77,7 @@ class DLPWebRules(ZscalerObject):
                 config["cloudApplications"] if "cloudApplications" in config else [], str
             )
             self.url_categories = ZscalerCollection.form_list(
-                config["urlCategories"] if "urlCategories" in config else [], urlcategory.URLCategory
+                config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
             )
             
             self.locations = ZscalerCollection.form_list(

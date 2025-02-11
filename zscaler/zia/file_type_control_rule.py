@@ -38,8 +38,8 @@ class FileTypeControlRuleAPI(APIClient):
         filter expression or query.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
+            query_params {dict}: Map of query parameters for the request. 
+                       
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -83,7 +83,8 @@ class FileTypeControlRuleAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(FileTypeControlRules(self.form_response_body(item))
+                result.append(FileTypeControlRules(
+                    self.form_response_body(item))
             )
         except Exception as error:
             return (None, response, error)
@@ -212,7 +213,9 @@ class FileTypeControlRuleAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
             
-        transform_common_id_fields(reformat_params, body, body)
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
         request, error = self._request_executor\
@@ -308,7 +311,9 @@ class FileTypeControlRuleAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
             
-        transform_common_id_fields(reformat_params, body, body)
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
         request, error = self._request_executor\

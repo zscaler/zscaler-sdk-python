@@ -4,6 +4,7 @@ import urllib.parse
 import requests
 
 from zscaler import __version__
+from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL
@@ -19,7 +20,7 @@ setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
 
-class LegacyZPAClientHelper():
+class LegacyZPAClientHelper:
     """A Controller to access Endpoints in the Zscaler Private Access (ZPA) API.
 
     The ZPA object stores the session token and simplifies access to API interfaces within ZPA.
@@ -75,14 +76,12 @@ class LegacyZPAClientHelper():
         self.fail_safe = fail_safe
 
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
-        if cache is None:
-            if cache_enabled:
-                ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
-                tti = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTI", 1800))
-                self.cache = ZscalerCache(ttl=ttl, tti=tti)
-            else:
-                self.cache = NoOpCache()
-        else:
+        self.cache = NoOpCache()
+        if cache is None and cache_enabled:
+            ttl = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTL", 3600))
+            tti = int(os.environ.get("ZSCALER_CLIENT_CACHE_DEFAULT_TTI", 1800))
+            self.cache = ZscalerCache(ttl=ttl, tti=tti)
+        elif isinstance(cache, Cache):
             self.cache = cache
 
         # Create request executor
@@ -98,9 +97,7 @@ class LegacyZPAClientHelper():
                 },
             }
         }
-        self.request_executor = RequestExecutor(
-            self.config, self.cache, zpa_legacy_client=self
-        )
+        self.request_executor = RequestExecutor(self.config, self.cache, zpa_legacy_client=self)
 
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()
@@ -112,9 +109,7 @@ class LegacyZPAClientHelper():
         if not self.access_token or is_token_expired(self.access_token):
             response = self.login()
             if response is None or response.status_code > 299 or not response.json():
-                logger.error(
-                    "Failed to login using provided credentials, response: %s", response
-                )
+                logger.error("Failed to login using provided credentials, response: %s", response)
                 raise Exception("Failed to login using provided credentials.")
             self.access_token = response.json().get("access_token")
             self.headers = {
@@ -183,10 +178,7 @@ class LegacyZPAClientHelper():
             )
 
             # Log and return results
-            logger.info(
-                f"Legacy client request executed successfully. "
-                f"Status: {response.status_code}, URL: {base_url}"
-            )
+            logger.info(f"Legacy client request executed successfully. " f"Status: {response.status_code}, URL: {base_url}")
             return response, {
                 "method": method,
                 "url": base_url,
@@ -210,6 +202,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.authdomains import AuthDomainsAPI
+
         return AuthDomainsAPI(self.request_executor, self.config)
 
     @property
@@ -219,6 +212,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.servers import AppServersAPI
+
         return AppServersAPI(self.request_executor, self.config)
 
     @property
@@ -228,6 +222,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
+
         return ApplicationSegmentByTypeAPI(self.request_executor, self.config)
 
     @property
@@ -237,6 +232,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.application_segment import ApplicationSegmentAPI
+
         return ApplicationSegmentAPI(self.request_executor, self.config)
 
     @property
@@ -246,6 +242,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
+
         return AppSegmentsPRAAPI(self.request_executor, self.config)
 
     @property
@@ -255,6 +252,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
+
         return AppSegmentsInspectionAPI(self.request_executor, self.config)
 
     @property
@@ -264,6 +262,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_connector_groups import AppConnectorGroupAPI
+
         return AppConnectorGroupAPI(self.request_executor, self.config)
 
     @property
@@ -273,6 +272,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_connector_schedule import AppConnectorScheduleAPI
+
         return AppConnectorScheduleAPI(self.request_executor, self.config)
 
     @property
@@ -282,8 +282,9 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.app_connectors import AppConnectorControllerAPI
+
         return AppConnectorControllerAPI(self.request_executor, self.config)
-    
+
     @property
     def cbi_banner(self):
         """
@@ -291,6 +292,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cbi_banner import CBIBannerAPI
+
         return CBIBannerAPI(self.request_executor, self.config)
 
     @property
@@ -300,6 +302,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cbi_certificate import CBICertificateAPI
+
         return CBICertificateAPI(self.request_executor, self.config)
 
     @property
@@ -309,6 +312,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cbi_profile import CBIProfileAPI
+
         return CBIProfileAPI(self.request_executor, self.config)
 
     @property
@@ -318,6 +322,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cbi_region import CBIRegionAPI
+
         return CBIRegionAPI(self.request_executor, self.config)
 
     @property
@@ -327,6 +332,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cbi_zpa_profile import CBIZPAProfileAPI
+
         return CBIZPAProfileAPI(self.request_executor, self.config)
 
     @property
@@ -336,6 +342,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.certificates import CertificatesAPI
+
         return CertificatesAPI(self.request_executor, self.config)
 
     @property
@@ -345,6 +352,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
+
         return CloudConnectorGroupsAPI(self.request_executor, self.config)
 
     @property
@@ -354,6 +362,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.customer_version_profile import CustomerVersionProfileAPI
+
         return CustomerVersionProfileAPI(self.request_executor, self.config)
 
     @property
@@ -363,6 +372,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.emergency_access import EmergencyAccessAPI
+
         return EmergencyAccessAPI(self.request_executor, self.config)
 
     @property
@@ -372,6 +382,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.enrollment_certificates import EnrollmentCertificateAPI
+
         return EnrollmentCertificateAPI(self.request_executor, self.config)
 
     @property
@@ -381,6 +392,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.idp import IDPControllerAPI
+
         return IDPControllerAPI(self.request_executor, self.config)
 
     @property
@@ -390,6 +402,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.inspection import InspectionControllerAPI
+
         return InspectionControllerAPI(self.request_executor, self.config)
 
     @property
@@ -399,6 +412,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.lss import LSSConfigControllerAPI
+
         return LSSConfigControllerAPI(self.request_executor, self.config)
 
     @property
@@ -408,6 +422,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.machine_groups import MachineGroupsAPI
+
         return MachineGroupsAPI(self.request_executor, self.config)
 
     @property
@@ -417,6 +432,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.microtenants import MicrotenantsAPI
+
         return MicrotenantsAPI(self.request_executor, self.config)
 
     @property
@@ -426,6 +442,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.policies import PolicySetControllerAPI
+
         return PolicySetControllerAPI(self.request_executor, self.config)
 
     @property
@@ -435,6 +452,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.posture_profiles import PostureProfilesAPI
+
         return PostureProfilesAPI(self.request_executor, self.config)
 
     @property
@@ -444,6 +462,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.pra_approval import PRAApprovalAPI
+
         return PRAApprovalAPI(self.request_executor, self.config)
 
     @property
@@ -453,6 +472,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.pra_console import PRAConsoleAPI
+
         return PRAConsoleAPI(self.request_executor, self.config)
 
     @property
@@ -462,6 +482,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.pra_credential import PRACredentialAPI
+
         return PRACredentialAPI(self.request_executor, self.config)
 
     @property
@@ -471,6 +492,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.pra_portal import PRAPortalAPI
+
         return PRAPortalAPI(self.request_executor, self.config)
 
     @property
@@ -480,6 +502,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.provisioning import ProvisioningKeyAPI
+
         return ProvisioningKeyAPI(self.request_executor, self.config)
 
     @property
@@ -489,6 +512,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.saml_attributes import SAMLAttributesAPI
+
         return SAMLAttributesAPI(self.request_executor, self.config)
 
     @property
@@ -498,6 +522,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
+
         return ScimAttributeHeaderAPI(self.request_executor, self.config)
 
     @property
@@ -507,6 +532,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.scim_groups import SCIMGroupsAPI
+
         return SCIMGroupsAPI(self.request_executor, self.config)
 
     @property
@@ -516,6 +542,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.segment_groups import SegmentGroupsAPI
+
         return SegmentGroupsAPI(self.request_executor, self.config)
 
     @property
@@ -525,6 +552,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.server_groups import ServerGroupsAPI
+
         return ServerGroupsAPI(self.request_executor, self.config)
 
     @property
@@ -534,6 +562,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.service_edges import ServiceEdgeControllerAPI
+
         return ServiceEdgeControllerAPI(self.request_executor, self.config)
 
     @property
@@ -543,6 +572,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.service_edge_group import ServiceEdgeGroupAPI
+
         return ServiceEdgeGroupAPI(self.request_executor, self.config)
 
     @property
@@ -552,6 +582,7 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.service_edge_schedule import ServiceEdgeScheduleAPI
+
         return ServiceEdgeScheduleAPI(self.request_executor, self.config)
 
     @property
@@ -561,5 +592,5 @@ class LegacyZPAClientHelper():
 
         """
         from zscaler.zpa.trusted_networks import TrustedNetworksAPI
-        return TrustedNetworksAPI(self.request_executor, self.config)
 
+        return TrustedNetworksAPI(self.request_executor, self.config)

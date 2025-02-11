@@ -42,24 +42,33 @@ class DLPResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
         
         Returns:
             tuple: A tuple containing (list of DLP ICAP Server instances, Response, error)
 
-        Examples:
-            Print all icap servers
+        Example:
+            List all dlp icap servers:
 
-            >>> for dlp icap in zia.dlp_resources.list_dlp_icap_servers():
-            ...    pprint(icap)
+            >>> icap_list, response, error = client.zia.dlp_resources.list_dlp_icap_servers()
+            ... if error:
+            ...    print(f"Error listing dlp icaps: {error}")
+            ...    return
+            ... print(f"Total icaps found: {len(icap_list)}")
+            ... for icap in icap_list:
+            ...    print(icap.as_dict())
+            
+            filtering dlp icap by name :
 
-            Print icaps that match the name or description 'ZS_ICAP'
-
-            >>> pprint(zia.dlp_resources.list_dlp_icap_servers('ZS_ICAP'))
+            >>> icap_list, response, error = client.dlp_resources.list_dlp_icap_servers(
+                query_params={"search": 'ICAP_SERVER01'}
+            )
+            ... if error:
+            ...    print(f"Error listing dlp icaps: {error}")
+            ...    return
+            ... print(f"Total icaps found: {len(icap_list)}")
+            ... for icap in icap_list:
+            ...    print(icap.as_dict())
 
         """
         http_method = "get".upper()
@@ -72,31 +81,130 @@ class DLPResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
         request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
-
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(DLPICAPServer(
+                results.append(DLPICAPServer(
                     self.form_response_body(item))
                 )
-        except Exception as error:
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
+
+    def list_dlp_icap_servers_lite(
+        self,
+        query_params=None,
+    ) -> tuple:
+        """
+        Lists name and ID of all ICAP servers.
+        If the `search` parameter is provided, the function filters the rules client-side.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: The search string used to match against a ICAP servers name.
+
+        Returns:
+            tuple: List of ICAP servers resource records.
+
+        Example:
+            List all dlp icap servers:
+
+            >>> icap_list, response, error = client.zia.dlp_resources.list_dlp_icap_servers_lite()
+            ... if error:
+            ...    print(f"Error listing dlp icaps: {error}")
+            ...    return
+            ... print(f"Total icaps found: {len(icap_list)}")
+            ... for icap in icap_list:
+            ...    print(icap.as_dict())
+            
+            filtering dlp icap by name :
+
+            >>> icap_list, response, error = client.dlp_resources.list_dlp_icap_servers_lite(
+                query_params={"search": 'ICAP_SERVER01'}
+            )
+            ... if error:
+            ...    print(f"Error listing dlp icaps: {error}")
+            ...    return
+            ... print(f"Total icaps found: {len(icap_list)}")
+            ... for icap in icap_list:
+            ...    print(icap.as_dict())
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /icapServers/lite
+        """
+        )
+
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
             return (None, response, error)
 
-        return (result, response, None)
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(DLPICAPServer(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_dlp_icap_servers(self, icap_server_id: int, query_params: dict = None) -> tuple:
         """
@@ -122,18 +230,15 @@ class DLPResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request)
 
@@ -157,24 +262,33 @@ class DLPResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
         
         Returns:
             tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
 
-        Examples:
-            Print all incident receivers
+        Example:
+            List all incident receivers
 
-            >>> for receiver in zia.dlp_resources.list_dlp_incident_receiver():
-            ...    pprint(dlp)
+            >>> receiver_list, response, error = client.zia.dlp_resources.list_dlp_incident_receiver()
+            ... if error:
+            ...    print(f"Error listing dlp incident receivers: {error}")
+            ...    return
+            ... print(f"Total incident receivers found: {len(receiver_list)}")
+            ... for receiver in receiver_list:
+            ...    print(receiver.as_dict())
+            
+            filtering incident receivers by name :
 
-            Print Incident Receiver that match the name or description 'ZS_INC_RECEIVER_01'
-
-            >>> pprint(zia.dlp_resources.list_dlp_incident_receiver('ZS_INC_RECEIVER_01'))
+            >>> receiver_list, response, error = client.dlp_resources.list_dlp_incident_receiver(
+                query_params={"search": 'ZS_INC_RECEIVER_01'}
+            )
+            ... if error:
+            ...    print(f"Error listing dlp incident receivers: {error}")
+            ...    return
+            ... print(f"Total incident receivers found: {len(receiver_list)}")
+            ... for receiver in receiver_list:
+            ...    print(receiver.as_dict())
 
         """
         http_method = "get".upper()
@@ -187,31 +301,129 @@ class DLPResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
         request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
-
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(DLPICAPServer(
+                results.append(DLPICAPServer(
                     self.form_response_body(item))
                 )
-        except Exception as error:
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
+
+    def list_dlp_incident_receiver_lite(
+        self,
+        query_params=None,
+    ) -> tuple:
+        """
+        Lists name and ID DLP Incident Receiver.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: The search string used to match against a Incident Receiver name attributes.
+        
+        Returns:
+            tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
+
+        Example:
+            List all incident receivers
+
+            >>> receiver_list, response, error = client.zia.dlp_resources.list_dlp_incident_receiver_lite()
+            ... if error:
+            ...    print(f"Error listing dlp incident receivers: {error}")
+            ...    return
+            ... print(f"Total incident receivers found: {len(receiver_list)}")
+            ... for receiver in receiver_list:
+            ...    print(receiver.as_dict())
+            
+            filtering incident receivers by name :
+
+            >>> receiver_list, response, error = client.dlp_resources.list_dlp_incident_receiver_lite(
+                query_params={"search": 'ZS_INC_RECEIVER_01'}
+            )
+            ... if error:
+            ...    print(f"Error listing dlp incident receivers: {error}")
+            ...    return
+            ... print(f"Total incident receivers found: {len(receiver_list)}")
+            ... for receiver in receiver_list:
+            ...    print(receiver.as_dict())
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /incidentReceiverServers/lite
+        """
+        )
+
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
             return (None, response, error)
 
-        return (result, response, None)
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(DLPICAPServer(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_dlp_incident_receiver(self, receiver_id: int) -> tuple:
         """
@@ -466,7 +678,12 @@ class DLPResourcesAPI(APIClient):
             params["fetchTokens"] = fetch_tokens
 
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/dlpExactDataMatchSchemas/lite")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpExactDataMatchSchemas/lite
+        """
+        )
 
         query_params = query_params or {}
 

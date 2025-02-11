@@ -37,21 +37,27 @@ class DLPEngineAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.search]`` {str}: The search string used to match against a DLP dictionary's name or description attributes.
 
         Returns:
             tuple: A tuple containing (list of DLP Engines instances, Response, error)
 
         Examples:
-            Print all dlp engines
-
-            >>> for dlp engines in zia.dlp.list_dlp_engines():
-            ...    pprint(engine)
-
-            Print engines that match the name or description 'GDPR'
-
-            >>> pprint(zia.dlp.list_dlp_engines('GDPR'))
+            Gets a list of all DLP Engine.
+            
+            >>> fetched_engines, response, error = client.zia.dlp_engine.list_dlp_engines()
+            ... if error:
+            ...     print(f"Error listing DLP Engines: {error}")
+            ...     return
+            ... print(f"Fetched engines: {[engine.as_dict() for engine in fetched_engines]}")
+            
+            Gets a list of all DLP Engine by name.
+            
+            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines(query_params={"search": 'EUIBAN_LEAKAGE'})
+            ... if error:
+            ...     print(f"Error listing DLP Engine: {error}")
+            ...     return
+            ... print(f"Fetched engine: {[engine.as_dict() for engine in dict]}")
 
         """
         http_method = "get".upper()
@@ -62,35 +68,126 @@ class DLPEngineAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
-
-        if error:
-            return (None, response, error)
-
-        response, error = self._request_executor.execute(request)
-
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(DLPEngine(self.form_response_body(item)))
-        except Exception as error:
+                results.append(DLPEngine(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
+
+    def list_dlp_engines_lite(
+        self,
+        query_params=None,
+    ) -> tuple:
+        """
+        Lists name and ID Engine of all custom and predefined DLP dictionaries.
+        If the `search` parameter is provided, the function filters the rules client-side.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: The search string used to match against a dictionary name.
+
+        Returns:
+            tuple: List of DLP Engine resource records.
+
+        Examples:
+            Gets a list of all DLP Engine.
+            
+            >>> fetched_engines, response, error = client.zia.dlp_engine.list_dlp_engines_lite()
+            ... if error:
+            ...     print(f"Error listing DLP Engines: {error}")
+            ...     return
+            ... print(f"Fetched engines: {[engine.as_dict() for engine in fetched_engines]}")
+            
+            Gets a list of all DLP Engine name and ID.
+            
+            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines_lite(query_params={"search": 'EUIBAN_LEAKAGE'})
+            ... if error:
+            ...     print(f"Error listing DLP Engine: {error}")
+            ...     return
+            ... print(f"Fetched engine: {[engine.as_dict() for engine in dict]}")
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /dlpEngines/lite
+        """
+        )
+
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
             return (None, response, error)
 
-        return (result, response, None)
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(DLPEngine(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_dlp_engines(self, engine_id: int) -> tuple:
         """
@@ -117,18 +214,22 @@ class DLPEngineAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DLPEngine)
+        response, error = self._request_executor.\
+            execute(request, DLPEngine)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPEngine(self.form_response_body(response.get_body()))
+            result = DLPEngine(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -298,22 +399,22 @@ class DLPEngineAPI(APIClient):
         """
         )
 
-        # Construct the payload
         payload = {"data": expression}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, DLPVAlidateExpression)
+        response, error = self._request_executor.\
+            execute(request, DLPVAlidateExpression)
         if error:
             return (None, response, error)
 
         try:
-            # Parse the response into the DLPPatternValidation model
-            result = DLPVAlidateExpression(self.form_response_body(response.get_body()))
+            result = DLPVAlidateExpression(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 

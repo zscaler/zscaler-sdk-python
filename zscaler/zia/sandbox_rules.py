@@ -38,8 +38,8 @@ class SandboxRulesAPI(APIClient):
         filter expression or query.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
+            query_params {dict}: Map of query parameters for the request. 
+                       
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -62,32 +62,43 @@ class SandboxRulesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
-
+        request, error = self._request_executor.create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(SandboxRules(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
+                results.append(SandboxRules(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
 
     def get_rule(
         self,
@@ -197,7 +208,9 @@ class SandboxRulesAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
             
-        transform_common_id_fields(reformat_params, body, body)
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
         request, error = self._request_executor\
@@ -278,7 +291,9 @@ class SandboxRulesAPI(APIClient):
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
             
-        transform_common_id_fields(reformat_params, body, body)
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
         request, error = self._request_executor\

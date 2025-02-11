@@ -45,6 +45,7 @@ reformat_params = [
     ("devices", "devices"),
     ("device_groups", "deviceGroups"),
     ("departments", "departments"),
+    ("ec_groups", "ecGroups"),
     ("auditor", "auditor"),
     ("dlp_engines", "dlpEngines"),
     ("excluded_departments", "excludedDepartments"),
@@ -70,7 +71,10 @@ reformat_params = [
     ("form_sharing_domain_profiles", "formSharingDomainProfiles"),
     ("url_categories", "urlCategories"),
     ("zpa_app_segments", "zpaAppSegments"),
+    ("zpa_application_segments", "zpaApplicationSegments"),
+    ("zpa_application_segment_groups", "zpaApplicationSegmentGroups"),
     ("workload_groups", "workloadGroups"),
+    ("service_ids", "services"),
     # etc. expand as needed
 ]
 
@@ -255,37 +259,7 @@ def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: 
                 value["id"] = int(value["id"])
                 target_dict[payload_key] = value
     return
-
-# def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
-#     for entry in id_groups:
-#         key, payload_key = entry
-#         if key in kwargs:
-#             value = kwargs.pop(key)
-#             if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
-#                 # Handle zpa_gateway, proxy_gateway, and zpa_server_group
-#                 if isinstance(value, dict):
-#                     payload[payload_key] = {
-#                         snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
-#                     }
-#             elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
-#                 # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
-#                 if isinstance(value, list):
-#                     payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
-#             elif key == "cbi_profile":
-#                 # Special handling for cbi_profile
-#                 if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
-#                     payload[payload_key] = {"id": value["id"], "name": value["name"], "url": value["url"]}
-#             elif key == "cloud_app_risk_profile":
-#                 # Special handling for cloudAppRiskProfile
-#                 if isinstance(value, dict) and "id" in value:
-#                     payload[payload_key] = {"id": value["id"]}
-#             else:
-#                 # General case for ID transformations
-#                 if isinstance(value, list):
-#                     payload[payload_key] = [{"id": int(item)} if isinstance(item, (str, int)) else item for item in value]
-#     return
-
-    
+  
 def transform_clientless_apps(clientless_app_ids):
     transformed_apps = []
     for app in clientless_app_ids:
@@ -301,7 +275,6 @@ def transform_clientless_apps(clientless_app_ids):
             }
         )
     return transformed_apps
-
 
 def format_clientless_apps(clientless_apps):
     # Implement this function to format clientless_apps as needed for the update request
@@ -841,24 +814,6 @@ def format_url(base_string):
         str: single line URL
     """
     return "".join([line.strip() for line in base_string.splitlines()])
-
-
-def convert_absolute_url_into_relative_url(absolute_url):
-    """
-    Converts absolute url into relative url.
-
-    Args:
-        absolute_url (str): URL
-
-    Returns:
-        str: URL
-
-    Example:
-        >>> convert_absolute_url_into_relative_url('https://test.okta.com/api/v1/users')
-        '/api/v1/users'
-    """
-    url_parts = urlsplit(absolute_url)
-    return urlunsplit(("", "", url_parts[2], url_parts[3], url_parts[4]))
 
 
 # Maps ZCC numeric os_type and registration_type arguments to a human-readable string

@@ -62,29 +62,32 @@ class CBIProfileAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params
+        )
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(CBIProfile(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
+            results = [CBIProfile(
+                self.form_response_body(item)) for item in response.get_results()
+            ]
+        except Exception as exc:
+            return (None, response, exc)
 
-        return (result, response, None)
+        if local_search:
+            lower_search = local_search.lower()
+            results = [role for role in results if \
+                lower_search in (role.name.lower() if role.name else "")]
+
+        return (results, response, None)
