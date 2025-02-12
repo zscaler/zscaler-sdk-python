@@ -21,10 +21,12 @@ from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
 from box import Box
 
+
 @pytest.fixture
 def fs():
     yield
- 
+
+
 class TestPacFiles:
     """
     Integration Tests for the pac file
@@ -200,20 +202,30 @@ class TestPacFiles:
             try:
                 # Retrieve PAC file without filter
                 retrieved_pac_file_list = client.pac_files.get_pac_file(pac_id)
-                assert isinstance(retrieved_pac_file_list, list), f"Expected a list, got {type(retrieved_pac_file_list).__name__}"
+                assert isinstance(
+                    retrieved_pac_file_list, list
+                ), f"Expected a list, got {type(retrieved_pac_file_list).__name__}"
                 assert len(retrieved_pac_file_list) > 0, "No PAC files returned by get_pac_file"
 
                 retrieved_pac_file = retrieved_pac_file_list[0]  # Access the first PAC file
-                assert retrieved_pac_file["id"] == pac_id, f"Retrieved PAC file ID mismatch: {retrieved_pac_file['id']} != {pac_id}"
-                assert retrieved_pac_file["name"] == pac_file_name, f"Retrieved PAC file name mismatch: {retrieved_pac_file['name']} != {pac_file_name}"
+                assert (
+                    retrieved_pac_file["id"] == pac_id
+                ), f"Retrieved PAC file ID mismatch: {retrieved_pac_file['id']} != {pac_id}"
+                assert (
+                    retrieved_pac_file["name"] == pac_file_name
+                ), f"Retrieved PAC file name mismatch: {retrieved_pac_file['name']} != {pac_file_name}"
 
                 # Retrieve PAC file with filter
                 retrieved_pac_file_list_with_filter = client.pac_files.get_pac_file(pac_id, filter="pac_content")
-                assert isinstance(retrieved_pac_file_list_with_filter, list), f"Expected a list, got {type(retrieved_pac_file_list_with_filter).__name__}"
+                assert isinstance(
+                    retrieved_pac_file_list_with_filter, list
+                ), f"Expected a list, got {type(retrieved_pac_file_list_with_filter).__name__}"
                 assert len(retrieved_pac_file_list_with_filter) > 0, "No PAC files returned by get_pac_file with filter"
 
                 retrieved_pac_file_with_filter = retrieved_pac_file_list_with_filter[0]
-                assert retrieved_pac_file_with_filter["id"] == pac_id, f"Retrieved PAC file ID mismatch with filter: {retrieved_pac_file_with_filter['id']} != {pac_id}"
+                assert (
+                    retrieved_pac_file_with_filter["id"] == pac_id
+                ), f"Retrieved PAC file ID mismatch with filter: {retrieved_pac_file_with_filter['id']} != {pac_id}"
             except Exception as exc:
                 errors.append(f"Failed to retrieve PAC file: {exc}")
 
@@ -221,28 +233,27 @@ class TestPacFiles:
             try:
                 # Retrieve PAC file version without filter
                 retrieved_pac_file_version = client.pac_files.get_pac_file_version(pac_id, pac_version)
-                assert isinstance(retrieved_pac_file_version, dict) or isinstance(retrieved_pac_file_version, Box), (
-                    f"Expected a dict or Box, got {type(retrieved_pac_file_version).__name__}"
-                )
+                assert isinstance(retrieved_pac_file_version, dict) or isinstance(
+                    retrieved_pac_file_version, Box
+                ), f"Expected a dict or Box, got {type(retrieved_pac_file_version).__name__}"
                 # Use snake_case key for Box object or fallback to original key
                 pac_version_key = "pac_version" if isinstance(retrieved_pac_file_version, Box) else "pacVersion"
-                assert retrieved_pac_file_version[pac_version_key] == pac_version, (
-                    f"Retrieved PAC file version mismatch: {retrieved_pac_file_version[pac_version_key]} != {pac_version}"
-                )
+                assert (
+                    retrieved_pac_file_version[pac_version_key] == pac_version
+                ), f"Retrieved PAC file version mismatch: {retrieved_pac_file_version[pac_version_key]} != {pac_version}"
 
                 # Retrieve PAC file version with filter
                 retrieved_pac_file_version_with_filter = client.pac_files.get_pac_file_version(
                     pac_id, pac_version, filter="pac_content"
                 )
-                assert isinstance(retrieved_pac_file_version_with_filter, dict) or isinstance(retrieved_pac_file_version_with_filter, Box), (
-                    f"Expected a dict or Box, got {type(retrieved_pac_file_version_with_filter).__name__}"
-                )
-                assert retrieved_pac_file_version_with_filter[pac_version_key] == pac_version, (
-                    f"Retrieved PAC file version mismatch with filter: {retrieved_pac_file_version_with_filter[pac_version_key]} != {pac_version}"
-                )
+                assert isinstance(retrieved_pac_file_version_with_filter, dict) or isinstance(
+                    retrieved_pac_file_version_with_filter, Box
+                ), f"Expected a dict or Box, got {type(retrieved_pac_file_version_with_filter).__name__}"
+                assert (
+                    retrieved_pac_file_version_with_filter[pac_version_key] == pac_version
+                ), f"Retrieved PAC file version mismatch with filter: {retrieved_pac_file_version_with_filter[pac_version_key]} != {pac_version}"
             except Exception as exc:
                 errors.append(f"Failed to retrieve PAC file version: {exc}")
-
 
         finally:
             # Cleanup: Attempt to delete the PAC file

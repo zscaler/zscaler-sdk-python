@@ -469,9 +469,7 @@ class ZIAClientHelper(ZIAClient):
         if page is not None:
             response = self.send("GET", path=path, params=params)
             if response.status_code != expected_status_code:
-                error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=params["page"]
-                )
+                error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=params["page"])
                 logger.error(error_msg)
                 return BoxList([]), error_msg
 
@@ -542,7 +540,6 @@ class ZIAClientHelper(ZIAClient):
 
         return BoxList(ret_data), None
 
-
     # def get_paginated_data(
     #     self,
     #     path=None,
@@ -597,7 +594,7 @@ class ZIAClientHelper(ZIAClient):
     #         "page": page if page is not None else 1,  # Start at page 1 if not specified
     #         "pagesize": max(100, min(pagesize or 100, 10000)),  # Ensure pagesize is within API limits
     #     }
-        
+
     #     # Add optional filters to the params if provided
     #     if search:
     #         params["search"] = search
@@ -717,7 +714,7 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return CloudAppsAPI(self)
-    
+
     @property
     def dlp(self):
         """
@@ -774,7 +771,7 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return CloudSandboxAPI(self)
-    
+
     @property
     def security(self):
         """
