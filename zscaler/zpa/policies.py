@@ -99,7 +99,7 @@ class PolicySetsAPI:
 
                 if object_type in ["APP", "APP_GROUP"]:
                     app_and_app_group_operands.append(operand)
-                elif object_type in ["SCIM","SCIM_GROUP"]:
+                elif object_type in ["SCIM", "SCIM_GROUP"]:
                     scim_and_scim_group_operands.append(operand)
                 elif object_type in object_types_to_operands:
                     object_types_to_operands[object_type].append(operand)
