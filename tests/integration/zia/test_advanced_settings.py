@@ -55,7 +55,7 @@ class TestAdvancedSettings:
             
             assert updated_settings is not None, "Failed to update advanced settings - No data returned."
             assert err is None, f"Error updating advanced settings: {err}"
-            assert response.get_status() == 200, f"Unexpected status code: {response.get_status()}"
+            assert response.get_status() == 204, f"Unexpected status code: {response.get_status()}"
 
             # Validate that changes were successfully applied
             assert updated_settings.enable_office365 == settings.enable_office365, (

@@ -9,6 +9,7 @@ from zscaler.exceptions import HTTPException, ZscalerAPIException
 from http import HTTPStatus
 from zscaler.logger import dump_request, dump_response
 from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from urllib.parse import urlparse
@@ -27,17 +28,20 @@ class HTTPClient:
     def __init__(self,
                  http_config={},
                  zcc_legacy_client: LegacyZCCClientHelper = None,
+                 zdx_legacy_client: LegacyZDXClientHelper = None,
                  zpa_legacy_client: LegacyZPAClientHelper = None,
                  zia_legacy_client: LegacyZIAClientHelper = None):
 
         # Get headers from Request Executor
         self._default_headers = http_config.get("headers", {})
         self.zcc_legacy_client = zcc_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
 
         # Determine if legacy clients are enabled
         self.use_zcc_legacy_client = zcc_legacy_client is not None
+        self.use_zdx_legacy_client = zdx_legacy_client is not None
         self.use_zpa_legacy_client = zpa_legacy_client is not None
         self.use_zia_legacy_client = zia_legacy_client is not None
 
@@ -156,6 +160,34 @@ class HTTPClient:
                     "params": legacy_request["params"],
                     "headers": legacy_request["headers"],
                 })
+
+            elif self.use_zdx_legacy_client:
+                parsed_url = urlparse(request["url"])
+                path = parsed_url.path
+                logger.debug(f"Sending request via ZDX legacy client. Path: {path}")
+                
+                # Unpack the returned tuple into response and legacy_req_info
+                response, legacy_req_info = self.zdx_legacy_client.send(
+                    method=request["method"],
+                    path=path,
+                    params=request["params"],
+                    json=request.get("json") or request.get("data"),
+                )
+
+                logger.debug(f"ZDX Legacy Client Response: {response}, Legacy Request Info: {legacy_req_info}")
+
+                if response is None:
+                    error_msg = f"ZDX Legacy client returned None for request {legacy_req_info}"
+                    logger.error(error_msg)
+                    return (None, ValueError(error_msg))
+
+                # Update params with the correct dictionary from the legacy client's response
+                params.update({
+                    "url": legacy_req_info["url"],
+                    "params": legacy_req_info["params"],
+                    "headers": legacy_req_info["headers"],
+                })
+
 
             elif self.use_zia_legacy_client:
                 parsed_url = urlparse(request["url"])

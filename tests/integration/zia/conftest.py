@@ -24,7 +24,7 @@ PYTEST_MOCK_CLIENT = "pytest_mock_client"
 class MockZIAClient(ZscalerClient):
     def __init__(self, fs, config=None):
         """
-        Initialize the MockZPAClient with support for environment variables and
+        Initialize the MockZIAClient with support for environment variables and
         optional inline config.
         
         Args:

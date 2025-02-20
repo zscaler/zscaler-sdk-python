@@ -10,9 +10,11 @@ from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.oneapi_oauth_client import OAuth
 from zscaler.zcc.zcc_service import ZCCService
+from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zia.zia_service import ZIAService
 from zscaler.zpa.zpa_service import ZPAService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 
@@ -25,12 +27,14 @@ class Client:
         self,
         user_config: dict = {},
         zcc_legacy_client: LegacyZCCClientHelper = None,
+        zdx_legacy_client: LegacyZDXClientHelper = None,
         zpa_legacy_client: LegacyZPAClientHelper = None,
         zia_legacy_client: LegacyZIAClientHelper = None,
         use_legacy_client: bool = False,
     ):
         self.use_legacy_client = use_legacy_client
         self.zcc_legacy_client = zcc_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
 
@@ -42,6 +46,13 @@ class Client:
             self.logger.info("Legacy ZCC client initialized successfully.")
             return
 
+        # Legacy client initialization logic
+        if use_legacy_client and zdx_legacy_client:
+            self._config = {}
+            self._request_executor = zdx_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZDX client initialized successfully.")
+            return
         # Legacy client initialization logic
         if use_legacy_client and zpa_legacy_client:
             self._config = {}
@@ -63,6 +74,7 @@ class Client:
             user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
         )
         self.zcc_legacy_client = zcc_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
 
@@ -134,6 +146,7 @@ class Client:
             cache,
             user_config.get("httpClient", None),
             self.zcc_legacy_client,
+            self.zdx_legacy_client,
             self.zpa_legacy_client,
             self.zia_legacy_client,
         )
@@ -143,6 +156,7 @@ class Client:
         self._zia = None
         self._zpa = None
         self._zcc = None
+        self._zdx = None
         # self.logger.debug("Client initialized successfully.")
 
     def authenticate(self):
@@ -166,6 +180,14 @@ class Client:
             self._zcc = ZCCService(self)
         return self._zcc
 
+    @property
+    def zdx(self):
+        if self.use_legacy_client:
+            return self.zdx_legacy_client
+        if self._zdx is None:
+            self._zdx = ZDXService(self)
+        return self._zdx
+    
     @property
     def zia(self):
         if self.use_legacy_client:
@@ -301,3 +323,22 @@ class LegacyZCCClient(Client):
             timeout=timeout,
         )
         super().__init__(config, zcc_legacy_client=legacy_helper, use_legacy_client=True)
+
+class LegacyZDXClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        client_id = config.get("key_id", os.getenv("ZDX_CLIENT_ID"))
+        client_secret = config.get("key_secret", os.getenv("ZDX_CLIENT_SECRET"))
+        cloud = config.get("cloud", os.getenv("ZDX_CLOUD", "zdxcloud"))
+        timeout = config.get("timeout", 240)
+
+        # Initialize the LegacyZDXClientHelper with the extracted parameters
+        legacy_helper = LegacyZDXClientHelper(
+            client_id=client_id,
+            client_secret=client_secret,
+            cloud=cloud,
+            timeout=timeout,
+        )
+        super().__init__(config, zdx_legacy_client=legacy_helper, use_legacy_client=True)

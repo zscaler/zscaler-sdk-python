@@ -9,6 +9,7 @@ from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from http import HTTPStatus
 from zscaler.helpers import convert_keys_to_snake_case, convert_keys_to_camel_case
 from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 
@@ -27,6 +28,7 @@ class RequestExecutor:
                  cache,
                  http_client=None,
                  zcc_legacy_client: LegacyZCCClientHelper = None,
+                 zdx_legacy_client: LegacyZDXClientHelper = None,
                  zpa_legacy_client: LegacyZPAClientHelper = None,
                  zia_legacy_client: LegacyZIAClientHelper = None):
         """
@@ -38,10 +40,16 @@ class RequestExecutor:
             http_client (object, optional): Custom HTTP client for making requests.
         """
         self.zcc_legacy_client = zcc_legacy_client
+        self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
 
-        self.use_legacy_client = zpa_legacy_client is not None or zia_legacy_client is not None or zcc_legacy_client is not None
+        self.use_legacy_client = (
+            zpa_legacy_client is not None or
+            zia_legacy_client is not None or
+            zcc_legacy_client is not None or
+            zdx_legacy_client is not None
+            )
 
         # Validate and set request timeout
         self._request_timeout = config["client"].get(
@@ -98,6 +106,7 @@ class RequestExecutor:
                 "sslContext": self._config["client"].get("sslContext"),
             },
             zcc_legacy_client=self.zcc_legacy_client,
+            zdx_legacy_client=self.zdx_legacy_client,
             zpa_legacy_client=self.zpa_legacy_client,
             zia_legacy_client=self.zia_legacy_client,
         )
@@ -124,11 +133,13 @@ class RequestExecutor:
     def get_service_type(self, url):
         if not url:
             raise ValueError("URL cannot be None or empty.")
-
+    
         if "/zia" in url or "/zscsb" in url:
             return "zia"
         elif "/zcc" in url:
             return "zcc"
+        elif "/zdx" in url:
+            return "zdx"
         elif "/zpa" in url or "/mgmtconfig" in url:
             return "zpa"
 
@@ -139,13 +150,15 @@ class RequestExecutor:
                 return "zia"
             elif "/zcc" in url:
                 return "zcc"
+            elif "/zdx" in url:
+                return "zdx"
             elif "/zpa" in url or "/mgmtconfig" in url:
                 return "zpa"
 
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["/zia", "/zpa", "/zcc"]
+        prefixes = ["/zia", "/zpa", "/zcc", "/zdx"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix):]
@@ -181,6 +194,8 @@ class RequestExecutor:
                 base_url = self.zia_legacy_client.get_base_url(endpoint)
             elif service_type == "zcc":
                 base_url = self.zcc_legacy_client.get_base_url(endpoint)
+            elif service_type == "zdx":
+                base_url = self.zdx_legacy_client.get_base_url(endpoint)
             else:
                 base_url = self.get_base_url(endpoint)
         else:
@@ -223,24 +238,63 @@ class RequestExecutor:
                 "Authorization"] = f"Bearer {self._oauth._get_access_token()}"
         return headers
 
+    # def _prepare_body(self, endpoint, body):
+    #     if body:
+    #         body = convert_keys_to_camel_case(body)
+    #     if "/zpa/" in endpoint and "/reorder" in endpoint and isinstance(
+    #             body, list):
+    #         return body
+    #     return body
+
     def _prepare_body(self, endpoint, body):
+        if not isinstance(body, dict):
+            return body
+
+        # Ensure ZDX remains snake_case without affecting other services
+        if self.use_legacy_client and self.zdx_legacy_client:
+            return body  # Do not convert anything, just return as-is
+
+        # Preserve existing logic for other services
         if body:
             body = convert_keys_to_camel_case(body)
-        if "/zpa/" in endpoint and "/reorder" in endpoint and isinstance(
-                body, list):
+
+        if "/zpa/" in endpoint and "/reorder" in endpoint and isinstance(body, list):
             return body
+
         return body
 
+
+    # def _prepare_params(self, endpoint, params, body):
+    #     if params:
+    #         params = convert_keys_to_camel_case(params)
+    #     if "/zpa/" in endpoint:
+    #         microtenant_id = self._get_microtenant_id(body, params)
+    #         if microtenant_id:
+    #             params["microtenantId"] = microtenant_id
+    #     else:
+    #         params.pop("microtenantId", None)
+    #     return params
+
     def _prepare_params(self, endpoint, params, body):
-        if params:
-            params = convert_keys_to_camel_case(params)
+        if not isinstance(params, dict):
+            return params
+
+        # Ensure ZDX query params remain snake_case
+        if self.use_legacy_client and self.zdx_legacy_client:
+            return params  # Keep as snake_case
+
+        # Keep existing logic for ZPA and other services
+        params = convert_keys_to_camel_case(params)
+
         if "/zpa/" in endpoint:
             microtenant_id = self._get_microtenant_id(body, params)
             if microtenant_id:
                 params["microtenantId"] = microtenant_id
         else:
             params.pop("microtenantId", None)
+
         return params
+
 
     def _get_microtenant_id(self, body, params):
         if body and isinstance(
@@ -502,7 +556,7 @@ class RequestExecutor:
 
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = headers.get(
-            "x-ratelimit-reset") or headers.get("X-RateLimit-Reset")
+            "x-ratelimit-reset") or headers.get("X-RateLimit-Reset") or headers.get("RateLimit-Reset")
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
         if retry_after:
