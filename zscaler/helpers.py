@@ -63,7 +63,11 @@ def to_lower_camel_case(string):
     components = string.split("_")
     
     # Define exceptions where components should remain in uppercase
-    special_cases = {"tls": "TLS", "dns": "DNS"}
+    special_cases = {
+                    "tls": "TLS",
+                    "dns": "DNS", 
+                    "dlp": "DLP",
+                }
     
     # Lowercase first letter of the first component
     if components[0]:

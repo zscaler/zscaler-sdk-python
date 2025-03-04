@@ -40,17 +40,13 @@ class LocationsAPI(APIClient):
             query_params (dict):
                 Map of query parameters for the request.
 
-                ``[query_params.page]`` (str):
-                    Specifies the page offset.
+                ``[query_params.page]`` (int): Specifies the page offset.
 
-                ``[query_params.page_size]`` (str):
-                    Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` (int): Specifies the page size. The default size is 100, but the maximum size is 1000.
 
-                ``[query_params.search]`` (str):
-                    The search string used to partially match against a location's name and port attributes.
+                ``[query_params.search]`` (str): The search string used to partially match against a location's name and port attributes.
 
-                ``[query_params.ssl_scan_enabled]`` (bool):
-                    This parameter was deprecated and no longer has an effect on SSL policy.
+                ``[query_params.ssl_scan_enabled]`` (bool): This parameter was deprecated and no longer has an effect on SSL policy.
 
                 ``[query_params.xff_enabled]`` (bool):
                     Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled
@@ -608,24 +604,29 @@ class LocationsAPI(APIClient):
         """
         Returns only the name and ID of all configured locations.
 
-        Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
-
         Keyword Args:
-            **include_parent_locations (bool, optional):
-                Only locations with sub-locations will be included in the response if `True`.
-            **include_sub_locations (bool, optional):
-                Sub-locations will be included in the response if `True`.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
-                Specifies the page size. The default size is 100, but the maximum size is 1000.
-            **search (str, optional):
-                The search string used to partially match against a location's name and port attributes.
+            query_params {dict}: Optional query parameters.
+            
+                ``[query_params.page]`` {int}: Specifies the page offset.
+                
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                
+                ``[query_params.state]`` {str}: Filter based on geographical state for a location.
+                
+                ``[query_params.xff_enabled]`` {bool}: Filter based on whether Enforce XFF Forwarding is enabled for a location.
+                
+                ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce Authentication is enabled for a location.
+                
+                ``[query_params.bw_enforced]`` {bool}: Filter based on whether Bandwith Control is enforced for a location.
+                
+                ``[query_params.partner_id]`` {bool}: Not applicable to Cloud & Branch Connector.
+                
+                ``[query_params.enforce_aup]`` {bool}: Filter based on whether Acceptable Use Policy (AUP) is enforced for a location.
+                
+                ``[query_params.enable_firewall]`` {bool}: Filter based on whether firewall is enabled for a location.
+                
+                ``[query_params.location_type]`` {bool}: Filter based on type of location.
+                    Supported values: `NONE`, `CORPORATE`, `SERVER`, `GUESTWIFI`, `IOT`, `WORKLOAD`
 
         Returns:
             :obj:`Tuple`: A list of configured locations.

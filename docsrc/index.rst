@@ -11,6 +11,7 @@
    zs/zcon/index
    zs/zcc/index
    zs/zdx/index
+   zs/zwa/index
    zs/guides/index
 
 Zscaler SDK Python (Beta) - Library Reference
@@ -54,6 +55,7 @@ This repository contains the Zscaler SDK for Python. This SDK can be used to int
 - :doc:`Zscaler Mobile Admin Portal <zs/zcc/index>`
 - :doc:`Zscaler Cloud Connector Portal (ZCON) <zs/zcon/index>`
 - :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
+- :doc:`Zscaler Workflow Automation (ZWA) <zs/zwa/index>`
 
 * `Documentation <https://zscaler-sdk-python.readthedocs.io>`_
 

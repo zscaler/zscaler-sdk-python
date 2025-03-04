@@ -23,7 +23,7 @@ from zscaler.zdx.troubleshooting import TroubleshootingAPI
 from zscaler.zdx.users import UsersAPI
         
 class ZDXService:
-    """ZCC Service client, exposing various ZDX APIs."""
+    """ZDX Service client, exposing various ZDX APIs."""
 
     def __init__(self, client):
         self._request_executor = client._request_executor

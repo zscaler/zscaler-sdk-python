@@ -9,16 +9,18 @@ from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from http import HTTPStatus
 from zscaler.helpers import convert_keys_to_snake_case, convert_keys_to_camel_case
 from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zcon.legacy import LegacyZCONClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
+from zscaler.zwa.legacy import LegacyZWAClientHelper
 
 logger = logging.getLogger(__name__)
 
 
 class RequestExecutor:
     """
-    This class handles all of the requests sent by the Zscaler SDK Client (ZIA, ZPA, ZCC, etc.).
+    This class handles all of the requests sent by the Zscaler SDK Client (ZIA, ZPA, ZCC, ZDX, ZWA etc.).
     """
 
     BASE_URL = "https://api.zsapi.net"  # Default base URL for API calls
@@ -28,9 +30,11 @@ class RequestExecutor:
                  cache,
                  http_client=None,
                  zcc_legacy_client: LegacyZCCClientHelper = None,
+                 zcon_legacy_client: LegacyZCONClientHelper = None,
                  zdx_legacy_client: LegacyZDXClientHelper = None,
                  zpa_legacy_client: LegacyZPAClientHelper = None,
-                 zia_legacy_client: LegacyZIAClientHelper = None):
+                 zia_legacy_client: LegacyZIAClientHelper = None,
+                 zwa_legacy_client: LegacyZWAClientHelper = None):
         """
         Constructor for Request Executor object for Zscaler SDK Client.
 
@@ -40,14 +44,18 @@ class RequestExecutor:
             http_client (object, optional): Custom HTTP client for making requests.
         """
         self.zcc_legacy_client = zcc_legacy_client
+        self.zcon_legacy_client = zcon_legacy_client
         self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
+        self.zwa_legacy_client = zwa_legacy_client
 
         self.use_legacy_client = (
             zpa_legacy_client is not None or
             zia_legacy_client is not None or
+            zwa_legacy_client is not None or
             zcc_legacy_client is not None or
+            zcon_legacy_client is not None or
             zdx_legacy_client is not None
             )
 
@@ -106,9 +114,11 @@ class RequestExecutor:
                 "sslContext": self._config["client"].get("sslContext"),
             },
             zcc_legacy_client=self.zcc_legacy_client,
+            zcon_legacy_client=self.zcon_legacy_client,
             zdx_legacy_client=self.zdx_legacy_client,
             zpa_legacy_client=self.zpa_legacy_client,
             zia_legacy_client=self.zia_legacy_client,
+            zwa_legacy_client=self.zwa_legacy_client,
         )
 
         # Initialize custom headers as an empty dictionary
@@ -136,10 +146,14 @@ class RequestExecutor:
     
         if "/zia" in url or "/zscsb" in url:
             return "zia"
+        elif "/zcon" in url:
+            return "zcon"
         elif "/zcc" in url:
             return "zcc"
         elif "/zdx" in url:
             return "zdx"
+        elif "/zwa" in url:
+            return "zwa"
         elif "/zpa" in url or "/mgmtconfig" in url:
             return "zpa"
 
@@ -148,17 +162,21 @@ class RequestExecutor:
             # Recheck for service type after removing the prefix
             if "/zia" in url or "/zscsb" in url:
                 return "zia"
+            elif "/zcon" in url:
+                return "zcon"
             elif "/zcc" in url:
                 return "zcc"
             elif "/zdx" in url:
                 return "zdx"
+            elif "/zwa" in url:
+                return "zwa"
             elif "/zpa" in url or "/mgmtconfig" in url:
                 return "zpa"
 
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["/zia", "/zpa", "/zcc", "/zdx"]
+        prefixes = ["/zia", "/zpa", "/zcc", "/zcon", "/zdx", "/zwa"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix):]
@@ -192,10 +210,14 @@ class RequestExecutor:
                 base_url = self.zpa_legacy_client.get_base_url(endpoint)
             elif service_type == "zia":
                 base_url = self.zia_legacy_client.get_base_url(endpoint)
+            elif service_type == "zcon":
+                base_url = self.zcon_legacy_client.get_base_url(endpoint)
             elif service_type == "zcc":
                 base_url = self.zcc_legacy_client.get_base_url(endpoint)
             elif service_type == "zdx":
                 base_url = self.zdx_legacy_client.get_base_url(endpoint)
+            elif service_type == "zwa":
+                base_url = self.zwa_legacy_client.get_base_url(endpoint)
             else:
                 base_url = self.get_base_url(endpoint)
         else:
@@ -238,14 +260,6 @@ class RequestExecutor:
                 "Authorization"] = f"Bearer {self._oauth._get_access_token()}"
         return headers
 
-    # def _prepare_body(self, endpoint, body):
-    #     if body:
-    #         body = convert_keys_to_camel_case(body)
-    #     if "/zpa/" in endpoint and "/reorder" in endpoint and isinstance(
-    #             body, list):
-    #         return body
-    #     return body
-
     def _prepare_body(self, endpoint, body):
         if not isinstance(body, dict):
             return body
@@ -262,18 +276,6 @@ class RequestExecutor:
             return body
 
         return body
-
-
-    # def _prepare_params(self, endpoint, params, body):
-    #     if params:
-    #         params = convert_keys_to_camel_case(params)
-    #     if "/zpa/" in endpoint:
-    #         microtenant_id = self._get_microtenant_id(body, params)
-    #         if microtenant_id:
-    #             params["microtenantId"] = microtenant_id
-    #     else:
-    #         params.pop("microtenantId", None)
-    #     return params
 
     def _prepare_params(self, endpoint, params, body):
         if not isinstance(params, dict):

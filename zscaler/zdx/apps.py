@@ -103,14 +103,6 @@ class AppsAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
-        # try:
-        #     result = [ActiveApplications(
-        #         self.form_response_body(response.get_body()))]  
-        # except Exception as error:
-        #     return (None, response, error)
-
-        # return (result, response, None)
 
     @zdx_params
     def get_app(

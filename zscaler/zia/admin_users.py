@@ -108,13 +108,17 @@ class AdminUsersAPI(APIClient):
             >>> admin_user, response, error = zia.admin_and_role_management.get_admin_user('987321202')
         """
         http_method = "get".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/adminUsers/{user_id}")
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}/adminUsers/{user_id}
+            """
+        )
 
         body = {}
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -127,7 +131,9 @@ class AdminUsersAPI(APIClient):
 
         # Parse the response
         try:
-            result = AdminUser(self.form_response_body(response.get_body()))
+            result = AdminUser(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
@@ -224,18 +230,22 @@ class AdminUsersAPI(APIClient):
             else:
                 payload[snake_to_camel(key)] = value
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload, {}, {})
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, AdminUser)
+        response, error = self._request_executor.\
+            execute(request, AdminUser)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AdminUser(self.form_response_body(response.get_body()))
+            result = AdminUser(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 

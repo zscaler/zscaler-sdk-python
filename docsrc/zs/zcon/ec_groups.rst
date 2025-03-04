@@ -1,13 +1,13 @@
-ecgroups
-========
+ec_groups
+============
 
 The following methods allow for interaction with the ZCON Edge Connector Group API endpoints.
 
-Methods are accessible via ``zcon.ecgroups``
+Methods are accessible via ``zcon.ec_groups``
 
-.. _zcon-ecgroups:
+.. _zcon-ec_groups:
 
-.. automodule:: zscaler.zcon.ecgroups
+.. automodule:: zscaler.zcon.ec_groups
     :members:
     :undoc-members:
     :show-inheritance:

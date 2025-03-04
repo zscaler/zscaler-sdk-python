@@ -51,7 +51,9 @@ class ForwardingControlRule(ZscalerObject):
             self.zpa_broker_rule = config["zpaBrokerRule"] if "zpaBrokerRule" in config else None
 
             # Handling lists of simple values
-            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
+            self.src_ips = ZscalerCollection.form_list(
+                config["srcIps"] if "srcIps" in config else [], str)
+            
             self.dest_addresses = ZscalerCollection.form_list(
                 config["destAddresses"] if "destAddresses" in config else [], str
             )

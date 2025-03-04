@@ -10,14 +10,17 @@ from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.oneapi_oauth_client import OAuth
 from zscaler.zcc.zcc_service import ZCCService
+from zscaler.zcon.zcon_service import ZCONService
 from zscaler.zdx.zdx_service import ZDXService
 from zscaler.zia.zia_service import ZIAService
 from zscaler.zpa.zpa_service import ZPAService
+from zscaler.zwa.zwa_service import ZWAService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
+from zscaler.zcon.legacy import LegacyZCONClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
-
+from zscaler.zwa.legacy import LegacyZWAClientHelper
 
 # Zscaler Client Connector APIs
 class Client:
@@ -27,18 +30,22 @@ class Client:
         self,
         user_config: dict = {},
         zcc_legacy_client: LegacyZCCClientHelper = None,
+        zcon_legacy_client: LegacyZCONClientHelper = None,
         zdx_legacy_client: LegacyZDXClientHelper = None,
         zpa_legacy_client: LegacyZPAClientHelper = None,
         zia_legacy_client: LegacyZIAClientHelper = None,
+        zwa_legacy_client: LegacyZWAClientHelper = None,
         use_legacy_client: bool = False,
     ):
         self.use_legacy_client = use_legacy_client
         self.zcc_legacy_client = zcc_legacy_client
+        self.zcon_legacy_client = zcon_legacy_client
         self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
+        self.zwa_legacy_client = zwa_legacy_client
 
-        # Legacy client initialization logic
+        # ZCC Legacy client initialization logic
         if use_legacy_client and zcc_legacy_client:
             self._config = {}
             self._request_executor = zcc_legacy_client
@@ -46,14 +53,23 @@ class Client:
             self.logger.info("Legacy ZCC client initialized successfully.")
             return
 
-        # Legacy client initialization logic
+        # ZDX Legacy client initialization logic
         if use_legacy_client and zdx_legacy_client:
             self._config = {}
             self._request_executor = zdx_legacy_client
             self.logger = logging.getLogger(__name__)
             self.logger.info("Legacy ZDX client initialized successfully.")
             return
-        # Legacy client initialization logic
+
+        # ZWA Legacy client initialization logic
+        if use_legacy_client and zwa_legacy_client:
+            self._config = {}
+            self._request_executor = zwa_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZWA client initialized successfully.")
+            return
+
+        # ZPA Legacy client initialization logic
         if use_legacy_client and zpa_legacy_client:
             self._config = {}
             self._request_executor = zpa_legacy_client
@@ -61,7 +77,7 @@ class Client:
             self.logger.info("Legacy ZPA client initialized successfully.")
             return
 
-        # Legacy client initialization logic for ZIA
+        # ZIA Legacy client initialization logic for ZIA
         if use_legacy_client and zia_legacy_client:
             self._config = {}
             self._request_executor = zia_legacy_client
@@ -69,14 +85,24 @@ class Client:
             self.logger.info("Legacy ZIA client initialized successfully.")
             return
 
+        # ZCON Legacy client initialization logic for ZCON
+        if use_legacy_client and zcon_legacy_client:
+            self._config = {}
+            self._request_executor = zcon_legacy_client
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("Legacy ZCON client initialized successfully.")
+            return
+        
         # Assuming user_config is a dictionary or an object with a 'logging' attribute
         logging_config = (
             user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
         )
         self.zcc_legacy_client = zcc_legacy_client
+        self.zcon_legacy_client = zcon_legacy_client
         self.zdx_legacy_client = zdx_legacy_client
         self.zpa_legacy_client = zpa_legacy_client
         self.zia_legacy_client = zia_legacy_client
+        self.zwa_legacy_client = zwa_legacy_client
 
         # Extract enabled and verbose from the logging configuration
         enabled = logging_config.get("enabled", None)
@@ -146,16 +172,20 @@ class Client:
             cache,
             user_config.get("httpClient", None),
             self.zcc_legacy_client,
+            self.zcon_legacy_client,
             self.zdx_legacy_client,
             self.zpa_legacy_client,
             self.zia_legacy_client,
+            self.zwa_legacy_client,
         )
         # self.logger.debug("Request executor initialized.")
 
         # Lazy load ZIA and ZPA clients
-        self._zia = None
-        self._zpa = None
         self._zcc = None
+        self._zcon = None
+        self._zia = None
+        self._zwa = None
+        self._zpa = None
         self._zdx = None
         # self.logger.debug("Client initialized successfully.")
 
@@ -197,6 +227,23 @@ class Client:
             self._zia = ZIAService(self._request_executor)
         return self._zia
 
+    @property
+    def zwa(self):
+        if self.use_legacy_client:
+            return self.zwa_legacy_client
+        if self._zwa is None:
+            self._zwa = ZWAService(self)
+        return self._zwa
+    
+    @property
+    def zcon(self):
+        if self.use_legacy_client:
+            return self.zcon_legacy_client
+        if self._zcon is None:
+            # Pass RequestExecutor directly
+            self._zcon = ZCONService(self._request_executor)
+        return self._zcon
+    
     @property
     def zpa(self):
         if self.use_legacy_client:
@@ -247,7 +294,6 @@ class Client:
 
     def get_default_headers(self):
         return self._request_executor.get_default_headers()
-
 
 class LegacyZPAClient(Client):
     def __init__(
@@ -302,6 +348,30 @@ class LegacyZIAClient(Client):
         )
         super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
 
+class LegacyZCONClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        username = config.get("username", os.getenv("ZCON_USERNAME"))
+        password = config.get("password", os.getenv("ZCON_PASSWORD"))
+        api_key = config.get("api_key", os.getenv("ZCON_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZCON_CLOUD"))
+        timeout = config.get("timeout", 240)
+        cache = config.get("cache", None)
+        fail_safe = config.get("failSafe", None)
+
+        # Initialize the LegacyZCONClientHelper with the extracted parameters
+        legacy_helper = LegacyZCONClientHelper(
+            username=username,
+            password=password,
+            api_key=api_key,
+            cloud=cloud,
+            timeout=timeout,
+            cache=cache,
+            fail_safe=fail_safe,
+        )
+        super().__init__(config, zcon_legacy_client=legacy_helper, use_legacy_client=True)
 
 class LegacyZCCClient(Client):
     def __init__(
@@ -342,3 +412,22 @@ class LegacyZDXClient(Client):
             timeout=timeout,
         )
         super().__init__(config, zdx_legacy_client=legacy_helper, use_legacy_client=True)
+
+class LegacyZWAClient(Client):
+    def __init__(
+        self,
+        config: dict = {},
+    ):
+        key_id = config.get("key_id", os.getenv("ZWA_CLIENT_ID"))
+        key_secret = config.get("key_secret", os.getenv("ZWA_CLIENT_SECRET"))
+        cloud = config.get("cloud", os.getenv("ZWACLOUD", "us1"))
+        timeout = config.get("timeout", 240)
+
+        # Initialize the LegacyZWAClientHelper with the extracted parameters
+        legacy_helper = LegacyZWAClientHelper(
+            key_id=key_id,
+            key_secret=key_secret,
+            cloud=cloud,
+            timeout=timeout,
+        )
+        super().__init__(config, zwa_legacy_client=legacy_helper, use_legacy_client=True)
