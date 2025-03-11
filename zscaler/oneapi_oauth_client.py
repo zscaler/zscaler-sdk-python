@@ -1,4 +1,5 @@
 import logging
+import json
 import requests
 import jwt
 import time
@@ -104,13 +105,13 @@ class OAuth:
         # logging.debug("Authentication with client secret successful.")
         return response
 
-    def _authenticate_with_private_key(self, client_id, private_key_path):
+    def _authenticate_with_private_key(self, client_id, private_key):
         """
         Authenticate using client ID and JWT private key.
 
         Args:
             client_id (str): Client ID for authentication.
-            private_key_path (str): Path to the private key file.
+            private_key (str): Path to the private key file, JWK JSON string, or raw private key.
 
         Returns:
             str: OAuth access token.
@@ -120,11 +121,29 @@ class OAuth:
         cloud = self._config["client"].get("cloud", "PRODUCTION").lower()
         auth_url = self._get_auth_url(vanity_domain, cloud)
 
-        # Read and load the private key
-        with open(private_key_path, "rb") as key_file:
-            private_key = serialization.load_pem_private_key(key_file.read(), password=None, backend=default_backend())
+        # **Step 1: Determine the Private Key Type**
+        if private_key.strip().startswith("{"):  
+            # **JWK JSON Format**
+            logging.info("Using JWK JSON format for private key.")
+            jwk_key = json.loads(private_key.strip())  # Convert JWK string to dict
+            private_key_obj = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk_key))
 
-        # Create JWT for client assertion
+        elif "BEGIN PRIVATE KEY" in private_key:
+            # **Raw PEM Private Key**
+            logging.info("Using raw PEM private key.")
+            private_key_obj = serialization.load_pem_private_key(
+                private_key.encode(), password=None, backend=default_backend()
+            )
+
+        else:
+            # **Assume it's a file path and read the private key**
+            logging.info("Using private key from file.")
+            with open(private_key, "rb") as key_file:
+                private_key_obj = serialization.load_pem_private_key(
+                    key_file.read(), password=None, backend=default_backend()
+                )
+
+        # **Step 2: Create JWT for Client Assertion**
         now = int(time.time())
         payload = {
             "iss": client_id,
@@ -133,10 +152,10 @@ class OAuth:
             "exp": now + 600,  # 10 minutes expiration
         }
 
-        # Generate the assertion using RS256 algorithm
-        assertion = jwt.encode(payload, private_key, algorithm="RS256")
+        # **Generate the JWT assertion using the private key**
+        assertion = jwt.encode(payload, private_key_obj, algorithm="RS256")
 
-        # Prepare form data
+        # **Step 3: Prepare OAuth Request**
         form_data = {
             "grant_type": "client_credentials",
             "client_id": client_id,
@@ -145,15 +164,13 @@ class OAuth:
             "audience": "https://api.zscaler.com",
         }
 
-        user_agent = UserAgent().get_user_agent_string()
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": user_agent,
+            "User-Agent": "Zscaler-SDK",
         }
 
-        # logging.debug(f"Sending authentication request to {auth_url} with JWT.")
-        # Synchronous HTTP request
+        logging.debug(f"Sending authentication request to {auth_url} with JWT.")
         response = requests.post(auth_url, data=form_data, headers=headers)
 
         if response.status_code >= 300:
@@ -162,6 +179,7 @@ class OAuth:
 
         logging.info("Authentication with JWT private key successful.")
         return response
+
 
     def _get_access_token(self):
         """

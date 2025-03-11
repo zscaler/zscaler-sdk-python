@@ -1,25 +1,26 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "0.20.0"
-description = "Official Python SDK for the Zscaler Products (Beta)"
+version = "1.0.0"
+description = "Official Python SDK for the Zscaler Products"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/zscaler/zscaler-sdk-python"
 repository = "https://github.com/zscaler/zscaler-sdk-python"
 documentation = "https://zscaler-sdk-python.readthedocs.io"
-keywords = ["zscaler", "sdk", "zpa", "zia", "zdx", "zcc", "zcon"]
+keywords = ["zscaler", "sdk", "zcc", "zcon", "zdx", "zia", "zpa", "zwa"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
     "Topic :: Security",
-    "Topic :: Software Development :: Libraries :: Python Modules", ]
+    "Topic :: Software Development :: Libraries :: Python Modules", 
+]
 packages = [
     { include = "zscaler" }
 ]
@@ -29,48 +30,25 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-arrow = "*"
-certifi = ">=2024.2.2"
-charset-normalizer = "*"
-idna = ">=3.10"
-python-box = ">=7.2.0"
-python-dateutil = "*"
-requests = ">=2.32.3"
-responses = ">=0.25.3"
-restfly = "*"
-six = "*"
 flatdict = "*"
 pyyaml = "*"
 xmltodict = "*"
 yarl = "*"
 pycryptodomex = "*"
-aenum = "*"
-pydash = ">=8.0.3"
+jwcrypto = "*"
+pyjwt = "*"
+pydash = "*"
 flake8 = "*"
-pytz = ">=2024.2"
-black = ">=24.3.0"
-# cryptography = ">=3.4,<43.0"
-cryptography = ">=43.0.0"
-okta = ">=2.9.7"
-aiohttp = ">=3.10.2"
 
 [tool.poetry.dev-dependencies]
-black = ">=24.3.0"
-pytest = ">=8.3.1"
-pytest-asyncio = "^0.23.8"
+pytest = "*"
 pytest-mock = "*"
-pytest-recording = "^0.13.2"
-pytest-cov = "*"
-pyfakefs = "^5.6.0"
-isort = "*"
-wheel = "*"
-sphinx = "7.0.1"
-furo = "2023.5.20"
-sphinx-autobuild = "*"
-sphinx_rtd_theme = "^3.0.2"
+pytest-recording = "*"
+pyfakefs = "*"
+pydash = "*"
 
 [tool.poetry.extras]
-dev = ["black", "pytest", "pytest-asyncio", "pytest-mock", "pytest-recording", "pytest-cov", "pyfakefs", "aenum", "isort", "wheel", "pydash"]
+dev = ["pytest", "pytest-mock", "pytest-recording", "pyfakefs", "pydash", "flake8"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -121,7 +121,8 @@ class RequestExecutor:
             zwa_legacy_client=self.zwa_legacy_client,
         )
 
-        # Initialize custom headers as an empty dictionary
+        HTTPClient.raise_exception = \
+            self._config['client'].get("raiseException", False)
         self._custom_headers = {}
 
     def get_base_url(self, endpoint: str) -> str:
