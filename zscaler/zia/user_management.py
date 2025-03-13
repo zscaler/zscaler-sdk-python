@@ -451,9 +451,11 @@ class UserManagementAPI(APIClient):
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
+
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`
 
                 ``[query_params.sort_order]`` {str}: Sorts the order of departments based on available values
+
                     Supported Values: `asc`, `desc`, `rule_execution`
      
         Returns:
@@ -716,9 +718,11 @@ class UserManagementAPI(APIClient):
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
+
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`, `mod_time`
 
                 ``[query_params.sort_order]`` {str}: Sorts the order of departments based on available values
+
                     Supported Values: `asc`, `desc`, `rule_execution`
 
         Returns:
@@ -821,22 +825,25 @@ class UserManagementAPI(APIClient):
         Returns the user group ID and Name.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
-                ``[query_params.limit_search]`` {bool}: Limits the search to match against the department name only.
-                ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
-                    Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`
+            query_params (dict, optional): Map of query parameters for the request.
 
-                ``[query_params.sort_order]`` {str}: Sorts the order of departments based on available values
-                    Supported Values: `asc`, `desc`, `rule_execution`
+                - ``limit_search`` (bool, optional): Limits the search to match against the department name only.
+                - ``search`` (str, optional): The search string used to partially match against an admin/auditor user's Login ID or Name.
+                - ``page`` (int, optional): Specifies the page offset.
+                - ``page_size`` (int, optional): Specifies the page size. The default size is 100, but the maximum size is 1000.
+                - ``sort_by`` (str, optional): Sorts the departments based on available values.
+
+                    Supported Values: ``id``, ``name``, ``expiry``, ``status``, ``external_id``, ``rank``
+
+                - ``sort_order`` (str, optional): Sorts the order of departments based on available values.
+
+                    Supported Values: ``asc``, ``desc``, ``rule_execution``
+
         Returns:
-            :obj:`Tuple`: The user group resource record.
+            tuple: The user group resource record.
 
         Examples:
             >>> user_group = zia.users.get_group('99999')
-
         """
         http_method = "get".upper()
         api_url = format_url(f"""
