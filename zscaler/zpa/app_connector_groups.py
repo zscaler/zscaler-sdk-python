@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_connector_groups import AppConnectorGroup
-from zscaler.utils import format_url, add_id_groups, pick_version_profile, snake_to_camel
+from zscaler.utils import format_url
 
 
 class AppConnectorGroupAPI(APIClient):

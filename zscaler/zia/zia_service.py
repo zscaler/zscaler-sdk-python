@@ -61,7 +61,7 @@ from zscaler.zia.url_filtering import URLFilteringAPI
 from zscaler.zia.user_management import UserManagementAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
-
+from zscaler.zia.sub_clouds import SubCloudsAPI
 
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
@@ -438,3 +438,12 @@ class ZIAService:
 
         """
         return WorkloadGroupsAPI(self._request_executor)
+
+    @property
+    def sub_clouds(self):
+        """
+        The interface object for the :ref:`ZIA Workload Groups <zia-sub_clouds>`.
+
+        """
+
+        return SubCloudsAPI(self._request_executor)

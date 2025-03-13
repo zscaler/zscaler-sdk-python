@@ -105,3 +105,155 @@ class AdminRolesAPI(APIClient):
             results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
 
         return (results, response, None)
+    
+    def get_role(self, role_id: int) -> tuple:
+        """
+        Fetches a specific admin role by ID.
+
+        Args:
+            role_id (int): The unique identifier for the admin role .
+
+        Returns:
+            tuple: A tuple containing (admin role  instance, Response, error).
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminRoles/{role_id}
+        """)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor\
+            .execute(request, AdminRoles)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AdminRoles(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def add_role(self, **kwargs) -> tuple:
+        """
+        Creates a new ZIA admin roles.
+
+        Args:
+            adminroles (dict or object):
+                The admin roles data to be sent in the request.
+
+        Returns:
+            tuple: A tuple containing the newly added admin roles, response, and error.
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /adminRoles
+        """
+        )
+
+        body = kwargs
+
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, AdminRoles)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AdminRoles(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_role(self, role_id: int, **kwargs) -> tuple:
+        """
+        Updates information for the specified ZIA admin role.
+
+        Args:
+            role_id (int): The unique ID for the admin role.
+
+        Returns:
+            tuple: A tuple containing the updated admin role, response, and error.
+        """
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminRoles/{role_id}
+        """)
+        body = {}
+
+        body.update(kwargs)
+
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor\
+            .execute(request, AdminRoles)
+        if error:
+            return (None, response, error)
+
+        # Parse the response into a RuleLabels instance
+        try:
+            result = AdminRoles(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_role(self, role_id: int) -> tuple:
+        """
+        Deletes the specified admin roles.
+
+        Args:
+            role_id (str): The unique identifier of the admin roles.
+
+        Returns:
+            tuple: A tuple containing the response object and error (if any).
+        """
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminRoles/{role_id}
+        """)
+
+        params = {}
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+        return (None, response, None)

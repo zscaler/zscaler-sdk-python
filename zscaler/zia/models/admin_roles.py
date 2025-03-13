@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 
 class AdminRoles(ZscalerObject):
     """
@@ -32,12 +33,57 @@ class AdminRoles(ZscalerObject):
                 if "name" in config else None
             self.role_type = config["roleType"]\
                 if "roleType" in config else None
+            self.policy_access = config["policyAccess"]\
+                if "policyAccess" in config else None
+            self.alerting_access = config["alertingAccess"]\
+                if "alertingAccess" in config else None
+            self.dashboard_access = config["dashboardAccess"]\
+                if "dashboardAccess" in config else None
+            self.report_access = config["reportAccess"]\
+                if "reportAccess" in config else None
+            self.analysis_access = config["analysisAccess"]\
+                if "analysisAccess" in config else None
+            self.username_access = config["usernameAccess"]\
+                if "usernameAccess" in config else None
+            self.device_info_access = config["deviceInfoAccess"]\
+                if "deviceInfoAccess" in config else None
+            self.admin_acct_access = config["adminAcctAccess"]\
+                if "adminAcctAccess" in config else None
+            self.is_auditor = config["isAuditor"]\
+                if "isAuditor" in config else None
+            self.is_non_editable = config["isNonEditable"]\
+                if "isNonEditable" in config else None
+            self.logs_limit = config["logsLimit"]\
+                if "logsLimit" in config else None
+            self.role_type = config["roleType"]\
+                if "roleType" in config else None
             self.report_time_duration = config["reportTimeDuration"]\
                 if "reportTimeDuration" in config else None
+                
+            self.permissions = ZscalerCollection.form_list(
+                config["permissions"] if "permissions" in config else [], str
+            )
+
+            # Store the entire dictionary since API does not return a fixed structure
+            self.feature_permissions = config if isinstance(config, dict) else {}
+            self.ext_feature_permissions = config if isinstance(config, dict) else {}
+            
         else:
             self.id = None
             self.rank = None
             self.name = None
+            self.policy_access = None
+            self.alerting_access = None
+            self.dashboard_access = None
+            self.report_access = None
+            self.analysis_access = None
+            self.username_access = None
+            self.device_info_access = None
+            self.admin_acct_access = None
+            self.is_auditor = None
+            self.permissions = None
+            self.feature_permissions = {}
+            self.ext_feature_permissions = {}
             self.role_type = None
             self.report_time_duration = None
 
@@ -50,6 +96,16 @@ class AdminRoles(ZscalerObject):
             "id": self.id,
             "rank": self.rank,
             "name": self.name,
+            "policyAccess": self.policy_access,
+            "alertingAccess": self.alerting_access,
+            "dashboardAccess": self.dashboard_access,
+            "reportAccess": self.report_access,
+            "analysisAccess": self.analysis_access,
+            "usernameAccess": self.username_access,
+            "deviceInfoAccess": self.device_info_access,
+            "adminAcctAccess": self.admin_acct_access,
+            "isAuditor": self.is_auditor,
+            "isAuditor": self.is_auditor,
             "roleType": self.role_type,
             "reportTimeDuration": self.report_time_duration,
         }

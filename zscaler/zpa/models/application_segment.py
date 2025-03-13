@@ -117,6 +117,16 @@ class ApplicationSegment(ZscalerObject):
             self.clientless_apps = ZscalerCollection.form_list(
                 config["clientlessApps"], AppSegmentClientlessApps
             ) if "clientlessApps" in config else []
+
+            if "sharedMicrotenantDetails" in config:
+                if isinstance(config["sharedMicrotenantDetails"], SharedMicrotenantDetails	):
+                    self.shared_microtenant_details = config["sharedMicrotenantDetails"]
+                elif config["sharedMicrotenantDetails"] is not None:
+                    self.shared_microtenant_details = SharedMicrotenantDetails(config["sharedMicrotenantDetails"])
+                else:
+                    self.shared_microtenant_details = None
+            else:
+                self.shared_microtenant_details = None
             
         else:
             self.id = None
@@ -240,7 +250,13 @@ class AppSegmentClientlessApps(ZscalerObject):
             self.microtenant_id = config["microtenantId"]\
                 if "microtenantId" in config else None   
             self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None       
+                if "microtenantName" in config else None
+            self.ext_domain = config["extDomain"]\
+                if "extDomain" in config else None     
+            self.ext_domain_name = config["extDomainName"]\
+                if "extDomainName" in config else None       
+            self.ext_label = config["extLabel"]\
+                if "extLabel" in config else None         
         else:
             # Default values when no config is provided
             self.id = None
@@ -261,6 +277,9 @@ class AppSegmentClientlessApps(ZscalerObject):
             self.cname = None
             self.microtenant_id = None
             self.microtenant_name = None
+            self.ext_domain = None
+            self.ext_domain_name = None
+            self.ext_label = None
 
     def request_format(self):
         """
@@ -285,4 +304,130 @@ class AppSegmentClientlessApps(ZscalerObject):
             "cname": self.cname,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
+            "extDomain": self.ext_domain,
+            "extDomainName	": self.ext_domain_name,
+            "extLabel	": self.ext_label,
         }
+
+class SharedMicrotenantDetails(ZscalerObject):
+    """
+    A class for SharedMicrotenantDetails objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SharedMicrotenantDetails model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the Rule Labels configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            if "sharedFromMicrotenant" in config:
+                if isinstance(config["sharedFromMicrotenant"], SharedFromMicrotenant):
+                    self.shared_from_microtenant = config["sharedFromMicrotenant"]
+                elif config["sharedFromMicrotenant"] is not None:
+                    self.shared_from_microtenant = SharedFromMicrotenant(config["sharedFromMicrotenant"])
+                else:
+                    self.shared_from_microtenant = None
+            else:
+                self.shared_from_microtenant = None
+
+            if "sharedToMicrotenants" in config:
+                if isinstance(config["sharedToMicrotenants"], SharedToMicrotenants):
+                    self.shared_to_microtenant = config["sharedToMicrotenants"]
+                elif config["sharedToMicrotenants"] is not None:
+                    self.shared_to_microtenant = SharedToMicrotenants(config["sharedToMicrotenants"])
+                else:
+                    self.shared_to_microtenant = None
+            else:
+                self.shared_to_microtenant = None
+
+        else:
+            self.shared_from_microtenant = None
+            self.shared_to_microtenant = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "sharedFromMicrotenant": self.shared_from_microtenant,
+            "sharedToMicrotenants": self.shared_to_microtenant,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class SharedFromMicrotenant(ZscalerObject):
+    """
+    A class for SharedFromMicrotenant objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SharedFromMicrotenant model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the Rule Labels configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"]\
+                if "id" in config else None
+            self.name = config["name"]\
+                if "name" in config else None
+
+        else:
+            self.id = None
+            self.name = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class SharedToMicrotenants(ZscalerObject):
+    """
+    A class for SharedToMicrotenants objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SharedToMicrotenants model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the Rule Labels configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"]\
+                if "id" in config else None
+            self.name = config["name"]\
+                if "name" in config else None
+
+        else:
+            self.id = None
+            self.name = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

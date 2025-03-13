@@ -17,8 +17,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_users import AdminUser
-from zscaler.utils import format_url, snake_to_camel
-
+from zscaler.zia.models.user_management import UserManagement
+from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 
 class AdminUsersAPI(APIClient):
     """
@@ -139,7 +139,15 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def add_admin_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> tuple:
+    def add_admin_user(
+        self, 
+        name: str,
+        login_name: str,
+        email: str,
+        password: str,
+        query_params=None,
+        **kwargs
+    ) -> tuple:
         """
         Adds a new admin user to ZIA.
 
@@ -149,7 +157,8 @@ class AdminUsersAPI(APIClient):
                 The name that the admin user will use to login to ZIA in email format, i.e. `user@domain.tld.`
             email (str): The email address for the admin user.
             password (str): The password for the admin user.
-            **kwargs: Optional keyword args.
+            associate_with_existing_admin (bool):
+                This field is set to true to update an admin user that already exists in other Zscaler services but does not exist in ZIA.
 
         Keyword Args:
             admin_scope (str): The scope of the admin's permissions, accepted values are:
@@ -205,8 +214,14 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/adminUsers")
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminUsers
+        """
+        )
 
+        query_params = query_params or {}
+        
         payload = {
             "userName": name,
             "loginName": login_name,
@@ -214,24 +229,10 @@ class AdminUsersAPI(APIClient):
             "password": password,
         }
 
-        # Handle admin scope and optional parameters
-        admin_scope = kwargs.pop("admin_scope", None)
-        if admin_scope and admin_scope != "organization":
-            payload["adminScopeType"] = admin_scope.upper()
-            payload["adminScopeScopeEntities"] = []
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            if key == "scope_ids":
-                for scope_id in value:
-                    payload["adminScopeScopeEntities"].append({"id": scope_id})
-            elif key == "role_id":
-                payload["role"] = {"id": value}
-            else:
-                payload[snake_to_camel(key)] = value
-
+        body = kwargs
+        
         request, error = self._request_executor.\
-            create_request(http_method, api_url, payload, {}, {})
+            create_request(http_method, api_url, payload, body=body, params=query_params)
 
         if error:
             return (None, None, error)
@@ -301,40 +302,39 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/adminUsers/{user_id}")
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminUsers/{user_id}
+        """
+        )
 
-        # Get the admin user record for the provided user id
-        payload = {snake_to_camel(k): v for k, v in self.get_admin_user(user_id)[0].__dict__.items()}
-
-        # Handle admin scope and optional parameters
-        admin_scope = kwargs.pop("admin_scope", None)
-        if admin_scope and admin_scope != "organization":
-            payload["adminScopeType"] = admin_scope.upper()
-            payload["adminScopeScopeEntities"] = []
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            if key == "scope_ids":
-                for scope_id in value:
-                    payload["adminScopeScopeEntities"].append({"id": scope_id})
-            elif key == "name":
-                payload["userName"] = value
-            else:
-                payload[snake_to_camel(key)] = value
-
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        body = kwargs
+        
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, AdminUser)
-
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, AdminUser)
         if error:
             return (None, response, error)
 
-        return self.get_admin_user(user_id)
+        try:
+            result = AdminUser(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def delete_admin_user(self, user_id: str, query_params=None) -> tuple:
+    def delete_admin_user(self, user_id: int) -> tuple:
         """
         Deletes the specified admin user by id.
 
@@ -349,16 +349,108 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"{self._zia_base_endpoint}/adminUsers/{user_id}")
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /adminUsers/{user_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def convert_to_user(
+        self,
+        user_id: str,
+        query_params=None,
+        **kwargs
+    ) -> tuple:
+        """
+        Removes admin privileges for a user while retaining them as a regular user 
+        of your organization in the ZIA Admin Portal.
+        This can be used as an alternative to the `delete_admin_user` method.
+        
+        Args:
+            user_id (int): The unique ID for the User.
+            name (str): User name. This appears when choosing users for policies.
+                The name field allows values containing UTF-8 characters up to a maximum of 127 characters.
+
+            email (str): User email consists of a user name and domain name.
+
+            groups (list): List of Groups a user belongs to. Groups are used in policies.
+            department (dict): Department a user belongs to
+
+        Keyword Args:
+            comments (str): Additional information about this user.
+            **tempAuthEmail (str): Temporary Authentication Email. If you enabled one-time tokens or links, enter the email address to
+                which the Zscaler service sends the tokens or links. If this is empty, the service will send the
+                email to the User email.
+            **adminUser (bool):
+                True if this user is an Admin user.
+            **password (str):
+                User's password. Applicable only when authentication type is Hosted DB. Password strength must follow
+                what is defined in the auth settings.
+
+        Returns:
+            :obj:`Tuple`: The resource record for the converted user.
+
+        Examples:
+            Add a user with the minimum required params:
+
+            >>> user, zscaler_resp, err = zia.users.add_user(name='Jane Doe',
+            ...    user_id=99999
+            ...    email='jane.doe@example.com',
+            ...    groups=[{
+            ...      'id': '49916183'}]
+            ...    department={
+            ...      'id': '49814321'})
+        """
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /adminUsers/{user_id}/convertToUser
+        """)
+
+        query_params = query_params or {}
+
+        headers = {}
+        
+        body = kwargs
+
+        transform_common_id_fields(reformat_params, body, body)
+        
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+            headers=headers,
+            params=query_params
+        )
 
         if error:
-            return (None, error)
+            return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
-
+        response, error = self._request_executor\
+            .execute(request, UserManagement)
         if error:
-            return (response, error)
+            return (None, response, error)
 
-        return (response, None)
+        try:
+            result = UserManagement(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

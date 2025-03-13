@@ -32,3 +32,27 @@ class ResourceReference(ZscalerObject):
             "name": self.name,
             "externalId": self.external_id
         }
+
+class Extensions(ZscalerObject):
+    """
+    A generic class to wrap dynamic extension data.
+    """
+    def __init__(self, config=None):
+        super().__init__(config)
+        # Simply store the dictionary as is
+        if config and isinstance(config, dict):
+            self.data = config
+        else:
+            self.data = {}
+
+    def request_format(self):
+        """
+        Return the extension data as a dictionary.
+        """
+        return self.data
+
+    def as_dict(self):
+        """
+        Return a dictionary representation of the extension data.
+        """
+        return self.data

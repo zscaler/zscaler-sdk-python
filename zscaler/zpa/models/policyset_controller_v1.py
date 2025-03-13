@@ -119,7 +119,27 @@ class PolicySetControllerV1(ZscalerObject):
             self.privileged_portal_capabilities = config.get("privilegedPortalCapabilities", {}).get("capabilities", [])
 
             # Handle credential using isinstance check
-            self.credential = credentials.Credential(config["credential"]) if isinstance(config.get("credential"), credentials.Credential) else credentials.Credential(config.get("credential")) if "credential" in config else None
+            # self.credential = credentials.Credential(config["credential"]) if isinstance(config.get("credential"), credentials.Credential) else credentials.Credential(config.get("credential")) if "credential" in config else None
+
+            if "credential" in config:
+                if isinstance(config["credential"], credentials.Credential):
+                    self.credential = config["credential"]
+                elif config["credential"] is not None:
+                    self.credential = credentials.Credential(config["credential"])
+                else:
+                    self.credential = None
+            else:
+                self.credential = None
+
+            if "credentialPool" in config:
+                if isinstance(config["credentialPool"], credentials.Credential):
+                    self.credential_pool = config["credentialPool"]
+                elif config["credentialPool"] is not None:
+                    self.credential_pool = credentials.Credential(config["credentialPool"])
+                else:
+                    self.credential_pool = None
+            else:
+                self.credential_pool = None
 
         else:
             # Defaults when config is None
@@ -141,6 +161,8 @@ class PolicySetControllerV1(ZscalerObject):
             self.microtenant_id = None
             self.microtenant_name = None
             self.version = None
+            self.credential = None
+            self.credential_pool = None
             self.zpn_isolation_profile_id = None
             self.zpn_inspection_profile_id = None
             self.zpn_inspection_profile_name = None
@@ -173,6 +195,8 @@ class PolicySetControllerV1(ZscalerObject):
             "zpnInspectionProfileId": self.zpn_inspection_profile_id,
             "zpnInspectionProfileName": self.zpn_inspection_profile_name,
             "version": self.version,
+            "credential": self.credential,
+            "credentialPool": self.credential_pool,
             "conditions": [condition.request_format() for condition in self.conditions],
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
             "appServerGroups": [group.request_format() for group in self.app_server_groups],

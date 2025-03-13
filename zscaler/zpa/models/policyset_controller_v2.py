@@ -107,8 +107,28 @@ class PolicySetControllerV2(ZscalerObject):
             self.privileged_portal_capabilities = config.get("privilegedPortalCapabilities", {}).get("capabilities", [])
 
             # Handle credential using isinstance check
-            self.credential = Credential(config["credential"]) if isinstance(config.get("credential"), Credential) else Credential(config.get("credential")) if "credential" in config else None
+            # self.credential = Credential(config["credential"]) if isinstance(config.get("credential"), Credential) else Credential(config.get("credential")) if "credential" in config else None
 
+            if "credential" in config:
+                if isinstance(config["credential"], Credential):
+                    self.credential = config["credential"]
+                elif config["credential"] is not None:
+                    self.credential = Credential(config["credential"])
+                else:
+                    self.credential = None
+            else:
+                self.credential = None
+
+            if "credentialPool" in config:
+                if isinstance(config["credentialPool"], Credential):
+                    self.credential_pool = config["credentialPool"]
+                elif config["credentialPool"] is not None:
+                    self.credential_pool = Credential(config["credentialPool"])
+                else:
+                    self.credential_pool = None
+            else:
+                self.credential_pool = None
+                
         else:
             # Defaults when config is None
             self.policy_set_id = None
@@ -133,6 +153,7 @@ class PolicySetControllerV2(ZscalerObject):
             self.privileged_capabilities = []
             self.privileged_portal_capabilities = []
             self.credential = None
+            self.credential_pool = None
 
     def request_format(self):
         parent_req_format = super().request_format()
@@ -149,6 +170,7 @@ class PolicySetControllerV2(ZscalerObject):
             "privilegedCapabilities": {"capabilities": self.privileged_capabilities},
             "privilegedPortalCapabilities": {"capabilities": self.privileged_portal_capabilities},
             "credential": self.credential.request_format() if self.credential else None,
+            "credentialPool": self.credential_pool.request_format() if self.credential_pool else None,
             "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups],
             "customMsg": self.custom_msg,
             "disabled": self.disabled,
@@ -246,8 +268,11 @@ class Credential(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config.get("id")
-            self.name = config.get("name")
+            self.id = config["id"]\
+                if "id" in config else None
+                
+            self.name = config["name"]\
+                if "name" in config else None
 
         else:
             self.id = None

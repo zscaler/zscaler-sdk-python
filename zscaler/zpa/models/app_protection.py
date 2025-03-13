@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zpa.models import app_protection_predefined_controls as app_protection_predefined_controls
 
 class InspectionProfile(ZscalerObject):
     """
@@ -70,7 +71,7 @@ class InspectionProfile(ZscalerObject):
                 config["predefinedApiControls"] if "predefinedApiControls" in config else [], str
             )
             self.predefined_controls = ZscalerCollection.form_list(
-                config["predefinedControls"] if "predefinedControls" in config else [], PredefinedInspectionControl
+                config["predefinedControls"] if "predefinedControls" in config else [], app_protection_predefined_controls.PredefinedInspectionControlResource
             )
             self.predefined_controls_version = config["predefinedControlsVersion"] \
                 if "predefinedControlsVersion" in config else None
@@ -252,41 +253,3 @@ class AppProtectionCustomControl(ZscalerObject):
         return parent_req_format
 
 
-class PredefinedInspectionControl(ZscalerObject):
-    """
-    A class for Predefinedinspectioncontrol objects.
-    """
-
-    def __init__(self, config=None):
-        """
-        Initialize the Predefinedinspectioncontrol model based on API response.
-
-        Args:
-            config (dict): A dictionary representing the configuration.
-        """
-        super().__init__(config)
-
-        if config:
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
-            self.default_group = config["defaultGroup"] \
-                if "defaultGroup" in config else None
-            self.predefined_inspection_controls = config["predefinedInspectionControls"] \
-                if "predefinedInspectionControls" in config else []
-        else:
-            self.control_group = None
-            self.default_group = None
-            self.predefined_inspection_controls = []
-
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "controlGroup": self.control_group,
-            "defaultGroup": self.default_group,
-            "predefinedInspectionControls": self.predefined_inspection_controls
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format

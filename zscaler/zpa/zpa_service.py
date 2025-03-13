@@ -19,7 +19,7 @@ from zscaler.zpa.customer_version_profile import CustomerVersionProfileAPI
 from zscaler.zpa.emergency_access import EmergencyAccessAPI
 from zscaler.zpa.enrollment_certificates import EnrollmentCertificateAPI
 from zscaler.zpa.idp import IDPControllerAPI
-from zscaler.zpa.inspection import InspectionControllerAPI
+from zscaler.zpa.app_protection import InspectionControllerAPI
 from zscaler.zpa.machine_groups import MachineGroupsAPI
 from zscaler.zpa.microtenants import MicrotenantsAPI
 from zscaler.zpa.lss import LSSConfigControllerAPI
@@ -201,9 +201,9 @@ class ZPAService:
         return IDPControllerAPI(self._request_executor, self._config)
 
     @property
-    def inspection(self):
+    def app_protection(self):
         """
-        The interface object for the :ref:`ZPA Inspection interface <zpa-inspection>`.
+        The interface object for the :ref:`ZPA Inspection interface <zpa-app_protection>`.
 
         """
         return InspectionControllerAPI(self._request_executor, self._config)

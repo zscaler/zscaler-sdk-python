@@ -396,12 +396,12 @@ class LegacyZPAClientHelper:
         return IDPControllerAPI(self.request_executor, self.config)
 
     @property
-    def inspection(self):
+    def app_protection(self):
         """
-        The interface object for the :ref:`ZPA Inspection interface <zpa-inspection>`.
+        The interface object for the :ref:`ZPA Inspection interface <zpa-app_protection>`.
 
         """
-        from zscaler.zpa.inspection import InspectionControllerAPI
+        from zscaler.zpa.app_protection import InspectionControllerAPI
 
         return InspectionControllerAPI(self.request_executor, self.config)
 

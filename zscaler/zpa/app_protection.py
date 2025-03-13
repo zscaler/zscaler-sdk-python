@@ -16,10 +16,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.inspection import InspectionProfile
-from zscaler.zpa.models.inspection import AppProtectionCustomControl
-from zscaler.zpa.models.inspection import PredefinedInspectionControl
-from zscaler.utils import format_url, snake_to_camel
+from zscaler.zpa.models.app_protection import InspectionProfile
+from zscaler.zpa.models.app_protection import AppProtectionCustomControl
+from zscaler.zpa.models.app_protection_predefined_controls import PredefinedInspectionControlResource
+from zscaler.utils import format_url
 from requests.utils import quote
 
 
@@ -75,8 +75,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionProfile
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionProfile
+        """
+        )
 
         query_params = query_params or {}
 
@@ -218,7 +220,8 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "post".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionProfile
+            {self._zpa_base_endpoint}
+            /inspectionProfile
         """)
 
         # Fetch all predefined control groups
@@ -229,7 +232,7 @@ class InspectionControllerAPI(APIClient):
         # Aggregate controls from all groups marked as `defaultGroup`
         predefined_controls = []
         for group in control_groups:
-            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+            if isinstance(group, PredefinedInspectionControlResource) and group.default_group:
                 for control in group.predefined_inspection_controls:
                     predefined_controls.append(
                         {
@@ -300,7 +303,8 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "put".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}
+            {self._zpa_base_endpoint}
+            /inspectionProfile/{profile_id}
         """)
 
         # Fetch all predefined control groups
@@ -311,7 +315,7 @@ class InspectionControllerAPI(APIClient):
         # Aggregate controls from all groups marked as `defaultGroup`
         predefined_controls = []
         for group in control_groups:
-            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+            if isinstance(group, PredefinedInspectionControlResource) and group.default_group:
                 for control in group.predefined_inspection_controls:
                     predefined_controls.append(
                         {
@@ -388,7 +392,8 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "delete".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}
+            {self._zpa_base_endpoint}
+            /inspectionProfile/{profile_id}
         """)
 
         # Create the request
@@ -470,7 +475,8 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "patch".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionProfile/{profile_id}/patch
+            {self._zpa_base_endpoint}
+            /inspectionProfile/{profile_id}/patch
         """
         )
 
@@ -482,7 +488,7 @@ class InspectionControllerAPI(APIClient):
         # Aggregate controls from all groups marked as `defaultGroup`
         predefined_controls = []
         for group in control_groups:
-            if isinstance(group, PredefinedInspectionControl) and group.default_group:
+            if isinstance(group, PredefinedInspectionControlResource) and group.default_group:
                 for control in group.predefined_inspection_controls:
                     predefined_controls.append(
                         {
@@ -567,8 +573,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/custom
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/custom
+        """
+        )
 
         query_params = query_params or {}
 
@@ -606,8 +614,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f""""
-            {self._zpa_base_endpoint}/inspectionControls/predefined/{control_id}
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/predefined/{control_id}
+        """
+        )
 
         request, error = self._request_executor\
             .create_request(http_method, api_url, {})
@@ -615,12 +625,12 @@ class InspectionControllerAPI(APIClient):
             return None
 
         response, error = self._request_executor\
-            .execute(request, AppProtectionCustomControl)
+            .execute(request, PredefinedInspectionControlResource)
         if error:
             return (None, response, error)
 
         try:
-            result = AppProtectionCustomControl(
+            result = PredefinedInspectionControlResource(
                 self.form_response_body(response.get_body())
             )
         except Exception as error:
@@ -712,8 +722,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "put".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/custom/{control_id}
+        """
+        )
 
         # Fetch existing control and handle errors
         existing_control, _, err = self.get_custom_control(control_id)
@@ -732,12 +744,14 @@ class InspectionControllerAPI(APIClient):
         payload.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, AppProtectionCustomControl)
+        response, error = self._request_executor.\
+            execute(request, AppProtectionCustomControl)
         if error:
             return (None, response, error)
 
@@ -763,8 +777,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "delete".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/custom/{control_id}
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/custom/{control_id}
+        """
+        )
 
         request, error = self._request_executor\
             .create_request(http_method, api_url, {})
@@ -807,8 +823,10 @@ class InspectionControllerAPI(APIClient):
         http_method = "get".upper()
         encoded_version = quote("OWASP_CRS/3.3.0", safe="")
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/predefined?version={encoded_version}
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/predefined?version={encoded_version}
+        """
+        )
 
         # Handle query parameters
         query_params = query_params or {}
@@ -838,7 +856,7 @@ class InspectionControllerAPI(APIClient):
 
         try:
             result = [
-                PredefinedInspectionControl(
+                PredefinedInspectionControlResource(
                     self.form_response_body(item)
                 )
                 for item in response.get_results()
@@ -862,8 +880,10 @@ class InspectionControllerAPI(APIClient):
         # Initialize URL and HTTP method
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/actionTypes
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/actionTypes
+        """
+        )
 
         # Prepare request body and headers
         body = {}
@@ -906,8 +926,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/severityTypes
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/severityTypes
+        """
+        )
 
         body = {}
         headers = {}
@@ -949,8 +971,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/controlTypes
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/controlTypes
+        """
+        )
 
         # Prepare request body and headers
         body = {}
@@ -995,7 +1019,8 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/httpMethods
-        """)
+        """
+        )
 
         body = {}
         headers = {}
@@ -1037,8 +1062,10 @@ class InspectionControllerAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(f"""
-            {self._zpa_base_endpoint}/inspectionControls/predefined/versions
-        """)
+            {self._zpa_base_endpoint}
+            /inspectionControls/predefined/versions
+        """
+        )
 
         body = {}
         headers = {}
@@ -1064,4 +1091,90 @@ class InspectionControllerAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
+        return (result, response, None)
+
+    def list_predef_control_adp(self, query_params=None) -> tuple:
+        """
+        Returns all predefined ADP inspection controls for the specified customer.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+
+        Returns:
+            AppProtectionCustomControl: The corresponding predefined control object.
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /inspectionControls/predefined/adp
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PredefinedInspectionControlResource(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_predef_control_api(self) -> tuple:
+        """
+        Returns all predefined inspection controls for the specified customer.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: Search string for filtering results.
+
+        Returns:
+            AppProtectionCustomControl: The corresponding predefined control object.
+        """
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /inspectionControls/predefined/api
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PredefinedInspectionControlResource(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
         return (result, response, None)
