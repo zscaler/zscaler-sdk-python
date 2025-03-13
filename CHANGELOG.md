@@ -1,6 +1,6 @@
 # Zscaler Python SDK Changelog
 
-## 0.10.5 (February,11 2025)
+## 0.10.5 (March,13 2025)
 
 ### Notes
 
@@ -8,11 +8,13 @@
 
 ### Bug Fix:
 
-* ([#250](https://github.com/zscaler/zscaler-sdk-python/pull/225037)) - Enhanced `pac_files` function resources.
+* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Enhanced `pac_files` function resources.
   - `clone_pac_file` - The function pre-checks if total number of pac file versions within a specific pac file is == 10. If so, it triggers a error requiring the use of the parameter/attribute `delete_version`.
     **NOTE** A maximum of 10 pac file versions is supported. If the total limit is reached you must explicitly indicate via the `delete_version` parameter which version must be removed prior to invoking the `clone_pac_file` method again.
 
   - `update_pac_file` - The function now validates the current `pac_version_status` prior to attempting an update. The API endpoint behind the `update_pac_file` method requires the `pac_version_status` to have specific value in order to accept the call.
+
+* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
 
 ## 0.10.4 (January,9 2025)
 

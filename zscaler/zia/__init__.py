@@ -168,14 +168,6 @@ class ZIAClientHelper(ZIAClient):
 
         return result.group(1)
 
-    # def is_session_expired(self):
-    #     if self.auth_details is None:
-    #         return True
-    #     now = datetime.datetime.now()
-    #     if self.auth_details["passwordExpiryTime"] > 0 and (self.session_refreshed - self.session_timeout_offset < now):
-    #         return True
-    #     return False
-
     def is_session_expired(self):
         """
         Checks whether the current session is expired.
@@ -184,11 +176,10 @@ class ZIAClientHelper(ZIAClient):
             bool: True if the session is expired or if the session details are missing.
         """
         if self.auth_details is None:
-            return True  # No auth details = expired session
+            return True
 
         now = datetime.datetime.now()
 
-        # ✅ Ensure 'passwordExpiryTime' exists before accessing it
         password_expiry_time = self.auth_details.get("passwordExpiryTime", -1)
         if password_expiry_time > 0 and (self.session_refreshed - self.session_timeout_offset < now):
             return True
