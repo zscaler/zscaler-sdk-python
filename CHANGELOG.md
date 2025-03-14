@@ -16,6 +16,7 @@
 
 * ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
 * ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit` 
+* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed pagination for `devices.list_devices` to support new pagination paramters.
 
 ## 0.10.4 (January,9 2025)
 
