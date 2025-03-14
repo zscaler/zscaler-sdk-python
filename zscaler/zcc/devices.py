@@ -148,7 +148,9 @@ class DevicesAPI:
             else:
                 raise ValueError("Invalid os_type specified. Check the Zscaler documentation for valid os_type options.")
 
-        return self.rest.get("getDevices", **payload)
+        list, _ = self.rest.get_paginated_data(path="getDevices", **payload)
+        return list
+        # return self.rest.get("getDevices", **payload)
 
     def remove_devices(self, force: bool = False, **kwargs):
         """

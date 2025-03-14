@@ -515,9 +515,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_pac_files)} pac file to delete.")
 
             for pac in test_pac_files:
-                logging.info(
-                    f"sweep_pac_file: Attempting to delete pac file: Name='{pac['name']}', ID='{pac['id']}'"
-                )
+                logging.info(f"sweep_pac_file: Attempting to delete pac file: Name='{pac['name']}', ID='{pac['id']}'")
                 response_code = self.client.pac_files.delete_pac_file(pac_id=pac["id"])
                 if response_code == 204:
                     logging.info(f"Successfully deleted pac file with ID: {pac['id']}, Name: {pac['name']}")
@@ -528,6 +526,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping pac files: {str(e)}")
             raise
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

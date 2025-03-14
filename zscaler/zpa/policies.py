@@ -99,7 +99,7 @@ class PolicySetsAPI:
 
                 if object_type in ["APP", "APP_GROUP"]:
                     app_and_app_group_operands.append(operand)
-                elif object_type in ["SCIM","SCIM_GROUP"]:
+                elif object_type in ["SCIM", "SCIM_GROUP"]:
                     scim_and_scim_group_operands.append(operand)
                 elif object_type in object_types_to_operands:
                     object_types_to_operands[object_type].append(operand)
@@ -955,7 +955,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Isolation Policy rule:
 
-            >>> zpa.policiesv2.update_isolation_rule_v1(
+            >>> zpa.policies.update_isolation_rule_v1(
             ...    rule_id='216199618143320419',
             ...    name='Update_Isolation_Rule_v2',
             ...    description='Update_Isolation_Rule_v2',
@@ -1286,7 +1286,7 @@ class PolicySetsAPI:
         Examples:
             Updates the description for an Access Policy rule:
 
-            >>> zpa.policiesv2.update_access_rule(
+            >>> zpa.policies.update_access_rule(
             ...    rule_id='216199618143320419',
             ...    description='Updated Description',
             ...    action='ALLOW',
@@ -1582,7 +1582,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Access Policy rule:
 
-            >>> zpa.policiesv2.update_client_forwarding_rule(
+            >>> zpa.policies.update_client_forwarding_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Redirection_Rule_v2',
             ...    description='Update_Redirection_Rule_v2',
@@ -1735,7 +1735,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Isolation Policy rule:
 
-            >>> zpa.policiesv2.update_isolation_rule(
+            >>> zpa.policies.update_isolation_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Isolation_Rule_v2',
             ...    description='Update_Isolation_Rule_v2',
@@ -1885,7 +1885,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Inspection Policy rule:
 
-            >>> zpa.policiesv2.update_app_protection_rule(
+            >>> zpa.policies.update_app_protection_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Inspection_Rule_v2',
             ...    description='Update_Inspection_Rule_v2',
@@ -1974,7 +1974,7 @@ class PolicySetsAPI:
 
                 .. code-block:: python
 
-                    zpa.policiesv2.add_privileged_credential_rule(
+                    zpa.policies.add_privileged_credential_rule(
                         name='new_pra_credential_rule',
                         description='new_pra_credential_rule',
                         credential_id='credential_id',
@@ -2048,7 +2048,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Credential Policy rule:
 
-            >>> zpa.policiesv2.update_privileged_credential_rule(
+            >>> zpa.policies.update_privileged_credential_rule(
             ...   rule_id='888888',
             ...   name='credential_rule_new_name')
 
@@ -2140,7 +2140,7 @@ class PolicySetsAPI:
 
             .. code-block:: python
 
-                zpa.policiesv2.add_capabilities_rule(
+                zpa.policies.add_capabilities_rule(
                     name='New_Capability_Rule',
                     description='New_Capability_Rule',
                     conditions=[
@@ -2260,7 +2260,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name and capabilities for an existing Capability Policy rule:
 
-            >>> zpa.policiesv2.update_capabilities_rule_v2(
+            >>> zpa.policies.update_capabilities_rule_v2(
             ... rule_id='888888',
             ... name='Updated_Capability_Rule',
             ... conditions=[
@@ -2379,7 +2379,7 @@ class PolicySetsAPI:
 
             .. code-block:: python
 
-                zpa.policiesv2.add_redirection_rule(
+                zpa.policies.add_redirection_rule(
                     name='New_Redirection_Rule',
                     action='redirect_preferred',
                     service_edge_group_ids=['12345', '67890'],
@@ -2483,7 +2483,7 @@ class PolicySetsAPI:
         Examples:
             Updates the name only for an Access Policy rule:
 
-            >>> zpa.policiesv2.update_redirection_rule(
+            >>> zpa.policies.update_redirection_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Redirection_Rule_v2',
             ...    description='Update_Redirection_Rule_v2',
