@@ -367,7 +367,7 @@ class CloudAppsAPI:
 
         return self.rest.post(f"shadowIT/applications/{entity}/exportCsv", json=payload).text
 
-    def list_apps(self):
+    def list_apps(self, **kwargs):
         """
         List all predefined and custom cloud applications by name and id.
 
@@ -382,7 +382,9 @@ class CloudAppsAPI:
                     print(app.name)
 
         """
-        return self.rest.get("cloudApplications/lite")
+        list, _ = self.rest.get_paginated_data(path="cloudApplications/lite", **kwargs)
+        return list
+        # return self.rest.get("cloudApplications/lite")
 
     def list_custom_tags(self):
         """

@@ -15,6 +15,7 @@
   - `update_pac_file` - The function now validates the current `pac_version_status` prior to attempting an update. The API endpoint behind the `update_pac_file` method requires the `pac_version_status` to have specific value in order to accept the call.
 
 * ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
+* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit` 
 
 ## 0.10.4 (January,9 2025)
 
