@@ -29,8 +29,11 @@ class ZPAGatewayAPI:
         """
         Returns a list of all ZPA Gateways.
 
-        Returns:
-            :obj:`BoxList`: The list of all ZPA Gateways Items
+        Keyword Args:
+            **app_segment (list, optional):
+                Filters the list by Application Segment
+            **search (str, optional):
+                The search string used to match against a ZPA gateway name or an associated Server Group name
 
         Returns:
             :obj:`BoxList`: The list of all ZPA Gateways Items
@@ -42,7 +45,8 @@ class ZPAGatewayAPI:
             ... for item in results:
             ...    print(item)
         """
-        return self.rest.get("zpaGateways")
+        list, _ = self.rest.get_paginated_data(path="/zpaGateways", **kwargs)
+        return list
 
     def get_gateway(self, gateway_id: str) -> Box:
         """

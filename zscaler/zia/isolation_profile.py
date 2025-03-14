@@ -17,7 +17,6 @@
 
 from box import BoxList
 
-from zscaler.utils import snake_to_camel
 from zscaler.zia.client import ZIAClient
 
 
@@ -25,7 +24,7 @@ class IsolationProfileAPI:
     def __init__(self, client: ZIAClient):
         self.rest = client
 
-    def list_isolation_profiles(self, **kwargs) -> BoxList:
+    def list_isolation_profiles(self) -> BoxList:
         """
         Returns a list of all profiles in the Isolation Profile field for URL Filtering rules and Cloud App Control rules.
 

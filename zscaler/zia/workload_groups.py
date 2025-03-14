@@ -36,10 +36,8 @@ class WorkloadGroupsAPI:
             ...    pprint(workloads)
 
         """
-        response = self.rest.get("/workloadGroups")
-        if isinstance(response, Response):
-            return None
-        return response
+        list, _ = self.rest.get_paginated_data(path="/workloadGroups", **kwargs)
+        return list
 
     # Search Workload Group By Name
     def get_group_by_name(self, name):
