@@ -22,6 +22,7 @@ from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
 
+
 # Zscaler Client Connector APIs
 class Client:
     """A Zscaler client object"""
@@ -92,7 +93,7 @@ class Client:
             self.logger = logging.getLogger(__name__)
             self.logger.info("Legacy ZCON client initialized successfully.")
             return
-        
+
         # Assuming user_config is a dictionary or an object with a 'logging' attribute
         logging_config = (
             user_config.get("logging", {}) if isinstance(user_config, dict) else getattr(user_config, "logging", {})
@@ -217,7 +218,7 @@ class Client:
         if self._zdx is None:
             self._zdx = ZDXService(self)
         return self._zdx
-    
+
     @property
     def zia(self):
         if self.use_legacy_client:
@@ -234,7 +235,7 @@ class Client:
         if self._zwa is None:
             self._zwa = ZWAService(self)
         return self._zwa
-    
+
     @property
     def zcon(self):
         if self.use_legacy_client:
@@ -243,7 +244,7 @@ class Client:
             # Pass RequestExecutor directly
             self._zcon = ZCONService(self._request_executor)
         return self._zcon
-    
+
     @property
     def zpa(self):
         if self.use_legacy_client:
@@ -295,6 +296,7 @@ class Client:
     def get_default_headers(self):
         return self._request_executor.get_default_headers()
 
+
 class LegacyZPAClient(Client):
     def __init__(
         self,
@@ -322,7 +324,6 @@ class LegacyZPAClient(Client):
         )
         super().__init__(config, zpa_legacy_client=legacy_helper, use_legacy_client=True)
 
-
 class LegacyZIAClient(Client):
     def __init__(
         self,
@@ -347,6 +348,7 @@ class LegacyZIAClient(Client):
             fail_safe=fail_safe,
         )
         super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
+
 
 class LegacyZCONClient(Client):
     def __init__(
@@ -373,6 +375,7 @@ class LegacyZCONClient(Client):
         )
         super().__init__(config, zcon_legacy_client=legacy_helper, use_legacy_client=True)
 
+
 class LegacyZCCClient(Client):
     def __init__(
         self,
@@ -394,6 +397,7 @@ class LegacyZCCClient(Client):
         )
         super().__init__(config, zcc_legacy_client=legacy_helper, use_legacy_client=True)
 
+
 class LegacyZDXClient(Client):
     def __init__(
         self,
@@ -412,6 +416,7 @@ class LegacyZDXClient(Client):
             timeout=timeout,
         )
         super().__init__(config, zdx_legacy_client=legacy_helper, use_legacy_client=True)
+
 
 class LegacyZWAClient(Client):
     def __init__(

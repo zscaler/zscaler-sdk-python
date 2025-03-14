@@ -163,6 +163,7 @@ class LegacyZPAClientHelper:
 
             # Prepare request headers
             headers = self.headers.copy()
+            headers.update(self.request_executor.get_custom_headers())
             if not headers.get("Authorization"):
                 self.refreshToken()  # Ensure token is refreshed
                 headers["Authorization"] = f"Bearer {self.access_token}"
@@ -594,3 +595,19 @@ class LegacyZPAClientHelper:
         from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 
         return TrustedNetworksAPI(self.request_executor, self.config)
+
+    """
+    Misc
+    """
+
+    def set_custom_headers(self, headers):
+        self.request_executor.set_custom_headers(headers)
+
+    def clear_custom_headers(self):
+        self.request_executor.clear_custom_headers()
+
+    def get_custom_headers(self):
+        return self.request_executor.get_custom_headers()
+
+    def get_default_headers(self):
+        return self.request_executor.get_default_headers()

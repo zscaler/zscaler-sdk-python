@@ -155,14 +155,6 @@ class LegacyZIAClientHelper:
 
         return result.group(1)
 
-    # def is_session_expired(self):
-    #     if self.auth_details is None:
-    #         return True
-    #     now = datetime.datetime.now()
-    #     if self.auth_details["passwordExpiryTime"] > 0 and (self.session_refreshed - self.session_timeout_offset < now):
-    #         return True
-    #     return False
-
     def is_session_expired(self):
         """
         Checks whether the current session is expired.
@@ -171,11 +163,10 @@ class LegacyZIAClientHelper:
             bool: True if the session is expired or if the session details are missing.
         """
         if self.auth_details is None:
-            return True  # No auth details = expired session
+            return True
 
         now = datetime.datetime.now()
 
-        # ✅ Ensure 'passwordExpiryTime' exists before accessing it
         password_expiry_time = self.auth_details.get("passwordExpiryTime", -1)
         if password_expiry_time > 0 and (self.session_refreshed - self.session_timeout_offset < now):
             return True
@@ -227,7 +218,7 @@ class LegacyZIAClientHelper:
 
         headers = self.headers.copy()
         headers.update({"Cookie": f"JSESSIONID={self.session_id}"})
-
+        headers.update(self.request_executor.get_custom_headers())
         try:
             response = requests.delete(logout_url, headers=headers, timeout=self.timeout)
             if response.status_code == 204:
@@ -469,7 +460,7 @@ class LegacyZIAClientHelper:
         from zscaler.zia.cloud_firewall import FirewallResourcesAPI
 
         return FirewallResourcesAPI(self.request_executor)
-    
+
     @property
     def dlp_dictionary(self):
         """
@@ -747,13 +738,19 @@ class LegacyZIAClientHelper:
         from zscaler.zia.workload_groups import WorkloadGroupsAPI
 
         return WorkloadGroupsAPI(self.request_executor)
-    
-    @property
-    def sub_clouds(self):
-        """
-        The interface object for the :ref:`ZIA Workload Groups <zia-sub_clouds>`.
 
-        """
-        from zscaler.zia.sub_clouds import SubCloudsAPI
+    """
+    Misc
+    """
 
-        return SubCloudsAPI(self.request_executor)
+    def set_custom_headers(self, headers):
+        self.request_executor.set_custom_headers(headers)
+
+    def clear_custom_headers(self):
+        self.request_executor.clear_custom_headers()
+
+    def get_custom_headers(self):
+        return self.request_executor.get_custom_headers()
+
+    def get_default_headers(self):
+        return self.request_executor.get_default_headers()

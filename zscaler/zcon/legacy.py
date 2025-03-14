@@ -32,6 +32,7 @@ from zscaler.utils import obfuscate_api_key
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
+
 class LegacyZCONClientHelper:
     """
     A Controller to access Endpoints in the ZCON API.
@@ -53,7 +54,7 @@ class LegacyZCONClientHelper:
 
     def __init__(self, cloud=None, timeout=240, cache=None, fail_safe=False, **kw):
         from zscaler.request_executor import RequestExecutor
-        
+
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
         self.username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
         self.password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
@@ -104,7 +105,7 @@ class LegacyZCONClientHelper:
             }
         }
         self.request_executor = RequestExecutor(self.config, self.cache, zcon_legacy_client=self)
-        
+
     def extractJSessionIDFromHeaders(self, header):
         session_id_str = header.get("Set-Cookie", "")
 
@@ -217,8 +218,8 @@ class LegacyZCONClientHelper:
         # Prepare headers
         headers_with_user_agent = self.headers.copy()
         headers_with_user_agent.update(headers or {})
+        headers_with_user_agent.update(self.request_executor.get_custom_headers())
         headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
-
         attempts = 0
         while attempts < 5:
             try:
@@ -282,8 +283,9 @@ class LegacyZCONClientHelper:
 
         """
         from zscaler.zcon.account_details import AccountDetailsAPI
+
         return AccountDetailsAPI(self.request_executor)
-    
+
     @property
     def activate(self):
         """
@@ -291,8 +293,9 @@ class LegacyZCONClientHelper:
 
         """
         from zscaler.zcon.activation import ActivationAPI
+
         return ActivationAPI(self.request_executor)
-        
+
     @property
     def admin_roles(self):
         """
@@ -300,6 +303,7 @@ class LegacyZCONClientHelper:
 
         """
         from zscaler.zcon.admin_roles import AdminRolesAPI
+
         return AdminRolesAPI(self.request_executor)
 
     @property
@@ -309,6 +313,7 @@ class LegacyZCONClientHelper:
 
         """
         from zscaler.zcon.admin_users import AdminUsersAPI
+
         return AdminUsersAPI(self.request_executor)
 
     @property
@@ -318,6 +323,7 @@ class LegacyZCONClientHelper:
 
         """
         from zscaler.zcon.ec_groups import ECGroupsAPI
+
         return ECGroupsAPI(self.request_executor)
 
     @property
@@ -329,7 +335,7 @@ class LegacyZCONClientHelper:
         from zscaler.zcon.location_management import LocationManagementAPI
 
         return LocationManagementAPI(self.request_executor)
-    
+
     @property
     def location_template(self):
         """
@@ -339,7 +345,7 @@ class LegacyZCONClientHelper:
         from zscaler.zcon.location_template import LocationTemplateAPI
 
         return LocationTemplateAPI(self.request_executor)
-    
+
     @property
     def api_keys(self):
         """
@@ -349,7 +355,7 @@ class LegacyZCONClientHelper:
         from zscaler.zcon.api_keys import ProvisioningAPIKeyAPI
 
         return ProvisioningAPIKeyAPI(self.request_executor)
-    
+
     @property
     def provisioning_url(self):
         """
@@ -360,3 +366,19 @@ class LegacyZCONClientHelper:
         from zscaler.zcon.provisioning_url import ProvisioningURLAPI
 
         return ProvisioningURLAPI(self.request_executor)
+
+    """
+    Misc
+    """
+
+    def set_custom_headers(self, headers):
+        self.request_executor.set_custom_headers(headers)
+
+    def clear_custom_headers(self):
+        self.request_executor.clear_custom_headers()
+
+    def get_custom_headers(self):
+        return self.request_executor.get_custom_headers()
+
+    def get_default_headers(self):
+        return self.request_executor.get_default_headers()

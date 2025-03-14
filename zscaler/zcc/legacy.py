@@ -183,7 +183,7 @@ class LegacyZCCClientHelper:
 
         headers_with_user_agent = self.headers.copy()
         headers_with_user_agent["User-Agent"] = self.user_agent
-
+        headers_with_user_agent.update(self.request_executor.get_custom_headers())
         # Check rate limits
         self.check_rate_limit(path)
 
@@ -265,7 +265,7 @@ class LegacyZCCClientHelper:
         from zscaler.zcc.company import CompanyInfoAPI
 
         return CompanyInfoAPI(self.request_executor)
-    
+
     @property
     def entitlements(self):
         """
@@ -273,6 +273,7 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.entitlements import EntitlementAPI
+
         return EntitlementAPI(self.request_executor)
 
     @property
@@ -282,6 +283,7 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
+
         return ForwardingProfileAPI(self.request_executor)
 
     @property
@@ -291,8 +293,9 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
+
         return FailOpenPolicyAPI(self.request_executor)
-    
+
     @property
     def web_policy(self):
         """
@@ -300,6 +303,7 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.web_policy import WebPolicyAPI
+
         return WebPolicyAPI(self.request_executor)
 
     @property
@@ -309,8 +313,9 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.web_app_service import WebAppServiceAPI
+
         return WebAppServiceAPI(self.request_executor)
-    
+
     @property
     def web_privacy(self):
         """
@@ -318,8 +323,9 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.web_privacy import WebPrivacyAPI
+
         return WebPrivacyAPI(self.request_executor)
-    
+
     @property
     def trusted_networks(self):
         """
@@ -327,4 +333,21 @@ class LegacyZCCClientHelper:
 
         """
         from zscaler.zcc.trusted_networks import TrustedNetworksAPI
+
         return TrustedNetworksAPI(self.request_executor)
+
+    """
+    Misc
+    """
+
+    def set_custom_headers(self, headers):
+        self.request_executor.set_custom_headers(headers)
+
+    def clear_custom_headers(self):
+        self.request_executor.clear_custom_headers()
+
+    def get_custom_headers(self):
+        return self.request_executor.get_custom_headers()
+
+    def get_default_headers(self):
+        return self.request_executor.get_default_headers()

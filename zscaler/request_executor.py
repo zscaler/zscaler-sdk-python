@@ -25,16 +25,18 @@ class RequestExecutor:
 
     BASE_URL = "https://api.zsapi.net"  # Default base URL for API calls
 
-    def __init__(self,
-                 config,
-                 cache,
-                 http_client=None,
-                 zcc_legacy_client: LegacyZCCClientHelper = None,
-                 zcon_legacy_client: LegacyZCONClientHelper = None,
-                 zdx_legacy_client: LegacyZDXClientHelper = None,
-                 zpa_legacy_client: LegacyZPAClientHelper = None,
-                 zia_legacy_client: LegacyZIAClientHelper = None,
-                 zwa_legacy_client: LegacyZWAClientHelper = None):
+    def __init__(
+        self,
+        config,
+        cache,
+        http_client=None,
+        zcc_legacy_client: LegacyZCCClientHelper = None,
+        zcon_legacy_client: LegacyZCONClientHelper = None,
+        zdx_legacy_client: LegacyZDXClientHelper = None,
+        zpa_legacy_client: LegacyZPAClientHelper = None,
+        zia_legacy_client: LegacyZIAClientHelper = None,
+        zwa_legacy_client: LegacyZWAClientHelper = None,
+    ):
         """
         Constructor for Request Executor object for Zscaler SDK Client.
 
@@ -51,28 +53,23 @@ class RequestExecutor:
         self.zwa_legacy_client = zwa_legacy_client
 
         self.use_legacy_client = (
-            zpa_legacy_client is not None or
-            zia_legacy_client is not None or
-            zwa_legacy_client is not None or
-            zcc_legacy_client is not None or
-            zcon_legacy_client is not None or
-            zdx_legacy_client is not None
-            )
+            zpa_legacy_client is not None
+            or zia_legacy_client is not None
+            or zwa_legacy_client is not None
+            or zcc_legacy_client is not None
+            or zcon_legacy_client is not None
+            or zdx_legacy_client is not None
+        )
 
         # Validate and set request timeout
-        self._request_timeout = config["client"].get(
-            "requestTimeout", 240)  # Default to 240 seconds
+        self._request_timeout = config["client"].get("requestTimeout", 240)  # Default to 240 seconds
         if self._request_timeout < 0:
-            raise ValueError(
-                f"Invalid request timeout: {self._request_timeout}. Must be greater than zero."
-            )
+            raise ValueError(f"Invalid request timeout: {self._request_timeout}. Must be greater than zero.")
 
         # Validate and set max retries for rate limiting
         self._max_retries = config["client"]["rateLimit"].get("maxRetries", 2)
         if self._max_retries < 0:
-            raise ValueError(
-                f"Invalid max retries: {self._max_retries}. Must be 0 or greater."
-            )
+            raise ValueError(f"Invalid max retries: {self._max_retries}. Must be 0 or greater.")
 
         # Set configuration and cache
         self._config = config
@@ -80,14 +77,10 @@ class RequestExecutor:
 
         # Retrieve cloud, service, and customer ID (optional)
         self.cloud = self._config["client"].get("cloud", "production").lower()
-        self.sandbox_cloud = self._config["client"].get("sandboxCloud",
-                                                        "").lower()
-        self.service = self._config["client"].get("service",
-                                                  "zia")  # Default to ZIA
-        self.customer_id = self._config["client"].get(
-            "customerId")  # Optional for ZIA/ZCC
-        self.microtenant_id = self._config["client"].get(
-            "microtenantId")  # Optional for ZIA/ZCC
+        self.sandbox_cloud = self._config["client"].get("sandboxCloud", "").lower()
+        self.service = self._config["client"].get("service", "zia")  # Default to ZIA
+        self.customer_id = self._config["client"].get("customerId")  # Optional for ZIA/ZCC
+        self.microtenant_id = self._config["client"].get("microtenantId")  # Optional for ZIA/ZCC
 
         # OAuth2 setup
         self._oauth = OAuth(self, self._config)
@@ -95,13 +88,9 @@ class RequestExecutor:
 
         # Set default headers from config
         self._default_headers = {
-            "User-Agent":
-            UserAgent(config["client"].get("userAgent",
-                                           None)).get_user_agent_string(),
-            "Accept":
-            "application/json",
-            "Content-Type":
-            "application/json",
+            "User-Agent": UserAgent(config["client"].get("userAgent", None)).get_user_agent_string(),
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
 
         # Initialize the HTTP client, considering proxy and SSL context from config
@@ -121,8 +110,7 @@ class RequestExecutor:
             zwa_legacy_client=self.zwa_legacy_client,
         )
 
-        HTTPClient.raise_exception = \
-            self._config['client'].get("raiseException", False)
+        HTTPClient.raise_exception = self._config["client"].get("raiseException", False)
         self._custom_headers = {}
 
     def get_base_url(self, endpoint: str) -> str:
@@ -144,7 +132,7 @@ class RequestExecutor:
     def get_service_type(self, url):
         if not url:
             raise ValueError("URL cannot be None or empty.")
-    
+
         if "/zia" in url or "/zscsb" in url:
             return "zia"
         elif "/zcon" in url:
@@ -180,7 +168,7 @@ class RequestExecutor:
         prefixes = ["/zia", "/zpa", "/zcc", "/zcon", "/zdx", "/zwa"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
-                return endpoint[len(prefix):]
+                return endpoint[len(prefix) :]
         return endpoint
 
     def create_request(
@@ -223,15 +211,14 @@ class RequestExecutor:
                 base_url = self.get_base_url(endpoint)
         else:
             base_url = self.get_base_url(endpoint)
-            
+
         final_url = f"{base_url}/{endpoint.lstrip('/')}"
 
         headers = self._prepare_headers(headers, endpoint)
         params = self._prepare_params(endpoint, params, body)
         # Extract and append query parameters from URL to request params
-        final_url, params = self._extract_and_append_query_params(
-            final_url, params)
-        
+        final_url, params = self._extract_and_append_query_params(final_url, params)
+
         # Check and add sandbox token if needed
         if "/zscsb" in endpoint:
             sandbox_token = self._config["client"].get("sandboxToken")
@@ -255,10 +242,9 @@ class RequestExecutor:
         return request, None
 
     def _prepare_headers(self, headers, endpoint=""):
-        headers = {**self._default_headers, **headers}
+        headers = {**self._default_headers, **(self._custom_headers or {}), **headers}
         if "/zscsb" not in endpoint and not self.use_legacy_client:
-            headers[
-                "Authorization"] = f"Bearer {self._oauth._get_access_token()}"
+            headers["Authorization"] = f"Bearer {self._oauth._get_access_token()}"
         return headers
 
     def _prepare_body(self, endpoint, body):
@@ -298,11 +284,8 @@ class RequestExecutor:
 
         return params
 
-
     def _get_microtenant_id(self, body, params):
-        if body and isinstance(
-                body,
-                dict) and "microtenantId" in body and body["microtenantId"]:
+        if body and isinstance(body, dict) and "microtenantId" in body and body["microtenantId"]:
             return body["microtenantId"]
         if params and "microtenantId" in params and params["microtenantId"]:
             return params["microtenantId"]
@@ -338,11 +321,9 @@ class RequestExecutor:
         # If raw response is requested, return it for file download purposes
         if return_raw_response:
             return response, None
-    
+
         try:
-            response_data, error = self._http_client.check_response_for_error(
-                request["url"], response, response_body
-            )
+            response_data, error = self._http_client.check_response_for_error(request["url"], response, response_body)
         except Exception as ex:
             logger.error(f"Exception while checking response for errors: {ex}")
             return None, ex
@@ -412,14 +393,11 @@ class RequestExecutor:
         is_sandbox_request = "/zscsb" in request["url"]
 
         # Pass both URL and params to create_key
-        url_cache_key = self._cache.create_key(request["url"],
-                                               request["params"])
+        url_cache_key = self._cache.create_key(request["url"], request["params"])
         if self._cache_enabled() and not is_sandbox_request:
             # Remove cache entry if not a GET call
             if request["method"].upper() != "GET":
-                logger.debug(
-                    f"Deleting cache entry for non-GET request: {url_cache_key}"
-                )
+                logger.debug(f"Deleting cache entry for non-GET request: {url_cache_key}")
                 self._cache.delete(url_cache_key)
 
             # Check if response exists in cache
@@ -430,11 +408,9 @@ class RequestExecutor:
             else:
                 logger.debug(f"No cache entry found for URL: {request['url']}")
 
-    # Send Actual Request
+        # Send Actual Request
         try:
-            request, response, response_body, error = self.fire_request_helper(
-                request, 0, time.time()
-            )
+            request, response, response_body, error = self.fire_request_helper(request, 0, time.time())
         except Exception as e:
             logger.error(f"Request execution failed: {e}")
             return request, None, None, e
@@ -484,7 +460,7 @@ class RequestExecutor:
             return self.fire_request_helper(request, attempts, request_start_time)
 
         return request, response, response.text, None
-    
+
     def is_retryable_status(self, status):
         """
         Checks if HTTP status is retryable.
@@ -558,16 +534,16 @@ class RequestExecutor:
         return self._custom_headers
 
     def get_retry_after(self, headers, logger):
-        retry_limit_reset_header = headers.get(
-            "x-ratelimit-reset") or headers.get("X-RateLimit-Reset") or headers.get("RateLimit-Reset")
+        retry_limit_reset_header = (
+            headers.get("x-ratelimit-reset") or headers.get("X-RateLimit-Reset") or headers.get("RateLimit-Reset")
+        )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
         if retry_after:
             try:
                 return int(retry_after.strip("s")) + 1  # Add 1 second padding
             except ValueError:
-                logger.error(
-                    f"Error parsing Retry-After header: {retry_after}")
+                logger.error(f"Error parsing Retry-After header: {retry_after}")
                 return None
 
         if retry_limit_reset_header is not None:
@@ -575,9 +551,7 @@ class RequestExecutor:
                 reset_seconds = float(retry_limit_reset_header)
                 return reset_seconds + 1  # Add 1 second padding
             except ValueError:
-                logger.error(
-                    f"Error parsing x-ratelimit-reset header: {retry_limit_reset_header}"
-                )
+                logger.error(f"Error parsing x-ratelimit-reset header: {retry_limit_reset_header}")
                 return None
 
         logger.error("Missing Retry-After and X-Rate-Limit-Reset headers.")
