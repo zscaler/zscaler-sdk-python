@@ -14,13 +14,13 @@ files = [
 
 [[package]]
 name = "aiohappyeyeballs"
-version = "2.5.0"
+version = "2.6.1"
 description = "Happy Eyeballs for asyncio"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "aiohappyeyeballs-2.5.0-py3-none-any.whl", hash = "sha256:0850b580748c7071db98bffff6d4c94028d0d3035acc20fd721a0ce7e8cac35d"},
-    {file = "aiohappyeyeballs-2.5.0.tar.gz", hash = "sha256:18fde6204a76deeabc97c48bdd01d5801cfda5d6b9c8bbeb1aaaee9d648ca191"},
+    {file = "aiohappyeyeballs-2.6.1-py3-none-any.whl", hash = "sha256:f349ba8f4b75cb25c99c5c2d84e997e485204d2902a9597802b0371f09331fb8"},
+    {file = "aiohappyeyeballs-2.6.1.tar.gz", hash = "sha256:c3f9d0113123803ccadfdf3f0faa505bc78e6a72d1cc4806cbd719826e943558"},
 ]
 
 [[package]]
@@ -205,20 +205,20 @@ files = [
 
 [[package]]
 name = "attrs"
-version = "25.1.0"
+version = "25.3.0"
 description = "Classes Without Boilerplate"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "attrs-25.1.0-py3-none-any.whl", hash = "sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a"},
-    {file = "attrs-25.1.0.tar.gz", hash = "sha256:1c97078a80c814273a76b2a298a932eb681c87415c11dee0a6921de7f1b02c3e"},
+    {file = "attrs-25.3.0-py3-none-any.whl", hash = "sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3"},
+    {file = "attrs-25.3.0.tar.gz", hash = "sha256:75d7cefc7fb576747b2c81b4442d4d4a1ce0900973527c011d1030fd3bf4af1b"},
 ]
 
 [package.extras]
 benchmark = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-codspeed", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 cov = ["cloudpickle", "coverage[toml] (>=5.3)", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 dev = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pre-commit-uv", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
-docs = ["cogapp", "furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier (<24.7)"]
+docs = ["cogapp", "furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier"]
 tests = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
 
@@ -1355,13 +1355,13 @@ dev = ["build", "coverage", "furo", "invoke", "mypy", "pytest", "pytest-cov", "p
 
 [[package]]
 name = "pyfakefs"
-version = "5.7.4"
+version = "5.8.0"
 description = "pyfakefs implements a fake file system that mocks the Python file system modules."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyfakefs-5.7.4-py3-none-any.whl", hash = "sha256:3e763d700b91c54ade6388be2cfa4e521abc00e34f7defb84ee511c73031f45f"},
-    {file = "pyfakefs-5.7.4.tar.gz", hash = "sha256:4971e65cc80a93a1e6f1e3a4654909c0c493186539084dc9301da3d68c8878fe"},
+    {file = "pyfakefs-5.8.0-py3-none-any.whl", hash = "sha256:4bd0fc8def7d0582139922447758632ff34a327b460a7e83feb6edbd841061dd"},
+    {file = "pyfakefs-5.8.0.tar.gz", hash = "sha256:7e5457ee3cc67069d3cef6e278227ecfc80bfb61e925bc0a4d3b0af32d1c99ce"},
 ]
 
 [[package]]
@@ -1430,20 +1430,20 @@ dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments
 
 [[package]]
 name = "pytest-asyncio"
-version = "0.23.8"
+version = "0.25.3"
 description = "Pytest support for asyncio"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "pytest_asyncio-0.23.8-py3-none-any.whl", hash = "sha256:50265d892689a5faefb84df80819d1ecef566eb3549cf915dfb33569359d1ce2"},
-    {file = "pytest_asyncio-0.23.8.tar.gz", hash = "sha256:759b10b33a6dc61cce40a8bd5205e302978bbbcc00e279a8b61d9a6a3c82e4d3"},
+    {file = "pytest_asyncio-0.25.3-py3-none-any.whl", hash = "sha256:9e89518e0f9bd08928f97a3482fdc4e244df17529460bc038291ccaf8f85c7c3"},
+    {file = "pytest_asyncio-0.25.3.tar.gz", hash = "sha256:fc1da2cf9f125ada7e710b4ddad05518d4cee187ae9412e9ac9271003497f07a"},
 ]
 
 [package.dependencies]
-pytest = ">=7.0.0,<9"
+pytest = ">=8.2,<9"
 
 [package.extras]
-docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1.0)"]
+docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1)"]
 testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)"]
 
 [[package]]
@@ -1645,13 +1645,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "responses"
-version = "0.25.6"
+version = "0.25.7"
 description = "A utility library for mocking out the `requests` Python library."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "responses-0.25.6-py3-none-any.whl", hash = "sha256:9cac8f21e1193bb150ec557875377e41ed56248aed94e4567ed644db564bacf1"},
-    {file = "responses-0.25.6.tar.gz", hash = "sha256:eae7ce61a9603004e76c05691e7c389e59652d91e94b419623c12bbfb8e331d8"},
+    {file = "responses-0.25.7-py3-none-any.whl", hash = "sha256:92ca17416c90fe6b35921f52179bff29332076bb32694c0df02dcac2c6bc043c"},
+    {file = "responses-0.25.7.tar.gz", hash = "sha256:8ebae11405d7a5df79ab6fd54277f6f2bc29b2d002d0dd2d5c632594d1ddcedb"},
 ]
 
 [package.dependencies]
@@ -2446,4 +2446,4 @@ dev = ["aenum", "black", "pydash"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "692c2c8c361b09b235b704c58277beb4061d8bbc6401edaf85c6e98a5618e92e"
+content-hash = "952f62b31101995203ed426f0b9f897f200a4a4128d075eaf16f544bf5308a42"
