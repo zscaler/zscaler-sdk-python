@@ -169,11 +169,21 @@ class ZIAClientHelper(ZIAClient):
         return result.group(1)
 
     def is_session_expired(self):
+        """
+        Checks whether the current session is expired.
+        
+        Returns:
+            bool: True if the session is expired or if the session details are missing.
+        """
         if self.auth_details is None:
             return True
+
         now = datetime.datetime.now()
-        if self.auth_details["passwordExpiryTime"] > 0 and (self.session_refreshed - self.session_timeout_offset < now):
+
+        password_expiry_time = self.auth_details.get("passwordExpiryTime", -1)
+        if password_expiry_time > 0 and (self.session_refreshed - self.session_timeout_offset < now):
             return True
+
         return False
 
     @retry_with_backoff(MAX_RETRIES)
@@ -401,24 +411,161 @@ class ZIAClientHelper(ZIAClient):
             time.sleep(delay)
         return self.send("DELETE", path, json, params)
 
+    # def get_paginated_data(
+    #     self,
+    #     path=None,
+    #     expected_status_code=200,
+    #     page=None,
+    #     pagesize=None,
+    #     search=None,
+    #     max_items=None,  # Maximum number of items to retrieve across pages
+    #     max_pages=None,  # Maximum number of pages to retrieve
+    #     type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
+    #     include_only_without_location=None,  # Include only VPN credentials not associated with any location
+    #     location_id=None,  # VPN credentials for a specific location ID
+    #     managed_by=None,  # VPN credentials managed by a given partner
+    #     prefix=None,  # VPN credentials managed by a given partner
+    # ):
+    #     """
+    #     Fetches paginated data from the API based on specified parameters and handles pagination.
+
+    #     Args:
+    #         path (str): The API endpoint path to send requests to.
+    #         expected_status_code (int): The expected HTTP status code for a successful request. Defaults to 200.
+    #         page (int): Specific page number to fetch. Defaults to 1 if not provided.
+    #         pagesize (int): Number of items per page, default is 100, with a maximum of 10000.
+    #         search (str): Search query to filter the results.
+    #         max_items (int): Maximum number of items to retrieve.
+    #         max_pages (int): Maximum number of pages to fetch.
+    #         type (str, optional): Type of VPN credentials (e.g., CN, IP, UFQDN, XAUTH).
+    #         include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
+    #         location_id (int, optional): Retrieve VPN credentials for the specified location ID.
+    #         managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
+    #         prefix (int, optional): Retrieve VPN credentials managed by a given partner.
+
+    #     Returns:
+    #         tuple: A tuple containing:
+    #             - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+    #             - str: An error message if any occurred during the data fetching process.
+    #     """
+    #     logger = logging.getLogger(__name__)
+
+    #     ERROR_MESSAGES = {
+    #         "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+    #         "EMPTY_RESULTS": "No results found for page {page}.",
+    #     }
+
+    #     # Initialize parameters
+    #     params = {
+    #         "page": page if page is not None else 1,  # Start at page 1 if not specified
+    #         "pageSize": pagesize if pagesize is not None else 100,  # Allow any user-defined pagesize
+    #     }
+
+    #     # Add optional filters to the params if provided
+    #     if search:
+    #         params["search"] = search
+    #     if type:
+    #         params["type"] = type
+    #     if include_only_without_location is not None:
+    #         params["includeOnlyWithoutLocation"] = include_only_without_location
+    #     if location_id:
+    #         params["locationId"] = location_id
+    #     if managed_by:
+    #         params["managedBy"] = managed_by
+    #     if prefix:
+    #         params["prefix"] = prefix
+
+    #     # If the user specifies a page, fetch only that page
+    #     if page is not None:
+    #         response = self.send("GET", path=path, params=params)
+    #         if response.status_code != expected_status_code:
+    #             error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=params["page"])
+    #             logger.error(error_msg)
+    #             return BoxList([]), error_msg
+
+    #         response_data = response.json()
+    #         if not isinstance(response_data, list):
+    #             error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+    #             logger.warn(error_msg)
+    #             return BoxList([]), error_msg
+
+    #         data = convert_keys_to_snake(response_data)
+    #         return BoxList(data), None
+
+    #     # If no page is specified, iterate through pages to fetch all items
+    #     ret_data = []
+    #     total_collected = 0
+    #     try:
+    #         while True:
+    #             should_wait, delay = self.rate_limiter.wait("GET")
+    #             if should_wait:
+    #                 time.sleep(delay)
+
+    #             # Send the request to the API
+    #             response = self.send("GET", path=path, params=params)
+
+    #             # Check for unexpected status code
+    #             if response.status_code != expected_status_code:
+    #                 error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+    #                     status_code=response.status_code, page=params["page"]
+    #                 )
+    #                 logger.error(error_msg)
+    #                 return BoxList([]), error_msg
+
+    #             # Parse the response as a flat list of items
+    #             response_data = response.json()
+    #             if not isinstance(response_data, list):
+    #                 error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+    #                 logger.warn(error_msg)
+    #                 return BoxList([]), error_msg
+
+    #             data = convert_keys_to_snake(response_data)
+
+    #             # Limit data collection based on max_items
+    #             if max_items is not None:
+    #                 data = data[: max_items - total_collected]  # Limit items on the current page
+    #             ret_data.extend(data)
+    #             total_collected += len(data)
+
+    #             # Check if we've reached max_items or max_pages limits
+    #             if (max_items is not None and total_collected >= max_items) or (
+    #                 max_pages is not None and params["page"] >= max_pages
+    #             ):
+    #                 break
+
+    #             # Stop if fewer items than pageSize are returned
+    #             if len(data) < params["pageSize"]:
+    #                 break
+
+    #             # Move to the next page
+    #             params["page"] += 1
+
+    #     finally:
+    #         time.sleep(2)  # Ensure a delay between requests regardless of outcome
+
+    #     if not ret_data:
+    #         error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+    #         logger.warn(error_msg)
+    #         return BoxList([]), error_msg
+
+    #     return BoxList(ret_data), None
+
     def get_paginated_data(
         self,
         path=None,
         expected_status_code=200,
-        limit=None,  # OPTIONAL PARAMETER
         page=None,
-        page_number=None,  # Snake_case for user input
         pagesize=None,
         search=None,
-        filter=None,
         max_items=None,  # Maximum number of items to retrieve across pages
         max_pages=None,  # Maximum number of pages to retrieve
-        app_segment=None,
-        type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
-        include_only_without_location=None,  # Include only VPN credentials not associated with any location
-        location_id=None,  # VPN credentials for a specific location ID
-        managed_by=None,  # VPN credentials managed by a given partner
-        prefix=None,  # VPN credentials managed by a given partner
+        page_number=None,  # New: Zero-based page number
+        limit=None,  # New: Max number of items per page (default: 1000)
+        type=None,
+        include_only_without_location=None,
+        location_id=None,
+        managed_by=None,
+        prefix=None,
     ):
         """
         Fetches paginated data from the API based on specified parameters and handles pagination.
@@ -426,24 +573,23 @@ class ZIAClientHelper(ZIAClient):
         Args:
             path (str): The API endpoint path to send requests to.
             expected_status_code (int): The expected HTTP status code for a successful request.
-            filter (int, optional): Retrieves the list of PAC files without the PAC file content in the response
-            limit (int, optional): Number of items to retrieve (sent as 'limit' in the URL construct).
-            page (int, optional): Specific page number to fetch (sent as 'page').
-            page_number (int, optional): Alternative parameter for specifying a page number (sent as 'pageNumber').
-            pagesize (int, optional): Number of items per page (default=1000, sent as 'pageSize').
-            search (str, optional): Search query to filter results.
-            max_items (int, optional): Maximum number of items to retrieve.
-            max_pages (int, optional): Maximum number of pages to fetch.
-            type (str, optional): Type of VPN credentials (e.g., CN, IP).
-            include_only_without_location (bool, optional): Filter only items w/o location.
-            location_id (int, optional): ID of a specific location.
-            managed_by (int, optional): Items managed by a given partner.
-            prefix (int, optional): Items with partner prefix.
+            page (int, optional): Specific page number to fetch (1-based).
+            pagesize (int, optional): Number of items per page, default is 100, max is 10,000.
+            page_number (int, optional): Specifies the page number (zero-based, starting at 0).
+            limit (int, optional): Specifies the maximum number of items retrieved per page (default 1000).
+            search (str, optional): Search query to filter the results.
+            max_items (int, optional): Maximum number of items to retrieve across pages.
+            max_pages (int, optional): Maximum number of pages to retrieve.
+            type (str, optional): Type of VPN credentials (e.g., CN, IP, UFQDN, XAUTH).
+            include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
+            location_id (int, optional): Retrieve VPN credentials for the specified location ID.
+            managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
+            prefix (int, optional): Retrieve VPN credentials managed by a given partner.
 
         Returns:
             tuple: A tuple containing:
-                - BoxList: A list of fetched items (BoxList).
-                - str: An error message if any occurred, else None.
+                - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+                - str: An error message if any occurred during the data fetching process.
         """
         logger = logging.getLogger(__name__)
 
@@ -452,22 +598,18 @@ class ZIAClientHelper(ZIAClient):
             "EMPTY_RESULTS": "No results found for page {page}.",
         }
 
-        # Initialize parameters
+        # Initialize parameters based on what the user has provided
         params = {}
 
-        # Handle 'page' and 'page_number' parameters
-        if page is not None:
-            params["page"] = page
-        elif page_number is not None:
-            params["pageNumber"] = page_number  # Use camelCase in the URL construct
-        else:
-            params["page"] = 1  # Default to page 1 if neither is provided
+        # ✅ Use new API pagination model (pageNumber, limit) if provided
+        if page_number is not None or limit is not None:
+            params["pageNumber"] = page_number if page_number is not None else 0  # Default is 0
+            params["limit"] = limit if limit is not None else 1000  # Default is 1000
 
-        # Handle 'limit' and 'pagesize' logic
-        if limit is not None:
-            params["limit"] = limit  # Explicitly use 'limit' in the URL construct
+        # ✅ Otherwise, use existing pagination parameters (page, pageSize)
         else:
-            params["pageSize"] = pagesize if pagesize is not None else 1000  # Default to 'pageSize'
+            params["page"] = page if page is not None else 1  # Default is 1-based page
+            params["pageSize"] = pagesize if pagesize is not None else 100  # Default is 100, max is 10,000
 
         # Add optional filters to the params if provided
         if search:
@@ -476,39 +618,34 @@ class ZIAClientHelper(ZIAClient):
             params["type"] = type
         if include_only_without_location is not None:
             params["includeOnlyWithoutLocation"] = include_only_without_location
-        if app_segment:
-            params["appSegment"] = app_segment
         if location_id:
             params["locationId"] = location_id
         if managed_by:
             params["managedBy"] = managed_by
         if prefix:
             params["prefix"] = prefix
-        if filter:
-            params["filter"] = filter
 
-        # If the user specifies a specific page, fetch only that page.
+        # If the user specifies a single page, fetch only that page
         if page is not None or page_number is not None:
             response = self.send("GET", path=path, params=params)
             if response.status_code != expected_status_code:
-                error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                    status_code=response.status_code, page=params.get("page", params.get("pageNumber"))
-                )
+                error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=params.get("page", params.get("pageNumber", 0)))
                 logger.error(error_msg)
                 return BoxList([]), error_msg
 
             response_data = response.json()
             if not isinstance(response_data, list):
-                error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber")))
-                logger.warning(error_msg)
+                error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber", 0)))
+                logger.warn(error_msg)
                 return BoxList([]), error_msg
 
             data = convert_keys_to_snake(response_data)
             return BoxList(data), None
 
-        # If no specific page is specified, iterate through pages to fetch all items
+        # If no page is specified, iterate through pages to fetch all items
         ret_data = []
         total_collected = 0
+
         try:
             while True:
                 should_wait, delay = self.rate_limiter.wait("GET")
@@ -521,7 +658,7 @@ class ZIAClientHelper(ZIAClient):
                 # Check for unexpected status code
                 if response.status_code != expected_status_code:
                     error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
-                        status_code=response.status_code, page=params.get("page", params.get("pageNumber"))
+                        status_code=response.status_code, page=params.get("page", params.get("pageNumber", 0))
                     )
                     logger.error(error_msg)
                     return BoxList([]), error_msg
@@ -529,28 +666,26 @@ class ZIAClientHelper(ZIAClient):
                 # Parse the response as a flat list of items
                 response_data = response.json()
                 if not isinstance(response_data, list):
-                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber")))
-                    logger.warning(error_msg)
+                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber", 0)))
+                    logger.warn(error_msg)
                     return BoxList([]), error_msg
 
                 data = convert_keys_to_snake(response_data)
 
                 # Limit data collection based on max_items
                 if max_items is not None:
-                    data = data[: max_items - total_collected]
+                    data = data[: max_items - total_collected]  # Limit items on the current page
                 ret_data.extend(data)
                 total_collected += len(data)
 
                 # Check if we've reached max_items or max_pages limits
                 if (max_items is not None and total_collected >= max_items) or (
-                    max_pages is not None and params.get("page", params.get("pageNumber")) >= max_pages
+                    max_pages is not None and params.get("page", params.get("pageNumber", 0)) >= max_pages
                 ):
                     break
 
-                # Stop if fewer items than pageSize or limit are returned
-                if "pageSize" in params and len(data) < params["pageSize"]:
-                    break
-                if "limit" in params and len(data) < params["limit"]:
+                # Stop if fewer items than pageSize/limit are returned
+                if len(data) < params.get("pageSize", params.get("limit", 1000)):
                     break
 
                 # Move to the next page
@@ -560,14 +695,149 @@ class ZIAClientHelper(ZIAClient):
                     params["pageNumber"] += 1
 
         finally:
-            time.sleep(2)  # Ensure a delay between requests, regardless of outcome
+            time.sleep(2)  # Ensure a delay between requests regardless of outcome
 
         if not ret_data:
-            error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber")))
-            logger.warning(error_msg)
+            error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params.get("page", params.get("pageNumber", 0)))
+            logger.warn(error_msg)
             return BoxList([]), error_msg
 
         return BoxList(ret_data), None
+
+    # def get_paginated_data(
+    #     self,
+    #     path=None,
+    #     expected_status_code=200,
+    #     page=None,
+    #     pagesize=None,
+    #     search=None,
+    #     max_items=None,  # Maximum number of items to retrieve across pages
+    #     max_pages=None,  # Maximum number of pages to retrieve
+    #     type=None,  # Specify type of VPN credentials (CN, IP, UFQDN, XAUTH)
+    #     include_only_without_location=None,  # Include only VPN credentials not associated with any location
+    #     location_id=None,  # VPN credentials for a specific location ID
+    #     managed_by=None,  # VPN credentials managed by a given partner
+    #     prefix=None,  # VPN credentials managed by a given partner
+    # ):
+    #     """
+    #     Fetches paginated data from the API based on specified parameters and handles pagination.
+
+    #     Args:
+    #         path (str): The API endpoint path to send requests to.
+    #         expected_status_code (int): The expected HTTP status code for a successful request. Defaults to 200.
+    #         page (int): Specific page number to fetch. Defaults to 1 if not provided.
+    #         pagesize (int): Number of items per page, default is 100, with a maximum of 1000.
+    #         search (str): Search query to filter the results.
+    #         max_items (int): Maximum number of items to retrieve.
+    #         max_pages (int): Maximum number of pages to fetch.
+    #         type (str, optional): Type of VPN credentials (e.g., CN, IP, UFQDN, XAUTH).
+    #         include_only_without_location (bool, optional): Filter to include only VPN credentials not associated with a location.
+    #         location_id (int, optional): Retrieve VPN credentials for the specified location ID.
+    #         managed_by (int, optional): Retrieve VPN credentials managed by the specified partner.
+    #         prefix (int, optional): Retrieve VPN credentials managed by the specified partner.
+
+    #     Returns:
+    #         tuple: A tuple containing:
+    #             - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+    #             - str: An error message if any occurred during the data fetching process.
+    #     """
+    #     logger = logging.getLogger(__name__)
+
+    #     ERROR_MESSAGES = {
+    #         "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+    #         "EMPTY_RESULTS": "No results found for page {page}.",
+    #     }
+
+    #     # Initialize pagination parameters
+    #     # params = {
+    #     #     "page": page if page is not None else 1,  # Start at page 1 if not specified
+    #     #     "pagesize": min(pagesize if pagesize is not None else 100, max_page_size),  # Apply max_page_size limit
+    #     # }
+
+    #     params = {
+    #         "page": page if page is not None else 1,  # Start at page 1 if not specified
+    #         "pagesize": max(100, min(pagesize or 100, 10000)),  # Ensure pagesize is within API limits
+    #     }
+
+    #     # Add optional filters to the params if provided
+    #     if search:
+    #         params["search"] = search
+    #     if type:
+    #         params["type"] = type
+    #     if include_only_without_location is not None:
+    #         params["includeOnlyWithoutLocation"] = include_only_without_location
+    #     if location_id:
+    #         params["locationId"] = location_id
+    #     if managed_by:
+    #         params["managedBy"] = managed_by
+    #     if prefix:
+    #         params["prefix"] = prefix
+
+    #     ret_data = []
+    #     total_collected = 0
+
+    #     try:
+    #         while True:
+    #             # Apply rate-limiting if necessary
+    #             should_wait, delay = self.rate_limiter.wait("GET")
+    #             if should_wait:
+    #                 time.sleep(delay)
+
+    #             # Send the request to the API
+    #             response = self.send("GET", path=path, params=params)
+
+    #             # Check for unexpected status code
+    #             if response.status_code != expected_status_code:
+    #                 error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+    #                     status_code=response.status_code, page=params["page"]
+    #                 )
+    #                 logger.error(error_msg)
+    #                 return BoxList([]), error_msg
+
+    #             # Parse the response as a flat list of items
+    #             response_data = response.json()
+    #             if not isinstance(response_data, list):
+    #                 error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+    #                 logger.warn(error_msg)
+    #                 return BoxList([]), error_msg
+
+    #             data = convert_keys_to_snake(response_data)
+
+    #             # If searching for a specific item, stop if we find a match
+    #             if search:
+    #                 for item in data:
+    #                     if item.get("name") == search:
+    #                         ret_data.append(item)
+    #                         return BoxList(ret_data), None
+
+    #             # Limit data collection based on max_items
+    #             if max_items is not None:
+    #                 data = data[: max_items - total_collected]  # Limit items on the current page
+    #             ret_data.extend(data)
+    #             total_collected += len(data)
+
+    #             # Check if we've reached max_items or max_pages limits
+    #             if (max_items is not None and total_collected >= max_items) or (
+    #                 max_pages is not None and params["page"] >= max_pages
+    #             ):
+    #                 break
+
+    #             # Stop if we've processed all available pages (i.e., less than requested page size)
+    #             if len(data) < params["pagesize"]:
+    #                 break
+
+    #             # Move to the next page
+    #             params["page"] += 1
+
+    #     finally:
+    #         time.sleep(2)  # Ensure a delay between requests regardless of outcome
+
+    #     if not ret_data:
+    #         error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+    #         logger.warn(error_msg)
+    #         return BoxList([]), error_msg
+
+    #     return BoxList(ret_data), None
 
     @property
     def admin_and_role_management(self):
@@ -608,7 +878,7 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return CloudAppsAPI(self)
-    
+
     @property
     def dlp(self):
         """
@@ -665,7 +935,7 @@ class ZIAClientHelper(ZIAClient):
 
         """
         return CloudSandboxAPI(self)
-    
+
     @property
     def security(self):
         """
