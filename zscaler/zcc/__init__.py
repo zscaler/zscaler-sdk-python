@@ -5,7 +5,7 @@ import uuid
 import time
 import requests
 from datetime import datetime, timedelta
-
+from box import Box, BoxList
 from zscaler import __version__
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
@@ -14,7 +14,9 @@ from zscaler.utils import (
     format_json_response,
     is_token_expired,
     retry_with_backoff,
+    convert_keys_to_snake
 )
+from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.logger import setup_logging
 from .devices import DevicesAPI
 from .secrets import SecretsAPI
@@ -74,6 +76,14 @@ class ZCCClientHelper(ZCCClient):
         self.url = f"https://api-mobile.{self._env_cloud}.net/papi/public/v1"
 
         self.user_agent = UserAgent().get_user_agent_string()  # Ensure this returns a string
+        # Initialize rate limiter
+        # You may want to adjust these parameters as per your rate limit configuration
+        self.rate_limiter = RateLimiter(
+            get_limit=2,  # Adjust as per actual limit
+            post_put_delete_limit=2,  # Adjust as per actual limit
+            get_freq=2,  # Adjust as per actual frequency (in seconds)
+            post_put_delete_freq=2,  # Adjust as per actual frequency (in seconds)
+        )
         self.auth_token = None
         self.headers = {}
         self.refreshToken()
@@ -263,3 +273,107 @@ class ZCCClientHelper(ZCCClient):
     def secrets(self):
         """The interface object for the :ref:`ZCC Secrets interface <zcc-secrets>`."""
         return SecretsAPI(self)
+
+    def get_paginated_data(
+        self,
+        path=None,
+        expected_status_code=200,
+        page=None,
+        pagesize=None,
+        search=None,
+    ):
+        """
+        Fetches paginated data from the API based on specified parameters and handles pagination.
+
+        Args:
+            path (str): The API endpoint path to send requests to.
+            expected_status_code (int): The expected HTTP status code for a successful request.
+            page (int, optional): Specific page number to fetch (1-based).
+            pagesize (int, optional): Number of items per page, default is 100, max is 10,000.
+            search (str, optional): Search query to filter the results.
+
+        Returns:
+            tuple: A tuple containing:
+                - BoxList: A list of fetched items wrapped in a BoxList for easy access.
+                - str: An error message if any occurred during the data fetching process.
+        """
+        logger = logging.getLogger(__name__)
+
+        ERROR_MESSAGES = {
+            "UNEXPECTED_STATUS": "Unexpected status code {status_code} received for page {page}.",
+            "EMPTY_RESULTS": "No results found for page {page}.",
+        }
+
+        # ✅ Ensure 'pageSize' is always converted to camelCase
+        params = {
+            "page": page if page is not None else 1,  # Default is 1-based page
+            "pageSize": pagesize if pagesize is not None else 100,  # Default is 100, max is 10,000
+        }
+
+        # Add optional filters to the params if provided
+        if search:
+            params["search"] = search
+
+        # If the user specifies a single page, fetch only that page
+        if page is not None:
+            response = self.send("GET", path=path, params=params)
+            if response.status_code != expected_status_code:
+                error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(status_code=response.status_code, page=params["page"])
+                logger.error(error_msg)
+                return BoxList([]), error_msg
+
+            response_data = response.json()
+            if not isinstance(response_data, list):
+                error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+                logger.warn(error_msg)
+                return BoxList([]), error_msg
+
+            data = convert_keys_to_snake(response_data)
+            return BoxList(data), None
+
+        # If no page is specified, iterate through pages to fetch all items
+        ret_data = []
+
+        try:
+            while True:
+                should_wait, delay = self.rate_limiter.wait("GET")
+                if should_wait:
+                    time.sleep(delay)
+
+                # Send the request to the API
+                response = self.send("GET", path=path, params=params)
+
+                # Check for unexpected status code
+                if response.status_code != expected_status_code:
+                    error_msg = ERROR_MESSAGES["UNEXPECTED_STATUS"].format(
+                        status_code=response.status_code, page=params["page"]
+                    )
+                    logger.error(error_msg)
+                    return BoxList([]), error_msg
+
+                # Parse the response as a flat list of items
+                response_data = response.json()
+                if not isinstance(response_data, list):
+                    error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+                    logger.warn(error_msg)
+                    return BoxList([]), error_msg
+
+                data = convert_keys_to_snake(response_data)
+                ret_data.extend(data)
+
+                # Stop if fewer items than pageSize are returned (indicating last page)
+                if len(data) < params["pageSize"]:
+                    break
+
+                # Move to the next page
+                params["page"] += 1
+
+        finally:
+            time.sleep(2)  # Ensure a delay between requests regardless of outcome
+
+        if not ret_data:
+            error_msg = ERROR_MESSAGES["EMPTY_RESULTS"].format(page=params["page"])
+            logger.warn(error_msg)
+            return BoxList([]), error_msg
+
+        return BoxList(ret_data), None

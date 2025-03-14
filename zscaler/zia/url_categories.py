@@ -184,6 +184,76 @@ class URLCategoriesAPI:
         """
         return self.rest.get(f"urlCategories/{category_id}")
 
+    # def add_url_category(self, configured_name: str, super_category: str, urls: list, **kwargs) -> Box:
+    #     """
+    #     Adds a new custom URL category.
+
+    #     Args:
+    #         name (str):
+    #             Name of the URL category.
+    #         super_category (str):
+    #             The name of the parent category.
+    #         urls (list):
+    #             Custom URLs to add to a URL category.
+    #         **kwargs:
+    #             Optional keyword args.
+
+    #     Keyword Args:
+    #         db_categorized_urls (list):
+    #             URLs entered will be covered by policies that reference the parent category, in addition to this one.
+    #         description (str):
+    #             Description of the category.
+    #         custom_category (bool):
+    #             Set to true for custom URL category. Up to 48 custom URL categories can be added per organisation.
+    #         ip_ranges (list):
+    #             Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+    #         ip_ranges_retaining_parent_category (list):
+    #             The retaining parent custom IP addess ranges associated to a URL category.
+    #         keywords (list):
+    #             Custom keywords associated to a URL category.
+    #         keywords_retaining_parent_category (list):
+    #             Retained custom keywords from the parent URL category that are associated with a URL category.
+
+    #     Returns:
+    #         :obj:`Box`: The newly configured custom URL category resource record.
+
+    #     Examples:
+    #         Add a new category for beers that don't taste good:
+
+    #         >>> zia.url_categories.add_url_category(name='Beer',
+    #         ...    super_category='ALCOHOL_TOBACCO',
+    #         ...    urls=['xxxx.com.au', 'carltondraught.com.au'],
+    #         ...    description="Beers that don't taste good.")
+
+    #         Add a new category with IP ranges:
+
+    #         >>> zia.url_categories.add_url_category(name='Beer',
+    #         ...    super_category='FINANCE',
+    #         ...    urls=['finance.google.com'],
+    #         ...    description="Google Finance.",
+    #         ...    ip_ranges=['10.0.0.0/24'])
+
+    #     """
+
+    #     payload = {
+    #         "type": "URL_CATEGORY",
+    #         "superCategory": super_category,
+    #         "configuredName": configured_name,
+    #         "urls": urls,
+    #     }
+
+    #     # Add optional parameters to payload
+    #     for key, value in kwargs.items():
+    #         payload[snake_to_camel(key)] = value
+
+    #     response = self.rest.post("urlCategories", json=payload)
+    #     if isinstance(response, Response):
+    #         # Handle error response
+    #         status_code = response.status_code
+    #         if status_code != 200:
+    #             raise Exception(f"API call failed with status {status_code}: {response.json()}")
+    #     return response
+
     def add_url_category(self, configured_name: str, super_category: str, urls: list, **kwargs) -> Box:
         """
         Adds a new custom URL category.
@@ -234,7 +304,6 @@ class URLCategoriesAPI:
             ...    ip_ranges=['10.0.0.0/24'])
 
         """
-
         payload = {
             "type": "URL_CATEGORY",
             "superCategory": super_category,
@@ -247,12 +316,15 @@ class URLCategoriesAPI:
             payload[snake_to_camel(key)] = value
 
         response = self.rest.post("urlCategories", json=payload)
+        
         if isinstance(response, Response):
             # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+            if response.status_code != 200:
+                raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
+            return Box(response.json())  # ✅ Return response as Box
+
+        return response  # Handle cases where `response` is already a `Box`
+
 
     def add_tld_category(self, name: str, tlds: list, **kwargs) -> Box:
         """

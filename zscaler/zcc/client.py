@@ -36,13 +36,18 @@ class ZCCClient:
         pass
 
     def get_paginated_data(
+        # self,
+        # path=None,
+        # params=None,
+        # search=None,
+        # search_field="name",
+        # page=None,
+        # pagesize=20,
         self,
-        path=None,
-        params=None,
-        search=None,
-        search_field="name",
-        page=None,
-        pagesize=20,
+        path: str = None,
+        data_key_name: str = None,
+        data_per_page: int = 500,
+        expected_status_code=200,
     ):
         """
         Send a GET request to the ZCC API to fetch all pages of a resources.
