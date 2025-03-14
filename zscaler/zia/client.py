@@ -34,7 +34,7 @@ class ZIAClient:
         self,
         path: str = None,
         data_key_name: str = None,
-        data_per_page: int = 500,
+        data_per_page: int = 1000,
         expected_status_code=200,
     ):
         """

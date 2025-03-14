@@ -35,11 +35,9 @@ class LocationsAPI:
                 Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
             **bw_enforced (bool, optional):
                 Filter based on whether Bandwith Control is being enforced for a location.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            **page (int, optional):
+                Specifies the page offset.
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to partially match against a location's name and port attributes.
@@ -60,7 +58,7 @@ class LocationsAPI:
 
             List locations, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for location in zia.locations.list_locations(page_size=200, max_pages=2):
+            >>> for location in zia.locations.list_locations(pagesize=200, max_pages=2):
             ...    print(location)
 
         """
@@ -243,7 +241,7 @@ class LocationsAPI:
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to partially match against a location's name and port attributes.
@@ -274,7 +272,7 @@ class LocationsAPI:
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
             **search (str, optional):
                 The search string used to partially match against a location's name and port attributes.
@@ -295,7 +293,7 @@ class LocationsAPI:
 
             List locations, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
+            >>> for location in zia.locations.list_locations_lite(pagesize=200, max_pages=2):
             ...    print(location)
 
         """
@@ -518,7 +516,7 @@ class LocationsAPI:
         """
         return self.rest.get(f"locations/groups/{group_id}")
 
-    def list_location_groups_lite(self, page: int = 1, page_size: int = 100) -> BoxList:
+    def list_location_groups_lite(self, **kwargs) -> BoxList:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
 
@@ -535,8 +533,8 @@ class LocationsAPI:
             Get a list of all configured location groups:
             >>> location = zia.locations.list_location_groups_lite()
         """
-        params = {"page": page, "pageSize": page_size}
-        return self.rest.get("locations/groups/lite", params=params)
+        list, _ = self.rest.get_paginated_data(path="/locations/groups/lite", **kwargs)
+        return list
 
     def get_location_group_lite_by_id(self, group_id: int) -> Box:
         """
@@ -633,12 +631,12 @@ class LocationsAPI:
         country, postal code, etc.
 
         Args:
-            **kwargs: Optional keyword arguments including 'prefix', 'page', and 'page_size'.
+            **kwargs: Optional keyword arguments including 'prefix', 'page', and 'pagesize'.
 
         Keyword Args:
             prefix (str): The prefix string to search for cities.
             page (int): The page number of the results.
-            page_size (int): The number of results per page.
+            pagesize (int): The number of results per page.
 
         Returns:
             :obj:`BoxList`: The list of cities (along with their geographical data) that match the prefix search.

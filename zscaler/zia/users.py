@@ -163,13 +163,11 @@ class UserManagementAPI:
                 Filters by department name. This is a `starts with` match.
             **group (str, optional):
                 Filters by group name. This is a `starts with` match.
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
             **name (str, optional):
                 Filters by user name. This is a `partial` match.
-            **page_size (int, optional):
+            **page (int, optional):
+                Specifies the page offset.
+            **pagesize (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 10000.
             **sort_by (str):
                 The field name to sort by, supported values: id, name, creationTime or modifiedTime (default to name)
