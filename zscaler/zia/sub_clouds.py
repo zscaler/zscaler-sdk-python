@@ -46,18 +46,13 @@ class SubCloudsAPI(APIClient):
         Examples:
             List Sub Clouds with default settings:
 
-            >>> for tunnel in zia.traffic.list_gre_tunnels():
-            ...    print(tunnel)
-
-            List GRE tunnels, limiting to a maximum of 10 items:
-
-            >>> for tunnel in zia.traffic.list_gre_tunnels(max_items=10):
-            ...    print(tunnel)
-
-            List GRE tunnels, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for tunnel in zia.traffic.list_gre_tunnels(page_size=200, max_pages=2):
-            ...    print(tunnel)
+            >>> subcloud_list, zscaler_resp, err = client.zia.sub_clouds.list_sub_clouds()
+            ... if err:
+            ...     print(f"Error listing sub clouds: {err}")
+            ...     return
+            ... print(f"Total sub clouds found: {len(subcloud_list)}")
+            ... for cloud in subcloud_list:
+            ...     print(cloud.as_dict())
 
         """
         http_method = "get".upper()
@@ -114,19 +109,16 @@ class SubCloudsAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
             return (None, response, error)
 
-        # Parse the response into a RuleLabels instance
         try:
             result = TenantSubClouds(
                 self.form_response_body(response.get_body())
@@ -144,16 +136,18 @@ class SubCloudsAPI(APIClient):
         Returns information for the list of all the excluded data centers in a country.
 
         Args:
-            cloud_id (str): Unique identifier for the country
-            dc_id (str): Unique identifier for the country
+            cloud_id (int): Unique identifier for the cloud.
+            query_params (dict, optional): Optional query parameters.
+                ``[query_params.dc_id]`` {list[int]}: List of Data Center IDs.
 
         Returns:
-            :obj:`tuple`: The GRE tunnel resource record.
+            tuple: A tuple containing a list of LastDCInCountry instances, Response, error.
 
-        Examples:
-            >>> gre_tunnel = zia.traffic.get_gre_tunnel('967134')
-
-        """
+        Example:
+            >>> subclouds, response, err = zia.sub_clouds.get_sub_cloud_last_dc_in_country(
+            ...     cloud_id=31649, query_params={"dc_id": [5313]}
+            ... )
+            """
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -174,15 +168,22 @@ class SubCloudsAPI(APIClient):
             return (None, None, error)
 
         response, error = self._request_executor.\
-            execute(request, LastDCInCountry)
+            execute(request)
 
         if error:
             return (None, response, error)
 
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
         try:
-            result = LastDCInCountry(
-                self.form_response_body(response.get_body())
-            )
+            # Convert the list of dictionaries to `LastDCInCountry` objects
+            result = [
+                LastDCInCountry(item) for item in response.get_body()
+            ]
         except Exception as error:
             return (None, response, error)
+
         return (result, response, None)

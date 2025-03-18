@@ -295,12 +295,26 @@ class LastDCInCountry(ZscalerObject):
         if config:
             self.country = config["country"] \
                 if "country" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
             self.last_dc_exclusion = config["lastDCExclusion"] \
                 if "lastDCExclusion" in config else None
-
+            self.dc_ids = ZscalerCollection.form_list(
+                config["dcIds"] if "dcIds" in config else [], str
+            )
         else:
             self.country = None
-            self.name = None
             self.last_dc_exclusion = None
+            self.dc_ids = None
+            
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "country": self.country,
+            "dcIds": self.dc_ids,
+            "lastDCExclusion": self.last_dc_exclusion,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
