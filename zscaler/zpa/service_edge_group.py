@@ -49,7 +49,17 @@ class ServiceEdgeGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant. 
 
         Returns:
-            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of ServiceEdgeGroup instances, Response, error)
+            
+        Examples:
+            >>> group_list, _, err = client.zpa.service_edge_group.list_service_edge_groups(
+            ... query_params={'search': 'ServiceEdgeGRP01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing app connector group: {err}")
+            ...     return
+            ... print(f"Total app connector groups found: {len(group_list)}")
+            ... for group in groups:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -64,13 +74,11 @@ class ServiceEdgeGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor.\
             create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request)
         if error:
@@ -86,7 +94,11 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_service_edge_group(self, group_id: str, query_params=None) -> tuple:
+    def get_service_edge_group(
+        self,
+        group_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Retrieves information about a specific service edge group.
 
@@ -96,7 +108,14 @@ class ServiceEdgeGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            ServiceEdgeGroup: The service edge group object.
+            :obj:`Tuple`: ServiceEdgeGroup: The service edge group object.
+            
+        Examples:
+            >>> fetched_group, _, err = client.zpa.service_edge_group.get_service_edge_group('999999')
+            ... if err:
+            ...     print(f"Error fetching group by ID: {err}")
+            ...     return
+            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -112,13 +131,11 @@ class ServiceEdgeGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, ServiceEdgeGroup)
         if error:
@@ -181,7 +198,25 @@ class ServiceEdgeGroupAPI(APIClient):
                 Supported Values: `MILES`, `KMS`
                                                                 
         Returns:
-            ServiceEdgeGroup: The newly created service edge group object.
+            :obj:`Tuple`: ServiceEdgeGroup: The newly created service edge group object.
+            
+        Examples:
+            >>> added_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
+            ...     name=f"NewServiceEdgeGroup_{random.randint(1000, 10000)}",
+            ...     description=f"NewServiceEdgeGroup_{random.randint(1000, 10000)}",
+            ...     enabled= True,
+            ...     city_country= "San Jose, US",
+            ...     country_code= "US",
+            ...     latitude= "37.3382082",
+            ...     longitude= "-121.8863286",
+            ...     location= "San Jose, CA, USA",
+            ...     upgrade_day= "SUNDAY",
+            ...     dns_query_type= "IPV4_IPV6",
+            ... )
+            ... if err:
+            ...     print(f"Error creating service edge group: {err}")
+            ...     return
+            ... print(f"service edge group created successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -201,13 +236,11 @@ class ServiceEdgeGroupAPI(APIClient):
         if "trusted_network_ids" in body:
             body["trustedNetworks"] = [{"id": network_id} for network_id in body.pop("trusted_network_ids")]
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, ServiceEdgeGroup)
         if error:
@@ -230,7 +263,26 @@ class ServiceEdgeGroupAPI(APIClient):
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            ServiceEdgeGroup: The updated service edge group object.
+            :obj:`Tuple`: ServiceEdgeGroup: The updated service edge group object.
+            
+        Examples:
+            >>> update_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
+            ...     group_id='999999'
+            ...     name=f"UpdateServiceEdgeGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateServiceEdgeGroup_{random.randint(1000, 10000)}",
+            ...     enabled= True,
+            ...     city_country= "San Jose, US",
+            ...     country_code= "US",
+            ...     latitude= "37.3382082",
+            ...     longitude= "-121.8863286",
+            ...     location= "San Jose, CA, USA",
+            ...     upgrade_day= "SUNDAY",
+            ...     dns_query_type= "IPV4_IPV6",
+            ... )
+            ... if err:
+            ...     print(f"Error creating service edge group: {err}")
+            ...     return
+            ... print(f"service edge group created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -250,13 +302,11 @@ class ServiceEdgeGroupAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, ServiceEdgeGroup)
         if error:
@@ -275,7 +325,11 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_service_edge_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_service_edge_group(
+        self,
+        group_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes the specified service edge group.
 
@@ -285,6 +339,15 @@ class ServiceEdgeGroupAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
+            
+        Examples:
+            >>> _, _, err = client.zpa.service_edge_group.delete_service_edge_group(
+            ...     group_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting service edge group: {err}")
+            ...     return
+            ... print(f"service edge group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -297,13 +360,13 @@ class ServiceEdgeGroupAPI(APIClient):
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

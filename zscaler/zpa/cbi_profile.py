@@ -39,7 +39,16 @@ class CBIProfileAPI(APIClient):
             scope_id (str, optional): The unique identifier of the scope of the tenant to filter the profiles.
 
         Returns:
-            tuple: A tuple containing a list of `CBIProfile` instances, response object, and error if any.
+            :obj:`Tuple`: A tuple containing a list of `CBIProfile` instances, response object, and error if any.
+
+        Examples:
+            >>> profile_list, _, err = client.zpa.cbi_profile.list_cbi_profiles()
+            ... if err:
+            ...     print(f"Error listing profiles: {err}")
+            ...     return
+            ... print(f"Total profiles found: {len(profile_list)}")
+            ... for profile in profile_list:
+            ...     print(profile.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -75,7 +84,15 @@ class CBIProfileAPI(APIClient):
             profile_id (str): The unique identifier for the cloud browser isolation profile.
 
         Returns:
-            tuple: A tuple containing the `CBIProfile` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `CBIProfile` instance, response object, and error if any.
+
+        Examples:
+            >>> fetched_profile, _, err = client.zpa.cbi_profile.get_cbi_profile(
+            ... profile_id='ab73fa29-667a-4057-83c5-6a8dccf84930')
+            ... if err:
+            ...     print(f"Error fetching profile by ID: {err}")
+            ...     return
+            ... print(f"Fetched profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -148,11 +165,11 @@ class CBIProfileAPI(APIClient):
                 - session_persistence (bool): Enable or disable session persistence across browser restarts.
 
         Returns:
-            tuple: A tuple containing the `CBIProfile` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `CBIProfile` instance, response object, and error if any.
         Examples:
             Creating a security profile with required and optional parameters:
 
-            >>> zpa.cbi_profile.add_cbi_profile(
+            >>> added_profile, _, err = zpa.cbi_profile.add_cbi_profile(
             ...   name='Add_CBI_Profile',
             ...   region_ids=["dc75dc8d-a713-49aa-821e-eb35da523cc2", "1a2cd1bc-b8e0-466b-96ad-fbe44832e1c7"],
             ...   certificate_ids=["87122222-457f-11ed-b878-0242ac120002"],
@@ -190,7 +207,10 @@ class CBIProfileAPI(APIClient):
             ...   },
             ...   banner_id="97f339f6-9f85-40fb-8b76-f62cdf8f795c"
             ... )
-
+            ... if err:
+            ...     print(f"Error adding cbi profile: {err}")
+            ...     return
+            ... print(f"CBI profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -198,7 +218,6 @@ class CBIProfileAPI(APIClient):
             /profiles
         """)
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
         # Validation for required fields: region_ids and certificate_ids
@@ -275,16 +294,20 @@ class CBIProfileAPI(APIClient):
                 - session_persistence (bool): Enable or disable session persistence across browser restarts.
 
         Returns:
-            tuple: A tuple containing the `CBIProfile` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `CBIProfile` instance, response object, and error if any.
 
         Examples:
             Updating the name and description of a cloud browser isolation profile:
 
-            >>> zpa.cbi_profile.update_cbi_profile(
+            >>> updated_profile, _, err = zpa.cbi_profile.update_cbi_profile(
             ...   profile_id='1beed6be-eb22-4328-92f2-fbe73fd6e5c7',
             ...   name='CBI_Profile_Update'
             ...   description='CBI_Profile_Update'
             )
+            ... if err:
+            ...     print(f"Error adding cbi profile: {err}")
+            ...     return
+            ... print(f"CBI profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -293,10 +316,8 @@ class CBIProfileAPI(APIClient):
             /profiles/{profile_id}
         """)
 
-        # Start with an empty body or an existing resource's current data
         body = {}
 
-        # Update the body with the fields passed in kwargs
         body.update(kwargs)
 
         # Validation for required fields: regions, certificates, and banner
@@ -341,7 +362,16 @@ class CBIProfileAPI(APIClient):
             profile_id (str): The unique identifier of the cloud browser isolation profile.
 
         Returns:
-            tuple: A tuple containing the response object and error if any.
+            :obj:`Tuple`: A tuple containing the response object and error if any.
+
+        Examples:
+            >>> _, _, err = client.zpa.cbi_profile.delete_cbi_profile(
+            ...     profile_id='ab73fa29-667a-4057-83c5-6a8dccf84930'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting cbi profile: {err}")
+            ...     return
+            ... print(f"CBI Profile with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""

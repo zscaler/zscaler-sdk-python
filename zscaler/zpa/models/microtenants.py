@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 
 
 class Microtenant(ZscalerObject):
@@ -85,75 +86,188 @@ class Microtenant(ZscalerObject):
 
 
 class MicrotenantSearch(ZscalerObject):
+    """
+    A class for MicrotenantSearch objects.
+    """
+
     def __init__(self, config=None):
         """
         Initialize the MicrotenantSearch model based on API response.
 
         Args:
-            config (dict): A dictionary representing the microtenant search configuration.
+            config (dict): A dictionary representing the configuration.
         """
         super().__init__(config)
 
-        self.filter_by = []
-        if config and "filterBy" in config:
-            for item in config["filterBy"]:
-                filter_obj = {
-                    "commaSepValues": item["commaSepValues"]\
-                        if "commaSepValues" in item else None,
-                    "filterName": item["filterName"]\
-                        if "filterName" in item else None,
-                    "operator": item["operator"]\
-                        if "operator" in item else None,
-                    "values": item["values"]\
-                        if "values" in item else None
-                }
-                self.filter_by.append(filter_obj)
+        if config:
+            
+            filter_and_sort = config.get("filterAndSortDto", {})
+            
+            self.filter_by = ZscalerCollection.form_list(
+                config["filterBy"] if "filterBy" in config else [], FilterBy
+            )
 
-        self.page_by = {
-            "page": config["pageBy"]["page"]\
-                if config and "pageBy" in config and "page" in config["pageBy"] else None,
-            "pageSize": config["pageBy"]["pageSize"]\
-                if config and "pageBy" in config and "pageSize" in config["pageBy"] else None,
-            "validPage": config["pageBy"]["validPage"]\
-                if config and "validPage" in config["pageBy"] else 0,
-            "validPageSize": config["pageBy"]["validPageSize"]\
-                if config and "validPageSize" in config["pageBy"] else 0
-        } if config and "pageBy" in config else None
+            self.page_by = PageBy(filter_and_sort["pageBy"]) if "pageBy" in filter_and_sort else None
+            self.sort_by = SortBy(filter_and_sort["sortBy"]) if "sortBy" in filter_and_sort else None           
+            # if "pageBy" in config:
+            #     if isinstance(config["pageBy"], PageBy):
+            #         self.page_by = config["pageBy"]
+            #     elif config["pageBy"] is not None:
+            #         self.page_by = PageBy(config["pageBy"])
+            #     else:
+            #         self.page_by = None
+            # else:
+            #     self.page_by = None
 
-        self.sort_by = {
-            "sortName": config["sortBy"]["sortName"]\
-                if config and "sortBy" in config and "sortName" in config["sortBy"] else None,
-            "sortOrder": config["sortBy"]["sortOrder"]\
-                if config and "sortBy" in config and "sortOrder" in config["sortBy"] else None
-        } if config and "sortBy" in config else None
+            # if "sortBy" in config:
+            #     if isinstance(config["sortBy"], SortBy):
+            #         self.sort_by = config["pageBy"]
+            #     elif config["sortBy"] is not None:
+            #         self.sort_by = SortBy(config["sortBy"])
+            #     else:
+            #         self.sort_by = None
+            # else:
+            #     self.sort_by = None
+
+        else:
+            self.filter_by = []
+            self.page_by = None
+            self.sort_by = None
 
     def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
         parent_req_format = super().request_format()
-        current_obj_format = {}
-
-        if self.filter_by:
-            current_obj_format["filterBy"] = [
-                {
-                    "commaSepValues": item["commaSepValues"],
-                    "filterName": item["filterName"],
-                    "operator": item["operator"],
-                    "values": item["values"]
-                } for item in self.filter_by if item
-            ]
-
-        if self.page_by:
-            current_obj_format["pageBy"] = {
-                "page": self.page_by["page"],
-                "pageSize": self.page_by["pageSize"],
-                "validPage": self.page_by["validPage"],
-                "validPageSize": self.page_by["validPageSize"]
+        current_obj_format = {
+            "filterAndSortDto": {
+                "filterBy": self.filter_by,
+                "pageBy": self.page_by,
+                "sortBy": self.sort_by
             }
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class FilterBy(ZscalerObject):
+    """
+    A class for FilterBy objects.
+    """
 
-        if self.sort_by:
-            current_obj_format["sortBy"] = {
-                "sortName": self.sort_by["sortName"],
-                "sortOrder": self.sort_by["sortOrder"]
-            }
+    def __init__(self, config=None):
+        """
+        Initialize the FilterBy model based on API response.
 
+        Args:
+            config (dict): A dictionary representing the FilterBy configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.comma_sep_values = config["commaSepValues"]\
+                if "commaSepValues" in config else None
+            self.filter_name = config["filterName"]\
+                if "filterName" in config else None
+            self.operator = config["operator"]\
+                if "operator" in config else None
+                
+            self.values = ZscalerCollection.form_list(
+                config["values"] if "values" in config else [], str
+            )
+        else:
+            self.comma_sep_values = None
+            self.filter_name = None
+            self.operator = None
+            self.values = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "commaSepValues": self.comma_sep_values,
+            "filterName": self.filter_name,
+            "operator": self.operator,
+            "values": self.values,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class PageBy(ZscalerObject):
+    """
+    A class for PageBy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the PageBy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the PageBy configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.page = config["page"]\
+                if "page" in config else None
+            self.page_size = config["pageSize"]\
+                if "pageSize" in config else None
+            self.valid_page = config["validPage"]\
+                if "validPage" in config else None
+            self.valid_page_size = config["validPageSize"]\
+                if "validPageSize" in config else None
+        else:
+            self.page = None
+            self.page_size = None
+            self.valid_page = None
+            self.valid_page_size = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "page": self.page,
+            "pageSize": self.page_size,
+            "validPage": self.valid_page,
+            "validPageSize": self.valid_page_size,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class SortBy(ZscalerObject):
+    """
+    A class for SortBy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SortBy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the SortBy configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.sort_name = config["sortName"]\
+                if "sortName" in config else None
+            self.sort_order = config["sortOrder"]\
+                if "sortOrder" in config else None
+        else:
+            self.sort_name = None
+            self.sort_order = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "sortName": self.sort_name,
+            "sortOrder": self.sort_order,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format

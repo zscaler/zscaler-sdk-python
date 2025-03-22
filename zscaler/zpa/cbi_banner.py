@@ -36,7 +36,16 @@ class CBIBannerAPI(APIClient):
         Returns a list of all cloud browser isolation banners.
 
         Returns:
-            tuple: A tuple containing a list of `CBIBanner` instances, response object, and error if any.
+            :obj:`Tuple`: A tuple containing a list of `CBIBanner` instances, response object, and error if any.
+
+        Examples:
+            >>> banner_list, _, err = client.zpa.cbi_banner.list_cbi_banners()
+            ... if err:
+            ...     print(f"Error listing banners: {err}")
+            ...     return
+            ... print(f"Total banners found: {len(banner_list)}")
+            ... for banner in banner_list:
+            ...     print(banner.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -73,6 +82,14 @@ class CBIBannerAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `CBIBanner` instance, response object, and error if any.
+
+        Examples:
+            >>> fetched_banner, _, err = client.zpa.cbi_banner.get_cbi_banner(
+            ... banner_id='ab73fa29-667a-4057-83c5-6a8dccf84930')
+            ... if err:
+            ...     print(f"Error fetching banner by ID: {err}")
+            ...     return
+            ... print(f"Fetched banner by ID: {fetched_banner.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -108,6 +125,21 @@ class CBIBannerAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `CBIBanner` instance, response object, and error if any.
+
+        Examples:
+            >>> added_banner, _, err = client.zpa.cbi_banner.add_cbi_banner(
+            ...     name=f"Create_CBI_Banner_{random.randint(1000, 10000)}",
+            ...     logo= "data:image/png;base64,iVBORw0KGgoAAAANS",
+            ...     primary_color= "#0076BE",
+            ...     text_color= "#FFFFFF",
+            ...     banner=True,
+            ...     notification_title= "Heads up, you've been redirected to Browser Isolation!",
+            ...     notification_text= "The website you were trying to access is now rendered in a fully isolated environment to protect you from malicious content.",
+            ... )
+            ... if err:
+            ...     print(f"Error adding cbi banner: {err}")
+            ...     return
+            ... print(f"CBI Banner added successfully: {added_banner.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -115,7 +147,6 @@ class CBIBannerAPI(APIClient):
             /banner
         """)
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
         request, error = self._request_executor\
@@ -145,6 +176,22 @@ class CBIBannerAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `CBIBanner` instance, response object, and error if any.
+
+        Examples:
+            >>> updated_banner, _, err = client.zpa.cbi_banner.update_cbi_banner(
+            ...     banner_id='ab73fa29-667a-4057-83c5-6a8dccf84930'
+            ...     name=f"Update_CBI_Banner_{random.randint(1000, 10000)}",
+            ...     logo= "data:image/png;base64,iVBORw0KGgoAAAANS",
+            ...     primary_color= "#0076BE",
+            ...     text_color= "#FFFFFF",
+            ...     banner=True,
+            ...     notification_title= "Heads up, you've been redirected to Browser Isolation!",
+            ...     notification_text= "The website you were trying to access is now rendered in a fully isolated environment to protect you from malicious content.",
+            ... )
+            ... if err:
+            ...     print(f"Error updating cbi banner: {err}")
+            ...     return
+            ... print(f"CBI Banner updated successfully: {updated_banner.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -152,10 +199,8 @@ class CBIBannerAPI(APIClient):
             /banners/{banner_id}
         """)
 
-        # Start with an empty body or an existing resource's current data
         body = {}
 
-        # Update the body with the fields passed in kwargs
         body.update(kwargs)
 
         request, error = self._request_executor\
@@ -190,6 +235,15 @@ class CBIBannerAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error if any.
+
+        Examples:
+            >>> _, _, err = client.zpa.cbi_banner.delete_cbi_banner(
+            ...     banner_id='ab73fa29-667a-4057-83c5-6a8dccf84930'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting cbi banner: {err}")
+            ...     return
+            ... print(f"CBI Banner with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""

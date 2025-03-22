@@ -45,8 +45,28 @@ class TrustedNetworksAPI(APIClient):
         Returns:
             list: A list of `TrustedNetwork` instances.
 
-        Example:
-            >>> trusted_networks = zpa.trusted_networks.list_trusted_networks(search="example")
+        Examples:
+            Retrieve trusted networks with pagination parameters:
+            
+            >>> network_list, _, err = client.zpa.trusted_networks.list_trusted_networks(
+            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing trusted networks: {err}")
+            ...     return
+            ... print(f"Total trusted networks found: {len(network_list)}")
+            ... for network in network_list:
+            ...     print(network.as_dict())
+            
+            Retrieve posture profiles udid with:
+            
+            >>> network_list, _, err = client.zpa.trusted_networks.list_trusted_networks()
+            ... if err:
+            ...     print(f"Error trusted networks: {err}")
+            ...     return
+            ... print("Extracted network_id values:")
+            ... for profile in network_list:
+            ...     if profile.network_id:
+            ...         print(profile.network_id)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -58,17 +78,14 @@ class TrustedNetworksAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -93,6 +110,13 @@ class TrustedNetworksAPI(APIClient):
 
         Returns:
             TrustedNetwork: The corresponding trusted network object.
+            
+        Examples:
+            >>> fetched_network, _, err = client.zpa.trusted_networks.get_network('999999')
+            ... if err:
+            ...     print(f"Error fetching network by ID: {err}")
+            ...     return
+            ... print(fetched_network.network_id)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -102,18 +126,15 @@ class TrustedNetworksAPI(APIClient):
         """
         )
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, TrustedNetwork)
 
@@ -127,43 +148,3 @@ class TrustedNetworksAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-
-    def get_network_by_name(self, name: str, query_params=None):
-        """
-        Returns information on the trusted network with the specified name.
-
-        Args:
-            name (str): The name of the trusted network.
-
-        Returns:
-            TrustedNetwork or None: The resource record for the trusted network if found, otherwise None.
-        """
-        networks, response, error = self.list_trusted_networks(query_params=query_params)
-        if error:
-            return (None, response, error)
-
-        for network in networks:
-            if network.name == name:
-                return network, response, None
-
-        return None, response, None
-
-    def get_network_by_udid(self, search_id: str, query_params={}) -> tuple:
-        """
-        Returns a trusted network based on its 'network_id'.
-
-        Args:
-            search_id (str): The unique identifier for the network_udid of the trusted network.
-
-        Returns:
-            TrustedNetwork: The resource record for the trusted network, or None if not found.
-        """
-        networks, response, error = self.list_trusted_networks(query_params=query_params)
-        if error:
-            return (None, response, error)
-
-        for network in networks:
-            if network.network_id == search_id:  # Assuming `network_id` is the UDID field
-                return network, response, None  # Return the full TrustedNetwork object
-
-        return None, response, None

@@ -39,7 +39,7 @@ class ActivationAPI(APIClient):
             :obj:`Activation`, response object, and error if any.
 
         Examples:
-            >>> config_status, response, error = zia.activate.status()
+            >>> config_status, response, error = zia.config.status()
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -78,7 +78,7 @@ class ActivationAPI(APIClient):
             :obj:`Activation`, response object, and error if any.
 
         Examples:
-            >>> config_activate, response, error = zia.activate.activate()
+            >>> config_activate, response, error = zia.config.activate()
         """
         http_method = "post".upper()
         api_url = format_url(

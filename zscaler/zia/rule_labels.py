@@ -63,7 +63,6 @@ class RuleLabelsAPI(APIClient):
 
             >>> for label in zia.labels.list_labels(page_size=200, max_pages=2):
             ...    print(label)
-
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -73,18 +72,15 @@ class RuleLabelsAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
 

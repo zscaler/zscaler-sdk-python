@@ -141,7 +141,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_static_ip(self, static_ip: dict) -> tuple:
+    def add_static_ip(self, **kwargs) -> tuple:
         """
         Adds a new static IP.
 
@@ -171,9 +171,14 @@ class TrafficStaticIPAPI(APIClient):
         Examples:
             Add a new static IP address:
 
-            >>> zia.traffic.add_static_ip(ip_address='203.0.113.10',
-            ...    comment="Los Angeles Branch Office")
-
+            >>> added_static_ip, response, error = client.zia.traffic_static_ip.add_static_ip(
+            ...     comment=f"NewStaticIP {random.randint(1000, 10000)}",
+            ...     ip_address="200.201.203.204",
+            ... )
+            ... if err:
+            ...     print(f"Error adding static_ip: {err}")
+            ...     return
+            ... print(f"static_ip added successfully: {added_static_ip.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -181,21 +186,20 @@ class TrafficStaticIPAPI(APIClient):
             /staticIP
         """)
 
-        # Create the request
+        body = kwargs
+        
         request, error = self._request_executor\
             .create_request(
             method=http_method,
             endpoint=api_url,
-            body=static_ip,  # Pass the entire dictionary as the body
+            body=body,
         )
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficStaticIP)
-
+        response, error = self._request_executor.\
+            execute(request, TrafficStaticIP)
         if error:
             return (None, response, error)
 
@@ -207,7 +211,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_static_ip(self, static_ip_id: int, static_ip) -> tuple:
+    def update_static_ip(self, static_ip_id: int, **kwargs) -> tuple:
         """
         Updates information relating to the specified static IP.
 
@@ -231,10 +235,7 @@ class TrafficStaticIPAPI(APIClient):
         if err:
             return (None, None, err)
 
-        if isinstance(static_ip, dict):
-            body = static_ip
-        else:
-            body = static_ip.as_dict()
+        body = kwargs
 
         # Ensure the current IP address is included in the update payload
         body["ip_address"] = current_ip.ip_address
@@ -245,13 +246,18 @@ class TrafficStaticIPAPI(APIClient):
 
         # Create the request
         request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficStaticIP)
+        response, error = self._request_executor.\
+            execute(request, TrafficStaticIP)
         if error:
             return (None, response, error)
 
@@ -261,7 +267,6 @@ class TrafficStaticIPAPI(APIClient):
             )
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
     def delete_static_ip(self, static_ip_id: int) -> tuple:
@@ -285,18 +290,19 @@ class TrafficStaticIPAPI(APIClient):
             /staticIP/{static_ip_id}
         """)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, {}, {}, {})
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
-            return (None, error)
+            return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.\
+            execute(request)
         if error:
-            return (None, error)
+            return (None, response, error)
 
-        return (response, None)
+        return (None, response, None)
 
     def check_static_ip(self, ip_address: str) -> tuple:
         """

@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_zpa_profile import ZPACBIProfile
-from zscaler.zpa.models.cbi_zpa_profile import CBIProfile
 from zscaler.utils import format_url
 
 
@@ -42,7 +41,13 @@ class CBIZPAProfileAPI(APIClient):
             scope_id (str, optional): The unique identifier of the scope of the tenant to filter the profiles.
 
         Returns:
-            tuple: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
+            :obj:`Tuple`: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
+
+        Examples:
+            >>> profile_list, _, err = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
+            ... if err:
+            ...     print(f"Error listing cbi profile: {err}")
+            ...     return
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -50,17 +55,14 @@ class CBIZPAProfileAPI(APIClient):
             /zpaprofiles
         """)
 
-        # Handle optional query parameters
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -85,7 +87,13 @@ class CBIZPAProfileAPI(APIClient):
             scope_id (str, optional): The unique identifier of the scope of the tenant to filter the profiles.
 
         Returns:
-            tuple: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
+            :obj:`Tuple`: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
+            
+        Examples:
+            >>> profile_list, _, err = client.zpa.cbi_zpa_profile.list_isolation_profiles()
+            ... if err:
+            ...     print(f"Error listing cbi profile: {err}")
+            ...     return
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -93,17 +101,14 @@ class CBIZPAProfileAPI(APIClient):
             /isolation/profiles
         """)
 
-        # Handle optional query parameters
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:

@@ -726,7 +726,7 @@ class Labels(ZscalerObject):
         Initialize the Labels model based on API response.
 
         Args:
-            config (dict): A dictionary representing the Rule Labels configuration.
+            config (dict): A dictionary representing the Labels configuration.
         """
         super().__init__(config)
 

@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 
 
 class Certificate(ZscalerObject):
@@ -54,9 +55,17 @@ class Certificate(ZscalerObject):
                 if "serialNo" in config else None
             self.public_key = config["publicKey"]\
                 if "publicKey" in config else None
-            self.san = config["san"] if "san" in config else []
+            
+            self.status = config["status"]\
+                if "status" in config else None
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
+            self.microtenant_id = config["microtenantId"]\
+                if "microtenantId" in config else None
+                
+            self.san = ZscalerCollection.form_list(
+                config["san"] if "san" in config else [], str
+            )
         else:
             self.id = None
             self.modified_time = None
@@ -72,8 +81,10 @@ class Certificate(ZscalerObject):
             self.issued_by = None
             self.serial_no = None
             self.public_key = None
-            self.san = []
+            self.status = None
+            self.san = ZscalerCollection.form_list([], str)
             self.microtenant_name = None
+            self.microtenant_id = None
 
     def request_format(self):
         """
@@ -91,6 +102,8 @@ class Certificate(ZscalerObject):
             "issuedBy": self.issued_by,
             "serialNo": self.serial_no,
             "publicKey": self.public_key,
+            "status": self.status,
             "san": self.san,
             "microtenantName": self.microtenant_name,
+            "microtenantId": self.microtenant_id,
         }

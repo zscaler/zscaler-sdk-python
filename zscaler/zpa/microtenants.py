@@ -49,7 +49,16 @@ class MicrotenantsAPI(APIClient):
                 ``[query_params.include_roles]`` {bool}: Include roles information in the API response. Default value: False
 
         Returns:
-            tuple: A tuple containing (list of Microtenants instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of Microtenants instances, Response, error)
+            
+            >>> microtenant_list, _, err = client.zpa.microtenants.list_microtenants(
+            ... query_params={'search': 'Microtenant_A', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing microtenants: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(microtenant_list)}")
+            ... for tenant in microtenant_list:
+            ...     print(tenant.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -59,19 +68,16 @@ class MicrotenantsAPI(APIClient):
         """
         )
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
             return (None, response, error)
 
-        # Process response and create Microtenant instances
         try:
             result = []
             for item in response.get_results():
@@ -82,7 +88,10 @@ class MicrotenantsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_microtenant(self, microtenant_id: str, query_params=None) -> tuple:
+    def get_microtenant(
+        self,
+        microtenant_id: str,
+    ) -> tuple:
         """
         Returns information on the specified microtenant.
 
@@ -90,10 +99,14 @@ class MicrotenantsAPI(APIClient):
             microtenant_id (str): The unique identifier for the microtenant.
 
         Returns:
-            Microtenant: The resource record for the microtenant.
+            :obj:`Tuple`: Microtenant: The resource record for the microtenant.
 
         Examples:
-            >>> microtenant = zpa.microtenants.get_microtenant('216199618143364393')
+            >>> fetched_microtenant, _, err = client.zpa.microtenants.get_microtenant('999999')
+            ... if err:
+            ...     print(f"Error fetching microtenant by ID: {err}")
+            ...     return
+            ... print(fetched_microtenant.id)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -103,18 +116,20 @@ class MicrotenantsAPI(APIClient):
         """
         )
 
-        query_params = query_params or {}
-
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, Microtenant)
+        response, error = self._request_executor.\
+            execute(request, Microtenant)
         if error:
             return (None, response, error)
 
         try:
-            result = Microtenant(self.form_response_body(response.get_body()))
+            result = Microtenant(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -124,10 +139,16 @@ class MicrotenantsAPI(APIClient):
         Returns the name and ID of the configured Microtenant.
 
         Returns:
-            Microtenant: The resource record for the microtenant.
+            :obj:`Tuple`: Microtenant: The resource record for the microtenant.
 
         Examples:
-            >>> summary = zpa.microtenants.get_microtenant_summary()
+            >>> microtenants_list, err = client.zpa.microtenants.get_microtenant_summary()
+            ... if err:
+            ...     print(f"Error listing microtenants: {err}")
+            ...     return
+            ... print(f"Total microtenants found: {len(microtenants_list)}")
+            ... for microtenant in microtenants_list:
+            ...     print(microtenant.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -137,17 +158,16 @@ class MicrotenantsAPI(APIClient):
         """
         )
 
-        # Create the request without any body or payload, as it's a simple GET request
-        request, error = self._request_executor.create_request(http_method, api_url)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url)
         if error:
             return (None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, error)
 
-        # Parse the response as a list of Microtenant objects
         microtenant_list = []
         response_body = response.get_body()
 
@@ -159,21 +179,66 @@ class MicrotenantsAPI(APIClient):
 
     def get_microtenant_search(self, **kwargs) -> tuple:
         """
-        Add a new microtenant.
+        Gets all configured Microtenants for the specified customer based on given filters.
 
         Args:
-            name (str): The name of the microtenant.
-            criteria_attribute (str): The criteria attribute for the microtenant.
-            criteria_attribute_values (list): The values for the criteria attribute.
+            **kwargs: Keyword arguments that define search filters, pagination, and sorting criteria.
 
         Keyword Args:
-            description (str): A description for the microtenant.
-            enabled (bool): Whether the microtenant is enabled. Defaults to True.
-            privileged_approvals_enabled (bool): Whether privileged approvals are enabled. Defaults to True.
+            filter_and_sort_dto (dict): A dictionary containing filtering, pagination, and sorting information.
+
+                - **filter_by** (list): A list of filter condition dictionaries.
+
+                    - **filter_name** (str): The name of the field to filter on (e.g., `name`, `criteria_attribute_values`).
+                    - **operator** (str): The logical operator (e.g., `EQUALS`, `LIKE`).
+                    - **values** (list): A list of values to match.
+                    - **comma_sep_values** (str, optional): Optional comma-separated string version of values.
+
+                - **page_by** (dict, optional): Dictionary containing pagination configuration.
+
+                    - **page** (int): The current page number.
+                    - **page_size** (int): The number of records per page.
+                    - **valid_page** (int, optional): Optional page validation flag.
+                    - **valid_page_size** (int, optional): Optional page size validation flag.
+
+                - **sort_by** (dict, optional): Dictionary defining sorting options.
+
+                    - **sort_name** (str): The name of the field to sort by (e.g., `name`).
+                    - **sort_order** (str): Sorting direction (e.g., `ASC` or `DESC`).
 
         Returns:
-            Microtenant: The resource record for the newly created microtenant.
+            tuple: A tuple containing:
+            
+                - **MicrotenantSearch**: The parsed response object containing filter results, paging, and sorting.
+                - **Response**: The raw response object returned by the request executor.
+                - **Error**: An exception if one occurred, otherwise `None`.
 
+        Example:
+            >>> search_payload = {
+            ...     "filter_and_sort_dto": {
+            ...         "filter_by": [
+            ...             {
+            ...                 "filter_name": "criteria_attribute_values",
+            ...                 "operator": "LIKE",
+            ...                 "values": ["Test"]
+            ...             }
+            ...         ],
+            ...         "page_by": {
+            ...             "page": 1,
+            ...             "page_size": 20
+            ...         },
+            ...         "sort_by": {
+            ...             "sort_name": "name",
+            ...             "sort_order": "ASC"
+            ...         }
+            ...     }
+            ... }
+            >>> result, _, err = client.zpa.microtenants.get_microtenant_search(**search_payload)
+            >>> if err:
+            ...     print(f"Error searching microtenants: {err}")
+            ... else:
+            ...     for item in result.filter_by:
+            ...         print(item.request_format())
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -183,17 +248,13 @@ class MicrotenantsAPI(APIClient):
         """
         )
 
-
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, MicrotenantSearch)
         if error:

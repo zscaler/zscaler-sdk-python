@@ -56,3 +56,46 @@ class Extensions(ZscalerObject):
         Return a dictionary representation of the extension data.
         """
         return self.data
+
+class CommonBlocks(ZscalerObject):
+    """
+    A class for CommonBlocks objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the CommonBlocks model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.external_id = config["externalId"] \
+                if "externalId" in config else False
+            self.extensions = config if isinstance(config, dict) else {}
+             
+        else:
+            self.id = None
+            self.name = None
+            self.external_id = None
+            self.extensions = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "externalId": self.external_id,
+            "extensions": self.extensions,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

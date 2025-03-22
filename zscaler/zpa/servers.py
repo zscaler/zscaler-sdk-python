@@ -45,12 +45,17 @@ class AppServersAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            tuple: A tuple containing (list of ApplicationServer instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of ApplicationServer instances, Response, error)
 
-        Example:
-            >>> servers = zpa.servers.list_servers(
-                query_params={"search": "Example100", "pagesize": 100}
-                microtenant_id="216199618143464722")
+        Examples:
+            >>> server_list, _, err = client.zpa.servers.list_servers(
+            ... query_params={'search': 'Server01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing application servers: {err}")
+            ...     return
+            ... print(f"Total application servers found: {len(server_list)}")
+            ... for server in server_list:
+            ...     print(server.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -63,13 +68,11 @@ class AppServersAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -93,7 +96,14 @@ class AppServersAPI(APIClient):
             server_id (str): The unique identifier of the server.
 
         Returns:
-            AppServers: The corresponding server object.
+            :obj:`Tuple`: AppServers: The corresponding server object.
+            
+        Examples:
+            >>> fetched_server, _, err = client.zpa.servers.get_server('999999')
+            ... if err:
+            ...     print(f"Error fetching app server by ID: {err}")
+            ...     return
+            ... print(f"Fetched app server by ID: {fetched_server.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -101,19 +111,16 @@ class AppServersAPI(APIClient):
             /server/{server_id}
         """)
 
-        # Handle optional query parameters
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, AppServers)
         if error:
@@ -140,6 +147,21 @@ class AppServersAPI(APIClient):
                 The list of unique identifiers for the Server Group.
             **config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
             **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+            
+        Returns:
+            :obj:`Tuple`: AppServers: The newly created portal object.
+            
+        Examples:
+            >>> new_server, _, err = client.zpa.servers.add_server(
+            ...     name="NewAppServer",
+            ...     description="NewAppServer",
+            ...     enabled=True,
+            ...     app_server_group_ids=['99999'],
+            ... )
+            ... if err:
+            ...     print(f"Error creating app server: {err}")
+            ...     return
+            ... print(f"app server created successfully: {new_portal.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -153,13 +175,11 @@ class AppServersAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, AppServers)
         if error:
@@ -180,6 +200,21 @@ class AppServersAPI(APIClient):
         Args:
             server_id (str): The unique identifier for the server being updated.
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+            
+        Returns:
+            :obj:`Tuple`: AppServers: The updated application server object.
+            
+        Examples:
+            >>> update_server, _, err = client.zpa.servers.update_server(
+            ...     server_id="999999",
+            ...     name="UdpateApplicationServer",
+            ...     description="UdpateApplicationServer",
+            ...     enabled=True,
+            ... )
+            ... if err:
+            ...     print(f"Error creating application servers: {err}")
+            ...     return
+            ... print(f"application servers created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(f"""
@@ -197,13 +232,11 @@ class AppServersAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, AppServers)
         if error:
@@ -223,7 +256,11 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_server(self, server_id: str, microtenant_id: str = None) -> tuple:
+    def delete_server(
+        self,
+        server_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Delete the specified server.
 
@@ -233,6 +270,15 @@ class AppServersAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
+            
+        Examples:
+            >>> _, _, err = client.zpa.servers.delete_server(
+            ...     server_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting application server: {err}")
+            ...     return
+            ... print(f"application server with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""
@@ -240,16 +286,13 @@ class AppServersAPI(APIClient):
             /server/{server_id}
         """)
 
-        # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:

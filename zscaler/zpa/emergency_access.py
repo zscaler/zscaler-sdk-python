@@ -45,7 +45,17 @@ class EmergencyAccessAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of Emergency Access instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of Emergency Access instances, Response, error)
+            
+        Examples:
+            >>> access_list, _, err = client.zpa.emergency_access.list_users(
+            ... query_params={'search': 'portal01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing emergency access users: {err}")
+            ...     return
+            ... print(f"Total emergency access users found: {len(access_list)}")
+            ... for user in access_list:
+            ...     print(user.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -63,13 +73,11 @@ class EmergencyAccessAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -94,6 +102,13 @@ class EmergencyAccessAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            
+        Examples:
+            >>> fetched_user, _, err = client.zpa.emergency_access.get_user('999999')
+            ... if err:
+            ...     print(f"Error fetching user by ID: {err}")
+            ...     return
+            ... print(f"Fetched user by ID: {fetched_user.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -109,19 +124,16 @@ class EmergencyAccessAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, EmergencyAccessUser)
         if error:
             return (None, response, error)
 
-        # Parse the response into an AppConnectorGroup instance
         try:
             result = EmergencyAccessUser(
                 self.form_response_body(response.get_body())
@@ -145,7 +157,22 @@ class EmergencyAccessAPI(APIClient):
             activate_now (bool, optional): Indicates if the emergency access user is activated upon creation. Defaults to True.
 
         Returns:
-            tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            
+        Examples:
+            >>> added_user, _, err = client.zpa.emergency_access.add_user(
+            ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
+            ...     user_id="user1",
+            ...     first_name="User1",
+            ...     last_name="Smith",
+            ...     activated_on="1",
+            ...     allowed_activate=True,
+            ...     allowed_deactivate=True,
+            ... )
+            ... if err:
+            ...     print(f"Error creating emergency user: {err}")
+            ...     return
+            ... print(f"emergency user created successfully: {added_user.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -201,6 +228,22 @@ class EmergencyAccessAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
+            
+        Examples:
+            >>> update_user, _, err = client.zpa.emergency_access.add_uupdate_userser(
+            ...     user_id='99999'    
+            ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
+            ...     user_id="user1",
+            ...     first_name="User1",
+            ...     last_name="Smith",
+            ...     activated_on="1",
+            ...     allowed_activate=True,
+            ...     allowed_deactivate=True,
+            ... )
+            ... if err:
+            ...     print(f"Error updating emergency user: {err}")
+            ...     return
+            ... print(f"emergency user updated successfully: {added_update_useruser.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -221,13 +264,11 @@ class EmergencyAccessAPI(APIClient):
         # Append 'activateNow' to the URL query parameters based on the activate_now argument
         query_params["activateNow"] = "true" if activate_now else "false"
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body=body, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, EmergencyAccessUser)
         if error:

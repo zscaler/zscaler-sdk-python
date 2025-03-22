@@ -45,7 +45,17 @@ class AppConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            
+        Examples:
+            >>> group_list, _, err = client.zpa.app_connector_groups.list_connector_groups(
+            ... query_params={'search': 'ConnectorGRP01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing app connector group: {err}")
+            ...     return
+            ... print(f"Total app connector groups found: {len(group_list)}")
+            ... for group in groups:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -58,13 +68,11 @@ class AppConnectorGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -80,7 +88,11 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_connector_group(self, group_id: str, query_params=None) -> tuple:
+    def get_connector_group(
+        self,
+        group_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Fetches a specific connector group by ID.
 
@@ -90,7 +102,14 @@ class AppConnectorGroupAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (AppConnectorGroup instance, Response, error).
+            :obj:`Tuple`: A tuple containing (AppConnectorGroup instance, Response, error).
+            
+        Examples:
+            >>> fetched_group, _, err = client.zpa.app_connector_groups.get_connector_group('999999')
+            ... if err:
+            ...     print(f"Error fetching group by ID: {err}")
+            ...     return
+            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -164,7 +183,25 @@ class AppConnectorGroupAPI(APIClient):
                 ``default``, ``previous_default`` and ``new_release``
 
         Returns:
-            tuple: A tuple containing (AppConnectorGroup, Response, error)
+            :obj:`Tuple`: A tuple containing (AppConnectorGroup, Response, error)
+            
+        Examples:
+            >>> added_group, _, err = client.zpa.app_connector_groups.add_connector_group(
+            ...     name=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
+            ...     description=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
+            ...     enabled= True,
+            ...     city_country= "San Jose, US",
+            ...     country_code= "US",
+            ...     latitude= "37.3382082",
+            ...     longitude= "-121.8863286",
+            ...     location= "San Jose, CA, USA",
+            ...     upgrade_day= "SUNDAY",
+            ...     dns_query_type= "IPV4_IPV6",
+            ... )
+            ... if err:
+            ...     print(f"Error creating connector group: {err}")
+            ...     return
+            ... print(f"connector group created successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -174,10 +211,8 @@ class AppConnectorGroupAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
@@ -201,7 +236,11 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_connector_group(self, group_id: str, **kwargs) -> tuple:
+    def update_connector_group(
+        self,
+        group_id: str,
+        **kwargs
+    ) -> tuple:
         """
         Updates an existing ZPA App Connector Group.
 
@@ -245,6 +284,23 @@ class AppConnectorGroupAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (AppConnectorGroup, Response, error)
+            
+            >>> update_group, _, err = client.zpa.app_connector_groups.update_connector_group(
+            ...     name=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
+            ...     enabled= True,
+            ...     city_country= "San Jose, US",
+            ...     country_code= "US",
+            ...     latitude= "37.3382082",
+            ...     longitude= "-121.8863286",
+            ...     location= "San Jose, CA, USA",
+            ...     upgrade_day= "SUNDAY",
+            ...     dns_query_type= "IPV4_IPV6",
+            ... )
+            ... if err:
+            ...     print(f"Error creating connector group: {err}")
+            ...     return
+            ... print(f"connector group created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -254,10 +310,8 @@ class AppConnectorGroupAPI(APIClient):
         """
         )
 
-        # Start with an empty body or an existing resource's current data
         body = {}
 
-        # Update the body with the fields passed in kwargs
         body.update(kwargs)
 
         # Use get instead of pop to keep microtenant_id in the body
@@ -290,7 +344,11 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_connector_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_connector_group(
+        self,
+        group_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes the specified App Connector Group from ZPA.
 
@@ -300,6 +358,15 @@ class AppConnectorGroupAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response and error (if any).
+            
+        Examples:
+            >>> _, _, err = client.zpa.app_connector_groups.delete_connector_group(
+            ...     group_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting app connector group: {err}")
+            ...     return
+            ... print(f"app connector group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""

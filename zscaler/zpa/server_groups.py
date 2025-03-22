@@ -50,10 +50,17 @@ class ServerGroupsAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            tuple: A tuple containing (list of ServerGroups instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of ServerGroups instances, Response, error)
 
         Examples:
-            >>> server_groups = zpa.server_groups.list_groups(search="example")
+            >>> groups_list, _, err = client.zpa.server_groups.list_server_groups(
+            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing server groups: {err}")
+            ...     return
+            ... print(f"Total server groups found: {len(groups_list)}")
+            ... for group in groups_list:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -68,13 +75,10 @@ class ServerGroupsAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor.\
             create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
-
-        # Execute the request
         response, error = self._request_executor.\
             execute(request)
         if error:
@@ -100,7 +104,14 @@ class ServerGroupsAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (ServerGroup, Response, error)
+            :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
+            
+        Examples:
+            >>> fetched_group, _, err = client.zpa.server_groups.get_group('999999')
+            ... if err:
+            ...     print(f"Error fetching server group by ID: {err}")
+            ...     return
+            ... print(f"Fetched server group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -110,25 +121,21 @@ class ServerGroupsAPI(APIClient):
         """
         )
 
-        # Handle optional query parameters
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
-        # Parse the response into an AppConnectorGroup instance
         try:
             result = ServerGroup(
                 self.form_response_body(response.get_body())
@@ -162,27 +169,33 @@ class ServerGroupsAPI(APIClient):
             **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (ServerGroup, Response, error)
+            :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
             
         Examples:
             Create a server group with the minimum params:
 
-            >>> zpa.server_groups.add_group(
+            >>> added_group, _, err = client.zpa.server_groups.add_group(
             ...    name='new_server_group',
             ...    app_connector_group_ids=['99999'],
+            ... )
+            ... if err:
+            ...     print(f"Error adding server group: {err}")
+            ...     return
+            ... print(f"Server Group added successfully: {added_group.as_dict()}")
 
             Create a server group and define a new application server on the fly:
 
-            >>> zpa.server_groups.add_group(
+            >>> added_group, _, err = client.zpa.server_groups.add_group(
             ...    name='new_server_group',
             ...    description='new_server_group',
             ...    enabled=True,
-            ...    dynamic_discovery=True,
+            ...    dynamic_discovery=False,
             ...    app_connector_group_ids=['99999'],
-            ...    servers=[{
-            ...      'name': 'new_server',
-            ...      'address': '10.0.0.30',
-            ...      'enabled': True}])
+            ...    server_ids=['99999'],
+            ... if err:
+            ...     print(f"Error adding server group: {err}")
+            ...     return
+            ... print(f"Server Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -207,13 +220,11 @@ class ServerGroupsAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, ServerGroup)
         if error:
@@ -236,7 +247,21 @@ class ServerGroupsAPI(APIClient):
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (ServerGroup, Response, error)
+            :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
+            
+        Examples:
+
+            >>> update_group, _, err = client.zpa.server_groups.update_group(
+            ...    group_id="999999",
+            ...    name='update_server_group',
+            ...    description='update_server_group',
+            ...    enabled=True,
+            ...    dynamic_discovery=True,
+            ...    app_connector_group_ids=['99999'],
+            ... if err:
+            ...     print(f"Error adding server group: {err}")
+            ...     return
+            ... print(f"Server Group added successfully: {added_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -274,13 +299,11 @@ class ServerGroupsAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, ServerGroup)
         if error:
@@ -301,7 +324,11 @@ class ServerGroupsAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_group(
+        self,
+        group_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes the specified server group.
 
@@ -311,6 +338,15 @@ class ServerGroupsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (None, Response, error)
+            
+        Examples:
+            >>> _, _, err = client.zpa.server_groups.delete_group(
+            ...     group_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting server groups: {err}")
+            ...     return
+            ... print(f"server groups with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -323,13 +359,11 @@ class ServerGroupsAPI(APIClient):
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request)
         if error:

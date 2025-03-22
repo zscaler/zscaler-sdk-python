@@ -46,33 +46,38 @@ class ServiceEdgeControllerAPI(APIClient):
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of ServiceEdge instances, Response, error)
+
+        Examples:
+            >>> service_edge_list, _, err = client.zpa.service_edges.list_service_edges(
+            ... query_params={'search': 'ServiceEdge01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing service edges: {err}")
+            ...     return
+            ... print(f"Total service edges found: {len(service_edge_list)}")
+            ... for edge in service_edge_list:
+            ...     print(edge.as_dict())
         """
         http_method = "get".upper()
-        api_url = f"{self._base_endpoint}/serviceEdge"
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /serviceEdge
+        """
+        )
 
-        # Handle query parameters (including microtenant_id if provided)
         query_params = query_params or {}
         microtenant_id = query_params.pop("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request body and headers
-        body = {}
-        headers = {}
-        form = {}
-
-        # Create the request
         request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, form, params=query_params)
-
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
-            execute(request, ServiceEdge)
-
+            execute(request)
         if error:
             return (None, response, error)
 
@@ -97,13 +102,20 @@ class ServiceEdgeControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            ServiceEdge: The corresponding Service Edge object.
+            :obj:`Tuple`: ServiceEdge: The corresponding Service Edge object.
+            
+        Examples:
+            >>> fetched_service_edge, _, err = client.zpa.service_edges.get_service_edge('999999')
+            ... if err:
+            ...     print(f"Error fetching service edge by ID: {err}")
+            ...     return
+            ... print(f"Fetched service edge by ID: {fetched_service_edge.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
-            f"""
-            {self._base_endpoint}/serviceEdge/{service_edge_id}"
-            """
+            f"""{
+            self._base_endpoint}/serviceEdge/{service_edge_id}
+        """
         )
 
         microtenant_id = kwargs.pop("microtenant_id", None)
@@ -129,37 +141,70 @@ class ServiceEdgeControllerAPI(APIClient):
             service_edge_id (str): The unique ID of the Service Edge.
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
+        Keyword Args:
+            **name (str): The name of the Service Edge
+            **description (str): Additional information about the Service Edge
+            **enabled (bool): True if the Service Edge is enabled.
+
         Returns:
-            ServiceEdge: The updated Service Edge object.
+            :obj:`Tuple`: ServiceEdge: The updated Service Edge object.
+            
+        Examples:
+            Update an Service Edge name, description and disable it.
+
+            >>> update_service_edge, _, err = client.zpa.service_edges.update_service_edge(
+            ...     service_edge_id='99999'
+            ...     name=f"UpdateServiceEdge_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateServiceEdge_{random.randint(1000, 10000)}",
+            ...     enabled=False,
+            ... )
+            ... if err:
+            ...     print(f"Error creating service edge: {err}")
+            ...     return
+            ... print(f"Service Edge created successfully: {update_service_edge.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
-            f"""
-            {self._base_endpoint}/serviceEdge/{service_edge_id}"
-            """
+            f"""{
+            self._base_endpoint}/serviceEdge/{service_edge_id}"
+        """
         )
 
-        # Fetch the current service edge data and update it with kwargs
-        existing_edge = self.get_service_edge(service_edge_id)
-        payload = existing_edge.request_format()
+        body = {}
 
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        body.update(kwargs)
 
-        microtenant_id = kwargs.pop("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, json=payload, params=params)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, params)
         if error:
-            return None
+            return (None, None, error)
 
-        _, error = self._request_executor.execute(request)
+        response, error = self._request_executor\
+            .execute(request, ServiceEdge)
         if error:
-            return None
+            return (None, response, error)
 
-        return self.get_service_edge(service_edge_id)
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            # Return a meaningful result to indicate success
+            return (ServiceEdge({"id": service_edge_id}), None, None)
 
-    def delete_service_edge(self, service_edge_id: str, **kwargs) -> int:
+        try:
+            result = ServiceEdge(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_service_edge(
+        self,
+        service_edge_id: str,
+        **kwargs
+    ) -> int:
         """
         Deletes the specified ZPA Service Edge.
 
@@ -168,6 +213,15 @@ class ServiceEdgeControllerAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
+            
+        Examples:
+            >>> _, _, err = client.zpa.service_edges.delete_service_edge(
+            ...     service_edge_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting service edge: {err}")
+            ...     return
+            ... print(f"Service Edge with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

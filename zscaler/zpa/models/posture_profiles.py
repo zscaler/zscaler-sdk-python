@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 
 class PostureProfile(ZscalerObject):
     """
@@ -44,7 +45,6 @@ class PostureProfile(ZscalerObject):
             self.posture_udid = config["postureUdid"]\
                 if config and "postureUdid" in config else None
 
-            # Apply defensive strategy for booleans, though default values are provided
             self.apply_to_machine_tunnel_enabled = config["applyToMachineTunnelEnabled"]\
                 if config and "applyToMachineTunnelEnabled" in config else False
             self.crl_check_enabled = config["crlCheckEnabled"]\
@@ -52,12 +52,26 @@ class PostureProfile(ZscalerObject):
             self.non_exportable_private_key_enabled = config["nonExportablePrivateKeyEnabled"]\
                 if config and "nonExportablePrivateKeyEnabled" in config else False
 
-            # Handle optional string field with a default of None
+            self.root_cert = config["rootCert"]\
+                if config and "rootCert" in config else None
+
+            self.posture_type = config["postureType"]\
+                if config and "postureType" in config else None
+                
             self.zscaler_cloud = config["zscalerCloud"]\
                 if config and "zscalerCloud" in config else None
 
+            self.master_customer_id = config["masterCustomerId"]\
+                if config and "masterCustomerId" in config else None
+
+            self.zscaler_customer_id = config["zscalerCustomerId"]\
+                if config and "zscalerCustomerId" in config else None
+                                
+            self.platform = ZscalerCollection.form_list(
+                config["platform"] if "platform" in config else [], str
+            )
+
         else:
-            # Default values when config is None
             self.id = None
             self.modified_time = None
             self.creation_time = None
@@ -68,7 +82,12 @@ class PostureProfile(ZscalerObject):
             self.crl_check_enabled = False
             self.non_exportable_private_key_enabled = False
             self.zscaler_cloud = None
-
+            self.platform = None
+            self.master_customer_id = None
+            self.zscaler_customer_id = None
+            self.posture_type = None
+            self.root_cert = None
+                                    
     def request_format(self):
         """
         Prepare the object in a format suitable for sending as a request payload.
@@ -87,4 +106,9 @@ class PostureProfile(ZscalerObject):
             "crlCheckEnabled": self.crl_check_enabled,
             "nonExportablePrivateKeyEnabled": self.non_exportable_private_key_enabled,
             "zscalerCloud": self.zscaler_cloud,
+            "platform": self.platform,
+            "masterCustomerId": self.master_customer_id,
+            "zscalerCustomerId": self.zscaler_customer_id,
+            "postureType": self.posture_type,
+            "rootCert	": self.root_cert,
         }

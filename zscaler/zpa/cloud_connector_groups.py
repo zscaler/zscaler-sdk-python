@@ -44,8 +44,15 @@ class CloudConnectorGroupsAPI(APIClient):
         Returns:
             list: A list of `CloudConnectorGroup` instances.
 
-        Example:
-            >>> cloud_connector_groups = zpa.cloud_connector_groups.list_cloud_connector_groups(search="example")
+        Examples:
+            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_groups(
+            ... query_params={'search': 'CloudConnectorGroup01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing connector groups: {err}")
+            ...     return
+            ... print(f"Total connector groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -55,22 +62,15 @@ class CloudConnectorGroupsAPI(APIClient):
         """
         )
 
-        # Handle query parameters (including microtenant_id if provided)
         query_params = query_params or {}
 
-        # Prepare request body and headers
-        body = {}
-        headers = {}
-
-        # Prepare request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor\
+            .execute(request)
         if error:
             return (None, response, error)
 
@@ -84,7 +84,10 @@ class CloudConnectorGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cloud_connector_groups(self, group_id: str, query_params=None) -> tuple:
+    def get_cloud_connector_groups(
+        self,
+        group_id: str,
+    ) -> tuple:
         """
         Returns information on the specified cloud connector group.
 
@@ -95,10 +98,12 @@ class CloudConnectorGroupsAPI(APIClient):
         Returns:
             dict: The cloud connector group object.
 
-        Example:
-            >>> group, response, error = zpa.cloud_connector_groups.get_group('216196257331305019')
-            >>> if error is None:
-            ...     pprint(group)
+        Examples:
+            >>> fetched_group, _, err = client.zpa.cloud_connector_groups.get_cloud_connector_groups('999999')
+            ... if err:
+            ...     print(f"Error fetching group by ID: {err}")
+            ...     return
+            ... print(f"Fetched group by ID: {fetched_group.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -108,22 +113,16 @@ class CloudConnectorGroupsAPI(APIClient):
         """
         )
 
-        # Handle optional query parameters
-        query_params = query_params or {}
-
-        # Create the request
         request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+            create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, CloudConnectorGroup)
         if error:
             return (None, response, error)
 
-        # Parse the response into an CloudConnectorGroup instance
         try:
             result = CloudConnectorGroup(
                 self.form_response_body(response.get_body())

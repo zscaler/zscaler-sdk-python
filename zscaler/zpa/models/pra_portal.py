@@ -26,30 +26,48 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
+            self.id = config["id"] \
                 if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else True
-            self.description = config["description"]\
-                if "description" in config else None
-            self.certificate_id = config["certificateId"]\
+            self.certificate_id = config["certificateId"] \
                 if "certificateId" in config else None
-            self.certificate_name = config["certificateName"]\
+            self.certificate_name = config["certificateName"] \
                 if "certificateName" in config else None
-            self.cname = config["cName"]\
-                if "cName" in config else None
-            self.domain = config["domain"]\
+            self.creation_time = config["creationTime"] \
+                if "creationTime" in config else None
+            self.description = config["description"] \
+                if "description" in config else None
+            self.domain = config["domain"] \
                 if "domain" in config else None
-            self.user_notification = config["userNotification"]\
-                if "userNotification" in config else None
-            self.user_notification_enabled = config["userNotificationEnabled"]\
-                if "userNotificationEnabled" in config else False
-            self.microtenant_id = config["microtenantId"]\
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.ext_domain = config["extDomain"] \
+                if "extDomain" in config else None
+            self.ext_domain_name = config["extDomainName"] \
+                if "extDomainName" in config else None
+            self.ext_domain_translation = config["extDomainTranslation"] \
+                if "extDomainTranslation" in config else None
+            self.ext_label = config["extLabel"] \
+                if "extLabel" in config else None
+            self.get_cname = config["getcName"] \
+                if "getcName" in config else None
+            self.modified_by = config["modifiedBy"] \
+                if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] \
+                if "modifiedTime" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.microtenant_id = config["microtenantId"] \
                 if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else "Default"
+            self.microtenant_name = config["microtenantName"] \
+                if "microtenantName" in config else None
+            self.user_notification = config["userNotification"] \
+                if "userNotification" in config else None
+            self.user_notification_enabled = config["userNotificationEnabled"] \
+                if "userNotificationEnabled" in config else None
+            self.user_portal_gid = config["userPortalGid"] \
+                if "userPortalGid" in config else None
+            self.user_portal_name = config["userPortalName"] \
+                if "userPortalName" in config else None
         else:
             self.id = None
             self.name = None
@@ -63,22 +81,41 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
             self.user_notification_enabled = False
             self.microtenant_id = None
             self.microtenant_name = "Default"
+            self.creation_time = None
+            self.ext_domain = None
+            self.ext_domain_name = None
+            self.ext_domain_translation = None
+            self.ext_label = None
+            self.get_cname = None
+            self.modified_by = None
+            self.modified_time = None
+            self.user_portal_gid = None
+            self.user_portal_name = None
 
     def request_format(self):
         """
         Formats the PRA portal data into a dictionary suitable for API requests.
         """
         return {
-            "id": self.id,
-            "name": self.name,
-            "enabled": self.enabled,
-            "description": self.description,
             "certificateId": self.certificate_id,
             "certificateName": self.certificate_name,
-            "cName": self.cname,
+            "creationTime": self.creation_time,
+            "description": self.description,
             "domain": self.domain,
-            "userNotification": self.user_notification,
-            "userNotificationEnabled": self.user_notification_enabled,
+            "enabled": self.enabled,
+            "extDomain": self.ext_domain,
+            "extDomainName": self.ext_domain_name,
+            "extDomainTranslation": self.ext_domain_translation,
+            "extLabel": self.ext_label,
+            "getcName": self.get_cname,
+            "id": self.id,
+            "modifiedBy": self.modified_by,
+            "modifiedTime": self.modified_time,
+            "name": self.name,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
+            "userNotification": self.user_notification,
+            "userNotificationEnabled": self.user_notification_enabled,
+            "userPortalGid": self.user_portal_gid,
+            "userPortalName": self.user_portal_name
         }

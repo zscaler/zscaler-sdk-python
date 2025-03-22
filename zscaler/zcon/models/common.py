@@ -34,15 +34,7 @@ class Common(ZscalerObject):
             self.association_time = config["associationTime"]\
                 if "associationTime" in config else None
                                                 
-            if "extensions" in config:
-                if isinstance(config["extensions"], Extensions):
-                    self.extensions = config["extensions"]
-                elif config["extensions"] is not None:
-                    self.extensions = Extensions(config["extensions"])
-                else:
-                    self.extensions = None
-            else:
-                self.extensions = None
+            self.extensions = config if isinstance(config, dict) else {}
                 
         else:
             self.id = None
@@ -61,27 +53,3 @@ class Common(ZscalerObject):
             "externalId": self.external_id,
             "associationTime": self.association_time,
         }
-
-class Extensions(ZscalerObject):
-    """
-    A generic class to wrap dynamic extension data.
-    """
-    def __init__(self, config=None):
-        super().__init__(config)
-        # Simply store the dictionary as is
-        if config and isinstance(config, dict):
-            self.data = config
-        else:
-            self.data = {}
-
-    def request_format(self):
-        """
-        Return the extension data as a dictionary.
-        """
-        return self.data
-
-    def as_dict(self):
-        """
-        Return a dictionary representation of the extension data.
-        """
-        return self.data

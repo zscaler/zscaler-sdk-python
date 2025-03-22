@@ -35,18 +35,25 @@ class TrustedNetwork(ZscalerObject):
                 if "modifiedBy" in config else None
             self.name = config["name"]\
                 if "name" in config else None
+            self.domain = config["domain"]\
+                if "domain" in config else None
             self.network_id = config["networkId"]\
                 if "networkId" in config else None
             self.zscaler_cloud = config["zscalerCloud"]\
                 if "zscalerCloud" in config else None
+            self.master_customer_id = config["masterCustomerId"]\
+                if config and "masterCustomerId" in config else None
+
         else:
             self.id = None
             self.modified_time = None
             self.creation_time = None
             self.modified_by = None
             self.name = None
+            self.domain = None
             self.network_id = None
             self.zscaler_cloud = None
+            self.master_customer_id = None
 
     def request_format(self):
         """
@@ -58,6 +65,8 @@ class TrustedNetwork(ZscalerObject):
             "creationTime": self.creation_time,
             "modifiedBy": self.modified_by,
             "name": self.name,
+            "domain": self.domain,
             "networkId": self.network_id,
             "zscalerCloud": self.zscaler_cloud,
+            "masterCustomerId": self.master_customer_id,
         }

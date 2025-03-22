@@ -25,43 +25,75 @@ class EnrollmentCertificate(ZscalerObject):
             config (dict): A dictionary representing the enrollment certificate configuration.
         """
         super().__init__(config)
-        self.id = config["id"]\
-            if config and "id" in config else None
-        self.modified_time = config["modifiedTime"]\
-            if config and "modifiedTime" in config else None
-        self.creation_time = config["creationTime"]\
-            if config and "creationTime" in config else None
-        self.modified_by = config["modifiedBy"]\
-            if config and "modifiedBy" in config else None
-        self.c_name = config["cName"]\
-            if config and "cName" in config else None
-        self.valid_from = config["validFromInEpochSec"]\
-            if config and "validFromInEpochSec" in config else None
-        self.valid_to = config["validToInEpochSec"]\
-            if config and "validToInEpochSec" in config else None
-        self.certificate = config["certificate"]\
-            if config and "certificate" in config else None
-        self.issued_to = config["issuedTo"]\
-            if config and "issuedTo" in config else None
-        self.issued_by = config["issuedBy"]\
-            if config and "issuedBy" in config else None
-        self.serial_no = config["serialNo"]\
-            if config and "serialNo" in config else None
-        self.name = config["name"]\
-            if config and "name" in config else None
-        self.allow_signing = config["allowSigning"]\
-            if config and "allowSigning" in config else None
-        self.private_key_present = config["privateKeyPresent"]\
-            if config and "privateKeyPresent" in config else None
-        self.client_cert_type = config["clientCertType"]\
-            if config and "clientCertType" in config else None
-        self.csr = config["csr"]\
-            if config and "csr" in config else None
-        self.parent_cert_id = config["parentCertId"]\
-            if config and "parentCertId" in config else None
-        self.parent_cert_name = config["parentCertName"]\
-            if config and "parentCertName" in config else None
+        if config:
+            self.id = config["id"]\
+                if config and "id" in config else None
+            self.modified_time = config["modifiedTime"]\
+                if config and "modifiedTime" in config else None
+            self.creation_time = config["creationTime"]\
+                if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"]\
+                if config and "modifiedBy" in config else None
+            self.get_cname = config["getcName"]\
+                if config and "getcName" in config else None
+            self.valid_from = config["validFromInEpochSec"]\
+                if config and "validFromInEpochSec" in config else None
+            self.valid_to = config["validToInEpochSec"]\
+                if config and "validToInEpochSec" in config else None
+            self.certificate = config["certificate"]\
+                if config and "certificate" in config else None
+            self.issued_to = config["issuedTo"]\
+                if config and "issuedTo" in config else None
+            self.issued_by = config["issuedBy"]\
+                if config and "issuedBy" in config else None
+            self.serial_no = config["serialNo"]\
+                if config and "serialNo" in config else None
+            self.name = config["name"]\
+                if config and "name" in config else None
+            self.allow_signing = config["allowSigning"]\
+                if config and "allowSigning" in config else None
+            self.private_key_present = config["privateKeyPresent"]\
+                if config and "privateKeyPresent" in config else None
+            self.client_cert_type = config["clientCertType"]\
+                if config and "clientCertType" in config else None
+            self.csr = config["csr"]\
+                if config and "csr" in config else None
+            self.parent_cert_id = config["parentCertId"]\
+                if config and "parentCertId" in config else None
+            self.parent_cert_name = config["parentCertName"]\
+                if config and "parentCertName" in config else None
+            self.zrsa_encrypted_private_key = config["zrsaencryptedprivatekey"]\
+                if config and "zrsaencryptedprivatekey" in config else None
+            self.zrsa_encrypted_session_key = config["zrsaencryptedsessionkey"]\
+                if config and "zrsaencryptedsessionkey" in config else None
+            self.microtenant_id = config["microtenantId"]\
+                if "microtenantId" in config else None
 
+        else:
+            self.id = None
+            self.modified_time = None
+            self.creation_time = None
+            self.modified_by = None
+            self.name = None
+            self.description = None
+            self.get_cname = None
+            self.valid_from = None
+            self.valid_to = None
+            self.certificate = None
+            self.issued_to = None
+            self.issued_by = None
+            self.serial_no = None
+            self.name = None
+            self.allow_signing = None
+            self.private_key_present = None
+            self.client_cert_type = None
+            self.csr = None
+            self.parent_cert_id = None          
+            self.parent_cert_name = None
+            self.zrsa_encrypted_private_key = None
+            self.zrsa_encrypted_session_key = None
+            self.microtenant_id = None
+                        
     def request_format(self):
         """
         Formats the model data for API requests.
@@ -72,7 +104,7 @@ class EnrollmentCertificate(ZscalerObject):
             "modifiedTime": self.modified_time,
             "creationTime": self.creation_time,
             "modifiedBy": self.modified_by,
-            "cName": self.c_name,
+            "getcName": self.get_cname,
             "validFromInEpochSec": self.valid_from,
             "validToInEpochSec": self.valid_to,
             "certificate": self.certificate,
@@ -86,6 +118,9 @@ class EnrollmentCertificate(ZscalerObject):
             "csr": self.csr,
             "parentCertId": self.parent_cert_id,
             "parentCertName": self.parent_cert_name,
+            "zrsaencryptedprivatekey": self.zrsa_encrypted_private_key,
+            "zrsaencryptedsessionkey": self.zrsa_encrypted_session_key,
+            "microtenantId": self.microtenant_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

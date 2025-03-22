@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models.application_segment_pra import ApplicationSegmentPRA
+from zscaler.zpa.models import application_segment_pra as application_segment_pra
 
 class PrivilegedRemoteAccessApproval(ZscalerObject):
     """
@@ -38,25 +38,24 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
                 if "creationTime" in config else None
             self.status = config["status"]\
                 if "status" in config else None
-            self.email_ids = config["emailIds"]\
-                if "emailIds" in config else []
-                
-            self.applications = [
-                ApplicationSegmentPRA(app) for app in config.get("applications", [])
-            ]
 
-            # Handle working hours with defensive programming for every attribute
-            working_hours = config["workingHours"] if "workingHours" in config else {}
-            self.working_hours = {
-                "startTimeCron": working_hours["startTimeCron"] if "startTimeCron" in working_hours else None,
-                "endTimeCron": working_hours["endTimeCron"] if "endTimeCron" in working_hours else None,
-                "startTime": working_hours["startTime"] if "startTime" in working_hours else None,
-                "endTime": working_hours["endTime"] if "endTime" in working_hours else None,
-                "timeZone": working_hours["timeZone"] if "timeZone" in working_hours else None,
-                "days": ZscalerCollection.form_list(
-                    working_hours["days"] if "days" in working_hours else [], str
-                )
-            }        
+            self.email_ids = ZscalerCollection.form_list(
+                config["emailIds"] if "emailIds" in config else [], str
+            )
+
+            self.applications = ZscalerCollection.form_list(
+                config["applications"] if "applications" in config else [], application_segment_pra.ApplicationSegmentPRA
+            )
+
+            if "workingHours" in config:
+                if isinstance(config["workingHours"], WorkingHours):
+                    self.working_hours = config["workingHours"]
+                elif config["workingHours"] is not None:
+                    self.working_hours = WorkingHours(config["workingHours"])
+                else:
+                    self.working_hours = None
+            else:
+                self.working_hours = None   
             
         else:
             self.id = None
@@ -65,10 +64,9 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
             self.modified_time = None
             self.creation_time = None
             self.status = None
-            self.email_ids = []
+            self.email_ids = ZscalerCollection.form_list([], str)
             self.applications = []
             self.working_hours = {}
-
 
     def request_format(self):
         """
@@ -84,15 +82,67 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
             "endTime": self.end_time,
             "status": self.status,
             "emailIds": self.email_ids,
-            "applications": [app.request_format() for app in self.applications],
-            "workingHours": {
-                "startTimeCron": self.working_hours["startTimeCron"] if self.working_hours["startTimeCron"] else None,
-                "endTimeCron": self.working_hours["endTimeCron"] if self.working_hours["endTimeCron"] else None,
-                "startTime": self.working_hours["startTime"] if self.working_hours["startTime"] else None,
-                "endTime": self.working_hours["endTime"] if self.working_hours["endTime"] else None,
-                "days": self.working_hours["days"] if self.working_hours["days"] else [],
-                "timeZone": self.working_hours["timeZone"] if self.working_hours["timeZone"] else None,
-            }
+            "applications": self.applications,
+            # "applications": [app.request_format() for app in self.applications],
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+    
+class WorkingHours(ZscalerObject):
+    """
+    A class for WorkingHours objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the WorkingHours model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.end_time = config["endTime"] \
+                if "endTime" in config else None
+
+            self.end_time_cron = config["endTimeCron"] \
+                if "endTimeCron" in config else None
+
+            self.start_time = config["startTime"] \
+                if "startTime" in config else None
+
+            self.start_time_cron = config["startTimeCron"] \
+                if "startTimeCron" in config else None
+
+            self.time_zone = config["timeZone"] \
+                if "timeZone" in config else None
+
+            self.days = ZscalerCollection.form_list(
+                config["days"] if "days" in config else [], str
+            )
+
+        else:
+            self.end_time = None
+            self.end_time_cron = None
+            self.start_time = None
+            self.start_time_cron = None
+            self.time_zone = None
+            self.days = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "endTime": self.end_time,
+            "endTimeCron": self.end_time_cron,
+            "startTime": self.start_time,
+            "startTimeCron": self.start_time_cron,
+            "timeZone": self.time_zone,
+            "days": self.days
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

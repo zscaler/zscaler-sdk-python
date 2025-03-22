@@ -45,6 +45,16 @@ class PRACredentialAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessCredential instances, Response, error)
+            
+        Examples:
+            >>> credential_list, _, err = client.zpa.pra_credential.list_credentials(
+            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing pra credentials: {err}")
+            ...     return
+            ... print(f"Total pra credentials found: {len(credential_list)}")
+            ... for pra in credential_list:
+            ...     print(pra.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -79,7 +89,11 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_credential(self, credential_id: str, query_params=None) -> tuple:
+    def get_credential(
+        self,
+        credential_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Returns information on the specified privileged remote access credential.
 
@@ -89,7 +103,14 @@ class PRACredentialAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            PrivilegedRemoteAccessCredential: The resource record for the credential.
+            :obj:`Tuple`: PrivilegedRemoteAccessCredential: The resource record for the credential.
+
+        Examples:
+            >>> fetched_credential, _, err = client.zpa.pra_credential.get_credential('999999')
+            ... if err:
+            ...     print(f"Error fetching credential by ID: {err}")
+            ...     return
+            ... print(f"Fetched credential by ID: {fetched_credential.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -134,7 +155,21 @@ class PRACredentialAPI(APIClient):
             private_key (str, optional): The private key for 'SSH_KEY' type.
 
         Returns:
-            PrivilegedRemoteAccessCredential: The newly created credential resource.
+            :obj:`Tuple`: PrivilegedRemoteAccessCredential: The newly created credential resource.
+
+        Examples:
+            >>> added_credential, _, err = client.zpa.pra_credential.update_credential(
+            ...     credential_id='999999',
+            ...     name="John Doe",
+            ...     description="Created PRA Credential",
+            ...     credential_type="PASSWORD",
+            ...     user_domain="acme.com",
+            ...     password="",
+            ... )
+            ... if err:
+            ...     print(f"Error adding credential: {err}")
+            ...     return
+            ... print(f"credential added successfully: {added_credential.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -197,7 +232,11 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_credential(self, credential_id: str, **kwargs) -> tuple:
+    def update_credential(
+        self,
+        credential_id: str,
+        **kwargs
+    ) -> tuple:
         """
         Updates a specified credential based on provided keyword arguments.
 
@@ -205,7 +244,21 @@ class PRACredentialAPI(APIClient):
             credential_id (str): The unique identifier for the credential being updated.
 
         Returns:
-            PrivilegedRemoteAccessCredential: The updated credential resource.
+            :obj:`Tuple`: PrivilegedRemoteAccessCredential: The updated credential resource.
+
+        Examples:
+            >>> updated_console, _, err = client.zpa.pra_credential.update_credential(
+            ...     credential_id='999999',
+            ...     name="John Doe",
+            ...     description="Created PRA Credential",
+            ...     credential_type="PASSWORD",
+            ...     user_domain="acme.com",
+            ...     password="",
+            ... )
+            ... if err:
+            ...     print(f"Error updating credential: {err}")
+            ...     return
+            ... print(f"credential updated successfully: {updated_console.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -277,7 +330,11 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_credential(self, credential_id: str, microtenant_id: str = None) -> tuple:
+    def delete_credential(
+        self,
+        credential_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes the specified privileged remote access credential.
 
@@ -286,7 +343,16 @@ class PRACredentialAPI(APIClient):
             microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
         Returns:
-            int: The HTTP status code of the delete operation.
+            int: The status code of the delete operation.
+
+        Examples:
+            >>> _, _, err = client.zpa.pra_credential.delete_credential(
+            ...     credential_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting pra credential: {err}")
+            ...     return
+            ... print(f"PRA Credential with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -309,7 +375,11 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def credential_move(self, credential_id: str, **kwargs) -> tuple:
+    def credential_move(
+        self,
+        credential_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Moves privileged remote access credentials between parent tenant and microtenants.
 
@@ -321,29 +391,44 @@ class PRACredentialAPI(APIClient):
 
         Returns:
             dict: Empty dictionary if the move operation is successful.
+            
+        Examples:
+            >>> _, _, err = client.zpa.pra_credential.credential_move(
+            ...     credential_id=updated_credential.id,
+            ...     query_params={
+            ...         "microtenant_id": microtenant_id,
+            ...         "target_microtenant_id": target_microtenant_id
+            ...     }
+            ... )
+            ... if err:
+            ...     print(f"Error moving credential: {err}")
+            ...     return
+            ... print(f"Credential with ID {updated_credential.id} moved successfully.")
         """
-        http_method = "POST"
-
-        # Extract required parameters from kwargs
-        microtenant_id = kwargs.pop("microtenant_id", None)
-        target_microtenant_id = kwargs.get("target_microtenant_id")
-        if target_microtenant_id is None:
-            raise ValueError("target_microtenant_id must be provided.")
-
+        http_method = "post".upper()
         api_url = format_url(
             f"""
             {self._zpa_base_endpoint}
-            /credential/{credential_id}/move?microtenantId={microtenant_id}&targetMicrotenantId={target_microtenant_id}
-            """
+            /credential/{credential_id}/move
+        """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        query_params = query_params or {}
+
+        target_microtenant_id = query_params.get("target_microtenant_id")
+        if not target_microtenant_id:
+            raise ValueError("target_microtenant_id must be provided in query_params.")
+
+        if "microtenant_id" in query_params:
+            query_params["microtenantId"] = query_params.pop("microtenant_id")
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, str)
+        response, error = self._request_executor.\
+            execute(request, str)
         if error:
             return (None, response, error)
 

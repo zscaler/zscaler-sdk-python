@@ -47,6 +47,14 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessApproval instances, Response, error)
+            
+        Examples:
+        >>> approvals_list, _, err = zpa.pra_approval.list_approval()
+        ... if err:
+        ...     print(f"Error listing approvals: {err}")
+        ...     return
+        ... for approval in approvals_list:
+        ...     print(approval.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -81,7 +89,11 @@ class PRAApprovalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_approval(self, approval_id: str, query_params=None) -> tuple:
+    def get_approval(
+        self,
+        approval_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Returns information on the specified pra approval.
 
@@ -91,7 +103,16 @@ class PRAApprovalAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            tuple: A tuple containing (PrivilegedRemoteAccessApproval instance, Response, error).
+            tuple: A tuple containing (PrivilegedRemoteAccessApproval instance, Response, error)
+            
+        Examples:
+        >>> approval, _, err = client.zpa.pra_approval.get_approval(
+        ... approval_id=99999
+        ... )
+        ... if err:
+        ...     print(f"Error fetching approval by ID: {err}")
+        ...     return
+        ... print(f"Fetched approval by ID: {approval.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -137,7 +158,28 @@ class PRAApprovalAPI(APIClient):
             working_hours (dict): Working hours configuration.
 
         Returns:
-            PrivilegedRemoteAccessApproval: The newly created PRA approval.
+            PrivilegedRemoteAccessApproval: The newly created PRA approval
+            
+        Examples:
+        >>> added_approval, _, error = client.zpa.pra_approval.add_approval(
+        ... email_ids=['jdoe@acme.com'],
+        ... application_ids=['72058304855096641'],
+        ... start_time="Tue, 19 Mar 2025 00:00:00 PST",
+        ... end_time="Sat, 19 Apr 2025 00:00:00 PST",
+        ... status='ACTIVE',
+        ... working_hours= {
+        ...     "start_time_cron": "0 0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT",
+        ...     "end_time_cron": "0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN",
+        ...     "start_time": "09:00",
+        ...     "end_time": "17:00",
+        ...     "days": ["FRI", "MON", "SAT", "SUN", "THU", "TUE", "WED"],
+        ...     "time_zone": "America/Vancouver"
+        ...     },
+        ... )
+        ... if error:
+        ...     print(f"Error adding pra approval: {error}")
+        ...     return
+        ... print(f"Pra approval added successfully: {added_approval.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -147,7 +189,6 @@ class PRAApprovalAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
         # Convert start_time and end_time to epoch format
@@ -209,7 +250,29 @@ class PRAApprovalAPI(APIClient):
             approval_id (str): The unique identifier for the approval being updated.
 
         Returns:
-            PrivilegedRemoteAccessApproval: The updated approval resource.
+            PrivilegedRemoteAccessApproval: The updated approval resource
+            
+        Examples:
+        >>> updated_approval, _, error = client.zpa.pra_approval.add_approval(
+        ... approval_id='99999',
+        ... email_ids=['jdoe@acme.com'],
+        ... application_ids=['72058304855096641'],
+        ... start_time="Tue, 19 Mar 2025 00:00:00 PST",
+        ... end_time="Sat, 19 Apr 2025 00:00:00 PST",
+        ... status='ACTIVE',
+        ... working_hours= {
+        ...     "start_time_cron": "0 0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT",
+        ...     "end_time_cron": "0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN",
+        ...     "start_time": "09:00",
+        ...     "end_time": "17:00",
+        ...     "days": ["FRI", "MON", "SAT", "SUN", "THU", "TUE", "WED"],
+        ...     "time_zone": "America/Vancouver"
+        ...     },
+        ... )
+        ... if error:
+        ...     print(f"Error updating PRA approval: {error}")
+        ...     return
+        ... print(f"PRA approval updated successfully: {updated_approval.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -219,11 +282,7 @@ class PRAApprovalAPI(APIClient):
         """
         )
 
-        # Start with an empty body or an existing resource's current data
-        body = {}
-
-        # Update the body with the fields passed in kwargs
-        body.update(kwargs)
+        body = kwargs
 
         # Convert start_time and end_time to epoch format
         start_time = body.pop("start_time", None)
@@ -231,7 +290,7 @@ class PRAApprovalAPI(APIClient):
         working_hours = body.get("working_hours", {})
 
         if start_time and end_time:
-            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours.get("time_zone"))
+            start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, working_hours["time_zone"])
             body.update({"startTime": start_epoch, "endTime": end_epoch})
 
         # Add applications and working hours to the body
@@ -281,7 +340,11 @@ class PRAApprovalAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_approval(self, approval_id: str, microtenant_id: str = None) -> tuple:
+    def delete_approval(
+        self,
+        approval_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes a specified privileged remote access approval.
 
@@ -291,6 +354,15 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
+            
+        Examples:
+        >>> _, _, err = client.zpa.pra_approval.delete_approval(
+        ... approval_id=99999
+        ... )
+        ... if err:
+        ...     print(f"Error deleting approval: {err}")
+        ...     return
+        ... print(f"PRA Approval with ID {99999} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

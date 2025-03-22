@@ -179,7 +179,6 @@ class SubCloudsAPI(APIClient):
             return (None, response, error)
 
         try:
-            # Convert the list of dictionaries to `LastDCInCountry` objects
             result = [
                 LastDCInCountry(item) for item in response.get_body()
             ]

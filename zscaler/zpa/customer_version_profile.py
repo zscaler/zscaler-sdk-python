@@ -50,9 +50,15 @@ class CustomerVersionProfileAPI(APIClient):
         Examples:
             List all visibile version profiles:
 
-            >>> for profile in zpa.connectors.list_version_profiles():
-            ...    print(profile)
-
+        Examples:
+            >>> version_list, _, err = client.zpa.customer_version_profile.list_version_profiles(
+            ... query_params={'search': 'Default', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing version profiles: {err}")
+            ...     return
+            ... print(f"Total version profiles found: {len(version_list)}")
+            ... for pra in version_list:
+            ...     print(pra.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -64,13 +70,11 @@ class CustomerVersionProfileAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:

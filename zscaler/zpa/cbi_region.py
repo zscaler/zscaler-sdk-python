@@ -39,8 +39,10 @@ class CBIRegionAPI(APIClient):
             tuple: A tuple containing a list of `CBIRegion` instances, response object, and error if any.
 
         Examples:
-            >>> for region in zpa.isolation.list_cbi_regions():
-            ...    pprint(region)
+            >>> region_list, _, err = client.zpa.cbi_region.list_cbi_regions()
+            ... if err:
+            ...     print(f"Error listing regions: {err}")
+            ...     return
         """
         http_method = "get".upper()
         api_url = format_url(

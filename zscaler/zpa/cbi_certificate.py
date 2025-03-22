@@ -36,7 +36,16 @@ class CBICertificateAPI(APIClient):
         Returns a list of all cloud browser isolation certificates.
 
         Returns:
-            tuple: A tuple containing a list of `CBICertificate` instances, response object, and error if any.
+            :obj:`Tuple`: A tuple containing a list of `CBICertificate` instances, response object, and error if any.
+
+        Examples:
+            >>> cert_list, _, err = client.zpa.cbi_certificate.list_cbi_certificates(
+            ... if err:
+            ...     print(f"Error listing certificates: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(certs_list)}")
+            ... for certificate in certs_list:
+            ...     print(certificate.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -72,7 +81,15 @@ class CBICertificateAPI(APIClient):
             certificate_id (str): The unique identifier for the cloud browser isolation certificate.
 
         Returns:
-            tuple: A tuple containing the `CBICertificate` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `CBICertificate` instance, response object, and error if any.
+    
+        Examples:
+            >>> fetched_cert, _, err = client.zpa.pra_portal.get_portal(
+                'a3a6b841-965c-4c75-8dd9-cefd83d740d4')
+            ... if err:
+            ...     print(f"Error fetching certificate by ID: {err}")
+            ...     return
+            ... print(f"Fetched certificate by ID: {fetched_certificate.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(f"""
@@ -107,18 +124,17 @@ class CBICertificateAPI(APIClient):
             pem (str): The content of the certificate in PEM format.
 
         Returns:
-            tuple: A tuple containing the `CBICertificate` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `CBICertificate` instance, response object, and error if any.
 
         Examples:
             Creating a Cloud browser isolation with the minimum required parameters:
 
-            >>> zpa.isolation.add_certificate(
+            >>> added_certificate, _, err = client.zpa.cbi_certificate.add_cbi_certificate(
             ...   name='new_certificate',
             ...   pem=("-----BEGIN CERTIFICATE-----\\n"
             ...              "nMIIF2DCCA8CgAwIBAgIBATANBgkqhkiG==\\n"
             ...              "-----END CERTIFICATE-----"),
             )
-
         """
         http_method = "post".upper()
         api_url = format_url(f"""
@@ -126,16 +142,13 @@ class CBICertificateAPI(APIClient):
             /certificate
         """)
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, CBICertificate)
         if error:
@@ -149,7 +162,11 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> tuple:
+    def update_cbi_certificate(
+        self,
+        certificate_id: str, 
+        **kwargs
+    ) -> tuple:
         """
         Updates an existing cloud browser isolation certificate.
 
@@ -162,10 +179,14 @@ class CBICertificateAPI(APIClient):
         Examples:
             Updating the name of a Cloud browser isolation:
 
-            >>> zpa.isolation.update_certificate(
-            ...   name='new_certificate',
-            ...   pem=("-----BEGIN CERTIFICATE-----\\n"
-            ...              "MIIFNzCCBIHNIHIO==\\n"
+        Examples:
+            Creating a Cloud browser isolation with the minimum required parameters:
+
+            >>> updated_certificate, _, err = client.zpa.cbi_certificate.update_cbi_certificate(
+            ...     certificate_id='a3a6b841-965c-4c75-8dd9-cefd83d740d4'
+            ...     name='new_certificate',
+            ...     pem=("-----BEGIN CERTIFICATE-----\\n"
+            ...              "nMIIF2DCCA8CgAwIBAgIBATANBgkqhkiG==\\n"
             ...              "-----END CERTIFICATE-----"),
             )
         """
@@ -175,13 +196,10 @@ class CBICertificateAPI(APIClient):
             /certificates/{certificate_id}
         """)
 
-        # Start with an empty body or an existing resource's current data
         body = {}
 
-        # Update the body with the fields passed in kwargs
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, {})
         if error:
@@ -205,7 +223,10 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cbi_certificate(self, certificate_id: str) -> tuple:
+    def delete_cbi_certificate(
+        self,
+        certificate_id: str
+    ) -> tuple:
         """
         Deletes the specified cloud browser isolation certificate.
 
@@ -214,6 +235,15 @@ class CBICertificateAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error if any.
+
+        Examples:
+            >>> _, _, err = client.zpa.cbi_certificate.delete_cbi_certificate(
+            ...     certificate_id='a3a6b841-965c-4c75-8dd9-cefd83d740d4'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting cbi certificate: {err}")
+            ...     return
+            ... print(f"CBI Certificate with ID {updated_certificate.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(f"""

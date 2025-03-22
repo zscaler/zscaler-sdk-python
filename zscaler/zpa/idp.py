@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.idp import IDP
+from zscaler.zpa.models.idp import IDPController
 from zscaler.utils import format_url
 
 
@@ -47,7 +47,19 @@ class IDPControllerAPI(APIClient):
                 ``[query_params.user_attributes]`` {bool}: Returns user attributes.
 
         Returns:
-            tuple: A tuple containing (list of IDP instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of IDP instances, Response, error)
+            
+        Examples:
+            Retrieve enrollment certificates with pagination parameters:
+            
+            >>> idp_list, _, err = client.zpa.idp.list_idps(
+            ... query_params={'search': 'IDP01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing idps: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(idp_list)}")
+            ... for idp in idp_list:
+            ...     print(idp.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -59,17 +71,14 @@ class IDPControllerAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -78,7 +87,7 @@ class IDPControllerAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(IDP(
+                result.append(IDPController(
                     self.form_response_body(item))
                 )
         except Exception as error:
@@ -93,7 +102,14 @@ class IDPControllerAPI(APIClient):
             idp_id (str): The unique identifier for the identity provider.
 
         Returns:
-            IDP: The corresponding identity provider object.
+            :obj:`Tuple`: The corresponding identity provider object.
+            
+        Examples:
+            >>> fetched_cert, _, err = client.zpa.certificates.get_enrolment('999999')
+            ... if err:
+            ...     print(f"Error fetching certificate by ID: {err}")
+            ...     return
+            ... print(fetched_cert.id)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -103,26 +119,23 @@ class IDPControllerAPI(APIClient):
         """
         )
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, IDP)
+            .execute(request, IDPController)
 
         if error:
             return (None, response, error)
 
         try:
-            result = IDP(
+            result = IDPController(
                 self.form_response_body(response.get_body())
             )
         except Exception as error:

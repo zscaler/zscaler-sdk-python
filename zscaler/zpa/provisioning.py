@@ -49,7 +49,11 @@ class ProvisioningKeyAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_provisioning_keys(self, key_type: str, query_params=None) -> tuple:
+    def list_provisioning_keys(
+        self,
+        key_type: str,
+        query_params=None
+    ) -> tuple:
         """
         Returns a list of all configured provisioning keys that match the specified ``key_type``.
 
@@ -59,8 +63,8 @@ class ProvisioningKeyAPI(APIClient):
 
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
@@ -69,13 +73,27 @@ class ProvisioningKeyAPI(APIClient):
         Examples:
             List all App Connector Groups provisioning keys:
 
-            >>> for key in zpa.provisioning.list_provisioning_keys(key_type="connector"):
-            ...    print(key)
+            >>> key_list, _, err = client.zpa.provisioning.list_provisioning_keys(
+            ... key_type=connector
+            ... query_params={'search': 'Connector_ProvKey01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing provisioning key: {err}")
+            ...     return
+            ... print(f"Total provisioning key found: {len(key_list)}")
+            ... for key in key_list:
+            ...     print(keys.as_dict())
 
             List all Service Edge Groups provisioning keys:
 
-            >>> for key in zpa.provisioning.list_provisioning_keys(key_type="service_edge"):
-            ...    print(key)
+            >>> key_list, _, err = client.zpa.provisioning.list_provisioning_keys(
+            ... key_type=service_edge
+            ... query_params={'search': 'ServiceEdge_ProvKey01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing provisioning key: {err}")
+            ...     return
+            ... print(f"Total provisioning key found: {len(key_list)}")
+            ... for key in key_list:
+            ...     print(keys.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -90,13 +108,11 @@ class ProvisioningKeyAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -112,7 +128,12 @@ class ProvisioningKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_provisioning_key(self, key_id: str, key_type: str, query_params=None) -> tuple:
+    def get_provisioning_key(
+        self,
+        key_id: str,
+        key_type: str,
+        query_params=None
+    ) -> tuple:
         """
         Returns information on the specified provisioning key.
 
@@ -130,19 +151,22 @@ class ProvisioningKeyAPI(APIClient):
         Examples:
             Get the specified App Connector key.
 
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("999999",
-            ...    key_type="connector")
+        Examples:
+            >>> fetched_key, _, err = client.zpa.provisioning.get_provisioning_key(
+                key_id='9999', key_type=connector
+            ... if err:
+            ...     print(f"Error fetching provisioning key by ID: {err}")
+            ...     return
+            ... print(f"Fetched provisioning key by ID: {fetched_key.as_dict()}")
 
             Get the specified Service Edge key.
 
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("888888",
-            ...    key_type="service_edge")
-
-            Get the specified App Connector key for a microtenant.
-
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("999999",
-            ...    key_type="connector", microtenant_id="12345")
-
+            >>> fetched_key, _, err = client.zpa.provisioning.get_provisioning_key(
+                key_id='9999', key_type=service_edge
+            ... if err:
+            ...     print(f"Error fetching provisioning key by ID: {err}")
+            ...     return
+            ... print(f"Fetched provisioning key by ID: {fetched_key.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -175,7 +199,11 @@ class ProvisioningKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_provisioning_key(self, key_type: str, **kwargs) -> tuple:
+    def add_provisioning_key(
+        self,
+        key_type: str,
+        **kwargs
+    ) -> tuple:
         """
         Adds a new provisioning key to ZPA.
 
@@ -192,6 +220,20 @@ class ProvisioningKeyAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The newly created Provisioning Key resource record.
+            
+        Examples:
+            >>> new_prov_key, _, err = zpa.provisioning.add_provisioning_key(
+            ...     key_type=key_type,
+            ...     name=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     description=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     max_usage="10",
+            ...     enrollment_cert_id="2519",
+            ...     component_id="72058304855047746",
+            ... )
+            ... if err:
+            ...     print(f"Error creating provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key created successfully: {new_prov_key.as_dict()}")
         """
         if not key_type:
             raise ValueError("key_type must be provided.")
@@ -246,7 +288,12 @@ class ProvisioningKeyAPI(APIClient):
 
         return (result, response, None)
 
-    def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> tuple:
+    def update_provisioning_key(
+        self,
+        key_id: str,
+        key_type: str,
+        **kwargs
+    ) -> tuple:
         """
         Updates the specified provisioning key.
 
@@ -264,6 +311,22 @@ class ProvisioningKeyAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The updated Provisioning Key resource record.
+            
+        Examples:
+        
+            Updated Provisioning Key `max_usage` to `20`
+            >>> update_prov_key, _, err = zpa.provisioning.add_provisioning_key(
+            ...     key_type=key_type,
+            ...     name=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     description=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     max_usage="20",
+            ...     enrollment_cert_id="2519",
+            ...     component_id="72058304855047746",
+            ... )
+            ... if err:
+            ...     print(f"Error creating provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key created successfully: {new_prov_key.as_dict()}")
         """
         if not key_type:
             raise ValueError("key_type must be provided.")
@@ -326,16 +389,25 @@ class ProvisioningKeyAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            Delete an App Connector provisioning key:
-
-            >>> zpa.provisioning.delete_provisioning_key(key_id="999999",
-            ...    key_type="connector")
-
             Delete a Service Edge provisioning key:
+            
+            >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
+            ... key_id='9999', key_type='connector')
+            ... if err:
+            ...     print(f"Error deleting provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
 
-            >>> zpa.provisioning.delete_provisioning_key(key_id="888888",
-            ...    key_type="service_edge")
-
+        Examples:
+        
+            Delete a Service Edge provisioning key:
+            
+            >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
+            ... key_id='9999', key_type='service_edge')
+            ... if err:
+            ...     print(f"Error deleting provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -345,16 +417,13 @@ class ProvisioningKeyAPI(APIClient):
         """
         )
 
-        # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:

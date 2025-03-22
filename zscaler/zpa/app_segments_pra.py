@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment_pra import ApplicationSegmentPRA
+from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
 
 
@@ -32,6 +33,7 @@ class AppSegmentsPRAAPI(APIClient):
     def __init__(self, request_executor, config):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
+        self.config = config
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
@@ -50,8 +52,17 @@ class AppSegmentsPRAAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (list of AppSegmentsPRA instances, Response, error)
+            
+        Examples:
+            >>> segment_list, _, err = client.zpa.app_segments_pra.list_segments_pra(
+            ... query_params={'search': 'AppSegmentPRA01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing application segment pra: {err}")
+            ...     return
+            ... print(f"Total application segment pra found: {len(segment_list)}")
+            ... for app in segments:
+            ...     print(app.as_dict())
         """
-        # Initialize URL and HTTP method
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -68,13 +79,11 @@ class AppSegmentsPRAAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -96,7 +105,14 @@ class AppSegmentsPRAAPI(APIClient):
             segment_id (str): The unique ID for the application segment.
 
         Returns:
-            tuple: A tuple containing (ApplicationSegment, Response, error)
+            :obj:`Tuple`: A tuple containing (ApplicationSegment, Response, error)
+            
+        Examples:
+            >>> fetched_segment, _, err = client.zpa.app_segments_pra.get_segment_pra('999999')
+            ... if err:
+            ...     print(f"Error fetching segment by ID: {err}")
+            ...     return
+            ... print(f"Fetched segment by ID: {fetched_segment.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -112,83 +128,101 @@ class AppSegmentsPRAAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)
 
-        # Parse the response into an AppConnectorGroup instance
         try:
-            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
+            result = ApplicationSegmentPRA(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     def add_segment_pra(self, **kwargs) -> tuple:
         """
-        Add a new application segment.
+        Create a new Privileged Remote Access (PRA) application segment.
 
         Args:
-            segment_group_id (str):
-                The unique identifer for the segment group this application segment belongs to.
-            udp_ports (:obj:`list` of :obj:`str`):
-                List of udp port range pairs, e.g. ['35000', '35000'] for port 35000.
-            tcp_ports (:obj:`list` of :obj:`str`):
-                List of tcp port range pairs, e.g. ['22', '22'] for port 22-22, ['80', '100'] for 80-100.
-            domain_names (:obj:`list` of :obj:`str`):
-                List of domain names or IP addresses for the application segment.
-            name (str):
-                The name of the application segment.
-            server_group_ids (:obj:`list` of :obj:`str`):
-                The list of server group IDs that belong to this application segment.
-            **kwargs:
-                Optional keyword args.
+            name (str): **Required**. Name of the application segment (user-defined).
+            domain_names (list[str]): **Required**. Domain names or IP addresses for the segment.
+            segment_group_id (str): **Required**. Unique identifier for the segment group.
+            server_group_ids (list[str]): **Required**. List of server group IDs this segment belongs to.
+            tcp_port_ranges (list[str], optional): **Legacy format**. TCP port range pairs (e.g., `['22', '22']`).
+            udp_port_ranges (list[str], optional): **Legacy format**. UDP port range pairs (e.g., `['35000', '35000']`).
+            tcp_port_range (list[dict], optional): **New format**. TCP port range pairs `[{"from": "8081", "to": "8081"}]`.
+            udp_port_range (list[dict], optional): **New format**. UDP port range pairs `[{"from": "8081", "to": "8081"}]`.
 
         Keyword Args:
-            bypass_type (str):
-                The type of bypass for the Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            config_space (str):
-                The config space for this Application Segment. Accepted values are `DEFAULT` and `SIEM`.
-            default_idle_timeout (int):
-                The Default Idle Timeout for the Application Segment.
-            default_max_age (int):
-                The Default Max Age for the Application Segment.
-            description (str):
-                Additional information about this Application Segment.
-            double_encrypt (bool):
-                Double Encrypt the Application Segment micro-tunnel.
-            enabled (bool):
-                Enable the Application Segment.
-            health_check_type (str):
-                Set the Health Check Type. Accepted values are `DEFAULT` and `NONE`.
-            health_reporting (str):
-                Set the Health Reporting. Accepted values are `NONE`, `ON_ACCESS` and `CONTINUOUS`.
-            ip_anchored (bool):
-                Enable IP Anchoring for this Application Segment.
-            is_cname_enabled (bool):
-                Enable CNAMEs for this Application Segment.
-            passive_health_enabled (bool):
-                Enable Passive Health Checks for this Application Segment.
+            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
+            config_space (str): Config space for the segment. Values: `DEFAULT`, `SIEM`.
+            description (str): Additional information about the segment.
+            double_encrypt (bool): If true, enables double encryption.
+            enabled (bool): If true, enables the application segment.
+            health_check_type (str): Health Check Type. Values: `DEFAULT`, `NONE`.
+            health_reporting (str): Health Reporting mode. Values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
+            ip_anchored (bool): If true, enables IP Anchoring.
+            is_cname_enabled (bool): If true, enables CNAMEs for the segment.
+            passive_health_enabled (bool): If true, enables Passive Health Checks.
             icmp_access_type (str): Sets ICMP access type for ZPA clients.
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
+
+            common_apps_dto (dict, optional): Dictionary containing application-specific configurations.
+
+                - **apps_config** (list[dict], optional): List of application configuration blocks.
+
+                - **application_port** (str): The port used by the application.
+                - **application_protocol** (str): The protocol used (e.g., `RDP`, `SSH`).
+                - **connection_security** (str): The security mode for connections.  
+                    Values: `ANY`, `NLA`, `NLA_EXT`, `TLS`, `VM_CONNECT`, `RDP`.
+                - **enabled** (bool): Whether the application is enabled.
+                - **domain** (str): The domain name of the application.
+                - **name** (str): The name of the application.
 
         Returns:
-            tuple: A tuple containing (ApplicationSegment, Response, error)
+            tuple: A tuple containing:
+
+                - **ApplicationSegment**: The newly created application segment instance.
+                - **Response**: The raw API response object.
+                - **Error**: An error message, if applicable.
 
         Examples:
-            Add a new application segment for example.com, ports 8080-8085.
 
-            >>> zpa.app_segments_pra.add_segment('new_app_segment',
-            ...    domain_names=['example.com'],
-            ...    segment_group_id='99999',
-            ...    tcp_ports=['8080', '8085'],
-            ...    server_group_ids=['99999', '88888'])
+            Create an application segment using **new TCP port format** (`tcp_port_range`):
+
+            >>> added_segment, _, err = client.zpa.app_segments_pra.add_segment_pra(
+            ...     name=f"NewPRASegment_{random.randint(1000, 10000)}",
+            ...     description=f"NewPRASegment_{random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     domain_names=["rdp_pra01.acme.com"],
+            ...     segment_group_id="72058304855089379",
+            ...     server_group_ids=["72058304855090128"],
+            ...     tcp_port_range=[{"from": "3389", "to": "3389"}],
+            ...     udp_port_range=[{"from": "3389", "to": "3389"}],
+            ...     common_apps_dto={
+            ...         "apps_config": [
+            ...             {
+            ...                 "application_port": "3389",
+            ...                 "application_protocol": "RDP",
+            ...                 "connection_security": "ANY",
+            ...                 "enabled": True,
+            ...                 "domain": "rdp_pra01.acme.com",
+            ...                 "name": "rdp_pra01.acme.com",
+            ...             }
+            ...         ]
+            ...     },
+            ... )
+            >>> if err:
+            ...     print(f"Error creating segment: {err}")
+            ... else:
+            ...     print(f"Segment created successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -198,7 +232,6 @@ class AppSegmentsPRAAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
         # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
@@ -209,11 +242,14 @@ class AppSegmentsPRAAPI(APIClient):
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Add common_apps_dto if provided
+        # Auto-add `"app_types": ["SECURE_REMOTE_ACCESS"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
-        if common_apps_dto:
-            body["commonAppsDto"] = common_apps_dto
+        if common_apps_dto and "apps_config" in common_apps_dto:
+            for app_config in common_apps_dto["apps_config"]:
+                if "app_types" not in app_config:  # Only add if missing
+                    app_config["app_types"] = ["SECURE_REMOTE_ACCESS"]
 
+        body["commonAppsDto"] = common_apps_dto  # Update the request payload
         # Process TCP and UDP port attributes
         if "tcp_port_ranges" in body:
             # Use format 1 (tcpPortRanges)
@@ -262,6 +298,38 @@ class AppSegmentsPRAAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (ApplicationSegment, Response, error)
+            
+        Examples:
+
+           Create an application segment using **new TCP port format** (`tcp_port_range`):
+
+            >>> updated_segment, _, err = client.zpa.app_segments_pra.update_segment_pra(
+            ...     segment_id='9999999'
+            ...     name=f"UpdatePRASegment_{random.randint(1000, 10000)}",
+            ...     description=f"UpdatePRASegment_{random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     domain_names=["rdp_pra01.acme.com"],
+            ...     segment_group_id="72058304855089379",
+            ...     server_group_ids=["72058304855090128"],
+            ...     tcp_port_range=[{"from": "3389", "to": "3389"}],
+            ...     udp_port_range=[{"from": "3389", "to": "3389"}],
+            ...     common_apps_dto={
+            ...         "apps_config": [
+            ...             {
+            ...                 "application_port": "3389",
+            ...                 "application_protocol": "RDP",
+            ...                 "connection_security": "ANY",
+            ...                 "enabled": True,
+            ...                 "domain": "rdp_pra01.acme.com",
+            ...                 "name": "rdp_pra01.acme.com",
+            ...             }
+            ...         ]
+            ...     },
+            ... )
+            ... if err:
+            ...     print(f"Error updating segment: {err}")
+            ...     return
+            ... print(f"segment updated successfully: {updated_segment.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -282,10 +350,39 @@ class AppSegmentsPRAAPI(APIClient):
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Add common_apps_dto if provided
+        # Ensure `app_types` is set in `commonAppsDto.apps_config`
         common_apps_dto = kwargs.get("common_apps_dto")
-        if common_apps_dto:
-            body["commonAppsDto"] = common_apps_dto
+        if common_apps_dto and "apps_config" in common_apps_dto:
+            for app_config in common_apps_dto["apps_config"]:
+                if "app_types" not in app_config:  # Only set if missing
+                    app_config["app_types"] = ["SECURE_REMOTE_ACCESS"]
+
+            body["commonAppsDto"] = common_apps_dto  # Update the request payload
+
+        # Fetch Secure Remote Access apps (same logic as before)
+        if common_apps_dto and "apps_config" in common_apps_dto:
+            app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
+
+            # Fetch all SECURE_REMOTE_ACCESS apps (no filtering, so we get everything)
+            segments_list, _, err = app_segment_api.get_segments_by_type(application_type="SECURE_REMOTE_ACCESS", query_params={})
+
+            if err:
+                return (None, None, f"Error fetching application segment data: {err}")
+
+            # Step 2: Find the correct entry where `appId == segment_id`
+            matched_segment = next((app for app in segments_list if app.get("appId") == segment_id), None)
+
+            if not matched_segment:
+                return (None, None, f"Error: No matching PRA App found with appId '{segment_id}' in existing segments.")
+
+            pra_app_id = matched_segment["id"]  # Extract correct `id`
+
+            # Step 3: Assign `appId` and `praAppId`
+            for app_config in common_apps_dto["apps_config"]:
+                app_config["app_id"] = segment_id  # Auto-assign appId (segment_id)
+                app_config["pra_app_id"] = pra_app_id  # Auto-assign praAppId
+
+            body["commonAppsDto"] = common_apps_dto  # Update the request payload
 
         # Process TCP and UDP port attributes
         if "tcp_port_ranges" in body:

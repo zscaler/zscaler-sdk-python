@@ -237,7 +237,11 @@ class SandboxRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> tuple:
+    def update_rule(
+        self,
+        rule_id: int,
+        **kwargs
+    ) -> tuple:
         """
         Updates an existing sandbox filter rule.
 

@@ -46,10 +46,20 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else "Default"
                 
-            # Handling the nested PRA Application
-            self.pra_application = application_segment_pra.ApplicationSegmentPRA(config["praApplication"]) \
-                if "praApplication" in config else None
+            # # Handling the nested PRA Application
+            # self.pra_application = application_segment_pra.ApplicationSegmentPRA(config["praApplication"]) \
+            #     if "praApplication" in config else None
 
+            if "praApplication" in config:
+                if isinstance(config["praApplication"], PRAApplication):
+                    self.pra_application = config["praApplication"]
+                elif config["praApplication"] is not None:
+                    self.pra_application = PRAApplication(config["praApplication"])
+                else:
+                    self.pra_application = None
+            else:
+                self.pra_application = None
+                
             # Handling the nested PRA Portals (list)
             self.pra_portals = ZscalerCollection.form_list(
                 config["praPortals"], pra_portal.PrivilegedRemoteAccessPortal
@@ -82,3 +92,90 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
                 if self.pra_application else None,
             "praPortals": [portal.request_format() for portal in self.pra_portals],
         }
+        
+class PRAApplication(ZscalerObject):
+    """
+    A class for PRAApplication objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the PRAApplication model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.app_id = config["appId"] \
+                if "appId" in config else None
+            self.application_port = config["applicationPort"] \
+                if "applicationPort" in config else None
+            self.application_protocol = config["applicationProtocol"] \
+                if "applicationProtocol" in config else None
+            self.connection_security = config["connectionSecurity"] \
+                if "connectionSecurity" in config else None
+            self.creation_time = config["creationTime"] \
+                if "creationTime" in config else None
+            self.description = config["description"] \
+                if "description" in config else None
+            self.domain = config["domain"] \
+                if "domain" in config else None
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.hidden = config["hidden"] \
+                if "hidden" in config else None
+            self.id = config["id"] \
+                if "id" in config else None
+            self.modified_by = config["modifiedBy"] \
+                if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] \
+                if "modifiedTime" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.microtenant_id = config["microtenantId"] \
+                if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] \
+                if "microtenantName" in config else None
+        else:
+            self.app_id = None
+            self.application_port = None
+            self.application_protocol = None
+            self.connection_security = None
+            self.creation_time = None
+            self.description = None
+            self.domain = None
+            self.enabled = None
+            self.hidden = None
+            self.id = None
+            self.modified_by = None
+            self.modified_time = None
+            self.name = None
+            self.microtenant_id = None
+            self.microtenant_name = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "appId": self.app_id,
+            "applicationPort": self.application_port,
+            "applicationProtocol": self.application_protocol,
+            "connectionSecurity": self.connection_security,
+            "creationTime": self.creation_time,
+            "description": self.description,
+            "domain": self.domain,
+            "enabled": self.enabled,
+            "hidden": self.hidden,
+            "id": self.id,
+            "modifiedBy": self.modified_by,
+            "modifiedTime": self.modified_time,
+            "name": self.name,
+            "microtenantId": self.microtenant_id,
+            "microtenantName": self.microtenant_name
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

@@ -50,14 +50,17 @@ class AppConnectorControllerAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
-            tuple: A tuple containing (list of App Connector instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of App Connector instances, Response, error)
 
         Examples:
-            List all configured App Connectors:
-
-            >>> for connector in zpa.connectors.list_connectors():
-            ...    print(connector)
-
+            >>> connector_list, _, err = client.zpa.app_connectors.list_connectors(
+            ... query_params={'search': 'Connector01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing app connector: {err}")
+            ...     return
+            ... print(f"Total app connector found: {len(connector_list)}")
+            ... for connector in connector_list:
+            ...     print(connector.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -72,25 +75,31 @@ class AppConnectorControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
-        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(AppConnectorController(self.form_response_body(item)))
+                result.append(AppConnectorController(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_connector(self, connector) -> tuple:
+    def get_connector(
+        self,
+        connector_id: str,
+        query_params=None
+    ) -> tuple:
         """
         Returns information on the specified App Connector.
 
@@ -101,44 +110,48 @@ class AppConnectorControllerAPI(APIClient):
             :obj:`Tuple`: The specified App Connector resource record.
 
         Examples:
-            >>> app_connector = zpa.connectors.get_connector('99999')
-
+            >>> fetched_connector, _, err = client.zpa.app_connectors.get_connector('999999')
+            ... if err:
+            ...     print(f"Error fetching connector by ID: {err}")
+            ...     return
+            ... print(f"Fetched connector by ID: {fetched_connector.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
             f"""{
             self._zpa_base_endpoint}
-            /connector
+            /connector/{connector_id}
         """
         )
 
-        # Ensure connector_group is a dictionary
-        if isinstance(connector, dict):
-            body = connector
-        else:
-            body = connector.as_dict()
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
-        microtenant_id = body.get("microtenant_id", None)
-        params = {"microtenantId": microtenant_id} if microtenant_id else {}
-
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorController)
+        response, error = self._request_executor\
+            .execute(request, AppConnectorController)
         if error:
             return (None, response, error)
 
         try:
-            result = AppConnectorController(self.form_response_body(response.get_body()))
+            result = AppConnectorController(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_connector(self, connector_id: str, connector) -> tuple:
+    def update_connector(
+        self,
+        connector_id: str,
+        **kwargs
+    ) -> tuple:
         """
         Updates an existing ZPA App Connector.
 
@@ -146,20 +159,26 @@ class AppConnectorControllerAPI(APIClient):
             connector_id (str): The unique id of the ZPA App Connector.
 
         Keyword Args:
+            **name (str): The name of the App Connector.
             **description (str): Additional information about the App Connector.
             **enabled (bool): True if the App Connector is enabled.
-            **name (str): The name of the App Connector.
 
         Returns:
             :obj:`Tuple`: The updated App Connector resource record.
 
         Examples:
-            Update an App Connector name and disable it.
+            Update an App Connector name, description and disable it.
 
-            >>> app_connector = zpa.connectors.update_connector('999999',
-            ...    name="Updated App Connector Name",
-            ...    enabled=False)
-
+            >>> update_group, _, err = client.zpa.app_connectors.update_connector(
+            ...     connector_id='99999'
+            ...     name=f"UpdateAppConnector_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateAppConnector_{random.randint(1000, 10000)}",
+            ...     enabled=False,
+            ... )
+            ... if err:
+            ...     print(f"Error creating connector: {err}")
+            ...     return
+            ... print(f"connector created successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -169,23 +188,20 @@ class AppConnectorControllerAPI(APIClient):
         """
         )
 
-        # Ensure the connector_group is in dictionary format
-        if isinstance(connector, dict):
-            body = connector
-        else:
-            body = connector.as_dict()
+        body = {}
 
-        # Use get instead of pop to keep microtenant_id in the body
+        body.update(kwargs)
+
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, AppConnectorController)
+        response, error = self._request_executor\
+            .execute(request, AppConnectorController)
         if error:
             return (None, response, error)
 
@@ -196,12 +212,18 @@ class AppConnectorControllerAPI(APIClient):
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = AppConnectorController(self.form_response_body(response.get_body()))
+            result = AppConnectorController(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_connector(self, connector_id: str, microtenant_id: str = None) -> tuple:
+    def delete_connector(
+        self,
+        connector_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes the specified App Connector from ZPA.
 
@@ -212,8 +234,13 @@ class AppConnectorControllerAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zpa.connectors.delete_connector('999999')
-
+            >>> _, _, err = client.zpa.app_connectors.delete_connector(
+            ...     connector_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting app connector: {err}")
+            ...     return
+            ... print(f"app connector with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -223,22 +250,25 @@ class AppConnectorControllerAPI(APIClient):
         """
         )
 
-        # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 
         return (None, response, None)
 
-    def bulk_delete_connectors(self, connector_ids: list, microtenant_id: str = None) -> tuple:
+    def bulk_delete_connectors(
+        self,
+        connector_ids: list,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Deletes all specified App Connectors from ZPA.
 
@@ -249,8 +279,12 @@ class AppConnectorControllerAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zpa.connectors.bulk_delete_connectors(['111111', '222222', '333333'])
-
+            >>> _, _, err = client.zpa.app_connectors.bulk_delete_connectors(
+            ...     connector_ids=['72058304855098016', '72058304855098017'])
+            ... if err:
+            ...     print(f"Error deleting connectors: {err}")
+            ...     return
+            ... print("Connectors deleted successfully.")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -260,19 +294,18 @@ class AppConnectorControllerAPI(APIClient):
         """
         )
 
-        # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         payload = {"ids": connector_ids}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, payload, params=params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 

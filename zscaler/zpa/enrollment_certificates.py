@@ -45,7 +45,19 @@ class EnrollmentCertificateAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of EnrollmentCertificate instances, Response, error)
+            :obj:`Tuple`: A tuple containing (list of EnrollmentCertificate instances, Response, error)
+            
+        Examples:
+            Retrieve enrollment certificates with pagination parameters:
+            
+            >>> cert_list, _, err = client.zpa.enrollment_certificates.list_enrolment(
+            ... query_params={'search': 'Connector', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing certificates: {err}")
+            ...     return
+            ... print(f"Total certificates found: {len(cert_list)}")
+            ... for cert in cert_list:
+            ...     print(cert.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -57,17 +69,14 @@ class EnrollmentCertificateAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -91,7 +100,14 @@ class EnrollmentCertificateAPI(APIClient):
             certificate_id (str): The unique ID of the enrollment certificate.
 
         Returns:
-            tuple: A tuple containing the `EnrollmentCertificate` instance, response object, and error if any.
+            :obj:`Tuple`: A tuple containing the `EnrollmentCertificate` instance, response object, and error if any.
+            
+        Examples:
+            >>> fetched_cert, _, err = client.zpa.certificates.get_enrolment('999999')
+            ... if err:
+            ...     print(f"Error fetching certificate by ID: {err}")
+            ...     return
+            ... print(fetched_cert.id)
         """
         http_method = "get".upper()
         api_url = format_url(

@@ -532,6 +532,16 @@ class LegacyZIAClientHelper:
         return EndUserNotificationAPI(self.request_executor)
 
     @property
+    def ipv6_config(self):
+        """
+        The interface object for the :ref:`ZIA Traffic IPV6 Configuration <zia-ipv6_config>`.
+
+        """
+        from zscaler.zia.ipv6_config import TrafficIPV6ConfigAPI
+
+        return TrafficIPV6ConfigAPI(self.request_executor)
+
+    @property
     def file_type_control_rule(self):
         """
         The interface object for the :ref:`ZIA File Type Control Rule interface <zia-file_type_control_rule>`.
@@ -660,12 +670,12 @@ class LegacyZIAClientHelper:
         return TrafficExtranetAPI(self.request_executor)
 
     @property
-    def traffic_gre_tunnel(self):
+    def gre_tunnel(self):
         """
-        The interface object for the :ref:`ZIA Traffic Forwarding interface <zia-traffic_gre_tunnel>`.
+        The interface object for the :ref:`ZIA Traffic GRE Tunnel interface <zia-gre_tunnel>`.
 
         """
-        from zscaler.zia.traffic_gre_tunnels import TrafficForwardingGRETunnelAPI
+        from zscaler.zia.gre_tunnel import TrafficForwardingGRETunnelAPI
 
         return TrafficForwardingGRETunnelAPI(self.request_executor)
 
