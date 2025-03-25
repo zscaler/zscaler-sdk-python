@@ -77,7 +77,7 @@ class ZIAService:
         The interface object for the :ref:`ZIA Activation interface <zia-activate>`.
 
         """
-        return ActivationAPI(self)
+        return ActivationAPI(self._request_executor)
 
     @property
     def admin_roles(self):

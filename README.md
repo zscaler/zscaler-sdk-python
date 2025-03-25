@@ -409,6 +409,8 @@ zscaler:
   client:
     clientId: { yourClientId }
     clientSecret: { yourClientSecret }
+    vanityDomain: { yourVanityDomain }
+    customerId: { yourCustomerId}
     proxy:
       port: { proxy_port }
       host: { proxy_host }
@@ -433,6 +435,8 @@ zscaler:
       THQdM5PIlot6XmeV1KUKuzw2ewDeb5zcasA4QHPcSVh2+KzbttPQ+RUXCUAr5t+r
       0r6gBc5Dy1IPjCFsqsPJXFwqe3RzUb...
       -----END RSA PRIVATE KEY-----
+    vanityDomain: { yourVanityDomain }
+    customerId: { yourCustomerId}
     proxy:
       port: { proxy_port }
       host: { proxy_host }
