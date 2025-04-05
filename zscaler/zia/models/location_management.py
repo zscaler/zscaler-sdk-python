@@ -18,6 +18,8 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 from zscaler.zia.models import traffic_vpn_credentials as vpn_credentials
+from zscaler.zia.models import common as common
+
 class LocationManagement(ZscalerObject):
     """
     A class representing a Location object.
@@ -25,6 +27,9 @@ class LocationManagement(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
+        # print("🚨 Raw config passed into LocationManagement:")
+        # import pprint
+        # pprint.pprint(config)
         if config:
             self.id = config["id"]\
                 if "id" in config else None
@@ -33,23 +38,23 @@ class LocationManagement(ZscalerObject):
             self.non_editable = config["nonEditable"]\
                 if "nonEditable" in config else False
             self.parent_id = config["parentId"]\
-                if "parentId" in config else 0
+                if "parentId" in config else None
             self.up_bandwidth = config["upBandwidth"]\
-                if "upBandwidth" in config else 0
+                if "upBandwidth" in config else None
             self.dn_bandwidth = config["dnBandwidth"]\
-                if "dnBandwidth" in config else 0
+                if "dnBandwidth" in config else None
             self.country = config["country"]\
-                if "country" in config else "NONE"
+                if "country" in config else None
             self.language = config["language"]\
-                if "language" in config else "NONE"
+                if "language" in config else None
             self.tz = config["tz"]\
-                if "tz" in config else "NOT_SPECIFIED"
+                if "tz" in config else None
             self.geo_override = config["geoOverride"]\
                 if "geoOverride" in config else False
             self.latitude = config["latitude"]\
-                if "latitude" in config else 0.0
+                if "latitude" in config else None
             self.longitude = config["longitude"]\
-                if "longitude" in config else 0.0
+                if "longitude" in config else None
             self.auth_required = config["authRequired"]\
                 if "authRequired" in config else False
             self.ssl_scan_enabled = config["sslScanEnabled"]\
@@ -62,18 +67,32 @@ class LocationManagement(ZscalerObject):
                 if "otherSubLocation" in config else False
             self.ec_location = config["ecLocation"]\
                 if "ecLocation" in config else False
-            self.surrogate_ip = config["surrogateIP"]\
-                if "surrogateIP" in config else False
+
+            # self.surrogate_ip = config["surrogateIP"] \
+            #     if "surrogateIP" in config else False
+
+            # print("💥 SurrogateIP Debug:",
+            #     config.get("surrogate_ip"),
+            #     config.get("surrogateIp"),
+            #     config.get("surrogateIP"))
+
+            self.surrogate_ip = (
+                config.get("surrogate_ip")  # ← used by the converted keys
+                or config.get("surrogateIp")  # ← if not snake_cased
+                or config.get("surrogateIP")  # ← raw from the API
+                or False  # ← fallback
+            )
+            
             self.cookies_and_proxy = config["cookiesAndProxy"]\
-                if "cookiesAndProxy" in config else False
+                if "cookiesAndProxy" in config else None
             self.idle_time_in_minutes = config["idleTimeInMinutes"]\
-                if "idleTimeInMinutes" in config else 0
+                if "idleTimeInMinutes" in config else None
             self.display_time_unit = config["displayTimeUnit"]\
-                if "displayTimeUnit" in config else "MINUTE"
+                if "displayTimeUnit" in config else None
             self.surrogate_ip_enforced_for_known_browsers = config["surrogateIPEnforcedForKnownBrowsers"]\
                 if "surrogateIPEnforcedForKnownBrowsers" in config else False
             self.surrogate_refresh_time_in_minutes = config["surrogateRefreshTimeInMinutes"]\
-                if "surrogateRefreshTimeInMinutes" in config else 0
+                if "surrogateRefreshTimeInMinutes" in config else None
             self.kerberos_auth = config["kerberosAuth"]\
                 if "kerberosAuth" in config else False
             self.digest_auth_enabled = config["digestAuthEnabled"]\
@@ -95,30 +114,31 @@ class LocationManagement(ZscalerObject):
             self.iot_enforce_policy_set = config["iotEnforcePolicySet"]\
                 if "iotEnforcePolicySet" in config else False
             self.aup_timeout_in_days = config["aupTimeoutInDays"]\
-                if "aupTimeoutInDays" in config else 0
+                if "aupTimeoutInDays" in config else None
             self.child_count = config["childCount"]\
-                if "childCount" in config else 0
+                if "childCount" in config else None
             self.match_in_child = config["matchInChild"]\
                 if "matchInChild" in config else False
             self.exclude_from_dynamic_groups = config["excludeFromDynamicGroups"]\
-                if "excludeFromDynamicGroups" in config else False
+                if "excludeFromDynamicGroups" in config else None
             self.exclude_from_manual_groups = config["excludeFromManualGroups"]\
-                if "excludeFromManualGroups" in config else False
+                if "excludeFromManualGroups" in config else None
             self.profile = config["profile"]\
-                if "profile" in config else "WORKLOAD"
+                if "profile" in config else None
             self.description = config["description"]\
                 if "description" in config else None
 
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
-                config["staticLocationGroups"] if "staticLocationGroups" in config else [], dict
+                config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.Common
             )
+            
             self.dynamic_location_groups = ZscalerCollection.form_list(
-                config["dynamiclocationGroups"] if "dynamiclocationGroups" in config else [], dict
+                config["dynamiclocationGroups"] if "dynamiclocationGroups" in config else [], common.Common
             )
 
             self.vpn_credentials = ZscalerCollection.form_list(
-                config["vpnCredentials"] if "vpnCredentials" in config else [], vpn_credentials.TrafficVPNCredentials
+                config["vpnCredentials"] if "vpnCredentials" in config else [], VPNCredentials
             )
 
             self.ip_addresses = ZscalerCollection.form_list(
@@ -129,27 +149,27 @@ class LocationManagement(ZscalerObject):
             self.id = None
             self.name = None
             self.non_editable = False
-            self.parent_id = 0
-            self.up_bandwidth = 0
-            self.dn_bandwidth = 0
-            self.country = "NONE"
-            self.language = "NONE"
-            self.tz = "NOT_SPECIFIED"
+            self.parent_id = None
+            self.up_bandwidth = None
+            self.dn_bandwidth = None
+            self.country = None
+            self.language = None
+            self.tz = None
             self.geo_override = False
-            self.latitude = 0.0
-            self.longitude = 0.0
+            self.latitude = None
+            self.longitude = None
             self.auth_required = False
             self.ssl_scan_enabled = False
             self.zapp_ssl_scan_enabled = False
             self.xff_forward_enabled = False
-            self.other_sub_location = False
-            self.ec_location = False
+            self.other_sub_location = None
+            self.ec_location = None
             self.surrogate_ip = False
-            self.cookies_and_proxy = False
-            self.idle_time_in_minutes = 0
-            self.display_time_unit = "MINUTE"
+            self.cookies_and_proxy = None
+            self.idle_time_in_minutes = None
+            self.display_time_unit = None
             self.surrogate_ip_enforced_for_known_browsers = False
-            self.surrogate_refresh_time_in_minutes = 0
+            self.surrogate_refresh_time_in_minutes = None
             self.kerberos_auth = False
             self.digest_auth_enabled = False
             self.ofw_enabled = False
@@ -163,9 +183,9 @@ class LocationManagement(ZscalerObject):
             self.aup_timeout_in_days = 0
             self.child_count = 0
             self.match_in_child = False
-            self.exclude_from_dynamic_groups = False
-            self.exclude_from_manual_groups = False
-            self.profile = "WORKLOAD"
+            self.exclude_from_dynamic_groups = None
+            self.exclude_from_manual_groups = None
+            self.profile = None
             self.description = None
             self.static_location_groups = []
             self.dynamic_location_groups = []
@@ -226,3 +246,48 @@ class LocationManagement(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class VPNCredentials(ZscalerObject):
+    """
+    A class representing a VPN Credentials object.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"]\
+                if "id" in config else None
+            self.type = config["type"]\
+                if "type" in config else None
+            self.fqdn = config["fqdn"]\
+                if "fqdn" in config else None
+            self.ip_address = config["ipAddress"]\
+                if "ipAddress" in config else None
+            self.comments = config["comments"]\
+                if "comments" in config else None
+
+        else:
+            self.id = None
+            self.type = None
+            self.fqdn = None
+            self.ip_address = None
+            self.comments = None
+            self.location = None
+            
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "type": self.type,
+            "fqdn": self.fqdn,
+            "ipAddress": self.ip_address,
+            "comments": self.comments,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+

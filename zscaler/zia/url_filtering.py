@@ -253,7 +253,7 @@ class URLFilteringAPI(APIClient):
         )
 
         body = kwargs
-
+        
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
@@ -262,7 +262,6 @@ class URLFilteringAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
         
-        # Create the request
         request, error = self._request_executor\
             .create_request(
             method=http_method,
@@ -273,7 +272,6 @@ class URLFilteringAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request, URLFilteringRule)
         if error:

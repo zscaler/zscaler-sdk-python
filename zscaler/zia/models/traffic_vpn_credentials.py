@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import location_management as location_management
+from zscaler.zia.models import common as common
 
 class TrafficVPNCredentials(ZscalerObject):
     """
@@ -27,7 +28,6 @@ class TrafficVPNCredentials(ZscalerObject):
         super().__init__(config)
 
         if config:
-            # Top-level attributes
             self.id = config["id"]\
                 if "id" in config else None
             self.type = config["type"]\
@@ -40,25 +40,40 @@ class TrafficVPNCredentials(ZscalerObject):
                 if "preSharedKey" in config else None
             self.comments = config["comments"]\
                 if "comments" in config else None
+            self.disabled = config["disabled"]\
+                if "disabled" in config else False
 
-            self.locations = ZscalerCollection.form_list(
-                config["location"] if "location" in config else [], location_management.LocationManagement
-            )
-
-            self.managed_by = config["managedBy"]\
-                if "managedBy" in config else None  
+            if "location" in config:
+                if isinstance(config["location"], common.CommonBlocks):
+                    self.location = config["location"]
+                elif config["location"] is not None:
+                    self.location = common.CommonBlocks(config["location"])
+                else:
+                    self.location = None
+            else:
+                self.location = None
+                
+            if "managedBy" in config:
+                if isinstance(config["managedBy"], common.CommonBlocks):
+                    self.managed_by = config["managedBy"]
+                elif config["managedBy"] is not None:
+                    self.managed_by = common.CommonBlocks(config["managedBy"])
+                else:
+                    self.managed_by = None
+            else:
+                self.managed_by = None
 
         else:
-            # Initialize with default None values
             self.id = None
             self.type = None
             self.fqdn = None
             self.ip_address = None
             self.pre_shared_key = None
             self.comments = None
-            self.location = []
+            self.disabled = False
+            self.location = None
             self.managed_by = None
-
+            
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -71,8 +86,9 @@ class TrafficVPNCredentials(ZscalerObject):
             "ipAddress": self.ip_address,
             "preSharedKey": self.pre_shared_key,
             "comments": self.comments,
+            "disabled": self.disabled,
+            "location": self.location,
             "managedBy": self.managed_by,
-            "location": [loc.request_format() for loc in (self.locations or [])]
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

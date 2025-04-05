@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_engine import DLPEngine, DLPVAlidateExpression
-from zscaler.utils import format_url, snake_to_camel
+from zscaler.utils import format_url
 
 
 class DLPEngineAPI(APIClient):
@@ -236,10 +236,42 @@ class DLPEngineAPI(APIClient):
 
     def add_dlp_engine(
         self,
-        rule: dict,
+        **kwargs
     ) -> tuple:
         """
         Adds a new dlp engine.
+
+        Args:
+            name (str): The order of the rule, defaults to adding rule to bottom of list.
+
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+
+            engine_expression (str, optional): The logical expression defining a DLP engine by
+                combining DLP dictionaries using logical operators: All (AND), Any (OR), Exclude (NOT),
+                and Sum (total number of content matches).
+            custom_dlp_engine (bool, optional): If true, indicates a custom DLP engine.
+            description (str, optional): The DLP engine description.
+
+        Returns:
+            :obj:`Tuple`: The updated dlp engine resource record.
+
+        Examples:
+            Update the dlp engine:
+
+            >>> zia.dlp.update_dlp_engine(name='new_dlp_engine',
+            ...    description='TT#1965432122',
+            ...    engine_expression="((D63.S > 1))",
+            ...    custom_dlp_engine=False)
+
+            Update a rule to enable custom dlp engine:
+
+            >>> zia.dlp.update_dlp_engine('976597',
+            ...    custom_dlp_engine=True,
+            ...    engine_expression="((D63.S > 1))",
+            ...    description="TT#1965232866")
+
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -249,37 +281,32 @@ class DLPEngineAPI(APIClient):
         """
         )
 
-        # Ensure the rule is passed as a dictionary
-        if isinstance(rule, dict):
-            payload = rule
-        else:
-            payload = rule.as_dict()
+        body = kwargs
 
-        # Process additional keyword arguments
-        for key, value in payload.items():
-            # Convert the key to camelCase and assign the value
-            camel_key = snake_to_camel(key)
-            payload[camel_key] = value
-
-            # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {})
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DLPEngine)
-
+        response, error = self._request_executor\
+            .execute(request, DLPEngine)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPEngine(self.form_response_body(response.get_body()))
+            result = DLPEngine(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
-    def update_dlp_engine(self, engine_id: int, engine) -> tuple:
+    def update_dlp_engine(self, engine_id: int, **kwargs) -> tuple:
         """
         Updates an existing dlp engine.
 
@@ -288,12 +315,11 @@ class DLPEngineAPI(APIClient):
 
         Keyword Args:
             name (str): The order of the rule, defaults to adding rule to bottom of list.
-            description (str): The admin rank of the rule.
+            description (str, optional): The DLP engine description.
             engine_expression (str, optional): The logical expression defining a DLP engine by
                 combining DLP dictionaries using logical operators: All (AND), Any (OR), Exclude (NOT),
                 and Sum (total number of content matches).
             custom_dlp_engine (bool, optional): If true, indicates a custom DLP engine.
-            description (str, optional): The DLP engine description.
 
         Returns:
             tuple: The updated dlp engine resource record.
@@ -322,26 +348,24 @@ class DLPEngineAPI(APIClient):
         """
         )
 
-        if isinstance(engine, dict):
-            payload = engine
-        else:
-            payload = engine.as_dict()
+        body = {}
 
-        # Construct the payload using the provided kwargs
-        payload = {snake_to_camel(key): value for key, value in payload.items()}
+        body.update(kwargs)
 
-        # Create and send the request
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DLPEngine)
+        response, error = self._request_executor\
+            .execute(request, DLPEngine)
         if error:
             return (None, response, error)
 
         try:
-            # Parse and return the updated object from the API response
-            result = DLPEngine(self.form_response_body(response.get_body()))
+            result = DLPEngine(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -368,11 +392,13 @@ class DLPEngineAPI(APIClient):
         )
         params = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request)
         if error:
             return (None, response, error)
 

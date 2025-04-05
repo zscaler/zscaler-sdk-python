@@ -97,7 +97,6 @@ class CloudAppControlAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
                 
                 ``[query_params.search]`` {str}: Search string for filtering results.
 

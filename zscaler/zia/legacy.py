@@ -412,6 +412,15 @@ class LegacyZIAClientHelper:
         return CloudApplicationsAPI(self.request_executor)
 
     @property
+    def cloud_browser_isolation(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-cloud_browser_isolation>`.
+
+        """
+        from zscaler.zia.cloud_browser_isolation import CBIProfileAPI
+        return CBIProfileAPI(self.request_executor)
+    
+    @property
     def cloud_nss(self):
         """
         The interface object for the :ref:`ZIA Cloud NSS interface <zia-cloud_nss>`.

@@ -167,11 +167,6 @@ class DLPTemplatesAPI(APIClient):
 
     def add_dlp_template(
         self,
-        name: str, 
-        subject: str,
-        plain_text_message: str,
-        html_message: str,
-        attach_content: bool,
         **kwargs
     ) -> tuple:
         """
@@ -207,30 +202,20 @@ class DLPTemplatesAPI(APIClient):
         """
         )
 
-        payload = {
-            "name": name,
-            "subject": subject,
-            "attachContent": attach_content,
-            "plainTextMessage": plain_text_message,
-            "htmlMessage": html_message,
-        }
-
-        payload.update(kwargs)
+        body = kwargs
 
         request, error = self._request_executor\
             .create_request(
             method=http_method,
             endpoint=api_url,
-            body=payload,
+            body=body,
         )
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, DLPTemplates)
-
         if error:
             return (None, response, error)
 
@@ -245,11 +230,7 @@ class DLPTemplatesAPI(APIClient):
     def update_dlp_template(
         self, 
         template_id: str,
-        name: str, 
-        subject: str,
-        plain_text_message: str,
-        html_message: str,
-        attach_content: bool,
+        **kwargs
     ) -> tuple:
         """
         Updates the specified DLP Notification Template.
@@ -286,21 +267,14 @@ class DLPTemplatesAPI(APIClient):
         """
         )
 
-        payload = {
-            "name": name,
-            "subject": subject,
-            "attachContent": attach_content,
-            "plainTextMessage": plain_text_message,
-            "htmlMessage": html_message,
-        }
+        body = {}
 
-        # Create the request
+        body.update(kwargs)
+
         request, error = self._request_executor\
-            .create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=payload,
-        )
+            .create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
 
         response, error = self._request_executor\
             .execute(request, DLPTemplates)

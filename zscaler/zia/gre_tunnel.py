@@ -367,7 +367,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         Examples:
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
         """
-        http_method = "put".upper()
+        http_method = "get".upper()
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}

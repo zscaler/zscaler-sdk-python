@@ -30,7 +30,6 @@ class NetworkServiceGroups(ZscalerObject):
             self.name = config["name"] if "name" in config else None
             self.description = config["description"] if "description" in config else None
 
-            # Handling services list using ZscalerCollection and the NetworkServices model
             self.services = ZscalerCollection.form_list(
                 config["services"] if "services" in config else [], nw_service.NetworkServices
             )

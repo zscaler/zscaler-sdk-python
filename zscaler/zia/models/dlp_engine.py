@@ -28,18 +28,22 @@ class DLPEngine(ZscalerObject):
                 if "id" in config else None
             self.name = config["name"]\
                 if "name" in config else None
+            self.predefined_engine_name = config["predefinedEngineName"]\
+                if "predefinedEngineName" in config else None
+            self.description = config["description"]\
+                if "description" in config else None
             self.engine_expression = config["engineExpression"]\
                 if "engineExpression" in config else None
             self.custom_dlp_engine = config["customDlpEngine"]\
-                if "customDlpEngine" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
+                if "customDlpEngine" in config else False
+
         else:
             self.id = None
             self.name = None
-            self.engine_expression = None
-            self.custom_dlp_engine = None
+            self.predefined_engine_name = None
             self.description = None
+            self.engine_expression = None
+            self.custom_dlp_engine = False
 
     def request_format(self):
         """
@@ -49,9 +53,11 @@ class DLPEngine(ZscalerObject):
         current_obj_format = {
             "id": self.id,
             "name": self.name,
+            "predefinedEngineName": self.predefined_engine_name,
+            "description": self.description,
             "engineExpression": self.engine_expression,
             "customDlpEngine": self.custom_dlp_engine,
-            "description": self.description,
+            
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -212,7 +212,6 @@ class CloudSandboxAPI:
         http_method = "get".upper()
         api_url = f"{self._zia_base_endpoint}/behavioralAnalysisAdvancedSettings"
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -221,7 +220,6 @@ class CloudSandboxAPI:
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:

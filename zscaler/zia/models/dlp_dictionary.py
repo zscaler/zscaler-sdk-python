@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 
 class DLPDictionary(ZscalerObject):
     """
@@ -32,8 +33,6 @@ class DLPDictionary(ZscalerObject):
                 if "description" in config else None
             self.confidence_threshold = config["confidenceThreshold"]\
                 if "confidenceThreshold" in config else None
-            self.phrases = config["phrases"]\
-                if "phrases" in config else []
             self.custom_phrase_match_type = config["customPhraseMatchType"]\
                 if "customPhraseMatchType" in config else None
             self.name_l10n_tag = config["nameL10nTag"]\
@@ -68,19 +67,30 @@ class DLPDictionary(ZscalerObject):
                 if "dictionaryCloningEnabled" in config else False
             self.confidence_level_for_predefined_dict = config["confidenceLevelForPredefinedDict"]\
                 if "confidenceLevelForPredefinedDict" in config else None
-            self.custom = config["custom"] if "custom" in config else False
+            self.custom = config["custom"]\
+                if "custom" in config else False
             self.proximity_length_enabled = config["proximityLengthEnabled"]\
                 if "proximityLengthEnabled" in config else False
             self.custom_phrase_supported = config["customPhraseSupported"]\
                 if "customPhraseSupported" in config else False
             self.hierarchical_dictionary = config["hierarchicalDictionary"]\
                 if "hierarchicalDictionary" in config else False
+                
+            self.phrases = ZscalerCollection.form_list(
+                config["phrases"] if "phrases" in config else [], DictionaryPhrases
+            )
+
+            self.patterns = ZscalerCollection.form_list(
+                config["patterns"] if "patterns" in config else [], DictionaryPattern
+            )
+
         else:
             self.id = None
             self.name = None
             self.description = None
             self.confidence_threshold = None
             self.phrases = []
+            self.patterns = []
             self.custom_phrase_match_type = None
             self.name_l10n_tag = False
             self.dictionary_type = None
@@ -114,6 +124,7 @@ class DLPDictionary(ZscalerObject):
             "description": self.description,
             "confidenceThreshold": self.confidence_threshold,
             "phrases": self.phrases,
+            "patterns": self.patterns,
             "customPhraseMatchType": self.custom_phrase_match_type,
             "nameL10nTag": self.name_l10n_tag,
             "dictionaryType": self.dictionary_type,
@@ -139,6 +150,78 @@ class DLPDictionary(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
+class DictionaryPhrases(ZscalerObject):
+    """
+    A class for DictionaryPhrases objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the DictionaryPhrases model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.action = config["action"] \
+                if "action" in config else None
+            self.phrase = config["phrase"] \
+                if "phrase" in config else None
+             
+        else:
+            self.action = None
+            self.phrase = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "action": self.action,
+            "phrase": self.phrase,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class DictionaryPattern(ZscalerObject):
+    """
+    A class for DictionaryPattern objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the DictionaryPattern model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.action = config["action"] \
+                if "action" in config else None
+            self.pattern = config["pattern"] \
+                if "pattern" in config else None
+             
+        else:
+            self.action = None
+            self.pattern = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "action": self.action,
+            "pattern": self.pattern,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
 
 class DLPPatternValidation(ZscalerObject):
     """

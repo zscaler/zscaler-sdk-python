@@ -80,6 +80,9 @@ class URLFilteringRule(ZscalerObject):
             self.protocols = ZscalerCollection.form_list(
                 config["protocols"] if "protocols" in config else [], str
             )
+            self.user_agent_types = ZscalerCollection.form_list(
+                config["userAgentTypes"] if "userAgentTypes" in config else [], str
+            )
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
             )
@@ -156,6 +159,7 @@ class URLFilteringRule(ZscalerObject):
             self.action = None
             self.ciparule = False
             self.protocols = []
+            self.user_agent_types = []
             self.url_categories = []
             self.url_categories2 = []
             self.request_methods = []
@@ -199,6 +203,7 @@ class URLFilteringRule(ZscalerObject):
             "action": self.action,
             "ciparule": self.ciparule,
             "protocols": self.protocols,
+            "userAgentTypes": self.user_agent_types,
             "urlCategories": self.url_categories,
             "urlCategories2": self.url_categories2,
             "requestMethods": self.request_methods,

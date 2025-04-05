@@ -140,7 +140,6 @@ class TrafficVPNCredentialAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, TrafficVPNCredentials)
 
@@ -155,7 +154,7 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_vpn_credential(self, credential: dict) -> tuple:
+    def add_vpn_credential(self, **kwargs) -> tuple:
         """
         Add new VPN credentials.
 
@@ -184,11 +183,11 @@ class TrafficVPNCredentialAPI(APIClient):
         """
         # Validate the `type`
         valid_types = ["IP", "UFQDN"]
-        if "type" not in credential or credential["type"] not in valid_types:
+        if "type" not in kwargs or kwargs["type"] not in valid_types:
             return (None, None, ValueError(f"Invalid type. Must be one of {valid_types}."))
 
         # Validate the `pre_shared_key`
-        if "pre_shared_key" not in credential:
+        if "pre_shared_key" not in kwargs:
             return (None, None, ValueError("Pre-shared key must be provided."))
 
         http_method = "post".upper()
@@ -197,19 +196,24 @@ class TrafficVPNCredentialAPI(APIClient):
             /vpnCredentials
         """)
 
-        # Create the request
+        # Prepare the request body from kwargs
+        body = kwargs
+        headers = {}
+
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
-            body=credential,  # Pass the entire dictionary as the body
+            body=body,
+            headers=headers
         )
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficVPNCredentials)
+        response, error = self._request_executor.execute(
+            request, 
+            TrafficVPNCredentials
+        )
 
         if error:
             return (None, response, error)
@@ -222,7 +226,11 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_vpn_credential(self, credential_id: int, credential) -> tuple:
+    def update_vpn_credential(
+        self,
+        credential_id: int, 
+        **kwargs
+    ) -> tuple:
         """
         Update VPN credentials with the specified ID.
 
@@ -245,38 +253,44 @@ class TrafficVPNCredentialAPI(APIClient):
             /vpnCredentials/{credential_id}
         """)
 
-        # Ensure the credential is in dictionary format
-        if isinstance(credential, dict):
-            body = credential
-        else:
-            body = credential.as_dict()
-
-        # Retrieve the current VPN credential (so we can validate against it)
+        # Retrieve the current VPN credential for validation
         current_credential, _, err = self.get_vpn_credential(credential_id)
         if err:
             return (None, None, err)
 
         # Validate that the `type` cannot be changed
-        if "type" in body and body["type"] != current_credential.type:
+        if "type" in kwargs and kwargs["type"] != current_credential.type:
             return (None, None, ValueError("The VPN credential type cannot be changed once created."))
 
-        # Validate that the `fqdn` and `ipAddress` cannot be changed for UFQDN and IP types
+        # Validate that the `fqdn` and `ipAddress` cannot be changed
         if current_credential.type == "UFQDN":
-            if "fqdn" in body and body["fqdn"] != current_credential.fqdn:
+            if "fqdn" in kwargs and kwargs["fqdn"] != current_credential.fqdn:
                 return (None, None, ValueError("The fqdn cannot be changed once created."))
         elif current_credential.type == "IP":
-            if "ipAddress" in body and body["ipAddress"] != current_credential.ip_address:
+            if "ip_address" in kwargs and kwargs["ip_address"] != current_credential.ip_address:
                 return (None, None, ValueError("The IP address cannot be changed once created."))
 
+        # Prepare the request body from kwargs
+        body = kwargs
+        headers = {}
+
         # Create the request after passing validation
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+            headers=headers
+        )
+
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficVPNCredentials)
+        response, error = self._request_executor.execute(
+            request, 
+            TrafficVPNCredentials
+        )
+
         if error:
             return (None, response, error)
 
@@ -338,6 +352,13 @@ class TrafficVPNCredentialAPI(APIClient):
             >>> zia.traffic.bulk_delete_vpn_credentials(['94963984', '97679232'])
 
         """
+        # Validate input before making the request
+        if not credential_ids:
+            return (None, ValueError("Empty credential_ids list provided"))
+        
+        if len(credential_ids) > 100:
+            return (None, ValueError("Maximum 100 credential IDs allowed per bulk delete request"))
+
         http_method = "post".upper()
         api_url = format_url(
             f"""
@@ -348,14 +369,23 @@ class TrafficVPNCredentialAPI(APIClient):
 
         payload = {"ids": credential_ids}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=payload,
+            headers={},
+            params={}
+        )
         if error:
-            return (None, None, error)
+            return (None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
-
+        response, error = self._request_executor.execute(request)
+        
+        # For 204 No Content responses, the executor may return None
         if error:
-            return (None, response, error)
-        return (response.get_body(), response, None)
+            return (None, error)
+        elif response is None:
+            # This is the expected case for 204 No Content
+            return (None, None)
+        
+        return (response, None)

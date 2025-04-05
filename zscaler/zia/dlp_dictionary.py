@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_dictionary import DLPDictionary, DLPPatternValidation
-from zscaler.utils import format_url, snake_to_camel
+from zscaler.utils import format_url
 
 
 class DLPDictionaryAPI(APIClient):
@@ -318,7 +318,7 @@ class DLPDictionaryAPI(APIClient):
 
         # Format 'phrases' and 'patterns' if present
         if "phrases" in payload:
-            payload["phrases"] = [{"action": action, "pattern": pattern} for action, pattern in payload["phrases"]]
+            payload["phrases"] = [{"action": action, "phrase": phrase} for action, phrase in payload["phrases"]]
 
         if "patterns" in payload:
             payload["patterns"] = [{"action": action, "pattern": pattern} for action, pattern in payload["patterns"]]
@@ -412,7 +412,7 @@ class DLPDictionaryAPI(APIClient):
 
         # Format 'phrases' and 'patterns' if present
         if "phrases" in payload:
-            payload["phrases"] = [{"action": action, "pattern": pattern} for action, pattern in payload["phrases"]]
+            payload["phrases"] = [{"action": action, "phrase": phrase} for action, phrase in payload["phrases"]]
 
         if "patterns" in payload:
             payload["patterns"] = [{"action": action, "pattern": pattern} for action, pattern in payload["patterns"]]

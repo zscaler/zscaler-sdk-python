@@ -14,8 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from box import Box
-
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.zpa_gateway import ZPAGateway
@@ -41,7 +39,7 @@ class ZPAGatewayAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.app_segment]`` {list}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -62,32 +60,31 @@ class ZPAGatewayAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into RuleLabels instances
         try:
             result = []
             for item in response.get_results():
-                result.append(ZPAGateway(self.form_response_body(item)))
+                result.append(ZPAGateway(
+                    self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def get_gateway(self, gateway_id: int) -> Box:
+    def get_gateway(self, gateway_id: int) -> tuple:
         """
         Returns the zpa gateway details for a given ZPA Gateway.
 
@@ -110,18 +107,22 @@ class ZPAGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, ZPAGateway)
+        response, error = self._request_executor.\
+            execute(request, ZPAGateway)
 
         if error:
             return (None, response, error)
 
         try:
-            result = ZPAGateway(self.form_response_body(response.get_body()))
+            result = ZPAGateway(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

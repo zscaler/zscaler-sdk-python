@@ -167,4 +167,13 @@ publish\:prod:
 sync-deps:
 	poetry export -f requirements.txt > requirements.txt
 
+local-setup:
+ifeq ($(wildcard ~/.local/bin/poetry),)
+	@echo "installing poetry"
+	curl -sSL https://install.python-poetry.org | python3 -
+else
+	@echo "poetry installation found"
+endif
+	~/.local/bin/poetry install
+
 .PHONY: clean-pyc clean-build docs clean

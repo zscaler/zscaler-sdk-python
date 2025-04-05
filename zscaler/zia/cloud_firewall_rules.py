@@ -18,7 +18,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_rules import FirewallRule
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
-
+import json
 class FirewallPolicyAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
@@ -59,43 +59,27 @@ class FirewallPolicyAPI(APIClient):
 
         query_params = query_params or {}
 
-        local_search = query_params.pop("search", None)
-
         body = {}
         headers = {}
 
         request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+            create_request(http_method, api_url, body, headers, params=query_params)
+
         if error:
             return (None, None, error)
 
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
-
         try:
-            results = []
+            result = []
             for item in response.get_results():
-                results.append(FirewallRule(
+                result.append(FirewallRule(
                     self.form_response_body(item))
                 )
-        except Exception as exc:
-            return (None, response, exc)
-
-        if local_search:
-            lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
-
-        return (results, response, None)
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
     def get_rule(
         self,
@@ -121,7 +105,6 @@ class FirewallPolicyAPI(APIClient):
             /firewallFilteringRules/{rule_id}
             """
         )
-
         body = {}
         headers = {}
 

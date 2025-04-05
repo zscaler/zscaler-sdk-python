@@ -156,7 +156,6 @@ class RuleLabelsAPI(APIClient):
 
         body = kwargs
 
-        # Create the request with no empty param handling logic
         request, error = self._request_executor\
             .create_request(
             method=http_method,
@@ -167,7 +166,6 @@ class RuleLabelsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, RuleLabels)
         if error:
@@ -181,7 +179,11 @@ class RuleLabelsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_label(self, label_id: int, **kwargs) -> tuple:
+    def update_label(
+        self,
+        label_id: int,
+        **kwargs
+    ) -> tuple:
         """
         Updates information for the specified ZIA Rule Label.
 
@@ -200,19 +202,16 @@ class RuleLabelsAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, RuleLabels)
         if error:
             return (None, response, error)
 
-        # Parse the response into a RuleLabels instance
         try:
             result = RuleLabels(
                 self.form_response_body(response.get_body())

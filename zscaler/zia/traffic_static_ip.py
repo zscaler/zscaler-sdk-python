@@ -70,18 +70,15 @@ class TrafficStaticIPAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
 
@@ -235,7 +232,9 @@ class TrafficStaticIPAPI(APIClient):
         if err:
             return (None, None, err)
 
-        body = kwargs
+        body = {}
+
+        body.update(kwargs)
 
         # Ensure the current IP address is included in the update payload
         body["ip_address"] = current_ip.ip_address

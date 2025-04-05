@@ -38,12 +38,16 @@ class CloudApplicationControl(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
+            self.id = config["id"] \
                 if "id" in config else None
-            self.type = config["type"]\
+            self.name = config["name"] \
+                if "name" in config else None
+            self.type = config["type"] \
                 if "type" in config else None
-            self.order = config["order"]\
+            self.order = config["order"] \
                 if "order" in config else None
+            self.access_control = config["accessControl"] \
+                if "accessControl" in config else None
             self.time_quota = config["timeQuota"]\
                 if "timeQuota" in config else 0
             self.size_quota = config["sizeQuota"]\
@@ -91,6 +95,10 @@ class CloudApplicationControl(ZscalerObject):
                 config["userRiskScoreLevels"] if "userRiskScoreLevels" in config else [], str
             )
 
+            self.applications = ZscalerCollection.form_list(
+                config["applications"] if "applications" in config else [], str
+            )
+            
             # Handling nested objects and lists of objects
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location.LocationManagement
@@ -104,9 +112,7 @@ class CloudApplicationControl(ZscalerObject):
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
-            self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], Application
-            )
+
             self.location_groups = ZscalerCollection.form_list(
                 config["locationGroups"] if "locationGroups" in config else [], location_group.LocationGroup
             )
@@ -140,15 +146,14 @@ class CloudApplicationControl(ZscalerObject):
 
             # Assign the cbi_profile as-is; conversions are handled by ZscalerObject
             self.cbi_profile = config.get("cbiProfile", {})
-            
-            # self.cbi_profile = isolation.CBIProfile(config["cbiProfile"])\
-            #     if "cbiProfile" in config else None
 
         else:
             # Defaults if config is None
             self.id = None
+            self.name = None
             self.type = None
             self.order = None
+            self.access_control = None
             self.time_quota = 0
             self.size_quota = 0
             self.description = None
@@ -193,8 +198,10 @@ class CloudApplicationControl(ZscalerObject):
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
+            "name": self.name,
             "type": self.type,
             "order": self.order,
+            "accessControl": self.access_control,
             "timeQuota": self.time_quota,
             "sizeQuota": self.size_quota,
             "description": self.description,
@@ -215,11 +222,11 @@ class CloudApplicationControl(ZscalerObject):
             "userAgentTypes": self.user_agent_types,
             "deviceTrustLevels": self.device_trust_levels,
             "userRiskScoreLevels": self.user_risk_score_levels,
+            "applications": self.applications,
             "locations": [loc.request_format() for loc in (self.locations or [])],
             "groups": [grp.request_format() for grp in (self.groups or [])],
             "departments": [dept.request_format() for dept in (self.departments or [])],
             "users": [usr.request_format() for usr in (self.users or [])],
-            "applications": [app.request_format() for app in (self.applications or [])],
             "locationGroups": [lg.request_format() for lg in (self.location_groups or [])],
             "timeWindows": [tw.request_format() for tw in (self.time_windows or [])],
             "devices": [dev.request_format() for dev in (self.devices or [])],

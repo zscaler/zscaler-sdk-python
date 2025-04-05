@@ -206,7 +206,10 @@ class DLPResourcesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_dlp_icap_servers(self, icap_server_id: int, query_params: dict = None) -> tuple:
+    def get_dlp_icap_servers(
+        self,
+        icap_server_id: int,
+    ) -> tuple:
         """
         Returns the dlp icap server details for a given DLP ICAP Server.
 
@@ -228,13 +231,11 @@ class DLPResourcesAPI(APIClient):
         """
         )
 
-        query_params = query_params or {}
-
         body = {}
         headers = {}
 
         request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -482,10 +483,7 @@ class DLPResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -559,18 +557,15 @@ class DLPResourcesAPI(APIClient):
         """
         )
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.\
             create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.\
             execute(request)
 

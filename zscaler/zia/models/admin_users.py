@@ -100,9 +100,9 @@ class AdminUser(ZscalerObject):
             else:
                 self.admin_scope = None
                 
-            # self.admin_scope_group_member_entities = config["adminScopescopeGroupMemberEntities"] if "adminScopescopeGroupMemberEntities" in config else []
-            # self.admin_scope_type = config["adminScopeType"] if "adminScopeType" in config else None
-            # self.admin_scope_scope_entities = config["adminScopeScopeEntities"] if "adminScopeScopeEntities" in config else []
+            self.admin_scope_group_member_entities = config["adminScopescopeGroupMemberEntities"] if "adminScopescopeGroupMemberEntities" in config else []
+            self.admin_scope_type = config["adminScopeType"] if "adminScopeType" in config else None
+            self.admin_scope_scope_entities = config["adminScopeScopeEntities"] if "adminScopeScopeEntities" in config else []
         else:
             self.id = None
             self.login_name = None

@@ -641,18 +641,20 @@ class FirewallResourcesAPI(APIClient):
             /ipDestinationGroups/{group_id}
         """
         )
-        params = {}
         
+        params = {}
+
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=params)
         if error:
-            return None, error
+            return (None, None, error)
 
         response, error = self._request_executor\
             .execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
+
 
     def list_ip_source_groups(
         self,
@@ -1083,7 +1085,7 @@ class FirewallResourcesAPI(APIClient):
 
     def update_ip_source_group(
         self,
-        group_id: str, 
+        group_id: int, 
         **kwargs
     ) -> tuple:
         """
@@ -1123,7 +1125,9 @@ class FirewallResourcesAPI(APIClient):
             /ipSourceGroups/{group_id}
         """
         )
-        body = kwargs
+        body = {}
+
+        body.update(kwargs)
 
         request, error = self._request_executor\
             .create_request(
@@ -1135,7 +1139,6 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, IPSourceGroup)
         if error:
@@ -1793,7 +1796,6 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, NetworkServiceGroups)
 

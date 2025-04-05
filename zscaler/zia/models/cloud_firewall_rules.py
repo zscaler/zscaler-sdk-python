@@ -54,8 +54,8 @@ class FirewallRule(ZscalerObject):
                 if "rank" in config else None
             self.action = config["action"]\
                 if "action" in config else None
-            self.capture_pcap = config["capturePCAP"]\
-                if "capturePCAP" in config else False
+            # self.capture_pcap = config["capturePCAP"]\
+            #     if "capturePCAP" in config else False
             self.state = config["state"]\
                 if "state" in config else None
             self.description = config["description"]\
@@ -64,7 +64,8 @@ class FirewallRule(ZscalerObject):
                 if "lastModifiedTime" in config else None
             self.last_modified_by = config["lastModifiedBy"]\
                 if "lastModifiedBy" in config else None               
-
+            self.exclude_src_countries = config["excludeSrcCountries"]\
+                if "excludeSrcCountries" in config else False   
             # Handling lists of simple values
             self.dest_ip_categories = ZscalerCollection.form_list(
                 config["destIpCategories"] if "destIpCategories" in config else [], str
@@ -75,9 +76,9 @@ class FirewallRule(ZscalerObject):
             self.source_countries = ZscalerCollection.form_list(
                 config["sourceCountries"] if "sourceCountries" in config else [], str
             )
-            self.exclude_src_countries = ZscalerCollection.form_list(
-                config["excludeSrcCountries"] if "excludeSrcCountries" in config else [], str
-            )
+            # self.exclude_src_countries = ZscalerCollection.form_list(
+            #     config["excludeSrcCountries"] if "excludeSrcCountries" in config else [], str
+            # )
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
             )
@@ -173,7 +174,7 @@ class FirewallRule(ZscalerObject):
             self.order = None
             self.rank = None
             self.action = None
-            self.capture_pcap = False
+            # self.capture_pcap = None
             self.state = None
             self.description = None
             self.last_modified_time = None
@@ -219,7 +220,7 @@ class FirewallRule(ZscalerObject):
             "order": self.order,
             "rank": self.rank,
             "action": self.action,
-            "capturePCAP": self.capture_pcap,
+            # "capturePCAP": self.capture_pcap,
             "state": self.state,
             "description": self.description,
             "lastModifiedTime": self.last_modified_time,
