@@ -43,7 +43,7 @@ class LegacyZDXClientHelper:
         client_secret=None,
         cloud=None,
         timeout=240,
-        request_executor=None,  # Uses centralized request executor
+        request_executor_impl=None,  # Uses centralized request executor
     ):
         self._client_id = client_id or os.getenv(f"{self._env_base}_CLIENT_ID")
         self._client_secret = client_secret or os.getenv(f"{self._env_base}_CLIENT_SECRET")
@@ -69,7 +69,7 @@ class LegacyZDXClientHelper:
             }
         }
 
-        self.request_executor = request_executor or RequestExecutor(self.config, self.cache, zdx_legacy_client=self)
+        self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, zdx_legacy_client=self)
 
         self.user_agent = UserAgent().get_user_agent_string()
         self.auth_token = None

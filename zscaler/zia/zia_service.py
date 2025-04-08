@@ -63,6 +63,7 @@ from zscaler.zia.user_management import UserManagementAPI
 from zscaler.zia.workload_groups import WorkloadGroupsAPI
 from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 from zscaler.zia.sub_clouds import SubCloudsAPI
+# from zscaler.zia.system_audit import SystemAuditReportAPI
 
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
@@ -456,3 +457,12 @@ class ZIAService:
         """
 
         return SubCloudsAPI(self._request_executor)
+    
+    # @property
+    # def system_audit(self):
+    #     """
+    #     The interface object for the :ref:`ZIA System Audit Report <zia-system_audit>`.
+
+    #     """
+
+    #     return SystemAuditReportAPI(self._request_executor)

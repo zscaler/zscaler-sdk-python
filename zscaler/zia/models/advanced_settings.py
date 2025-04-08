@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-
 class AdvancedSettings(ZscalerObject):
     """
     A class representing a Devices object.
@@ -25,18 +24,19 @@ class AdvancedSettings(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
+
         if config:
-            self.enable_dns_resolution_on_transparent_proxy = config["enableDnsResolutionOnTransparentProxy"]\
+            self.enable_dns_resolution_on_transparent_proxy = config["enableDnsResolutionOnTransparentProxy"] \
                 if "enableDnsResolutionOnTransparentProxy" in config else False
-            self.enable_ipv6_dns_resolution_on_transparent_proxy = config["enableIPv6DnsResolutionOnTransparentProxy"]\
+            self.enable_ipv6_dns_resolution_on_transparent_proxy = config["enableIPv6DnsResolutionOnTransparentProxy"] \
                 if "enableIPv6DnsResolutionOnTransparentProxy" in config else False
-            self.enable_ipv6_dns_optimization_on_all_transparent_proxy = config["enableIPv6DnsOptimizationOnAllTransparentProxy"]\
+            self.enable_ipv6_dns_optimization_on_all_transparent_proxy = config["enableIPv6DnsOptimizationOnAllTransparentProxy"] \
                 if "enableIPv6DnsOptimizationOnAllTransparentProxy" in config else False
-            self.enable_evaluate_policy_on_global_ssl_bypass = config["enableEvaluatePolicyOnGlobalSSLBypass"]\
+            self.enable_evaluate_policy_on_global_ssl_bypass = config["enableEvaluatePolicyOnGlobalSSLBypass"] \
                 if "enableEvaluatePolicyOnGlobalSSLBypass" in config else False     
-            self.enable_office365 = config["enableOffice365"]\
+            self.enable_office365 = config["enableOffice365"] \
                 if "enableOffice365" in config else False     
-            self.log_internal_ip = config["logInternalIp"]\
+            self.log_internal_ip = config["logInternalIp"] \
                 if "logInternalIp" in config else False   
             self.enforce_surrogate_ip_for_windows_app = config["enforceSurrogateIpForWindowsApp"]\
                 if "enforceSurrogateIpForWindowsApp" in config else False   
@@ -46,7 +46,7 @@ class AdvancedSettings(ZscalerObject):
                 if "blockHttpTunnelOnNonHttpPorts" in config else False   
             self.block_domain_fronting_on_host_header = config["blockDomainFrontingOnHostHeader"]\
                 if "blockDomainFrontingOnHostHeader" in config else False  
-            self.zscaler_client_connector_1and_pac_road_warrior_in_firewall = config["zscalerClientConnector1AndPacRoadWarriorInFirewall"]\
+            self.zscaler_client_connector1_and_pac_road_warrior_in_firewall = config["zscalerClientConnector1AndPacRoadWarriorInFirewall"]\
                 if "zscalerClientConnector1AndPacRoadWarriorInFirewall" in config else False                  
             self.cascade_url_filtering = config["cascadeUrlFiltering"]\
                 if "cascadeUrlFiltering" in config else False    
@@ -58,7 +58,7 @@ class AdvancedSettings(ZscalerObject):
                 if "enableAdminRankAccess" in config else False  
             self.ui_session_timeout = config["uiSessionTimeout"]\
                 if "uiSessionTimeout" in config else None  
-            self.http2_non_browser_traffic_enabled = config["http2NonbrowserTrafficEnabled"]\
+            self.http2_nonbrowser_traffic_enabled = config["http2NonbrowserTrafficEnabled"]\
                 if "http2NonbrowserTrafficEnabled" in config else False  
             self.ecs_for_all_enabled = config["ecsForAllEnabled"]\
                 if "ecsForAllEnabled" in config else False  
@@ -166,13 +166,13 @@ class AdvancedSettings(ZscalerObject):
             self.track_http_tunnel_on_http_ports = False
             self.block_http_tunnel_on_non_http_ports = False
             self.block_domain_fronting_on_host_header = False
-            self.zscaler_client_connector_1and_pac_road_warrior_in_firewall = False
+            self.zscaler_client_connector1_and_pac_road_warrior_in_firewall = False
             self.cascade_url_filtering = False
             self.enable_policy_for_unauthenticated_traffic = False
             self.block_non_compliant_http_request_on_http_ports = False                                                                                       
             self.enable_admin_rank_access = False
             self.ui_session_timeout = None
-            self.http2_non_browser_traffic_enabled = False
+            self.http2_nonbrowser_traffic_enabled = False
             self.ecs_for_all_enabled = False
             self.dynamic_user_risk_enabled = False
             self.block_connect_host_sni_mismatch = False
@@ -222,13 +222,13 @@ class AdvancedSettings(ZscalerObject):
             "trackHttpTunnelOnHttpPorts": self.track_http_tunnel_on_http_ports,
             "blockHttpTunnelOnNonHttpPorts": self.block_http_tunnel_on_non_http_ports,
             "blockDomainFrontingOnHostHeader": self.block_domain_fronting_on_host_header,
-            "zscalerClientConnector1AndPacRoadWarriorInFirewall": self.zscaler_client_connector_1and_pac_road_warrior_in_firewall,
+            "zscalerClientConnector1AndPacRoadWarriorInFirewall": self.zscaler_client_connector1_and_pac_road_warrior_in_firewall,
             "cascadeUrlFiltering": self.cascade_url_filtering,
             "enablePolicyForUnauthenticatedTraffic": self.enable_policy_for_unauthenticated_traffic,
             "blockNonCompliantHttpRequestOnHttpPorts": self.block_non_compliant_http_request_on_http_ports,
             "enableAdminRankAccess": self.enable_admin_rank_access,
             "uiSessionTimeout": self.ui_session_timeout,
-            "http2NonbrowserTrafficEnabled": self.http2_non_browser_traffic_enabled,
+            "http2NonbrowserTrafficEnabled": self.http2_nonbrowser_traffic_enabled,
             "ecsForAllEnabled": self.ecs_for_all_enabled,
             "dynamicUserRiskEnabled": self.dynamic_user_risk_enabled,
             "blockConnectHostSniMismatch": self.block_connect_host_sni_mismatch,

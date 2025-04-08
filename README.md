@@ -335,6 +335,8 @@ query_parameters = {'search': 'Group1'}
 groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
 ```
 
+Example of listing ZIA Users 1 at a time:
+
 ## Logging
 
 The Zscaler SDK Python, provides robust logging for debug purposes.

@@ -310,6 +310,7 @@ class LegacyZPAClient(Client):
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
 
         # Initialize the LegacyZPAClientHelper with the extracted parameters
         legacy_helper = LegacyZPAClientHelper(
@@ -321,8 +322,10 @@ class LegacyZPAClient(Client):
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zpa_legacy_client=legacy_helper, use_legacy_client=True)
+
 
 class LegacyZIAClient(Client):
     def __init__(
@@ -336,6 +339,7 @@ class LegacyZIAClient(Client):
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
 
         # Initialize the LegacyZIAClientHelper with the extracted parameters
         legacy_helper = LegacyZIAClientHelper(
@@ -346,6 +350,7 @@ class LegacyZIAClient(Client):
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
 
@@ -362,7 +367,7 @@ class LegacyZCONClient(Client):
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
-
+        request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZCONClientHelper with the extracted parameters
         legacy_helper = LegacyZCONClientHelper(
             username=username,
@@ -372,6 +377,7 @@ class LegacyZCONClient(Client):
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zcon_legacy_client=legacy_helper, use_legacy_client=True)
 
@@ -385,8 +391,7 @@ class LegacyZCCClient(Client):
         secret_key = config.get("secret_key", os.getenv("ZCC_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZCC_CLOUD"))
         timeout = config.get("timeout", 240)
-        # cache = config.get("cache", None)
-        # fail_safe = config.get("failSafe", None)
+        request_executor_impl = config.get("requestExecutor", None)
 
         # Initialize the LegacyZCCClientHelper with the extracted parameters
         legacy_helper = LegacyZCCClientHelper(
@@ -394,6 +399,7 @@ class LegacyZCCClient(Client):
             secret_key=secret_key,
             cloud=cloud,
             timeout=timeout,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zcc_legacy_client=legacy_helper, use_legacy_client=True)
 
@@ -407,13 +413,14 @@ class LegacyZDXClient(Client):
         client_secret = config.get("key_secret", os.getenv("ZDX_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZDX_CLOUD", "zdxcloud"))
         timeout = config.get("timeout", 240)
-
+        request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZDXClientHelper with the extracted parameters
         legacy_helper = LegacyZDXClientHelper(
             client_id=client_id,
             client_secret=client_secret,
             cloud=cloud,
             timeout=timeout,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zdx_legacy_client=legacy_helper, use_legacy_client=True)
 
@@ -427,12 +434,13 @@ class LegacyZWAClient(Client):
         key_secret = config.get("key_secret", os.getenv("ZWA_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZWACLOUD", "us1"))
         timeout = config.get("timeout", 240)
-
+        request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZWAClientHelper with the extracted parameters
         legacy_helper = LegacyZWAClientHelper(
             key_id=key_id,
             key_secret=key_secret,
             cloud=cloud,
             timeout=timeout,
+            request_executor_impl=request_executor_impl,
         )
         super().__init__(config, zwa_legacy_client=legacy_helper, use_legacy_client=True)

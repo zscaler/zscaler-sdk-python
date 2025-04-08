@@ -150,17 +150,17 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         """
         Add a new GRE tunnel.
 
-        Note: If the `primary_dest_vip_id` and `secondary_dest_vip_id` aren't specified then the closest recommended
+        Note: If the `primary_dest_vip` and `secondary_dest_vip` aren't specified then the closest recommended
         VIPs will be automatically chosen.
 
         Args:
             source_ip (str):
                 The source IP address of the GRE tunnel. This is typically a static IP address in the organisation
                 or SD-WAN.
-            primary_dest_vip_id (str):
+            primary_dest_vip (str):
                 The unique identifier for the primary destination virtual IP address (VIP) of the GRE tunnel.
                 Defaults to the closest recommended VIP.
-            secondary_dest_vip_id (str):
+            secondary_dest_vip (str):
                 The unique identifier for the secondary destination virtual IP address (VIP) of the GRE tunnel.
                 Defaults to the closest recommended VIP that isn't in the same city as the primary VIP.
 
@@ -180,19 +180,40 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             :obj:`tuple`: The resource record for the newly created GRE tunnel.
 
         Examples:
-            Add a GRE tunnel with closest recommended VIPs:
-
-            >>> zia.traffic.add_gre_tunnel('203.0.113.10')
-
             Add a GRE tunnel with explicit VIPs:
 
-            >>> zia.traffic.add_gre_tunnel('203.0.113.11',
-            ...    primary_dest_vip_id='88088',
-            ...    secondary_dest_vip_id='54590',
-            ...    comment='GRE Tunnel for Manufacturing Plant')
+            >>> added_tunnel, zscaler_resp, err = client.zia.gre_tunnel.add_gre_tunnel(
+            ... source_ip='1.1.1.1',
+            ... comment=f"NewGRETunnel{random.randint(1000, 10000)}",
+            ... ip_unnumbered=False,
+            ... primary_dest_vip={
+            ...     "id":4681,
+            ...     "virtual_ip": "199.168.148.131",
+            ... },
+            ... secondary_dest_vip={
+            ...     "id":34283,
+            ...     "virtual_ip": "147.161.246.38",
+            ... }
+            ... )
+            ... if err:
+            ...     print(f"Error adding tunnel: {err}")
+            ...     print(f"Full Response: {zscaler_resp}")
+            ...     return
+            ... print(f"Tunnel added successfully: {added_tunnel.as_dict()}")
+            
+            Add a GRE tunnel with implicit VIPs:
 
+            >>> added_tunnel, zscaler_resp, err = client.zia.gre_tunnel.add_gre_tunnel(
+            ... source_ip='1.1.1.1',
+            ... comment=f"NewGRETunnel{random.randint(1000, 10000)}",
+            ... ip_unnumbered=False,
+            ... )
+            ... if err:
+            ...     print(f"Error adding tunnel: {err}")
+            ...     print(f"Full Response: {zscaler_resp}")
+            ...     return
+            ... print(f"Tunnel added successfully: {added_tunnel.as_dict()}")
         """
-        # Define the HTTP method and API endpoint
         http_method = "post".upper()
         api_url = format_url(
             f"""
@@ -250,10 +271,10 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             source_ip (str):
                 The source IP address of the GRE tunnel. This is typically a static IP address in the organisation
                 or SD-WAN.
-            primary_dest_vip_id (str):
+            primary_dest_vip (str):
                 The unique identifier for the primary destination virtual IP address (VIP) of the GRE tunnel.
                 Defaults to the closest recommended VIP.
-            secondary_dest_vip_id (str):
+            secondary_dest_vip (str):
                 The unique identifier for the secondary destination virtual IP address (VIP) of the GRE tunnel.
                 Defaults to the closest recommended VIP that isn't in the same city as the primary VIP.
 
@@ -268,6 +289,43 @@ class TrafficForwardingGRETunnelAPI(APIClient):
              **within_country (bool):
                 Restrict the data center virtual IP addresses (VIPs) only to those within the same country as the
                 source IP address.
+                
+        Examples:
+            Update a GRE tunnel with explicit VIPs:
+
+            >>> update_tunnel, zscaler_resp, err = client.zia.gre_tunnel.update_gre_tunnel(
+            ... tunnel_id=122455
+            ... source_ip='1.1.1.1',
+            ... comment=f"NewGRETunnel{random.randint(1000, 10000)}",
+            ... ip_unnumbered=False,
+            ... primary_dest_vip={
+            ...     "id":4681,
+            ...     "virtual_ip": "199.168.148.131",
+            ... },
+            ... secondary_dest_vip={
+            ...     "id":34283,
+            ...     "virtual_ip": "147.161.246.38",
+            ... }
+            ... )
+            ... if err:
+            ...     print(f"Error adding tunnel: {err}")
+            ...     print(f"Full Response: {zscaler_resp}")
+            ...     return
+            ... print(f"Tunnel added successfully: {update_tunnel.as_dict()}")
+            
+            Update a GRE tunnel with implicit VIPs:
+
+            >>> update_tunnel, zscaler_resp, err = client.zia.gre_tunnel.update_gre_tunnel(
+            ... tunnel_id=122455
+            ... source_ip='1.1.1.1',
+            ... comment=f"NewGRETunnel{random.randint(1000, 10000)}",
+            ... ip_unnumbered=False,
+            ... )
+            ... if err:
+            ...     print(f"Error adding tunnel: {err}")
+            ...     print(f"Full Response: {zscaler_resp}")
+            ...     return
+            ... print(f"Tunnel added successfully: {update_tunnel.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -326,8 +384,11 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
 
         Examples:
-            >>> zia.traffic.delete_gre_tunnel('972494')
-
+            >>> _, _, err = client.zia.gre_tunnel.delete_gre_tunnel(updated_tunnel.id)
+            ... if err:
+            ...     print(f"Error deleting tunnel: {err}")
+            ...     return
+            ... print(f"Tunnel with ID {updated_tunnel.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -365,7 +426,13 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             tuple: List of configured gre .
 
         Examples:
-            >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
+            >>> ranges, _, error = client.zia.gre_tunnel.list_gre_ranges(
+            ...     query_params={ 'internal_ip_range': '172.17.47.247-172.17.47.240'})
+            ... if error:
+            ...     print(f"Error listing GRE ranges: {error}")
+            ...     return
+            ... for rule in ranges:
+            ...     print(rule)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -428,9 +495,18 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         Examples:
             Return recommended VIPs for a given source IP:
 
-            >>> vips, response, err = zia.traffic.list_vips_recommended(source_ip='203.0.113.30')
-            >>> for vip in vips:
-            ...     pprint(vip)
+            >>> recommended_vips, zscaler_resp, err = client.zia.traffic_gre_tunnel.list_vips_recommended(
+            ... source_ip=source_ip, query_params={'routable_ip': True, 'within_country_only': True})
+            ... if err:
+            ...     print(f"Error listing recommended VIPs: {err}")
+            ...     return
+            ... if len(recommended_vips) < 2:
+            ...     print("Error: Not enough VIPs found to assign both primary and secondary.")
+            ...     return
+            ... primary_vip_id = recommended_vips[0].id
+            ... secondary_vip_id = recommended_vips[1].id
+            ... print(f"Primary VIP ID: {primary_vip_id}")
+            ... print(f"Secondary VIP ID: {secondary_vip_id}")
         """
 
         http_method = "get".upper()
@@ -484,7 +560,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         """
         # Fetch the recommended VIPs
-        vips_list, _, err = self.list_vips_recommended(query_params={'source_ip':ip_address})
+        vips_list, _, err = self.list_vips_recommended(query_params={'source_ip': ip_address})
 
         if err:
             raise ValueError(f"Error fetching recommended VIPs: {err}")

@@ -39,22 +39,29 @@ class ZPAGateway(ZscalerObject):
             self.zpa_tenant_id = config["zpaTenantId"]\
                 if "zpaTenantId" in config else None
 
-            # Handling nested object for zpaServerGroup
-            self.zpa_server_group = common_reference.ResourceReference(config["zpaServerGroup"]) \
-                if "zpaServerGroup" in config else None
+            if "zpaServerGroup" in config:
+                if isinstance(config["zpaServerGroup"], common_reference.CommonBlocks):
+                    self.zpa_server_group = config["zpaServerGroup"]
+                elif config["zpaServerGroup"] is not None:
+                    self.zpa_server_group = common_reference.CommonBlocks(config["zpaServerGroup"])
+                else:
+                    self.zpa_server_group = None
+            else:
+                self.zpa_server_group = None
 
-            # Handling lists of objects for zpaAppSegments
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common_reference.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common_reference.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
+
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
             )
-
-            # Handling nested object for lastModifiedBy
-            self.last_modified_by = {
-                "id": config["lastModifiedBy"]["id"] if "lastModifiedBy" in config and "id" in config["lastModifiedBy"] else None,
-                "name": config["lastModifiedBy"]["name"] if "lastModifiedBy" in config and "name" in config["lastModifiedBy"] else None,
-                "externalId": config["lastModifiedBy"]["externalId"] if "lastModifiedBy" in config and "externalId" in config["lastModifiedBy"] else None
-            } if "lastModifiedBy" in config else None
-
         else:
             # Defaults when config is None
             self.id = None
@@ -79,8 +86,8 @@ class ZPAGateway(ZscalerObject):
             "description": self.description,
             "lastModifiedTime": self.last_modified_time,
             "zpaTenantId": self.zpa_tenant_id,
-            "zpaServerGroup": self.zpa_server_group.request_format() if self.zpa_server_group else None,
-            "zpaAppSegments": [segment.request_format() for segment in self.zpa_app_segments],
+            "zpaServerGroup": self.zpa_server_group,
+            "zpaAppSegments": self.zpa_app_segments,
             "lastModifiedBy": self.last_modified_by
         }
         parent_req_format.update(current_obj_format)

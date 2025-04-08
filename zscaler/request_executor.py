@@ -261,27 +261,6 @@ class RequestExecutor:
 
         return body
 
-    # def _prepare_params(self, endpoint, params, body):
-    #     if not isinstance(params, dict):
-    #         return params
-
-    #     # Ensure ZDX query params remain snake_case
-    #     if self.use_legacy_client and self.zdx_legacy_client:
-    #         return params  # Keep as snake_case
-
-    #     # Keep existing logic for ZPA and other services
-    #     params = convert_keys_to_camel_case(params)
-
-    #     if "/zpa/" in endpoint:
-    #         microtenant_id = self._get_microtenant_id(body, params)
-    #         if microtenant_id:
-    #             params["microtenantId"] = microtenant_id
-    #     else:
-    #         params.pop("microtenantId", None)
-
-    #     return params
-
-    # [MODIFIED] `_prepare_params` now takes `service_type` as well
     def _prepare_params(self, service_type, endpoint, params, body):
         if not isinstance(params, dict):
             return params

@@ -48,6 +48,7 @@ class LegacyZPAClientHelper:
         timeout=240,
         cache=None,
         fail_safe=False,
+        request_executor_impl=None,
     ):
         from zscaler.request_executor import RequestExecutor
 
@@ -97,7 +98,7 @@ class LegacyZPAClientHelper:
                 },
             }
         }
-        self.request_executor = RequestExecutor(self.config, self.cache, zpa_legacy_client=self)
+        self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, zpa_legacy_client=self)
 
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()

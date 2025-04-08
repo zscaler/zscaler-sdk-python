@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.zpa_gateway import ZPAGateway
-from zscaler.utils import format_url, convert_keys, snake_to_camel, transform_common_id_fields
+from zscaler.utils import format_url
 
 
 class ZPAGatewayAPI(APIClient):
@@ -45,13 +45,25 @@ class ZPAGatewayAPI(APIClient):
         Returns:
             tuple: A tuple containing (list of ZPA Gateways instances, Response, error)
 
-
         Examples:
-            Get a list of all  ZPA Gateways Items
+            Get a list of all ZPA Gateways Items
 
-            >>> results = zia.zpa_gateway.list_gateways()
-            ... for item in results:
-            ...    print(item)
+            >>> gw_list, _, error = client.zia.zpa_gateway.list_gateways()
+                if error:
+                    print(f"Error listing zpa gateway: {error}")
+                    return
+                print(f"Total gateways found: {len(rulgw_listes_list)}")
+                for rule in gw_list:
+                    print(rule.as_dict())
+
+            Search a ZPA Gateways By Name
+
+            >>> gw_list, _, error = client.zia.zpa_gateway.list_gateways(query_params={'search': 'ZPA_GW01'})
+            ... if error:
+            ...     print(f"Error listing zpa gateway: {error}")
+            ...     return
+            ... for rule in gw_list:
+            ...     print(rule.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -89,13 +101,17 @@ class ZPAGatewayAPI(APIClient):
         Returns the zpa gateway details for a given ZPA Gateway.
 
         Args:
-            gatewayId (str): The unique identifier for the ZPA Gateway.
+            gateway_id (str): The unique identifier for the ZPA Gateway.
 
         Returns:
             tuple: A tuple containing (ZPA Gateway instance, Response, error).
 
         Examples:
-            >>> gw = zia.zpa_gateway.get_gateway('99999')
+            >>> etched_gateway, _, error = client.zia.zpa_gateway.get_gateway(gateway_id=18423896)
+            ... if error:
+            ...     print(f"Error fetching gateway by ID: {error}")
+            ...     return
+            ... print(f"Fetched gateway by ID: {fetched_gateway.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -131,6 +147,7 @@ class ZPAGatewayAPI(APIClient):
         self,
         name: str,
         zpa_server_group: dict = None,
+        zpa_app_segments: dict = None,
         **kwargs,
     ) -> tuple:
         """
@@ -154,41 +171,79 @@ class ZPAGatewayAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The newly added ZPA Gateway resource record.
+            
+        Examples:
+            Adding a new ZPA Gateway
+
+            >>> added_gateway, _, error = client.zia.zpa_gateway.add_gateway(
+            ... name=f"NewGateway_{random.randint(1000, 10000)}",
+            ... description=f"NewGateway_{random.randint(1000, 10000)}",
+            ... zpa_server_group={
+            ...     "name": "App_Segment_IP_Source_Anchoring2",
+            ...     "external_id": "72058304855090128"
+            ... },
+            ... zpa_app_segments=[
+            ... {
+            ...      "name": "App_Segment_IP_Source_Anchoring1",
+            ...      "external_id": "72058304855090129"
+            ...  }
+            ... ])
+            ... if error:
+            ...     print(f"Error adding gateway: {error}")
+            ...     return
+            ... print(f"Gateway added successfully: {added_gateway.as_dict()}")
         """
-        payload = {"name": name, "type": "ZPA"}
 
-        # Add zpa_server_group to kwargs
-        if zpa_server_group:
-            kwargs["zpa_server_group"] = zpa_server_group
-
-        # Define the id groups specific to this function
-        zpa_gateway_id_groups = [
-            ("zpa_server_group", "zpaServerGroup"),
-        ]
-        transform_common_id_fields(zpa_gateway_id_groups, kwargs, payload)
-
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
+        if not zpa_server_group:
+            return (None, None, ValueError("zpa_server_group is required"))
+        if not zpa_app_segments:
+            return (None, None, ValueError("zpa_app_segments is required"))
+        
         http_method = "post".upper()
-        api_url = f"{self._zia_base_endpoint}/zpaGateways"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /zpaGateways
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        body = {
+            "name": name,
+            "type": "ZPA",
+            "zpaServerGroup": zpa_server_group,
+            "zpaAppSegments": zpa_app_segments,
+        }
+        body.update(kwargs)
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request, ZPAGateway)
         if error:
             return (None, response, error)
 
         try:
-            result = ZPAGateway(self.form_response_body(response.get_body()))
+            result = ZPAGateway(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def update_gateway(self, gateway_id: str, **kwargs) -> tuple:
+    def update_gateway(
+        self,
+        gateway_id: str,
+        zpa_server_group: dict = None,
+        zpa_app_segments: dict = None,
+        **kwargs
+    ) -> tuple:
         """
         Updates information for the specified ZPA Gateway.
 
@@ -211,31 +266,72 @@ class ZPAGatewayAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The updated ZPA Gateway resource record.
+            
+        Examples:
+            Updating a new ZPA Gateway
+
+            >>> update_gateway, _, error = client.zia.zpa_gateway.update_gateway(
+            ... gateway_id=18423896
+            ... name=f"NewGateway_{random.randint(1000, 10000)}",
+            ... description=f"NewGateway_{random.randint(1000, 10000)}",
+            ... zpa_server_group={
+            ...     "name": "App_Segment_IP_Source_Anchoring2",
+            ...     "external_id": "72058304855090128"
+            ... },
+            ... zpa_app_segments=[
+            ... {
+            ...      "name": "App_Segment_IP_Source_Anchoring1",
+            ...      "external_id": "72058304855090129"
+            ...  }
+            ... ])
+            ... if error:
+            ...     print(f"Error updating gateway: {error}")
+            ...     return
+            ... print(f"Gateway updated successfully: {update_gateway.as_dict()}")
         """
-        payload = convert_keys(self.get_gateway(gateway_id))
 
-        # Define the id groups specific to this function
-        zpa_gateway_id_groups = [
-            ("zpa_server_group", "zpaServerGroup"),
-        ]
-
-        transform_common_id_fields(zpa_gateway_id_groups, kwargs, payload)
-
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        if not zpa_server_group:
+            return (None, None, ValueError("zpa_server_group is required"))
+        if not zpa_app_segments:
+            return (None, None, ValueError("zpa_app_segments is required"))
 
         http_method = "put".upper()
-        api_url = f"{self._zia_base_endpoint}/zpaGateways/{gateway_id}"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /zpaGateways/{gateway_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
+        body = {
+            "id": gateway_id,  # ← this is the key fix
+            "type": "ZPA",
+            "zpaServerGroup": zpa_server_group,
+            "zpaAppSegments": zpa_app_segments,
+        }
+        body.update(kwargs)
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.\
+            execute(request, ZPAGateway)
         if error:
             return (None, response, error)
 
-        return self.get_gateway(gateway_id)
+        try:
+            result = ZPAGateway(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
 
     def delete_gateway(self, gateway_id) -> tuple:
         """
@@ -248,18 +344,29 @@ class ZPAGatewayAPI(APIClient):
             :obj:`int`: The response code for the request.
 
         Examples
-            >>> gateway = zia.zpa_gateway.delete_gateway('99999')
-
+            >>> _, _, error = client.zia.zpa_gateway.delete_gateway(gateway_id=18423896)
+            ... if error:
+            ...     print(f"Error deleting zpa gateway: {error}")
+            ...     return
+            ... print(f"Rule with ID {updated_gateway.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = f"{self._zia_base_endpoint}/zpaGateways/{gateway_id}"
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /zpaGateways/{gateway_id}
+        """
+        )
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        params = {}
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor\
+            .execute(request)
         if error:
             return (None, response, error)
-
-        return (response.get_status(), response, None)
+        return (None, response, None)

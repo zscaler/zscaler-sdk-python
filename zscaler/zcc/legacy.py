@@ -56,7 +56,7 @@ class LegacyZCCClientHelper:
     RATE_LIMIT_RESET_TIME = timedelta(hours=1)
     DOWNLOAD_DEVICES_RESET_TIME = timedelta(days=1)
 
-    def __init__(self, api_key=None, secret_key=None, cloud=None, timeout=240, cache=None):
+    def __init__(self, api_key=None, secret_key=None, cloud=None, timeout=240, cache=None, request_executor_impl=None):
         from zscaler.request_executor import RequestExecutor
 
         self._api_key = api_key or os.getenv("api_key", os.getenv(f"{self._env_base}_CLIENT_ID"))
@@ -84,7 +84,7 @@ class LegacyZCCClientHelper:
         }
 
         # Correct initialization of the request executor
-        self.request_executor = RequestExecutor(self.config, self.cache, zcc_legacy_client=self)
+        self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, zcc_legacy_client=self)
 
         self.user_agent = UserAgent().get_user_agent_string()
         self.auth_token = None

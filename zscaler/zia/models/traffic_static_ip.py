@@ -52,10 +52,10 @@ class TrafficStaticIP(ZscalerObject):
                     self.last_modified_by = None
 
             if "city" in config:
-                if isinstance(config["city"], common.Common):
+                if isinstance(config["city"], common.CommonIDName):
                     self.city = config["city"]
                 elif config["city"] is not None:
-                    self.city = common.Common(config["city"])
+                    self.city = common.CommonIDName(config["city"])
                 else:
                     self.city = None
             else:

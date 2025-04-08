@@ -83,7 +83,9 @@ class ForwardingControlRule(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
+            self.groups = ZscalerCollection.form_list(
+                config["groups"] if "groups" in config else [], user_management.Groups)
+            
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
@@ -129,12 +131,26 @@ class ForwardingControlRule(ZscalerObject):
                 common_reference.ResourceReference,
             )
 
-            # Handle nested single objects
-            self.proxy_gateway = (
-                common_reference.ResourceReference(config["proxyGateway"]) if "proxyGateway" in config else None
-            )
 
-            self.zpa_gateway = zpa_gateway.ZPAGateway(config["zpaGateway"]) if "zpaGateway" in config else None
+            if "proxyGateway" in config:
+                if isinstance(config["proxyGateway"], common_reference.CommonBlocks):
+                    self.proxy_gateway = config["proxyGateway"]
+                elif config["proxyGateway"] is not None:
+                    self.proxy_gateway = common_reference.CommonBlocks(config["proxyGateway"])
+                else:
+                    self.proxy_gateway = None
+            else:
+                self.proxy_gateway = None
+                
+            if "zpaGateway" in config:
+                if isinstance(config["zpaGateway"], common_reference.CommonBlocks):
+                    self.zpa_gateway = config["zpaGateway"]
+                elif config["zpaGateway"] is not None:
+                    self.zpa_gateway = common_reference.CommonBlocks(config["zpaGateway"])
+                else:
+                    self.zpa_gateway = None
+            else:
+                self.zpa_gateway = None
 
         else:
             # Defaults when config is None

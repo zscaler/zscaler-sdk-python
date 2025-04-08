@@ -100,15 +100,15 @@ class CommonBlocks(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
-class Common(ZscalerObject):
+class CommonIDName(ZscalerObject):
     """
-    A class for Common objects.
+    A class for CommonIDName objects.
     Handles common block attributes shared across multiple resources
     """
 
     def __init__(self, config=None):
         """
-        Initialize the Common model based on API response.
+        Initialize the CommonIDName model based on API response.
 
         Args:
             config (dict): A dictionary representing the response.

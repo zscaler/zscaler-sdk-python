@@ -39,16 +39,28 @@ class TrafficGRERecommendedVIP(ZscalerObject):
                 if "privateServiceEdge" in config else None
             self.datacenter = config["datacenter"]\
                 if "datacenter" in config else None
+            self.latitude = config["latitude"]\
+                if "latitude" in config else None
+            self.longitude = config["longitude"]\
+                if "longitude" in config else None
             self.city = config["city"]\
                 if "city" in config else None
+            self.country_code = config["countryCode"]\
+                if "countryCode" in config else None
+            self.region = config["region"]\
+                if "region" in config else None
         else:
             # Initialize with default None or 0 values
             self.id = None
             self.virtual_ip = None
             self.private_service_edge = False
             self.datacenter = None
+            self.latitude = None
+            self.longitude = None
             self.city = None
-
+            self.country_code = None
+            self.region = None
+            
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -59,7 +71,11 @@ class TrafficGRERecommendedVIP(ZscalerObject):
             "virtualIp": self.virtual_ip,
             "privateServiceEdge": self.private_service_edge,
             "datacenter": self.datacenter,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
             "city": self.city,
+            "countryCode": self.country_code,
+            "region": self.region,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -52,7 +52,7 @@ class LegacyZCONClientHelper:
     _env_base = "ZCON"
     env_cloud = "zscaler"
 
-    def __init__(self, cloud=None, timeout=240, cache=None, fail_safe=False, **kw):
+    def __init__(self, cloud=None, timeout=240, cache=None, fail_safe=False, request_executor_impl=None, **kw):
         from zscaler.request_executor import RequestExecutor
 
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
@@ -104,7 +104,7 @@ class LegacyZCONClientHelper:
                 },
             }
         }
-        self.request_executor = RequestExecutor(self.config, self.cache, zcon_legacy_client=self)
+        self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, zcon_legacy_client=self)
 
     def extractJSessionIDFromHeaders(self, header):
         session_id_str = header.get("Set-Cookie", "")
