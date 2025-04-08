@@ -15,6 +15,7 @@
 # Official Zscaler Python SDK Overview
 
 * [Release status](#release-status)
+* [Breaking Changes & Migration Guide to Multi-Client SDK](#breaking-changes--migration-guide-to-multi-client-sdk)
 * [Need help?](#need-help)
 * [Getting Started](#getting-started)
 - [Building the SDK](#building-the-sdk)
@@ -49,7 +50,6 @@ This library uses semantic versioning and updates are posted in ([release notes]
 | ------- | -------------------------------- |
 | 0.x     | :warning: Beta Release (Retired) |
 | 1.x     | :warning: Retired                |
-| 2.x     | :heavy_check_mark: Release       |
 
 The latest release can always be found on the ([releases page](github-releases))
 
@@ -63,6 +63,89 @@ If you run into problems, please refer to our [General Support Statement](docs/g
 - Ask questions on the [Zenith Community][zenith]
 - Post [issues on GitHub][github-issues] (for code errors)
 - Support [customer support portal][zscaler-support]
+
+## Breaking Changes & Migration Guide to Multi-Client SDK
+
+This SDK is a complete redesign from the older `zscaler-sdk-python` or `pyzscaler packages`. If you've used either of those, please review the following before upgrading:
+
+### What's Changed
+
+| Feature                         | Legacy SDK (Restfly + Box)                      | New SDK (OneAPI + Pythonic Dict)                |
+|---------------------------------|--------------------------------------------------|--------------------------------------------------|
+| **Data Structure**              | Used `Python-Box` objects (dot notation)        | Uses native Python `dict` with `snake_case`     |
+| **HTTP Engine**                 | [Restfly](https://github.com/tdunham/restfly)   | Custom HTTP executor with retries, caching, etc.|
+| **Auth Model**                  | One set of credentials per service              | Unified OAuth2 (Zidentity) with scoped access    |
+| **Multi-Service Support**       | Separate SDKs or config per service             | Unified client with `.zia`, `.zpa`, `.zcc`      |
+| **Pagination**                  | Inconsistent or manual                          | Built-in with `resp.has_next()` and `resp.next()` |
+| **Error Handling**              | Raw HTTP exceptions                             | Returns `(result, response, error)` tuples      |
+| **Models**                      | Custom models + `.attribute` access             | Plain Python dict access: `object["field"]`     |
+| **Return Types**                | Box-style nested objects                        | Pure JSON-serializable `dict` responses          |
+
+### Legacy SDK Examples
+
+```py
+# Old SDK (Pyzscaler / Restfly)
+client = ZIAClientHelper(api_key="...", cloud="...")
+
+users = client.users.list()
+print(users[0].name)  # Box-style access
+```
+
+### New SDK Example
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": "...",
+    "clientSecret": "...",
+    "vanityDomain": "...",
+    "cloud": "beta", # (Optional)
+}
+
+with ZscalerClient(config) as client:
+    users, _, err = client.zia.user_management.list_users()
+    if err:
+        print("Error:", err)
+    else:
+        print(users[0]["name"])  # Pythonic dict access
+```
+
+### Migration Summary
+
+If you're upgrading from a previous version:
+
+* Refactor any `.attribute` access to dictionary access: `user["name"]` instead of `user.name`
+* Update authentication to use OAuth2 via OneAPI:
+Choose either:
+```py
+client = ZscalerClient({
+    "client_id": "...",
+    "client_secret": "...",
+    "vanity_domain": "..."
+})
+```
+
+or (for JWT private key auth):
+```py
+client = ZscalerClient({
+    "client_id": "...",
+    "private_key": "...",
+    "vanity_domain": "..."
+})
+```
+
+* If your tenant is still `NOT` migrated to Zidentity:
+You can still use this SDK by instantiating the respective legacy API client directly. See section: [Zscaler Legacy API Framework](#zscaler-legacy-api-framework)
+```py
+from zscaler.oneapi_client import LegacyZIAClient
+
+def main():
+    with LegacyZIAClient(config) as client:
+        users, _, _ = client.user_management.list_users()
+        ...
+```
+
+* All data returned from the SDK is pure `dict` — no Box, no attribute-style access — just native, Pythonic, serializable output.
 
 ## Getting started
 
@@ -316,16 +399,35 @@ The header `x-ratelimit-reset` is returned in the API response for each API call
 
 ## Pagination
 
-The pagination logic in this SDK applies to both the OneAPI Client and Legacy API Client Framework. This way, the transition from the legacy to OneAPI is seamless and no code changes are required at the resource level.
+The pagination system in this SDK is unified across `ZCC`, `ZCON`, `ZDX`, `ZIA`, `ZPA`, `ZWA`
+and is applied transparently whether you're using the Legacy API Client or the new OneAPI OAuth2 Client.
 
-### Filter or search for Segment Groups
+✅ This means no code changes are needed when transitioning from the legacy API framework to OneAPI framework.
+
+When calling a method that supports pagination (e.g., `list_users`, `list_groups`, `list_app_segments`), only the first page of results is returned initially. The SDK returns a response tuple:
 
 ```py
-# Query parameters are optional on methods that can use them!
-# Check the method definition for details on which query parameters are accepted.
-query_parameters = {'page': '1', 'page_size': '100'}
-groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+items, response, error = client.zia.user_management.list_groups()
 ```
+
+You can then use the `response.has_next()` and `response.next()` methods to retrieve subsequent pages.
+
+### Basic Pagination Example
+
+```py
+query_parameters = {'page_size': 100}
+groups, resp, err = client.zia.user_management.list_groups(query_parameters)
+
+while resp.has_next():
+    more_groups, err = resp.next()
+    if err:
+        break
+    groups.extend(more_groups)
+```
+
+### Searching and Filtering
+
+You can filter or search using available query parameters. The available parameters vary by service, so refer to each method's documentation for details.
 
 ```py
 # Query parameters are optional on methods that can use them!
@@ -335,7 +437,87 @@ query_parameters = {'search': 'Group1'}
 groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
 ```
 
-Example of listing ZIA Users 1 at a time:
+```py
+# Query parameters are optional on methods that can use them!
+# Check the method definition for details on which query parameters are accepted.
+query_parameters = {'page': '1', 'page_size': '100'}
+groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+```
+
+### Full Example with Error Handling
+```py
+def main():
+    with ZscalerClient(config) as client:
+        query_parameters = {}
+        groups, resp, err = client.zia.user_management.list_groups(query_parameters)
+
+        if err:
+            print(f"Error: {err}")
+            return
+
+        print(f"Processing {len(groups)} groups:")
+        for group in groups:
+            print(group)
+
+        while resp.has_next():
+            next_page, err = resp.next()
+            if err:
+                print(f"Error fetching next page: {err}")
+                break
+            for group in next_page:
+                print(group)
+
+        try:
+            resp.next()  # Will raise StopIteration if no more data
+        except StopIteration:
+            print("✅ No more groups to retrieve.")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Pagination Limits and Controls
+
+Each Zscaler service has its own pagination requiremens and max page size:
+
+| Service | Default Page Size | Max Page Size | Notes                                           |
+|---------|-------------------|---------------|-------------------------------------------------|
+| ZPA     | 100               | 500           | Uses `pagesize` (lowercase)                    |
+| ZIA     | 500               | Varies        | Uses `pageSize` (camelCase)                    |
+| ZDX     | 10                | Varies        | Uses `limit` + `offset`, similar to cursor API |
+
+⚠️ **Note:** Always use `snake_case` for all parameter names, even when the API expects camelCase.The SDK handles conversion internally.
+
+When using
+```py
+query_parameters = {
+    "page_size": 100,
+    "max_pages": 5,
+    "max_items": 250
+}
+```
+You can control how many total items or pages the SDK will fetch even if more data is available.
+
+###  Internal Pagination Handling
+
+The `ZscalerAPIResponse` object returned as resp handles:
+
+* Tracking the current page
+* Automatically applying proper pagination parameters per service
+* Mapping pagination fields like page, pagesize, limit, offset, next_offset, etc.
+* Fallback handling when the API doesn't indicate the total count
+
+You don’t need to worry about API quirks—just use `resp.has_next()` and `resp.next()` safely.
+
+⚠️ Note on StopIteration
+The SDK raises a StopIteration if `next()` is called and no more pages are available:
+
+```py
+try:
+    resp.next()
+except StopIteration:
+    print("All data fetched.")
+```
 
 ## Logging
 

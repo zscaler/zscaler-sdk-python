@@ -33,6 +33,7 @@ Official Zscaler Python SDK Overview
 ====================================
 
 -  `Release status <#release-status>`__
+-  `Breaking Changes & Migration Guide to Multi-Client SDK <#breaking-changes--migration-guide-to-multi-client-sdk>`__
 -  `Need help? <#need-help>`__
 -  `Getting Started <#getting-started>`__
 -  `Building the SDK <#building-the-sdk>`__
@@ -74,7 +75,6 @@ Version Status
 ======= ================================
 0.x     :warning: Beta Release (Retired)
 1.x     :warning: Retired
-2.x     :heavy_check_mark: Release
 ======= ================================
 
 The latest release can always be found on the (`releases
@@ -102,6 +102,105 @@ page <https://github.com/zscaler/zscaler-sdk-go/issues>`__)
    code errors)
 -  Support `customer support
    portal <https://help.zscaler.com/contact-support>`__
+
+Breaking Changes & Migration Guide to Multi-Client SDK
+------------------------------------------------------
+
+This SDK is a complete redesign from the older `zscaler-sdk-python` or `pyzscaler packages`. If you've used either of those, please review the following before upgrading:
+
+What's Changed
+~~~~~~~~~~~~~~~~
+
++--------------------------+--------------------------------------------+-------------------------------------------------+
+|          Feature         |        Legacy SDK (Restfly + Box)          | New SDK (OneAPI + Pythonic Dict)                |
++==========================+============================================+=================================================+
+|     `Data Structure`     |     Used Python-Box objects (dot notation)	| Uses native Python dict with snake_case         |
++--------------------------+--------------------------------------------+-------------------------------------------------+
+|      `HTTP Engine`       |                 Restfly                    | Custom HTTP executor with retries, caching, etc.|
++--------------------------+--------------------------------------------+-------------------------------------------------+
+|     ``Auth Model``       |     One set of credentials per service     | Unified OAuth2 (Zidentity) with scoped access   |
++--------------------------+--------------------------------------------+-------------------------------------------------+
+| ``Multi-Service Support``|     Separate SDKs or config per service    | Unified client with `.zia`, `.zpa`, `.zcc`      |
++--------------------------+--------------------------------------------+-------------------------------------------------+
+|       ``Pagination``     |           Inconsistent or manual           | Built-in with resp.has_next() and resp.next()   |
++--------------------------+--------------------------------------------+--------------------------------------------------
+|     ``Error Handling``   |              Raw HTTP exceptions           | Returns (result, response, error) tuples        |
++--------------------------+--------------------------------------------+-------------------------------------------------+
+|        ``Models``        |         Custom models + .attribute access  | Plain Python dict access: object["field"]       |
++--------------------------+-------------------+------------------------+--------------------------------------------------
+|     ``Return Types``     |              Box-style nested objects      | Pure JSON-serializable dict responses           |
++--------------------------+--------------------------------------------+-------------------------------------------------+
+
+Legacy SDK Examples
+~~~~~~~~~~~~~~~~~~~
+
+```py
+# Old SDK (Pyzscaler / Restfly)
+client = ZIAClientHelper(api_key="...", cloud="...")
+
+users = client.users.list()
+print(users[0].name)  # Box-style access
+```
+
+New SDK Example
+~~~~~~~~~~~~~~~~~~~
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": "...",
+    "clientSecret": "...",
+    "vanityDomain": "...",
+    "cloud": "beta", # (Optional)
+}
+
+with ZscalerClient(config) as client:
+    users, _, err = client.zia.user_management.list_users()
+    if err:
+        print("Error:", err)
+    else:
+        print(users[0]["name"])  # Pythonic dict access
+```
+
+Migration Summary
+~~~~~~~~~~~~~~~~~~~
+
+If you're upgrading from a previous version:
+
+- Refactor any `.attribute` access to dictionary access: `user["name"]` instead of `user.name`
+- Update authentication to use OAuth2 via OneAPI:
+Choose either:
+```py
+client = ZscalerClient({
+    "client_id": "...",
+    "client_secret": "...",
+    "vanity_domain": "..."
+})
+```
+
+or (for JWT private key auth):
+```py
+client = ZscalerClient({
+    "client_id": "...",
+    "private_key": "...",
+    "vanity_domain": "..."
+})
+```
+
+- If your tenant is still `NOT` migrated to Zidentity:
+You can still use this SDK by instantiating the respective legacy API client directly. See section: `Zscaler Legacy API Framework(#zscaler-legacy-api-framework)
+
+```py
+from zscaler.oneapi_client import LegacyZIAClient
+
+def main():
+    with LegacyZIAClient(config) as client:
+        users, _, _ = client.user_management.list_users()
+        ...
+```
+
+- All data returned from the SDK is pure `dict` — no Box, no attribute-style access — just native, Pythonic, serializable output.
 
 Getting started
 ---------------
