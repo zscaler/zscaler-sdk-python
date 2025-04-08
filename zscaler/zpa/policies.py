@@ -75,6 +75,8 @@ class PolicySetsAPI:
             "SCIM": [],
             "SCIM_GROUP": [],
             "COUNTRY_CODE": [],
+            "RISK_FACTOR_TYPE":[],
+            "CHROME_ENTERPRISE":[],
         }
 
         operators_for_types = {}  # Dictionary to store specific operators for each object type
@@ -105,9 +107,9 @@ class PolicySetsAPI:
                     object_types_to_operands[object_type].append(operand)
 
             elif isinstance(condition, dict):
-                if "operator" in condition:
-                    operators_for_types["default"] = condition["operator"]
-                    continue  # Skip to the next condition after setting the operator
+                # if "operator" in condition:
+                #     operators_for_types["default"] = condition["operator"]
+                #     continue  # Skip to the next condition after setting the operator
 
                 condition_template = {}
                 for key in ["id", "negated", "operator"]:
@@ -184,7 +186,7 @@ class PolicySetsAPI:
                         ]
                     }
                 )
-            elif object_type in ["posture", "trusted_network", "country_code", "platform"]:
+            elif object_type in ["posture", "trusted_network", "country_code", "platform", "risk_factor_type", "chrome_enterprise"]:
                 # These types use "entryValues" with "lhs" as unique ID and "rhs" as "true"/"false"
                 template.append(
                     {"operands": [{"objectType": object_type.upper(), "entryValues": [{"lhs": values[0], "rhs": values[1]}]}]}
@@ -481,6 +483,13 @@ class PolicySetsAPI:
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
+        # Force removal if user gave an empty list. 
+        # (Ensures we don't leave behind the old 'appConnectorGroups' from current_rule.)
+        if not app_connector_group_ids:
+            payload["appConnectorGroups"] = []
+        if not app_server_group_ids:
+            payload["appServerGroups"] = []
+        
         for key, value in kwargs.items():
             if key == "conditions":
                 payload["conditions"] = self._create_conditions_v1(value)
