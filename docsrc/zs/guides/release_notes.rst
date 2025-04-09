@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 0.10.6 (April, 8 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+------------
+
+* Fixed `_create_conditions_v1` in ZPA `policies` package to ensure proper `conditions` block configuration (`253 <https://github.com/zscaler/zscaler-sdk-python/pull/253>`_)
+* Included new ZPA `policies` `object_types`. `RISK_FACTOR_TYPE` and `CHROME_ENTERPRISE` (`253 <https://github.com/zscaler/zscaler-sdk-python/pull/253>`_)
+    
+
 ## 0.10.5 (March, 13 2025)
 
 ### Notes
