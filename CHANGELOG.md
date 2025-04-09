@@ -1,5 +1,18 @@
 # Zscaler Python SDK Changelog
 
+## 0.10.6 (April,8 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+### Bug Fix:
+
+* ([#253](https://github.com/zscaler/zscaler-sdk-python/pull/253)) - Fixed `_create_conditions_v1` in ZPA `policies` package to ensure proper `conditions` block configuration
+* ([#253](https://github.com/zscaler/zscaler-sdk-python/pull/253)) - Included new ZPA `policies` `object_types`. `RISK_FACTOR_TYPE` and `CHROME_ENTERPRISE`.
+
 ## 0.10.5 (March,13 2025)
 
 ### Notes
@@ -8,15 +21,15 @@
 
 ### Bug Fix:
 
-* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Enhanced `pac_files` function resources.
+* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Enhanced `pac_files` function resources.
   - `clone_pac_file` - The function pre-checks if total number of pac file versions within a specific pac file is == 10. If so, it triggers a error requiring the use of the parameter/attribute `delete_version`.
     **NOTE** A maximum of 10 pac file versions is supported. If the total limit is reached you must explicitly indicate via the `delete_version` parameter which version must be removed prior to invoking the `clone_pac_file` method again.
 
   - `update_pac_file` - The function now validates the current `pac_version_status` prior to attempting an update. The API endpoint behind the `update_pac_file` method requires the `pac_version_status` to have specific value in order to accept the call.
 
-* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
-* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit` 
-* ([#252](https://github.com/zscaler/zscaler-sdk-python/pull/252)) - Fixed pagination for `devices.list_devices` to support new pagination paramters.
+* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
+* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit` 
+* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed pagination for `devices.list_devices` to support new pagination paramters.
 
 ## 0.10.4 (January,9 2025)
 
