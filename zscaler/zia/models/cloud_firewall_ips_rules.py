@@ -28,8 +28,8 @@ from zscaler.zia.models import cloud_firewall_destination_groups as destination_
 from zscaler.zia.models import cloud_firewall_source_groups as source_groups
 from zscaler.zia.models import cloud_firewall_nw_service_groups as nw_service_groups
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
-from zscaler.zia.models import common as common_reference
-
+from zscaler.zia.models import common as common
+from zscaler.zia.models import common as common
 class FirewallIPSrules(ZscalerObject):
     """
     A class for FirewallIPSrules objects.
@@ -123,9 +123,8 @@ class FirewallIPSrules(ZscalerObject):
                 config["nwServiceGroups"] if "nwServiceGroups" in config else [], nw_service_groups.NetworkServiceGroups
             )
             
-            # Need to check how to handle this attribute.
             self.threat_categories = ZscalerCollection.form_list(
-                config["threatCategories"] if "threatCategories" in config else [], str
+                config["threatCategories"] if "threatCategories" in config else [], common.CommonIDNameTag
             )
             self.devices = ZscalerCollection.form_list(
                 config["devices"] if "devices" in config else [], devices.Devices
@@ -138,10 +137,10 @@ class FirewallIPSrules(ZscalerObject):
             )
             # Reuse the external ZPAAppSegment class
             self.zpa_app_segments = ZscalerCollection.form_list(
-                config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
+                config["zpaAppSegments"] if "zpaAppSegments" in config else [], common.ResourceReference
             )
             self.enable_full_logging = config["enableFullLogging"] \
-                if "enableFullLogging" in config else False
+                if "enableFullLogging" in config else None
             self.predefined = config["predefined"] \
                 if "predefined" in config else False
             self.default_rule = config["defaultRule"] \
@@ -220,7 +219,7 @@ class FirewallIPSrules(ZscalerObject):
             "destIpv6Groups": [dig.request_format() for dig in (self.dest_ipv6_groups or [])],
             "nwServices": [service.request_format() for service in (self.nw_services or [])],
             "nwServiceGroups": [sg.request_format() for sg in (self.nw_service_groups or [])],
-            "threatCategories": self.threat_categories, # Need to figure it out how to handle this attribute
+            "threatCategories": [tc.request_format() for tc in (self.threat_categories or [])],
             "devices": [device.request_format() for device in (self.devices or [])],
             "deviceGroups": [dg.request_format() for dg in (self.device_groups or [])],
             "labels": [label.request_format() for label in (self.labels or [])],

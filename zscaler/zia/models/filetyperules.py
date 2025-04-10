@@ -56,9 +56,9 @@ class FileTypeControlRules(ZscalerObject):
             self.description = config["description"] \
                 if "description" in config else None
             self.min_size = config["minSize"] \
-                if "minSize" in config else None
+                if "minSize" in config else 0
             self.max_size = config["maxSize"] \
-                if "maxSize" in config else None
+                if "maxSize" in config else 0
             self.filtering_action = config["filteringAction"] \
                 if "filteringAction" in config else None
             self.capture_pcap = config["capturePCAP"] \
@@ -143,8 +143,8 @@ class FileTypeControlRules(ZscalerObject):
             self.devices = []
             self.device_groups = []
             self.device_trust_levels = []
-            self.min_size = None
-            self.max_size = None
+            self.min_size = 0
+            self.max_size = 0
             self.filtering_action = None
             self.capture_pcap = None
             self.operation = None

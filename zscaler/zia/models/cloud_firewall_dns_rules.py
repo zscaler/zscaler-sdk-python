@@ -27,7 +27,8 @@ from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import cloud_firewall_destination_groups as destination_groups
 from zscaler.zia.models import cloud_firewall_source_groups as source_groups
-from zscaler.zia.models import common as common_reference
+from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
+from zscaler.zia.models import common as common
 
 class FirewallDNSRules(ZscalerObject):
     """
@@ -122,20 +123,12 @@ class FirewallDNSRules(ZscalerObject):
             
             # Need to create model to iterate through application_groups list
             self.application_groups = ZscalerCollection.form_list(
-                config["applicationGroups"] if "applicationGroups" in config else [], str
-            )
-
-            self.dns_gateway = (
-                common_reference.ResourceReference(config["dnsGateway"]) if "dnsGateway" in config else None
+                config["applicationGroups"] if "applicationGroups" in config else [], common.CommonIDName
             )
 
             self.edns_ecs_object = (
-                common_reference.ResourceReference(config["ednsEcsObject"]) if "ednsEcsObject" in config else None
+                common.ResourceReference(config["ednsEcsObject"]) if "ednsEcsObject" in config else None
             ) 
-            
-            self.zpa_ip_group = (
-                common_reference.ResourceReference(config["zpaIpGroup"]) if "zpaIpGroup" in config else None
-            )
             
             self.dns_rule_request_types = ZscalerCollection.form_list(
                 config["dnsRuleRequestTypes"] if "dnsRuleRequestTypes" in config else [], str
@@ -160,6 +153,37 @@ class FirewallDNSRules(ZscalerObject):
                 if "predefined" in config else False
             self.default_rule = config["defaultRule"] \
                 if "defaultRule" in config else False
+                
+            if "zpaIpGroup" in config:
+                if isinstance(config["zpaIpGroup"], common.CommonIDName):
+                    self.zpa_ip_group = config["zpaIpGroup"]
+                elif config["zpaIpGroup"] is not None:
+                    self.zpa_ip_group = common.CommonIDName(config["zpaIpGroup"])
+                else:
+                    self.zpa_ip_group = None
+            else:
+                self.zpa_ip_group = None
+
+            if "dnsGateway" in config:
+                if isinstance(config["dnsGateway"], common.CommonBlocks):
+                    self.dns_gateway = config["dnsGateway"]
+                elif config["dnsGateway"] is not None:
+                    self.dns_gateway = common.CommonBlocks(config["dnsGateway"])
+                else:
+                    self.dns_gateway = None
+            else:
+                self.dns_gateway = None
+
+            if "ednsEcsObject" in config:
+                if isinstance(config["ednsEcsObject"], common.CommonBlocks):
+                    self.edns_ecs_object = config["ednsEcsObject"]
+                elif config["ednsEcsObject"] is not None:
+                    self.edns_ecs_object = common.CommonBlocks(config["ednsEcsObject"])
+                else:
+                    self.edns_ecs_object = None
+            else:
+                self.edns_ecs_object = None
+                                
         else:
             self.action = None
             self.capture_pcap = None
@@ -237,16 +261,16 @@ class FirewallDNSRules(ZscalerObject):
             "resCategories": self.res_categories,
             "redirectIp": self.redirect_ip,
             "applications": self.applications,
-            "applicationGroups": [ag.request_format() for ag in (self.application_groups or [])],
-            "dnsGateway": self.dns_gateway.request_format() if self.dns_gateway else None,
+            "applicationGroups": self.application_groups,
+            "dnsGateway": self.dns_gateway,
             "dnsRuleRequestTypes": self.dns_rule_request_types,
-            "zpaIpGroup": self.zpa_ip_group.request_format() if self.zpa_ip_group else None,
+            "zpaIpGroup": self.zpa_ip_group,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "devices": [dg.request_format() for dg in (self.devices or [])],
             "deviceGroups": [dg.request_format() for dg in (self.device_groups or [])],
             "labels": self.labels,
-            "ednsEcsObject": self.edns_ecs_object.request_format() if self.edns_ecs_object else None,
+            "ednsEcsObject": self.edns_ecs_object,
             "blockResponseCode": self.block_response_code,
             "predefined": self.predefined,
             "defaultRule": self.default_rule

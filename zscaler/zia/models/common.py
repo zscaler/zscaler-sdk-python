@@ -135,3 +135,42 @@ class CommonIDName(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+class CommonIDNameTag(ZscalerObject):
+    """
+    A class for CommonIDNameTag objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the CommonIDNameTag model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.is_name_l10n_tag = config["isNameL10nTag"] \
+                if "isNameL10nTag" in config else False             
+        else:
+            self.id = None
+            self.name = None
+            self.is_name_l10n_tag=False
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "isNameL10nTag": self.is_name_l10n_tag
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
