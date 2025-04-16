@@ -6,9 +6,25 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-## 0.10.6 (April, 8 2025)
+0.10.7 (April, 15 2025)
+------------------------
 
-### Notes
+Notes
+^^^^^
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+------------
+
+* Added retry-status code `408` to prevent random timeouts during unforseen issues. (`254 <https://github.com/zscaler/zscaler-sdk-python/pull/254>`_)
+
+
+0.10.6 (April, 8 2025)
+------------------------
+
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
@@ -19,9 +35,11 @@ Bug Fixes
 * Included new ZPA `policies` `object_types`. `RISK_FACTOR_TYPE` and `CHROME_ENTERPRISE` (`253 <https://github.com/zscaler/zscaler-sdk-python/pull/253>`_)
     
 
-## 0.10.5 (March, 13 2025)
+0.10.5 (March, 13 2025)
+------------------------
 
-### Notes
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
@@ -41,7 +59,8 @@ Bug Fixes
 
 ## 0.10.4 (January,9 2025)
 
-### Notes
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
@@ -50,9 +69,11 @@ Bug Fixes
 
 * Fixed pagination parameters on ZIA `cloud_apps` resource. Cloud Apps use the following parameters during pagination: `limit` and `page_number` (`237 <https://github.com/zscaler/zscaler-sdk-python/pull/237>`_)
 
-## 0.10.3 (January,8 2024)
+0.10.3 (January,8 2024)
+------------------------
 
-### Notes
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
@@ -63,7 +84,8 @@ Bug Fixes
 
 ## 0.10.2 (January,6 2024)
 
-### Notes
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
@@ -77,7 +99,8 @@ Bug Fixes
 
 ## 0.10.1 (December,18 2024)
 
-### Notes
+Notes
+^^^^^
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 

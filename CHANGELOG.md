@@ -1,5 +1,17 @@
 # Zscaler Python SDK Changelog
 
+## 0.10.7 (April,15 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+### Bug Fix:
+
+* ([#254](https://github.com/zscaler/zscaler-sdk-python/pull/254)) - Added retry-status code `408` to prevent random timeouts during unforseen issues.
+
 ## 0.10.6 (April,8 2025)
 
 ### Notes
