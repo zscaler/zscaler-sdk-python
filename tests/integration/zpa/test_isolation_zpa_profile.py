@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -36,26 +36,16 @@ class TestZPACBIProfile:
 
         # List all CBI ZPA profiles
         try:
-            profiles = client.isolation.list_zpa_profiles()
-            assert isinstance(profiles, list) and profiles, "Expected a non-empty list of CBI ZPA profiles"
-            first_profile = profiles[0]
-            cbi_profile_id = first_profile.get("cbi_profile_id")
-            assert cbi_profile_id is not None, "No CBI profile ID found in the first profile"
-        except AssertionError as exc:
-            errors.append(f"Assertion error: {str(exc)}")
-        except Exception as exc:
-            errors.append(f"Listing CBI ZPA profiles failed: {str(exc)}")
+            profiles_response, _, err = client.zpa.cbi_zpa_profile.list_cbi_zpa_profiles()
+            assert err is None, f"Error listing ZPA CBI Profiles: {err}"
+            assert isinstance(profiles_response, list), "Expected a list of ZPA CBI Profiles"
 
-        # Fetch the selected CBI ZPA profile by its ID
-        if cbi_profile_id:
-            try:
-                fetched_profile = client.isolation.get_zpa_profile(cbi_profile_id)
-                assert fetched_profile is not None, "Expected a valid CBI ZPA profile object"
-                assert fetched_profile.get("cbi_profile_id") == cbi_profile_id, "Mismatch in CBI ZPA profile ID"
-            except AssertionError as exc:
-                errors.append(f"Assertion error: {str(exc)}")
-            except Exception as exc:
-                errors.append(f"Fetching CBI ZPA profile by ID failed: {str(exc)}")
+            if profiles_response:  # If there are any ZPA CBI Profiles, proceed with further operations
+                first_profile = profiles_response[0]
+                cbi_profile_id = first_profile.id  # Access the 'id' attribute using dot notation
+                assert cbi_profile_id is not None, "Isolation Profile ID should not be None"
+        except Exception as exc:
+            errors.append(f"Listing ZPA CBI Profile failed: {str(exc)}")
 
         # Assert that no errors occurred during the test
         assert not errors, f"Errors occurred during CBI ZPA profile operations test: {errors}"

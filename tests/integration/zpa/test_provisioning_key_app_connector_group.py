@@ -1,3 +1,19 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
@@ -14,19 +30,20 @@ class TestAppConnectorGroupProvisioningKey:
     Integration Tests for the Provisioning Key API.
     """
 
-    def test_provisioning_key_operations(self, fs):
+    def test_connector_group_provisioning_key(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         connector_group_id = None
         connector_key_id = None
-
+        key_type="connector"
+        
         try:
             try:
                 # Create an App Connector Group
                 connector_group_name = "tests-" + generate_random_string()
                 connector_description = "tests-" + generate_random_string()
-                created_connector_group = client.connectors.add_connector_group(
+                created_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                     name=connector_group_name,
                     description=connector_description,
                     enabled=True,
@@ -44,75 +61,99 @@ class TestAppConnectorGroupProvisioningKey:
                     tcp_quick_ack_assistant=True,
                     tcp_quick_ack_read_assistant=True,
                 )
-                connector_group_id = created_connector_group.get("id", None)
-                assert connector_group_id is not None, "App Connector Group creation failed"
+                if err:
+                    errors.append(f"App Connector Group creation failed: {err}")
+                else:
+                    connector_group_id = created_connector_group.id
+                    assert connector_group_id is not None, "App Connector Group creation failed"
             except Exception as exc:
                 errors.append(f"App Connector Group creation failed: {exc}")
 
             try:
-                # Obtain the "Connector" enrolment certificate ID
-                connector_cert = client.certificates.get_enrolment_cert_by_name("Connector")
-                assert connector_cert, "Failed to retrieve 'Connector' enrolment certificate"
+                # Retrieve the 'Service Edge' enrollment certificate
+                connector_certs, _, err = client.zpa.enrollment_certificates.list_enrolment(query_params={'search': 'Connector'})
+                if err:
+                    errors.append(f"Retrieving 'connector' enrolment certificate failed: {err}")
+                else:
+                    assert connector_certs, "Failed to retrieve 'Connector Edge' enrolment certificate"
+                    connector_cert = connector_certs[0]
+                    connector_cert_id = connector_cert.id
+                    assert connector_cert_id, "Enrollment certificate missing 'id'"
             except Exception as exc:
-                errors.append(f"Retrieving 'Connector' enrolment certificate failed: {exc}")
+                errors.append(f"Retrieving 'connector' enrolment certificate failed: {exc}")
 
             try:
                 # Create a CONNECTOR_GRP Provisioning Key
                 connector_key_name = "tests-" + generate_random_string()
-                created_connector_key = client.provisioning.add_provisioning_key(
-                    key_type="connector",
+                (created_connector_key, _, err) = client.zpa.provisioning.add_provisioning_key(
+                    key_type=key_type,
                     name=connector_key_name,
                     max_usage=2,
-                    enrollment_cert_id=connector_cert.get("id"),
-                    component_id=connector_group_id,
+                    enrollment_cert_id=connector_cert_id,
+                    component_id=connector_group_id
                 )
-                connector_key_id = created_connector_key.get("id", None)
-                assert connector_key_id is not None, "CONNECTOR_GRP Provisioning Key creation failed"
+                if err:
+                    errors.append(f"CONNECTOR_GRP Provisioning Key creation failed: {err}")
+                else:
+                    connector_key_id = created_connector_key.id
+                    assert connector_key_id is not None, "CONNECTOR_GRP Provisioning Key creation failed"
             except Exception as exc:
                 errors.append(f"CONNECTOR_GRP Provisioning Key creation failed: {exc}")
 
             try:
-                # List provisioning keys to verify creation
-                all_connector_keys = client.provisioning.list_provisioning_keys("connector")
-                assert any(
-                    key["id"] == connector_key_id for key in all_connector_keys
-                ), "Newly created connector key not found in list"
+                # List provisioning keys
+                all_connector_keys, _, err = client.zpa.provisioning.list_provisioning_keys(key_type)
+                if err:
+                    errors.append(f"Listing connector group keys failed: {err}")
+                else:
+                    # Check that the newly created key is in the list
+                    assert any(
+                        key.id == connector_key_id for key in all_connector_keys
+                    ), "Newly created connector group key not found in list"
             except Exception as exc:
-                errors.append(f"Listing connector keys failed: {exc}")
+                errors.append(f"Listing connector group keys failed: {exc}")
 
             try:
-                # Retrieve the specific CONNECTOR_GRP Provisioning Key
-                retrieved_connector_key = client.provisioning.get_provisioning_key(connector_key_id, "connector")
-                assert (
-                    retrieved_connector_key["id"] == connector_key_id
-                ), "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
+                # Retrieve the specific SERVICE_EDGE_GRP Provisioning Key
+                retrieved_connector_key, _, err = client.zpa.provisioning.get_provisioning_key(connector_key_id, key_type)
+                if err:
+                    errors.append(f"Retrieving CONNECTOR_GRP Provisioning Key failed: {err}")
+                else:
+                    assert retrieved_connector_key.id == connector_key_id, "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
             except Exception as exc:
                 errors.append(f"Retrieving CONNECTOR_GRP Provisioning Key failed: {exc}")
 
             try:
-                # Update the CONNECTOR_GRP Provisioning Key
-                updated_connector_key = client.provisioning.update_provisioning_key(
-                    connector_key_id, "connector", max_usage="3"
-                )
-                assert updated_connector_key["max_usage"] == "3", "Failed to update CONNECTOR_GRP Provisioning Key"
+                # Update the server group
+                updated_name = connector_key_name + " Updated"
+                _, _, err = client.zpa.provisioning.update_provisioning_key(connector_key_id, key_type, name=updated_name)
+                assert err is None, f"Error updating provisioning key: {err}"
             except Exception as exc:
                 errors.append(f"Updating CONNECTOR_GRP Provisioning Key failed: {exc}")
 
+
         finally:
-            try:
-                # Cleanup: Attempt to delete the CONNECTOR_GRP Provisioning Key
-                if connector_key_id:
-                    delete_status_connector = client.provisioning.delete_provisioning_key(connector_key_id, "connector")
-                    assert delete_status_connector == 204, "Failed to delete CONNECTOR_GRP Provisioning Key"
-            except Exception as cleanup_exc:
-                errors.append(f"Deleting CONNECTOR_GRP Provisioning Key failed: {cleanup_exc}")
+            cleanup_errors = []
 
-            try:
-                # Cleanup: Attempt to delete the App Connector Group
-                if connector_group_id:
-                    client.connectors.delete_connector_group(connector_group_id)
-            except Exception as cleanup_exc:
-                errors.append(f"Deleting App Connector Group failed: {cleanup_exc}")
+            # Attempt to delete the SERVICE_EDGE_GRP Provisioning Key
+            if connector_key_id:
+                try:
+                    delete_response, _, err = client.zpa.provisioning.delete_provisioning_key(connector_key_id, key_type)
+                    assert err is None, f"Deleting CONNECTOR_GRP Provisioning Key failed: {err}"
+                    # For 204 No Content, delete_response should be None
+                    assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
+                except Exception as cleanup_exc:
+                    cleanup_errors.append(f"Cleanup failed for Deleting CONNECTOR_GRP Provisioning Key ID {connector_key_id}: {cleanup_exc}")
 
-        # Assert no errors occurred during the test execution
+            # Attempt to delete the Connector Group
+            if connector_group_id:
+                try:
+                    _, _, err = client.zpa.app_connector_groups.delete_connector_group(connector_group_id)
+                    if err:
+                        cleanup_errors.append(f"Deleting Connector Group failed: {err}")
+                except Exception as exc:
+                    cleanup_errors.append(f"Cleanup failed for Deleting Connector Group: {exc}")
+
+            errors.extend(cleanup_errors)
+
         assert len(errors) == 0, f"Errors occurred during the provisioning key operations test: {errors}"

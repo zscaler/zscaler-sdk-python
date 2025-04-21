@@ -4,10 +4,10 @@ import json
 # Zscaler Base Exceptions
 class ZscalerBaseException(Exception):
     def __init__(self, url, response, response_body):
-        self.status = response.status_code
+        self.status_code = response.status_code
         self.url = url
         self.response_body = json.dumps(response_body)
-        self.message = f"ZSCALER HTTP {url} {self.status} {self.response_body}"
+        self.message = f"ZSCALER HTTP {url} {self.status_code} {self.response_body}"
 
     def __repr__(self):
         return str({"message": self.message})

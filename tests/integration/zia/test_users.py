@@ -1,24 +1,24 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_password, generate_random_string
-
+import time
 
 @pytest.fixture
 def fs():
@@ -30,141 +30,92 @@ class TestUsers:
     Integration Tests for the User Management
     """
 
-    def test_user_management(self, fs):
+    def test_users(self, fs):
         client = MockZIAClient(fs)
-        errors = []  # Initialize an empty list to collect errors
+        errors = []
         user_id = None
+        department_id = None
+        group_id = None
+        user_name = f"tests-{generate_random_string()}"
+        user_email = f"{user_name}@securitygeek.io"
 
         try:
-            # Retrieve role ID
+            # Step 1: Retrieve department
             try:
-                # Retrieve the first department's ID
-                departments = client.users.list_departments(search="A000")
-                department_id = departments[0]["id"] if departments else None
-                assert department_id, "No departments available for assignment"
+                departments, _, error = client.zia.user_management.list_departments(query_params={'search': 'A000'})
+                assert error is None, f"Department listing error: {error}"
+                department = next((d for d in departments if hasattr(d, "id")), None)
+                assert department, "No valid departments available for assignment"
+                department_id = department.id
             except Exception as exc:
                 errors.append(f"Department retrieval failed: {exc}")
 
+            # Step 2: Retrieve group
             try:
-                # Retrieve the first group's ID
-                groups = client.users.list_groups(search="A000")
-                group_id = groups[0]["id"] if groups else None
-                assert group_id, "No groups available for assignment"
+                groups, _, error = client.zia.user_management.list_groups(query_params={'search': 'A000'})
+                assert error is None, f"Group listing error: {error}"
+                group = next((g for g in groups if hasattr(g, "id")), None)
+                assert group, "No valid groups available for assignment"
+                group_id = group.id
             except Exception as exc:
                 errors.append(f"Group retrieval failed: {exc}")
 
-            # Create User Account
+            # Step 3: Create user
             if department_id and group_id:
                 try:
-                    created_user = client.users.add_user(
-                        name="tests-" + generate_random_string(),
-                        email="tests-" + generate_random_string() + "@bd-hashicorp.com",
+                    created_user, _, error = client.zia.user_management.add_user(
+                        name=user_name,
+                        email=user_email,
+                        comments="Test user creation",
                         password=generate_random_password(),
                         groups=[{"id": group_id}],
-                        department=({"id": department_id}),
+                        department={"id": department_id},
                     )
-                    user_id = created_user.get("id", None)
-                    assert user_id, "User account creation failed"
+                    assert error is None, f"User creation error: {error}"
+                    assert created_user and hasattr(created_user, "id"), "User creation returned no valid ID"
+                    user_id = created_user.id
                 except Exception as exc:
                     errors.append(f"User creation failed: {exc}")
 
+            # Step 4: Fetch user
+            time.sleep(2)
             if user_id:
                 try:
-                    # Fetch and verify the user
-                    retrieved_user = client.users.get_user(user_id)
-                    assert retrieved_user["id"] == user_id, "Incorrect user account retrieved"
+                    retrieved_user, _, error = client.zia.user_management.get_user(user_id)
+                    assert error is None, f"User fetch error: {error}"
+                    assert retrieved_user.id == user_id, "Mismatch in fetched user ID"
                 except Exception as exc:
-                    errors.append(f"Retrieving User Account failed: {exc}")
+                    errors.append(f"Retrieving user account failed: {exc}")
 
-            # Update the User Account
+            # Step 5: Update user (must re-send all required fields)
+            time.sleep(2)
             if user_id:
                 try:
-                    updated_password = generate_random_password()  # Generate a new password
-                    client.users.update_user(
-                        user_id,
+                    updated_password = generate_random_password()
+                    updated_user, _, error = client.zia.user_management.update_user(
+                        user_id=user_id,
+                        name=user_name,
+                        email=user_email,
+                        comments="Updated test user via integration test",
                         password=updated_password,
+                        groups=[{"id": group_id}],
+                        department={"id": department_id},
                     )
+                    assert error is None, f"User update error: {error}"
+                    assert updated_user and updated_user.comments == "Updated test user via integration test", "Update verification failed"
                 except Exception as exc:
-                    errors.append(f"Updating User Account password failed: {exc}")
-
-            try:
-                # List departments and collect up to 2 items to simulate a limited view
-                depts = client.users.list_departments(pagesize=2)
-
-                # Limit the department count we work with to 2 for testing purposes
-                if len(depts) > 2:
-                    depts = depts[:2]  # Take only the first 2 items if more are returned
-
-                assert isinstance(depts, list), "Expected a list of departments"
-
-                # Check that we are testing with a maximum of 2 departments
-                assert len(depts) <= 2, f"Expected 2 or fewer departments, got {len(depts)}"
-
-                if depts:  # If there are any departments
-                    # Select the first department for further testing
-                    first_dept = depts[0]
-                    department_id = first_dept.get("id")
-
-                    # Fetch the selected department by its ID
-                    fetched_dept = client.users.get_department(department_id)
-                    assert fetched_dept is not None, "Expected a valid department object"
-                    assert fetched_dept.get("id") == department_id, "Mismatch in department ID"
-
-                    # Attempt to retrieve the department by name
-                    dept_name = fetched_dept.get("name")
-                    dept_by_name = client.users.get_dept_by_name(dept_name)
-                    assert dept_by_name is not None, "Expected a valid department object when searching by name"
-                    assert dept_by_name.get("id") == department_id, "Mismatch in department ID when searching by name"
-
-            except Exception as exc:
-                errors.append(f"Test failed: {exc}")
-
-            # Assert that no errors occurred during the test
-            assert len(errors) == 0, f"Errors occurred during departments test: {errors}"
-
-            try:
-                # List departments and collect up to 2 items to simulate a limited view
-                groups = client.users.list_groups(pagesize=2)
-
-                # Limit the department count we work with to 2 for testing purposes
-                if len(groups) > 2:
-                    groups = groups[:2]  # Take only the first 2 items if more are returned
-
-                assert isinstance(groups, list), "Expected a list of groups"
-
-                # Check that we are testing with a maximum of 2 groups
-                assert len(groups) <= 2, f"Expected 2 or fewer groups, got {len(groups)}"
-
-                if groups:  # If there are any groups
-                    # Select the first group for further testing
-                    first_group = groups[0]
-                    group_id = first_group.get("id")
-
-                    # Fetch the selected group by its ID
-                    fetched_group = client.users.get_group(group_id)
-                    assert fetched_group is not None, "Expected a valid group object"
-                    assert fetched_group.get("id") == group_id, "Mismatch in group ID"
-
-                    # Attempt to retrieve the group by name
-                    group_name = fetched_group.get("name")
-                    group_name = client.users.get_group_by_name(group_name)
-                    assert group_name is not None, "Expected a valid group object when searching by name"
-                    assert group_name.get("id") == group_id, "Mismatch in group ID when searching by name"
-
-            except Exception as exc:
-                errors.append(f"Test failed: {exc}")
-
-            # Assert that no errors occurred during the test
-            assert len(errors) == 0, f"Errors occurred during groups test: {errors}"
+                    errors.append(f"Updating user account failed: {exc}")
 
         finally:
-            # Cleanup: Attempt to delete the user
+            time.sleep(2)
+            # Step 6: Delete user
             if user_id:
                 try:
-                    delete_status = client.users.delete_user(user_id)
-                    assert delete_status == 204, "User Account deletion failed"
-                except Exception as exc:
-                    errors.append(f"Deleting User Account failed: {exc}")
+                    _, _, error = client.zia.user_management.delete_user(user_id)
+                    assert error is None, f"Delete user error: {error}"
+                except Exception as e:
+                    errors.append(f"Exception during delete_user: {str(e)}")
 
+            # Final assertion
             if errors:
-                raise AssertionError("Errors occurred during the user management test: " + "; ".join(errors))
+                raise AssertionError("Errors occurred during the user management test:\n" + "\n".join(errors))

@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import pytest
 
@@ -38,41 +38,41 @@ class TestForwardingControlRulesDirect:
         rule_id = None
 
         try:
+            # Step 1: Create Destination IP Group
             try:
-                # Prerequisite: Create a Destination IP Group
                 dst_group_name = "tests-" + generate_random_string()
                 dst_group_description = "tests-" + generate_random_string()
-                created_dst_group = client.firewall.add_ip_destination_group(
+                created_dst_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
                     name=dst_group_name,
                     description=dst_group_description,
                     type="DSTN_IP",
                     addresses=["192.168.100.4", "192.168.100.5"],
                 )
-                dst_group_id = created_dst_group.get("id", None)
-                assert dst_group_id is not None, "Destination IP Group creation failed"
+                assert error is None, f"Error creating destination group: {error}"
+                dst_group_id = created_dst_group.id
             except Exception as exc:
                 errors.append(f"Destination IP Group creation failed: {exc}")
 
+            # Step 2: Create Source IP Group
             try:
-                # Prerequisite: Create a Source IP Group
                 src_group_name = "tests-" + generate_random_string()
-                created_src_group = client.firewall.add_ip_source_group(
+                created_src_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
                     name=src_group_name,
                     description="Integration test source group",
                     ip_addresses=["192.168.100.1", "192.168.100.2", "192.168.100.3"],
                 )
-                src_group_id = created_src_group.get("id", None)
-                assert src_group_id is not None, "Source IP Group creation failed"
+                assert error is None, f"Error creating source group: {error}"
+                src_group_id = created_src_group.id
             except Exception as exc:
                 errors.append(f"Source IP Group creation failed: {exc}")
 
+            # Step 3: Create Forwarding Control Rule
             try:
-                # Create a Firewall Rule
                 rule_name = "tests-" + generate_random_string()
-                created_rule = client.forwarding_control.add_rule(
+                created_rule, _, error = client.zia.forwarding_control.add_rule(
                     name=rule_name,
                     description="Integration test Forwarding Control Rule",
-                    state=True,
+                    enabled=True,
                     order=1,
                     rank=7,
                     type="FORWARDING",
@@ -80,62 +80,77 @@ class TestForwardingControlRulesDirect:
                     src_ip_groups=[src_group_id],
                     dest_ip_groups=[dst_group_id],
                 )
-                rule_id = created_rule.get("id", None)
-                assert rule_id is not None, "Forwarding Control Rule creation failed"
+                assert error is None, f"Error creating Forwarding Control Rule: {error}"
+                rule_id = created_rule.id
             except Exception as exc:
                 errors.append(f"Forwarding Control Rule creation failed: {exc}")
 
+            # Step 4: Retrieve the Rule by ID
             try:
-                # Verify the rule by retrieving it
-                retrieved_rule = client.forwarding_control.get_rule(rule_id)
-                assert retrieved_rule["id"] == rule_id, "Incorrect rule retrieved"
+                retrieved_rule, _, error = client.zia.forwarding_control.get_rule(rule_id)
+                assert error is None, f"Error retrieving rule: {error}"
+                assert retrieved_rule.id == rule_id, "Incorrect rule retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Forwarding Control Rule failed: {exc}")
 
+            # Step 5: Update the Rule
+            # Step 5: Update the Rule
             try:
-                # Update the Forwarding Control Rule
+                updated_name = "updated-" + generate_random_string()
                 updated_description = "Updated integration test Forwarding Control Rule"
-                client.forwarding_control.update_rule(
-                    rule_id,
+
+                updated_rule, _, error = client.zia.forwarding_control.update_rule(
+                    rule_id=rule_id,
+                    name=updated_name,  # ✅ REQUIRED
                     description=updated_description,
+                    enabled=True,
+                    order=1,
+                    rank=7,
+                    type="FORWARDING",
+                    forward_method="DIRECT",
                 )
-                updated_rule = client.forwarding_control.get_rule(rule_id)
-                assert updated_rule["description"] == updated_description, "Forwarding Control Rule update failed"
+                assert error is None, f"Error updating rule: {error}"
+                assert updated_rule.description == updated_description, "Forwarding Control Rule update failed"
+                assert updated_rule.name == updated_name, "Forwarding Control Rule name not updated"
             except Exception as exc:
                 errors.append(f"Updating Forwarding Control Rule failed: {exc}")
 
+
+            # Step 6: List rules and validate presence
             try:
-                # Retrieve the list of all rules
-                rules = client.forwarding_control.list_rules()
-                # Check if the newly created location is in the list of rules
-                found_rule = any(rule["id"] == rule_id for rule in rules)
-                assert found_rule, "Newly created rule not found in the list of rules."
+                rules, _, error = client.zia.forwarding_control.list_rules()
+                assert error is None, f"Error listing rules: {error}"
+                assert rules is not None
+                assert any(rule.id == rule_id for rule in rules), "Newly created rule not found in list"
             except Exception as exc:
-                errors.append(f"Listing rules failed: {exc}")
+                errors.append(f"Listing Forwarding Control Rules failed: {exc}")
 
         finally:
             cleanup_errors = []
+
             try:
-                # Attempt to delete resources created during the test
                 if rule_id:
-                    delete_status = client.forwarding_control.delete_rule(rule_id)
-                    assert delete_status == 204, "Forwarding Control Rule deletion failed"
+                    _, _, error = client.zia.forwarding_control.delete_rule(rule_id)
+                    assert error is None, f"Error deleting rule: {error}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Forwarding Control Rule failed: {exc}")
 
             try:
                 if dst_group_id:
-                    client.firewall.delete_ip_destination_group(dst_group_id)
+                    _, _, error = client.zia.cloud_firewall.delete_ip_destination_group(dst_group_id)
+                    assert error is None, f"Error deleting destination group: {error}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Destination IP Group failed: {exc}")
 
             try:
                 if src_group_id:
-                    client.firewall.delete_ip_source_group(src_group_id)
+                    _, _, error = client.zia.cloud_firewall.delete_ip_source_group(src_group_id)
+                    assert error is None, f"Error deleting source group: {error}"
             except Exception as exc:
                 cleanup_errors.append(f"Deleting Source IP Group failed: {exc}")
 
             errors.extend(cleanup_errors)
 
-        # Assert no errors occurred during the entire test process
-        assert len(errors) == 0, f"Errors occurred during the firewall rule lifecycle test: {errors}"
+        # Final assertion
+        if errors:
+            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")

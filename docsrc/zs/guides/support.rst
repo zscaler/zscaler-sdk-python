@@ -22,4 +22,4 @@ Urgent, production related Terraform issues can be resolved via direct interacti
 Contact
 -------
 
-For questions or requests that cannot be submitted via GitHub Issues, please contact ``devrel@zscaler.com`` with "Zscaler-SDK-Python" in the subject line.
+For questions or requests that cannot be submitted via GitHub Issues, please contact `Zscaler Support <https://help.zscaler.com/login-tickets>`_.

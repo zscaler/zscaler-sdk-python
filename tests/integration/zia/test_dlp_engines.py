@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
 import pytest
@@ -33,71 +33,77 @@ class TestDLPEngines:
 
     def test_dlp_engines(self, fs):
         client = MockZIAClient(fs)
-        errors = []  # Initialize an empty list to collect errors
+        errors = []
 
-        engine_name = "tests-" + generate_random_string()
-        engine_description = "tests-" + generate_random_string()
         engine_id = None
+        created_engine = None
+        updated_engine = None
+        updated_name = None
+
+        engine_name = f"tests-{generate_random_string()}"
+        engine_description = f"tests-{generate_random_string()}"
 
         try:
-            # Attempt to create a new dlp engine
+            # Step 1: Create DLP engine
             try:
-                created_engine = client.dlp.add_dlp_engine(
+                created_engine, _, error = client.zia.dlp_engine.add_dlp_engine(
                     name=engine_name,
                     description=engine_description,
                     engine_expression="((D63.S > 1))",
                     custom_dlp_engine=True,
                 )
-                assert created_engine is not None, "DLP engine creation returned None"
-                assert created_engine.name == engine_name, "DLP engine name mismatch"
-                assert created_engine.description == engine_description, "DLP engine description mismatch"
+                assert error is None, f"Add DLP Engine Error: {error}"
+                assert created_engine is not None, "DLP engine creation failed."
+                assert created_engine.name == engine_name
+                assert created_engine.description == engine_description
                 engine_id = created_engine.id
-            except Exception as exc:
-                errors.append(f"Failed to add DLP engine: {exc}")
+            except Exception as e:
+                errors.append(f"Exception during add_dlp_engine: {str(e)}")
 
-            # Attempt to retrieve the created dlp engine by ID
-            if engine_id:
-                try:
-                    retrieved_engine = client.dlp.get_dlp_engines(engine_id)
-                    assert retrieved_engine.id == engine_id, "Retrieved DLP engine ID mismatch"
-                    assert retrieved_engine.name == engine_name, "Retrieved DLP engine name mismatch"
-                except Exception as exc:
-                    errors.append(f"Failed to retrieve DLP engine: {exc}")
-
-            # Attempt to update the dlp engine
-            if engine_id:
-                try:
-                    updated_name = engine_name + " Updated"
-                    client.dlp.update_dlp_engine(engine_id, name=updated_name)
-                    updated_engine = client.dlp.get_dlp_engines(engine_id)
-                    assert updated_engine.name == updated_name, "Failed to update DLP engine name"
-                except Exception as exc:
-                    errors.append(f"Failed to update DLP engine: {exc}")
-
-            # Attempt to list dlp engines and check if the updated engine is in the list
+            # Step 2: Retrieve the DLP engine
             try:
-                engines_list = client.dlp.list_dlp_engines()
-                assert any(engine.id == engine_id for engine in engines_list), "Updated DLP engine not found in list"
-            except Exception as exc:
-                errors.append(f"Failed to list DLP engines: {exc}")
+                if engine_id:
+                    retrieved_engine, _, error = client.zia.dlp_engine.get_dlp_engines(engine_id)
+                    assert error is None, f"Get DLP Engine Error: {error}"
+                    assert retrieved_engine is not None
+                    assert retrieved_engine.id == engine_id
+                    assert retrieved_engine.name == engine_name
+            except Exception as e:
+                errors.append(f"Exception during get_dlp_engine: {str(e)}")
 
-            # Attempt to search for the dlp engine by name
-            if engine_id:
-                try:
-                    search_result = client.dlp.get_dlp_engine_by_name(updated_name)
-                    assert search_result is not None, "Search returned None"
-                    assert search_result.id == engine_id, "Search result ID mismatch"
-                except Exception as exc:
-                    errors.append(f"Failed to search DLP engine by name: {exc}")
+            # Step 3: Update the DLP engine
+            try:
+                if engine_id:
+                    updated_name = f"{engine_name}_Updated"
+                    updated_engine, _, error = client.zia.dlp_engine.update_dlp_engine(
+                        engine_id=engine_id,
+                        name=updated_name,
+                        description=engine_description,
+                        engine_expression="((D63.S > 1))",
+                        custom_dlp_engine=True,
+                    )
+                    assert error is None, f"Update DLP Engine Error: {error}"
+                    assert updated_engine.name == updated_name, "Updated name mismatch."
+            except Exception as e:
+                errors.append(f"Exception during update_dlp_engine: {str(e)}")
+
+            # Step 4: List DLP engines
+            try:
+                engines_list, _, error = client.zia.dlp_engine.list_dlp_engines()
+                assert error is None, f"List DLP Engines Error: {error}"
+                assert any(engine.id == engine_id for engine in engines_list), "Engine not found in list."
+            except Exception as e:
+                errors.append(f"Exception during list_dlp_engines: {str(e)}")
 
         finally:
-            # Cleanup: Attempt to delete the dlp engine
-            if engine_id:
-                try:
-                    delete_response_code = client.dlp.delete_dlp_engine(engine_id)
-                    assert str(delete_response_code) == "204", "Failed to delete DLP engine"
-                except Exception as exc:
-                    errors.append(f"Cleanup failed: {exc}")
+            # Step 6: Cleanup
+            try:
+                if engine_id:
+                    _, _, error = client.zia.dlp_engine.delete_dlp_engine(updated_engine.id)
+                    assert error is None, f"Delete Label Error: {error}"
+            except Exception as e:
+                errors.append(f"Exception during delete_dlp_engine: {str(e)}")
 
-        # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during the DLP engine lifecycle test: {errors}"
+        # Final Assertion
+        if errors:
+            raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
