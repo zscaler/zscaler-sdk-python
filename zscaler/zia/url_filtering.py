@@ -1,34 +1,33 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-
-from box import Box, BoxList
-from requests import Response
-
-from zscaler.utils import (
-    convert_keys,
-    recursive_snake_to_camel,
-    snake_to_camel,
-    transform_common_id_fields,
-)
-from zscaler.zia import ZIAClient
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
-class URLFilteringAPI:
-    # URL Filtering Policy rule keys that only require an ID to be provided.
+from zscaler.request_executor import RequestExecutor
+from zscaler.api_client import APIClient
+from zscaler.zia.models.url_filtering_rules import URLFilteringRule
+from zscaler.zia.models.url_filter_cloud_app_settings import AdvancedUrlFilterAndCloudAppSettings
+from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+
+
+
+class URLFilteringAPI(APIClient):
+    """
+    A Client object for the URL Filtering Rule resources.
+    """
+
     reformat_params = [
         ("cbi_profile", "cbiProfile"),
         ("departments", "departments"),
@@ -45,27 +44,86 @@ class URLFilteringAPI:
         ("users", "users"),
     ]
 
-    def __init__(self, client: ZIAClient):
-        self.rest = client
+    _zia_base_endpoint = "/zia/api/v1"
 
-    def list_rules(self) -> BoxList:
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+
+    def list_rules(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
-        Returns the list of URL Filtering Policy rules
+        Lists url filtering rules in your organization.
+        If the `search` parameter is provided, the function filters the rules client-side.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            :obj:`BoxList`: The list of URL Filtering Policy rules.
+            tuple: A tuple containing (list of url filtering rules instances, Response, error)
 
         Examples:
-            >>> for rule in zia.url_filtering.list_rules():
-            ...    pprint(rule)
+        >>> rules, response, error = zia.url_filtering.list_rules()
+        ...    pprint(rule)
 
+        >>> rules, response, error = zia.url_filtering.list_rules(
+            query_params={"search": "Block malicious IPs and domains"})
+        ...    pprint(rule)
         """
-        response = self.rest.get("urlFilteringRules")
-        if isinstance(response, Response):
-            return None
-        return response
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules
+        """)
 
-    def get_rule(self, rule_id: str) -> Box:
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method,
+            api_url,
+            body,
+            headers,
+            params=query_params
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(URLFilteringRule(
+                    self.form_response_body(item))
+                )
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [
+                r for r in results
+                if lower_search in (r.name.lower() if r.name else "")
+            ]
+
+        return (results, response, None)
+
+    def get_rule(
+        self,
+        rule_id: int,
+    ) -> tuple:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -73,23 +131,45 @@ class URLFilteringAPI:
             rule_id (str): The unique ID for the URL Filtering Policy rule.
 
         Returns:
-            :obj:`Box`: The URL Filtering Policy rule.
+            :obj:`Tuple`: The URL Filtering Policy rule.
 
         Examples:
             >>> pprint(zia.url_filtering.get_rule('977469'))
 
         """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
+            """
+        )
 
-        return self.rest.get(f"urlFilteringRules/{rule_id}")
+        body = {}
+        headers = {}
 
-    def add_rule(
-        self,
-        rank: str,
-        name: str,
-        action: str,
-        protocols: list,
-        **kwargs,
-    ) -> Box:
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_rule(self, **kwargs) -> tuple:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -146,7 +226,7 @@ class URLFilteringAPI:
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`Box`: The newly created URL Filtering Policy rule.
+            :obj:`Tuple`: The newly created URL Filtering Policy rule.
 
         Examples:
             Add a rule with the minimum required parameters:
@@ -167,41 +247,48 @@ class URLFilteringAPI:
             ...    url_categories=["SOCIAL_NETWORKING"])
 
         """
-        # Convert enabled to API format if present
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules
+        """
+        )
+
+        body = kwargs
+        
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+            
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
+        
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        # Initialize the payload with required parameters
-        payload = {
-            "rank": rank,
-            "name": name,
-            "action": action,
-            "protocols": protocols,
-            "order": kwargs.pop("order", len(self.list_rules())),
-        }
+        if error:
+            return (None, None, error)
 
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[snake_to_camel(key)] = value
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
+        if error:
+            return (None, response, error)
 
-        # Convert the entire payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)
-        for key, value in kwargs.items():
-            if value is not None:
-                camel_payload[snake_to_camel(key)] = value
+        try:
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-        # Send POST request to create the rule
-        response = self.rest.post("urlFilteringRules", json=payload)
-        if isinstance(response, Response):
-            # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
-
-    def update_rule(self, rule_id: str, **kwargs) -> Box:
+    def update_rule(self, rule_id: str, **kwargs) -> tuple:
         """
         Updates the specified URL Filtering Policy rule.
 
@@ -260,7 +347,7 @@ class URLFilteringAPI:
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`Box`: The updated URL Filtering Policy rule.
+            :obj:`Tuple`: The updated URL Filtering Policy rule.
 
         Examples:
             Update the name of a URL Filtering Policy rule:
@@ -275,40 +362,223 @@ class URLFilteringAPI:
             ...    action="ALLOW")
 
         """
-        # Set payload to value of existing record and convert nested dict keys.
-        payload = convert_keys(self.get_rule(rule_id))
-
-        # Convert enabled to API format if present in kwargs
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
-
-        # Add remaining optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
-        response = self.rest.put(f"urlFilteringRules/{rule_id}", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            # Handle error response
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-
-        # Return the updated object
-        return self.get_rule(rule_id)
-
-    def delete_rule(self, rule_id: str) -> int:
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
         """
-        Deletes the specified URL Filtering Policy rule.
+        )
+        
+        body = kwargs
+
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
+        if "enabled" in body:
+            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
+
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
+        
+        # Create the request
+        request, error = self._request_executor\
+            .create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.\
+            execute(request, URLFilteringRule)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = URLFilteringRule(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_rule(self, rule_id: str) -> tuple:
+        """
+        Deletes the specified url filtering filter rule.
 
         Args:
-            rule_id (str): The unique ID for the URL Filtering Policy rule.
+            rule_id (str): The unique identifier for the url filtering rule.
 
         Returns:
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.url_filtering.delete_rule('977463')
+            >>> zia.url_filtering.delete_rule('278454')
 
         """
-        return self.rest.delete(f"urlFilteringRules/{rule_id}").status_code
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /urlFilteringRules/{rule_id}
+        """
+        )
+
+        params = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def get_url_and_app_settings(self) -> tuple:
+        """
+        Retrieves information about URL and Cloud App Control advanced policy settings
+
+        Returns:
+            tuple: A tuple containing:
+                - AdvancedUrlFilterAndCloudAppSettings: The current advanced settings object.
+                - Response: The raw HTTP response returned by the API.
+                - error: An error message if the request failed; otherwise, `None`.
+
+        Examples:
+            Retrieve and print the current url and app settings:
+
+            >>> settings, response, err = client.zia.url_filtering.get_update_url_and_app_settings()
+            >>> if err:
+            ...     print(f"Error fetching settings: {err}")
+            ... else:
+            ...     print(f"Enable Office365: {settings.enable_office365}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /advancedUrlFilterAndCloudAppSettings
+        """
+        )
+
+        request, error = self._request_executor.\
+            create_request(
+            http_method, api_url
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            advanced_settings = AdvancedUrlFilterAndCloudAppSettings(response.get_body())
+            return (advanced_settings, response, None)
+        except Exception as ex:
+            return (None, response, ex)
+
+    def update_url_and_app_settings(self, **kwargs) -> tuple:
+        """
+        Updates the URL and Cloud App Control advanced policy settings
+
+        Args:
+            settings (:obj:`AdvancedUrlFilterAndCloudAppSettings`):
+                An instance of `AdvancedSettings` containing the updated configuration.
+
+                **Supported attributes**:
+
+                - **enable_dynamic_content_cat (bool)**: Indicates if dynamic categorization of URLs by analyzing content of uncategorized websites using AI/ML tools is enabled or not.
+                - **consider_embedded_sites (bool)**: Indicates if URL filtering rules must be applied to sites that are translated using translation services or not.
+                - **enforce_safe_search (bool)**: Indicates whether only safe content must be returned for web, image, and video search. 
+                - **enable_office365 (bool)**: Enables or disables Microsoft Office 365 configuration.
+                - **enable_msft_o365 (bool)**: Enables or disables Microsoft-recommended Office 365 one click configuration
+                - **enable_ucaas_zoom (bool)**: Indicates if the Zscaler service is allowed to automatically permit secure local breakout for Zoom traffic
+                - **enable_ucaas_log_me_in (bool)**: Indicates if the Zscaler service is allowed to automatically permit secure local breakout for GoTo traffic
+                - **enable_ucaas_ring_central (bool)**: Indicates if the Zscaler service is allowed to automatically permit secure local breakout for RingCentral traffic
+                - **enable_ucaas_webex (bool)**: Indicates if the Zscaler service is allowed to automatically permit secure local breakout for Webex traffic
+                - **enable_ucaas_talkdesk (bool)**: Indicates if the Zscaler service is allowed to automatically permit secure local breakout for Talkdesk traffic
+                - **enable_chat_gpt_prompt (bool)**: Indicates if the use of generative AI prompts with ChatGPT by users should be categorized and logged
+                - **enable_microsoft_copilot_prompt (bool)**: Indicates if the use of generative AI prompts with Microsoft Copilot by users should be categorized and logged
+                - **enable_gemini_prompt (bool)**: Indicates if the use of generative AI prompts with Google Gemini by users should be categorized and logged
+                - **enable_poe_prompt (bool)**: Indicates if the use of generative AI prompts with Poe by users should be categorized and logged
+                - **enable_meta_prompt (bool)**: Indicates if the use of generative AI prompts with Meta AI by users should be categorized and logged
+                - **enable_perplexity_prompt (bool)**: Indicates if the use of generative AI prompts with Perplexity by users should be categorized and logged
+                - **block_skype (bool)**: Indicates whether access to Skype is blocked or not.
+                - **enable_newly_registered_domains (bool)**: Indicates whether newly registered and observed domains that are identified within hours of going live are allowed or blocked
+                - **enable_block_override_for_non_auth_user (bool)**: Indicates authorized users can temporarily override block action on websites by providing their authentication information
+                - **enable_cipa_compliance (bool)**: Indicates if the predefined CIPA Compliance Rule is enabled or not.
+        Returns:
+            tuple:
+                - **AdvancedUrlFilterAndCloudAppSettings**: The updated URL and Cloud App Control advanced object.
+                - **Response**: The raw HTTP response returned by the API.
+                - **error**: An error message if the update failed; otherwise, `None`.
+
+        Examples:
+            Update URL and Cloud App Control advanced by enabling Office365 and adjusting the session timeout:
+
+            >>> settings, response, err = client.zia.url_filtering.get_advanced_settings()
+            >>> if not err:
+            ...     settings.enable_office365 = True
+            ...     settings.ui_session_timeout = 7200
+            ...     updated_settings, response, err = client.zia.url_filtering.update_url_and_app_settings(settings)
+            ...     if not err:
+            ...         print(f"Updated Enable Office365: {updated_settings.enable_office365}")
+            ...     else:
+            ...         print(f"Failed to update settings: {err}")
+        """
+        if kwargs.get("enable_cipa_compliance") is True:
+            mutually_exclusive = [
+                "enable_newly_registered_domains",
+                "consider_embedded_sites",
+                "enforce_safe_search",
+                "enable_dynamic_content_cat",
+            ]
+            for key in mutually_exclusive:
+                if kwargs.get(key) is True:
+                    return (
+                        None,
+                        None,
+                        ValueError(
+                            f"Invalid configuration: '{key}' cannot be True when 'enable_cipa_compliance' is True"
+                        )
+                    )
+
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /advancedUrlFilterAndCloudAppSettings
+            """
+        )
+        body = {}
+        body.update(kwargs)
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor\
+            .execute(request, AdvancedUrlFilterAndCloudAppSettings)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AdvancedUrlFilterAndCloudAppSettings(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

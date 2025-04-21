@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 
 import pytest
@@ -36,17 +36,7 @@ class TestAlerts:
         errors = []
 
         try:
-            # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
-
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
-
-            ongoing_alerts = client.alerts.list_ongoing(**kwargs)
+            ongoing_alerts = client.zdx.alerts.list_ongoing(query_params={"since": 2})
             alerts = list(ongoing_alerts)
 
             if not alerts:
@@ -65,17 +55,7 @@ class TestAlerts:
         errors = []
 
         try:
-            # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
-
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
-
-            historical_alerts = client.alerts.list_historical(**kwargs)
+            historical_alerts = client.zdx.alerts.list_historical(query_params={"since": 2})
             alerts = list(historical_alerts)
 
             if not alerts:
@@ -94,29 +74,32 @@ class TestAlerts:
         errors = []
 
         try:
-            # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
+            ongoing_alerts, _, error = client.zdx.alerts.list_ongoing(query_params={"since": 2})
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
+            if error:
+                errors.append(f"Error listing ongoing alerts: {error}")
+                return
 
-            # List ongoing alerts to get an alert ID
-            ongoing_alerts = client.alerts.list_ongoing(**kwargs)
-            alerts = list(ongoing_alerts)
-
-            if not alerts:
+            if not ongoing_alerts or not isinstance(ongoing_alerts, list):
                 print("No ongoing alerts found within the specified time range.")
-            else:
-                alert_id = alerts[0].id
-                print(f"Using alert ID {alert_id} for get_alert test")
+                return
 
-                # Get alert information using the retrieved alert ID
-                alert_info = client.alerts.get_alert(alert_id=alert_id, **kwargs)
-                pprint(alert_info)
+            first_alert = ongoing_alerts[0]
+            alert_id = getattr(first_alert, "id", None)
+
+            if not alert_id:
+                raise ValueError(f"Alert ID not found in response: {first_alert.as_dict()}")
+
+            print(f"Using Alert ID: {alert_id}")
+
+            alert_info, _, error = client.zdx.alerts.get_alert(alert_id=alert_id)
+
+            if error:
+                errors.append(f"Error retrieving alert details: {error}")
+            else:
+                print(f"Successfully retrieved alert {alert_id}:")
+                pprint(alert_info.as_dict() if hasattr(alert_info, "as_dict") else alert_info)
+
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
 
@@ -127,36 +110,34 @@ class TestAlerts:
         errors = []
 
         try:
-            # time.sleep(5)  # Sleep for 5 seconds before making the request
-            now = int(time.time())
-            from_time = now - 2 * 60 * 60  # 2 hours ago
-            to_time = now
+            ongoing_alerts, _, error = client.zdx.alerts.list_ongoing(query_params={"since": 2})
 
-            kwargs = {
-                "from_time": from_time,
-                "to": to_time,
-            }
+            if error:
+                errors.append(f"Error listing ongoing alerts: {error}")
+                return
 
-            # List ongoing alerts to get an alert ID
-            ongoing_alerts = client.alerts.list_ongoing(**kwargs)
-            alerts = list(ongoing_alerts)
-
-            if not alerts:
+            if not ongoing_alerts or not isinstance(ongoing_alerts, list):
                 print("No ongoing alerts found within the specified time range.")
+                return
+
+            first_alert = ongoing_alerts[0]
+            alert_id = getattr(first_alert, "id", None)
+
+            if not alert_id:
+                raise ValueError(f"Alert ID not found in response: {first_alert.as_dict()}")
+
+            print(f"Using Alert ID: {alert_id}")
+
+            # List affected devices using the retrieved alert ID
+            affected_devices = client.zdx.alerts.list_affected_devices(alert_id=alert_id)
+            devices = list(affected_devices)
+
+            if not devices:
+                print("No affected devices found within the specified time range.")
             else:
-                alert_id = alerts[0].id
-                print(f"Using alert ID {alert_id} for list_affected_devices test")
-
-                # List affected devices using the retrieved alert ID
-                affected_devices = client.alerts.list_affected_devices(alert_id=alert_id, **kwargs)
-                devices = list(affected_devices)
-
-                if not devices:
-                    print("No affected devices found within the specified time range.")
-                else:
-                    print(f"Retrieved {len(devices)} affected devices")
-                    for device in devices:
-                        pprint(device)
+                print(f"Retrieved {len(devices)} affected devices")
+                for device in devices:
+                    pprint(device)
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
 

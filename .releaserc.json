@@ -15,7 +15,6 @@
       {
         "assets": [
           "pyproject.toml",
-          "setup.py",
           "README.rst",
           "zscaler/__init__.py"
         ],

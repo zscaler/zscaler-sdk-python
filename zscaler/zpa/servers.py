@@ -1,218 +1,295 @@
-# -*- coding: utf-8 -*-
+"""
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.application_servers import AppServers
+from zscaler.api_client import APIClient
+from zscaler.utils import format_url
 
 
-from box import Box, BoxList
-from requests import Response
+class AppServersAPI(APIClient):
+    """
+    A Client object for the Application Server resource.
+    """
 
-from zscaler.utils import snake_to_camel
-from zscaler.zpa.client import ZPAClient
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-
-class AppServersAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
-
-    def list_servers(self, **kwargs) -> BoxList:
+    def list_servers(self, query_params=None) -> tuple:
         """
-        Returns all configured servers.
+        Enumerates application servers in your organization with pagination.
+        A subset of application servers can be returned that match a supported
+        filter expression or query.
 
-        Keyword Args:
-            **max_items (int):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
-            :obj:`BoxList`: List of all configured servers.
+            :obj:`Tuple`: A tuple containing (list of ApplicationServer instances, Response, error)
 
         Examples:
-            >>> servers = zpa.servers.list_servers()
+            >>> server_list, _, err = client.zpa.servers.list_servers(
+            ... query_params={'search': 'Server01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing application servers: {err}")
+            ...     return
+            ... print(f"Total application servers found: {len(server_list)}")
+            ... for server in server_list:
+            ...     print(server.as_dict())
         """
-        list, _ = self.rest.get_paginated_data(path="/server", **kwargs, api_version="v1")
-        return list
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /server
+        """)
 
-    def get_server(self, server_id: str, **kwargs) -> Box:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(AppServers(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_server(self, server_id: str, query_params=None) -> tuple:
         """
         Gets information on the specified server.
 
         Args:
-            server_id (str):
-                The unique identifier for the server.
+            server_id (str): The unique identifier of the server.
 
         Returns:
-            :obj:`Box`: The resource record for the server.
-
+            :obj:`Tuple`: AppServers: The corresponding server object.
+            
         Examples:
-            >>> server = zpa.servers.get_server('99999')
-
+            >>> fetched_server, _, err = client.zpa.servers.get_server('999999')
+            ... if err:
+            ...     print(f"Error fetching app server by ID: {err}")
+            ...     return
+            ... print(f"Fetched app server by ID: {fetched_server.as_dict()}")
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.get(f"server/{server_id}", params=params)
+        http_method = "get".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /server/{server_id}
+        """)
 
-    def get_server_by_name(self, name, **kwargs):
-        """
-        Returns information on the application server with the specified name.
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
 
-        Args:
-            name (str): The name of the application server.
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
 
-        Returns:
-            :obj:`Box` or None: The resource record for the application server if found, otherwise None.
+        response, error = self._request_executor\
+            .execute(request, AppServers)
+        if error:
+            return (None, response, error)
 
-        Examples:
-            >>> app_server = zpa.servers.get_server_by_name('example_name')
-            >>> if app_server:
-            ...     pprint(app_server)
-            ... else:
-            ...     print("Application server not found")
-        """
-        servers = self.list_servers(**kwargs)
-        for server in servers:
-            if server.get("name") == name:
-                return server
-        return None
+        try:
+            result = AppServers(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-    def add_server(self, name: str, address: str, enabled: bool = True, **kwargs) -> Box:
+    def add_server(self, **kwargs) -> tuple:
         """
         Add a new application server.
 
         Args:
-            name (str):
-                The name of the server.
-            address (str):
-                The IP address of the server.
-            enabled (bool):
-                 Enable the server. Defaults to True.
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            description (str):
-                A description for the server.
-            app_server_group_ids (list):
-                Unique identifiers for the server groups the server belongs to.
-            config_space (str):
-                The configuration space for the server. Defaults to DEFAULT.
-
+            **name (str): The name of the server.
+            **description (str): The name of the server.
+            **address (str): The IP address of the server.
+            **enabled (bool): Enable the server. Defaults to True.
+            **app_server_group_ids (list):
+                The list of unique identifiers for the Server Group.
+            **config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
+            **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+            
         Returns:
-            :obj:`Box`: The resource record for the newly created server.
-
+            :obj:`Tuple`: AppServers: The newly created portal object.
+            
         Examples:
-            Create a server with the minimum required parameters:
-
-            >>> zpa.servers.add_server(
-            ...   name='myserver.example',
-            ...   address='192.0.2.10',
-            ...   enabled=True)
-
+            >>> new_server, _, err = client.zpa.servers.add_server(
+            ...     name="NewAppServer",
+            ...     description="NewAppServer",
+            ...     enabled=True,
+            ...     app_server_group_ids=['99999'],
+            ... )
+            ... if err:
+            ...     print(f"Error creating app server: {err}")
+            ...     return
+            ... print(f"app server created successfully: {new_portal.as_dict()}")
         """
-        payload = {"name": name, "address": address, "enabled": enabled}
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /server""")
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        body = kwargs
 
-        microtenant_id = kwargs.pop("microtenant_id", None)
+        microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        response = self.rest.post("server", json=payload, params=params)
-        if isinstance(response, Response):
-            status_code = response.status_code
-            # Handle error response
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
 
-    def update_server(self, server_id: str, **kwargs) -> Box:
+        response, error = self._request_executor\
+            .execute(request, AppServers)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = AppServers(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_server(self, server_id: str, **kwargs) -> tuple:
         """
         Updates the specified server.
 
         Args:
-            server_id (str):
-                The unique identifier for the server being updated.
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            name (str):
-                The name of the server.
-            address (str):
-                The IP address of the server.
-            enabled (bool):
-                 Enable the server.
-            description (str):
-                A description for the server.
-            app_server_group_ids (list):
-                Unique identifiers for the server groups the server belongs to.
-            config_space (str):
-                The configuration space for the server.
-
+            server_id (str): The unique identifier for the server being updated.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
+            
         Returns:
-            :obj:`Box`: The resource record for the updated server.
-
+            :obj:`Tuple`: AppServers: The updated application server object.
+            
         Examples:
-            Update the name of a server:
-
-            >>> zpa.servers.update_server(
-            ...   '99999',
-            ...   name='newname.example')
-
-            Update the address and enable a server:
-
-            >>> zpa.servers.update_server(
-            ...    '99999',
-            ...    address='192.0.2.20',
-            ...    enabled=True)
-
+            >>> update_server, _, err = client.zpa.servers.update_server(
+            ...     server_id="999999",
+            ...     name="UdpateApplicationServer",
+            ...     description="UdpateApplicationServer",
+            ...     enabled=True,
+            ... )
+            ... if err:
+            ...     print(f"Error creating application servers: {err}")
+            ...     return
+            ... print(f"application servers created successfully: {new_portal.as_dict()}")
         """
-        payload = {snake_to_camel(k): v for k, v in self.get_server(server_id).items()}
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /server/{server_id}
+        """)
 
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        body = {}
 
-        microtenant_id = kwargs.pop("microtenant_id", None)
+        body.update(kwargs)
+
+        # Use get instead of pop to keep microtenant_id in the body
+        microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        resp = self.rest.put(f"server/{server_id}", json=payload, params=params).status_code
-        if not isinstance(resp, Response):
-            return self.get_server(server_id)
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, body, {}, params)
+        if error:
+            return (None, None, error)
 
-    def delete_server(self, server_id: str, **kwargs) -> int:
+        response, error = self._request_executor\
+            .execute(request, AppServers)
+        if error:
+            return (None, response, error)
+
+        # Handle case where no content is returned (204 No Content)
+        if response is None:
+            # Return a meaningful result to indicate success
+            return (AppServers({"id": server_id}), None, None)
+
+        try:
+            result = AppServers(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_server(
+        self,
+        server_id: str,
+        microtenant_id: str = None
+    ) -> tuple:
         """
         Delete the specified server.
 
-        The server must not be assigned to any Server Groups or the operation will fail.
-
         Args:
             server_id (str): The unique identifier for the server to be deleted.
+            microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
 
         Returns:
-            :obj:`int`: The response code for the operation.
-
+            int: Status code of the delete operation.
+            
         Examples:
-            >>> zpa.servers.delete_server('99999')
-
+            >>> _, _, err = client.zpa.servers.delete_server(
+            ...     server_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting application server: {err}")
+            ...     return
+            ... print(f"application server with ID {'999999'} deleted successfully.")
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.delete(f"server/{server_id}", params=params).status_code
+        http_method = "delete".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint}
+            /server/{server_id}
+        """)
+
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor\
+            .create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor\
+            .execute(request)
+        if error:
+            return (None, response, error)
+        return (None, response, None)

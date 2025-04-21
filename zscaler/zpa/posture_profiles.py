@@ -1,151 +1,150 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from box import Box, BoxList
-from requests import Response
-
-from zscaler.utils import remove_cloud_suffix
-
-from . import ZPAClient
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.posture_profiles import PostureProfile
+from zscaler.utils import format_url, remove_cloud_suffix
 
 
-class PostureProfilesAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
+class PostureProfilesAPI(APIClient):
+    """
+    A Client object for the Posture Profiles resource.
+    """
 
-    def list_profiles(self, **kwargs) -> BoxList:
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+        self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
+
+    def list_posture_profiles(self, query_params=None) -> tuple:
         """
         Returns a list of all configured posture profiles.
 
         Keyword Args:
-            max_items (int):
-                The maximum number of items to request before stopping iteration.
-            max_pages (int):
-                The maximum number of pages to request before stopping iteration.
-            pagesize (int):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {int}: Page size for pagination.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            BoxList: A list of all configured posture profiles.
+            list: A list of `PostureProfile` instances.
 
         Examples:
-            >>> for posture_profile in zpa.posture_profiles.list_profiles():
-            ...    pprint(posture_profile)
+            Retrieve posture profiles with pagination parameters:
+            
+            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles(
+            ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing posture: {err}")
+            ...     return
+            ... print(f"Total posture profiles found: {len(posture_list)}")
+            ... for posture in posture_list:
+            ...     print(posture.as_dict())
+            
+            Retrieve posture profiles udid with:
+            
+            >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles()
+            ... if err:
+            ...     print(f"Error listing profiles: {err}")
+            ...     return
+            ... print("Extracted posture_udid values:")
+            ... for profile in profile_list:
+            ...     if profile.posture_udid:
+            ...         print(profile.posture_udid)
         """
-        list, _ = self.rest.get_paginated_data(path="/posture", **kwargs, api_version="v2")
-        return list
-
-    def get_profile_by_name(self, name):
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v2}
+            /posture
         """
-        Searches for and returns a posture profile based on its name.
+        )
 
-        This method performs a case-sensitive search through all posture profiles,
-        returning the first profile that matches the specified name exactly.
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PostureProfile(
+                    self.form_response_body(item))
+                )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_profile(self, profile_id: str) -> tuple:
+        """
+        Gets a specific posture profile by its unique ID.
 
         Args:
-            name (str): The name of the posture profile to search for.
+            profile_id (str): The unique identifier of the posture profile.
 
         Returns:
-            Box: The posture profile that matches the given name, or None if no match is found.
+            :obj:`Tuple`: A tuple containing (list of Posture Profile instances, Response, error)
 
         Examples:
-            >>> profile = zpa.posture_profiles.get_profile_by_name("Example Profile Name")
-            >>> if profile:
-            ...     print("Profile ID:", profile.id)
-            ... else:
-            ...     print("Profile not found.")
+            >>> fetched_posture, _, err = client.zpa.posture_profile.get_profile('999999')
+            ... if err:
+            ...     print(f"Error fetching posture by ID: {err}")
+            ...     return
+            ... print(fetched_profile.posture_udid)
         """
-        profiles = self.list_profiles()
-        for profile in profiles:
-            if profile.get("name") == name:
-                return profile
-        return None
-
-    def get_profile(self, profile_id: str) -> Box:
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /posture/{profile_id}
         """
-        Returns information on the specified posture profiles.
+        )
 
-        Args:
-            profile_id (str):
-                The unique identifier for the posture profiles.
+        body = {}
+        headers = {}
 
-        Returns:
-            :obj:`Box`: The resource record for the posture profiles.
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
-        Examples:
-            >>> pprint(zpa.posture_profiles.get_profile('99999'))
+        if error:
+            return (None, None, error)
 
-        """
-        response = self.rest.get("/posture/%s" % (profile_id))
-        if isinstance(response, Response):
-            status_code = response.status_code
-            if status_code != 200:
-                return None
-        return response
+        response, error = self._request_executor.\
+            execute(request, PostureProfile)
 
-    def get_udid_by_profile_name(self, search_name: str, **kwargs) -> str:
-        """
-        Searches for a posture profile by name and returns its posture_udid.
+        if error:
+            return (None, response, error)
 
-        This function searches through all configured posture profiles, comparing the
-        provided search_name against each profile's name, both exactly and with any cloud suffix removed.
-        It returns the 'posture_udid' of the first matching profile found.
-
-        Args:
-            search_name (str): The name of the posture profile to search for.
-
-        Keyword Args:
-            **kwargs: Additional keyword arguments to pass to the list_profiles method, such as
-                    'max_items', 'max_pages', 'pagesize', and 'search'.
-
-        Returns:
-            str: The posture_udid of the found posture profile, or None if not found.
-
-        Examples:
-            >>> udid = zpa.posture_profiles.get_udid_by_profile_name("Example Profile")
-            >>> if udid:
-            ...     print(f"Found Profile UDID: {udid}")
-            ... else:
-            ...     print("Profile not found.")
-        """
-        profiles = self.list_profiles(**kwargs)
-        for profile in profiles:
-            clean_profile_name = remove_cloud_suffix(profile.get("name"))
-            if clean_profile_name == search_name or profile.get("name") == search_name:
-                return profile.get("posture_udid")
-        return None
-
-    def get_name_by_posture_udid(self, search_udid: str, **kwargs) -> str:
-        """
-        Searches for a posture profile by posture_udid and returns its name.
-
-        Args:
-            search_udid (str): The posture_udid of the posture profile to search for.
-
-        Keyword Args:
-            **kwargs: Additional keyword arguments to pass to the list_profiles method.
-
-        Returns:
-            str: The name of the found posture profile, or None if not found.
-        """
-        profiles = self.list_profiles(**kwargs)
-        for profile in profiles:
-            if profile.get("posture_udid") == search_udid:
-                return profile.get("name")
-        return None
+        try:
+            result = PostureProfile(
+                self.form_response_body(response.get_body())
+            )
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

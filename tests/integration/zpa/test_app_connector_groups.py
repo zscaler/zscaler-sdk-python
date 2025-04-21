@@ -11,13 +11,15 @@ def fs():
 
 class TestAppConnectorGroup:
     """
-    Integration Tests for the App Connector Group
+    Integration Tests for the app connector group
     """
 
     def test_app_connector_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
+        group_id = None  # Initialize group_id
+        
         group_name = "tests-" + generate_random_string()
         group_description = "tests-" + generate_random_string()
         group_enabled = True
@@ -37,104 +39,68 @@ class TestAppConnectorGroup:
 
         try:
             # Create a new app connector group
-            created_group = client.connectors.add_connector_group(
+            created_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                 name=group_name,
                 description=group_description,
-                enabled=group_enabled,
+                group_enabled=group_enabled,
                 latitude=latitude,
                 longitude=longitude,
                 location=location,
                 upgrade_day=upgrade_day,
                 upgrade_time_in_secs=upgrade_time_in_secs,
                 override_version_profile=override_version_profile,
-                version_profile_id=version_profile_id,
                 version_profile_name=version_profile_name,
+                version_profile_id=version_profile_id,
                 dns_query_type=dns_query_type,
                 pra_enabled=pra_enabled,
                 tcp_quick_ack_app=tcp_quick_ack_app,
                 tcp_quick_ack_assistant=tcp_quick_ack_assistant,
                 tcp_quick_ack_read_assistant=tcp_quick_ack_read_assistant,
             )
+            assert err is None, f"Error creating app connector group: {err}"
             assert created_group is not None
             assert created_group.name == group_name
             assert created_group.description == group_description
-            assert created_group.enabled == group_enabled
+            assert created_group.enabled is True
 
             group_id = created_group.id
         except Exception as exc:
-            errors.append(f"Failed to create app connector group: {exc}")
+            errors.append(exc)
 
-        if group_id:
-            try:
+        try:
+            if group_id:
                 # Retrieve the created app connector group by ID
-                retrieved_group = client.connectors.get_connector_group(group_id)
+                retrieved_group, _, err = client.zpa.app_connector_groups.get_connector_group(group_id)
+                assert err is None, f"Error fetching group: {err}"
                 assert retrieved_group.id == group_id
                 assert retrieved_group.name == group_name
-            except Exception as exc:
-                errors.append(f"Failed to retrieve app connector group: {exc}")
 
-        try:
-            # Update the app connector group
-            updated_name = group_name + " Updated"
-            client.connectors.update_connector_group(group_id, name=updated_name)
+                # Update the app connector group
+                updated_name = group_name + " Updated"
+                _, _, err = client.zpa.app_connector_groups.update_connector_group(group_id, name=updated_name)
+                assert err is None, f"Error updating group: {err}"
 
-            updated_group = client.connectors.get_connector_group(group_id)
-            assert updated_group.name == updated_name
+                updated_group, _, err = client.zpa.app_connector_groups.get_connector_group(group_id)
+                assert err is None, f"Error fetching updated group: {err}"
+                assert updated_group.name == updated_name
+
+                # List app connector group and ensure the updated group is in the list
+                groups_list, _, err = client.zpa.app_connector_groups.list_connector_groups()
+                assert err is None, f"Error listing groups: {err}"
+                assert any(group.id == group_id for group in groups_list)
         except Exception as exc:
-            errors.append(f"Failed to update app connector group: {exc}")
-
-        try:
-            # List app connector group and ensure the updated group is in the list
-            groups_list = client.connectors.list_connector_groups()
-            assert any(group.id == group_id for group in groups_list)
-        except Exception as exc:
-            errors.append(f"Failed to list app connector group: {exc}")
-
-        try:
-            # Search for the app connector group by name
-            search_result = client.connectors.get_connector_group_by_name(updated_name)
-            assert search_result is not None
-            assert search_result.id == group_id
-        except Exception as exc:
-            errors.append(f"Failed to search for app connector group by name: {exc}")
+            errors.append(exc)
 
         finally:
             # Cleanup: Delete the app connector group if it was created
             if group_id:
                 try:
-                    delete_response_code = client.connectors.delete_connector_group(group_id)
-                    assert str(delete_response_code) == "204", f"Failed to delete app connector group with ID {group_id}"
+                    delete_response, _, err = client.zpa.app_connector_groups.delete_connector_group(group_id)
+                    assert err is None, f"Error deleting group: {err}"
+                    # Since a 204 No Content response returns None, we assert that delete_response is None
+                    assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:
                     errors.append(f"Cleanup failed for app connector group ID {group_id}: {cleanup_exc}")
 
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during the app connector group lifecycle test: {errors}"
-
-
-class TestCustomerVersionProfile:
-    def test_version_profiles(self, fs):
-        client = MockZPAClient(fs)
-        errors = []  # Initialize an empty list to collect errors
-
-        # Step 1: Test to retrieve all version profiles without any filters
-        try:
-            profiles = client.connectors.list_version_profiles()
-            assert isinstance(profiles, list), "Expected a list of version profiles"
-            assert len(profiles) > 0, "Expected non-empty list of profiles"
-        except AssertionError as e:
-            errors.append(f"Error retrieving all profiles: {str(e)}")
-
-        # Profile names to test
-        profile_names = ["Default", "Previous Default", "New Release"]
-
-        # Step 2: Test to retrieve version profiles by specific names
-        for profile_name in profile_names:
-            try:
-                profiles_by_name = client.connectors.list_version_profiles(search=profile_name)
-                found_profiles = [profile for profile in profiles_by_name if profile.get("name") == profile_name]
-                assert found_profiles, f"No profiles found with the name {profile_name}"
-            except AssertionError as e:
-                errors.append(f"Error retrieving profile by name '{profile_name}': {str(e)}")
-
-        # Assert that no errors occurred during the test
-        assert not errors, f"Errors occurred during the tests: {errors}"

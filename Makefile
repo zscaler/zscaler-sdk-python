@@ -172,8 +172,14 @@ publish\:test:
 publish\:prod:
 	python3 -m twine upload dist/*
 
+# Runtime-only dependencies
 sync-deps:
-	poetry export -f requirements.txt > requirements.txt
+	poetry export -f requirements.txt --without-hashes > requirements.txt
+
+# Dev dependencies for contributors/CI
+sync-dev-deps:
+	poetry export -f requirements.txt --without-hashes --with dev > requirements-dev.txt
+
 
 local-setup:
 ifeq ($(wildcard ~/.local/bin/poetry),)
