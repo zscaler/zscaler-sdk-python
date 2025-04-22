@@ -143,6 +143,58 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    def get_credential_pool_info(self, pool_id: str, query_params=None) -> tuple:
+        """
+        Given Privileged credential pool id gets mapped privileged credential info
+
+        Args:
+            pool_id (str): The unique identifier of the Privileged credential pool.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+
+        Returns:
+            :obj:`Tuple`: PRACredentialPoolController: The corresponding PRA Credential Pool object.
+
+        Example:
+            Retrieve details of a specific Privileged credential pool
+
+            >>> fetched_pool, _, err = client.zpa.pra_credential_pool.get_credential_pool_info('999999')
+            ... if err:
+            ...     print(f"Error fetching Privileged credential pool by ID: {err}")
+            ...     return
+            ... print(f"Fetched Privileged credential pool by ID: {fetched_pool.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /credential-pool/{pool_id}/credential
+        """
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.\
+            execute(request, PRACredentialPoolController)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PRACredentialPoolController(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
     def add_credential_pool(self, **kwargs) -> tuple:
         """
         Adds a new Privileged Credential Pool.

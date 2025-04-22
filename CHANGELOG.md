@@ -214,6 +214,15 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
     - Added `PUT /adminRoles/{roleId}` Updates the admin role based on the specified ID.
     - Added `DELETE /adminRoles/{roleId}` Deletes the admin role based on the specified ID.
 
+### ZPA Credential Pool (New)
+[PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added new ZPA endpoint:
+  - Added `GET /credential-pool` Gets the privileged credential pool details for the specified customer.
+  - Added `GET /credential-pool/{id}` Gets the privileged credential pool details for the specified customer.
+  - Added `GET /credential-pool/{id}/credential` Given Privileged credential pool id gets mapped privileged credential info
+  - Added `POST /credential-pool` Adds a new privileged credential pool for the specified customer.
+  - Added `PUT /credential-pool/{id}` Updates the existing credential pool for the specified customer.
+  - Added `DELETE /credential-pool/{id}` Updates the existing credential pool for the specified customer.
+
 #### ZWA - Zscaler Workflow Automation (NEW)
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added new ZWA endpoint:
   - Added `GET /dlp/v1/incidents/transactions/{transactionId}` Gets the list of all DLP incidents associated with the transaction ID
