@@ -16,8 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import server_group\
-    as server_group
+from zscaler.zpa.models import server_group as server_group
 
 
 class ApplicationSegmentInspection(ZscalerObject):
@@ -28,16 +27,11 @@ class ApplicationSegmentInspection(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.domain_names = config["domainNames"]\
-                if "domainNames" in config else []
-            self.segment_group_id = config["segmentGroupId"]\
-                if "segmentGroupId" in config else None
-            self.segment_group_name = config["segmentGroupName"]\
-                if "segmentGroupName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.domain_names = config["domainNames"] if "domainNames" in config else []
+            self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
+            self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
             self.tcp_port_ranges = ZscalerCollection.form_list(
                 config["tcpPortRanges"] if "tcpPortRanges" in config else [], str
             )
@@ -45,51 +39,31 @@ class ApplicationSegmentInspection(ZscalerObject):
                 config["udpPortRanges"] if "udpPortRanges" in config else [], str
             )
             self.enabled = config["enabled"] if "enabled" in config else True
-            self.double_encrypt = config["doubleEncrypt"]\
-                if "doubleEncrypt" in config else False
-            self.config_space = config["configSpace"]\
-                if "configSpace" in config else "DEFAULT"
-            self.bypass_type = config["bypassType"]\
-                if "bypassType" in config else "NEVER"
-            self.health_check_type = config["healthCheckType"]\
-                if "healthCheckType" in config else "NONE"
-            self.icmp_access_type = config["icmpAccessType"]\
-                if "icmpAccessType" in config else "NONE"
-            self.is_cname_enabled = config["isCnameEnabled"]\
-                if "isCnameEnabled" in config else False
+            self.double_encrypt = config["doubleEncrypt"] if "doubleEncrypt" in config else False
+            self.config_space = config["configSpace"] if "configSpace" in config else "DEFAULT"
+            self.bypass_type = config["bypassType"] if "bypassType" in config else "NEVER"
+            self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else "NONE"
+            self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else "NONE"
+            self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else False
             self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else False
-            self.bypass_on_reauth = config["bypassOnReauth"]\
-                if "bypassOnReauth" in config else False
-            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"]\
-                if "inspectTrafficWithZia" in config else False
-            self.health_reporting = config["healthReporting"]\
-                if "healthReporting" in config else "NONE"
-            self.use_in_dr_mode = config["useInDrMode"]\
-                if "useInDrMode" in config else False
-            self.tcp_keep_alive = config["tcpKeepAlive"]\
-                if "tcpKeepAlive" in config else "0"
-            self.select_connector_close_to_app = config["selectConnectorCloseToApp"]\
-                if "selectConnectorCloseToApp" in config else False
-            self.match_style = config["matchStyle"]\
-                if "matchStyle" in config else "EXCLUSIVE"
-            self.is_incomplete_dr_config = config["isIncompleteDRConfig"]\
-                if "isIncompleteDRConfig" in config else False
-            self.adp_enabled = config["adpEnabled"]\
-                if "adpEnabled" in config else False
-            self.auto_app_protect_enabled = config["autoAppProtectEnabled"]\
-                if "autoAppProtectEnabled" in config else False
-            self.api_protection_enabled = config["apiProtectionEnabled"]\
-                if "apiProtectionEnabled" in config else False
-            self.fqdn_dns_check = config["fqdnDnsCheck"]\
-                if "fqdnDnsCheck" in config else False
-            self.weighted_load_balancing = config["weightedLoadBalancing"]\
-                if "weightedLoadBalancing" in config else False
-            self.extranet_enabled = config["extranetEnabled"]\
-                if "extranetEnabled" in config else False
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else "Default"
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
+            self.bypass_on_reauth = config["bypassOnReauth"] if "bypassOnReauth" in config else False
+            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"] if "inspectTrafficWithZia" in config else False
+            self.health_reporting = config["healthReporting"] if "healthReporting" in config else "NONE"
+            self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else False
+            self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else "0"
+            self.select_connector_close_to_app = (
+                config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else False
+            )
+            self.match_style = config["matchStyle"] if "matchStyle" in config else "EXCLUSIVE"
+            self.is_incomplete_dr_config = config["isIncompleteDRConfig"] if "isIncompleteDRConfig" in config else False
+            self.adp_enabled = config["adpEnabled"] if "adpEnabled" in config else False
+            self.auto_app_protect_enabled = config["autoAppProtectEnabled"] if "autoAppProtectEnabled" in config else False
+            self.api_protection_enabled = config["apiProtectionEnabled"] if "apiProtectionEnabled" in config else False
+            self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else False
+            self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else False
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else "Default"
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
             # Handle serverGroups using defensive programming
             self.server_groups = []
@@ -109,19 +83,13 @@ class ApplicationSegmentInspection(ZscalerObject):
             if "tcpPortRange" in config:
                 for port_range in config["tcpPortRange"]:
                     if isinstance(port_range, dict):
-                        self.tcp_port_range.append({
-                            "from": port_range.get("from"),
-                            "to": port_range.get("to")
-                        })
+                        self.tcp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
 
             self.udp_port_range = []
             if "udpPortRange" in config:
                 for port_range in config["udpPortRange"]:
                     if isinstance(port_range, dict):
-                        self.tcp_port_range.append({
-                            "from": port_range.get("from"),
-                            "to": port_range.get("to")
-                        })
+                        self.tcp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
         else:
             self.id = None
             self.name = None

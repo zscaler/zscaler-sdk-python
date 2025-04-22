@@ -27,7 +27,6 @@ from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import urlcategory as urlcategory
 from zscaler.zia.models import rule_labels as labels
-from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
 
@@ -67,19 +66,17 @@ class DLPWebRules(ZscalerObject):
             self.external_auditor_email = config["externalAuditorEmail"] if "externalAuditorEmail" in config else None
 
             # Handling lists of simple values
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str)
-            
-            self.file_types = ZscalerCollection.form_list(
-                config["fileTypes"] if "fileTypes" in config else [], str)
-            
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
+
+            self.file_types = ZscalerCollection.form_list(config["fileTypes"] if "fileTypes" in config else [], str)
+
             self.cloud_applications = ZscalerCollection.form_list(
                 config["cloudApplications"] if "cloudApplications" in config else [], str
             )
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
             )
-            
+
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
             )

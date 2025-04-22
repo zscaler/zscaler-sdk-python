@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class AppServices(ZscalerObject):
     """
     A class representing a Cloud Firewall App Service Groups object.
@@ -24,12 +25,9 @@ class AppServices(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.is_name_l10n_Tag = config["isNameL10nTag"]\
-                if "isNameL10nTag" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.is_name_l10n_Tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
 
         else:
             self.id = None

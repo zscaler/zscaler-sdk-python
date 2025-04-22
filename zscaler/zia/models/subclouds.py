@@ -33,17 +33,11 @@ class TenantSubClouds(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
-            self.dcs = ZscalerCollection.form_list(
-                config["dcs"] if "dcs" in config else [], DCs
-            )
-            self.exclusions = ZscalerCollection.form_list(
-                config["exclusions"] if "exclusions" in config else [], Exclusions
-            )
+            self.dcs = ZscalerCollection.form_list(config["dcs"] if "dcs" in config else [], DCs)
+            self.exclusions = ZscalerCollection.form_list(config["exclusions"] if "exclusions" in config else [], Exclusions)
         else:
             self.id = None
             self.name = None
@@ -55,14 +49,10 @@ class TenantSubClouds(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "dcs": self.dcs,
-            "exclusions": self.exclusions
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "dcs": self.dcs, "exclusions": self.exclusions}
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class DCs(ZscalerObject):
     """
@@ -79,12 +69,9 @@ class DCs(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.country = config["country"] \
-                if "country" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.country = config["country"] if "country" in config else None
 
         else:
             self.id = None
@@ -104,6 +91,7 @@ class DCs(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class Exclusions(ZscalerObject):
     """
     A class for Exclusions objects.
@@ -119,30 +107,22 @@ class Exclusions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.country = config["country"] \
-                if "country" in config else None
+            self.country = config["country"] if "country" in config else None
 
-            self.expired = config["expired"] \
-                if "expired" in config else False
+            self.expired = config["expired"] if "expired" in config else False
 
-            self.disabled_by_ops = config["disabledByOps"] \
-                if "disabledByOps" in config else False
+            self.disabled_by_ops = config["disabledByOps"] if "disabledByOps" in config else False
 
-            self.create_time = config["createTime"] \
-                if "createTime" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
 
-            self.start_time = config["startTime"] \
-                if "startTime" in config else None
+            self.start_time = config["startTime"] if "startTime" in config else None
 
-            self.end_time = config["endTime"] \
-                if "endTime" in config else None
+            self.end_time = config["endTime"] if "endTime" in config else None
 
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-                                                               
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+
             if "datacenter" in config:
                 if isinstance(config["datacenter"], Datacenter):
                     self.datacenter = config["datacenter"]
@@ -162,7 +142,7 @@ class Exclusions(ZscalerObject):
                     self.last_modified_user = None
             else:
                 self.last_modified_user = None
-                
+
         else:
             self.country = None
             self.expired = None
@@ -186,10 +166,11 @@ class Exclusions(ZscalerObject):
             "startTime": self.start_time,
             "endTime": self.end_time,
             "lastModifiedUser": self.last_modified_user,
-            "lastModifiedTime": self.last_modified_time
+            "lastModifiedTime": self.last_modified_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class Datacenter(ZscalerObject):
     """
@@ -206,12 +187,9 @@ class Datacenter(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.external_id = config["externalId"] \
-                if "externalId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
             self.extensions = config if isinstance(config, dict) else {}
 
         else:
@@ -250,14 +228,11 @@ class LastModifiedUser(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.external_id = config["externalId"]\
-                if "externalId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
             self.triggers = config if isinstance(config, dict) else {}
-        
+
         else:
             self.id = None
             self.name = None
@@ -269,15 +244,11 @@ class LastModifiedUser(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "externalId": self.external_id,
-            "extensions": self.extensions
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "externalId": self.external_id, "extensions": self.extensions}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class LastDCInCountry(ZscalerObject):
     """
     A class for LastDCInCountry objects.
@@ -293,18 +264,14 @@ class LastDCInCountry(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.country = config["country"] \
-                if "country" in config else None
-            self.last_dc_exclusion = config["lastDCExclusion"] \
-                if "lastDCExclusion" in config else None
-            self.dc_ids = ZscalerCollection.form_list(
-                config["dcIds"] if "dcIds" in config else [], str
-            )
+            self.country = config["country"] if "country" in config else None
+            self.last_dc_exclusion = config["lastDCExclusion"] if "lastDCExclusion" in config else None
+            self.dc_ids = ZscalerCollection.form_list(config["dcIds"] if "dcIds" in config else [], str)
         else:
             self.country = None
             self.last_dc_exclusion = None
             self.dc_ids = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -317,4 +284,3 @@ class LastDCInCountry(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-

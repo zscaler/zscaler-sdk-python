@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import common as common
 
+
 class ApiKeys(ZscalerObject):
     """
     A class for ApiKeys objects.
@@ -33,22 +34,14 @@ class ApiKeys(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.key_value = config["keyValue"] \
-                if "keyValue" in config else None
-            self.permissions = ZscalerCollection.form_list(
-                config["permissions"] if "permissions" in config else [], str
-            )
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.partner = config["partner"] \
-                if "partner" in config else None
-            self.partner_url = config["partnerUrl"] \
-                if "partnerUrl" in config else None
-                
+            self.id = config["id"] if "id" in config else None
+            self.key_value = config["keyValue"] if "keyValue" in config else None
+            self.permissions = ZscalerCollection.form_list(config["permissions"] if "permissions" in config else [], str)
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.partner = config["partner"] if "partner" in config else None
+            self.partner_url = config["partnerUrl"] if "partnerUrl" in config else None
+
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonIDNameExternalID):
                     self.last_modified_by = config["lastModifiedBy"]
@@ -58,7 +51,7 @@ class ApiKeys(ZscalerObject):
                     self.last_modified_by = None
             else:
                 self.last_modified_by = None
-                
+
             if "partner" in config:
                 if isinstance(config["partner"], common.CommonIDNameExternalID):
                     self.partner = config["partner"]
@@ -92,7 +85,7 @@ class ApiKeys(ZscalerObject):
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "partner": self.partner,
-            "partnerUrl": self.partner_url
+            "partnerUrl": self.partner_url,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

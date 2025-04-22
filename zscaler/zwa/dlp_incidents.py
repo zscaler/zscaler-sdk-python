@@ -33,11 +33,7 @@ class DLPIncidentsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"
 
-    def get_incident_transactions(
-        self,
-        transaction_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_incident_transactions(self, transaction_id: str, query_params=None) -> tuple:
         """
         Returns information DLP incident details based on the incident ID.
 
@@ -46,8 +42,8 @@ class DLPIncidentsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
-                ``[query_params.fields]`` {list}: The fields associated with the DLP incident. 
+
+                ``[query_params.fields]`` {list}: The fields associated with the DLP incident.
                     For example, sourceActions, contentInfo, status, resolution, etc.
 
         Returns:
@@ -76,8 +72,7 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -87,18 +82,13 @@ class DLPIncidentsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [IncidentDLPDetails(
-                self.form_response_body(response.get_body()))]  
+            result = [IncidentDLPDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def get_incident_details(
-        self,
-        incident_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_incident_details(self, incident_id: str, query_params=None) -> tuple:
         """
         Returns information DLP incident details based on the incident ID.
 
@@ -107,8 +97,8 @@ class DLPIncidentsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
-                ``[query_params.fields]`` {list}: The fields associated with the DLP incident. 
+
+                ``[query_params.fields]`` {list}: The fields associated with the DLP incident.
                     For example, sourceActions, contentInfo, status, resolution, etc.
 
         Returns:
@@ -137,8 +127,7 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -148,18 +137,13 @@ class DLPIncidentsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [IncidentDLPDetails(
-                self.form_response_body(response.get_body()))]  
+            result = [IncidentDLPDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def change_history(
-        self,
-        incident_id: str,
-        query_params=None
-    ) -> tuple:
+    def change_history(self, incident_id: str, query_params=None) -> tuple:
         """
         Returns details of updates made to an incident based on the given ID and timeline.
 
@@ -192,8 +176,7 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -203,8 +186,7 @@ class DLPIncidentsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ChangeHistory(
-                self.form_response_body(response.get_body()))]  
+            result = [ChangeHistory(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
@@ -244,21 +226,17 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentTrigger(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentTrigger(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -303,8 +281,7 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -314,20 +291,19 @@ class DLPIncidentsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [GeneratedTickets(
-                self.form_response_body(response.get_body()))]  
+            result = [GeneratedTickets(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
+
     def get_incident_evidence(
         self,
         incident_id: str,
     ) -> tuple:
         """
         Gets the evidence URL of the incident.
-        The evidence link can be used to view and download the XML file with the actual 
+        The evidence link can be used to view and download the XML file with the actual
         data that triggered the incident.
 
         Args:
@@ -355,33 +331,23 @@ class DLPIncidentsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentEvidence(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentEvidence(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def dlp_incident_search(
-        self,
-        query_params=None,
-        fields=None,
-        time_range=None,
-        **kwargs
-    ) -> tuple:
+    def dlp_incident_search(self, query_params=None, fields=None, time_range=None, **kwargs) -> tuple:
         """
         Filters DLP incidents based on the given time range and field values.
 
@@ -480,24 +446,17 @@ class DLPIncidentsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, IncidentSearch)
+        response, error = self._request_executor.execute(request, IncidentSearch)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentSearch(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentSearch(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def incident_group_search(
-        self,
-        incident_id: str,
-        incident_group_ids: list = None
-    ) -> tuple:
+    def incident_group_search(self, incident_id: str, incident_group_ids: list = None) -> tuple:
         """
         Filters a list of DLP incident groups to which the specified incident ID belongs.
 
@@ -522,35 +481,24 @@ class DLPIncidentsAPI(APIClient):
         body = {"incidentGroupIds": incident_group_ids or []}
 
         # Create the request
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=body)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, IncidentGroupSearch)
+        response, error = self._request_executor.execute(request, IncidentGroupSearch)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentGroupSearch(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentGroupSearch(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)
 
-    def assign_labels(
-        self,
-        incident_id: str,
-        labels: list = None
-    ) -> tuple:
+    def assign_labels(self, incident_id: str, labels: list = None) -> tuple:
         """
         Assigns labels (name-value pairs) to a DLP incident.
 
@@ -581,35 +529,24 @@ class DLPIncidentsAPI(APIClient):
         body = {"labels": labels} if labels else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=body)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, IncidentDLPDetails)
+        response, error = self._request_executor.execute(request, IncidentDLPDetails)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentDLPDetails(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentDLPDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)
 
-    def incident_notes(
-        self,
-        incident_id: str,
-        notes: str = None
-    ) -> tuple:
+    def incident_notes(self, incident_id: str, notes: str = None) -> tuple:
         """
         Adds notes to a DLP incident.
 
@@ -640,36 +577,25 @@ class DLPIncidentsAPI(APIClient):
         body = {"notes": notes} if notes else {}
 
         # Create the request
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=body)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, IncidentDLPDetails)
+        response, error = self._request_executor.execute(request, IncidentDLPDetails)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentDLPDetails(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentDLPDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)
-    
+
     def incident_close(
-        self,
-        incident_id: str,
-        resolution_label: dict = None,
-        resolution_code: str = None,
-        notes: str = None
+        self, incident_id: str, resolution_label: dict = None, resolution_code: str = None, notes: str = None
     ) -> tuple:
         """
         Updates the status of the incident to resolved and closes the incident with a resolution label and a resolution code.
@@ -705,33 +631,26 @@ class DLPIncidentsAPI(APIClient):
         body = {
             "resolutionLabel": resolution_label if resolution_label else {},
             "resolutionCode": resolution_code,
-            "notes": notes
+            "notes": notes,
         }
 
         # Remove empty values to prevent sending them as null
         body = {k: v for k, v in body.items() if v}
 
         # Create the request
-        request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=body)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, IncidentDLPDetails)
+        response, error = self._request_executor.execute(request, IncidentDLPDetails)
         if error:
             return (None, response, error)
 
         try:
-            result = IncidentDLPDetails(
-                self.form_response_body(response.get_body())
-            )
+            result = IncidentDLPDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)

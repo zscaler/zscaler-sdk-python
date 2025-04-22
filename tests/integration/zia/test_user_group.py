@@ -20,6 +20,7 @@ import pytest
 from tests.integration.zia.conftest import MockZIAClient
 import random
 
+
 @pytest.fixture
 def fs():
     yield
@@ -74,9 +75,7 @@ class TestUserGroup:
             # Test: List Groups
             try:
                 if update_group:
-                    grps, _, error = client.zia.user_management.list_groups(
-                        query_params={"search": update_group.name}
-                    )
+                    grps, _, error = client.zia.user_management.list_groups(query_params={"search": update_group.name})
                     assert error is None, f"List Groups Error: {error}"
                     assert grps is not None and isinstance(grps, list), "No groups found or invalid format."
             except Exception as e:

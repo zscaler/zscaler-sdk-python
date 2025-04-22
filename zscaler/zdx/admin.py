@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.administration import Administration
 from zscaler.utils import format_url, zdx_params
 
+
 class AdminAPI(APIClient):
 
     def __init__(self, request_executor):
@@ -33,12 +34,12 @@ class AdminAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
                     If not entered, returns the data for the last 2 hours.
-                    
+
                 ``[query_params.search]`` {str}: The search string used to support search by name or department ID.
-                
+
         Returns:
             :obj:`tuple`: A tuple containing configured departments.
 
@@ -52,7 +53,7 @@ class AdminAPI(APIClient):
             ... print(f"Total department found: {len(dept_list)}")
             ...  for dept in dept_list:
             ...     print(dept.as_dict())
-            
+
             Search specific configured department.
 
             >>> dept_list, _, err = client.zdx.admin.list_departments(query_params={"search": 'Finance'})
@@ -76,8 +77,7 @@ class AdminAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -89,9 +89,7 @@ class AdminAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(Administration(
-                    self.form_response_body(item))
-                )
+                result.append(Administration(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -106,9 +104,9 @@ class AdminAPI(APIClient):
 
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
                     If not entered, returns the data for the last 2 hours.
-                    
+
                 ``[query_params.search]`` {str}: The search string used to support search by name or location ID.
-                
+
         Returns:
             :obj:`tuple`: A tuple containing configured locations.
 
@@ -122,7 +120,7 @@ class AdminAPI(APIClient):
             ... print(f"Total location found: {len(locations_list)}")
             ...  for location in locations_list:
             ...     print(location.as_dict())
-            
+
             Search specific configured Zscaler locations.
 
             >>> locations_list, _, err = client.zdx.admin.list_locations(query_params={"search": 'San Jose'})
@@ -146,8 +144,7 @@ class AdminAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -159,9 +156,7 @@ class AdminAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(Administration(
-                    self.form_response_body(item))
-                )
+                result.append(Administration(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

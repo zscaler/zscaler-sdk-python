@@ -60,7 +60,7 @@ class TestCBISecurityProfile:
                     assert cert_id is not None, "Certificate ID should not be None"
             except Exception as exc:
                 errors.append(f"Listing certificate failed: {str(exc)}")
-                
+
             try:
                 regions, _, err = client.zpa.cbi_region.list_cbi_regions()
                 assert err is None, f"Error listing CBI regions: {err}"

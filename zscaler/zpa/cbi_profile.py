@@ -51,27 +51,25 @@ class CBIProfileAPI(APIClient):
             ...     print(profile.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /profiles
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(CBIProfile(
-                    self.form_response_body(item))
-                )
+                result.append(CBIProfile(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -95,25 +93,23 @@ class CBIProfileAPI(APIClient):
             ... print(f"Fetched profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIProfile)
+        response, error = self._request_executor.execute(request, CBIProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = CBIProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -213,10 +209,12 @@ class CBIProfileAPI(APIClient):
             ... print(f"CBI profile added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /profiles
-        """)
+        """
+        )
 
         body = kwargs
 
@@ -228,20 +226,16 @@ class CBIProfileAPI(APIClient):
             return (None, None, "Validation Error: 'certificate_ids' is required and must be a list.")
 
         # Proceed with request creation and execution
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIProfile)
+        response, error = self._request_executor.execute(request, CBIProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = CBIProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -314,7 +308,8 @@ class CBIProfileAPI(APIClient):
             f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """)
+        """
+        )
 
         body = {}
 
@@ -331,13 +326,11 @@ class CBIProfileAPI(APIClient):
             return (None, None, "Validation Error: 'banner' is required and must contain a valid 'id'.")
 
         # Proceed with request creation and execution
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIProfile)
+        response, error = self._request_executor.execute(request, CBIProfile)
         if error:
             return (None, response, error)
 
@@ -346,9 +339,7 @@ class CBIProfileAPI(APIClient):
             return (CBIProfile({"id": profile_id}), None, None)
 
         try:
-            result = CBIProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -374,18 +365,18 @@ class CBIProfileAPI(APIClient):
             ... print(f"CBI Profile with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /profiles/{profile_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

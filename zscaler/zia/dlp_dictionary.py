@@ -40,7 +40,7 @@ class DLPDictionaryAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a DLP dictionary's name or description attributes.
+                ``[query_params.search]`` {str}: Search string to match a DLP dictionary's name or description attributes
 
         Returns:
             tuple: A tuple containing (list of DLPDictionaries instances, Response, error)
@@ -55,7 +55,7 @@ class DLPDictionaryAPI(APIClient):
             ... print(f"Total dictionaries found: {len(dict_list)}")
             ... for dict in dict_list:
             ...    print(dict.as_dict())
-            
+
             filtering dlp dictionaries by name :
 
             >>> dict_list, response, error = client.zia.dlp_dictionary.list_dicts(
@@ -80,14 +80,12 @@ class DLPDictionaryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -95,9 +93,7 @@ class DLPDictionaryAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DLPDictionary(
-                    self.form_response_body(item))
-                )
+                result.append(DLPDictionary(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -119,15 +115,15 @@ class DLPDictionaryAPI(APIClient):
 
         Examples:
             Gets a list of all DLP Dictionary.
-            
+
             >>> fetched_dicts, response, error = client.zia.dlp_dictionary.list_dicts()
             ... if error:
             ...     print(f"Error listing DLP Dictionaries: {error}")
             ...     return
             ... print(f"Fetched dictionaries: {[dictionary.as_dict() for dictionary in fetched_dicts]}")
-            
+
             Gets a list of all DLP Dictionary name and ID.
-            
+
             >>> dict, response, error = = client.zia.dlp_dictionary.list_dicts(query_params={"search": 'EUIBAN_LEAKAGE'})
             ... if error:
             ...     print(f"Error listing DLP Dictionary: {error}")
@@ -150,14 +146,7 @@ class DLPDictionaryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -168,18 +157,13 @@ class DLPDictionaryAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPDictionary(
-                    self.form_response_body(item))
-                )
+                results.append(DLPDictionary(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -208,33 +192,23 @@ class DLPDictionaryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPDictionary(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPDictionary(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_dict(
-        self, 
-        name: str, 
-        custom_phrase_match_type: str, 
-        dictionary_type: str, 
-        **kwargs
-    ) -> tuple:
+    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> tuple:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
@@ -302,21 +276,20 @@ class DLPDictionaryAPI(APIClient):
 
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}/dlpDictionaries
         """
-    )
+        )
 
         payload = {
             "name": name,
             "customPhraseMatchType": custom_phrase_match_type,
             "dictionaryType": dictionary_type,
         }
-        
-        # Merge any optional parameters (kwargs) into payload
+
         payload.update(kwargs)
 
-        # Format 'phrases' and 'patterns' if present
         if "phrases" in payload:
             payload["phrases"] = [{"action": action, "phrase": phrase} for action, phrase in payload["phrases"]]
 
@@ -332,25 +305,19 @@ class DLPDictionaryAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-        execute(request, DLPDictionary)
+        response, error = self._request_executor.execute(request, DLPDictionary)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPDictionary(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPDictionary(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def update_dict(
-        self, dict_id: int, 
-        **kwargs
-    ) -> tuple:
+    def update_dict(self, dict_id: int, **kwargs) -> tuple:
         """
         Updates the specified DLP Dictionary.
 
@@ -410,7 +377,6 @@ class DLPDictionaryAPI(APIClient):
 
         payload = kwargs.copy()
 
-        # Format 'phrases' and 'patterns' if present
         if "phrases" in payload:
             payload["phrases"] = [{"action": action, "phrase": phrase} for action, phrase in payload["phrases"]]
 
@@ -426,15 +392,12 @@ class DLPDictionaryAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, DLPDictionary)
+        response, error = self._request_executor.execute(request, DLPDictionary)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPDictionary(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPDictionary(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -462,13 +425,11 @@ class DLPDictionaryAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -496,26 +457,18 @@ class DLPDictionaryAPI(APIClient):
         """
         )
 
-        # Construct the payload
         payload = {"data": pattern}
 
-        # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request, DLPPatternValidation)
+        response, error = self._request_executor.execute(request, DLPPatternValidation)
         if error:
             return (None, response, error)
 
         try:
-            # Parse the response into the DLPPatternValidation model
-            result = DLPPatternValidation(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPPatternValidation(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -537,12 +490,10 @@ class DLPDictionaryAPI(APIClient):
             >>> pprint(zia.dlp_dictionary.list_dict_predefined_identifiers('USDL_LEAKAGE'))
 
         """
-        # Search for dictionaries
         dictionaries, response, error = self.list_dicts()
         if error:
             return (None, response, error)
 
-        # Find the dictionary with the exact name match
         dictionary = next((d for d in dictionaries if d.name == dict_name), None)
         if not dictionary:
             return (None, response, ValueError(f"No dictionary found with the name: {dict_name}"))
@@ -556,14 +507,12 @@ class DLPDictionaryAPI(APIClient):
             /dlpDictionaries/{dict_id}/predefinedIdentifiers
         """
         )
-        
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, {}, {}, {})
+
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, DLPDictionary)
+        response, error = self._request_executor.execute(request, DLPDictionary)
         if error:
             return (None, response, error)
 

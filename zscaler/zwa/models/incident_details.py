@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
 
+
 class IncidentDLPDetails(ZscalerObject):
     """
     A class for DLPDetails objects.
@@ -33,56 +34,35 @@ class IncidentDLPDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.internal_id = config["internalId"] \
-                if "internalId" in config else None
-            self.integration_type = config["integrationType"] \
-                if "integrationType" in config else None
-            self.transaction_id = config["transactionId"] \
-                if "transactionId" in config else None
-            self.source_type = config["sourceType"] \
-                if "sourceType" in config else None
-            self.source_sub_type = config["sourceSubType"] \
-                if "sourceSubType" in config else None
+            self.internal_id = config["internalId"] if "internalId" in config else None
+            self.integration_type = config["integrationType"] if "integrationType" in config else None
+            self.transaction_id = config["transactionId"] if "transactionId" in config else None
+            self.source_type = config["sourceType"] if "sourceType" in config else None
+            self.source_sub_type = config["sourceSubType"] if "sourceSubType" in config else None
             self.source_actions = ZscalerCollection.form_list(
                 config["sourceActions"] if "sourceActions" in config else [], str
             )
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.priority = config["priority"] \
-                if "priority" in config else None
-            self.match_count = config["matchCount"] \
-                if "matchCount" in config else None
-            self.created_at = config["createdAt"] \
-                if "createdAt" in config else None
-            self.last_updated_at = config["lastUpdatedAt"] \
-                if "lastUpdatedAt" in config else None
-            self.source_first_observed_at = config["sourceFirstObservedAt"] \
-                if "sourceFirstObservedAt" in config else None
-            self.source_last_observed_at = config["sourceLastObservedAt"] \
-                if "sourceLastObservedAt" in config else None
-            self.metadata_file_url = config["metadataFileUrl"] \
-                if "metadataFileUrl" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.resolution = config["resolution"] \
-                if "resolution" in config else None
-            self.assigned_admin = config["assignedAdmin"] \
-                if "assignedAdmin" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.priority = config["priority"] if "priority" in config else None
+            self.match_count = config["matchCount"] if "matchCount" in config else None
+            self.created_at = config["createdAt"] if "createdAt" in config else None
+            self.last_updated_at = config["lastUpdatedAt"] if "lastUpdatedAt" in config else None
+            self.source_first_observed_at = config["sourceFirstObservedAt"] if "sourceFirstObservedAt" in config else None
+            self.source_last_observed_at = config["sourceLastObservedAt"] if "sourceLastObservedAt" in config else None
+            self.metadata_file_url = config["metadataFileUrl"] if "metadataFileUrl" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.resolution = config["resolution"] if "resolution" in config else None
+            self.assigned_admin = config["assignedAdmin"] if "assignedAdmin" in config else None
 
-            self.closed_code = config["closedCode"] \
-                if "closedCode" in config else None
+            self.closed_code = config["closedCode"] if "closedCode" in config else None
 
             self.incident_group_ids = ZscalerCollection.form_list(
                 config["incidentGroupIds"] if "incidentGroupIds" in config else [], str
             )
-            
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], common.Labels
-            )
 
-            self.notes = ZscalerCollection.form_list(
-                config["notes"] if "notes" in config else [], common.Notes
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], common.Labels)
+
+            self.notes = ZscalerCollection.form_list(config["notes"] if "notes" in config else [], common.Notes)
 
             self.incident_groups = ZscalerCollection.form_list(
                 config["incidentGroups"] if "incidentGroups" in config else [], common.IncidentGroups
@@ -91,7 +71,7 @@ class IncidentDLPDetails(ZscalerObject):
             self.dlp_incident_tickets = ZscalerCollection.form_list(
                 config["dlpIncidentTickets"] if "dlpIncidentTickets" in config else [], common.DLPIncidentTickets
             )
-            
+
             if "matchingPolicies" in config:
                 if isinstance(config["matchingPolicies"], common.MatchingPolicies):
                     self.matching_policies = config["matchingPolicies"]
@@ -131,7 +111,7 @@ class IncidentDLPDetails(ZscalerObject):
                     self.content_info = None
             else:
                 self.content_info = None
-                
+
             if "networkInfo" in config:
                 if isinstance(config["networkInfo"], common.NetworkInfo):
                     self.network_info = config["networkInfo"]
@@ -217,8 +197,7 @@ class IncidentDLPDetails(ZscalerObject):
             "incidentGroupIds": self.incident_group_ids,
             "incidentGroups": self.incident_groups,
             "dlpIncidentTickets": self.dlp_incident_tickets,
-            "labels": self.labels
+            "labels": self.labels,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    

@@ -76,21 +76,17 @@ class ServerGroupsAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ServerGroup(
-                    self.form_response_body(item))
-                )
+                result.append(ServerGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -127,20 +123,16 @@ class ServerGroupsAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ServerGroup)
+        response, error = self._request_executor.execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = ServerGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServerGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -220,20 +212,16 @@ class ServerGroupsAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ServerGroup)
+        response, error = self._request_executor.execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = ServerGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServerGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -294,13 +282,11 @@ class ServerGroupsAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ServerGroup)
+        response, error = self._request_executor.execute(request, ServerGroup)
         if error:
             return (None, response, error)
 
@@ -308,19 +294,13 @@ class ServerGroupsAPI(APIClient):
             return (ServerGroup({"id": group_id}), None, None)
 
         try:
-            result = ServerGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServerGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def delete_group(
-        self,
-        group_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_group(self, group_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified server group.
 
@@ -351,13 +331,11 @@ class ServerGroupsAPI(APIClient):
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

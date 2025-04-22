@@ -10,7 +10,7 @@
 #### Zscaler OneAPI Support
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
-**NOTES** 
+**NOTES**
   - Starting at v3.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
   - The new OneAPI framework is compatible only with the following products `ZCC/ZIA/ZPA`.
   - The following products `ZTW` - Cloud Connector and `ZDX` and Zscaler Digital Experience, authentication methods remain unnaffected.
@@ -65,7 +65,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
   - Added `GET /sandboxRules` to retrieve the list of all Sandbox policy rules.
   - Added `GET /sandboxRules/{ruleId}` to retrieve the Sandbox policy rule information based on the specified ID.
-  - Added `POST /sandboxRules` to add a Sandbox policy rule. 
+  - Added `POST /sandboxRules` to add a Sandbox policy rule.
   - Added `PUT /sandboxRules/{ruleId}` to update the Sandbox policy rule configuration for the specified ID.
   - Added `DELETE /sandboxRules/{ruleId}` to delete the Sandbox policy rule based on the specified ID.
 
@@ -73,7 +73,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
   - Added `GET /firewallDnsRules` to retrieve the list of all DNS Control policy rules.
   - Added `GET /firewallDnsRules/{ruleId}` to retrieve the DNS Control policy rule information based on the specified ID.
-  - Added `POST /firewallDnsRules` to add a DNS Control policy rules. 
+  - Added `POST /firewallDnsRules` to add a DNS Control policy rules.
   - Added `PUT /firewallDnsRules/{ruleId}` to update the DNS Control policy rule configuration for the specified ID.
   - Added `DELETE /firewallDnsRules/{ruleId}` to delete the DNS Control policy rule based on the specified ID.
 
@@ -81,7 +81,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
   - Added `GET /firewallIpsRules` to retrieve the list of all IPS Control policy rules.
   - Added `GET /firewallIpsRules/{ruleId}` to retrieve the IPS Control policy rule information based on the specified ID.
-  - Added `POST /firewallIpsRules` to add a IPS Control policy rule. 
+  - Added `POST /firewallIpsRules` to add a IPS Control policy rule.
   - Added `PUT /firewallIpsRules/{ruleId}` to update the IPS Control policy rule configuration for the specified ID.
   - Added `DELETE /firewallIpsRules/{ruleId}` to delete the IPS Control policy rule based on the specified ID.
 
@@ -90,7 +90,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
   - Added `GET /fileTypeRules` to retrieve the list of all File Type Control policy rules.
   - Added `GET /fileTypeRules/lite` to retrieve the list of all File Type Control policy rules.
   - Added `GET /fileTypeRules/{ruleId}` to retrieve the File Type Control policy rule information based on the specified ID.
-  - Added `POST /fileTypeRules` to add a File Type Control policy rule. 
+  - Added `POST /fileTypeRules` to add a File Type Control policy rule.
   - Added `PUT /fileTypeRules/{ruleId}` to update the File Type Control policy rule configuration for the specified ID.
   - Added `DELETE /fileTypeRules/{ruleId}` to delete the File Type Control policy rule based on the specified ID.
 
@@ -118,7 +118,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
   - Added `PUT /cyberThreatProtection/maliciousUrls` to updates the malicious URLs added to the denylist in ATP policy
   - Added `GET /cyberThreatProtection/securityExceptions` to retrieves information about the security exceptions configured for the ATP policy
   - Added `PUT /cyberThreatProtection/securityExceptions` to update security exceptions for the ATP policy
-  
+
 #### ZIA Advanced Threat Protection Policy
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
   - Added `GET /cyberThreatProtection/atpMalwareInspection` to retrieve the traffic inspection configurations of Malware Protection policy
@@ -128,7 +128,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
   - Added `GET /cyberThreatProtection/malwareSettings` to retrieve the malware protection policy configuration details
   - Added `PUT /cyberThreatProtection/malwareSettings` to update the malware protection policy configuration details.
   - Added `GET /cyberThreatProtection/malwarePolicy` to retrieve information about the security exceptions configured for the Malware Protection policy
-  - Added `PUT /cyberThreatProtection/malwarePolicy` to update security exceptions for the Malware Protection policy. 
+  - Added `PUT /cyberThreatProtection/malwarePolicy` to update security exceptions for the Malware Protection policy.
 
 #### ZIA URL & Cloud App Control Policy Settings
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
@@ -209,7 +209,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 ### ZIA Admin Role Endpoints
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Added the following new ZIA API Endpoints:
     - Added `GET /adminRoles/{roleId}` Retrieves the admin role based on the specified ID
-    - Added `GET /adminRoles/lite` Retrieves a name and ID dictionary of all admin roles. The list only includes the name and ID for all admin roles. 
+    - Added `GET /adminRoles/lite` Retrieves a name and ID dictionary of all admin roles. The list only includes the name and ID for all admin roles.
     - Added `POST /adminRoles` Adds an admin role.
     - Added `PUT /adminRoles/{roleId}` Updates the admin role based on the specified ID.
     - Added `DELETE /adminRoles/{roleId}` Deletes the admin role based on the specified ID.
@@ -227,7 +227,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
   - Added `POST /dlp/v1/incidents/{dlpIncidentId}/labels` Assign lables (a label name and it's associated value) to DLP incidents.
   - Added `POST /dlp/v1/incidents/search` Filters DLP incidents based on the given time range and the field values.
   - Added `GET /dlp/v1/incidents/{dlpIncidentId}/triggers` Downloads the actual data that triggered the incident.
-  - Added `GET /dlp/v1/incidents/{dlpIncidentId}/evidence` Gets the evidence URL of the incident. 
+  - Added `GET /dlp/v1/incidents/{dlpIncidentId}/evidence` Gets the evidence URL of the incident.
 
 ### Cloud & Branch Connector - OneAPI Support
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255) - Cloud & Branch Connector package is now compatible with OneAPI and Legacy API framework. Please refer to README for details.
@@ -299,7 +299,7 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
   - `update_pac_file` - The function now validates the current `pac_version_status` prior to attempting an update. The API endpoint behind the `update_pac_file` method requires the `pac_version_status` to have specific value in order to accept the call.
 
 * ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed `ZIAClientHelper` to prevent KeyError issues during time expiry check. [Issue 250](https://github.com/zscaler/zscaler-sdk-python/issues/250)
-* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit` 
+* ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed `cloud_apps.list_apps` function to support new pagination parameters `page_number` and `limit`
 * ([#251](https://github.com/zscaler/zscaler-sdk-python/pull/251)) - Fixed pagination for `devices.list_devices` to support new pagination paramters.
 
 ## 0.10.4 (January,9 2025)

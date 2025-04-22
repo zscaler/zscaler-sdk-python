@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 
 import ast
 
+
 class SoftwareList(ZscalerObject):
     """
     A class for SoftwareList objects.
@@ -44,9 +45,7 @@ class SoftwareList(ZscalerObject):
             self.vendor = config.get("vendor")
             self.software_group = config.get("software_group") or config.get("softwareGroup")
             self.software_install_type = (
-                config.get("software_install_type")
-                or config.get("sw_install_type")
-                or config.get("swInstallType")
+                config.get("software_install_type") or config.get("sw_install_type") or config.get("swInstallType")
             )
             self.user_total = config.get("user_total") or config.get("userTotal")
             self.device_total = config.get("device_total") or config.get("deviceTotal")
@@ -90,6 +89,7 @@ class SoftwareList(ZscalerObject):
             "device_total": self.device_total,
         }
 
+
 class DeviceSoftwareInventory(ZscalerObject):
     """
     A class for DeviceSoftwareInventory objects.
@@ -105,11 +105,8 @@ class DeviceSoftwareInventory(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.software = ZscalerCollection.form_list(
-                config["software"] if "software" in config else [], str
-            )
-            self.next_offset = config["next_offset"] \
-                if "next_offset" in config else None
+            self.software = ZscalerCollection.form_list(config["software"] if "software" in config else [], str)
+            self.next_offset = config["next_offset"] if "next_offset" in config else None
         else:
             self.software = ZscalerCollection.form_list([], str)
             self.next_offset = None
@@ -119,9 +116,6 @@ class DeviceSoftwareInventory(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "software": self.software,
-            "next_offset": self.next_offset
-        }
+        current_obj_format = {"software": self.software, "next_offset": self.next_offset}
         parent_req_format.update(current_obj_format)
         return parent_req_format

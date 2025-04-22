@@ -35,37 +35,26 @@ class InspectionProfile(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.api_profile = config["apiProfile"] \
-                if "apiProfile" in config else None
-            self.check_control_deployment_status = config["checkControlDeploymentStatus"] \
-                if "checkControlDeploymentStatus" in config else None
-            self.controls_info = ZscalerCollection.form_list(
-                config["controlsInfo"] if "controlsInfo" in config else [], str
+            self.api_profile = config["apiProfile"] if "apiProfile" in config else None
+            self.check_control_deployment_status = (
+                config["checkControlDeploymentStatus"] if "checkControlDeploymentStatus" in config else None
             )
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
+            self.controls_info = ZscalerCollection.form_list(config["controlsInfo"] if "controlsInfo" in config else [], str)
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
             self.custom_controls = ZscalerCollection.form_list(
                 config["customControls"] if "customControls" in config else [], str
             )
-            self.description = config["description"] \
-                if "description" in config else None
-            self.exceptions_version = config["exceptionsVersion"] \
-                if "exceptionsVersion" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.exceptions_version = config["exceptionsVersion"] if "exceptionsVersion" in config else None
             self.global_control_actions = ZscalerCollection.form_list(
                 config["globalControlActions"] if "globalControlActions" in config else [], str
             )
-            self.id = config["id"] \
-                if "id" in config else None
-            self.incarnation_number = config["incarnationNumber"] \
-                if "incarnationNumber" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.incarnation_number = config["incarnationNumber"] if "incarnationNumber" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
             self.predefined_adp_controls = ZscalerCollection.form_list(
                 config["predefinedADPControls"] if "predefinedADPControls" in config else [], str
             )
@@ -74,22 +63,20 @@ class InspectionProfile(ZscalerObject):
             )
 
             self.predefined_controls = ZscalerCollection.form_list(
-                config["predefinedControls"]
-                if "predefinedControls" in config
-                else [],
+                config["predefinedControls"] if "predefinedControls" in config else [],
                 app_protection_predefined_controls.PredefinedInspectionControlResource,
             )
 
-            self.predefined_controls_version = config["predefinedControlsVersion"] \
-                if "predefinedControlsVersion" in config else None
+            self.predefined_controls_version = (
+                config["predefinedControlsVersion"] if "predefinedControlsVersion" in config else None
+            )
             self.threatlabz_controls = ZscalerCollection.form_list(
                 config["threatlabzControls"] if "threatlabzControls" in config else [], str
             )
             self.websocket_controls = ZscalerCollection.form_list(
                 config["websocketControls"] if "websocketControls" in config else [], str
             )
-            self.zs_defined_control_choice = config["zsDefinedControlChoice"] \
-                if "zsDefinedControlChoice" in config else None
+            self.zs_defined_control_choice = config["zsDefinedControlChoice"] if "zsDefinedControlChoice" in config else None
         else:
             self.api_profile = None
             self.check_control_deployment_status = None
@@ -139,7 +126,7 @@ class InspectionProfile(ZscalerObject):
             "predefinedControlsVersion": self.predefined_controls_version,
             "threatlabzControls": self.threatlabz_controls,
             "websocketControls": self.websocket_controls,
-            "zsDefinedControlChoice": self.zs_defined_control_choice
+            "zsDefinedControlChoice": self.zs_defined_control_choice,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -147,8 +134,8 @@ class InspectionProfile(ZscalerObject):
 
 class AppProtectionCustomControl(ZscalerObject):
     """
-    A class for class AppProtectionCustomControl(ZscalerObject):
- objects.
+       A class for class AppProtectionCustomControl(ZscalerObject):
+    objects.
     """
 
     def __init__(self, config=None):
@@ -161,53 +148,31 @@ class AppProtectionCustomControl(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.action_value = config["actionValue"] \
-                if "actionValue" in config else None
-            self.control_number = config["controlNumber"] \
-                if "controlNumber" in config else None
-            self.control_rule_json = config["controlRuleJson"] \
-                if "controlRuleJson" in config else None
-            self.control_type = config["controlType"] \
-                if "controlType" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.default_action = config["defaultAction"] \
-                if "defaultAction" in config else None
-            self.default_action_value = config["defaultActionValue"] \
-                if "defaultActionValue" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.paranoia_level = config["paranoiaLevel"] \
-                if "paranoiaLevel" in config else None
-            self.protocol_type = config["protocolType"] \
-                if "protocolType" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
+            self.control_rule_json = config["controlRuleJson"] if "controlRuleJson" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.version = config["version"] if "version" in config else None
 
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
-                config["associatedInspectionProfileNames"]
-                if "associatedInspectionProfileNames" in config
-                else [],
+                config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
             )
 
-            self.rules = ZscalerCollection.form_list(
-                config["rules"] if "rules" in config else [], InspectionRule
-            )
+            self.rules = ZscalerCollection.form_list(config["rules"] if "rules" in config else [], InspectionRule)
 
             if "controlException" in config:
                 if isinstance(config["controlException"], common.InspectionControlException):
@@ -268,7 +233,7 @@ class AppProtectionCustomControl(ZscalerObject):
             "rules": self.rules,
             "severity": self.severity,
             "type": self.type,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -289,10 +254,8 @@ class InspectionRule(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.names = config["names"] \
-                if "names" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
+            self.names = config["names"] if "names" in config else None
+            self.type = config["type"] if "type" in config else None
             self.conditions = ZscalerCollection.form_list(
                 config["conditions"] if "conditions" in config else [], InspectionRuleCondition
             )
@@ -331,12 +294,9 @@ class InspectionRuleCondition(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.lhs = config["lhs"] \
-                if "lhs" in config else None
-            self.op = config["op"] \
-                if "op" in config else None
-            self.rhs = config["rhs"] \
-                if "rhs" in config else None
+            self.lhs = config["lhs"] if "lhs" in config else None
+            self.op = config["op"] if "op" in config else None
+            self.rhs = config["rhs"] if "rhs" in config else None
 
         else:
             self.lhs = None

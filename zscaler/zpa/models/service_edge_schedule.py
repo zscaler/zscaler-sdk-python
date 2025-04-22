@@ -27,18 +27,12 @@ class ServiceEdgeSchedule(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.frequency_interval = config["frequencyInterval"]\
-                if "frequencyInterval" in config else None
-            self.frequency = config["frequency"]\
-                if "frequency" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else None
-            self.customer_id = config["customerId"]\
-                if "customerId" in config else None
-            self.delete_disabled = config["deleteDisabled"]\
-                if "deleteDisabled" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.frequency_interval = config["frequencyInterval"] if "frequencyInterval" in config else None
+            self.frequency = config["frequency"] if "frequency" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.delete_disabled = config["deleteDisabled"] if "deleteDisabled" in config else None
         else:
             self.id = None
             self.frequency_interval = None

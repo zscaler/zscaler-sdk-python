@@ -25,32 +25,19 @@ class ProvisioningKey(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.usage_count = config["usageCount"]\
-                if "usageCount" in config else None
-            self.max_usage = config["maxUsage"]\
-                if "maxUsage" in config else None
-            self.zcomponent_id = config["zcomponentId"]\
-                if "zcomponentId" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else None
-            self.zcomponent_name = config["zcomponentName"]\
-                if "zcomponentName" in config else None
-            self.provisioning_key = config["provisioningKey"]\
-                if "provisioningKey" in config else None
-            self.enrollment_cert_id = config["enrollmentCertId"]\
-                if "enrollmentCertId" in config else None
-            self.enrollment_cert_name = config["enrollmentCertName"]\
-                if "enrollmentCertName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.usage_count = config["usageCount"] if "usageCount" in config else None
+            self.max_usage = config["maxUsage"] if "maxUsage" in config else None
+            self.zcomponent_id = config["zcomponentId"] if "zcomponentId" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.zcomponent_name = config["zcomponentName"] if "zcomponentName" in config else None
+            self.provisioning_key = config["provisioningKey"] if "provisioningKey" in config else None
+            self.enrollment_cert_id = config["enrollmentCertId"] if "enrollmentCertId" in config else None
+            self.enrollment_cert_name = config["enrollmentCertName"] if "enrollmentCertName" in config else None
         else:
             self.id = None
             self.modified_time = None

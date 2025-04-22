@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class LocationGroup(ZscalerObject):
     """
     A class representing a Location Group object.
@@ -25,32 +26,21 @@ class LocationGroup(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.group_type = config["groupType"]\
-                if "groupType" in config else None
-            self.comments = config["comments"]\
-                if "comments" in config else None
-            self.last_mod_time = config["lastModTime"]\
-                if "lastModTime" in config else None
-            self.predefined = config["predefined"]\
-                if "predefined" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.group_type = config["groupType"] if "groupType" in config else None
+            self.comments = config["comments"] if "comments" in config else None
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else False
 
             # Explicit handling of dynamicLocationGroupCriteria with profiles list
             if "dynamicLocationGroupCriteria" in config:
                 if "profiles" in config["dynamicLocationGroupCriteria"]:
                     self.dynamic_location_group_criteria = {
-                        "profiles": ZscalerCollection.form_list(
-                            config["dynamicLocationGroupCriteria"]["profiles"], 
-                            str
-                        )
+                        "profiles": ZscalerCollection.form_list(config["dynamicLocationGroupCriteria"]["profiles"], str)
                     }
                 else:
-                    self.dynamic_location_group_criteria = {
-                        "profiles": []
-                    }
+                    self.dynamic_location_group_criteria = {"profiles": []}
             else:
                 self.dynamic_location_group_criteria = None
 
@@ -82,12 +72,10 @@ class LocationGroup(ZscalerObject):
             "comments": self.comments,
             "lastModTime": self.last_mod_time,
             "predefined": self.predefined,
-            "dynamicLocationGroupCriteria": self.dynamic_location_group_criteria\
-                if self.dynamic_location_group_criteria else None,
-            "locations": [
-                {"id": location["id"], "name": location["name"]}\
-                for location in self.locations
-            ]
+            "dynamicLocationGroupCriteria": (
+                self.dynamic_location_group_criteria if self.dynamic_location_group_criteria else None
+            ),
+            "locations": [{"id": location["id"], "name": location["name"]} for location in self.locations],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

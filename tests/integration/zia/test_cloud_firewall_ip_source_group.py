@@ -21,6 +21,7 @@ from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_string
 import time
 
+
 @pytest.fixture
 def fs():
     yield
@@ -65,7 +66,9 @@ class TestCloudFirewallIPSourceGroup:
                     # Optional: Fetch before update
                     time.sleep(3)
                     fetched_before, _, fetch_error = client.zia.cloud_firewall.get_ip_source_group(group_id)
-                    print(f"Group Before Update: {fetched_before.as_dict() if fetched_before else 'Not Found'}, Error: {fetch_error}")
+                    print(
+                        f"Group Before Update: {fetched_before.as_dict() if fetched_before else 'Not Found'}, Error: {fetch_error}"
+                    )
 
                     # Update
                     time.sleep(3)
@@ -84,7 +87,9 @@ class TestCloudFirewallIPSourceGroup:
                     # Fetch after update to confirm
                     time.sleep(3)
                     fetched_after, _, fetch_error = client.zia.cloud_firewall.get_ip_source_group(group_id)
-                    print(f"Fetched Group After Update: {fetched_after.as_dict() if fetched_after else 'Not Found'}, Error: {fetch_error}")
+                    print(
+                        f"Fetched Group After Update: {fetched_after.as_dict() if fetched_after else 'Not Found'}, Error: {fetch_error}"
+                    )
                     assert fetch_error is None, f"Error retrieving updated group: {fetch_error}"
                     assert fetched_after.name == updated_name, "Group name not updated correctly"
                     assert fetched_after.description == updated_description, "Group description not updated correctly"

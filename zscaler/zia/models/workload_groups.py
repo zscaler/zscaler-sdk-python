@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class WorkloadGroups(ZscalerObject):
     """
     A class for WorkloadGroup objects.
@@ -58,7 +59,5 @@ class WorkloadGroups(ZscalerObject):
             "expression": self.expression,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
-            "expressionJson": {
-                "expressionContainers": self.expression_containers
-            }
+            "expressionJson": {"expressionContainers": self.expression_containers},
         }

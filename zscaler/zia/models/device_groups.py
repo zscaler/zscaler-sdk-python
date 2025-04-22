@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class DeviceGroups(ZscalerObject):
     """
     A class representing a Device Group object.
@@ -24,18 +25,12 @@ class DeviceGroups(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.group_type = config["groupType"]\
-                if "groupType" in config else None
-            self.os_type = config["osType"]\
-                if "osType" in config else None
-            self.predefined = config["predefined"]\
-                if "predefined" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.group_type = config["groupType"] if "groupType" in config else None
+            self.os_type = config["osType"] if "osType" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else None
 
         else:
             self.id = None
@@ -60,4 +55,3 @@ class DeviceGroups(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-

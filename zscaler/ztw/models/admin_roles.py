@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class AdminRoles(ZscalerObject):
     """
     A class for AdminRoles objects.
@@ -32,41 +33,23 @@ class AdminRoles(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.policy_access = config["policyAccess"] \
-                if "policyAccess" in config else None
-            self.alerting_access = config["alertingAccess"] \
-                if "alertingAccess" in config else None
-            self.dashboard_access = config["dashboardAccess"] \
-                if "dashboardAccess" in config else None
-            self.report_access = config["reportAccess"] \
-                if "reportAccess" in config else None
-            self.analysis_access = config["analysisAccess"] \
-                if "analysisAccess" in config else None
-            self.username_access = config["usernameAccess"] \
-                if "usernameAccess" in config else None
-            self.device_info_access = config["deviceInfoAccess"] \
-                if "deviceInfoAccess" in config else None
-            self.admin_acct_access = config["adminAcctAccess"] \
-                if "adminAcctAccess" in config else None
-            self.is_auditor = config["isAuditor"] \
-                if "isAuditor" in config else None
-            self.permissions = ZscalerCollection.form_list(
-                config["permissions"] if "permissions" in config else [], str
-            )
-            self.feature_permissions = config["featurePermissions"] \
-                if "featurePermissions" in config else None
-            self.is_non_editable = config["isNonEditable"] \
-                if "isNonEditable" in config else None
-            self.logs_limit = config["logsLimit"] \
-                if "logsLimit" in config else None
-            self.role_type = config["roleType"] \
-                if "roleType" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.policy_access = config["policyAccess"] if "policyAccess" in config else None
+            self.alerting_access = config["alertingAccess"] if "alertingAccess" in config else None
+            self.dashboard_access = config["dashboardAccess"] if "dashboardAccess" in config else None
+            self.report_access = config["reportAccess"] if "reportAccess" in config else None
+            self.analysis_access = config["analysisAccess"] if "analysisAccess" in config else None
+            self.username_access = config["usernameAccess"] if "usernameAccess" in config else None
+            self.device_info_access = config["deviceInfoAccess"] if "deviceInfoAccess" in config else None
+            self.admin_acct_access = config["adminAcctAccess"] if "adminAcctAccess" in config else None
+            self.is_auditor = config["isAuditor"] if "isAuditor" in config else None
+            self.permissions = ZscalerCollection.form_list(config["permissions"] if "permissions" in config else [], str)
+            self.feature_permissions = config["featurePermissions"] if "featurePermissions" in config else None
+            self.is_non_editable = config["isNonEditable"] if "isNonEditable" in config else None
+            self.logs_limit = config["logsLimit"] if "logsLimit" in config else None
+            self.role_type = config["roleType"] if "roleType" in config else None
         else:
             self.id = None
             self.rank = None
@@ -108,7 +91,7 @@ class AdminRoles(ZscalerObject):
             "featurePermissions": self.feature_permissions,
             "isNonEditable": self.is_non_editable,
             "logsLimit": self.logs_limit,
-            "roleType": self.role_type
+            "roleType": self.role_type,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

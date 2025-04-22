@@ -105,11 +105,13 @@ class TestFirewallRules:
                     enabled=True,
                     order=1,
                     rank=7,
-                    action='ALLOW',
+                    action="ALLOW",
                 )
                 assert error is None, f"Error updating Firewall Rule: {error}"
                 assert updated_rule is not None, "Updated Firewall Rule is None"
-                assert updated_rule.description == updated_description, f"Firewall Rule update failed: {updated_rule.as_dict()}"
+                assert (
+                    updated_rule.description == updated_description
+                ), f"Firewall Rule update failed: {updated_rule.as_dict()}"
             except Exception as exc:
                 errors.append(f"Updating Firewall Rule failed: {exc}")
 

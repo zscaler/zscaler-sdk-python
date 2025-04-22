@@ -25,24 +25,15 @@ class TrustedNetwork(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.domain = config["domain"]\
-                if "domain" in config else None
-            self.network_id = config["networkId"]\
-                if "networkId" in config else None
-            self.zscaler_cloud = config["zscalerCloud"]\
-                if "zscalerCloud" in config else None
-            self.master_customer_id = config["masterCustomerId"]\
-                if config and "masterCustomerId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.network_id = config["networkId"] if "networkId" in config else None
+            self.zscaler_cloud = config["zscalerCloud"] if "zscalerCloud" in config else None
+            self.master_customer_id = config["masterCustomerId"] if config and "masterCustomerId" in config else None
 
         else:
             self.id = None

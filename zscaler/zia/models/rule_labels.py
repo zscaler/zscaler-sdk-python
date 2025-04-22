@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class RuleLabels(ZscalerObject):
     """
     A class for RuleLabels objects.
@@ -31,18 +32,12 @@ class RuleLabels(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"]\
-                if "lastModifiedBy" in config else None   
-            self.created_by = config["createdBy"]\
-                if "createdBy" in config else None 
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
 
             if "referencedRuleCount" in config:
                 self.referenced_rule_count = config["referencedRuleCount"]
@@ -68,7 +63,7 @@ class RuleLabels(ZscalerObject):
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "createdBy": self.created_by,
-            "referencedRuleCount": self.referenced_rule_count
+            "referencedRuleCount": self.referenced_rule_count,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

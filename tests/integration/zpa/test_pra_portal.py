@@ -69,7 +69,7 @@ class TestPRAPortal:
             assert created_portal.name == portal_name
             assert created_portal.description == portal_description
             assert created_portal.enabled is True
-            
+
             portal_id = created_portal.id  # Assuming id is accessible like this
         except Exception as exc:
             errors.append(f"Error during portal creation: {exc}")
@@ -109,7 +109,7 @@ class TestPRAPortal:
                     certificate_id=certificate_id,
                     domain="tests-" + generate_random_string() + "acme.com",
                     user_notification_enabled=True,
-                user_notification=f"{SDK_PREFIX} Test PRA Portal",
+                    user_notification=f"{SDK_PREFIX} Test PRA Portal",
                 )
                 assert err is None, f"Error updating pra portal: {err}"
 

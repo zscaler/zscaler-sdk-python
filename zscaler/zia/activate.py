@@ -50,15 +50,13 @@ class ActivationAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body={}, headers={}, params={})
+        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, Activation)
+        response, error = self._request_executor.execute(request, Activation)
 
         if error:
             return (None, response, error)
@@ -89,15 +87,13 @@ class ActivationAPI(APIClient):
         )
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body={}, headers={}, params={})
+        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, Activation)
+        response, error = self._request_executor.execute(request, Activation)
 
         if error:
             return (None, response, error)

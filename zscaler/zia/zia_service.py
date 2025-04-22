@@ -66,6 +66,7 @@ from zscaler.zia.sub_clouds import SubCloudsAPI
 from zscaler.zia.system_audit import SystemAuditReportAPI
 from zscaler.zia.iot_report import IOTReportAPI
 
+
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
 
@@ -152,7 +153,7 @@ class ZIAService:
 
         """
         return CloudApplicationsAPI(self._request_executor)
-    
+
     @property
     def cloud_nss(self):
         """
@@ -168,7 +169,7 @@ class ZIAService:
 
         """
         return FirewallDNSRulesAPI(self._request_executor)
-    
+
     @property
     def cloud_firewall_ips(self):
         """
@@ -249,7 +250,7 @@ class ZIAService:
 
         """
         return EndUserNotificationAPI(self._request_executor)
-    
+
     @property
     def file_type_control_rule(self):
         """
@@ -273,7 +274,7 @@ class ZIAService:
 
         """
         return CBIProfileAPI(self._request_executor)
-    
+
     @property
     def intermediate_certificates(self):
         """
@@ -305,7 +306,7 @@ class ZIAService:
 
         """
         return MalwareProtectionPolicyAPI(self._request_executor)
-    
+
     @property
     def organization_information(self):
         """
@@ -329,7 +330,7 @@ class ZIAService:
 
         """
         return PolicyExportAPI(self._request_executor)
-    
+
     @property
     def remote_assistance(self):
         """
@@ -337,7 +338,7 @@ class ZIAService:
 
         """
         return RemoteAssistanceAPI(self._request_executor)
-    
+
     @property
     def rule_labels(self):
         """
@@ -361,7 +362,7 @@ class ZIAService:
 
         """
         return SandboxRulesAPI(self._request_executor)
-    
+
     @property
     def security_policy_settings(self):
         """
@@ -458,7 +459,7 @@ class ZIAService:
         """
 
         return SubCloudsAPI(self._request_executor)
-    
+
     @property
     def system_audit(self):
         """
@@ -467,8 +468,7 @@ class ZIAService:
         """
 
         return SystemAuditReportAPI(self._request_executor)
-    
-    
+
     @property
     def iot_report(self):
         """

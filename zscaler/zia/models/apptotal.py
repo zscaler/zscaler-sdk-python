@@ -14,9 +14,9 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+
 
 class AppTotal(ZscalerObject):
     """
@@ -27,10 +27,18 @@ class AppTotal(ZscalerObject):
         super().__init__(config)
         if config:
             self.name = config["name"] if "name" in config else None
-            self.publisher_name = config["publisher"]["name"] if "publisher" in config and "name" in config["publisher"] else None
-            self.publisher_description = config["publisher"]["description"] if "publisher" in config and "description" in config["publisher"] else None
-            self.publisher_site_url = config["publisher"]["siteUrl"] if "publisher" in config and "siteUrl" in config["publisher"] else None
-            self.publisher_logo_url = config["publisher"]["logoUrl"] if "publisher" in config and "logoUrl" in config["publisher"] else None
+            self.publisher_name = (
+                config["publisher"]["name"] if "publisher" in config and "name" in config["publisher"] else None
+            )
+            self.publisher_description = (
+                config["publisher"]["description"] if "publisher" in config and "description" in config["publisher"] else None
+            )
+            self.publisher_site_url = (
+                config["publisher"]["siteUrl"] if "publisher" in config and "siteUrl" in config["publisher"] else None
+            )
+            self.publisher_logo_url = (
+                config["publisher"]["logoUrl"] if "publisher" in config and "logoUrl" in config["publisher"] else None
+            )
             self.platform = config["platform"] if "platform" in config else None
             self.description = config["description"] if "description" in config else None
             self.redirect_urls = ZscalerCollection.form_list(config["redirectUrls"] if "redirectUrls" in config else [], str)
@@ -50,18 +58,38 @@ class AppTotal(ZscalerObject):
             self.privacy_policy_url = config["privacyPolicyUrl"] if "privacyPolicyUrl" in config else None
             self.terms_of_service_url = config["termsOfServiceUrl"] if "termsOfServiceUrl" in config else None
             self.marketplace_url = config["marketplaceUrl"] if "marketplaceUrl" in config else None
-            self.marketplace_data_stars = config["marketplaceData"]["stars"] if "marketplaceData" in config and "stars" in config["marketplaceData"] else None
-            self.marketplace_data_downloads = config["marketplaceData"]["downloads"] if "marketplaceData" in config and "downloads" in config["marketplaceData"] else None
-            self.marketplace_data_reviews = config["marketplaceData"]["reviews"] if "marketplaceData" in config and "reviews" in config["marketplaceData"] else None
+            self.marketplace_data_stars = (
+                config["marketplaceData"]["stars"]
+                if "marketplaceData" in config and "stars" in config["marketplaceData"]
+                else None
+            )
+            self.marketplace_data_downloads = (
+                config["marketplaceData"]["downloads"]
+                if "marketplaceData" in config and "downloads" in config["marketplaceData"]
+                else None
+            )
+            self.marketplace_data_reviews = (
+                config["marketplaceData"]["reviews"]
+                if "marketplaceData" in config and "reviews" in config["marketplaceData"]
+                else None
+            )
             self.platform_verified = config["platformVerified"] if "platformVerified" in config else None
             self.canonic_verified = config["canonicVerified"] if "canonicVerified" in config else None
             self.developer_email = config["developerEmail"] if "developerEmail" in config else None
             self.consent_screenshot = config["consentScreenshot"] if "consentScreenshot" in config else None
             self.ip_addresses = ZscalerCollection.form_list(config["ipAddresses"] if "ipAddresses" in config else [], dict)
-            self.extracted_urls = ZscalerCollection.form_list(config["extractedUrls"] if "extractedUrls" in config else [], str)
-            self.extracted_api_calls = ZscalerCollection.form_list(config["extractedApiCalls"] if "extractedApiCalls" in config else [], str)
-            self.vulnerabilities = ZscalerCollection.form_list(config["vulnerabilities"] if "vulnerabilities" in config else [], dict)
-            self.api_activities = ZscalerCollection.form_list(config["apiActivities"] if "apiActivities" in config else [], dict)
+            self.extracted_urls = ZscalerCollection.form_list(
+                config["extractedUrls"] if "extractedUrls" in config else [], str
+            )
+            self.extracted_api_calls = ZscalerCollection.form_list(
+                config["extractedApiCalls"] if "extractedApiCalls" in config else [], str
+            )
+            self.vulnerabilities = ZscalerCollection.form_list(
+                config["vulnerabilities"] if "vulnerabilities" in config else [], dict
+            )
+            self.api_activities = ZscalerCollection.form_list(
+                config["apiActivities"] if "apiActivities" in config else [], dict
+            )
             self.risks = ZscalerCollection.form_list(config["risks"] if "risks" in config else [], dict)
             self.insights = ZscalerCollection.form_list(config["insights"] if "insights" in config else [], dict)
             self.instances = ZscalerCollection.form_list(config["instances"] if "instances" in config else [], dict)
@@ -138,7 +166,7 @@ class AppTotal(ZscalerObject):
             "marketplaceData": {
                 "stars": self.marketplace_data_stars,
                 "downloads": self.marketplace_data_downloads,
-                "reviews": self.marketplace_data_reviews
+                "reviews": self.marketplace_data_reviews,
             },
             "platformVerified": self.platform_verified,
             "canonicVerified": self.canonic_verified,
@@ -151,7 +179,7 @@ class AppTotal(ZscalerObject):
             "apiActivities": self.api_activities,
             "risks": self.risks,
             "insights": self.insights,
-            "instances": self.instances
+            "instances": self.instances,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -171,18 +199,20 @@ class AppTotalSearch(ZscalerObject):
             self.data = []
             if "data" in config and isinstance(config["data"], list):
                 for item in config["data"]:
-                    self.data.append({
-                        "result": {
-                            "appId": item["result"]["appId"]\
-                                if "result" in item and "appId" in item["result"] else None,
-                            "name": item["result"]["name"]\
-                                if "result" in item and "name" in item["result"] else None,
-                            "provider": item["result"]["provider"]\
-                                if "result" in item and "provider" in item["result"] else None,
-                            "publisher": item["result"]["publisher"]\
-                                if "result" in item and "publisher" in item["result"] else None
+                    self.data.append(
+                        {
+                            "result": {
+                                "appId": item["result"]["appId"] if "result" in item and "appId" in item["result"] else None,
+                                "name": item["result"]["name"] if "result" in item and "name" in item["result"] else None,
+                                "provider": (
+                                    item["result"]["provider"] if "result" in item and "provider" in item["result"] else None
+                                ),
+                                "publisher": (
+                                    item["result"]["publisher"] if "result" in item and "publisher" in item["result"] else None
+                                ),
+                            }
                         }
-                    })
+                    )
         else:
             self.count = None
             self.current_page = None
@@ -190,13 +220,10 @@ class AppTotalSearch(ZscalerObject):
 
     def request_format(self):
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "count": self.count,
-            "currentPage": self.current_page,
-            "data": self.data
-        }
+        current_obj_format = {"count": self.count, "currentPage": self.current_page, "data": self.data}
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class AppViewAppsResponse(ZscalerObject):
     """
@@ -226,7 +253,5 @@ class AppViewAppsResponse(ZscalerObject):
             "name": self.name,
             "createdBy": self.created_by,
             "createdAt": self.created_at,
-            "spec": {
-                "map": self.spec_map
-            } if self.spec_map else None
+            "spec": {"map": self.spec_map} if self.spec_map else None,
         }

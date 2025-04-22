@@ -33,10 +33,8 @@ class CommonIDName(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
         else:
             self.id = None
@@ -70,10 +68,8 @@ class CommonNameReason(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.name = config["name"] \
-                if "name" in config else None
-            self.reason = config["reason"] \
-                if "reason" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.reason = config["reason"] if "reason" in config else None
         else:
             self.id = None
             self.reason = None
@@ -106,18 +102,12 @@ class ExtranetDTO(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.zia_er_name = config["ziaErName"]\
-                if "ziaErName" in config else None
-            self.zia_er_id = config["ziaErId"]\
-                if "ziaErId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.zia_er_name = config["ziaErName"] if "ziaErName" in config else None
+            self.zia_er_id = config["ziaErId"] if "ziaErId" in config else None
 
             self.location_dto = ZscalerCollection.form_list(
                 config["locationDTO"] if "locationDTO" in config else [], CommonIDName
@@ -169,10 +159,8 @@ class LocationGroupDTO(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
             self.zia_locations = ZscalerCollection.form_list(
                 config["ziaLocations"] if "ziaLocations" in config else [], CommonIDName
@@ -212,20 +200,13 @@ class InspectionControlException(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.domains = ZscalerCollection.form_list(
-                config["domains"] if "domains" in config else [], Domains
-            )
+            self.domains = ZscalerCollection.form_list(config["domains"] if "domains" in config else [], Domains)
 
-            self.paths = ZscalerCollection.form_list(
-                config["paths"] if "paths" in config else [], Paths
-            )
+            self.paths = ZscalerCollection.form_list(config["paths"] if "paths" in config else [], Paths)
 
-            self.variables = ZscalerCollection.form_list(
-                config["variables"] if "variables" in config else [], Variables
-            )
+            self.variables = ZscalerCollection.form_list(config["variables"] if "variables" in config else [], Variables)
 
-            self.version = config["version"] \
-                if "version" in config else None
+            self.version = config["version"] if "version" in config else None
 
         else:
             self.domains = None
@@ -263,10 +244,8 @@ class Domains(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.match_type = config["matchType"]\
-                if "matchType" in config else None
-            self.var_value = config["varValue"]\
-                if "varValue" in config else None
+            self.match_type = config["matchType"] if "matchType" in config else None
+            self.var_value = config["varValue"] if "varValue" in config else None
         else:
             self.match_type = None
             self.var_value = None
@@ -299,10 +278,8 @@ class Paths(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.match_type = config["matchType"]\
-                if "matchType" in config else None
-            self.var_value = config["varValue"]\
-                if "varValue" in config else None
+            self.match_type = config["matchType"] if "matchType" in config else None
+            self.var_value = config["varValue"] if "varValue" in config else None
         else:
             self.match_type = None
             self.var_value = None
@@ -335,10 +312,8 @@ class Variables(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.match_type = config["matchType"]\
-                if "matchType" in config else None
-            self.var_value = config["varValue"]\
-                if "varValue" in config else None
+            self.match_type = config["matchType"] if "matchType" in config else None
+            self.var_value = config["varValue"] if "varValue" in config else None
         else:
             self.match_type = None
             self.var_value = None
@@ -371,9 +346,7 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.dest_addresses = ZscalerCollection.form_list(
-                config["capabilities"] if "capabilities" in config else [], str
-            )
+            self.dest_addresses = ZscalerCollection.form_list(config["capabilities"] if "capabilities" in config else [], str)
 
         else:
             self.capabilities = None

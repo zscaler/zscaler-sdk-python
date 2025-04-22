@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
@@ -41,15 +40,13 @@ class TestEnrolmentCertificate:
         for cert_name in cert_names:
             try:
                 # Perform search with the query_params
-                certs, response, error = client.zpa.enrollment_certificates.list_enrolment(
-                    query_params={"search": cert_name}
-                )
-                
+                certs, response, error = client.zpa.enrollment_certificates.list_enrolment(query_params={"search": cert_name})
+
                 # Validate response
                 assert error is None, f"Error occurred when searching for '{cert_name}': {error}"
                 assert isinstance(certs, list), f"Expected a list when searching for '{cert_name}'"
                 assert any(cert.name == cert_name for cert in certs), f"Certificate '{cert_name}' not found in the list"
-                
+
             except Exception as exc:
                 errors.append(f"Searching for enrolment certificate '{cert_name}' failed: {str(exc)}")
 

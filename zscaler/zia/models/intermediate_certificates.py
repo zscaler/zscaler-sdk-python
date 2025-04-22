@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class IntermediateCACertificate(ZscalerObject):
     """
     A class for Intermediate Certificate objects.
@@ -31,36 +32,23 @@ class IntermediateCACertificate(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.type = config["type"]\
-                if "type" in config else None
-            self.region = config["region"]\
-                if "region" in config else None
-            self.status = config["status"]\
-                if "status" in config else None   
-            self.default_certificate = config["defaultCertificate"]\
-                if "defaultCertificate" in config else None 
-            self.cert_start_date = config["certStartDate"]\
-                if "certStartDate" in config else None 
-            self.cert_exp_date = config["certExpDate"]\
-                if "certExpDate" in config else None
-            self.current_state = config["currentState"]\
-                if "currentState" in config else None
-            self.public_key = config["publicKey"]\
-                if "publicKey" in config else None
-            self.key_generation_time = config["keyGenerationTime"]\
-                if "keyGenerationTime" in config else None
-            self.hsm_attestation_verified_time = config["hsmAttestationVerifiedTime"]\
-                if "hsmAttestationVerifiedTime" in config else None
-            self.csr_file_name = config["csrFileName"]\
-                if "csrFileName" in config else None
-            self.csr_generation_time = config["csrGenerationTime"]\
-                if "csrGenerationTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.region = config["region"] if "region" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.default_certificate = config["defaultCertificate"] if "defaultCertificate" in config else None
+            self.cert_start_date = config["certStartDate"] if "certStartDate" in config else None
+            self.cert_exp_date = config["certExpDate"] if "certExpDate" in config else None
+            self.current_state = config["currentState"] if "currentState" in config else None
+            self.public_key = config["publicKey"] if "publicKey" in config else None
+            self.key_generation_time = config["keyGenerationTime"] if "keyGenerationTime" in config else None
+            self.hsm_attestation_verified_time = (
+                config["hsmAttestationVerifiedTime"] if "hsmAttestationVerifiedTime" in config else None
+            )
+            self.csr_file_name = config["csrFileName"] if "csrFileName" in config else None
+            self.csr_generation_time = config["csrGenerationTime"] if "csrGenerationTime" in config else None
         else:
             # Initialize with default None or 0 values
             self.id = None
@@ -78,7 +66,7 @@ class IntermediateCACertificate(ZscalerObject):
             self.hsm_attestation_verified_time = None
             self.csr_file_name = None
             self.csr_generation_time = None
-                                     
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -104,6 +92,7 @@ class IntermediateCACertificate(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class CertSigningRequest(ZscalerObject):
     """
     A class for Generate CSR objects.
@@ -119,28 +108,17 @@ class CertSigningRequest(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cert_id = config["certId"]\
-                if "certId" in config else None
-            self.csr_file_name = config["csrFileName"]\
-                if "csrFileName" in config else None
-            self.comm_name = config["commName"]\
-                if "commName" in config else None
-            self.org_name = config["orgName"]\
-                if "orgName" in config else None
-            self.dept_name = config["deptName"]\
-                if "deptName" in config else None   
-            self.city = config["city"]\
-                if "city" in config else None 
-            self.state = config["state"]\
-                if "state" in config else None 
-            self.country = config["country"]\
-                if "country" in config else None
-            self.key_size = config["keySize"]\
-                if "keySize" in config else None
-            self.signature_algorithm = config["signatureAlgorithm"]\
-                if "signatureAlgorithm" in config else None
-            self.path_length_constraint = config["pathLengthConstraint"]\
-                if "pathLengthConstraint" in config else None 
+            self.cert_id = config["certId"] if "certId" in config else None
+            self.csr_file_name = config["csrFileName"] if "csrFileName" in config else None
+            self.comm_name = config["commName"] if "commName" in config else None
+            self.org_name = config["orgName"] if "orgName" in config else None
+            self.dept_name = config["deptName"] if "deptName" in config else None
+            self.city = config["city"] if "city" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.country = config["country"] if "country" in config else None
+            self.key_size = config["keySize"] if "keySize" in config else None
+            self.signature_algorithm = config["signatureAlgorithm"] if "signatureAlgorithm" in config else None
+            self.path_length_constraint = config["pathLengthConstraint"] if "pathLengthConstraint" in config else None
         else:
             # Initialize with default None or 0 values
             self.cert_id = None
@@ -155,7 +133,7 @@ class CertSigningRequest(ZscalerObject):
             self.key_size = None
             self.signature_algorithm = None
             self.path_length_constraint = None
-                                                          
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

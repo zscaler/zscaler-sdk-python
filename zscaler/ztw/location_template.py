@@ -16,8 +16,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.ztw.models.location_templates import  LocationTemplate
+from zscaler.ztw.models.location_templates import LocationTemplate
 from zscaler.utils import format_url
+
 
 class LocationTemplateAPI(APIClient):
     """
@@ -54,9 +55,9 @@ class LocationTemplateAPI(APIClient):
             ... print(f"Total templates found: {len(template_list)}")
             ... for template in template_list:
             ...     print(template.as_dict())
-            
+
             Gets a Provisioning Templates by name.
-            
+
             >>> template_list, _, error = client.ztw.location_template.list_location_templates(query_params={'search': 'Template01'})
             ... if error:
             ...     print(f"Error listing location templates: {error}")
@@ -79,14 +80,12 @@ class LocationTemplateAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -105,9 +104,9 @@ class LocationTemplateAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100.
 
         Returns:
@@ -138,14 +137,12 @@ class LocationTemplateAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -153,19 +150,12 @@ class LocationTemplateAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(
-                    LocationTemplate(
-                        self.form_response_body(item))
-                    )
+                result.append(LocationTemplate(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_location_template(
-        self,
-        name: str,
-        template: dict = None,
-        **kwargs) -> tuple:
+    def add_location_template(self, name: str, template: dict = None, **kwargs) -> tuple:
         """
         Add a new location template.
 
@@ -241,24 +231,17 @@ class LocationTemplateAPI(APIClient):
         )
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=payload,
-            headers={},
-            params={}
+            method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, LocationTemplate)
+        response, error = self._request_executor.execute(request, LocationTemplate)
         if error:
             return (None, response, error)
 
         try:
-            result = LocationTemplate(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationTemplate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -305,7 +288,7 @@ class LocationTemplateAPI(APIClient):
             Update existing location template with minimal settings::
 
                 >>> updated_template, _, error = client.ztw.location_template.add_location_template(
-                ...     template_id='12345'    
+                ...     template_id='12345'
                 ...     name=f"UpdateTemplate_{random.randint(1000, 10000)}",
                 ...     description=f"UpdateTemplate_{random.randint(1000, 10000)}",
                 ...     template={
@@ -340,7 +323,7 @@ class LocationTemplateAPI(APIClient):
         )
 
         payload = {k: v for k, v in kwargs.items() if v is not None}
-        
+
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -348,16 +331,13 @@ class LocationTemplateAPI(APIClient):
         )
         if error:
             return (None, None, error)
-        
-        response, error = self._request_executor.\
-            execute(request, LocationTemplate)
+
+        response, error = self._request_executor.execute(request, LocationTemplate)
         if error:
             return (None, response, error)
-        
+
         try:
-            result = LocationTemplate(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationTemplate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -394,13 +374,11 @@ class LocationTemplateAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

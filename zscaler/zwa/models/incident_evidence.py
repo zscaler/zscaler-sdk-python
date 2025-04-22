@@ -32,14 +32,10 @@ class IncidentEvidence(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.file_name = config["fileName"] \
-                if "fileName" in config else None
-            self.file_type = config["fileType"] \
-                if "fileType" in config else None
-            self.additional_info = config["additionalInfo"] \
-                if "additionalInfo" in config else None
-            self.evidence_u_r_l = config["evidenceURL"] \
-                if "evidenceURL" in config else None
+            self.file_name = config["fileName"] if "fileName" in config else None
+            self.file_type = config["fileType"] if "fileType" in config else None
+            self.additional_info = config["additionalInfo"] if "additionalInfo" in config else None
+            self.evidence_u_r_l = config["evidenceURL"] if "evidenceURL" in config else None
         else:
             self.file_name = None
             self.file_type = None
@@ -55,7 +51,7 @@ class IncidentEvidence(ZscalerObject):
             "fileName": self.file_name,
             "fileType": self.file_type,
             "additionalInfo": self.additional_info,
-            "evidenceURL": self.evidence_u_r_l
+            "evidenceURL": self.evidence_u_r_l,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

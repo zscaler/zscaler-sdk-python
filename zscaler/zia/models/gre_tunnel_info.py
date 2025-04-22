@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class GreTunnelInfo(ZscalerObject):
     """
     A class for GreTunnelInfo objects.
@@ -31,22 +32,14 @@ class GreTunnelInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ip_address = config["ipAddress"] \
-                if "ipAddress" in config else None
-            self.gre_enabled = config["greEnabled"] \
-                if "greEnabled" in config else None
-            self.gre_tunnel_ip = config["greTunnelIP"] \
-                if "greTunnelIP" in config else None
-            self.primary_gw = config["primaryGW"] \
-                if "primaryGW" in config else None
-            self.secondary_gw = config["secondaryGW"] \
-                if "secondaryGW" in config else None
-            self.tunid = config["tunID"] \
-                if "tunID" in config else None
-            self.gre_range_primary = config["greRangePrimary"] \
-                if "greRangePrimary" in config else None
-            self.gre_range_secondary = config["greRangeSecondary"] \
-                if "greRangeSecondary" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.gre_enabled = config["greEnabled"] if "greEnabled" in config else None
+            self.gre_tunnel_ip = config["greTunnelIP"] if "greTunnelIP" in config else None
+            self.primary_gw = config["primaryGW"] if "primaryGW" in config else None
+            self.secondary_gw = config["secondaryGW"] if "secondaryGW" in config else None
+            self.tunid = config["tunID"] if "tunID" in config else None
+            self.gre_range_primary = config["greRangePrimary"] if "greRangePrimary" in config else None
+            self.gre_range_secondary = config["greRangeSecondary"] if "greRangeSecondary" in config else None
         else:
             self.ip_address = None
             self.gre_enabled = None
@@ -70,7 +63,7 @@ class GreTunnelInfo(ZscalerObject):
             "secondaryGW": self.secondary_gw,
             "tunID": self.tunid,
             "greRangePrimary": self.gre_range_primary,
-            "greRangeSecondary": self.gre_range_secondary
+            "greRangeSecondary": self.gre_range_secondary,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

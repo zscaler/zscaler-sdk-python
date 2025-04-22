@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class Devices(ZscalerObject):
     """
     A class representing a Devices object.
@@ -24,24 +25,15 @@ class Devices(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.device_group_type = config["deviceGroupType"]\
-                if "deviceGroupType" in config else None
-            self.device_model = config["deviceModel"]\
-                if "deviceModel" in config else None
-            self.os_type = config["osType"]\
-                if "osType" in config else None
-            self.os_version = config["osVersion"]\
-                if "osVersion" in config else None
-            self.owner_user_id = config["ownerUserId"]\
-                if "ownerUserId" in config else None
-            self.owner_name = config["ownerName"]\
-                if "ownerName" in config else None
-            self.hostname = config["hostName"]\
-                if "hostName" in config else None           
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.device_group_type = config["deviceGroupType"] if "deviceGroupType" in config else None
+            self.device_model = config["deviceModel"] if "deviceModel" in config else None
+            self.os_type = config["osType"] if "osType" in config else None
+            self.os_version = config["osVersion"] if "osVersion" in config else None
+            self.owner_user_id = config["ownerUserId"] if "ownerUserId" in config else None
+            self.owner_name = config["ownerName"] if "ownerName" in config else None
+            self.hostname = config["hostName"] if "hostName" in config else None
         else:
             self.id = None
             self.name = None
@@ -71,4 +63,3 @@ class Devices(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-

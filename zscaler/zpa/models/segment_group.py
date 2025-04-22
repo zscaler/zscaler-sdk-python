@@ -16,8 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import application_segment\
-    as application_segment
+from zscaler.zpa.models import application_segment as application_segment
 
 
 class SegmentGroup(ZscalerObject):
@@ -28,24 +27,15 @@ class SegmentGroup(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else None
-            self.policy_migrated = config["policyMigrated"]\
-                if "policyMigrated" in config else None
-            self.config_space = config["configSpace"]\
-                if "configSpace" in config else None
-            self.tcp_keep_alive_enabled = config["tcpKeepAliveEnabled"]\
-                if "tcpKeepAliveEnabled" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.policy_migrated = config["policyMigrated"] if "policyMigrated" in config else None
+            self.config_space = config["configSpace"] if "configSpace" in config else None
+            self.tcp_keep_alive_enabled = config["tcpKeepAliveEnabled"] if "tcpKeepAliveEnabled" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
 
             self.applications = (
                 ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegment)

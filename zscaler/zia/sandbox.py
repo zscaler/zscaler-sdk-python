@@ -19,6 +19,7 @@ import time
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 
+
 class CloudSandboxAPI:
     """
     A Client object for the Cloud Sandbox resource.
@@ -54,7 +55,7 @@ class CloudSandboxAPI:
             /submit
             """
         )
-        
+
         # Read the file content
         with open(file_path, "rb") as file:
             file_content = file.read()
@@ -78,8 +79,7 @@ class CloudSandboxAPI:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -320,14 +320,12 @@ class CloudSandboxAPI:
 
         payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
 
-        request, error = self._request_executor\
-            .create_request(method=http_method, endpoint=api_url, body=payload)
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)

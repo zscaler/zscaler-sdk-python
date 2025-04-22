@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class CloudApplicationPolicy(ZscalerObject):
     """
     A class for CloudApplicationPolicy objects.
@@ -31,14 +32,10 @@ class CloudApplicationPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.app = config["app"] \
-                if "app" in config else None
-            self.app_name = config["appName"] \
-                if "appName" in config else None
-            self.parent = config["parent"] \
-                if "parent" in config else None
-            self.parent_name = config["parentName"] \
-                if "parentName" in config else None
+            self.app = config["app"] if "app" in config else None
+            self.app_name = config["appName"] if "appName" in config else None
+            self.parent = config["parent"] if "parent" in config else None
+            self.parent_name = config["parentName"] if "parentName" in config else None
         else:
             self.app = None
             self.app_name = None
@@ -50,11 +47,6 @@ class CloudApplicationPolicy(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "app": self.app,
-            "appName": self.app_name,
-            "parent": self.parent,
-            "parentName": self.parent_name
-        }
+        current_obj_format = {"app": self.app, "appName": self.app_name, "parent": self.parent, "parentName": self.parent_name}
         parent_req_format.update(current_obj_format)
         return parent_req_format

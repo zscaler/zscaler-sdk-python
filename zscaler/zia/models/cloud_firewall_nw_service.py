@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class NetworkServices(ZscalerObject):
     """
     A class representing a Cloud Firewall Network Service object.
@@ -34,18 +35,10 @@ class NetworkServices(ZscalerObject):
             self.is_name_l10n_tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
 
             # Use ZscalerCollection.form_list to handle port ranges with the PortRange class
-            self.src_tcp_ports = ZscalerCollection.form_list(
-                config.get("srcTcpPorts", []), PortRange
-            )
-            self.dest_tcp_ports = ZscalerCollection.form_list(
-                config.get("destTcpPorts", []), PortRange
-            )
-            self.src_udp_ports = ZscalerCollection.form_list(
-                config.get("srcUdpPorts", []), PortRange
-            )
-            self.dest_udp_ports = ZscalerCollection.form_list(
-                config.get("destUdpPorts", []), PortRange
-            )
+            self.src_tcp_ports = ZscalerCollection.form_list(config.get("srcTcpPorts", []), PortRange)
+            self.dest_tcp_ports = ZscalerCollection.form_list(config.get("destTcpPorts", []), PortRange)
+            self.src_udp_ports = ZscalerCollection.form_list(config.get("srcUdpPorts", []), PortRange)
+            self.dest_udp_ports = ZscalerCollection.form_list(config.get("destUdpPorts", []), PortRange)
         else:
             self.id = None
             self.name = None
@@ -77,6 +70,7 @@ class NetworkServices(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class PortRange(ZscalerObject):
     """
     A class representing a port range with a start and optional end.
@@ -92,7 +86,4 @@ class PortRange(ZscalerObject):
             self.end = None
 
     def request_format(self):
-        return {
-            "start": self.start,
-            "end": self.end
-        }
+        return {"start": self.start, "end": self.end}

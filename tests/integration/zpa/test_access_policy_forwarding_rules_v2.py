@@ -45,9 +45,7 @@ class TestAccessPolicyForwardingRuleV2:
                     name=rule_name,
                     description=rule_description,
                     action="intercept",
-                    conditions=[
-                        ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])
-                    ],
+                    conditions=[("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])],
                 )
                 assert err is None, f"Error creating forwarding rule: {err}"
                 assert created_rule is not None
@@ -71,9 +69,7 @@ class TestAccessPolicyForwardingRuleV2:
                     name=rule_name,
                     description=updated_description,
                     action="intercept",
-                    conditions=[
-                        ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])
-                    ],
+                    conditions=[("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp"])],
                 )
                 if err and str(err) != "Response is None":
                     raise AssertionError(f"Unexpected update error: {err}")

@@ -16,7 +16,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
-from zscaler.zia.models.cloud_firewall_rules import FirewallRule
 from zscaler.zia.models.cloud_firewall_destination_groups import IPDestinationGroups
 from zscaler.zia.models.cloud_firewall_source_groups import IPSourceGroup
 from zscaler.zia.models.cloud_firewall_nw_application_groups import NetworkApplicationGroups
@@ -26,6 +25,7 @@ from zscaler.zia.models.cloud_firewall_nw_service import NetworkServices
 from zscaler.zia.models.cloud_firewall_time_windows import TimeWindows
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 
+
 class FirewallResourcesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
@@ -33,12 +33,8 @@ class FirewallResourcesAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
-    def list_ip_destination_groups(
-        self,
-        exclude_type: str = None,
-        query_params=None
-    ) -> tuple:
+
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params=None) -> tuple:
         """
         Returns a list of IP Destination Groups.
 
@@ -56,7 +52,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all IP destination groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups():
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
@@ -64,10 +60,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP destination groups by excluding specific type.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups(
+                query_params={"exclude_type": 'DSTN_DOMAIN'}):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -76,14 +73,14 @@ class FirewallResourcesAPI(APIClient):
             ...     print(group.as_dict())
 
         """
-        
-        # Define supported values for exclude_type
+
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
-        # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}")
+            raise ValueError(
+                f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}"
+            )
 
         http_method = "get".upper()
         api_url = format_url(
@@ -95,47 +92,34 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Add excludeType to query_params if it's provided
         if exclude_type:
             query_params["excludeType"] = exclude_type
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into IPDestinationGroups instances
         try:
             result = []
             for item in response.get_results():
-                result.append(IPDestinationGroups(
-                    self.form_response_body(item))
-                )
+                result.append(IPDestinationGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups(
-        self, 
-        exclude_type: str = None, 
-        query_params=None
-    ) -> tuple:
+    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params=None) -> tuple:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
-        `Note`: User-defined groups for IPv6 addresses are currently not supported, 
+        `Note`: User-defined groups for IPv6 addresses are currently not supported,
         so this endpoint retrieves only the predefined group that includes all IPv6 addresses.
         If the `search` parameter is provided, the function filters the rules client-side.
 
@@ -153,7 +137,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all IP destination groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups():
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
@@ -161,10 +145,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP destination groups by excluding specific type.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups(
+                query_params={"exclude_type": 'DSTN_DOMAIN'}):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -172,14 +157,14 @@ class FirewallResourcesAPI(APIClient):
             ... for group in group_list:
             ...     print(group.as_dict())
         """
-        
-        # Define supported values for exclude_type
+
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
-        # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}")
+            raise ValueError(
+                f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}"
+            )
 
         http_method = "get".upper()
         api_url = format_url(
@@ -191,24 +176,18 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Add excludeType to query_params if it's provided
         if exclude_type:
             query_params["excludeType"] = exclude_type
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -216,18 +195,12 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(IPDestinationGroups(
-                    self.form_response_body(item))
-                )
+                result.append(IPDestinationGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
-    def list_ip_destination_groups_lite(
-        self, 
-        exclude_type: str = None, 
-        query_params=None
-    ) -> tuple:
+
+    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params=None) -> tuple:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -246,7 +219,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all IP destination groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups_lite():
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
@@ -254,10 +227,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP destination groups by excluding specific type.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups_lite(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ip_destination_groups_lite(
+                query_params={"exclude_type": 'DSTN_DOMAIN'}):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -274,13 +248,13 @@ class FirewallResourcesAPI(APIClient):
         """
         )
 
-        # Define supported values for exclude_type
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
-        # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}")
+            raise ValueError(
+                f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}"
+            )
 
         http_method = "get".upper()
         api_url = format_url(
@@ -292,47 +266,34 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Add excludeType to query_params if it's provided
         if exclude_type:
             query_params["excludeType"] = exclude_type
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into IPDestinationGroups instances
         try:
             result = []
             for item in response.get_results():
-                result.append(IPDestinationGroups(
-                    self.form_response_body(item))
-                )
+                result.append(IPDestinationGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups_lite(
-        self, 
-        exclude_type: str = None, 
-        query_params=None
-    ) -> tuple:
+    def list_ipv6_destination_groups_lite(self, exclude_type: str = None, query_params=None) -> tuple:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
-        `Note`: User-defined groups for IPv6 addresses are currently not supported, 
+        `Note`: User-defined groups for IPv6 addresses are currently not supported,
         so this endpoint retrieves only the predefined group that includes all IPv6 addresses.
         If the `search` parameter is provided, the function filters the rules client-side.
 
@@ -349,7 +310,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all IP destination groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups_lite():
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
@@ -357,10 +318,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP destination groups by excluding specific type.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups_lite(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_destination_groups_lite(
+                query_params={"exclude_type": 'DSTN_DOMAIN'}):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -377,13 +339,13 @@ class FirewallResourcesAPI(APIClient):
         """
         )
 
-        # Define supported values for exclude_type
         valid_exclude_types = {"DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN", "DSTN_OTHER"}
 
-        # Validate exclude_type if provided
         if exclude_type and exclude_type not in valid_exclude_types:
-            raise ValueError(f"Invalid exclude_type: {exclude_type}. \
-                Supported values are: {', '.join(valid_exclude_types)}")
+            raise ValueError(
+                f"Invalid exclude_type: {exclude_type}. \
+                Supported values are: {', '.join(valid_exclude_types)}"
+            )
 
         http_method = "get".upper()
         api_url = format_url(
@@ -395,24 +357,18 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Add excludeType to query_params if it's provided
         if exclude_type:
             query_params["excludeType"] = exclude_type
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -420,9 +376,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(IPDestinationGroups(
-                    self.form_response_body(item))
-                )
+                result.append(IPDestinationGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -456,22 +410,18 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, IPDestinationGroups)
+        response, error = self._request_executor.execute(request, IPDestinationGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = IPDestinationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = IPDestinationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -525,8 +475,7 @@ class FirewallResourcesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -535,26 +484,18 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request, IPDestinationGroups)
+        response, error = self._request_executor.execute(request, IPDestinationGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = IPDestinationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = IPDestinationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_destination_group(
-        self,
-        group_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_ip_destination_group(self, group_id: str, **kwargs) -> tuple:
         """
         Updates the specified IP Destination Group.
 
@@ -597,22 +538,16 @@ class FirewallResourcesAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request, IPDestinationGroups)
+        response, error = self._request_executor.execute(request, IPDestinationGroups)
         if error:
             return (None, response, error)
 
         try:
-            result = IPDestinationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = IPDestinationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -641,20 +576,17 @@ class FirewallResourcesAPI(APIClient):
             /ipDestinationGroups/{group_id}
         """
         )
-        
+
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
-
 
     def list_ip_source_groups(
         self,
@@ -680,10 +612,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP Source Groups.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ip_source_groups(query_params={"search": 'Group01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ip_source_groups(
+                query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing IP Source Groups: {error}")
             ...     return
@@ -702,20 +635,15 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -723,9 +651,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(IPSourceGroup(
-                    self.form_response_body(item))
-                )
+                result.append(IPSourceGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -736,7 +662,7 @@ class FirewallResourcesAPI(APIClient):
     ) -> tuple:
         """
         List IPv6 Source Groups in your organization.
-        `Note`: User-defined groups for IPv6 addresses are currently not supported, 
+        `Note`: User-defined groups for IPv6 addresses are currently not supported,
         so this endpoint retrieves only the predefined group that includes all IPv6 addresses.
         If the `search` parameter is provided, the function filters the rules client-side.
 
@@ -779,20 +705,15 @@ class FirewallResourcesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -800,9 +721,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(IPSourceGroup(
-                    self.form_response_body(item))
-                )
+                result.append(IPSourceGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -818,14 +737,14 @@ class FirewallResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+                ``[query_params.search]`` {str}: Search string used to match against a group's name or description attributes.
 
         Returns:
             tuple: List of IP Source Groups resource records.
 
         Examples:
             Gets a list of all IP source groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ip_source_groups_lite():
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
@@ -833,10 +752,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP source groups name and ID.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ip_source_groups_lite(query_params={"search": 'Group01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ip_source_groups_lite(
+                query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
             ...     return
@@ -860,14 +780,7 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -878,18 +791,13 @@ class FirewallResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(IPSourceGroup(
-                    self.form_response_body(item))
-                )
+                results.append(IPSourceGroup(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -899,20 +807,20 @@ class FirewallResourcesAPI(APIClient):
     ) -> tuple:
         """
         Lists IPv6 Source Groups name and ID all IPv6 Source Groups.
-        `Note`: User-defined groups for IPv6 addresses are currently not supported, 
+        `Note`: User-defined groups for IPv6 addresses are currently not supported,
         so this endpoint retrieves only the predefined group that includes all IPv6 addresses.
         If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+                ``[query_params.search]`` {str}: Search string used to match against a group's name or description attributes.
 
         Returns:
             tuple: List of IPv6 Source Groups resource records.
 
         Examples:
             Gets a list of all IP source groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_ipv6_source_groups_lite():
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
@@ -920,10 +828,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all IP source groups name and ID.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_source_groups_lite(query_params={"search": 'Group01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_ipv6_source_groups_lite(
+                query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
             ...     return
@@ -947,14 +856,7 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -965,18 +867,13 @@ class FirewallResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(IPSourceGroup(
-                    self.form_response_body(item))
-                )
+                results.append(IPSourceGroup(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -1009,22 +906,18 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, IPSourceGroup)
+        response, error = self._request_executor.execute(request, IPSourceGroup)
 
         if error:
             return (None, response, error)
 
         try:
-            result = IPSourceGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = IPSourceGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1059,8 +952,7 @@ class FirewallResourcesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -1069,25 +961,17 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request, IPSourceGroup)
+        response, error = self._request_executor.execute(request, IPSourceGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = IPSourceGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = IPSourceGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_source_group(
-        self,
-        group_id: int, 
-        **kwargs
-    ) -> tuple:
+    def update_ip_source_group(self, group_id: int, **kwargs) -> tuple:
         """
         Update an IP Source Group.
 
@@ -1129,8 +1013,7 @@ class FirewallResourcesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -1139,15 +1022,12 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, IPSourceGroup)
+        response, error = self._request_executor.execute(request, IPSourceGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = IPSourceGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = IPSourceGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1161,7 +1041,7 @@ class FirewallResourcesAPI(APIClient):
 
         Returns:
             :obj:`int`: The status code for the operation.
-            
+
         Examples:
             >>> _, response, error = client.zia.cloud_firewall.delete_ip_source_group(updated_group.id)
             ... if error:
@@ -1179,13 +1059,11 @@ class FirewallResourcesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -1207,7 +1085,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all network app groups.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_network_app_groups():
             ... if error:
             ...     print(f"Error listing network app groupss: {error}")
@@ -1215,10 +1093,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all network app groups by excluding specific type.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_network_app_groups(query_params={"search": 'AppGroup01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_network_app_groups(
+                query_params={"search": 'AppGroup01'}):
             ... if error:
             ...     print(f"Error listing network app groups: {error}")
             ...     return
@@ -1240,14 +1119,12 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -1255,9 +1132,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(NetworkApplicationGroups(
-                    self.form_response_body(item))
-                )
+                result.append(NetworkApplicationGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1294,30 +1169,23 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, NetworkApplicationGroups)
+        response, error = self._request_executor.execute(request, NetworkApplicationGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkApplicationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkApplicationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_network_app_group(
-        self,
-        **kwargs
-    ) -> tuple:
+    def add_network_app_group(self, **kwargs) -> tuple:
         """
         Adds a new Network Application Group.
 
@@ -1347,8 +1215,7 @@ class FirewallResourcesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -1357,25 +1224,18 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, NetworkApplicationGroups)
+        response, error = self._request_executor.execute(request, NetworkApplicationGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkApplicationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkApplicationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_app_group(
-        self,
-        group_id: int,
-        **kwargs
-    ) -> tuple:
+    def update_network_app_group(self, group_id: int, **kwargs) -> tuple:
         """
         Update an Network Application Group.
 
@@ -1415,23 +1275,18 @@ class FirewallResourcesAPI(APIClient):
 
         body = kwargs
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor\
-            .execute(request, NetworkApplicationGroups)
+        response, error = self._request_executor.execute(request, NetworkApplicationGroups)
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkApplicationGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkApplicationGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1466,13 +1321,11 @@ class FirewallResourcesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -1490,8 +1343,8 @@ class FirewallResourcesAPI(APIClient):
             query_params (dict): Map of query parameters for the request.
                 ``[query_params.search]`` (str): Search string for filtering results.
 
-                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``, 
-                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application 
+                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``,
+                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application
                     description is localized into the requested language.
 
         Returns:
@@ -1500,7 +1353,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all network apps.
-            
+
             >>> app_list, response, error = zia.cloud_firewall.list_network_apps():
             ... if error:
             ...     print(f"Error listing ip network apps : {error}")
@@ -1508,9 +1361,9 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total apps found: {len(app_list)}")
             ... for app in app_list:
             ...     print(app.as_dict())
-            
+
             Gets a list of all of specific network apps.
-            
+
             >>> app_list, response, error = zia.cloud_firewall.list_network_apps(
                 query_params={'search': 'ICMP_ANY',"locale": 'fr-FR'}):
             ... if error:
@@ -1534,14 +1387,12 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -1549,17 +1400,12 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(NetworkApplications(
-                    self.form_response_body(item))
-                )
+                result.append(NetworkApplications(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_network_app(
-        self,
-        app_id: int
-    ) -> tuple:
+    def get_network_app(self, app_id: int) -> tuple:
         """
         Returns information for the specified Network Application.
 
@@ -1585,21 +1431,17 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, NetworkApplications)
+        response, error = self._request_executor.execute(request, NetworkApplications)
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkApplications(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkApplications(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1615,14 +1457,14 @@ class FirewallResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+                ``[query_params.search]`` {str}: Search string used to match against a group's name or description attributes.
 
         Returns:
             tuple: List of Network Service Group resource records.
 
         Examples:
             Gets a list of all network services group.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups():
             ... if error:
             ...     print(f"Error listing network services group: {error}")
@@ -1630,10 +1472,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all network services group.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups(query_params={"search": 'Group01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups(
+                query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing network services group: {error}")
             ...     return
@@ -1655,14 +1498,12 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -1670,9 +1511,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(NetworkServiceGroups(
-                    self.form_response_body(item))
-                )
+                result.append(NetworkServiceGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -1696,7 +1535,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all network services group.
-            
+
             >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups():
             ... if error:
             ...     print(f"Error listing network services group: {error}")
@@ -1704,10 +1543,11 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all network services group.
-            
-            >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups(query_params={"search": 'Group01'}):
+
+            >>> group_list, response, error = zia.cloud_firewall.list_network_svc_groups(
+                query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing network services group: {error}")
             ...     return
@@ -1731,14 +1571,7 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -1749,18 +1582,13 @@ class FirewallResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(NetworkServiceGroups(
-                    self.form_response_body(item))
-                )
+                results.append(NetworkServiceGroups(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -1790,31 +1618,24 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, NetworkServiceGroups)
+        response, error = self._request_executor.execute(request, NetworkServiceGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServiceGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServiceGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def add_network_svc_group(
-        self,
-        **kwargs
-    ) -> tuple:
+    def add_network_svc_group(self, **kwargs) -> tuple:
         """
         Adds a new Network Service Group.
 
@@ -1845,9 +1666,8 @@ class FirewallResourcesAPI(APIClient):
         body = kwargs
 
         transform_common_id_fields(reformat_params, body, body)
-        
-        request, error = self._request_executor\
-            .create_request(
+
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -1857,25 +1677,18 @@ class FirewallResourcesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, NetworkServiceGroups)
+        response, error = self._request_executor.execute(request, NetworkServiceGroups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServiceGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServiceGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_svc_group(
-        self,
-        group_id: int,
-        **kwargs
-    ) -> tuple:
+    def update_network_svc_group(self, group_id: int, **kwargs) -> tuple:
         """
         Update a Network Service Group.
 
@@ -1912,22 +1725,18 @@ class FirewallResourcesAPI(APIClient):
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor\
-            .execute(request, NetworkServiceGroups)
+        response, error = self._request_executor.execute(request, NetworkServiceGroups)
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServiceGroups(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServiceGroups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -1962,21 +1771,16 @@ class FirewallResourcesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
 
-    def list_network_services(
-        self,
-        query_params=None
-    ) -> tuple:
+    def list_network_services(self, query_params=None) -> tuple:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported
@@ -1985,19 +1789,19 @@ class FirewallResourcesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.protocol]`` {str}: Filter based on the network service protocol.
-                Supported Values: `ICMP`, `TCP`, `UDP`, `GRE`, `ESP`, `OTHER`, 
+                Supported Values: `ICMP`, `TCP`, `UDP`, `GRE`, `ESP`, `OTHER`,
 
-                ``[query_params.search]`` {str}: The search string used to match against a service's name or description attributes.
+                ``[query_params.search]`` {str}: Search string used to match against a service's name or description attributes
 
-                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``, 
-                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application 
+                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``,
+                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application
                     description is localized into the requested language.
         Returns:
             tuple: A tuple containing (list of network services instances, Response, error)
 
         Examples:
             Gets a list of all network services.
-            
+
             >>> service_list, response, error = zia.cloud_firewall.list_network_services():
             ... if error:
             ...     print(f"Error listing network services: {error}")
@@ -2005,9 +1809,9 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total network services found: {len(service_list)}")
             ... for service in service_list:
             ...     print(service.as_dict())
-            
+
             Gets a list of all network services.
-            
+
             >>> service_list, response, error = zia.cloud_firewall.list_network_services(query_params={"search": 'FTP'}):
             ... if error:
             ...     print(f"Error listing network services: {error}")
@@ -2026,19 +1830,15 @@ class FirewallResourcesAPI(APIClient):
         )
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -2046,9 +1846,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(NetworkServices(
-                    self.form_response_body(item))
-                )
+                result.append(NetworkServices(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -2064,10 +1862,10 @@ class FirewallResourcesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+                ``[query_params.search]`` {str}:  Search string used to match against a group's name or description attributes.
 
-                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``, 
-                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application 
+                ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``,
+                    ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application
                     description is localized into the requested language.
 
         Returns:
@@ -2075,7 +1873,7 @@ class FirewallResourcesAPI(APIClient):
 
         Examples:
             Gets a list of all network services.
-            
+
             >>> service_list, response, error = zia.cloud_firewall.list_network_services_lite():
             ... if error:
             ...     print(f"Error listing network services: {error}")
@@ -2083,9 +1881,9 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total network services found: {len(service_list)}")
             ... for service in service_list:
             ...     print(service.as_dict())
-            
+
             Gets a list of all network services.
-            
+
             >>> service_list, response, error = zia.cloud_firewall.list_network_services_lite(
                 query_params={"search": 'FTP'}):
             ... if error:
@@ -2111,14 +1909,7 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -2129,18 +1920,13 @@ class FirewallResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(NetworkServices(
-                    self.form_response_body(item))
-                )
+                results.append(NetworkServices(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -2173,31 +1959,23 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, NetworkServices)
+        response, error = self._request_executor.execute(request, NetworkServices)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServices(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServices(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_network_service(
-        self,
-        ports: list = None,
-        **kwargs
-    ) -> tuple:
+    def add_network_service(self, ports: list = None, **kwargs) -> tuple:
         """
         Adds a new Network Service.
 
@@ -2260,8 +2038,7 @@ class FirewallResourcesAPI(APIClient):
                     port_dict["end"] = int(items[3])
                 body.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -2271,26 +2048,18 @@ class FirewallResourcesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, NetworkServices)
+        response, error = self._request_executor.execute(request, NetworkServices)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServices(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServices(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_service(
-        self,
-        service_id: str,
-        ports: list = None,
-        **kwargs
-    ) -> tuple:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> tuple:
         """
         Updates the specified Network Service.
 
@@ -2351,22 +2120,18 @@ class FirewallResourcesAPI(APIClient):
                     port_dict["end"] = int(items[3])
                 body.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_dict)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, NetworkServices)
+        response, error = self._request_executor.execute(request, NetworkServices)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NetworkServices(
-                self.form_response_body(response.get_body())
-            )
+            result = NetworkServices(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -2398,13 +2163,11 @@ class FirewallResourcesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -2431,14 +2194,12 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -2446,9 +2207,7 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_body():
-                result.append(TimeWindows(
-                    self.form_response_body(item))
-                )
+                result.append(TimeWindows(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -2476,14 +2235,12 @@ class FirewallResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -2491,11 +2248,8 @@ class FirewallResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(TimeWindows(
-                    self.form_response_body(item))
-                )
+                result.append(TimeWindows(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-

@@ -35,12 +35,9 @@ class TrafficExtranet(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
 
             self.extranet_dns_list = ZscalerCollection.form_list(
                 config["extranetDNSList"] if "extranetDNSList" in config else [], ExtranetDNSList
@@ -49,11 +46,9 @@ class TrafficExtranet(ZscalerObject):
             self.extranet_ip_pool_list = ZscalerCollection.form_list(
                 config["extranetIpPoolList"] if "extranetIpPoolList" in config else [], ExtranetIPPoolList
             )
-                
-            self.created_at = config["createdAt"] \
-                if "createdAt" in config else None
-            self.modified_at = config["modifiedAt"] \
-                if "modifiedAt" in config else None
+
+            self.created_at = config["createdAt"] if "createdAt" in config else None
+            self.modified_at = config["modifiedAt"] if "modifiedAt" in config else None
         else:
             self.id = None
             self.name = None
@@ -73,20 +68,19 @@ class TrafficExtranet(ZscalerObject):
             "name": self.name,
             "description": self.description,
             "extranetDNSList": [
-                dns_list.as_dict() if isinstance(dns_list, ZscalerObject) else dns_list
-                for dns_list in self.extranet_dns_list
+                dns_list.as_dict() if isinstance(dns_list, ZscalerObject) else dns_list for dns_list in self.extranet_dns_list
             ],
             "extranetIpPoolList": [
                 pool_list.as_dict() if isinstance(pool_list, ZscalerObject) else pool_list
                 for pool_list in self.extranet_ip_pool_list
             ],
-
             "createdAt": self.created_at,
-            "modifiedAt": self.modified_at
+            "modifiedAt": self.modified_at,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ExtranetDNSList(ZscalerObject):
     """
     A class for ExtranetDNSList objects.
@@ -127,7 +121,8 @@ class ExtranetDNSList(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ExtranetIPPoolList(ZscalerObject):
     """
     A class for ExtranetIPPoolList objects.

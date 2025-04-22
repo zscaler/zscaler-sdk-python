@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.endusernotification import EndUserNotification
 from zscaler.utils import format_url
 
+
 class EndUserNotificationAPI(APIClient):
     """
     A Client object for the Advanced Threat Protection Policy resource.
@@ -58,16 +59,12 @@ class EndUserNotificationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -85,41 +82,41 @@ class EndUserNotificationAPI(APIClient):
         This method pushes updated advanced threat protection policy settings.
 
         Args:
-            settings (:obj:`EndUserNotification`): 
+            settings (:obj:`EndUserNotification`):
                 An instance of `EndUserNotification` containing the updated configuration.
 
                 Supported attributes:
-                    - aup_frequency (str): The frequency at which the Acceptable Use Policy (AUP) is shown to the end users
-                        Supported values: NEVER, SESSION, DAILY, WEEKLY, ONLOGIN, CUSTOM, ON_DATE, ON_WEEKDAY
-                    - aup_custom_frequency (int): The custom frequency (in days) for showing the AUP to the end users. Valid range is 1 to 180.
-                    - aup_day_offset (int): Specifies which day of the week or month the AUP is shown for users when aupFrequency is set. Valid range is 1 to 31.
-                    - aup_message: (str): The acceptable use statement that is shown in the AUP
-                    - notification_type: (str): The type of EUN as default or custom. Supported vlues: DEFAULT, CUSTOM
-                    - display_reason: (bool): Whether or not the reason for cautioning or blocking access to a site, file, or application is shown when triggered
-                    - display_comp_name: (bool): Whether the organization's name appears in the EUN or not
-                    - display_comp_logo: (bool): Whether your organization's logo appears in the EUN or not
-                    - custom_text: (str): The custom text shown in the EUN
-                    - url_cat_review_enabled: (bool): Whether the URL Categorization notification is enabled or disabled
-                    - url_cat_review_submit_to_security_cloud: (bool): Whether users' review requests for possibly misclassified URLs are submitted to the Zscaler service
-                    - url_cat_review_custom_location: (str): A custom URL location where users' review requests for blocked URLs are sent
-                    - url_cat_review_text: (str): The message that appears in the URL Categorization notification
-                    - security_review_enabled: (bool): Whether the Security Violation notification is enabled or disabled
-                    - security_review_submit_to_security_cloud: (bool): Whether users' review requests for blocked URLs are submitted to the Zscaler service
-                    - security_review_custom_location: (str): A custom URL location where users' review requests for possible misclassified URLs are sent
-                    - security_review_text: (str): The message that appears in the Security Violation notification
-                    - web_dlp_review_enabled: (bool): Whether the Web DLP Violation notification is enabled or disabled    
-                    - web_dlp_review_submit_to_security_cloud: (bool): Whether users' review requests for web DLP policy violation are submitted to the Zscaler service
-                    - web_dlp_review_custom_location: (str): A custom URL location where users' review requests for the web DLP policy violation are sent              
-                    - web_dlp_review_text: (str): The message that appears in the Web DLP Violation notification
-                    - redirect_url: (str): The redirect URL for the external site hosting the EUN specified when the custom notification type is selected
-                    - support_email: (str): The email address for writing to IT Support
-                    - support_phone: (str): The phone number for contacting IT Support
-                    - org_policy_link: (str): The URL of the organization's policy page. This field is required for the default notification type.
-                    - caution_again_after: (int): The time interval at which the caution notification is shown when users continue browsing a restricted site.
-                    - caution_per_domain: (bool): Specifies whether to display the caution notification at a specific time interval for URLs in the Miscellaneous or Unknown category.                
-                    - caution_custom_text: (str): The custom message that appears in the caution notification
-                    - idp_proxy_notification_text: (str): The message that appears in the IdP Proxy notification
-                    - quarantine_custom_notification_text: (str): The message that appears in the quarantine notification                                                                                                                                                
+                    - aup_frequency (str): How often AUP is shown.
+                        Values: NEVER, SESSION, DAILY, WEEKLY, ONLOGIN, CUSTOM, ON_DATE, ON_WEEKDAY
+                    - aup_custom_frequency (int): Custom frequency (in days) to show AUP. Range: 1 to 180
+                    - aup_day_offset (int): Day of week or month to show AUP. Range: 1 to 31
+                    - aup_message (str): The acceptable use message shown in the AUP
+                    - notification_type (str): EUN type. Values: DEFAULT, CUSTOM
+                    - display_reason (bool): Show reason for blocking/cautioning access to a site, file, or app
+                    - display_comp_name (bool): Show organization's name in the EUN
+                    - display_comp_logo (bool): Show organization's logo in the EUN
+                    - custom_text (str): Custom EUN message shown to users
+                    - url_cat_review_enabled (bool): Enable/disable URL Categorization review notification
+                    - url_cat_review_submit_to_security_cloud (bool): Submit URL review requests to Zscaler
+                    - url_cat_review_custom_location (str): URL to send review requests for blocked URLs
+                    - url_cat_review_text (str): Message shown in URL Categorization notification
+                    - security_review_enabled (bool): Enable/disable Security Violation review notification
+                    - security_review_submit_to_security_cloud (bool): Submit Security Violation reviews to Zscaler
+                    - security_review_custom_location (str): URL to send review requests for misclassified URLs
+                    - security_review_text (str): Message shown in Security Violation notification
+                    - web_dlp_review_enabled (bool): Enable/disable Web DLP Violation notification
+                    - web_dlp_review_submit_to_security_cloud (bool): Submit Web DLP reviews to Zscaler
+                    - web_dlp_review_custom_location (str): URL to send Web DLP policy violation review requests
+                    - web_dlp_review_text (str): Message shown in Web DLP Violation notification
+                    - redirect_url (str): Redirect URL used with custom notification type
+                    - support_email (str): IT support contact email
+                    - support_phone (str): IT support contact phone number
+                    - org_policy_link (str): URL to org's policy page. Required for default notification type
+                    - caution_again_after (int): Time interval to repeat caution notification
+                    - caution_per_domain (bool): Show caution per domain for unknown or misc. categories
+                    - caution_custom_text (str): Custom message in the caution notification
+                    - idp_proxy_notification_text (str): Message shown in IdP Proxy notification
+                    - quarantine_custom_notification_text (str): Message shown in quarantine notification
         Returns:
             tuple: A tuple containing:
                 - EndUserNotification: The updated end user notification settings object.
@@ -136,7 +133,7 @@ class EndUserNotificationAPI(APIClient):
             ...     updated_settings, response, err = client.zia.end_user_notification.update_eun_settings(eun_settings)
             ...     if not err:
             ...         print("EUN settings updated successfully.")
-            """
+        """
         http_method = "put".upper()
         api_url = format_url(
             f"""
@@ -147,22 +144,18 @@ class EndUserNotificationAPI(APIClient):
 
         body = {}
         body.update(kwargs)
-        
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, EndUserNotification)
+        response, error = self._request_executor.execute(request, EndUserNotification)
         if error:
             return (None, response, error)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
-                result = EndUserNotification(
-                    self.form_response_body(response.get_body())
-                )
+                result = EndUserNotification(self.form_response_body(response.get_body()))
             else:
                 result = EndUserNotification()
         except Exception as error:

@@ -32,11 +32,9 @@ class Users(ZscalerObject):
         """
         super().__init__(config)
         print(f"DEBUG: Raw config received in Users: {config}")  # Debugging input
-        
+
         if config:
-            self.users = ZscalerCollection.form_list(
-                config.get("users", []), UserDetails
-            )
+            self.users = ZscalerCollection.form_list(config.get("users", []), UserDetails)
             self.next_offset = config.get("next_offset")
 
         else:
@@ -56,12 +54,10 @@ class Users(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "users": [user.as_dict() for user in self.users],
-            "next_offset": self.next_offset
-        }
+        current_obj_format = {"users": [user.as_dict() for user in self.users], "next_offset": self.next_offset}
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class UserDetails(ZscalerObject):
     """
@@ -86,7 +82,7 @@ class UserDetails(ZscalerObject):
             self.name = None
             self.email = None
             self.score = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

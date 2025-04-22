@@ -27,26 +27,16 @@ class PRACredentialPoolController(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.credential_mapping_count = config["credentialMappingCount"]\
-                if "credentialMappingCount" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.credential_type = config["credentialType"]\
-                if "credentialType" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.credential_mapping_count = config["credentialMappingCount"] if "credentialMappingCount" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.credential_type = config["credentialType"] if "credentialType" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
 
             self.device_groups = ZscalerCollection.form_list(
                 config["credentials"] if "credentials" in config else [], common.CommonIDName

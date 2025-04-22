@@ -39,47 +39,27 @@ class URLFilteringRule(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.order = config["order"]\
-                if "order" in config else None
-            self.rank = config["rank"]\
-                if "rank" in config else None
-            self.state = config["state"]\
-                if "state" in config else None
-            self.end_user_notification_url = config["endUserNotificationUrl"]\
-                if "endUserNotificationUrl" in config else None
-            self.block_override = config["blockOverride"]\
-                if "blockOverride" in config else False
-            self.time_quota = config["timeQuota"]\
-                if "timeQuota" in config else 0
-            self.size_quota = config["sizeQuota"]\
-                if "sizeQuota" in config else 0
-            self.description = config["description"]\
-                if "description" in config else None
-            self.validity_start_time = config["validityStartTime"]\
-                if "validityStartTime" in config else None
-            self.validity_end_time = config["validityEndTime"]\
-                if "validityEndTime" in config else None
-            self.validity_time_zone_id = config["validityTimeZoneId"]\
-                if "validityTimeZoneId" in config else None
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"]\
-                if "lastModifiedBy" in config else None
-            self.enforce_time_validity = config["enforceTimeValidity"]\
-                if "enforceTimeValidity" in config else False
-            self.action = config["action"]\
-                if "action" in config else None
-            self.ciparule = config["ciparule"]\
-                if "ciparule" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.end_user_notification_url = config["endUserNotificationUrl"] if "endUserNotificationUrl" in config else None
+            self.block_override = config["blockOverride"] if "blockOverride" in config else False
+            self.time_quota = config["timeQuota"] if "timeQuota" in config else 0
+            self.size_quota = config["sizeQuota"] if "sizeQuota" in config else 0
+            self.description = config["description"] if "description" in config else None
+            self.validity_start_time = config["validityStartTime"] if "validityStartTime" in config else None
+            self.validity_end_time = config["validityEndTime"] if "validityEndTime" in config else None
+            self.validity_time_zone_id = config["validityTimeZoneId"] if "validityTimeZoneId" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.enforce_time_validity = config["enforceTimeValidity"] if "enforceTimeValidity" in config else False
+            self.action = config["action"] if "action" in config else None
+            self.ciparule = config["ciparule"] if "ciparule" in config else False
 
             # Handling lists of simple values
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
             self.user_agent_types = ZscalerCollection.form_list(
                 config["userAgentTypes"] if "userAgentTypes" in config else [], str
             )
@@ -100,9 +80,7 @@ class URLFilteringRule(ZscalerObject):
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location.LocationManagement
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
@@ -124,19 +102,14 @@ class URLFilteringRule(ZscalerObject):
             self.location_groups = ZscalerCollection.form_list(
                 config["locationGroups"] if "locationGroups" in config else [], location_group.LocationGroup
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], labels.RuleLabels
-            )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
 
             # Handling nested single object for CBIProfile
-            self.cbi_profile = isolation.CBIProfile(config["cbiProfile"])\
-                if "cbiProfile" in config else None
+            self.cbi_profile = isolation.CBIProfile(config["cbiProfile"]) if "cbiProfile" in config else None
 
         else:
             # Defaults if config is None

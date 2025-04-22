@@ -73,10 +73,7 @@ class TestApplicationSegmentPRA:
 
             try:
                 segment_group_name = "tests-" + generate_random_string()
-                created_segment_group, resp, err = client.zpa.segment_groups.add_group(
-                    name=segment_group_name,
-                    enabled=True
-                )
+                created_segment_group, resp, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 assert created_segment_group is not None, "No segment group data returned"
 
@@ -132,7 +129,7 @@ class TestApplicationSegmentPRA:
                 assert err is None, f"Error creating server group: {err}"
                 assert app_segment is not None, "No application segment PRA data returned"
                 assert app_segment.name == app_segment_name
-                
+
                 app_segment_id = app_segment.id
             except Exception as exc:
                 errors.append(f"Creating PRA Application Segment failed: {exc}")

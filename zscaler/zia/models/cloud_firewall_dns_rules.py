@@ -30,6 +30,7 @@ from zscaler.zia.models import cloud_firewall_source_groups as source_groups
 from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
 from zscaler.zia.models import common as common
 
+
 class FirewallDNSRules(ZscalerObject):
     """
     A class for FirewallDNSRules objects.
@@ -45,48 +46,33 @@ class FirewallDNSRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.capture_pcap = config["capturePCAP"] \
-                if "capturePCAP" in config else None
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.capture_pcap = config["capturePCAP"] if "capturePCAP" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.description = config["description"] if "description" in config else None
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
             )
             self.location_groups = ZscalerCollection.form_list(
                 config["locationGroups"] if "locationGroups" in config else [], location_group.LocationGroup
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
-            self.state = config["state"] \
-                if "state" in config else None
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
+            self.state = config["state"] if "state" in config else None
             self.time_windows = ZscalerCollection.form_list(
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str
-            )
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
             self.src_ip_groups = ZscalerCollection.form_list(
                 config["srcIpGroups"] if "srcIpGroups" in config else [], source_groups.IPSourceGroup
             )
@@ -114,46 +100,32 @@ class FirewallDNSRules(ZscalerObject):
             self.res_categories = ZscalerCollection.form_list(
                 config["resCategories"] if "resCategories" in config else [], str
             )
-            self.redirect_ip = config["redirectIp"] \
-                if "redirectIp" in config else None
-                
-            self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], str
-            )
-            
+            self.redirect_ip = config["redirectIp"] if "redirectIp" in config else None
+
+            self.applications = ZscalerCollection.form_list(config["applications"] if "applications" in config else [], str)
+
             # Need to create model to iterate through application_groups list
             self.application_groups = ZscalerCollection.form_list(
                 config["applicationGroups"] if "applicationGroups" in config else [], common.CommonIDName
             )
 
-            self.edns_ecs_object = (
-                common.ResourceReference(config["ednsEcsObject"]) if "ednsEcsObject" in config else None
-            ) 
-            
+            self.edns_ecs_object = common.ResourceReference(config["ednsEcsObject"]) if "ednsEcsObject" in config else None
+
             self.dns_rule_request_types = ZscalerCollection.form_list(
                 config["dnsRuleRequestTypes"] if "dnsRuleRequestTypes" in config else [], str
             )
-            
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] \
-                if "lastModifiedBy" in config else None
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
-            self.block_response_code = config["blockResponseCode"] \
-                if "blockResponseCode" in config else None
-            self.predefined = config["predefined"] \
-                if "predefined" in config else False
-            self.default_rule = config["defaultRule"] \
-                if "defaultRule" in config else False
-                
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
+            self.block_response_code = config["blockResponseCode"] if "blockResponseCode" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else False
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else False
+
             if "zpaIpGroup" in config:
                 if isinstance(config["zpaIpGroup"], common.CommonIDName):
                     self.zpa_ip_group = config["zpaIpGroup"]
@@ -183,7 +155,7 @@ class FirewallDNSRules(ZscalerObject):
                     self.edns_ecs_object = None
             else:
                 self.edns_ecs_object = None
-                                
+
         else:
             self.action = None
             self.capture_pcap = None
@@ -273,7 +245,7 @@ class FirewallDNSRules(ZscalerObject):
             "ednsEcsObject": self.edns_ecs_object,
             "blockResponseCode": self.block_response_code,
             "predefined": self.predefined,
-            "defaultRule": self.default_rule
+            "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -32,6 +32,7 @@ from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
 from zscaler.zia.models import common as common_reference
 
+
 class FirewallRule(ZscalerObject):
     """
     A class representing a Firewall Rule object.
@@ -40,32 +41,20 @@ class FirewallRule(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.access_control = config["accessControl"]\
-                if "accessControl" in config else None
-            self.enable_full_logging = config["enableFullLogging"]\
-                if "enableFullLogging" in config else False
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.order = config["order"]\
-                if "order" in config else None
-            self.rank = config["rank"]\
-                if "rank" in config else None
-            self.action = config["action"]\
-                if "action" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.enable_full_logging = config["enableFullLogging"] if "enableFullLogging" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.action = config["action"] if "action" in config else None
             # self.capture_pcap = config["capturePCAP"]\
             #     if "capturePCAP" in config else False
-            self.state = config["state"]\
-                if "state" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"]\
-                if "lastModifiedBy" in config else None               
-            self.exclude_src_countries = config["excludeSrcCountries"]\
-                if "excludeSrcCountries" in config else False   
+            self.state = config["state"] if "state" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.exclude_src_countries = config["excludeSrcCountries"] if "excludeSrcCountries" in config else False
             # Handling lists of simple values
             self.dest_ip_categories = ZscalerCollection.form_list(
                 config["destIpCategories"] if "destIpCategories" in config else [], str
@@ -85,9 +74,7 @@ class FirewallRule(ZscalerObject):
             self.nw_applications = ZscalerCollection.form_list(
                 config["nwApplications"] if "nwApplications" in config else [], str
             )
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str
-            )
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
             self.dest_addresses = ZscalerCollection.form_list(
                 config["destAddresses"] if "destAddresses" in config else [], str
             )
@@ -95,7 +82,7 @@ class FirewallRule(ZscalerObject):
             self.dest_addresses = ZscalerCollection.form_list(
                 config["destAddresses"] if "destAddresses" in config else [], str
             )
-             
+
             # Handling nested lists of objects
             self.app_service_groups = ZscalerCollection.form_list(
                 config["appServiceGroups"] if "appServiceGroups" in config else [], app_services.AppServices
@@ -112,9 +99,7 @@ class FirewallRule(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
@@ -139,12 +124,8 @@ class FirewallRule(ZscalerObject):
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
             self.nw_services = ZscalerCollection.form_list(
                 config["nwServices"] if "nwServices" in config else [], nw_service.NetworkServices
             )
@@ -152,18 +133,17 @@ class FirewallRule(ZscalerObject):
                 config["nwServiceGroups"] if "nwServiceGroups" in config else [], nw_service_groups.NetworkServiceGroups
             )
             self.nw_application_groups = ZscalerCollection.form_list(
-                config["nwApplicationGroups"] if "nwApplicationGroups" in config else [], nw_application_groups.NetworkApplicationGroups
+                config["nwApplicationGroups"] if "nwApplicationGroups" in config else [],
+                nw_application_groups.NetworkApplicationGroups,
             )
             # Reuse the external ZPAAppSegment class
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
             )
 
-            self.default_rule = config["defaultRule"]\
-                if "defaultRule" in config else False
-                
-            self.predefined = config["predefined"]\
-                if "predefined" in config else False
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else False
+
+            self.predefined = config["predefined"] if "predefined" in config else False
 
         else:
             # Defaults if config is None
@@ -206,7 +186,6 @@ class FirewallRule(ZscalerObject):
             self.exclude_src_countries = False
             self.predefined = False
 
-
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -232,7 +211,6 @@ class FirewallRule(ZscalerObject):
             "nwApplications": self.nw_applications,
             "srcIps": self.src_ips,
             "destAddresses": self.dest_addresses,
-            
             # Applying fallback to all attributes with similar structure
             "appServiceGroups": [asg.request_format() for asg in (self.app_service_groups or [])],
             "locations": [loc.request_format() for loc in (self.locations or [])],
@@ -253,7 +231,7 @@ class FirewallRule(ZscalerObject):
             "devices": [dg.request_format() for dg in (self.devices or [])],
             "defaultRule": self.default_rule,
             "excludeSrcCountries": self.exclude_src_countries,
-            "predefined": self.predefined
+            "predefined": self.predefined,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

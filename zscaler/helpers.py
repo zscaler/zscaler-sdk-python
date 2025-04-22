@@ -5,6 +5,7 @@ Module is independent from any zscaler modules.
 
 import re
 
+
 def to_snake_case(string):
     """
     Converts camelCase or PascalCase to snake_case.
@@ -47,7 +48,7 @@ def to_snake_case(string):
         "dnsResolutionOnTransparentProxyIPv6Apps": "dns_resolution_on_transparent_proxy_ipv6_apps",
         "enableIPv6DnsOptimizationOnAllTransparentProxy": "enable_ipv6_dns_optimization_on_all_transparent_proxy",
         "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories": "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories",
-        "endPointDLPLogType":  "end_point_dlp_log_type",
+        "endPointDLPLogType": "end_point_dlp_log_type",
         "emailDLPLogType": "email_dlp_log_type",
     }
 
@@ -55,8 +56,8 @@ def to_snake_case(string):
         return FIELD_EXCEPTIONS[string]
 
     # Generic fallback logic
-    string = re.sub(r'(?<!^)(?=[A-Z])', '_', string).lower()
-    return string.replace('__', '_').strip('_')
+    string = re.sub(r"(?<!^)(?=[A-Z])", "_", string).lower()
+    return string.replace("__", "_").strip("_")
 
 
 def to_lower_camel_case(string):
@@ -105,18 +106,17 @@ def to_lower_camel_case(string):
         "dns_resolution_on_transparent_proxy_ipv6_apps": "dnsResolutionOnTransparentProxyIPv6Apps",
         "enable_ipv6_dns_optimization_on_all_transparent_proxy": "enableIPv6DnsOptimizationOnAllTransparentProxy",
         "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories": "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories",
-        "end_point_dlp_log_type":  "endPointDLPLogType",
-        "email_dlp_log_type": "emailDLPLogType"
-        
+        "end_point_dlp_log_type": "endPointDLPLogType",
+        "email_dlp_log_type": "emailDLPLogType",
     }
 
     if string in FIELD_EXCEPTIONS:
         return FIELD_EXCEPTIONS[string]
 
-    if not string or '_' not in string:
+    if not string or "_" not in string:
         return string
 
-    components = string.split('_')
+    components = string.split("_")
     converted = []
 
     for i, comp in enumerate(components):
@@ -126,7 +126,8 @@ def to_lower_camel_case(string):
         else:
             converted.append(comp.capitalize())
 
-    return ''.join(converted)
+    return "".join(converted)
+
 
 def convert_keys_to_snake_case(data):
     """

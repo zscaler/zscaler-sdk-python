@@ -16,10 +16,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import app_connector_groups\
-    as app_connector_groups
-from zscaler.zpa.models import policyset_controller_v1\
-    as policyset_controller_v1
+from zscaler.zpa.models import app_connector_groups as app_connector_groups
+from zscaler.zpa.models import policyset_controller_v1 as policyset_controller_v1
 
 
 class LSSResourceModel(ZscalerObject):
@@ -37,8 +35,7 @@ class LSSResourceModel(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
 
             self.connector_groups = ZscalerCollection.form_list(
                 config["connectorGroups"] if "connectorGroups" in config else [], app_connector_groups.AppConnectorGroup
@@ -112,34 +109,20 @@ class LSSConfig(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else True
-            self.source_log_type = config["sourceLogType"]\
-                if "sourceLogType" in config else None
-            self.use_tls = config["useTls"]\
-                if "useTls" in config else False
-            self.format = config["format"]\
-                if "format" in config else None
-            self.filter = config["filter"]\
-                if "filter" in config else []
-            self.audit_message = config["auditMessage"]\
-                if "auditMessage" in config else None
-            self.lss_host = config["lssHost"]\
-                if "lssHost" in config else None
-            self.lss_port = config["lssPort"]\
-                if "lssPort" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else True
+            self.source_log_type = config["sourceLogType"] if "sourceLogType" in config else None
+            self.use_tls = config["useTls"] if "useTls" in config else False
+            self.format = config["format"] if "format" in config else None
+            self.filter = config["filter"] if "filter" in config else []
+            self.audit_message = config["auditMessage"] if "auditMessage" in config else None
+            self.lss_host = config["lssHost"] if "lssHost" in config else None
+            self.lss_port = config["lssPort"] if "lssPort" in config else None
 
         else:
             self.id = None

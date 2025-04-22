@@ -26,4 +26,3 @@ class ZscalerAPIError(Error):
         self.url = url
         self.headers = response_details.headers
         self.stack = ""
-

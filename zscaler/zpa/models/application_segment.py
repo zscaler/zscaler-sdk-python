@@ -16,8 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import server_group\
-    as server_group
+from zscaler.zpa.models import server_group as server_group
 from zscaler.zpa.models import common as common
 
 
@@ -29,81 +28,46 @@ class ApplicationSegment(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.domain_names = config["domainNames"]\
-                if "domainNames" in config else []
-            self.enabled = config["enabled"]\
-                if "enabled" in config else True
-            self.passive_health_enabled = config["passiveHealthEnabled"]\
-                if "passiveHealthEnabled" in config else False
-            self.double_encrypt = config["doubleEncrypt"]\
-                if "doubleEncrypt" in config else False
-            self.config_space = config["configSpace"]\
-                if "configSpace" in config else "DEFAULT"
-            self.bypass_type = config["bypassType"]\
-                if "bypassType" in config else "NEVER"
-            self.health_check_type = config["healthCheckType"]\
-                if "healthCheckType" in config else "NONE"
-            self.icmp_access_type = config["icmpAccessType"]\
-                if "icmpAccessType" in config else "NONE"
-            self.is_cname_enabled = config["isCnameEnabled"]\
-                if "isCnameEnabled" in config else False
-            self.ip_anchored = config["ipAnchored"]\
-                if "ipAnchored" in config else False
-            self.bypass_on_reauth = config["bypassOnReauth"]\
-                if "bypassOnReauth" in config else False
-            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"]\
-                if "inspectTrafficWithZia" in config else False
-            self.health_reporting = config["healthReporting"]\
-                if "healthReporting" in config else "NONE"
-            self.use_in_dr_mode = config["useInDrMode"]\
-                if "useInDrMode" in config else False
-            self.tcp_keep_alive = config["tcpKeepAlive"]\
-                if "tcpKeepAlive" in config else "0"
-            self.select_connector_close_to_app = config["selectConnectorCloseToApp"] \
-                if "selectConnectorCloseToApp" in config else False
-            self.match_style = config["matchStyle"]\
-                if "matchStyle" in config else "EXCLUSIVE"
-            self.is_incomplete_dr_config = config["isIncompleteDRConfig"]\
-                if "isIncompleteDRConfig" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.domain_names = config["domainNames"] if "domainNames" in config else []
+            self.enabled = config["enabled"] if "enabled" in config else True
+            self.passive_health_enabled = config["passiveHealthEnabled"] if "passiveHealthEnabled" in config else False
+            self.double_encrypt = config["doubleEncrypt"] if "doubleEncrypt" in config else False
+            self.config_space = config["configSpace"] if "configSpace" in config else "DEFAULT"
+            self.bypass_type = config["bypassType"] if "bypassType" in config else "NEVER"
+            self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else "NONE"
+            self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else "NONE"
+            self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else False
+            self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else False
+            self.bypass_on_reauth = config["bypassOnReauth"] if "bypassOnReauth" in config else False
+            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"] if "inspectTrafficWithZia" in config else False
+            self.health_reporting = config["healthReporting"] if "healthReporting" in config else "NONE"
+            self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else False
+            self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else "0"
+            self.select_connector_close_to_app = (
+                config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else False
+            )
+            self.match_style = config["matchStyle"] if "matchStyle" in config else "EXCLUSIVE"
+            self.is_incomplete_dr_config = config["isIncompleteDRConfig"] if "isIncompleteDRConfig" in config else False
             self.adp_enabled = config["adpEnabled"] if "adpEnabled" in config else False
-            self.auto_app_protect_enabled = config["autoAppProtectEnabled"]\
-                if "autoAppProtectEnabled" in config else False
-            self.api_protection_enabled = config["apiProtectionEnabled"]\
-                if "apiProtectionEnabled" in config else False
-            self.fqdn_dns_check = config["fqdnDnsCheck"]\
-                if "fqdnDnsCheck" in config else False
-            self.weighted_load_balancing = config["weightedLoadBalancing"]\
-                if "weightedLoadBalancing" in config else False
-            self.extranet_enabled = config["extranetEnabled"]\
-                if "extranetEnabled" in config else False
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else "Default"
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.segment_group_id = config["segmentGroupId"]\
-                if "segmentGroupId" in config else None
-            self.segment_group_name = config["segmentGroupName"]\
-                if "segmentGroupName" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
+            self.auto_app_protect_enabled = config["autoAppProtectEnabled"] if "autoAppProtectEnabled" in config else False
+            self.api_protection_enabled = config["apiProtectionEnabled"] if "apiProtectionEnabled" in config else False
+            self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else False
+            self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else False
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else "Default"
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
+            self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
 
-            self.tcp_protocols = ZscalerCollection.form_list(
-                config["tcpProtocols"] if "tcpProtocols" in config else [], str
-            )
+            self.tcp_protocols = ZscalerCollection.form_list(config["tcpProtocols"] if "tcpProtocols" in config else [], str)
 
-            self.udp_protocols = ZscalerCollection.form_list(
-                config["udpProtocols"] if "udpProtocols" in config else [], str
-            )
+            self.udp_protocols = ZscalerCollection.form_list(config["udpProtocols"] if "udpProtocols" in config else [], str)
 
             self.server_groups = ZscalerCollection.form_list(config.get("serverGroups", []), server_group.ServerGroup)
 
@@ -118,23 +82,19 @@ class ApplicationSegment(ZscalerObject):
             if "tcpPortRange" in config:
                 for port_range in config["tcpPortRange"]:
                     if isinstance(port_range, dict):
-                        self.tcp_port_range.append({
-                            "from": port_range.get("from"),
-                            "to": port_range.get("to")
-                        })
+                        self.tcp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
 
             self.udp_port_range = []
             if "udpPortRange" in config:
                 for port_range in config["udpPortRange"]:
                     if isinstance(port_range, dict):
-                        self.tcp_port_range.append({
-                            "from": port_range.get("from"),
-                            "to": port_range.get("to")
-                        })
+                        self.tcp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
 
-            self.clientless_apps = ZscalerCollection.form_list(
-                config["clientlessApps"], AppSegmentClientlessApps
-            ) if "clientlessApps" in config else []
+            self.clientless_apps = (
+                ZscalerCollection.form_list(config["clientlessApps"], AppSegmentClientlessApps)
+                if "clientlessApps" in config
+                else []
+            )
 
             if "sharedMicrotenantDetails" in config:
                 if isinstance(config["sharedMicrotenantDetails"], SharedMicrotenantDetails):
@@ -263,49 +223,28 @@ class AppSegmentClientlessApps(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else None
-            self.certificate_id = config["certificateId"]\
-                if "certificateId" in config else None
-            self.certificate_name = config["certificateName"]\
-                if "certificateName" in config else None
-            self.application_port = config["applicationPort"]\
-                if "applicationPort" in config else None
-            self.application_protocol = config["applicationProtocol"]\
-                if "applicationProtocol" in config else None
-            self.domain = config["domain"]\
-                if "domain" in config else None
-            self.app_id = config["appId"]\
-                if "appId" in config else None
-            self.hidden = config["hidden"]\
-                if "hidden" in config else None
-            self.local_domain = config["localDomain"]\
-                if "localDomain" in config else None
-            self.portal = config["portal"]\
-                if "portal" in config else None
-            self.trust_untrusted_cert = config["trustUntrustedCert"]\
-                if "trustUntrustedCert" in config else None
-            self.allow_options = config["allowOptions"]\
-                if "allowOptions" in config else None
-            self.cname = config["cname"]\
-                if "cname" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
-            self.ext_domain = config["extDomain"]\
-                if "extDomain" in config else None
-            self.ext_domain_name = config["extDomainName"]\
-                if "extDomainName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.certificate_id = config["certificateId"] if "certificateId" in config else None
+            self.certificate_name = config["certificateName"] if "certificateName" in config else None
+            self.application_port = config["applicationPort"] if "applicationPort" in config else None
+            self.application_protocol = config["applicationProtocol"] if "applicationProtocol" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.app_id = config["appId"] if "appId" in config else None
+            self.hidden = config["hidden"] if "hidden" in config else None
+            self.local_domain = config["localDomain"] if "localDomain" in config else None
+            self.portal = config["portal"] if "portal" in config else None
+            self.trust_untrusted_cert = config["trustUntrustedCert"] if "trustUntrustedCert" in config else None
+            self.allow_options = config["allowOptions"] if "allowOptions" in config else None
+            self.cname = config["cname"] if "cname" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.ext_domain = config["extDomain"] if "extDomain" in config else None
+            self.ext_domain_name = config["extDomainName"] if "extDomainName" in config else None
 
-            self.ext_label = config["extLabel"]\
-                if "extLabel" in config else None
+            self.ext_label = config["extLabel"] if "extLabel" in config else None
 
         else:
             self.id = None
@@ -429,10 +368,8 @@ class SharedFromMicrotenant(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
         else:
             self.id = None
@@ -466,10 +403,8 @@ class SharedToMicrotenants(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
 
         else:
             self.id = None
@@ -503,24 +438,15 @@ class ZPNExtranetResource(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.zia_cloud = config["ziaCloud"] \
-                if "ziaCloud" in config else None
-            self.zia_er_id = config["ziaErId"] \
-                if "ziaErId" in config else None
-            self.zia_er_name = config["ziaErName"] \
-                if "ziaErName" in config else None
-            self.zia_modified_time = config["ziaModifiedTime"] \
-                if "ziaModifiedTime" in config else None
-            self.zia_org_id = config["ziaOrgId"] \
-                if "ziaOrgId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.zia_cloud = config["ziaCloud"] if "ziaCloud" in config else None
+            self.zia_er_id = config["ziaErId"] if "ziaErId" in config else None
+            self.zia_er_name = config["ziaErName"] if "ziaErName" in config else None
+            self.zia_modified_time = config["ziaModifiedTime"] if "ziaModifiedTime" in config else None
+            self.zia_org_id = config["ziaOrgId"] if "ziaOrgId" in config else None
 
         else:
             self.id = None
@@ -568,24 +494,15 @@ class AppSegmentByType(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.enabled = config["enabled"]\
-                if "enabled" in config else None
-            self.application_port = config["applicationPort"]\
-                if "applicationPort" in config else None
-            self.application_protocol = config["applicationProtocol"]\
-                if "applicationProtocol" in config else None
-            self.domain = config["domain"]\
-                if "domain" in config else None
-            self.app_id = config["appId"]\
-                if "appId" in config else None
-            self.hidden = config["hidden"]\
-                if "hidden" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.application_port = config["applicationPort"] if "applicationPort" in config else None
+            self.application_protocol = config["applicationProtocol"] if "applicationProtocol" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.app_id = config["appId"] if "appId" in config else None
+            self.hidden = config["hidden"] if "hidden" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
 
             if "appResource" in config:
                 if isinstance(config["appResource"], AppResource):
@@ -624,7 +541,7 @@ class AppSegmentByType(ZscalerObject):
             "appId": self.app_id,
             "hidden": self.hidden,
             "microtenantName": self.microtenant_name,
-            "appResource": self.app_resource
+            "appResource": self.app_resource,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

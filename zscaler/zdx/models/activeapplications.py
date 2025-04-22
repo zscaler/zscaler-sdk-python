@@ -36,14 +36,10 @@ class Activeapplications(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.score = config["score"] \
-                if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] \
-                if "most_impacted_geo" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.score = config["score"] if "score" in config else None
+            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
         else:
             self.id = None
             self.name = None
@@ -59,7 +55,7 @@ class Activeapplications(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "score": self.score,
-            "most_impacted_geo": self.most_impacted_geo
+            "most_impacted_geo": self.most_impacted_geo,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -102,7 +102,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             rule_id = created_rule.id
 #         except Exception as exc:
 #             errors.append(exc)
-            
+
 #         try:
 #             # Test listing Access Policy Capabilities Ruless
 #             all_rules, _, err = client.zpa.policies.list_rules("capabilities")
@@ -147,7 +147,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #             print(f"Access Policy Capabilities Rules with ID {rule_id} updated successfully (204 No Content).")
 #         except Exception as exc:
 #             errors.append(f"Updating Access Policy Capabilities Rules failed: {exc}")
-            
+
 #         finally:
 #             # Ensure cleanup is performed even if there are errors
 #             if rule_id:

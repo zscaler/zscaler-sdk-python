@@ -43,6 +43,7 @@ class GeoLocations(ZscalerObject):
             self.state = None
             self.country = None
             self.num_devices = None
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -57,7 +58,8 @@ class GeoLocations(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Departments(ZscalerObject):
     """
     A class for Departments objects.
@@ -79,6 +81,7 @@ class Departments(ZscalerObject):
             self.id = None
             self.name = None
             self.num_devices = None
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -91,7 +94,8 @@ class Departments(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Locations(ZscalerObject):
     """
     A class for Locations objects.
@@ -109,12 +113,8 @@ class Locations(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.num_devices = config["num_devices"] if "num_devices" in config else None
-            self.groups = (
-                Common(config["groups"]) if "groups" in config else None
-            )
-            self.application = (
-                Common(config["application"]) if "application" in config else None
-            )
+            self.groups = Common(config["groups"]) if "groups" in config else None
+            self.application = Common(config["application"]) if "application" in config else None
         else:
             self.id = None
             self.name = None
@@ -132,7 +132,8 @@ class Locations(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Common(ZscalerObject):
     """
     A class for Groups objects.

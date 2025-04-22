@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class TrafficGRERecommendedVIP(ZscalerObject):
     """
     A class for Traffic GRE Recommended VIPs objects.
@@ -31,24 +32,15 @@ class TrafficGRERecommendedVIP(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.virtual_ip = config["virtualIp"]\
-                if "virtualIp" in config else None
-            self.private_service_edge = config["privateServiceEdge"]\
-                if "privateServiceEdge" in config else None
-            self.datacenter = config["datacenter"]\
-                if "datacenter" in config else None
-            self.latitude = config["latitude"]\
-                if "latitude" in config else None
-            self.longitude = config["longitude"]\
-                if "longitude" in config else None
-            self.city = config["city"]\
-                if "city" in config else None
-            self.country_code = config["countryCode"]\
-                if "countryCode" in config else None
-            self.region = config["region"]\
-                if "region" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.virtual_ip = config["virtualIp"] if "virtualIp" in config else None
+            self.private_service_edge = config["privateServiceEdge"] if "privateServiceEdge" in config else None
+            self.datacenter = config["datacenter"] if "datacenter" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.city = config["city"] if "city" in config else None
+            self.country_code = config["countryCode"] if "countryCode" in config else None
+            self.region = config["region"] if "region" in config else None
         else:
             # Initialize with default None or 0 values
             self.id = None
@@ -60,7 +52,7 @@ class TrafficGRERecommendedVIP(ZscalerObject):
             self.city = None
             self.country_code = None
             self.region = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

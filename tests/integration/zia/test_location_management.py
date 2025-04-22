@@ -58,7 +58,7 @@ class TestLocationManagement:
                 created_location, _, error = client.zia.locations.add_location(
                     name=location_name,
                     description=location_name,
-                    country='UNITED_STATES',
+                    country="UNITED_STATES",
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
                     ofw_enabled=True,
                     ips_control=True,
@@ -84,11 +84,11 @@ class TestLocationManagement:
                 updated_description = "Updated integration test location management"
                 updated_location, _, error = client.zia.locations.update_location(
                     location_id=location_id,
-                    name=location_name,     
+                    name=location_name,
                     description=updated_description,
                     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
                     auth_required=True,
-                    idle_time_in_minutes='720',
+                    idle_time_in_minutes="720",
                     display_time_unit="MINUTE",
                     surrogate_ip=True,
                     xff_forward_enabled=True,
@@ -129,11 +129,9 @@ class TestLocationManagement:
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting VPN Credential failed: {exc}")
 
-
             errors.extend(cleanup_errors)
 
         assert len(errors) == 0, f"Errors occurred during the location management lifecycle test:\n{chr(10).join(errors)}"
-
 
     # def test_sub_location(self, fs):
     #     client = MockZIAClient(fs)

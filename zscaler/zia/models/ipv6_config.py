@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class IPV6PrefixMask(ZscalerObject):
     """
     A class for IPV6PrefixMask objects.
@@ -32,19 +33,13 @@ class IPV6PrefixMask(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.prefix_mask = config["prefixMask"] \
-                if "prefixMask" in config else None
-            self.dns_prefix = config["dnsPrefix"] \
-                if "dnsPrefix" in config else None
-            self.non_editable = config["nonEditable"] \
-                if "nonEditable" in config else None
-      
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.prefix_mask = config["prefixMask"] if "prefixMask" in config else None
+            self.dns_prefix = config["dnsPrefix"] if "dnsPrefix" in config else None
+            self.non_editable = config["nonEditable"] if "nonEditable" in config else None
+
         else:
             self.id = None
             self.name = None
@@ -52,7 +47,7 @@ class IPV6PrefixMask(ZscalerObject):
             self.prefix_mask = None
             self.dns_prefix = None
             self.non_editable = None
-            
+
     def request_format(self):
         """
         Returns the object as a dictionary in the format expected for API requests.
@@ -68,7 +63,8 @@ class IPV6PrefixMask(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class IPV6Configuration(ZscalerObject):
     """
     A class for IPV6Configuration objects.
@@ -84,20 +80,18 @@ class IPV6Configuration(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.ipv6_enabled = config["ipV6Enabled"] \
-                if "ipV6Enabled" in config else None
-            self.dns_prefix = config["dnsPrefix"] \
-                if "dnsPrefix" in config else None
-                
+            self.ipv6_enabled = config["ipV6Enabled"] if "ipV6Enabled" in config else None
+            self.dns_prefix = config["dnsPrefix"] if "dnsPrefix" in config else None
+
             self.nat_prefixes = ZscalerCollection.form_list(
                 config["natPrefixes"] if "natPrefixes" in config else [], IPV6PrefixMask
             )
-                
+
         else:
             self.ipv6_enabled = None
             self.nat_prefixes = []
             self.dns_prefix = None
-            
+
     def request_format(self):
         """
         Returns the object as a dictionary in the format expected for API requests.

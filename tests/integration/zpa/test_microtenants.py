@@ -125,7 +125,7 @@ class TestMicrotenants:
             # Retrieve microtenant summary
             microtenant_summary = client.zpa.microtenants.get_microtenant_summary()
             assert microtenant_summary is not None
-            #assert any(summary.id == microtenant_id and summary.name == updated_name for summary in microtenant_summary)
+            # assert any(summary.id == microtenant_id and summary.name == updated_name for summary in microtenant_summary)
         except Exception as exc:
             errors.append(exc)
 

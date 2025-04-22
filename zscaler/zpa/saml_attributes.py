@@ -60,22 +60,18 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(SAMLAttribute(
-                    self.form_response_body(item))
-                )
+                result.append(SAMLAttribute(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -111,22 +107,18 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(
-                    SAMLAttribute(self.form_response_body(item))
-                )
+                result.append(SAMLAttribute(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -156,13 +148,11 @@ class SAMLAttributesAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

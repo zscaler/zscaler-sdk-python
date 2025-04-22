@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class DLPTemplates(ZscalerObject):
     """
     A class for DLPTemplate objects.
@@ -31,20 +32,13 @@ class DLPTemplates(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.subject = config["subject"]\
-                if "subject" in config else None
-            self.tls_enabled = config["tlsEnabled"]\
-                if "tlsEnabled" in config else None
-            self.attach_content = config["attachContent"]\
-                if "attachContent" in config else None
-            self.plain_text_message = config["plainTextMessage"]\
-                if "plainTextMessage" in config else None
-            self.html_message = config["htmlMessage"]\
-                if "htmlMessage" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.subject = config["subject"] if "subject" in config else None
+            self.tls_enabled = config["tlsEnabled"] if "tlsEnabled" in config else None
+            self.attach_content = config["attachContent"] if "attachContent" in config else None
+            self.plain_text_message = config["plainTextMessage"] if "plainTextMessage" in config else None
+            self.html_message = config["htmlMessage"] if "htmlMessage" in config else None
         else:
             self.id = None
             self.name = None

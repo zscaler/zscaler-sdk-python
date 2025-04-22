@@ -35,16 +35,12 @@ class PredefinedInspectionControlResource(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.control_group = config["controlGroup"] \
-                if "controlGroup" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
 
-            self.default_group = config["defaultGroup"] \
-                if "defaultGroup" in config else None
+            self.default_group = config["defaultGroup"] if "defaultGroup" in config else None
 
             self.predefined_inspection_controls = ZscalerCollection.form_list(
-                config["predefinedInspectionControls"]
-                if "predefinedInspectionControls" in config
-                else [],
+                config["predefinedInspectionControls"] if "predefinedInspectionControls" in config else [],
                 PredefinedInspectionControls,
             )
 
@@ -61,7 +57,7 @@ class PredefinedInspectionControlResource(ZscalerObject):
         current_obj_format = {
             "controlGroup": self.control_group,
             "defaultGroup": self.default_group,
-            "predefinedInspectionControls": self.predefined_inspection_controls
+            "predefinedInspectionControls": self.predefined_inspection_controls,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -82,64 +78,44 @@ class PredefinedInspectionControls(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.name = config["name"]\
-                if "name" in config else None
+            self.name = config["name"] if "name" in config else None
 
-            self.description = config["description"]\
-                if "description" in config else None
+            self.description = config["description"] if "description" in config else None
 
-            self.action = config["action"]\
-                if "action" in config else None
+            self.action = config["action"] if "action" in config else None
 
-            self.action_value = config["actionValue"]\
-                if "actionValue" in config else None
+            self.action_value = config["actionValue"] if "actionValue" in config else None
 
-            self.attachment = config["attachment"]\
-                if "attachment" in config else None
+            self.attachment = config["attachment"] if "attachment" in config else None
 
-            self.control_group = config["controlGroup"]\
-                if "controlGroup" in config else None
+            self.control_group = config["controlGroup"] if "controlGroup" in config else None
 
-            self.control_number = config["controlNumber"]\
-                if "controlNumber" in config else None
+            self.control_number = config["controlNumber"] if "controlNumber" in config else None
 
-            self.control_type = config["controlType"]\
-                if "controlType" in config else None
+            self.control_type = config["controlType"] if "controlType" in config else None
 
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
 
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
 
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
 
-            self.default_action = config["defaultAction"]\
-                if "defaultAction" in config else None
+            self.default_action = config["defaultAction"] if "defaultAction" in config else None
 
-            self.default_action_value = config["defaultActionValue"]\
-                if "defaultActionValue" in config else None
+            self.default_action_value = config["defaultActionValue"] if "defaultActionValue" in config else None
 
-            self.paranoia_level = config["paranoiaLevel"]\
-                if "paranoiaLevel" in config else None
+            self.paranoia_level = config["paranoiaLevel"] if "paranoiaLevel" in config else None
 
-            self.protocol_type = config["protocolType"]\
-                if "protocolType" in config else None
+            self.protocol_type = config["protocolType"] if "protocolType" in config else None
 
-            self.severity = config["severity"]\
-                if "severity" in config else None
+            self.severity = config["severity"] if "severity" in config else None
 
-            self.version = config["version"]\
-                if "version" in config else None
+            self.version = config["version"] if "version" in config else None
 
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
-                config["associatedInspectionProfileNames"]
-                if "associatedInspectionProfileNames" in config
-                else [],
+                config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
             )
 

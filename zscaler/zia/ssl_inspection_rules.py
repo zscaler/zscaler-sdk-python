@@ -37,8 +37,8 @@ class SSLInspectionAPI(APIClient):
         If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
-            query_params {dict}: Map of query parameters for the request. 
-                       
+            query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -53,11 +53,12 @@ class SSLInspectionAPI(APIClient):
         ...    pprint(rule)
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /sslInspectionRules
         """
-    )
+        )
 
         query_params = query_params or {}
 
@@ -66,36 +67,24 @@ class SSLInspectionAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             results = []
             for item in response.get_results():
-                results.append(SSLInspectionRules(
-                    self.form_response_body(item))
-                )
+                results.append(SSLInspectionRules(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -130,22 +119,18 @@ class SSLInspectionAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, SSLInspectionRules)
+        response, error = self._request_executor.execute(request, SSLInspectionRules)
 
         if error:
             return (None, response, error)
 
         try:
-            result = SSLInspectionRules(
-                self.form_response_body(response.get_body())
-            )
+            result = SSLInspectionRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -166,7 +151,7 @@ class SSLInspectionAPI(APIClient):
             order (str): The order of the rule, defaults to adding rule to bottom of list.
             rank (str): The admin rank of the rule. Supported values 1-7
             state (bool): The rule state. Accepted values are True and False.
-            road_warrior_for_kerberos (bool): When set to true, the rule is applied to remote users that use PAC with Kerberos authentication.
+            road_warrior_for_kerberos (bool): The rule is applied to remote users that use PAC with Kerberos authentication.
             predefined (bool): Indicates that the rule is predefined by using a true value
             default_rule (bool): Indicates whether the rule is the Default Cloud SSL Inspection Rule or not
             device_trust_levels (list): List of device trust levels for which the rule must be applied. Accepted values are:
@@ -189,8 +174,8 @@ class SSLInspectionAPI(APIClient):
             proxy_gateways (list): The proxy chaining gateway for which this rule is applicable.
             time_windows (list): IDs for time windows the rule applies to.
             workload_groups (list): List of workload groups for which this rule is applicable
-            zpa_app_segments (list): List of Source IP Anchoring-enabled ZPA Application Segments for which this rule is applicable
-            
+            zpa_app_segments (list): List of Source IP Anchoring-enabled ZPA Application Segments
+
         Returns:
             :obj:`Tuple`: New ssl inspection rule resource record.
 
@@ -202,7 +187,7 @@ class SSLInspectionAPI(APIClient):
             ...    description='SSL_Inspection_Rule-01',
             ...    state=True
             ...    order=1,
-            ...    rank=7,            
+            ...    rank=7,
             ...    road_warrior_for_kerberos=True,
             ...    cloud_appliications=['CHATGPT_AI', 'ANDI'],
             ...    platforms=['SCAN_IOS', 'SCAN_ANDROID', 'SCAN_MACOS', 'SCAN_WINDOWS', 'NO_CLIENT_CONNECTOR', 'SCAN_LINUX'],
@@ -223,14 +208,13 @@ class SSLInspectionAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
-        
+
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -240,15 +224,12 @@ class SSLInspectionAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, SSLInspectionRules)
+        response, error = self._request_executor.execute(request, SSLInspectionRules)
         if error:
             return (None, response, error)
 
         try:
-            result = SSLInspectionRules(
-                self.form_response_body(response.get_body())
-            )
+            result = SSLInspectionRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -292,7 +273,7 @@ class SSLInspectionAPI(APIClient):
             ...    description='SSL_Inspection_Rule-01',
             ...    state=True
             ...    order=1,
-            ...    rank=7,            
+            ...    rank=7,
             ...    road_warrrior_for_kerberos=True,
             ...    cloud_appliications=['CHATGPT_AI', 'ANDI'],
             ...    platforms=['SCAN_IOS', 'SCAN_ANDROID', 'SCAN_MACOS', 'SCAN_WINDOWS', 'NO_CLIENT_CONNECTOR', 'SCAN_LINUX'],
@@ -317,10 +298,9 @@ class SSLInspectionAPI(APIClient):
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
-        
+
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -330,19 +310,16 @@ class SSLInspectionAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, SSLInspectionRules)
+        response, error = self._request_executor.execute(request, SSLInspectionRules)
         if error:
             return (None, response, error)
 
         try:
-            result = SSLInspectionRules(
-                self.form_response_body(response.get_body())
-            )
+            result = SSLInspectionRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_rule(self, rule_id: int) -> tuple:
         """
         Deletes the specified ssl inspection filter rule.
@@ -367,13 +344,11 @@ class SSLInspectionAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

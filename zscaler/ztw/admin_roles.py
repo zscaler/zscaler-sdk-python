@@ -37,13 +37,13 @@ class AdminRolesAPI(APIClient):
 
         Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.include_auditor_role]`` {bool}: Include or exclude auditor user information in the list.
-                
+
                 ``[query_params.include_partner_role]`` {bool}: Include or exclude admin user information in the list. Default is True.
-                
+
                 ``[query_params.include_api_roles]`` {bool}: Include or exclude API role information in the list. Default is True.
-                
+
                 ``[query_params.id]`` {list}: Include or exclude role ID information in the list.
 
         Returns:
@@ -80,9 +80,7 @@ class AdminRolesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body, headers, params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -92,9 +90,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
 
         try:
-            results = [AdminRoles(
-                self.form_response_body(item)) for item in response.get_results()
-            ]
+            results = [AdminRoles(self.form_response_body(item)) for item in response.get_results()]
         except Exception as exc:
             return (None, response, exc)
 
@@ -180,7 +176,7 @@ class AdminRolesAPI(APIClient):
             /adminRoles
         """
         )
-        
+
         payload = {
             "name": name,
             "role_type": "EDGE_CONNECTOR_ADMIN",
@@ -193,8 +189,7 @@ class AdminRolesAPI(APIClient):
         body = {**payload, **kwargs}
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -203,15 +198,12 @@ class AdminRolesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AdminRoles)
+        response, error = self._request_executor.execute(request, AdminRoles)
         if error:
             return (None, response, error)
 
         try:
-            result = AdminRoles(
-                self.form_response_body(response.get_body())
-            )
+            result = AdminRoles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -274,28 +266,26 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /adminRoles/{role_id}
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AdminRoles)
+        response, error = self._request_executor.execute(request, AdminRoles)
         if error:
             return (None, response, error)
 
         try:
-            result = AdminRoles(
-                self.form_response_body(response.get_body())
-            )
+            result = AdminRoles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -317,20 +307,20 @@ class AdminRolesAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /adminRoles/{role_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

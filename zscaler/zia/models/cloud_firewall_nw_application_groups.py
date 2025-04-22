@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class NetworkApplicationGroups(ZscalerObject):
     """
     A class representing a Cloud Firewall Network Application Groups object.
@@ -25,16 +26,12 @@ class NetworkApplicationGroups(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-                
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+
             self.network_applications = ZscalerCollection.form_list(
-                config["networkApplications"] if "networkApplications" in config else [],
-                str
+                config["networkApplications"] if "networkApplications" in config else [], str
             )
         else:
             self.id = None

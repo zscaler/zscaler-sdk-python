@@ -29,56 +29,31 @@ class Device(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.agent_version = config["agentVersion"]\
-                if "agentVersion" in config else None
-            self.company_name = config["companyName"]\
-                if "companyName" in config else None
-            self.config_download_time = config["config_download_time"]\
-                if "config_download_time" in config else None
-            self.deregistration_timestamp = config["deregistrationTimestamp"]\
-                if "deregistrationTimestamp" in config else None
-            self.detail = config["detail"]\
-                if "detail" in config else None                                
-            self.download_count = config["download_count"]\
-                if "download_count" in config else None      
-            self.hardware_fingerprint = config["hardwareFingerprint"]\
-                if "hardwareFingerprint" in config else None   
-            self.keep_alive_time = config["keepAliveTime"]\
-                if "keepAliveTime" in config else None   
-            self.last_seen_time = config["last_seen_time"]\
-                if "last_seen_time" in config else None                                   
-            self.mac_address = config["macAddress"]\
-                if "macAddress" in config else None 
-            self.machine_hostname = config["machineHostname"]\
-                if "machineHostname" in config else None 
-            self.manufacturer = config["manufacturer"]\
-                if "manufacturer" in config else None 
-            self.os_version = config["osVersion"]\
-                if "osVersion" in config else None
-            self.owner = config["owner"]\
-                if "owner" in config else None                
-            self.policy_name = config["policyName"]\
-                if "policyName" in config else None    
-            self.registration_state = config["registrationState"]\
-                if "registrationState" in config else None   
-            self.registration_time = config["registration_time"]\
-                if "registration_time" in config else None   
-            self.state = config["state"]\
-                if "state" in config else None   
-            self.tunnel_version = config["tunnelVersion"]\
-                if "tunnelVersion" in config else None 
-            self.type = config["type"]\
-                if "type" in config else None 
-            self.udid = config["udid"]\
-                if "udid" in config else None 
-            self.upm_version = config["upmVersion"]\
-                if "upmVersion" in config else None 
-            self.user = config["user"]\
-                if "user" in config else None 
-            self.vpn_state = config["vpnState"]\
-                if "vpnState" in config else None 
-            self.zapp_arch = config["zappArch"]\
-                if "zappArch" in config else None 
+            self.agent_version = config["agentVersion"] if "agentVersion" in config else None
+            self.company_name = config["companyName"] if "companyName" in config else None
+            self.config_download_time = config["config_download_time"] if "config_download_time" in config else None
+            self.deregistration_timestamp = config["deregistrationTimestamp"] if "deregistrationTimestamp" in config else None
+            self.detail = config["detail"] if "detail" in config else None
+            self.download_count = config["download_count"] if "download_count" in config else None
+            self.hardware_fingerprint = config["hardwareFingerprint"] if "hardwareFingerprint" in config else None
+            self.keep_alive_time = config["keepAliveTime"] if "keepAliveTime" in config else None
+            self.last_seen_time = config["last_seen_time"] if "last_seen_time" in config else None
+            self.mac_address = config["macAddress"] if "macAddress" in config else None
+            self.machine_hostname = config["machineHostname"] if "machineHostname" in config else None
+            self.manufacturer = config["manufacturer"] if "manufacturer" in config else None
+            self.os_version = config["osVersion"] if "osVersion" in config else None
+            self.owner = config["owner"] if "owner" in config else None
+            self.policy_name = config["policyName"] if "policyName" in config else None
+            self.registration_state = config["registrationState"] if "registrationState" in config else None
+            self.registration_time = config["registration_time"] if "registration_time" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.tunnel_version = config["tunnelVersion"] if "tunnelVersion" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.udid = config["udid"] if "udid" in config else None
+            self.upm_version = config["upmVersion"] if "upmVersion" in config else None
+            self.user = config["user"] if "user" in config else None
+            self.vpn_state = config["vpnState"] if "vpnState" in config else None
+            self.zapp_arch = config["zappArch"] if "zappArch" in config else None
 
         else:
             self.agent_version = None
@@ -139,6 +114,7 @@ class Device(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class ForceRemoveDevices(ZscalerObject):
     """
     A class for ForceRemoveDevices objects.
@@ -157,13 +133,9 @@ class ForceRemoveDevices(ZscalerObject):
             self.client_connector_version = ZscalerCollection.form_list(
                 config["clientConnectorVersion"] if "clientConnectorVersion" in config else [], str
             )
-            self.os_type = config["osType"] \
-                if "osType" in config else None
-            self.udids = ZscalerCollection.form_list(
-                config["udids"] if "udids" in config else [], str
-            )
-            self.user_name = config["userName"] \
-                if "userName" in config else None
+            self.os_type = config["osType"] if "osType" in config else None
+            self.udids = ZscalerCollection.form_list(config["udids"] if "udids" in config else [], str)
+            self.user_name = config["userName"] if "userName" in config else None
         else:
             self.client_connector_version = ZscalerCollection.form_list([], str)
             self.os_type = None
@@ -179,11 +151,12 @@ class ForceRemoveDevices(ZscalerObject):
             "clientConnectorVersion": self.client_connector_version,
             "osType": self.os_type,
             "udids": self.udids,
-            "userName": self.user_name
+            "userName": self.user_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class SetDeviceCleanupInfo(ZscalerObject):
     """
     A class for SetDeviceCleanupInfo objects.
@@ -199,26 +172,16 @@ class SetDeviceCleanupInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.active = config["active"] \
-                if "active" in config else None
-            self.auto_purge_days = config["autoPurgeDays"] \
-                if "autoPurgeDays" in config else None
-            self.auto_removal_days = config["autoRemovalDays"] \
-                if "autoRemovalDays" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.created_by = config["createdBy"] \
-                if "createdBy" in config else None
-            self.device_exceed_limit = config["deviceExceedLimit"] \
-                if "deviceExceedLimit" in config else None
-            self.edited_by = config["editedBy"] \
-                if "editedBy" in config else None
-            self.force_remove_type = config["forceRemoveType"] \
-                if "forceRemoveType" in config else None
-            self.force_remove_type_string = config["forceRemoveTypeString"] \
-                if "forceRemoveTypeString" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
+            self.active = config["active"] if "active" in config else None
+            self.auto_purge_days = config["autoPurgeDays"] if "autoPurgeDays" in config else None
+            self.auto_removal_days = config["autoRemovalDays"] if "autoRemovalDays" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.device_exceed_limit = config["deviceExceedLimit"] if "deviceExceedLimit" in config else None
+            self.edited_by = config["editedBy"] if "editedBy" in config else None
+            self.force_remove_type = config["forceRemoveType"] if "forceRemoveType" in config else None
+            self.force_remove_type_string = config["forceRemoveTypeString"] if "forceRemoveTypeString" in config else None
+            self.id = config["id"] if "id" in config else None
         else:
             self.active = None
             self.auto_purge_days = None
@@ -246,7 +209,7 @@ class SetDeviceCleanupInfo(ZscalerObject):
             "editedBy": self.edited_by,
             "forceRemoveType": self.force_remove_type,
             "forceRemoveTypeString": self.force_remove_type_string,
-            "id": self.id
+            "id": self.id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -66,14 +66,7 @@ class CBIProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -83,15 +76,12 @@ class CBIProfileAPI(APIClient):
             return (None, response, error)
 
         try:
-            results = [CBIProfile(
-                self.form_response_body(item)) for item in response.get_results()
-            ]
+            results = [CBIProfile(self.form_response_body(item)) for item in response.get_results()]
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [role for role in results if \
-                lower_search in (role.name.lower() if role.name else "")]
+            results = [role for role in results if lower_search in (role.name.lower() if role.name else "")]
 
         return (results, response, None)

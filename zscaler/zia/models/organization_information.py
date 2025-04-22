@@ -33,145 +33,161 @@ class OrganizationInformation(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.org_id = config["orgId"] \
-                if "orgId" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.hq_location = config["hqLocation"] \
-                if "hqLocation" in config else None
-            self.domains = ZscalerCollection.form_list(
-                config["domains"] if "domains" in config else [], str
+            self.org_id = config["orgId"] if "orgId" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.hq_location = config["hqLocation"] if "hqLocation" in config else None
+            self.domains = ZscalerCollection.form_list(config["domains"] if "domains" in config else [], str)
+            self.geo_location = config["geoLocation"] if "geoLocation" in config else None
+            self.industry_vertical = config["industryVertical"] if "industryVertical" in config else None
+            self.addr_line1 = config["addrLine1"] if "addrLine1" in config else None
+            self.addr_line2 = config["addrLine2"] if "addrLine2" in config else None
+            self.city = config["city"] if "city" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.zipcode = config["zipcode"] if "zipcode" in config else None
+            self.country = config["country"] if "country" in config else None
+            self.employee_count = config["employeeCount"] if "employeeCount" in config else None
+            self.language = config["language"] if "language" in config else None
+            self.timezone = config["timezone"] if "timezone" in config else None
+            self.alert_timer = config["alertTimer"] if "alertTimer" in config else None
+            self.pdomain = config["pdomain"] if "pdomain" in config else None
+            self.internal_company = config["internalCompany"] if "internalCompany" in config else None
+            self.primary_technical_contactcontact_type = (
+                config["primaryTechnicalContactcontactType"] if "primaryTechnicalContactcontactType" in config else None
             )
-            self.geo_location = config["geoLocation"] \
-                if "geoLocation" in config else None
-            self.industry_vertical = config["industryVertical"] \
-                if "industryVertical" in config else None
-            self.addr_line1 = config["addrLine1"] \
-                if "addrLine1" in config else None
-            self.addr_line2 = config["addrLine2"] \
-                if "addrLine2" in config else None
-            self.city = config["city"] \
-                if "city" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.zipcode = config["zipcode"] \
-                if "zipcode" in config else None
-            self.country = config["country"] \
-                if "country" in config else None
-            self.employee_count = config["employeeCount"] \
-                if "employeeCount" in config else None
-            self.language = config["language"] \
-                if "language" in config else None
-            self.timezone = config["timezone"] \
-                if "timezone" in config else None
-            self.alert_timer = config["alertTimer"] \
-                if "alertTimer" in config else None
-            self.pdomain = config["pdomain"] \
-                if "pdomain" in config else None
-            self.internal_company = config["internalCompany"] \
-                if "internalCompany" in config else None
-            self.primary_technical_contactcontact_type = config["primaryTechnicalContactcontactType"] \
-                if "primaryTechnicalContactcontactType" in config else None
-            self.primary_technical_contact_name = config["primaryTechnicalContactName"] \
-                if "primaryTechnicalContactName" in config else None
-            self.primary_technical_contact_title = config["primaryTechnicalContactTitle"] \
-                if "primaryTechnicalContactTitle" in config else None
-            self.primary_technical_contact_email = config["primaryTechnicalContactEmail"] \
-                if "primaryTechnicalContactEmail" in config else None
-            self.primary_technical_contact_phone = config["primaryTechnicalContactPhone"] \
-                if "primaryTechnicalContactPhone" in config else None
-            self.primary_technical_contact_alt_phone = config["primaryTechnicalContactAltPhone"] \
-                if "primaryTechnicalContactAltPhone" in config else None
-            self.primary_technical_contact_insights_href = config["primaryTechnicalContactInsightsHref"] \
-                if "primaryTechnicalContactInsightsHref" in config else None
-            self.secondary_technical_contactcontact_type = config["secondaryTechnicalContactcontactType"] \
-                if "secondaryTechnicalContactcontactType" in config else None
-            self.secondary_technical_contact_name = config["secondaryTechnicalContactName"] \
-                if "secondaryTechnicalContactName" in config else None
-            self.secondary_technical_contact_title = config["secondaryTechnicalContactTitle"] \
-                if "secondaryTechnicalContactTitle" in config else None
-            self.secondary_technical_contact_email = config["secondaryTechnicalContactEmail"] \
-                if "secondaryTechnicalContactEmail" in config else None
-            self.secondary_technical_contact_phone = config["secondaryTechnicalContactPhone"] \
-                if "secondaryTechnicalContactPhone" in config else None
-            self.secondary_technical_contact_alt_phone = config["secondaryTechnicalContactAltPhone"] \
-                if "secondaryTechnicalContactAltPhone" in config else None
-            self.secondary_technical_contact_insights_href = config["secondaryTechnicalContactInsightsHref"] \
-                if "secondaryTechnicalContactInsightsHref" in config else None
-            self.primary_billing_contactcontact_type = config["primaryBillingContactcontactType"] \
-                if "primaryBillingContactcontactType" in config else None
-            self.primary_billing_contact_name = config["primaryBillingContactName"] \
-                if "primaryBillingContactName" in config else None
-            self.primary_billing_contact_title = config["primaryBillingContactTitle"] \
-                if "primaryBillingContactTitle" in config else None
-            self.primary_billing_contact_email = config["primaryBillingContactEmail"] \
-                if "primaryBillingContactEmail" in config else None
-            self.primary_billing_contact_phone = config["primaryBillingContactPhone"] \
-                if "primaryBillingContactPhone" in config else None
-            self.primary_billing_contact_alt_phone = config["primaryBillingContactAltPhone"] \
-                if "primaryBillingContactAltPhone" in config else None
-            self.primary_billing_contact_insights_href = config["primaryBillingContactInsightsHref"] \
-                if "primaryBillingContactInsightsHref" in config else None
-            self.secondary_billing_contactcontact_type = config["secondaryBillingContactcontactType"] \
-                if "secondaryBillingContactcontactType" in config else None
-            self.secondary_billing_contact_name = config["secondaryBillingContactName"] \
-                if "secondaryBillingContactName" in config else None
-            self.secondary_billing_contact_title = config["secondaryBillingContactTitle"] \
-                if "secondaryBillingContactTitle" in config else None
-            self.secondary_billing_contact_email = config["secondaryBillingContactEmail"] \
-                if "secondaryBillingContactEmail" in config else None
-            self.secondary_billing_contact_phone = config["secondaryBillingContactPhone"] \
-                if "secondaryBillingContactPhone" in config else None
-            self.secondary_billing_contact_alt_phone = config["secondaryBillingContactAltPhone"] \
-                if "secondaryBillingContactAltPhone" in config else None
-            self.secondary_billing_contact_insights_href = config["secondaryBillingContactInsightsHref"] \
-                if "secondaryBillingContactInsightsHref" in config else None
-            self.primary_business_contactcontact_type = config["primaryBusinessContactcontactType"] \
-                if "primaryBusinessContactcontactType" in config else None
-            self.primary_business_contact_name = config["primaryBusinessContactName"] \
-                if "primaryBusinessContactName" in config else None
-            self.primary_business_contact_title = config["primaryBusinessContactTitle"] \
-                if "primaryBusinessContactTitle" in config else None
-            self.primary_business_contact_email = config["primaryBusinessContactEmail"] \
-                if "primaryBusinessContactEmail" in config else None
-            self.primary_business_contact_phone = config["primaryBusinessContactPhone"] \
-                if "primaryBusinessContactPhone" in config else None
-            self.primary_business_contact_alt_phone = config["primaryBusinessContactAltPhone"] \
-                if "primaryBusinessContactAltPhone" in config else None
-            self.primary_business_contact_insights_href = config["primaryBusinessContactInsightsHref"] \
-                if "primaryBusinessContactInsightsHref" in config else None
-            self.secondary_business_contactcontact_type = config["secondaryBusinessContactcontactType"] \
-                if "secondaryBusinessContactcontactType" in config else None
-            self.secondary_business_contact_name = config["secondaryBusinessContactName"] \
-                if "secondaryBusinessContactName" in config else None
-            self.secondary_business_contact_title = config["secondaryBusinessContactTitle"] \
-                if "secondaryBusinessContactTitle" in config else None
-            self.secondary_business_contact_email = config["secondaryBusinessContactEmail"] \
-                if "secondaryBusinessContactEmail" in config else None
-            self.secondary_business_contact_phone = config["secondaryBusinessContactPhone"] \
-                if "secondaryBusinessContactPhone" in config else None
-            self.secondary_business_contact_alt_phone = config["secondaryBusinessContactAltPhone"] \
-                if "secondaryBusinessContactAltPhone" in config else None
-            self.secondary_business_contact_insights_href = config["secondaryBusinessContactInsightsHref"] \
-                if "secondaryBusinessContactInsightsHref" in config else None
-            self.exec_insights_href = config["execInsightsHref"] \
-                if "execInsightsHref" in config else None
-            self.legacy_insights_report_was_enabled = config["legacyInsightsReportWasEnabled"] \
-                if "legacyInsightsReportWasEnabled" in config else None
-            self.logo_base64_data = config["logoBase64Data"] \
-                if "logoBase64Data" in config else None
-            self.logo_mime_type = config["logoMimeType"] \
-                if "logoMimeType" in config else None
-            self.cloud_name = config["cloudName"] \
-                if "cloudName" in config else None
-            self.external_email_portal = config["externalEmailPortal"] \
-                if "externalEmailPortal" in config else None
-            self.zpa_tenant_id = config["zpaTenantId"] \
-                if "zpaTenantId" in config else None
-            self.zpa_tenant_cloud = config["zpaTenantCloud"] \
-                if "zpaTenantCloud" in config else None
-            self.customer_contact_inherit = config["customerContactInherit"] \
-                if "customerContactInherit" in config else None
+            self.primary_technical_contact_name = (
+                config["primaryTechnicalContactName"] if "primaryTechnicalContactName" in config else None
+            )
+            self.primary_technical_contact_title = (
+                config["primaryTechnicalContactTitle"] if "primaryTechnicalContactTitle" in config else None
+            )
+            self.primary_technical_contact_email = (
+                config["primaryTechnicalContactEmail"] if "primaryTechnicalContactEmail" in config else None
+            )
+            self.primary_technical_contact_phone = (
+                config["primaryTechnicalContactPhone"] if "primaryTechnicalContactPhone" in config else None
+            )
+            self.primary_technical_contact_alt_phone = (
+                config["primaryTechnicalContactAltPhone"] if "primaryTechnicalContactAltPhone" in config else None
+            )
+            self.primary_technical_contact_insights_href = (
+                config["primaryTechnicalContactInsightsHref"] if "primaryTechnicalContactInsightsHref" in config else None
+            )
+            self.secondary_technical_contactcontact_type = (
+                config["secondaryTechnicalContactcontactType"] if "secondaryTechnicalContactcontactType" in config else None
+            )
+            self.secondary_technical_contact_name = (
+                config["secondaryTechnicalContactName"] if "secondaryTechnicalContactName" in config else None
+            )
+            self.secondary_technical_contact_title = (
+                config["secondaryTechnicalContactTitle"] if "secondaryTechnicalContactTitle" in config else None
+            )
+            self.secondary_technical_contact_email = (
+                config["secondaryTechnicalContactEmail"] if "secondaryTechnicalContactEmail" in config else None
+            )
+            self.secondary_technical_contact_phone = (
+                config["secondaryTechnicalContactPhone"] if "secondaryTechnicalContactPhone" in config else None
+            )
+            self.secondary_technical_contact_alt_phone = (
+                config["secondaryTechnicalContactAltPhone"] if "secondaryTechnicalContactAltPhone" in config else None
+            )
+            self.secondary_technical_contact_insights_href = (
+                config["secondaryTechnicalContactInsightsHref"] if "secondaryTechnicalContactInsightsHref" in config else None
+            )
+            self.primary_billing_contactcontact_type = (
+                config["primaryBillingContactcontactType"] if "primaryBillingContactcontactType" in config else None
+            )
+            self.primary_billing_contact_name = (
+                config["primaryBillingContactName"] if "primaryBillingContactName" in config else None
+            )
+            self.primary_billing_contact_title = (
+                config["primaryBillingContactTitle"] if "primaryBillingContactTitle" in config else None
+            )
+            self.primary_billing_contact_email = (
+                config["primaryBillingContactEmail"] if "primaryBillingContactEmail" in config else None
+            )
+            self.primary_billing_contact_phone = (
+                config["primaryBillingContactPhone"] if "primaryBillingContactPhone" in config else None
+            )
+            self.primary_billing_contact_alt_phone = (
+                config["primaryBillingContactAltPhone"] if "primaryBillingContactAltPhone" in config else None
+            )
+            self.primary_billing_contact_insights_href = (
+                config["primaryBillingContactInsightsHref"] if "primaryBillingContactInsightsHref" in config else None
+            )
+            self.secondary_billing_contactcontact_type = (
+                config["secondaryBillingContactcontactType"] if "secondaryBillingContactcontactType" in config else None
+            )
+            self.secondary_billing_contact_name = (
+                config["secondaryBillingContactName"] if "secondaryBillingContactName" in config else None
+            )
+            self.secondary_billing_contact_title = (
+                config["secondaryBillingContactTitle"] if "secondaryBillingContactTitle" in config else None
+            )
+            self.secondary_billing_contact_email = (
+                config["secondaryBillingContactEmail"] if "secondaryBillingContactEmail" in config else None
+            )
+            self.secondary_billing_contact_phone = (
+                config["secondaryBillingContactPhone"] if "secondaryBillingContactPhone" in config else None
+            )
+            self.secondary_billing_contact_alt_phone = (
+                config["secondaryBillingContactAltPhone"] if "secondaryBillingContactAltPhone" in config else None
+            )
+            self.secondary_billing_contact_insights_href = (
+                config["secondaryBillingContactInsightsHref"] if "secondaryBillingContactInsightsHref" in config else None
+            )
+            self.primary_business_contactcontact_type = (
+                config["primaryBusinessContactcontactType"] if "primaryBusinessContactcontactType" in config else None
+            )
+            self.primary_business_contact_name = (
+                config["primaryBusinessContactName"] if "primaryBusinessContactName" in config else None
+            )
+            self.primary_business_contact_title = (
+                config["primaryBusinessContactTitle"] if "primaryBusinessContactTitle" in config else None
+            )
+            self.primary_business_contact_email = (
+                config["primaryBusinessContactEmail"] if "primaryBusinessContactEmail" in config else None
+            )
+            self.primary_business_contact_phone = (
+                config["primaryBusinessContactPhone"] if "primaryBusinessContactPhone" in config else None
+            )
+            self.primary_business_contact_alt_phone = (
+                config["primaryBusinessContactAltPhone"] if "primaryBusinessContactAltPhone" in config else None
+            )
+            self.primary_business_contact_insights_href = (
+                config["primaryBusinessContactInsightsHref"] if "primaryBusinessContactInsightsHref" in config else None
+            )
+            self.secondary_business_contactcontact_type = (
+                config["secondaryBusinessContactcontactType"] if "secondaryBusinessContactcontactType" in config else None
+            )
+            self.secondary_business_contact_name = (
+                config["secondaryBusinessContactName"] if "secondaryBusinessContactName" in config else None
+            )
+            self.secondary_business_contact_title = (
+                config["secondaryBusinessContactTitle"] if "secondaryBusinessContactTitle" in config else None
+            )
+            self.secondary_business_contact_email = (
+                config["secondaryBusinessContactEmail"] if "secondaryBusinessContactEmail" in config else None
+            )
+            self.secondary_business_contact_phone = (
+                config["secondaryBusinessContactPhone"] if "secondaryBusinessContactPhone" in config else None
+            )
+            self.secondary_business_contact_alt_phone = (
+                config["secondaryBusinessContactAltPhone"] if "secondaryBusinessContactAltPhone" in config else None
+            )
+            self.secondary_business_contact_insights_href = (
+                config["secondaryBusinessContactInsightsHref"] if "secondaryBusinessContactInsightsHref" in config else None
+            )
+            self.exec_insights_href = config["execInsightsHref"] if "execInsightsHref" in config else None
+            self.legacy_insights_report_was_enabled = (
+                config["legacyInsightsReportWasEnabled"] if "legacyInsightsReportWasEnabled" in config else None
+            )
+            self.logo_base64_data = config["logoBase64Data"] if "logoBase64Data" in config else None
+            self.logo_mime_type = config["logoMimeType"] if "logoMimeType" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.external_email_portal = config["externalEmailPortal"] if "externalEmailPortal" in config else None
+            self.zpa_tenant_id = config["zpaTenantId"] if "zpaTenantId" in config else None
+            self.zpa_tenant_cloud = config["zpaTenantCloud"] if "zpaTenantCloud" in config else None
+            self.customer_contact_inherit = config["customerContactInherit"] if "customerContactInherit" in config else None
         else:
             self.org_id = None
             self.name = None
@@ -317,11 +333,12 @@ class OrganizationInformation(ZscalerObject):
             "externalEmailPortal": self.external_email_portal,
             "zpaTenantId": self.zpa_tenant_id,
             "zpaTenantCloud": self.zpa_tenant_cloud,
-            "customerContactInherit": self.customer_contact_inherit
+            "customerContactInherit": self.customer_contact_inherit,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class OrganizationSubscription(ZscalerObject):
     """
     A class for OrganizationSubscription objects.
@@ -337,30 +354,18 @@ class OrganizationSubscription(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.licenses = config["licenses"] \
-                if "licenses" in config else None
-            self.start_date = config["startDate"] \
-                if "startDate" in config else None
-            self.str_start_date = config["strStartDate"] \
-                if "strStartDate" in config else None
-            self.str_end_date = config["strEndDate"] \
-                if "strEndDate" in config else None
-            self.end_date = config["endDate"] \
-                if "endDate" in config else None
-            self.sku = config["sku"] \
-                if "sku" in config else None
-            self.cell_count = config["cellCount"] \
-                if "cellCount" in config else None
-            self.updated_at_timestamp = config["updatedAtTimestamp"] \
-                if "updatedAtTimestamp" in config else None
-            self.subscribed = config["subscribed"] \
-                if "subscribed" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.licenses = config["licenses"] if "licenses" in config else None
+            self.start_date = config["startDate"] if "startDate" in config else None
+            self.str_start_date = config["strStartDate"] if "strStartDate" in config else None
+            self.str_end_date = config["strEndDate"] if "strEndDate" in config else None
+            self.end_date = config["endDate"] if "endDate" in config else None
+            self.sku = config["sku"] if "sku" in config else None
+            self.cell_count = config["cellCount"] if "cellCount" in config else None
+            self.updated_at_timestamp = config["updatedAtTimestamp"] if "updatedAtTimestamp" in config else None
+            self.subscribed = config["subscribed"] if "subscribed" in config else None
         else:
             self.id = None
             self.status = None
@@ -392,11 +397,12 @@ class OrganizationSubscription(ZscalerObject):
             "sku": self.sku,
             "cellCount": self.cell_count,
             "updatedAtTimestamp": self.updated_at_timestamp,
-            "subscribed": self.subscribed
+            "subscribed": self.subscribed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class OrganizationInformationLite(ZscalerObject):
     """
     A class for OrganizationInformationLite objects.
@@ -412,21 +418,13 @@ class OrganizationInformationLite(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.org_id = config["orgId"] \
-                if "orgId" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.cloud_name = config["cloudName"] \
-                if "cloudName" in config else None
-            self.domains = ZscalerCollection.form_list(
-                config["domains"] if "domains" in config else [], str
-            )
-            self.language = config["language"] \
-                if "language" in config else None
-            self.timezone = config["timezone"] \
-                if "timezone" in config else None
-            self.org_disabled = config["orgDisabled"] \
-                if "orgDisabled" in config else None
+            self.org_id = config["orgId"] if "orgId" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.domains = ZscalerCollection.form_list(config["domains"] if "domains" in config else [], str)
+            self.language = config["language"] if "language" in config else None
+            self.timezone = config["timezone"] if "timezone" in config else None
+            self.org_disabled = config["orgDisabled"] if "orgDisabled" in config else None
         else:
             self.org_id = None
             self.name = None
@@ -448,7 +446,7 @@ class OrganizationInformationLite(ZscalerObject):
             "domains": self.domains,
             "language": self.language,
             "timezone": self.timezone,
-            "orgDisabled": self.org_disabled
+            "orgDisabled": self.org_disabled,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

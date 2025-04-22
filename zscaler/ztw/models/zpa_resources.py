@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class ZPAApplicationSegments(ZscalerObject):
     """
     A class for ZPAApplicationSegments objects.
@@ -31,17 +32,12 @@ class ZPAApplicationSegments(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.deleted = config["deleted"] \
-                if "deleted" in config else None
-            self.zpa_id = config["zpaId"] \
-                if "zpaId" in config else None
-                                             
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.deleted = config["deleted"] if "deleted" in config else None
+            self.zpa_id = config["zpaId"] if "zpaId" in config else None
+
         else:
             self.id = None
             self.name = None
@@ -59,7 +55,7 @@ class ZPAApplicationSegments(ZscalerObject):
             "name": self.name,
             "description": self.description,
             "deleted": self.deleted,
-            "zpaId": self.zpa_id
+            "zpaId": self.zpa_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
@@ -83,7 +82,6 @@ class TestCloudFirewallNetworkAppGroup:
                 assert any(g.id == group_id for g in groups), "Updated network application group group not found in list"
             except Exception as exc:
                 errors.append(f"Failed to list network application group groups: {exc}")
-            
 
         finally:
             try:
@@ -96,4 +94,3 @@ class TestCloudFirewallNetworkAppGroup:
         # Final assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
-

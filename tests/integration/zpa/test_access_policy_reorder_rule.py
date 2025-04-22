@@ -41,9 +41,7 @@ class TestAccessPolicyReorderRule:
                     rule_name = f"tests-{generate_random_string()}"
                     rule_description = f"tests-{generate_random_string()}"
                     created_rule, _, err = client.zpa.policies.add_access_rule(
-                        name=rule_name,
-                        description=rule_description,
-                        action="allow"
+                        name=rule_name, description=rule_description, action="allow"
                     )
                     assert err is None, f"Error creating access rule: {err}"
                     assert created_rule is not None, "Created rule is None"
@@ -58,9 +56,7 @@ class TestAccessPolicyReorderRule:
                     rule_id = rule["id"]
                     rule_order = index + 1
                     _, response, err = client.zpa.policies.reorder_rule(
-                        policy_type="access",
-                        rule_id=rule_id,
-                        rule_order=str(rule_order)
+                        policy_type="access", rule_id=rule_id, rule_order=str(rule_order)
                     )
                     assert err is None, f"Error reordering rule {rule_id}: {err}"
                     print(f"Reordered Rule ID: {rule_id}, Response: {response}")

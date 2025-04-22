@@ -28,23 +28,16 @@ class MachineGroup(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if config and "id" in config else None
-            self.name = config["name"]\
-                if config and "name" in config else None
+            self.id = config["id"] if config and "id" in config else None
+            self.name = config["name"] if config and "name" in config else None
 
             # Apply defensive strategy for booleans, though default values are provided
-            self.enabled = config["enabled"]\
-                if config and "enabled" in config else True
+            self.enabled = config["enabled"] if config and "enabled" in config else True
 
-            self.description = config["description"]\
-                if config and "description" in config else None
-            self.creation_time = config["creationTime"]\
-                if config and "creationTime" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if config and "modifiedTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if config and "modifiedBy" in config else None
+            self.description = config["description"] if config and "description" in config else None
+            self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+            self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+            self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
         else:
             # Default values if no config provided
             self.id = None

@@ -26,7 +26,7 @@ class MockZIAClient(ZscalerClient):
         """
         Initialize the MockZIAClient with support for environment variables and
         optional inline config.
-        
+
         Args:
             fs: Fixture to pause/resume the filesystem mock for pyfakefs.
             config: Optional dictionary containing client configuration (clientId, clientSecret, etc.).
@@ -40,12 +40,9 @@ class MockZIAClient(ZscalerClient):
         customerId = config.get("customerId", os.getenv("ZPA_CUSTOMER_ID"))
         vanityDomain = config.get("vanityDomain", os.getenv("ZSCALER_VANITY_DOMAIN"))
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
-        
+
         # Extract logging configuration or use defaults
-        logging_config = config.get("logging", {
-            "enabled": False, 
-            "verbose": False
-        })
+        logging_config = config.get("logging", {"enabled": False, "verbose": False})
 
         # Set up the client config dictionary
         client_config = {
@@ -54,10 +51,7 @@ class MockZIAClient(ZscalerClient):
             "customerId": customerId,
             "vanityDomain": vanityDomain,
             "cloud": cloud,
-            "logging": {
-                "enabled": logging_config.get("enabled", True), 
-                "verbose": logging_config.get("verbose", True)
-            },
+            "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
         }
 
         # Check if we are running in a pytest mock environment

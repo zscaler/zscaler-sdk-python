@@ -27,20 +27,13 @@ class SCIMGroup(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.idp_id = config["idpId"]\
-                if "idpId" in config else None
-            self.idp_group_id = config["idpGroupId"]\
-                if "idpGroupId" in config else None
-            self.internal_id = config["internalId"]\
-                if "internalId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.idp_id = config["idpId"] if "idpId" in config else None
+            self.idp_group_id = config["idpGroupId"] if "idpGroupId" in config else None
+            self.internal_id = config["internalId"] if "internalId" in config else None
         else:
             self.id = None
             self.modified_time = None

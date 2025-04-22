@@ -27,34 +27,20 @@ class SCIMAttributeHeader(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.idp_id = config["idpId"]\
-                if "idpId" in config else None
-            self.data_type = config["dataType"]\
-                if "dataType" in config else None
-            self.schema_uri = config["schemaURI"]\
-                if "schemaURI" in config else None
-            self.multivalued = config["multivalued"]\
-                if "multivalued" in config else None
-            self.required = config["required"]\
-                if "required" in config else None
-            self.case_sensitive = config["caseSensitive"]\
-                if "caseSensitive" in config else None
-            self.mutability = config["mutability"]\
-                if "mutability" in config else None
-            self.returned = config["returned"]\
-                if "returned" in config else None
-            self.uniqueness = config["uniqueness"]\
-                if "uniqueness" in config else None
-            self.delta = config["delta"]\
-                if "delta" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.idp_id = config["idpId"] if "idpId" in config else None
+            self.data_type = config["dataType"] if "dataType" in config else None
+            self.schema_uri = config["schemaURI"] if "schemaURI" in config else None
+            self.multivalued = config["multivalued"] if "multivalued" in config else None
+            self.required = config["required"] if "required" in config else None
+            self.case_sensitive = config["caseSensitive"] if "caseSensitive" in config else None
+            self.mutability = config["mutability"] if "mutability" in config else None
+            self.returned = config["returned"] if "returned" in config else None
+            self.uniqueness = config["uniqueness"] if "uniqueness" in config else None
+            self.delta = config["delta"] if "delta" in config else None
         else:
             self.id = None
             self.creation_time = None

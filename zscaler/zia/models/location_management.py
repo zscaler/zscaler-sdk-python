@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 
 from zscaler.zia.models import common as common
 
+
 class LocationManagement(ZscalerObject):
     """
     A class representing a Location object.
@@ -30,44 +31,25 @@ class LocationManagement(ZscalerObject):
         # import pprint
         # pprint.pprint(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.non_editable = config["nonEditable"]\
-                if "nonEditable" in config else False
-            self.parent_id = config["parentId"]\
-                if "parentId" in config else None
-            self.up_bandwidth = config["upBandwidth"]\
-                if "upBandwidth" in config else None
-            self.dn_bandwidth = config["dnBandwidth"]\
-                if "dnBandwidth" in config else None
-            self.country = config["country"]\
-                if "country" in config else None
-            self.language = config["language"]\
-                if "language" in config else None
-            self.tz = config["tz"]\
-                if "tz" in config else None
-            self.geo_override = config["geoOverride"]\
-                if "geoOverride" in config else False
-            self.latitude = config["latitude"]\
-                if "latitude" in config else None
-            self.longitude = config["longitude"]\
-                if "longitude" in config else None
-            self.auth_required = config["authRequired"]\
-                if "authRequired" in config else False
-            self.ssl_scan_enabled = config["sslScanEnabled"]\
-                if "sslScanEnabled" in config else False
-            self.zapp_ssl_scan_enabled = config["zappSslScanEnabled"]\
-                if "zappSslScanEnabled" in config else False
-            self.xff_forward_enabled = config["xffForwardEnabled"]\
-                if "xffForwardEnabled" in config else False
-            self.other_sub_location = config["otherSubLocation"]\
-                if "otherSubLocation" in config else False
-            self.ec_location = config["ecLocation"]\
-                if "ecLocation" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.non_editable = config["nonEditable"] if "nonEditable" in config else False
+            self.parent_id = config["parentId"] if "parentId" in config else None
+            self.up_bandwidth = config["upBandwidth"] if "upBandwidth" in config else None
+            self.dn_bandwidth = config["dnBandwidth"] if "dnBandwidth" in config else None
+            self.country = config["country"] if "country" in config else None
+            self.language = config["language"] if "language" in config else None
+            self.tz = config["tz"] if "tz" in config else None
+            self.geo_override = config["geoOverride"] if "geoOverride" in config else False
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.auth_required = config["authRequired"] if "authRequired" in config else False
+            self.ssl_scan_enabled = config["sslScanEnabled"] if "sslScanEnabled" in config else False
+            self.zapp_ssl_scan_enabled = config["zappSslScanEnabled"] if "zappSslScanEnabled" in config else False
+            self.xff_forward_enabled = config["xffForwardEnabled"] if "xffForwardEnabled" in config else False
+            self.other_sub_location = config["otherSubLocation"] if "otherSubLocation" in config else False
+            self.ec_location = config["ecLocation"] if "ecLocation" in config else False
 
             # self.surrogate_ip = config["surrogateIP"] \
             #     if "surrogateIP" in config else False
@@ -83,68 +65,53 @@ class LocationManagement(ZscalerObject):
                 or config.get("surrogateIP")  # ← raw from the API
                 or False  # ← fallback
             )
-            
-            self.cookies_and_proxy = config["cookiesAndProxy"]\
-                if "cookiesAndProxy" in config else None
-            self.idle_time_in_minutes = config["idleTimeInMinutes"]\
-                if "idleTimeInMinutes" in config else None
-            self.display_time_unit = config["displayTimeUnit"]\
-                if "displayTimeUnit" in config else None
-            self.surrogate_ip_enforced_for_known_browsers = config["surrogateIPEnforcedForKnownBrowsers"]\
-                if "surrogateIPEnforcedForKnownBrowsers" in config else False
-            self.surrogate_refresh_time_in_minutes = config["surrogateRefreshTimeInMinutes"]\
-                if "surrogateRefreshTimeInMinutes" in config else None
-            self.kerberos_auth = config["kerberosAuth"]\
-                if "kerberosAuth" in config else False
-            self.ofw_enabled = config["ofwEnabled"]\
-                if "ofwEnabled" in config else False
-            self.ips_control = config["ipsControl"]\
-                if "ipsControl" in config else False
-            self.aup_enabled = config["aupEnabled"]\
-                if "aupEnabled" in config else False
-            self.caution_enabled = config["cautionEnabled"]\
-                if "cautionEnabled" in config else False
-            self.aup_block_internet_until_accepted = config["aupBlockInternetUntilAccepted"]\
-                if "aupBlockInternetUntilAccepted" in config else False
-            self.aup_force_ssl_inspection = config["aupForceSslInspection"]\
-                if "aupForceSslInspection" in config else False
-            self.iot_discovery_enabled = config["iotDiscoveryEnabled"]\
-                if "iotDiscoveryEnabled" in config else False
-            self.iot_enforce_policy_set = config["iotEnforcePolicySet"]\
-                if "iotEnforcePolicySet" in config else False
-            self.aup_timeout_in_days = config["aupTimeoutInDays"]\
-                if "aupTimeoutInDays" in config else None
-            self.child_count = config["childCount"]\
-                if "childCount" in config else None
-            self.match_in_child = config["matchInChild"]\
-                if "matchInChild" in config else False
-            self.exclude_from_dynamic_groups = config["excludeFromDynamicGroups"]\
-                if "excludeFromDynamicGroups" in config else None
-            self.exclude_from_manual_groups = config["excludeFromManualGroups"]\
-                if "excludeFromManualGroups" in config else None
-            self.profile = config["profile"]\
-                if "profile" in config else None
 
-            self.default_extranet_ts_pool = config["defaultExtranetTsPool"]\
-                if "defaultExtranetTsPool" in config else False
+            self.cookies_and_proxy = config["cookiesAndProxy"] if "cookiesAndProxy" in config else None
+            self.idle_time_in_minutes = config["idleTimeInMinutes"] if "idleTimeInMinutes" in config else None
+            self.display_time_unit = config["displayTimeUnit"] if "displayTimeUnit" in config else None
+            self.surrogate_ip_enforced_for_known_browsers = (
+                config["surrogateIPEnforcedForKnownBrowsers"] if "surrogateIPEnforcedForKnownBrowsers" in config else False
+            )
+            self.surrogate_refresh_time_in_minutes = (
+                config["surrogateRefreshTimeInMinutes"] if "surrogateRefreshTimeInMinutes" in config else None
+            )
+            self.kerberos_auth = config["kerberosAuth"] if "kerberosAuth" in config else False
+            self.ofw_enabled = config["ofwEnabled"] if "ofwEnabled" in config else False
+            self.ips_control = config["ipsControl"] if "ipsControl" in config else False
+            self.aup_enabled = config["aupEnabled"] if "aupEnabled" in config else False
+            self.caution_enabled = config["cautionEnabled"] if "cautionEnabled" in config else False
+            self.aup_block_internet_until_accepted = (
+                config["aupBlockInternetUntilAccepted"] if "aupBlockInternetUntilAccepted" in config else False
+            )
+            self.aup_force_ssl_inspection = config["aupForceSslInspection"] if "aupForceSslInspection" in config else False
+            self.iot_discovery_enabled = config["iotDiscoveryEnabled"] if "iotDiscoveryEnabled" in config else False
+            self.iot_enforce_policy_set = config["iotEnforcePolicySet"] if "iotEnforcePolicySet" in config else False
+            self.aup_timeout_in_days = config["aupTimeoutInDays"] if "aupTimeoutInDays" in config else None
+            self.child_count = config["childCount"] if "childCount" in config else None
+            self.match_in_child = config["matchInChild"] if "matchInChild" in config else False
+            self.exclude_from_dynamic_groups = (
+                config["excludeFromDynamicGroups"] if "excludeFromDynamicGroups" in config else None
+            )
+            self.exclude_from_manual_groups = (
+                config["excludeFromManualGroups"] if "excludeFromManualGroups" in config else None
+            )
+            self.profile = config["profile"] if "profile" in config else None
 
-            self.default_extranet_dns = config["defaultExtranetDns"]\
-                if "defaultExtranetDns" in config else False
+            self.default_extranet_ts_pool = config["defaultExtranetTsPool"] if "defaultExtranetTsPool" in config else False
 
-            self.ipv6_enabled = config["ipv6Enabled"]\
-                if "ipv6Enabled" in config else False
+            self.default_extranet_dns = config["defaultExtranetDns"] if "defaultExtranetDns" in config else False
 
-            self.basic_auth_enabled = config["basicAuthEnabled"]\
-                if "basicAuthEnabled" in config else False
+            self.ipv6_enabled = config["ipv6Enabled"] if "ipv6Enabled" in config else False
 
-            self.digest_auth_enabled = config["digestAuthEnabled"]\
-                if "digestAuthEnabled" in config else False
+            self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
+
+            self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
 
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
                 config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.CommonIDName
             )
-            
+
             self.dynamic_location_groups = ZscalerCollection.form_list(
                 config["dynamiclocationGroups"] if "dynamiclocationGroups" in config else [], common.CommonIDName
             )
@@ -153,9 +120,7 @@ class LocationManagement(ZscalerObject):
                 config["vpnCredentials"] if "vpnCredentials" in config else [], VPNCredentials
             )
 
-            self.ip_addresses = ZscalerCollection.form_list(
-                config["ipAddresses"] if "ipAddresses" in config else [], str
-            )
+            self.ip_addresses = ZscalerCollection.form_list(config["ipAddresses"] if "ipAddresses" in config else [], str)
 
             if "extranet" in config:
                 if isinstance(config["extranet"], common.CommonIDName):
@@ -186,7 +151,7 @@ class LocationManagement(ZscalerObject):
                     self.extranet_dns = None
             else:
                 self.extranet_dns = None
-                
+
         else:
             self.id = None
             self.name = None
@@ -311,16 +276,11 @@ class VPNCredentials(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.type = config["type"]\
-                if "type" in config else None
-            self.fqdn = config["fqdn"]\
-                if "fqdn" in config else None
-            self.ip_address = config["ipAddress"]\
-                if "ipAddress" in config else None
-            self.comments = config["comments"]\
-                if "comments" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.fqdn = config["fqdn"] if "fqdn" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.comments = config["comments"] if "comments" in config else None
 
         else:
             self.id = None
@@ -329,7 +289,7 @@ class VPNCredentials(ZscalerObject):
             self.ip_address = None
             self.comments = None
             self.location = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -344,4 +304,3 @@ class VPNCredentials(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-

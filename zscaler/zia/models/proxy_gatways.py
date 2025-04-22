@@ -32,24 +32,15 @@ class ProxyGatways(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.primary_proxy = config["primaryProxy"] \
-                if "primaryProxy" in config else None
-            self.secondary_proxy = config["secondaryProxy"] \
-                if "secondaryProxy" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.last_modified_by = config["lastModifiedBy"] \
-                if "lastModifiedBy" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.fail_closed = config["failClosed"] \
-                if "failClosed" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.primary_proxy = config["primaryProxy"] if "primaryProxy" in config else None
+            self.secondary_proxy = config["secondaryProxy"] if "secondaryProxy" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.fail_closed = config["failClosed"] if "failClosed" in config else None
         else:
             self.id = None
             self.name = None
@@ -75,7 +66,7 @@ class ProxyGatways(ZscalerObject):
             "description": self.description,
             "lastModifiedBy": self.last_modified_by,
             "lastModifiedTime": self.last_modified_time,
-            "failClosed": self.fail_closed
+            "failClosed": self.fail_closed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

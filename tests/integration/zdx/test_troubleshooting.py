@@ -180,7 +180,9 @@ class TestTroubleshooting:
                 print(f"Using trace ID {trace_id} for get_deeptrace_webprobe_metrics test")
 
                 # Get deeptrace webprobe metrics using the retrieved device ID and trace ID
-                webprobe_metrics = client.zdx.troubleshooting.get_deeptrace_webprobe_metrics(device_id=device_id, trace_id=trace_id)
+                webprobe_metrics = client.zdx.troubleshooting.get_deeptrace_webprobe_metrics(
+                    device_id=device_id, trace_id=trace_id
+                )
                 pprint(webprobe_metrics)
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -223,7 +225,9 @@ class TestTroubleshooting:
                 print(f"Using trace ID {trace_id} for get_deeptrace_cloudpath_metrics test")
 
                 # Get deeptrace cloudpath metrics using the retrieved device ID and trace ID
-                cloudpath_metrics = client.zdx.troubleshooting.get_deeptrace_cloudpath_metrics(device_id=device_id, trace_id=trace_id)
+                cloudpath_metrics = client.zdx.troubleshooting.get_deeptrace_cloudpath_metrics(
+                    device_id=device_id, trace_id=trace_id
+                )
                 pprint(cloudpath_metrics)
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
@@ -266,7 +270,9 @@ class TestTroubleshooting:
                 print(f"Using trace ID {trace_id} for get_deeptrace_health_metrics test")
 
                 # Get deeptrace health metrics using the retrieved device ID and trace ID
-                health_metrics = client.zdx.troubleshooting.get_deeptrace_health_metrics(device_id=device_id, trace_id=trace_id)
+                health_metrics = client.zdx.troubleshooting.get_deeptrace_health_metrics(
+                    device_id=device_id, trace_id=trace_id
+                )
                 pprint(health_metrics)
         except Exception as e:
             errors.append(f"Exception occurred: {e}")

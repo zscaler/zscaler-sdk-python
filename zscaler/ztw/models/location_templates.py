@@ -33,17 +33,12 @@ class LocationTemplate(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.desc = config["desc"] \
-                if "desc" in config else None
-            self.editable = config["editable"] \
-                if "editable" in config else False
-            self.last_mod_time = config["lastModTime"] \
-                if "lastModTime" in config else None
-                
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.desc = config["desc"] if "desc" in config else None
+            self.editable = config["editable"] if "editable" in config else False
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+
             if "template" in config:
                 if isinstance(config["template"], Template):
                     self.template = config["template"]
@@ -53,7 +48,7 @@ class LocationTemplate(ZscalerObject):
                     self.template = None
             else:
                 self.template = None
-                
+
             if "lastModUid" in config:
                 if isinstance(config["lastModUid"], common.CommonIDNameExternalID):
                     self.last_mod_uid = config["lastModUid"]
@@ -84,22 +79,24 @@ class LocationTemplate(ZscalerObject):
             "template": self.template,
             "editable": self.editable,
             "lastModUid": self.last_mod_uid,
-            "lastModTime": self.last_mod_time
+            "lastModTime": self.last_mod_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Template(ZscalerObject):
     """
     A class for Template objects.
-    
+
     This model wraps a plain dictionary of template settings and converts internal
     snake_case attribute names to the expected camelCase keys for the API.
     """
+
     def __init__(self, config=None):
         """
         Initialize the Template model based on API response or a plain dict.
-        
+
         Args:
             config (dict): A dictionary representing the template settings.
         """
@@ -164,7 +161,7 @@ class Template(ZscalerObject):
             "surrogateIPEnforcedForKnownBrowsers": self.surrogate_i_p_enforced_for_known_browsers,
             "surrogateRefreshTimeUnit": self.surrogate_refresh_time_unit,
             "surrogateRefreshTimeInMinutes": self.surrogate_refresh_time_in_minutes,
-            "surrogateIP": self.surrogate_i_p
+            "surrogateIP": self.surrogate_i_p,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

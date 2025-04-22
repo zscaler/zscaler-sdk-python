@@ -77,9 +77,7 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         try:
             # Expect a single object, not a list
-            result = ServiceEdgeSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -135,21 +133,17 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, ServiceEdgeSchedule)
+        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
         if error:
             return (None, response, error)
 
         try:
-            result = ServiceEdgeSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -207,14 +201,12 @@ class ServiceEdgeScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, ServiceEdgeSchedule)
+        response, error = self._request_executor.execute(request, ServiceEdgeSchedule)
         if error:
             return (None, response, error)
 
@@ -225,9 +217,7 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = ServiceEdgeSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

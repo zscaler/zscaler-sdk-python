@@ -30,6 +30,7 @@ from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import workload_groups as workload_groups
 
+
 class CloudApplicationControl(ZscalerObject):
     """
     A class representing a Cloud Application Control Policy object.
@@ -38,53 +39,30 @@ class CloudApplicationControl(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.time_quota = config["timeQuota"]\
-                if "timeQuota" in config else 0
-            self.size_quota = config["sizeQuota"]\
-                if "sizeQuota" in config else 0
-            self.description = config["description"]\
-                if "description" in config else None
-            self.state = config["state"]\
-                if "state" in config else None
-            self.rank = config["rank"]\
-                if "rank" in config else None
-            self.validity_start_time = config["validityStartTime"]\
-                if "validityStartTime" in config else None
-            self.validity_end_time = config["validityEndTime"]\
-                if "validityEndTime" in config else None
-            self.validity_time_zone_id = config["validityTimeZoneId"]\
-                if "validityTimeZoneId" in config else None
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"]\
-                if "lastModifiedBy" in config else None  
-            self.enforce_time_validity = config["enforceTimeValidity"]\
-                if "enforceTimeValidity" in config else False
-            self.eun_enabled = config["eunEnabled"]\
-                if "eunEnabled" in config else False
-            self.eun_template_id = config["eunTemplateId"]\
-                if "eunTemplateId" in config else None
-            self.browser_eun_template_id = config["browserEunTemplateId"]\
-                if "browserEunTemplateId" in config else None
-            self.cascading_enabled = config["cascadingEnabled"]\
-                if "cascadingEnabled" in config else False
-            self.predefined = config["predefined"]\
-                if "predefined" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.time_quota = config["timeQuota"] if "timeQuota" in config else 0
+            self.size_quota = config["sizeQuota"] if "sizeQuota" in config else 0
+            self.description = config["description"] if "description" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.validity_start_time = config["validityStartTime"] if "validityStartTime" in config else None
+            self.validity_end_time = config["validityEndTime"] if "validityEndTime" in config else None
+            self.validity_time_zone_id = config["validityTimeZoneId"] if "validityTimeZoneId" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.enforce_time_validity = config["enforceTimeValidity"] if "enforceTimeValidity" in config else False
+            self.eun_enabled = config["eunEnabled"] if "eunEnabled" in config else False
+            self.eun_template_id = config["eunTemplateId"] if "eunTemplateId" in config else None
+            self.browser_eun_template_id = config["browserEunTemplateId"] if "browserEunTemplateId" in config else None
+            self.cascading_enabled = config["cascadingEnabled"] if "cascadingEnabled" in config else False
+            self.predefined = config["predefined"] if "predefined" in config else False
 
             # Handling lists of simple values
-            self.actions = ZscalerCollection.form_list(
-                config["actions"] if "actions" in config else [], str
-            )
+            self.actions = ZscalerCollection.form_list(config["actions"] if "actions" in config else [], str)
             self.user_agent_types = ZscalerCollection.form_list(
                 config["userAgentTypes"] if "userAgentTypes" in config else [], str
             )
@@ -95,17 +73,13 @@ class CloudApplicationControl(ZscalerObject):
                 config["userRiskScoreLevels"] if "userRiskScoreLevels" in config else [], str
             )
 
-            self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], str
-            )
-            
+            self.applications = ZscalerCollection.form_list(config["applications"] if "applications" in config else [], str)
+
             # Handling nested objects and lists of objects
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location.LocationManagement
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
@@ -119,15 +93,11 @@ class CloudApplicationControl(ZscalerObject):
             self.time_windows = ZscalerCollection.form_list(
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
             self.cloud_app_instances = ZscalerCollection.form_list(
                 config["cloudAppInstances"] if "cloudAppInstances" in config else [], CloudAppInstance
             )
@@ -135,10 +105,12 @@ class CloudApplicationControl(ZscalerObject):
                 config["tenancyProfileIds"] if "tenancyProfileIds" in config else [], common_reference.ResourceReference
             )
             self.sharing_domain_profiles = ZscalerCollection.form_list(
-                config["sharingDomainProfiles"] if "sharingDomainProfiles" in config else [], common_reference.ResourceReference
+                config["sharingDomainProfiles"] if "sharingDomainProfiles" in config else [],
+                common_reference.ResourceReference,
             )
             self.form_sharing_domain_profiles = ZscalerCollection.form_list(
-                config["formSharingDomainProfiles"] if "formSharingDomainProfiles" in config else [], common_reference.ResourceReference
+                config["formSharingDomainProfiles"] if "formSharingDomainProfiles" in config else [],
+                common_reference.ResourceReference,
             )
             self.cloud_app_risk_profile = ZscalerCollection.form_list(
                 config["cloudAppRiskProfile"] if "cloudAppRiskProfile" in config else [], common_reference.ResourceReference
@@ -237,7 +209,7 @@ class CloudApplicationControl(ZscalerObject):
             "sharingDomainProfiles": [sdp.request_format() for sdp in (self.sharing_domain_profiles or [])],
             "formSharingDomainProfiles": [fsdp.request_format() for fsdp in (self.form_sharing_domain_profiles or [])],
             "cloudAppRiskProfile": self.cloud_app_risk_profile.request_format() if self.cloud_app_risk_profile else None,
-            "cbiProfile": self.cbi_profile.request_format() if self.cbi_profile else None
+            "cbiProfile": self.cbi_profile.request_format() if self.cbi_profile else None,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -269,8 +241,9 @@ class Application(ZscalerObject):
             "misc": self.misc,
             "appNotReady": self.app_not_ready,
             "underMigration": self.under_migration,
-            "appCatModified": self.app_cat_modified
+            "appCatModified": self.app_cat_modified,
         }
+
 
 class CloudAppInstance(ZscalerObject):
     def __init__(self, config=None):
@@ -280,9 +253,4 @@ class CloudAppInstance(ZscalerObject):
         self.type = config["type"] if "type" in config else None
 
     def request_format(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "type": self.type
-        }
-
+        return {"id": self.id, "name": self.name, "type": self.type}

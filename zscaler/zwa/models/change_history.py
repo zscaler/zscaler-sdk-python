@@ -33,12 +33,9 @@ class ChangeHistory(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.incident_id = config["incidentId"] \
-                if "incidentId" in config else None
-            self.start_date = config["startDate"] \
-                if "startDate" in config else None
-            self.end_date = config["endDate"] \
-                if "endDate" in config else None
+            self.incident_id = config["incidentId"] if "incidentId" in config else None
+            self.start_date = config["startDate"] if "startDate" in config else None
+            self.end_date = config["endDate"] if "endDate" in config else None
 
             self.change_history = ZscalerCollection.form_list(
                 config["changeHistory"] if "changeHistory" in config else [], str
@@ -58,7 +55,7 @@ class ChangeHistory(ZscalerObject):
             "incidentId": self.incident_id,
             "startDate": self.start_date,
             "endDate": self.end_date,
-            "changeHistory": self.change_history
+            "changeHistory": self.change_history,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

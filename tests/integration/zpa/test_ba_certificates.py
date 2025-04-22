@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import cryptography.hazmat.backends as crypto_backends
 import cryptography.hazmat.primitives.asymmetric.rsa as rsa
 import cryptography.hazmat.primitives.serialization as serialization

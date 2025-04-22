@@ -42,9 +42,7 @@ class TestCloudFirewallNetworkServicesGroup:
         # Step 1: Search for the required network services and extract their IDs
         try:
             for service_name in ["ICMP_ANY", "UDP_ANY", "TCP_ANY", "DNS"]:
-                services, _, error = client.zia.cloud_firewall.list_network_services(
-                    query_params={"search": service_name}
-                )
+                services, _, error = client.zia.cloud_firewall.list_network_services(query_params={"search": service_name})
                 assert error is None, f"Error searching for network service '{service_name}': {error}"
                 assert services, f"No services found for '{service_name}'"
 
@@ -110,7 +108,7 @@ class TestCloudFirewallNetworkServicesGroup:
             # Ensure label cleanup
             try:
                 if group_id:
-                    _, _, error =  client.zia.cloud_firewall.delete_network_svc_group(group_id)
+                    _, _, error = client.zia.cloud_firewall.delete_network_svc_group(group_id)
                     assert error is None, f"Delete network service group Error: {error}"
             except Exception as e:
                 errors.append(f"Exception during network service group: {str(e)}")

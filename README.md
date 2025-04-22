@@ -361,7 +361,7 @@ MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCv3krdYg3z7h0H
 
 ### Get and set custom headers
 
-It is possible to set custom headers, which will be sent with each request. This feature is only supported when instantiating the OneAPI Client `ZscalerClient`. 
+It is possible to set custom headers, which will be sent with each request. This feature is only supported when instantiating the OneAPI Client `ZscalerClient`.
 
 ```py
 from zscaler import ZscalerClient
@@ -375,7 +375,7 @@ def main():
 
     # clear all custom headers
     client.clear_custom_headers()
-    
+
     # output should be: {}
     print(client.get_custom_headers())
 ```
@@ -385,7 +385,7 @@ This doesn't allow breaking the client. Get default headers:
 
 ## Zscaler OneAPI Rate Limiting
 
-Zscaler OneAPI provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
+Zscaler OneAPI provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time.
 
 ### Built-In Retry
 
@@ -677,9 +677,9 @@ You can provide credentials via the `ZIA_USERNAME`, `ZIA_PASSWORD`, `ZIA_API_KEY
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
-| `username`       | _(String)_ A string that contains the email ID of the API admin.| `ZIA_USERNAME` |    
+| `username`       | _(String)_ A string that contains the email ID of the API admin.| `ZIA_USERNAME` |
 | `password`       | _(String)_ A string that contains the password for the API admin.| `ZIA_PASSWORD` |
-| `api_key`       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| `ZIA_API_KEY` |   
+| `api_key`       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| `ZIA_API_KEY` |
 | `cloud`       | _(String)_ The host and basePath for the cloud services API is `$zsapi.<Zscaler Cloud Name>/api/v1`.| `ZIA_CLOUD` |
 
 ### ZIA Legacy Client Initialization
@@ -736,9 +736,9 @@ You can provide credentials via the `ZTW_USERNAME`, `ZTW_PASSWORD`, `ZTW_API_KEY
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
-| `username`       | _(String)_ A string that contains the email ID of the API admin.| `ZTW_USERNAME` |    
+| `username`       | _(String)_ A string that contains the email ID of the API admin.| `ZTW_USERNAME` |
 | `password`       | _(String)_ A string that contains the password for the API admin.| `ZTW_PASSWORD` |
-| `api_key`       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| `ZTW_API_KEY` |   
+| `api_key`       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| `ZTW_API_KEY` |
 | `cloud`       | _(String)_ The host and basePath for the cloud services API is `$zsapi.<Zscaler Cloud Name>/api/v1`.| `ZTW_CLOUD` |
 
 ### ZTW Legacy Client Initialization
@@ -762,7 +762,7 @@ def main():
             print(f"Error fetching prov url by ID: {error}")
             return
         print(f"Fetched prov url by ID: {fetched_prov_url.as_dict()}")
-        
+
 if __name__ == "__main__":
     main()
 ```
@@ -790,7 +790,7 @@ You can provide credentials via the `ZPA_CLIENT_ID`, `ZPA_CLIENT_SECRET`, `ZPA_C
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
-| `clientId`       | _(String)_ The ZPA API client ID generated from the ZPA console.| `ZPA_CLIENT_ID` |    
+| `clientId`       | _(String)_ The ZPA API client ID generated from the ZPA console.| `ZPA_CLIENT_ID` |
 | `clientSecret`       | _(String)_ The ZPA API client secret generated from the ZPA console.| `ZPA_CLIENT_SECRET` |
 | `customerId`       | _(String)_ The ZPA tenant ID found in the Administration > Company menu in the ZPA console.| `ZPA_CUSTOMER_ID` |
 | `microtenantId`       | _(String)_ The ZPA microtenant ID found in the respective microtenant instance under Configuration & Control > Public API > API Keys menu in the ZPA console.| `ZPA_MICROTENANT_ID` |
@@ -874,7 +874,7 @@ config = {
     with LegacyZCCClient(config) as client:
 
         for group in client.zcc.devices.list_devices():
-            print(group)     
+            print(group)
 if __name__ == "__main__":
     main()
 ```
@@ -943,7 +943,7 @@ You can provide credentials via the `ZWA_CLIENT_ID`, `ZWA_CLIENT_SECRET` environ
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
-| `key_id`       | _(String)_ The ZWA string that contains the API key ID.| `ZWA_CLIENT_ID` |    
+| `key_id`       | _(String)_ The ZWA string that contains the API key ID.| `ZWA_CLIENT_ID` |
 | `key_secret`       | _(String)_ The ZWA string that contains the key secret.| `ZWA_CLIENT_SECRET` |
 | `cloud`       | _(String)_ The ZWA string containing cloud provisioned for your organization.| `ZWA_CLOUD` |
 
@@ -968,14 +968,14 @@ def main():
             return
         for incident in transactions:
             print(incident.as_dict())
-            
+
 if __name__ == "__main__":
     main()
 ```
 
 ## Zscaler Legacy API Rate Limiting
 
-Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
+Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time.
 Please see:
 
 The header `X-Rate-Limit-Remaining` is returned in the API response for each API call. This header indicates the time in seconds until the rate limit resets. The SDK uses the returned value to calculate the retry time for the following services:
@@ -989,7 +989,7 @@ When a 429 error is received, the `Retry-After` header is returned in the API re
 * [ZTW Rate Limiting][rate-limiting-ZTW] for a complete list of which endpoints are rate limited.
 * [ZIA Rate Limiting][rate-limiting-zia] for a complete list of which endpoints are rate limited.
 
-When a 429 error is received, the `retry-after` header will tell you the time at which you can retry. The SDK uses the returned value to calculate the retry time. 
+When a 429 error is received, the `retry-after` header will tell you the time at which you can retry. The SDK uses the returned value to calculate the retry time.
 * [ZPA Rate Limiting][rate-limiting-zpa] for rate limiting requirements.
 
 ### Built-In Retry
@@ -1019,7 +1019,7 @@ Contributors
 - Eddie Parra - [eparra](https://github.com/eparra)
 - Paul Abbot - [abbottp](https://github.com/abbottp)
 
-Thank you to [Mitch Kelly](https://github.com/mitchos/pyZscaler), creator of the [PyZscaler](https://github.com/mitchos/pyZscaler) SDK, 
+Thank you to [Mitch Kelly](https://github.com/mitchos/pyZscaler), creator of the [PyZscaler](https://github.com/mitchos/pyZscaler) SDK,
 which this SDK was inspired on.
 
 ## MIT License

@@ -34,32 +34,20 @@ class WebAppService(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.active = config["active"] \
-                if "active" in config else None
-            self.app_data_blob = ZscalerCollection.form_list(
-                config["appDataBlob"] if "appDataBlob" in config else [], str
-            )
+            self.active = config["active"] if "active" in config else None
+            self.app_data_blob = ZscalerCollection.form_list(config["appDataBlob"] if "appDataBlob" in config else [], str)
             self.app_data_blob_v6 = ZscalerCollection.form_list(
                 config["appDataBlobV6"] if "appDataBlobV6" in config else [], str
             )
-            self.app_name = config["appName"] \
-                if "appName" in config else None
-            self.app_svc_id = config["appSvcId"] \
-                if "appSvcId" in config else None
-            self.app_version = config["appVersion"] \
-                if "appVersion" in config else None
-            self.created_by = config["createdBy"] \
-                if "createdBy" in config else None
-            self.edited_by = config["editedBy"] \
-                if "editedBy" in config else None
-            self.edited_timestamp = config["editedTimestamp"] \
-                if "editedTimestamp" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.uid = config["uid"] \
-                if "uid" in config else None
-            self.version = config["version"] \
-                if "version" in config else None
+            self.app_name = config["appName"] if "appName" in config else None
+            self.app_svc_id = config["appSvcId"] if "appSvcId" in config else None
+            self.app_version = config["appVersion"] if "appVersion" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.edited_by = config["editedBy"] if "editedBy" in config else None
+            self.edited_timestamp = config["editedTimestamp"] if "editedTimestamp" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.uid = config["uid"] if "uid" in config else None
+            self.version = config["version"] if "version" in config else None
         else:
             self.active = None
             self.app_data_blob = ZscalerCollection.form_list([], str)
@@ -91,7 +79,7 @@ class WebAppService(ZscalerObject):
             "editedTimestamp": self.edited_timestamp,
             "id": self.id,
             "uid": self.uid,
-            "version": self.version
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

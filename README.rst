@@ -31,8 +31,8 @@ The Zscaler SDK for Python includes functionality to accelerate development with
 
 Each package is supportedd by an individual and robust HTTP client designed to handle failures on different levels by performing intelligent retries.
 
-**Beta:** This SDK is supported for production use cases, but we do expect future releases to have some interface changes; see `Interface stability`_. 
-We are keen to hear feedback from you on these SDKs. Please `file issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_, and we will address them. 
+**Beta:** This SDK is supported for production use cases, but we do expect future releases to have some interface changes; see `Interface stability`_.
+We are keen to hear feedback from you on these SDKs. Please `file issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_, and we will address them.
 
 Contents
 --------
@@ -115,11 +115,11 @@ You can provide credentials via the ``ZIA_USERNAME``, ``ZIA_PASSWORD``, ``ZIA_AP
 +------------------+-----------------------------+-------------------+
 | Argument         | Description                 | Environment variable |
 +==================+=============================+===================+
-| ``username``       | _(String)_ A string that contains the email ID of the API admin.| ``ZIA_USERNAME`` |    
+| ``username``       | _(String)_ A string that contains the email ID of the API admin.| ``ZIA_USERNAME`` |
 +------------------+-----------------------------+-------------------+
 | ``password``       | _(String)_ A string that contains the password for the API admin.| ``ZIA_PASSWORD`` |
 +------------------+-----------------------------+-------------------+
-| ``api_key``       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| ``ZIA_API_KEY`` |   
+| ``api_key``       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| ``ZIA_API_KEY`` |
 +------------------+-----------------------------+-------------------+
 | ``cloud``       | _(String)_ The host and basePath for the cloud services API is ``$zsapi.<Zscaler Cloud Name>/api/v1``.| ``ZIA_CLOUD`` |
 +------------------+-----------------------------+-------------------+
@@ -147,11 +147,11 @@ You can provide credentials via the ``ZPA_CLIENT_ID``, ``ZPA_CLIENT_SECRET``, ``
 +------------------+-----------------------------+-------------------+
 | Argument         | Description                 | Environment variable |
 +==================+=============================+===================+
-| ``client_id``       | _(String)_ The ZPA API client ID generated from the ZPA console.| ``ZPA_CLIENT_ID`` |    
+| ``client_id``       | _(String)_ The ZPA API client ID generated from the ZPA console.| ``ZPA_CLIENT_ID`` |
 +------------------+-----------------------------+-------------------+
 | ``client_secret``       | _(String)_ The ZPA API client secret generated from the ZPA console.| ``ZPA_CLIENT_SECRET`` |
 +------------------+-----------------------------+-------------------+
-| ``customer_id``       | _(String)_ The ZPA tenant ID found in the Administration > Company menu in the ZPA console.| ``ZPA_CUSTOMER_ID`` |   
+| ``customer_id``       | _(String)_ The ZPA tenant ID found in the Administration > Company menu in the ZPA console.| ``ZPA_CUSTOMER_ID`` |
 +------------------+-----------------------------+-------------------+
 | ``cloud``       | _(String)_ The Zscaler cloud for your tenancy.| ``ZPA_CLOUD`` |
 +------------------+-----------------------------+-------------------+
@@ -216,7 +216,7 @@ Customizing Pagination Parameters
 While pagination is handled automatically, you can also customize pagination behavior by specifying parameters such as data_per_page and max_items. These parameters give you control over the volume of data fetched per request and the total amount of data to process. This is useful for limiting the scope of data fetched
 
 * ``max_pages``: controls the number of items fetched per API call (per page).
-* ``max_items``: controls the total number of items to retrieve across all pages. 
+* ``max_items``: controls the total number of items to retrieve across all pages.
 
 .. code-block:: python
 
@@ -272,7 +272,7 @@ Each one of the configuration values above can be turned into an environment var
 
 - ``ZSCALER_CLIENT_CACHE_ENABLED`` - Enable or disable the caching mechanism within the clien
 - ``ZSCALER_CLIENT_CACHE_DEFAULT_TTL`` - Duration (in seconds) that cached data remains valid. By default data is cached in memory for ``3600`` seconds.
-- ``ZSCALER_CLIENT_CACHE_DEFAULT_TTI`` - This environment variable sets the maximum amount of time (in seconds) that cached data can remain in the cache without being accessed. If the cached data is not accessed within this timeframe, it is removed from the cache, regardless of its TTL. The default TTI is ``1800`` seconds (``30 minutes``) 
+- ``ZSCALER_CLIENT_CACHE_DEFAULT_TTI`` - This environment variable sets the maximum amount of time (in seconds) that cached data can remain in the cache without being accessed. If the cached data is not accessed within this timeframe, it is removed from the cache, regardless of its TTL. The default TTI is ``1800`` seconds (``30 minutes``)
 - ``ZSCALER_SDK_LOG`` - Turn on logging
 - ``ZSCALER_SDK_VERBOSE`` - Turn on logging in verbose mode
 
@@ -280,7 +280,7 @@ Each one of the configuration values above can be turned into an environment var
 Rate Limiting
 -------------
 
-Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time. 
+Zscaler provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time.
 Please see:
 * `ZPA Rate Limiting <rate-limiting-zpa>`_ for rate limiting requirements.
 * `ZIA Rate Limiting <rate-limiting-zia>`_ for a complete list of which endpoints are rate limited.
@@ -307,15 +307,15 @@ In most cases, you won't need to build the SDK from source. If you want to build
 - Clone the repo
 - Run ``make build:dist`` from the root of the project (assuming Python is installed)
 - Ensure tests run succesfully by executing ``make test-simple``
-- Install ``tox`` if not installed already using: ``pip install tox``. 
+- Install ``tox`` if not installed already using: ``pip install tox``.
 - Run tests using ``tox`` in the root directory of the project.
 
 .. _Interface stability:
 Interface stability
 -------------------
 
-Zscaler is actively working on stabilizing the Zscaler SDK for Python's interfaces.  
-You are highly encouraged to pin the exact dependency version and read the `changelog <https://github.com/zscaler/zscaler-sdk-python/blob/master/CHANGELOG.md>`_ 
+Zscaler is actively working on stabilizing the Zscaler SDK for Python's interfaces.
+You are highly encouraged to pin the exact dependency version and read the `changelog <https://github.com/zscaler/zscaler-sdk-python/blob/master/CHANGELOG.md>`_
 where Zscaler documents the changes. Zscaler may have minor `documented <https://github.com/zscaler/zscaler-sdk-python/blob/master/CHANGELOG.md>`_
 backward-incompatible changes, such as renaming some type names to bring more consistency.
 

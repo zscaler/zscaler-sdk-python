@@ -37,23 +37,24 @@ class DLPEngineAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a DLP dictionary's name or description attributes.
+                ``[query_params.search]`` {str}: Search string to match against a DLP Engine name or description attributes.
 
         Returns:
             tuple: A tuple containing (list of DLP Engines instances, Response, error)
 
         Examples:
             Gets a list of all DLP Engine.
-            
+
             >>> fetched_engines, response, error = client.zia.dlp_engine.list_dlp_engines()
             ... if error:
             ...     print(f"Error listing DLP Engines: {error}")
             ...     return
             ... print(f"Fetched engines: {[engine.as_dict() for engine in fetched_engines]}")
-            
+
             Gets a list of all DLP Engine by name.
-            
-            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines(query_params={"search": 'EUIBAN_LEAKAGE'})
+
+            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines(
+                query_params={"search": 'EUIBAN_LEAKAGE'})
             ... if error:
             ...     print(f"Error listing DLP Engine: {error}")
             ...     return
@@ -75,14 +76,7 @@ class DLPEngineAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -93,18 +87,13 @@ class DLPEngineAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPEngine(
-                    self.form_response_body(item))
-                )
+                results.append(DLPEngine(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -125,16 +114,17 @@ class DLPEngineAPI(APIClient):
 
         Examples:
             Gets a list of all DLP Engine.
-            
+
             >>> fetched_engines, response, error = client.zia.dlp_engine.list_dlp_engines_lite()
             ... if error:
             ...     print(f"Error listing DLP Engines: {error}")
             ...     return
             ... print(f"Fetched engines: {[engine.as_dict() for engine in fetched_engines]}")
-            
+
             Gets a list of all DLP Engine name and ID.
-            
-            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines_lite(query_params={"search": 'EUIBAN_LEAKAGE'})
+
+            >>> engine, response, error = = client.zia.dlp_engine.list_dlp_engines_lite(
+                query_params={"search": 'EUIBAN_LEAKAGE'})
             ... if error:
             ...     print(f"Error listing DLP Engine: {error}")
             ...     return
@@ -156,14 +146,7 @@ class DLPEngineAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -174,18 +157,13 @@ class DLPEngineAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPEngine(
-                    self.form_response_body(item))
-                )
+                results.append(DLPEngine(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -214,30 +192,23 @@ class DLPEngineAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, DLPEngine)
+        response, error = self._request_executor.execute(request, DLPEngine)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPEngine(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPEngine(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_dlp_engine(
-        self,
-        **kwargs
-    ) -> tuple:
+    def add_dlp_engine(self, **kwargs) -> tuple:
         """
         Adds a new dlp engine.
 
@@ -283,8 +254,7 @@ class DLPEngineAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -293,15 +263,12 @@ class DLPEngineAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, DLPEngine)
+        response, error = self._request_executor.execute(request, DLPEngine)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPEngine(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPEngine(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -352,20 +319,16 @@ class DLPEngineAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, DLPEngine)
+        response, error = self._request_executor.execute(request, DLPEngine)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPEngine(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPEngine(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -392,13 +355,11 @@ class DLPEngineAPI(APIClient):
         )
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -427,20 +388,16 @@ class DLPEngineAPI(APIClient):
 
         payload = {"data": expression}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, DLPVAlidateExpression)
+        response, error = self._request_executor.execute(request, DLPVAlidateExpression)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPVAlidateExpression(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPVAlidateExpression(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

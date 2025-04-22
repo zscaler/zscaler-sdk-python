@@ -19,6 +19,8 @@ from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_rules import FirewallRule
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 import json
+
+
 class FirewallPolicyAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
@@ -49,21 +51,22 @@ class FirewallPolicyAPI(APIClient):
         >>> rules, response, error = zia.zia.cloud_firewall_rules.list_rules(
             query_params={"search": "Block malicious IPs and domains"})
         ...    pprint(rule)
-        
+
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /firewallFilteringRules
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -74,9 +77,7 @@ class FirewallPolicyAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(FirewallRule(
-                    self.form_response_body(item))
-                )
+                result.append(FirewallRule(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -108,23 +109,19 @@ class FirewallPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, FirewallRule)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallRule(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -201,12 +198,11 @@ class FirewallPolicyAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -216,17 +212,14 @@ class FirewallPolicyAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, FirewallRule)
 
         if error:
             return (None, response, error)
 
         try:
             # Parse the response and return it as a FirewallRule object
-            result = FirewallRule(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -299,26 +292,22 @@ class FirewallPolicyAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
 
-        response, error = self._request_executor\
-            .execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, FirewallRule)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallRule(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -347,14 +336,11 @@ class FirewallPolicyAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
-

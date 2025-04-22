@@ -62,24 +62,20 @@ class AppConnectorScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request with headers
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=None, headers={}, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=None, headers={}, params=params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
             # Expect a single object, not a list
-            result = AppConnectorSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -135,21 +131,17 @@ class AppConnectorScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AppConnectorSchedule)
+        response, error = self._request_executor.execute(request, AppConnectorSchedule)
         if error:
             return (None, response, error)
 
         try:
-            result = AppConnectorSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -209,14 +201,12 @@ class AppConnectorScheduleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AppConnectorSchedule)
+        response, error = self._request_executor.execute(request, AppConnectorSchedule)
         if error:
             return (None, response, error)
 
@@ -227,9 +217,7 @@ class AppConnectorScheduleAPI(APIClient):
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = AppConnectorSchedule(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorSchedule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

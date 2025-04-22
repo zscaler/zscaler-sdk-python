@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.ztw.models.forwarding_gateways import ForwardingGateways
 from zscaler.utils import format_url
 
+
 class ForwardingGatewaysAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
@@ -26,7 +27,7 @@ class ForwardingGatewaysAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
+
     def list_gateways(self, query_params=None) -> tuple:
         """
         Retrieves a list of ZIA gateways and Log and Control gateways.
@@ -55,14 +56,7 @@ class ForwardingGatewaysAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -73,18 +67,13 @@ class ForwardingGatewaysAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(ForwardingGateways(
-                    self.form_response_body(item))
-                )
+                results.append(ForwardingGateways(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -106,7 +95,7 @@ class ForwardingGatewaysAPI(APIClient):
 
         Examples:
             Gets a list of all forward gateways.
-            
+
             >>> gw_list, response, error = ztw.forwarding_gateways.list_gateway_lite():
             ... if error:
             ...     print(f"Error listing forward gateways: {error}")
@@ -114,9 +103,9 @@ class ForwardingGatewaysAPI(APIClient):
             ... print(f"Total gateways found: {len(gw_list)}")
             ... for gw in gw_list:
             ...     print(gw.as_dict())
-            
+
             Gets a list of all forward gateways name and ID.
-            
+
             >>> gw_list, response, error = ztw.forwarding_gateways.list_gateway_lite(query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing forward gateways: {error}")
@@ -141,14 +130,7 @@ class ForwardingGatewaysAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -159,18 +141,13 @@ class ForwardingGatewaysAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(ForwardingGateways(
-                    self.form_response_body(item))
-                )
+                results.append(ForwardingGateways(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -195,7 +172,7 @@ class ForwardingGatewaysAPI(APIClient):
                 Supported values: "NONE", "AUTO", "MANUAL_OVERRIDE", "SUBCLOUD", "VZEN", "PZEN", "DC"
             secondary_type (str): Type of the secondary proxy, such as automatic proxy (AUTO), manual proxy (DC)
                 Supported values: "NONE", "AUTO", "MANUAL_OVERRIDE", "SUBCLOUD", "VZEN", "PZEN", "DC"
-                
+
         Returns:
             tuple: A tuple containing the newly added Forwarding Gateway, response, and error.
         """
@@ -209,8 +186,7 @@ class ForwardingGatewaysAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -219,19 +195,16 @@ class ForwardingGatewaysAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ForwardingGateways)
+        response, error = self._request_executor.execute(request, ForwardingGateways)
         if error:
             return (None, response, error)
 
         try:
-            result = ForwardingGateways(
-                self.form_response_body(response.get_body())
-            )
+            result = ForwardingGateways(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_gateway(self, gateway_id: int) -> tuple:
         """
         Deletes a ZIA gateway or Log and Control gateway based on the specified ID.
@@ -243,20 +216,20 @@ class ForwardingGatewaysAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /gateways/{gateway_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

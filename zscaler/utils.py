@@ -31,6 +31,7 @@ import pytz
 from box import Box, BoxList
 from dateutil import parser
 from requests import Response
+
 # from restfly import APIIterator
 
 from zscaler.constants import RETRYABLE_STATUS_CODES, DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR
@@ -76,6 +77,7 @@ reformat_params = [
     ("service_ids", "services"),
     # etc. expand as needed
 ]
+
 
 # Recursive function to convert all keys and nested keys from camel case
 # to snake case.
@@ -205,6 +207,7 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
+
 #### Working function
 # def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
 #     """
@@ -213,7 +216,7 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
 #       - pop that value,
 #       - insert it into target_dict with name 'payload_key',
 #       - converting each item in the list to { "id": int(item) } if it's a string or int.
-    
+
 #     Additional domain logic can be placed here, e.g. for zpa_app_segments or cbi_profile, etc.
 #     """
 #     for (key, payload_key) in id_groups:
@@ -222,13 +225,14 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
 #             # Example logic: if it's a list, do the ID transform
 #             if isinstance(value, list):
 #                 target_dict[payload_key] = [
-#                     {"id": int(item)} if isinstance(item, (str, int)) else item 
+#                     {"id": int(item)} if isinstance(item, (str, int)) else item
 #                     for item in value
 #                 ]
 #             elif isinstance(value, dict) and "id" in value:
 #                 # single dict with ID
 #                 target_dict[payload_key] = {"id": int(value["id"])}
 #     return
+
 
 def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
     """
@@ -237,7 +241,7 @@ def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: 
       - convert that list/dict to the final "id" structure,
       - store in target_dict[payload_key].
     """
-    for (key, payload_key) in id_groups:
+    for key, payload_key in id_groups:
         if key in source_dict:
             value = source_dict.pop(key)
             if isinstance(value, list):
@@ -258,7 +262,8 @@ def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: 
                 value["id"] = int(value["id"])
                 target_dict[payload_key] = value
     return
-  
+
+
 def transform_clientless_apps(clientless_app_ids):
     transformed_apps = []
     for app in clientless_app_ids:
@@ -274,6 +279,7 @@ def transform_clientless_apps(clientless_app_ids):
             }
         )
     return transformed_apps
+
 
 def format_clientless_apps(clientless_apps):
     # Implement this function to format clientless_apps as needed for the update request
@@ -416,7 +422,9 @@ def calculate_epoch(hours: int):
     past_time = int(current_time - (hours * 3600))
     return current_time, past_time
 
+
 import functools
+
 
 def zdx_params(func):
     """
@@ -443,11 +451,11 @@ def zdx_params(func):
             ("department_id", "dept"),
             ("geo_id", "geo"),
             ("exclude_dept", "exclude_dept"),  # New: array[integer]
-            ("exclude_loc", "exclude_loc"),    # New: array[integer]
-            ("exclude_geo", "exclude_geo"),    # New: array[str]
+            ("exclude_loc", "exclude_loc"),  # New: array[integer]
+            ("exclude_geo", "exclude_geo"),  # New: array[str]
             ("score_bucket", "score_bucket"),  # New: str (poor, okay, good)
-            ("limit", "limit"),                # New: int
-            ("offset", "offset")               # New: str (API-defined pagination)
+            ("limit", "limit"),  # New: int
+            ("offset", "offset"),  # New: str (API-defined pagination)
         ]:
             if key in kwargs:
                 value = kwargs.pop(key)
@@ -505,7 +513,9 @@ def zdx_params(func):
         kwargs["query_params"] = query_params
 
         return func(self, *args, **kwargs)
+
     return wrapper
+
 
 class CommonFilters:
     def __init__(self, **kwargs):
@@ -547,6 +557,7 @@ class CommonFilters:
             }.items()
             if v is not None
         }
+
 
 def remove_cloud_suffix(str_name: str) -> str:
     """
@@ -769,6 +780,7 @@ zcc_param_map = {
     },
 }
 
+
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
     request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
     # Log the request details before sending the request
@@ -791,7 +803,8 @@ def dump_request(logger, url: str, method: str, json, params, headers, request_u
         log_lines.append(f"\n{request_body}")
     log_lines.append("--------------------------------------------------------------------")
     logger.info("\n".join(log_lines))
-    
+
+
 def dump_response(
     logger,
     url: str,

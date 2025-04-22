@@ -27,45 +27,26 @@ class Certificate(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.cname = config["cName"]\
-                if "cName" in config else None
-            self.valid_from = config["validFromInEpochSec"]\
-                if "validFromInEpochSec" in config else None
-            self.valid_to = config["validToInEpochSec"]\
-                if "validToInEpochSec" in config else None
-            self.certificate = config["certificate"]\
-                if "certificate" in config else None
-            self.issued_to = config["issuedTo"]\
-                if "issuedTo" in config else None
-            self.issued_by = config["issuedBy"]\
-                if "issuedBy" in config else None
-            self.serial_no = config["serialNo"]\
-                if "serialNo" in config else None
-            self.public_key = config["publicKey"]\
-                if "publicKey" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.cname = config["cName"] if "cName" in config else None
+            self.valid_from = config["validFromInEpochSec"] if "validFromInEpochSec" in config else None
+            self.valid_to = config["validToInEpochSec"] if "validToInEpochSec" in config else None
+            self.certificate = config["certificate"] if "certificate" in config else None
+            self.issued_to = config["issuedTo"] if "issuedTo" in config else None
+            self.issued_by = config["issuedBy"] if "issuedBy" in config else None
+            self.serial_no = config["serialNo"] if "serialNo" in config else None
+            self.public_key = config["publicKey"] if "publicKey" in config else None
 
-            self.status = config["status"]\
-                if "status" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
-            self.san = ZscalerCollection.form_list(
-                config["san"] if "san" in config else [], str
-            )
+            self.san = ZscalerCollection.form_list(config["san"] if "san" in config else [], str)
         else:
             self.id = None
             self.modified_time = None

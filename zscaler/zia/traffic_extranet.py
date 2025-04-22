@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_extranet import TrafficExtranet
 from zscaler.utils import format_url
 
+
 class TrafficExtranetAPI(APIClient):
     """
     A Client object for the Extranet resource.
@@ -64,10 +65,12 @@ class TrafficExtranetAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /extranet
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
@@ -76,15 +79,13 @@ class TrafficExtranetAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -92,9 +93,7 @@ class TrafficExtranetAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(TrafficExtranet(
-                    self.form_response_body(item))
-                )
+                result.append(TrafficExtranet(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -110,33 +109,31 @@ class TrafficExtranetAPI(APIClient):
             tuple: A tuple containing (Extranet instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, TrafficExtranet)
+        response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficExtranet(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficExtranet(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def add_extranet(self, **kwargs) -> tuple:
         """
         Adds a new extranet for the organization.
@@ -159,8 +156,7 @@ class TrafficExtranetAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -170,15 +166,12 @@ class TrafficExtranetAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficExtranet)
+        response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficExtranet(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficExtranet(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -194,30 +187,28 @@ class TrafficExtranetAPI(APIClient):
             tuple: A tuple containing the updated Extranet, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrafficExtranet)
+        response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficExtranet(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficExtranet(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -233,20 +224,20 @@ class TrafficExtranetAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /extranet/{extranet_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

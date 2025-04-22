@@ -50,10 +50,12 @@ class PacFilesAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
@@ -62,15 +64,13 @@ class PacFilesAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -78,9 +78,7 @@ class PacFilesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(PacFiles(
-                    self.form_response_body(item))
-                )
+                result.append(PacFiles(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -96,37 +94,32 @@ class PacFilesAPI(APIClient):
             tuple: A tuple containing (Pac File instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(
-            method=http_method, 
-            endpoint=api_url, 
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PacFiles)
+        response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
 
         try:
-            result = PacFiles(
-                self.form_response_body(response.get_body())
-            )
+            result = PacFiles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)
 
-    def get_pac_file_version(self, pac_id: int,  pac_version: int, query_params=None) -> tuple:
+    def get_pac_file_version(self, pac_id: int, pac_version: int, query_params=None) -> tuple:
         """
         Returns the PAC file version details for a given PAC ID and version.
 
@@ -144,34 +137,29 @@ class PacFilesAPI(APIClient):
             >>> pac_file_version = zia.get_pac_file_version('12345', '1', filter='pac_content')
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(
-            method=http_method, 
-            endpoint=api_url, 
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PacFiles)
+        response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
 
         try:
-            result = PacFiles(
-                self.form_response_body(response.get_body())
-            )
+            result = PacFiles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)
 
     def add_pac_file(self, **kwargs) -> tuple:
@@ -182,8 +170,8 @@ class PacFilesAPI(APIClient):
             name (str): The name of the new PAC file.
             description (str): The description of the new PAC file.
             domain (str): The domain of your organization to which the PAC file applies.
-            pac_commit_message (str): The commit message entered while saving the PAC file version as indicated by the pacVersion field.
-            pac_verification_status (str): Indicates the verification status of the PAC file and if any errors are identified in the syntax.
+            pac_commit_message (str): Commit msg entered when saving the PAC file version as indicated by the pacVersion field.
+            pac_verification_status (str): Verification status of the PAC file and if any errors are identified in the syntax.
                                            Supported Values: `VERIFY_NOERR`, `VERIFY_ERR`, `NOVERIFY`
             pac_version_status (str): Version status of the new PAC file.
                                       Supported Values: `DEPLOYED`, `STAGE`, `LKG`
@@ -217,16 +205,17 @@ class PacFilesAPI(APIClient):
 
         # Preserve the existing logic for payload and request
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles
-        """)
+        """
+        )
 
         body = kwargs
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -236,15 +225,12 @@ class PacFilesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, PacFiles)
+        response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
 
         try:
-            result = PacFiles(
-                self.form_response_body(response.get_body())
-            )
+            result = PacFiles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -311,15 +297,19 @@ class PacFilesAPI(APIClient):
             delete_version = kwargs.pop("delete_version", None)
             if not delete_version:
                 delete_version = min(pac_versions)  # Default to the oldest version if delete_version is not provided
-            api_url = format_url(f"""
+            api_url = format_url(
+                f"""
                 {self._zia_base_endpoint}
                 /pacFiles/{pac_id}/version/{pac_version}?deleteVersion={delete_version}
-            """)
+            """
+            )
         else:
-            api_url = format_url(f"""
+            api_url = format_url(
+                f"""
                 {self._zia_base_endpoint}
                 /pacFiles/{pac_id}/version/{pac_version}
-            """)
+            """
+            )
 
         # Step 4: Use the constructor logic to create the request and execute it
         body = kwargs
@@ -334,19 +324,16 @@ class PacFilesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, PacFiles)
+        response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
 
         try:
-            result = PacFiles(
-                self.form_response_body(response.get_body())
-            )
+            result = PacFiles(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def validate_pac_file(self, pac_file_content: str) -> tuple:
         """
         Sends the PAC file content for validation and returns the validation result.
@@ -374,10 +361,12 @@ class PacFilesAPI(APIClient):
             >>>     print("PAC file validation failed.")
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles/validate
-        """)
+        """
+        )
 
         # Use the PAC file content as the raw body for the request
         body = pac_file_content
@@ -405,12 +394,7 @@ class PacFilesAPI(APIClient):
         return (result, response, None)
 
     def update_pac_file(
-        self,
-        pac_id: int,
-        pac_version: int,
-        pac_version_action: str,
-        new_lkg_ver: int = None,
-        **kwargs
+        self, pac_id: int, pac_version: int, pac_version_action: str, new_lkg_ver: int = None, **kwargs
     ) -> tuple:
         """
         Performs the specified action on the PAC file version and updates the file status.
@@ -456,10 +440,12 @@ class PacFilesAPI(APIClient):
                 )
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}/version/{pac_version}/action/{pac_version_action}
-        """)
+        """
+        )
 
         # Append optional newLKGVer parameter to the URL if provided
         if new_lkg_ver is not None:
@@ -470,8 +456,7 @@ class PacFilesAPI(APIClient):
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -480,16 +465,13 @@ class PacFilesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, PacFiles)
+        response, error = self._request_executor.execute(request, PacFiles)
         if error:
             return (None, response, error)
 
         # Parse the response into a PacFiles instance
         try:
-            result = PacFiles(
-                self.form_response_body(response.get_body())
-            )
+            result = PacFiles(self.form_response_body(response.get_body()))
         except Exception as parse_error:
             return (None, response, parse_error)
 
@@ -506,20 +488,20 @@ class PacFilesAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /pacFiles/{pac_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

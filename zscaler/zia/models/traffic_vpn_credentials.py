@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import common as common
 
+
 class TrafficVPNCredentials(ZscalerObject):
     """
     A class representing a VPN Credentials object.
@@ -28,20 +29,13 @@ class TrafficVPNCredentials(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.type = config["type"]\
-                if "type" in config else None
-            self.fqdn = config["fqdn"]\
-                if "fqdn" in config else None
-            self.ip_address = config["ipAddress"]\
-                if "ipAddress" in config else None
-            self.pre_shared_key = config["preSharedKey"]\
-                if "preSharedKey" in config else None
-            self.comments = config["comments"]\
-                if "comments" in config else None
-            self.disabled = config["disabled"]\
-                if "disabled" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.fqdn = config["fqdn"] if "fqdn" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.pre_shared_key = config["preSharedKey"] if "preSharedKey" in config else None
+            self.comments = config["comments"] if "comments" in config else None
+            self.disabled = config["disabled"] if "disabled" in config else False
 
             if "location" in config:
                 if isinstance(config["location"], common.CommonBlocks):
@@ -52,7 +46,7 @@ class TrafficVPNCredentials(ZscalerObject):
                     self.location = None
             else:
                 self.location = None
-                
+
             if "managedBy" in config:
                 if isinstance(config["managedBy"], common.CommonBlocks):
                     self.managed_by = config["managedBy"]
@@ -73,7 +67,7 @@ class TrafficVPNCredentials(ZscalerObject):
             self.disabled = False
             self.location = None
             self.managed_by = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

@@ -72,7 +72,7 @@ class TestAdvancedSettings:
                 prefer_sni_over_conn_host=False,
                 sipa_xff_header_enabled=False,
                 block_non_http_on_http_port_enabled=True,
-                ui_session_timeout=300
+                ui_session_timeout=300,
             )
             assert err is None, f"Error updating advanced settings: {err}"
             assert hasattr(updated_settings, "enable_office365"), "Missing expected attribute after update"

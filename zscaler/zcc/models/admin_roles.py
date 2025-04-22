@@ -32,82 +32,48 @@ class AdminRoles(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.admin_management = config["adminManagement"] \
-                if "adminManagement" in config else None
-            self.administrator_group = config["administratorGroup"] \
-                if "administratorGroup" in config else None
-            self.android_profile = config["androidProfile"] \
-                if "androidProfile" in config else None
-            self.app_bypass = config["appBypass"] \
-                if "appBypass" in config else None
-            self.app_profile_group = config["appProfileGroup"] \
-                if "appProfileGroup" in config else None
-            self.audit_logs = config["auditLogs"] \
-                if "auditLogs" in config else None
-            self.auth_setting = config["authSetting"] \
-                if "authSetting" in config else None
-            self.client_connector_app_store = config["clientConnectorAppStore"] \
-                if "clientConnectorAppStore" in config else None
-            self.client_connector_idp = config["clientConnectorIdp"] \
-                if "clientConnectorIdp" in config else None
-            self.client_connector_notifications = config["clientConnectorNotifications"] \
-                if "clientConnectorNotifications" in config else None
-            self.client_connector_support = config["clientConnectorSupport"] \
-                if "clientConnectorSupport" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.created_by = config["createdBy"] \
-                if "createdBy" in config else None
-            self.dashboard = config["dashboard"] \
-                if "dashboard" in config else None
-            self.ddil_configuration = config["ddilConfiguration"] \
-                if "ddilConfiguration" in config else None
-            self.dedicated_proxy_ports = config["dedicatedProxyPorts"] \
-                if "dedicatedProxyPorts" in config else None
-            self.device_groups = config["deviceGroups"] \
-                if "deviceGroups" in config else None
-            self.device_overview = config["deviceOverview"] \
-                if "deviceOverview" in config else None
-            self.device_posture = config["devicePosture"] \
-                if "devicePosture" in config else None
-            self.enrolled_devices_group = config["enrolledDevicesGroup"] \
-                if "enrolledDevicesGroup" in config else None
-            self.forwarding_profile = config["forwardingProfile"] \
-                if "forwardingProfile" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.ios_profile = config["iosProfile"] \
-                if "iosProfile" in config else None
-            self.is_editable = config["isEditable"] \
-                if "isEditable" in config else None
-            self.linux_profile = config["linuxProfile"] \
-                if "linuxProfile" in config else None
-            self.mac_profile = config["macProfile"] \
-                if "macProfile" in config else None
-            self.machine_tunnel = config["machineTunnel"] \
-                if "machineTunnel" in config else None
-            self.obfuscate_data = config["obfuscateData"] \
-                if "obfuscateData" in config else None
-            self.partner_device_overview = config["partnerDeviceOverview"] \
-                if "partnerDeviceOverview" in config else None
-            self.public_api = config["publicApi"] \
-                if "publicApi" in config else None
-            self.role_name = config["roleName"] \
-                if "roleName" in config else None
-            self.trusted_network = config["trustedNetwork"] \
-                if "trustedNetwork" in config else None
-            self.updated_by = config["updatedBy"] \
-                if "updatedBy" in config else None
-            self.user_agent = config["userAgent"] \
-                if "userAgent" in config else None
-            self.windows_profile = config["windowsProfile"] \
-                if "windowsProfile" in config else None
-            self.zpa_partner_login = config["zpaPartnerLogin"] \
-                if "zpaPartnerLogin" in config else None
-            self.zscaler_deception = config["zscalerDeception"] \
-                if "zscalerDeception" in config else None
-            self.zscaler_entitlement = config["zscalerEntitlement"] \
-                if "zscalerEntitlement" in config else None
+            self.admin_management = config["adminManagement"] if "adminManagement" in config else None
+            self.administrator_group = config["administratorGroup"] if "administratorGroup" in config else None
+            self.android_profile = config["androidProfile"] if "androidProfile" in config else None
+            self.app_bypass = config["appBypass"] if "appBypass" in config else None
+            self.app_profile_group = config["appProfileGroup"] if "appProfileGroup" in config else None
+            self.audit_logs = config["auditLogs"] if "auditLogs" in config else None
+            self.auth_setting = config["authSetting"] if "authSetting" in config else None
+            self.client_connector_app_store = (
+                config["clientConnectorAppStore"] if "clientConnectorAppStore" in config else None
+            )
+            self.client_connector_idp = config["clientConnectorIdp"] if "clientConnectorIdp" in config else None
+            self.client_connector_notifications = (
+                config["clientConnectorNotifications"] if "clientConnectorNotifications" in config else None
+            )
+            self.client_connector_support = config["clientConnectorSupport"] if "clientConnectorSupport" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.dashboard = config["dashboard"] if "dashboard" in config else None
+            self.ddil_configuration = config["ddilConfiguration"] if "ddilConfiguration" in config else None
+            self.dedicated_proxy_ports = config["dedicatedProxyPorts"] if "dedicatedProxyPorts" in config else None
+            self.device_groups = config["deviceGroups"] if "deviceGroups" in config else None
+            self.device_overview = config["deviceOverview"] if "deviceOverview" in config else None
+            self.device_posture = config["devicePosture"] if "devicePosture" in config else None
+            self.enrolled_devices_group = config["enrolledDevicesGroup"] if "enrolledDevicesGroup" in config else None
+            self.forwarding_profile = config["forwardingProfile"] if "forwardingProfile" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.ios_profile = config["iosProfile"] if "iosProfile" in config else None
+            self.is_editable = config["isEditable"] if "isEditable" in config else None
+            self.linux_profile = config["linuxProfile"] if "linuxProfile" in config else None
+            self.mac_profile = config["macProfile"] if "macProfile" in config else None
+            self.machine_tunnel = config["machineTunnel"] if "machineTunnel" in config else None
+            self.obfuscate_data = config["obfuscateData"] if "obfuscateData" in config else None
+            self.partner_device_overview = config["partnerDeviceOverview"] if "partnerDeviceOverview" in config else None
+            self.public_api = config["publicApi"] if "publicApi" in config else None
+            self.role_name = config["roleName"] if "roleName" in config else None
+            self.trusted_network = config["trustedNetwork"] if "trustedNetwork" in config else None
+            self.updated_by = config["updatedBy"] if "updatedBy" in config else None
+            self.user_agent = config["userAgent"] if "userAgent" in config else None
+            self.windows_profile = config["windowsProfile"] if "windowsProfile" in config else None
+            self.zpa_partner_login = config["zpaPartnerLogin"] if "zpaPartnerLogin" in config else None
+            self.zscaler_deception = config["zscalerDeception"] if "zscalerDeception" in config else None
+            self.zscaler_entitlement = config["zscalerEntitlement"] if "zscalerEntitlement" in config else None
         else:
             self.admin_management = None
             self.administrator_group = None
@@ -191,7 +157,7 @@ class AdminRoles(ZscalerObject):
             "windowsProfile": self.windows_profile,
             "zpaPartnerLogin": self.zpa_partner_login,
             "zscalerDeception": self.zscaler_deception,
-            "zscalerEntitlement": self.zscaler_entitlement
+            "zscalerEntitlement": self.zscaler_entitlement,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

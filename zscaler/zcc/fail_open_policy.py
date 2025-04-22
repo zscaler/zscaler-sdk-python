@@ -26,7 +26,7 @@ class FailOpenPolicyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-        
+
     def list_by_company(self, query_params=None) -> tuple:
         """
         Returns the list of Fail Open Policy By Company in the Client Connector Portal.
@@ -60,8 +60,7 @@ class FailOpenPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -77,43 +76,41 @@ class FailOpenPolicyAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def update_failopen_policy(self, **kwargs) -> tuple:
         """
         Update Fail Open Policy
 
         Args:
-           device_type: (int): 
-           policy_id: (int): 
+           device_type: (int):
+           policy_id: (int):
 
         Returns:
             tuple: A tuple containing the Updated Fail Open Policy, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /webFailOpenPolicy/edit
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, FailOpenPolicy)
+        response, error = self._request_executor.execute(request, FailOpenPolicy)
         if error:
             return (None, response, error)
 
         try:
-            result = FailOpenPolicy (
-                self.form_response_body(response.get_body())
-            )
+            result = FailOpenPolicy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

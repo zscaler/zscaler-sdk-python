@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 
+
 class TrafficGRETunnel(ZscalerObject):
     """
     A class representing a Traffic Forwarding GRE Tunnel object.
@@ -25,22 +26,14 @@ class TrafficGRETunnel(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.comment = config["comment"]\
-                if "comment" in config else None
-            self.source_ip = config["sourceIp"] \
-                if "sourceIp" in config else None
-            self.internal_ip_range = config["internalIpRange"] \
-                if "internalIpRange" in config else None
-            self.within_country = config["withinCountry"] \
-                if "withinCountry" in config else False
-            self.ip_unnumbered = config["ipUnnumbered"] \
-                if "ipUnnumbered" in config else False
-            self.sub_cloud = config["subcloud"] \
-                if "subcloud" in config else None
-            self.last_modification_time = config["lastModificationTime"] \
-                if "lastModificationTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.comment = config["comment"] if "comment" in config else None
+            self.source_ip = config["sourceIp"] if "sourceIp" in config else None
+            self.internal_ip_range = config["internalIpRange"] if "internalIpRange" in config else None
+            self.within_country = config["withinCountry"] if "withinCountry" in config else False
+            self.ip_unnumbered = config["ipUnnumbered"] if "ipUnnumbered" in config else False
+            self.sub_cloud = config["subcloud"] if "subcloud" in config else None
+            self.last_modification_time = config["lastModificationTime"] if "lastModificationTime" in config else None
 
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):
@@ -49,7 +42,7 @@ class TrafficGRETunnel(ZscalerObject):
                     self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
                 else:
                     self.last_modified_by = None
-                                        
+
             if "primaryDestVip" in config:
                 if isinstance(config["primaryDestVip"], GreVirtualIP):
                     self.primary_dest_vip = config["primaryDestVip"]
@@ -65,7 +58,7 @@ class TrafficGRETunnel(ZscalerObject):
                     self.secondary_dest_vip = GreVirtualIP(config["secondaryDestVip"])
                 else:
                     self.secondary_dest_vip = None
-            
+
         else:
             self.id = None
             self.comment = None
@@ -100,6 +93,7 @@ class TrafficGRETunnel(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class GreVirtualIP(ZscalerObject):
     """
     A class for GreVirtualIP objects.
@@ -115,14 +109,10 @@ class GreVirtualIP(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.virtual_ip = config["virtualIp"] \
-                if "virtualIp" in config else None
-            self.private_service_edge = config["privateServiceEdge"] \
-                if "privateServiceEdge" in config else False
-            self.datacenter = config["datacenter"] \
-                if "datacenter" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.virtual_ip = config["virtualIp"] if "virtualIp" in config else None
+            self.private_service_edge = config["privateServiceEdge"] if "privateServiceEdge" in config else False
+            self.datacenter = config["datacenter"] if "datacenter" in config else False
 
         else:
             self.id = None

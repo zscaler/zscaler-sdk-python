@@ -32,14 +32,10 @@ class Activation(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.org_edit_status = config["orgEditStatus"] \
-                if "orgEditStatus" in config else None
-            self.org_last_activate_status = config["orgLastActivateStatus"] \
-                if "orgLastActivateStatus" in config else None
-            self.admin_status_map = config["adminStatusMap"] \
-                if "adminStatusMap" in config else None
-            self.admin_activate_status = config["adminActivateStatus"] \
-                if "adminActivateStatus" in config else None
+            self.org_edit_status = config["orgEditStatus"] if "orgEditStatus" in config else None
+            self.org_last_activate_status = config["orgLastActivateStatus"] if "orgLastActivateStatus" in config else None
+            self.admin_status_map = config["adminStatusMap"] if "adminStatusMap" in config else None
+            self.admin_activate_status = config["adminActivateStatus"] if "adminActivateStatus" in config else None
         else:
             self.org_edit_status = None
             self.org_last_activate_status = None
@@ -55,7 +51,7 @@ class Activation(ZscalerObject):
             "orgEditStatus": self.org_edit_status,
             "orgLastActivateStatus": self.org_last_activate_status,
             "adminStatusMap": self.admin_status_map,
-            "adminActivateStatus": self.admin_activate_status
+            "adminActivateStatus": self.admin_activate_status,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

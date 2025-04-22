@@ -14,4 +14,3 @@ class ZscalerCollection:
     @staticmethod
     def is_formed(value, data_type: type):
         return isinstance(value, data_type)
-

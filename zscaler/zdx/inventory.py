@@ -14,12 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.software_inventory import SoftwareList
 from zscaler.zdx.models.software_inventory import DeviceSoftwareInventory
 from zscaler.utils import format_url, zdx_params
+
 
 class InventoryAPI(APIClient):
 
@@ -29,24 +29,21 @@ class InventoryAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_softwares(
-        self,
-        query_params=None
-    ) -> tuple:
+    def list_softwares(self, query_params=None) -> tuple:
         """
         Returns a list of all software in ZDX.
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
 
-                ``[query_params.location_id]`` {list}: The unique ID for the department. 
-                
+                ``[query_params.location_id]`` {list}: The unique ID for the department.
+
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
 
                 ``[query_params.geo_id]`` {list}: List of unique ID for the geolocation.
 
                 ``[query_params.user_ids]`` {list}: List of user IDs.
-                                
+
                 ``[query_params.device_ids]`` {list}: List of device IDs.
 
         Returns:
@@ -84,8 +81,7 @@ class InventoryAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -107,25 +103,21 @@ class InventoryAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_software_keys(
-        self,
-        software_key: str, 
-        query_params=None
-    ) -> tuple:
+    def list_software_keys(self, software_key: str, query_params=None) -> tuple:
         """
         Returns a list of all users and devices for the given software name and version.
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.department_id]`` {str}: The unique ID for the department.
 
                 ``[query_params.geo_id]`` {int}: The unique ID for the geolocation.
 
                 ``[query_params.user_ids]`` {list}: List of user IDs.
-                                
+
                 ``[query_params.device_ids]`` {list}: List of device IDs.
 
         Returns:
@@ -154,18 +146,19 @@ class InventoryAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zdx_base_endpoint}
             /inventory/software/{software_key}
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -175,8 +168,7 @@ class InventoryAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceSoftwareInventory(
-                self.form_response_body(response.get_body()))]  
+            result = [DeviceSoftwareInventory(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

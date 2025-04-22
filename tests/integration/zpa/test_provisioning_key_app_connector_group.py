@@ -36,8 +36,8 @@ class TestAppConnectorGroupProvisioningKey:
 
         connector_group_id = None
         connector_key_id = None
-        key_type="connector"
-        
+        key_type = "connector"
+
         try:
             try:
                 # Create an App Connector Group
@@ -71,7 +71,9 @@ class TestAppConnectorGroupProvisioningKey:
 
             try:
                 # Retrieve the 'Service Edge' enrollment certificate
-                connector_certs, _, err = client.zpa.enrollment_certificates.list_enrolment(query_params={'search': 'Connector'})
+                connector_certs, _, err = client.zpa.enrollment_certificates.list_enrolment(
+                    query_params={"search": "Connector"}
+                )
                 if err:
                     errors.append(f"Retrieving 'connector' enrolment certificate failed: {err}")
                 else:
@@ -90,7 +92,7 @@ class TestAppConnectorGroupProvisioningKey:
                     name=connector_key_name,
                     max_usage=2,
                     enrollment_cert_id=connector_cert_id,
-                    component_id=connector_group_id
+                    component_id=connector_group_id,
                 )
                 if err:
                     errors.append(f"CONNECTOR_GRP Provisioning Key creation failed: {err}")
@@ -119,7 +121,9 @@ class TestAppConnectorGroupProvisioningKey:
                 if err:
                     errors.append(f"Retrieving CONNECTOR_GRP Provisioning Key failed: {err}")
                 else:
-                    assert retrieved_connector_key.id == connector_key_id, "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
+                    assert (
+                        retrieved_connector_key.id == connector_key_id
+                    ), "Failed to retrieve the correct CONNECTOR_GRP Provisioning Key"
             except Exception as exc:
                 errors.append(f"Retrieving CONNECTOR_GRP Provisioning Key failed: {exc}")
 
@@ -130,7 +134,6 @@ class TestAppConnectorGroupProvisioningKey:
                 assert err is None, f"Error updating provisioning key: {err}"
             except Exception as exc:
                 errors.append(f"Updating CONNECTOR_GRP Provisioning Key failed: {exc}")
-
 
         finally:
             cleanup_errors = []
@@ -143,7 +146,9 @@ class TestAppConnectorGroupProvisioningKey:
                     # For 204 No Content, delete_response should be None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:
-                    cleanup_errors.append(f"Cleanup failed for Deleting CONNECTOR_GRP Provisioning Key ID {connector_key_id}: {cleanup_exc}")
+                    cleanup_errors.append(
+                        f"Cleanup failed for Deleting CONNECTOR_GRP Provisioning Key ID {connector_key_id}: {cleanup_exc}"
+                    )
 
             # Attempt to delete the Connector Group
             if connector_group_id:

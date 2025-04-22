@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.zwa.dlp_incidents import DLPIncidentsAPI
 from zscaler.zwa.audit_logs import AuditLogsAPI
 
+
 class ZWAService:
     """ZWA Service client, exposing various ZWA APIs."""
 
@@ -27,7 +28,7 @@ class ZWAService:
     def audit_logs(self):
         """
         The interface object for the :ref:`ZWA Audit Logs interface <zwa-audit_logs>`.
-        
+
         """
         return AuditLogsAPI(self._request_executor)
 
@@ -35,7 +36,6 @@ class ZWAService:
     def dlp_incidents(self):
         """
         The interface object for the :ref:`ZWA DLP Incidents interface <zwa-dlp_incidents>`.
-        
+
         """
         return DLPIncidentsAPI(self._request_executor)
-    

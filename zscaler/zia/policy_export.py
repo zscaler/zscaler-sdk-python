@@ -18,10 +18,12 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 
+
 class PolicyExportAPI(APIClient):
     """
     A Client object for exporting ZIA policy rules to JSON files.
     """
+
     _zia_base_endpoint = "/zia/api/v1"
 
     def __init__(self, request_executor):
@@ -30,7 +32,7 @@ class PolicyExportAPI(APIClient):
 
     def policy_export(self, policy_types=None, output_file=None) -> tuple:
         """
-        Exports the rules for the specified policy types. The server typically returns 
+        Exports the rules for the specified policy types. The server typically returns
         a ZIP file containing one JSON file per policy type.
 
         Args:
@@ -76,9 +78,7 @@ class PolicyExportAPI(APIClient):
             return (None, error)
 
         # We want raw bytes so we can save them if it's a ZIP
-        response, error = self._request_executor.execute(
-            request, return_raw_response=True
-        )
+        response, error = self._request_executor.execute(request, return_raw_response=True)
         if error:
             return (None, f"Request failed: {error}")
 

@@ -25,34 +25,27 @@ class Microtenant(ZscalerObject):
     Args:
         config (dict): A dictionary representing the microtenant configuration.
     """
+
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if config and "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if config and "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if config and "modifiedBy" in config else None
-            self.name = config["name"]\
-                if config and "name" in config else None
-            self.description = config["description"]\
-                if config and "description" in config else None
-            self.enabled = config["enabled"]\
-                if config and "enabled" in config else None
-            self.operator = config["operator"]\
-                if config and "operator" in config else None
-            self.criteria_attribute = config["criteriaAttribute"]\
-                if config and "criteriaAttribute" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+            self.name = config["name"] if config and "name" in config else None
+            self.description = config["description"] if config and "description" in config else None
+            self.enabled = config["enabled"] if config and "enabled" in config else None
+            self.operator = config["operator"] if config and "operator" in config else None
+            self.criteria_attribute = config["criteriaAttribute"] if config and "criteriaAttribute" in config else None
 
-            self.privileged_approvals_enabled = config["privilegedApprovalsEnabled"]\
-                if config and "privilegedApprovalsEnabled" in config else None
+            self.privileged_approvals_enabled = (
+                config["privilegedApprovalsEnabled"] if config and "privilegedApprovalsEnabled" in config else None
+            )
 
             self.criteria_attribute_values = ZscalerCollection.form_list(
-                    config["criteriaAttributeValues"] if "criteriaAttributeValues" in config else [], str
-                )
+                config["criteriaAttributeValues"] if "criteriaAttributeValues" in config else [], str
+            )
 
         else:
             self.id = None
@@ -73,7 +66,6 @@ class Microtenant(ZscalerObject):
         """
         parent_req_format = super().request_format()
         current_obj_format = {
-
             "id": self.id,
             "name": self.name,
             "description": self.description,
@@ -84,7 +76,7 @@ class Microtenant(ZscalerObject):
             "operator": self.operator,
             "criteriaAttribute": self.criteria_attribute,
             "criteriaAttributeValues": self.criteria_attribute_values,
-            "privilegedApprovalsEnabled": self.privileged_approvals_enabled
+            "privilegedApprovalsEnabled": self.privileged_approvals_enabled,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -108,9 +100,7 @@ class MicrotenantSearch(ZscalerObject):
 
             filter_and_sort = config.get("filterAndSortDto", {})
 
-            self.filter_by = ZscalerCollection.form_list(
-                config["filterBy"] if "filterBy" in config else [], FilterBy
-            )
+            self.filter_by = ZscalerCollection.form_list(config["filterBy"] if "filterBy" in config else [], FilterBy)
 
             self.page_by = PageBy(filter_and_sort["pageBy"]) if "pageBy" in filter_and_sort else None
             self.sort_by = SortBy(filter_and_sort["sortBy"]) if "sortBy" in filter_and_sort else None
@@ -125,13 +115,7 @@ class MicrotenantSearch(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "filterAndSortDto": {
-                "filterBy": self.filter_by,
-                "pageBy": self.page_by,
-                "sortBy": self.sort_by
-            }
-        }
+        current_obj_format = {"filterAndSortDto": {"filterBy": self.filter_by, "pageBy": self.page_by, "sortBy": self.sort_by}}
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -151,16 +135,11 @@ class FilterBy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.comma_sep_values = config["commaSepValues"]\
-                if "commaSepValues" in config else None
-            self.filter_name = config["filterName"]\
-                if "filterName" in config else None
-            self.operator = config["operator"]\
-                if "operator" in config else None
+            self.comma_sep_values = config["commaSepValues"] if "commaSepValues" in config else None
+            self.filter_name = config["filterName"] if "filterName" in config else None
+            self.operator = config["operator"] if "operator" in config else None
 
-            self.values = ZscalerCollection.form_list(
-                config["values"] if "values" in config else [], str
-            )
+            self.values = ZscalerCollection.form_list(config["values"] if "values" in config else [], str)
         else:
             self.comma_sep_values = None
             self.filter_name = None
@@ -197,14 +176,10 @@ class PageBy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.page = config["page"]\
-                if "page" in config else None
-            self.page_size = config["pageSize"]\
-                if "pageSize" in config else None
-            self.valid_page = config["validPage"]\
-                if "validPage" in config else None
-            self.valid_page_size = config["validPageSize"]\
-                if "validPageSize" in config else None
+            self.page = config["page"] if "page" in config else None
+            self.page_size = config["pageSize"] if "pageSize" in config else None
+            self.valid_page = config["validPage"] if "validPage" in config else None
+            self.valid_page_size = config["validPageSize"] if "validPageSize" in config else None
         else:
             self.page = None
             self.page_size = None
@@ -241,10 +216,8 @@ class SortBy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.sort_name = config["sortName"]\
-                if "sortName" in config else None
-            self.sort_order = config["sortOrder"]\
-                if "sortOrder" in config else None
+            self.sort_name = config["sortName"] if "sortName" in config else None
+            self.sort_order = config["sortOrder"] if "sortOrder" in config else None
         else:
             self.sort_name = None
             self.sort_order = None

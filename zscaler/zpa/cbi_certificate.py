@@ -48,27 +48,25 @@ class CBICertificateAPI(APIClient):
             ...     print(certificate.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /certificates
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(CBICertificate(
-                    self.form_response_body(item))
-                )
+                result.append(CBICertificate(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -92,25 +90,23 @@ class CBICertificateAPI(APIClient):
             ... print(f"Fetched certificate by ID: {fetched_certificate.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBICertificate)
+        response, error = self._request_executor.execute(request, CBICertificate)
         if error:
             return (None, response, error)
 
         try:
-            result = CBICertificate(
-                self.form_response_body(response.get_body())
-            )
+            result = CBICertificate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -137,36 +133,30 @@ class CBICertificateAPI(APIClient):
             )
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /certificate
-        """)
+        """
+        )
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBICertificate)
+        response, error = self._request_executor.execute(request, CBICertificate)
         if error:
             return (None, response, error)
 
         try:
-            result = CBICertificate(
-                self.form_response_body(response.get_body())
-            )
+            result = CBICertificate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_cbi_certificate(
-        self,
-        certificate_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> tuple:
         """
         Updates an existing cloud browser isolation certificate.
 
@@ -191,22 +181,22 @@ class CBICertificateAPI(APIClient):
             )
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """)
+        """
+        )
 
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBICertificate)
+        response, error = self._request_executor.execute(request, CBICertificate)
         if error:
             return (None, response, error)
 
@@ -216,17 +206,12 @@ class CBICertificateAPI(APIClient):
             return (CBICertificate({"id": certificate_id}), None, None)
 
         try:
-            result = CBICertificate(
-                self.form_response_body(response.get_body())
-            )
+            result = CBICertificate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cbi_certificate(
-        self,
-        certificate_id: str
-    ) -> tuple:
+    def delete_cbi_certificate(self, certificate_id: str) -> tuple:
         """
         Deletes the specified cloud browser isolation certificate.
 
@@ -246,18 +231,18 @@ class CBICertificateAPI(APIClient):
             ... print(f"CBI Certificate with ID {updated_certificate.id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /certificates/{certificate_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

@@ -509,7 +509,7 @@ Client ``ZscalerClient``.
 
        # clear all custom headers
        client.clear_custom_headers()
-       
+
        # output should be: {}
        print(client.get_custom_headers())
 
@@ -643,7 +643,7 @@ Each Zscaler service has its own pagination requiremens and max page size:
 |     Service Notes  | Default Page Size |        Max Page Size       |          Notes                  |
 +====================+===================+============================+=================================+
 |                    |                   |                            |                                 |
-|      ``ZPA``       |     ``20``        |         ``500``            |  Uses ``pagesize``` (lowercase) | 
+|      ``ZPA``       |     ``20``        |         ``500``            |  Uses ``pagesize``` (lowercase) |
 |                    |                   |                            |                                 |
 +--------------------+-------------------+----------------------------+---------------------------------+
 |                    |                   |                            |                                 |
@@ -1102,7 +1102,7 @@ ZTW Legacy Client Initialization
                print(f"Error fetching prov url by ID: {error}")
                return
            print(f"Fetched prov url by ID: {fetched_prov_url.as_dict()}")
-           
+
    if __name__ == "__main__":
        main()
 
@@ -1292,7 +1292,7 @@ ZCC Legacy Client Initialization
        with LegacyZCCClient(config) as client:
 
            for group in client.zcc.devices.list_devices():
-               print(group)     
+               print(group)
    if __name__ == "__main__":
        main()
 
@@ -1434,7 +1434,7 @@ ZWA Legacy Client Initialization
                return
            for incident in transactions:
                print(incident.as_dict())
-               
+
    if __name__ == "__main__":
        main()
 

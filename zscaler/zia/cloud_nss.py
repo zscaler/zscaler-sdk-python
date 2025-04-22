@@ -20,6 +20,7 @@ from zscaler.zia.models.cloud_nss import NSSTestConnectivity
 from zscaler.zia.models.cloud_nss import NssFeeds
 from zscaler.utils import format_url
 
+
 class CloudNSSAPI(APIClient):
     """
     A Client object for the Cloud NSS resource.
@@ -34,7 +35,7 @@ class CloudNSSAPI(APIClient):
     def list_nss_feed(self, query_params=None) -> tuple:
         """
         Retrieves the cloud NSS feeds configured in the ZIA Admin Portal
-        
+
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.feed_type]`` {str}: The cloud NSS feed type
@@ -60,23 +61,19 @@ class CloudNSSAPI(APIClient):
 
         body = {}
         headers = {}
-        
-        request, error = self._request_executor\
-             .create_request(http_method, api_url, body, headers, params=query_params)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(NssFeeds(
-                    self.form_response_body(item))
-                )
+                result.append(NssFeeds(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -112,23 +109,18 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request, NssFeeds)
+        response, error = self._request_executor.execute(request, NssFeeds)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NssFeeds(
-                self.form_response_body(response.get_body())
-            )
+            result = NssFeeds(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -150,7 +142,7 @@ class CloudNSSAPI(APIClient):
             feed_output_format (str): Output format used for the feed.
             user_obfuscation (str): Specifies whether user obfuscation is enabled or disabled.
             time_zone (str): Specifies the time zone used in the output file.
-            custom_escaped_character (list[str]): Characters that need to be encoded using hex when they appear in URL, Host, or Referrer.
+            custom_escaped_character (list[str]): Characters to be encoded using hex when they appear in URL, Host, or Referrer
             eps_rate_limit (int): Event per second limit.
             json_array_toggle (bool): Enables or disables streaming logs in JSON array format.
             siem_type (str): Cloud NSS SIEM type.
@@ -170,13 +162,13 @@ class CloudNSSAPI(APIClient):
             oauth_authentication (bool): Indicates whether OAuth 2.0 authentication is enabled.
             server_ips (list): Filter to limit the logs based on the server's IPv4 addresses
             client_ips (list): Filter to limit the logs based on a client's public IPv4 addresses
-            domains (list): Filter to limit the logs to sessions associated with specific domains      
+            domains (list): Filter to limit the logs to sessions associated with specific domains
             dns_request_types (list): DNS request types filter
-            dns_response_types (list): DNS response types filter          
-            dns_responses (list): DNS responses filter          
+            dns_response_types (list): DNS response types filter
+            dns_responses (list): DNS responses filter
             durations (list): Filter based on time durations
             dns_actions (list): DNS Control policy action filter
-            firewall_logging_mode (str): Filter based on the Firewall Filtering policy logging mode. Supported values: SESSION, AGGREGATE, ALL
+            firewall_logging_mode (str): Firewall Filtering policy logging mode. Supported values: SESSION, AGGREGATE, ALL
             rules (list): Policy rules filter (e.g., Firewall Filtering or DNS Control rule filter)
             nw_services (list): Firewall network services filter
             client_source_ips (list): Filter based on a client's source IPv4 address in the Firewall policy
@@ -186,15 +178,19 @@ class CloudNSSAPI(APIClient):
             server_source_ports (list): Firewall log filter based on the traffic destination name
             client_source_ports (list): Firewall log filter based on a client's source ports
             action_filter (str): Policy action filter. Supported values: ALLOWED, BLOCKED
-            email_dlp_policy_action (str): Action filter for Email DLP log type. Supported values: ALLOW, CUSTOMHEADERINSERTION, BLOCK
-            direction (str): Traffic direction filter specifying inbound or outbound. Supported values: INBOUND, OUTBOUND
+            email_dlp_policy_action (str): Action filter for Email DLP log type.
+                Supported values: ALLOW, CUSTOMHEADERINSERTION, BLOCK
+            direction (str): Traffic direction filter specifying inbound or outbound.
+                Supported values: INBOUND, OUTBOUND
             event (str): CASB event filter. Supported values: SCAN, VIOLATION, INCIDENT
             policy_reasons (list): Policy reason filter
             protocol_types (list): Protocol types filter
             user_agents (list): Predefined user agents filter
             request_methods (list): Request methods filter
-            casb_severity (list): Zscaler's Cloud Access Security Broker (CASB) severity filter. Supported values: RULE_SEVERITY_HIGH, RULE_SEVERITY_MEDIUM, RULE_SEVERITY_LOW, RULE_SEVERITY_INFO 
-            casb_policy_types (list): CASB policy type filter. Supported values: MALWARE, DLP, ALL_INCIDENT
+            casb_severity (list): Zscaler's Cloud Access Security Broker (CASB) severity filter.
+                Supported values: RULE_SEVERITY_HIGH, RULE_SEVERITY_MEDIUM, RULE_SEVERITY_LOW, RULE_SEVERITY_INFO
+            casb_policy_types (list): CASB policy type filter.
+                Supported values: MALWARE, DLP, ALL_INCIDENT
             casb_applications (list): CASB application filter
             casb_action (list): CASB policy action filter
             casb_tenant (list): CASB tenant filter
@@ -215,21 +211,23 @@ class CloudNSSAPI(APIClient):
             activity (list): CASB activity filter
             object_type1 (list): CASB activity object type filter
             object_type2 (list): CASB activity object type filter if applicable
-            end_point_dlp_log_type (list): Endpoint DLP log type filter. Supported values: EPDLP_SCAN_AGGREGATE, EPDLP_SENSITIVE_ACTIVITY, EPDLP_DLP_INCIDENT
-            email_dlp_log_type (list): Email DLP record type filter. Supported values: EMAILDLP_SCAN, EMAILDLP_SENSITIVE_ACTIVITY, EMAILDLP_DLP_INCIDENT
+            end_point_dlp_log_type (list): Endpoint DLP log type filter.
+                Supported values: EPDLP_SCAN_AGGREGATE, EPDLP_SENSITIVE_ACTIVITY, EPDLP_DLP_INCIDENT
+            email_dlp_log_type (list): Email DLP record type filter.
+                Supported values: EMAILDLP_SCAN, EMAILDLP_SENSITIVE_ACTIVITY, EMAILDLP_DLP_INCIDENT
             file_type_super_categories (list): Filter based on the category of file type in download
             file_type_categories (list): Filter based on the file type in download
             casb_file_type (list): Endpoint DLP file type filter
             casb_file_type_super_categories (list): Endpoint DLP file type category filer
-            external_owners (list): Filter logs associated with file owners (inside or outside your organization) who are not provisioned to ZIA services
+            external_owners (list): Filter logs associated with file owners
             external_collaborators (list): Filter logs to specific recipients outside your organization
             internal_collaborators (list): Filter logs to specific recipients within your organization
             itsm_object_type (list): ITSM object type filter
             url_categories (list): URL category filter
             dlp_engines (list): DLP engine filter
-            dlp_dictionaries (list): DLP dictionary filter         
-            users (list): User filter             
-            departments (list): Department filter  
+            dlp_dictionaries (list): DLP dictionary filter
+            users (list): User filter
+            departments (list): Department filter
             sender_name (list): Filter based on sender or owner name
             buckets (list): Filter based on public cloud storage buckets
             vpn_credentials (list): Filter based on specific VPN credentials
@@ -279,7 +277,7 @@ class CloudNSSAPI(APIClient):
             ...     nss_log_type="WEBLOG",
             ...     nss_feed_type="JSON",
             ...     siem_type="SPLUNK",
-            ...     feed_output_format=""\\{ \"sourcetype\" : \"zscalernss-web\", \"event\" : \\{\"datetime\":\"%d{yy}-%02d{mth}-",
+            ...     feed_output_format=""\\{ \"sourcetype\" : \"zscalernss-web\", \"event\"-",
             ...     user_obfuscation="DISABLED",
             ...     time_zone="GMT",
             ...     custom_escaped_character= ["ASCII_44", "ASCII_92", "ASCII_34"],
@@ -293,7 +291,7 @@ class CloudNSSAPI(APIClient):
             ...             "Authorization:Splunk 34de02bc-e1fa-4c24-b025-a6c8f1214991"
             ... ],
             ...     test_connectivity_display="Validation pending. Click icon to test the connectivity."
-            ... )  
+            ... )
             ... if error:
             ...     print(f"Error adding NSS Feed: {error}")
             ...     return
@@ -310,8 +308,7 @@ class CloudNSSAPI(APIClient):
         body = kwargs
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -321,24 +318,17 @@ class CloudNSSAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, NssFeeds)
+        response, error = self._request_executor.execute(request, NssFeeds)
         if error:
             return (None, response, error)
 
         try:
-            result = NssFeeds(
-                self.form_response_body(response.get_body())
-            )
+            result = NssFeeds(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_nss_feed(
-        self,
-        feed_id: int, 
-        **kwargs
-    ) -> tuple:
+    def update_nss_feed(self, feed_id: int, **kwargs) -> tuple:
         """
         Updates cloud NSS feed configuration based on the specified ID
 
@@ -354,9 +344,9 @@ class CloudNSSAPI(APIClient):
             feed_output_format (str): Output format used for the feed.
             user_obfuscation (str): Specifies whether user obfuscation is enabled or disabled.
             time_zone (str): Specifies the time zone used in the output file.
-            custom_escaped_character (list[str]): Characters that need to be encoded using hex when they appear in URL, Host, or Referrer.
-            eps_rate_limit (int): Event per second limit.
-            json_array_toggle (bool): Enables or disables streaming logs in JSON array format.
+            custom_escaped_character (list[str]): Characters to be encoded using hex when they appear in URL, Host, or Referrer
+            eps_rate_limit (int): Event per second limit
+            json_array_toggle (bool): Enables or disables streaming logs in JSON array format
             siem_type (str): Cloud NSS SIEM type.
             max_batch_size (int): The maximum batch size in KB.
             connection_url (str): The HTTPS URL of the SIEM log collection API endpoint.
@@ -374,13 +364,14 @@ class CloudNSSAPI(APIClient):
             oauth_authentication (bool): Indicates whether OAuth 2.0 authentication is enabled.
             server_ips (list): Filter to limit the logs based on the server's IPv4 addresses
             client_ips (list): Filter to limit the logs based on a client's public IPv4 addresses
-            domains (list): Filter to limit the logs to sessions associated with specific domains      
+            domains (list): Filter to limit the logs to sessions associated with specific domains
             dns_request_types (list): DNS request types filter
-            dns_response_types (list): DNS response types filter          
-            dns_responses (list): DNS responses filter          
+            dns_response_types (list): DNS response types filter
+            dns_responses (list): DNS responses filter
             durations (list): Filter based on time durations
             dns_actions (list): DNS Control policy action filter
-            firewall_logging_mode (str): Filter based on the Firewall Filtering policy logging mode. Supported values: SESSION, AGGREGATE, ALL
+            firewall_logging_mode (str): Filter based on the Firewall Filtering policy logging mode.
+                Supported values: SESSION, AGGREGATE, ALL
             rules (list): Policy rules filter (e.g., Firewall Filtering or DNS Control rule filter)
             nw_services (list): Firewall network services filter
             client_source_ips (list): Filter based on a client's source IPv4 address in the Firewall policy
@@ -390,15 +381,19 @@ class CloudNSSAPI(APIClient):
             server_source_ports (list): Firewall log filter based on the traffic destination name
             client_source_ports (list): Firewall log filter based on a client's source ports
             action_filter (str): Policy action filter. Supported values: ALLOWED, BLOCKED
-            email_dlp_policy_action (str): Action filter for Email DLP log type. Supported values: ALLOW, CUSTOMHEADERINSERTION, BLOCK
-            direction (str): Traffic direction filter specifying inbound or outbound. Supported values: INBOUND, OUTBOUND
+            email_dlp_policy_action (str): Action filter for Email DLP log type.
+                Supported values: ALLOW, CUSTOMHEADERINSERTION, BLOCK
+            direction (str): Traffic direction filter specifying inbound or outbound.
+                Supported values: INBOUND, OUTBOUND
             event (str): CASB event filter. Supported values: SCAN, VIOLATION, INCIDENT
             policy_reasons (list): Policy reason filter
             protocol_types (list): Protocol types filter
             user_agents (list): Predefined user agents filter
             request_methods (list): Request methods filter
-            casb_severity (list): Zscaler's Cloud Access Security Broker (CASB) severity filter. Supported values: RULE_SEVERITY_HIGH, RULE_SEVERITY_MEDIUM, RULE_SEVERITY_LOW, RULE_SEVERITY_INFO 
-            casb_policy_types (list): CASB policy type filter. Supported values: MALWARE, DLP, ALL_INCIDENT
+            casb_severity (list): Zscaler's Cloud Access Security Broker (CASB) severity filter.
+                Supported values: RULE_SEVERITY_HIGH, RULE_SEVERITY_MEDIUM, RULE_SEVERITY_LOW, RULE_SEVERITY_INFO
+            casb_policy_types (list): CASB policy type filter.
+                Supported values: MALWARE, DLP, ALL_INCIDENT
             casb_applications (list): CASB application filter
             casb_action (list): CASB policy action filter
             casb_tenant (list): CASB tenant filter
@@ -419,21 +414,23 @@ class CloudNSSAPI(APIClient):
             activity (list): CASB activity filter
             object_type1 (list): CASB activity object type filter
             object_type2 (list): CASB activity object type filter if applicable
-            end_point_dlp_log_type (list): Endpoint DLP log type filter. Supported values: EPDLP_SCAN_AGGREGATE, EPDLP_SENSITIVE_ACTIVITY, EPDLP_DLP_INCIDENT
-            email_dlp_log_type (list): Email DLP record type filter. Supported values: EMAILDLP_SCAN, EMAILDLP_SENSITIVE_ACTIVITY, EMAILDLP_DLP_INCIDENT
+            end_point_dlp_log_type (list): Endpoint DLP log type filter.
+                Supported values: EPDLP_SCAN_AGGREGATE, EPDLP_SENSITIVE_ACTIVITY, EPDLP_DLP_INCIDENT
+            email_dlp_log_type (list): Email DLP record type filter.
+                Supported values: EMAILDLP_SCAN, EMAILDLP_SENSITIVE_ACTIVITY, EMAILDLP_DLP_INCIDENT
             file_type_super_categories (list): Filter based on the category of file type in download
             file_type_categories (list): Filter based on the file type in download
             casb_file_type (list): Endpoint DLP file type filter
             casb_file_type_super_categories (list): Endpoint DLP file type category filer
-            external_owners (list): Filter logs associated with file owners (inside or outside your organization) who are not provisioned to ZIA services
+            external_owners (list): Filter logs associated with file owners
             external_collaborators (list): Filter logs to specific recipients outside your organization
             internal_collaborators (list): Filter logs to specific recipients within your organization
             itsm_object_type (list): ITSM object type filter
             url_categories (list): URL category filter
             dlp_engines (list): DLP engine filter
-            dlp_dictionaries (list): DLP dictionary filter         
-            users (list): User filter             
-            departments (list): Department filter  
+            dlp_dictionaries (list): DLP dictionary filter
+            users (list): User filter
+            departments (list): Department filter
             sender_name (list): Filter based on sender or owner name
             buckets (list): Filter based on public cloud storage buckets
             vpn_credentials (list): Filter based on specific VPN credentials
@@ -469,7 +466,7 @@ class CloudNSSAPI(APIClient):
             page_risk_indexes (list): Page Risk Index filter
             client_destination_ports (list): Firewall logs filter based on a client's destination
             tunnel_source_port (list): Filter based on the tunnel source port
-                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
         Returns:
             tuple: Updated cloud NSS feed resource record.
 
@@ -494,8 +491,7 @@ class CloudNSSAPI(APIClient):
         body = kwargs
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -505,19 +501,16 @@ class CloudNSSAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, NssFeeds)
+        response, error = self._request_executor.execute(request, NssFeeds)
         if error:
             return (None, response, error)
 
         try:
-            result = NssFeeds(
-                self.form_response_body(response.get_body())
-            )
+            result = NssFeeds(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_feed(self, feed_id: int) -> tuple:
         """
         Deletes cloud NSS feed configuration based on the specified ID
@@ -542,13 +535,11 @@ class CloudNSSAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -560,11 +551,11 @@ class CloudNSSAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.type]`` {str}: The type of logs that you are streaming
-                
+
                ``[query_params.multi_feed_type]`` {str}: This field is used to set the multi-feed type to Tunnel
-               
+
                 ``[query_params.field_format]`` {str}: The feed output type of your SIEM
 
         Returns:
@@ -586,17 +577,14 @@ class CloudNSSAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
-        
-        request, error = self._request_executor\
-             .create_request(http_method, api_url, body, headers, params=query_params)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -606,7 +594,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
 
         return (result, response, None)
-    
+
     def test_connectivity(
         self,
         feed_id: int,
@@ -638,30 +626,23 @@ class CloudNSSAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, NSSTestConnectivity)
+        response, error = self._request_executor.execute(request, NSSTestConnectivity)
 
         if error:
             return (None, response, error)
 
         try:
-            result = NSSTestConnectivity(
-                self.form_response_body(response.get_body())
-            )
+            result = NSSTestConnectivity(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
-    def validate_feed_format(
-        self,
-        feed_type: str = None
-    ) -> tuple:
+
+    def validate_feed_format(self, feed_type: str = None) -> tuple:
         """
         Validates the cloud NSS feed format and returns the validation result.
 
@@ -686,9 +667,7 @@ class CloudNSSAPI(APIClient):
 
         query_params = {"type": feed_type} if feed_type else {}
 
-        # Create the request with no empty payload
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             params=query_params,
@@ -697,16 +676,13 @@ class CloudNSSAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body()
-            )
+            result = self.form_response_body(response.get_body())
         except Exception as error:
             return (None, response, error)
-        
+
         return (result, response, None)

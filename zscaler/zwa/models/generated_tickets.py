@@ -34,7 +34,7 @@ class GeneratedTickets(ZscalerObject):
         super().__init__(config)
 
         if config:
-            
+
             if "cursor" in config:
                 if isinstance(config["cursor"], common.Common):
                     self.cursor = config["cursor"]
@@ -45,10 +45,8 @@ class GeneratedTickets(ZscalerObject):
             else:
                 self.cursor = None
 
-            self.tickets = ZscalerCollection.form_list(
-                config["tickets"] if "tickets" in config else [], Tickets
-            )
-            
+            self.tickets = ZscalerCollection.form_list(config["tickets"] if "tickets" in config else [], Tickets)
+
         else:
             self.cursor = None
             self.tickets = []
@@ -58,13 +56,11 @@ class GeneratedTickets(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "cursor": self.cursor,
-            "tickets": self.tickets
-        }
+        current_obj_format = {"cursor": self.cursor, "tickets": self.tickets}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Tickets(ZscalerObject):
     """
     A class for Tickets objects.
@@ -80,15 +76,11 @@ class Tickets(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ticket_type = config["ticketType"] \
-                if "ticketType" in config else None
-            self.ticketing_system_name = config["ticketingSystemName"] \
-                if "ticketingSystemName" in config else None            
-            self.project_id = config["projectId"] \
-                if "projectId" in config else None
-            self.project_name = config["projectName"] \
-                if "projectName" in config else None
-                
+            self.ticket_type = config["ticketType"] if "ticketType" in config else None
+            self.ticketing_system_name = config["ticketingSystemName"] if "ticketingSystemName" in config else None
+            self.project_id = config["projectId"] if "projectId" in config else None
+            self.project_name = config["projectName"] if "projectName" in config else None
+
             if "ticketInfo" in config:
                 if isinstance(config["ticketInfo"], TicketInfo):
                     self.ticket_info = config["ticketInfo"]
@@ -98,7 +90,7 @@ class Tickets(ZscalerObject):
                     self.ticket_info = None
             else:
                 self.ticket_info = None
-       
+
         else:
             self.cursor = None
             self.ticketing_system_name = None
@@ -116,11 +108,12 @@ class Tickets(ZscalerObject):
             "ticketingSystemName": self.ticketing_system_name,
             "projectId": self.project_id,
             "projectName": self.project_name,
-            "ticketInfo": self.ticket_info
+            "ticketInfo": self.ticket_info,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class TicketInfo(ZscalerObject):
     """
     A class for TicketInfo objects.
@@ -136,13 +129,10 @@ class TicketInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ticket_id = config["ticketId"] \
-                if "ticketId" in config else None
-            self.ticket_url = config["ticketUrl"] \
-                if "ticketUrl" in config else None            
-            self.state = config["state"] \
-                if "state" in config else None
-       
+            self.ticket_id = config["ticketId"] if "ticketId" in config else None
+            self.ticket_url = config["ticketUrl"] if "ticketUrl" in config else None
+            self.state = config["state"] if "state" in config else None
+
         else:
             self.ticket_id = None
             self.ticket_url = None

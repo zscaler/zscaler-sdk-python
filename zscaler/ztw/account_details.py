@@ -18,6 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 
+
 class AccountDetailsAPI(APIClient):
     """
     A Client object for the AccountDetails resource.
@@ -28,16 +29,16 @@ class AccountDetailsAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
+
     def list_public_account_details(self, query_params=None) -> tuple:
         """
         Returns a list of public cloud account information.
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
@@ -64,14 +65,12 @@ class AccountDetailsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -79,18 +78,12 @@ class AccountDetailsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append((
-                    self.form_response_body(item))
-                )
+                result.append((self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_public_account_details(
-        self,
-        account_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_public_account_details(self, account_id: str, query_params=None) -> tuple:
         """
         Returns information for the public (Cloud Connector) cloud account information for the specified ID.
 
@@ -100,9 +93,9 @@ class AccountDetailsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
@@ -113,24 +106,24 @@ class AccountDetailsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountDetails/{account_id}
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -138,9 +131,7 @@ class AccountDetailsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append((
-                    self.form_response_body(item))
-                )
+                result.append((self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -151,9 +142,9 @@ class AccountDetailsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
@@ -177,24 +168,24 @@ class AccountDetailsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountDetails/lite
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -202,14 +193,12 @@ class AccountDetailsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append((
-                    self.form_response_body(item))
-                )
+                result.append((self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_status(self)  -> tuple:
+    def list_public_account_status(self) -> tuple:
         """
         Returns a List of public (Cloud Connector) cloud account status information (enabled/disabled).
 
@@ -229,9 +218,7 @@ class AccountDetailsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
@@ -242,7 +229,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
 
         try:
-            advanced_settings = (response.get_body())
+            advanced_settings = response.get_body()
             return (advanced_settings, response, None)
         except Exception as ex:
             return (None, response, ex)
@@ -264,28 +251,26 @@ class AccountDetailsAPI(APIClient):
                 print(ztw.provisioning.update_public_account_status(account_id_enabled=True, sub_id_enabled=False))
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /publicCloudAccountIdStatus
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = (
-                self.form_response_body(response.get_body())
-            )
+            result = self.form_response_body(response.get_body())
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

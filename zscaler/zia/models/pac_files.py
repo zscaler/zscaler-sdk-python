@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class PacFiles(ZscalerObject):
     """
     A class for Pac File objects.
@@ -31,40 +32,23 @@ class PacFiles(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.domain = config["domain"]\
-                if "domain" in config else None
-            self.pac_url = config["pacUrl"]\
-                if "pacUrl" in config else None
-            self.pac_content = config["pacContent"]\
-                if "pacContent" in config else None    
-            self.editable = config["editable"]\
-                if "editable" in config else None   
-            self.pac_sub_url = config["pacSubURL"]\
-                if "pacSubURL" in config else None
-            self.pac_url_obfuscated = config["pacUrlObfuscated"]\
-                if "pacUrlObfuscated" in config else None
-            self.pac_verification_status = config["pacVerificationStatus"]\
-                if "pacVerificationStatus" in config else None
-            self.pac_version_status = config["pacVersionStatus"]\
-                if "pacVersionStatus" in config else None
-            self.pac_version = config["pacVersion"]\
-                if "pacVersion" in config else None
-            self.pac_commit_message = config["pacCommitMessage"]\
-                if "pacCommitMessage" in config else None
-            self.total_hits = config["totalHits"]\
-                if "totalHits" in config else None                                                                        
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"]\
-                if "lastModifiedBy" in config else None   
-            self.create_time = config["createTime"]\
-                if "createTime" in config else None 
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.pac_url = config["pacUrl"] if "pacUrl" in config else None
+            self.pac_content = config["pacContent"] if "pacContent" in config else None
+            self.editable = config["editable"] if "editable" in config else None
+            self.pac_sub_url = config["pacSubURL"] if "pacSubURL" in config else None
+            self.pac_url_obfuscated = config["pacUrlObfuscated"] if "pacUrlObfuscated" in config else None
+            self.pac_verification_status = config["pacVerificationStatus"] if "pacVerificationStatus" in config else None
+            self.pac_version_status = config["pacVersionStatus"] if "pacVersionStatus" in config else None
+            self.pac_version = config["pacVersion"] if "pacVersion" in config else None
+            self.pac_commit_message = config["pacCommitMessage"] if "pacCommitMessage" in config else None
+            self.total_hits = config["totalHits"] if "totalHits" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
 
         else:
             # Initialize with default None or 0 values

@@ -79,8 +79,12 @@ class TestSamlAttributes:
                 print(f"Response content: {saml_attribute}")
 
                 # Check if the response is a dict, or handle it appropriately based on its actual format
-                assert isinstance(saml_attribute, dict), f"Response is not in the expected dict format, got {type(saml_attribute)}."
-                assert saml_attribute["id"] == first_attribute_id, "Retrieved SAML attribute ID does not match the requested ID."
+                assert isinstance(
+                    saml_attribute, dict
+                ), f"Response is not in the expected dict format, got {type(saml_attribute)}."
+                assert (
+                    saml_attribute["id"] == first_attribute_id
+                ), "Retrieved SAML attribute ID does not match the requested ID."
             except Exception as exc:
                 errors.append(f"Getting a specific SAML attribute failed: {str(exc)}")
 

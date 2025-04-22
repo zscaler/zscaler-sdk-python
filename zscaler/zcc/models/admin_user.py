@@ -32,22 +32,14 @@ class AdminUser(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.account_enabled = config["accountEnabled"] \
-                if "accountEnabled" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.company_role = config["companyRole"] \
-                if "companyRole" in config else None
-            self.edit_enabled = config["editEnabled"] \
-                if "editEnabled" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.is_default_admin = config["isDefaultAdmin"] \
-                if "isDefaultAdmin" in config else None
-            self.service_type = config["serviceType"] \
-                if "serviceType" in config else None
-            self.user_name = config["userName"] \
-                if "userName" in config else None
+            self.account_enabled = config["accountEnabled"] if "accountEnabled" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.company_role = config["companyRole"] if "companyRole" in config else None
+            self.edit_enabled = config["editEnabled"] if "editEnabled" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.is_default_admin = config["isDefaultAdmin"] if "isDefaultAdmin" in config else None
+            self.service_type = config["serviceType"] if "serviceType" in config else None
+            self.user_name = config["userName"] if "userName" in config else None
         else:
             self.account_enabled = None
             self.company_id = None
@@ -71,7 +63,7 @@ class AdminUser(ZscalerObject):
             "id": self.id,
             "isDefaultAdmin": self.is_default_admin,
             "serviceType": self.service_type,
-            "userName": self.user_name
+            "userName": self.user_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

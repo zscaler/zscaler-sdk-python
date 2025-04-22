@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class CommonIDName(ZscalerObject):
     """
     A class for CommonIDName objects.
@@ -31,11 +32,9 @@ class CommonIDName(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-             
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+
         else:
             self.id = None
             self.name = None
@@ -52,34 +51,29 @@ class CommonIDName(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class CommonIDNameExternalID(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.is_name_l10n_tag = config["isNameL10nTag"]\
-                if "isNameL10nTag" in config else None
-            self.deleted = config["deleted"]\
-                if "deleted" in config else False
-            self.external_id = config["externalId"]\
-                if "externalId" in config else None
-            self.association_time = config["associationTime"]\
-                if "associationTime" in config else None
-                                                
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.is_name_l10n_tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
+            self.deleted = config["deleted"] if "deleted" in config else False
+            self.external_id = config["externalId"] if "externalId" in config else None
+            self.association_time = config["associationTime"] if "associationTime" in config else None
+
             self.extensions = config if isinstance(config, dict) else {}
-                
+
         else:
             self.id = None
             self.name = None
             self.is_name_l10n_tag = False
-            self.deleted = False       
-            self.external_id = None  
+            self.deleted = False
+            self.external_id = None
             self.association_time = None
-      
+
     def request_format(self):
         parent_req_format = super().request_format()
         current_obj_format = {
@@ -92,4 +86,3 @@ class CommonIDNameExternalID(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-        

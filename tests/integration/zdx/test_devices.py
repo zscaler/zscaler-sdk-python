@@ -142,7 +142,7 @@ class TestDevices:
                 raise ValueError(f"Device ID not found in response: {first_device.as_dict()}")
 
             print(f"Using Device ID: {device_id}")
-            
+
             apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if error:
@@ -160,7 +160,7 @@ class TestDevices:
                 raise ValueError(f"App ID not found in response: {first_app.as_dict()}")
 
             print(f"Using Device ID: {app_id}")
-            
+
             if not devices or not apps:
                 print("No devices or apps found within the specified time range.")
             else:
@@ -198,7 +198,7 @@ class TestDevices:
                 raise ValueError(f"Device ID not found in response: {first_device.as_dict()}")
 
             print(f"Using Device ID: {device_id}")
-            
+
             apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if error:
@@ -216,7 +216,7 @@ class TestDevices:
                 raise ValueError(f"App ID not found in response: {first_app.as_dict()}")
 
             print(f"Using Device ID: {app_id}")
-            
+
             if not devices or not apps:
                 print("No devices or apps found within the specified time range.")
             else:
@@ -254,7 +254,7 @@ class TestDevices:
                 raise ValueError(f"Device ID not found in response: {first_device.as_dict()}")
 
             print(f"Using Device ID: {device_id}")
-            
+
             apps, _, error = client.zdx.apps.list_apps(query_params={"since": 2})
 
             if error:
@@ -272,7 +272,7 @@ class TestDevices:
                 raise ValueError(f"App ID not found in response: {first_app.as_dict()}")
 
             print(f"Using Device ID: {app_id}")
-            
+
             if not devices or not apps:
                 print("No devices or apps found within the specified time range.")
             else:
@@ -312,7 +312,7 @@ class TestDevices:
             print(f"Using Device ID: {device_id}")
             health_metrics = client.zdx.devices.get_health_metrics(device_id=device_id)
             pprint(health_metrics)
-            
+
         except Exception as e:
             errors.append(f"Exception occurred: {e}")
 

@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 import time
 
+
 class AuditLogsAPI(APIClient):
     """
     A Client object for Audit Logs resource.
@@ -49,13 +50,11 @@ class AuditLogsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, {}, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
             return None
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return None
 
@@ -89,16 +88,14 @@ class AuditLogsAPI(APIClient):
             "endTime": end_time,
         }
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return None
 
-        response, error = self._request_executor\
-            .execute(request, None)
+        response, error = self._request_executor.execute(request, None)
         if error:
             return None
-        time.sleep(2) 
+        time.sleep(2)
         return response.get_status()
 
     def cancel(self) -> tuple:
@@ -120,13 +117,11 @@ class AuditLogsAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, {}, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
             return None
 
-        response, error = self._request_executor\
-            .execute(request, None)
+        response, error = self._request_executor.execute(request, None)
         if error:
             return None
 
@@ -148,19 +143,17 @@ class AuditLogsAPI(APIClient):
         """
         http_method = "get".upper()
         api_url = format_url(
-            f"""            
+            f"""
             {self._zia_base_endpoint}
             /auditlogEntryReport/download
             """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, {}, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {}, {})
         if error:
             return None
 
-        response, error = self._request_executor\
-            .execute(request, None)
+        response, error = self._request_executor.execute(request, None)
         if error:
             return None
 

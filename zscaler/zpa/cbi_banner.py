@@ -48,27 +48,25 @@ class CBIBannerAPI(APIClient):
             ...     print(banner.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /banners
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(CBIBanner(
-                    self.form_response_body(item))
-                )
+                result.append(CBIBanner(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -92,25 +90,23 @@ class CBIBannerAPI(APIClient):
             ... print(f"Fetched banner by ID: {fetched_banner.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIBanner)
+        response, error = self._request_executor.execute(request, CBIBanner)
         if error:
             return (None, response, error)
 
         try:
-            result = CBIBanner(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIBanner(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -142,27 +138,25 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner added successfully: {added_banner.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /banner
-        """)
+        """
+        )
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIBanner)
+        response, error = self._request_executor.execute(request, CBIBanner)
         if error:
             return (None, response, error)
 
         try:
-            result = CBIBanner(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIBanner(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -194,22 +188,22 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner updated successfully: {updated_banner.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """)
+        """
+        )
 
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CBIBanner)
+        response, error = self._request_executor.execute(request, CBIBanner)
         if error:
             return (None, response, error)
 
@@ -219,9 +213,7 @@ class CBIBannerAPI(APIClient):
             return (CBIBanner({"id": banner_id}), None, None)
 
         try:
-            result = CBIBanner(
-                self.form_response_body(response.get_body())
-            )
+            result = CBIBanner(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -246,18 +238,18 @@ class CBIBannerAPI(APIClient):
             ... print(f"CBI Banner with ID {ab73fa29-667a-4057-83c5-6a8dccf84930} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._cbi_base_endpoint}
             /banners/{banner_id}
-        """)
+        """
+        )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

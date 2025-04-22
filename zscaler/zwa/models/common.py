@@ -33,8 +33,7 @@ class Common(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cursor = config["cursor"] \
-                if "cursor" in config else None
+            self.cursor = config["cursor"] if "cursor" in config else None
         else:
             self.cursor = None
 
@@ -48,7 +47,8 @@ class Common(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Pagination(ZscalerObject):
     """
     A class for Pagination objects.
@@ -64,16 +64,11 @@ class Pagination(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.total_pages = config["totalPages"] \
-                if "totalPages" in config else None
-            self.current_page_number = config["currentPageNumber"] \
-                if "currentPageNumber" in config else None
-            self.current_page_size = config["currentPageSize"] \
-                if "currentPageSize" in config else None
-            self.page_id = config["pageId"] \
-                if "pageId" in config else None
-            self.total_elements = config["totalElements"] \
-                if "totalElements" in config else None
+            self.total_pages = config["totalPages"] if "totalPages" in config else None
+            self.current_page_number = config["currentPageNumber"] if "currentPageNumber" in config else None
+            self.current_page_size = config["currentPageSize"] if "currentPageSize" in config else None
+            self.page_id = config["pageId"] if "pageId" in config else None
+            self.total_elements = config["totalElements"] if "totalElements" in config else None
         else:
             self.total_pages = None
             self.current_page_number = None
@@ -95,33 +90,31 @@ class Pagination(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class MatchingPolicies(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
 
         if config:
-            self.engines = ZscalerCollection.form_list(
-                config["engines"] if "engines" in config else [], Engines
-            )
-            self.rules = ZscalerCollection.form_list(
-                config["rules"] if "rules" in config else [], Rules
-            )
+            self.engines = ZscalerCollection.form_list(config["engines"] if "engines" in config else [], Engines)
+            self.rules = ZscalerCollection.form_list(config["rules"] if "rules" in config else [], Rules)
             self.dictionaries = ZscalerCollection.form_list(
                 config["dictionaries"] if "dictionaries" in config else [], Dictionaries
-            )  
+            )
         else:
             self.engines = []
             self.rules = []
             self.dictionaries = []
-      
+
     def request_format(self):
         return {
             "engines": self.engines,
             "rules": self.rules,
             "dictionaries": self.dictionaries,
         }
-        
+
+
 class Engines(ZscalerObject):
     """
     A class for Engines objects.
@@ -137,10 +130,8 @@ class Engines(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"]\
-                if "name" in config else None
-            self.rule = config["rule"]\
-                if "rule" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.rule = config["rule"] if "rule" in config else None
 
         else:
             self.name = None
@@ -158,6 +149,7 @@ class Engines(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class Rules(ZscalerObject):
     """
     A class for Rules objects.
@@ -173,8 +165,7 @@ class Rules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"]\
-                if "name" in config else None
+            self.name = config["name"] if "name" in config else None
 
         else:
             self.name = None
@@ -189,6 +180,7 @@ class Rules(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class Dictionaries(ZscalerObject):
     """
@@ -205,12 +197,9 @@ class Dictionaries(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"]\
-                if "name" in config else None
-            self.match_count = config["matchCount"]\
-                if "matchCount" in config else None
-            self.name_match_count = config["nameMatchCount"]\
-                if "nameMatchCount" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.match_count = config["matchCount"] if "matchCount" in config else None
+            self.name_match_count = config["nameMatchCount"] if "nameMatchCount" in config else None
         else:
             self.name = None
 
@@ -226,7 +215,8 @@ class Dictionaries(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class UserInfo(ZscalerObject):
     """
     A class for UserInfo objects.
@@ -242,21 +232,14 @@ class UserInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.name = config["name"]\
-                if "name" in config else None
-            self.email = config["email"]\
-                if "email" in config else None
-            self.client_ip = config["clientIP"]\
-                if "clientIP" in config else None
-            self.unique_identifier = config["uniqueIdentifier"]\
-                if "uniqueIdentifier" in config else None
-            self.user_id = config["userId"]\
-                if "userId" in config else None
-            self.department = config["department"]\
-                if "department" in config else None
-            self.home_country = config["homeCountry"]\
-                if "homeCountry" in config else None
-                
+            self.name = config["name"] if "name" in config else None
+            self.email = config["email"] if "email" in config else None
+            self.client_ip = config["clientIP"] if "clientIP" in config else None
+            self.unique_identifier = config["uniqueIdentifier"] if "uniqueIdentifier" in config else None
+            self.user_id = config["userId"] if "userId" in config else None
+            self.department = config["department"] if "department" in config else None
+            self.home_country = config["homeCountry"] if "homeCountry" in config else None
+
             if "managerInfo" in config:
                 if isinstance(config["managerInfo"], ManagerInfo):
                     self.manager_info = config["managerInfo"]
@@ -293,6 +276,7 @@ class UserInfo(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class ManagerInfo(ZscalerObject):
     """
     A class for ManagerInfo objects.
@@ -308,12 +292,9 @@ class ManagerInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.email = config["email"]\
-                if "email" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.email = config["email"] if "email" in config else None
         else:
             self.id = None
             self.name = None
@@ -331,7 +312,8 @@ class ManagerInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ApplicationInfo(ZscalerObject):
     """
     A class for ApplicationInfo objects.
@@ -347,16 +329,11 @@ class ApplicationInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.url = config["url"]\
-                if "url" in config else None
-            self.category = config["category"]\
-                if "category" in config else None
-            self.name = config["name"]\
-                if "hostnameOrApplication" in config else None
-            self.hostname_or_application = config["name"]\
-                if "hostnameOrApplication" in config else None
-            self.additional_info = config["additionalInfo"]\
-                if "additionalInfo" in config else None
+            self.url = config["url"] if "url" in config else None
+            self.category = config["category"] if "category" in config else None
+            self.name = config["name"] if "hostnameOrApplication" in config else None
+            self.hostname_or_application = config["name"] if "hostnameOrApplication" in config else None
+            self.additional_info = config["additionalInfo"] if "additionalInfo" in config else None
         else:
             self.url = None
             self.category = None
@@ -378,7 +355,8 @@ class ApplicationInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ContentInfo(ZscalerObject):
     """
     A class for ContentInfo objects.
@@ -394,12 +372,9 @@ class ContentInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.file_name = config["fileName"]\
-                if "ufileNamerl" in config else None
-            self.file_type = config["fileType"]\
-                if "fileType" in config else None
-            self.additional_info = config["additionalInfo"]\
-                if "additionalInfo" in config else None
+            self.file_name = config["fileName"] if "ufileNamerl" in config else None
+            self.file_type = config["fileType"] if "fileType" in config else None
+            self.additional_info = config["additionalInfo"] if "additionalInfo" in config else None
         else:
             self.file_name = None
             self.file_type = None
@@ -417,7 +392,8 @@ class ContentInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class NetworkInfo(ZscalerObject):
     """
     A class for NetworkInfo objects.
@@ -433,10 +409,8 @@ class NetworkInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.source = config["source"]\
-                if "source" in config else None
-            self.destination = config["destination"]\
-                if "destination" in config else None
+            self.source = config["source"] if "source" in config else None
+            self.destination = config["destination"] if "destination" in config else None
         else:
             self.source = None
             self.destination = None
@@ -452,7 +426,8 @@ class NetworkInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class AssignedAdmin(ZscalerObject):
     """
     A class for AssignedAdmin objects.
@@ -468,8 +443,7 @@ class AssignedAdmin(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.email = config["email"]\
-                if "email" in config else None
+            self.email = config["email"] if "email" in config else None
         else:
             self.email = None
 
@@ -483,7 +457,8 @@ class AssignedAdmin(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class LastNotifiedUser(ZscalerObject):
     """
     A class for LastNotifiedUser objects.
@@ -499,10 +474,8 @@ class LastNotifiedUser(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.role = config["role"]\
-                if "role" in config else None
-            self.email = config["email"]\
-                if "email" in config else None
+            self.role = config["role"] if "role" in config else None
+            self.email = config["email"] if "email" in config else None
 
         else:
             self.role = None
@@ -519,7 +492,8 @@ class LastNotifiedUser(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Notes(ZscalerObject):
     """
     A class for Notes objects.
@@ -535,16 +509,11 @@ class Notes(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.body = config["body"]\
-                if "body" in config else None
-            self.created_at = config["createdAt"]\
-                if "createdAt" in config else None
-            self.last_updated_at = config["lastUpdatedAt"]\
-                if "lastUpdatedAt" in config else None
-            self.created_by = config["createdBy"]\
-                if "createdBy" in config else None
-            self.last_updated_by = config["lastUpdatedBy"]\
-                if "lastUpdatedBy" in config else None
+            self.body = config["body"] if "body" in config else None
+            self.created_at = config["createdAt"] if "createdAt" in config else None
+            self.last_updated_at = config["lastUpdatedAt"] if "lastUpdatedAt" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.last_updated_by = config["lastUpdatedBy"] if "lastUpdatedBy" in config else None
         else:
             self.body = None
             self.created_at = None
@@ -566,7 +535,8 @@ class Notes(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class IncidentGroups(ZscalerObject):
     """
     A class for IncidentGroups objects.
@@ -582,16 +552,11 @@ class IncidentGroups(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.status = config["status"]\
-                if "status" in config else None
-            self.incident_group_type = config["incidentGroupType"]\
-                if "incidentGroupType" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.incident_group_type = config["incidentGroupType"] if "incidentGroupType" in config else None
             # self.is_dlp_incident_group_already_mapped = config["isDLPIncidentGroupAlreadyMapped"]\
             #     if "isDLPIncidentGroupAlreadyMapped" in config else False
             # self.is_dlp_admin_config_already_mapped = config["isDLPAdminConfigAlreadyMapped"]\
@@ -621,7 +586,8 @@ class IncidentGroups(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DLPIncidentTickets(ZscalerObject):
     """
     A class for DLPIncidentTickets objects.
@@ -637,14 +603,10 @@ class DLPIncidentTickets(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ticket_type = config["ticketType"]\
-                if "ticketType" in config else None
-            self.ticketing_system_name = config["ticketingSystemName"]\
-                if "ticketingSystemName" in config else None
-            self.project_id = config["projectId"]\
-                if "projectId" in config else None
-            self.project_name = config["projectName"]\
-                if "projectName" in config else None
+            self.ticket_type = config["ticketType"] if "ticketType" in config else None
+            self.ticketing_system_name = config["ticketingSystemName"] if "ticketingSystemName" in config else None
+            self.project_id = config["projectId"] if "projectId" in config else None
+            self.project_name = config["projectName"] if "projectName" in config else None
 
             if "ticketInfo" in config:
                 if isinstance(config["ticketInfo"], TicketInfo):
@@ -675,7 +637,8 @@ class DLPIncidentTickets(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class TicketInfo(ZscalerObject):
     """
     A class for TicketInfo objects.
@@ -691,13 +654,10 @@ class TicketInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ticket_id = config["ticketId"]\
-                if "ticketId" in config else None
-            self.ticket_url = config["ticketUrl"]\
-                if "ticketUrl" in config else None
-            self.state = config["state"]\
-                if "state" in config else None
-                
+            self.ticket_id = config["ticketId"] if "ticketId" in config else None
+            self.ticket_url = config["ticketUrl"] if "ticketUrl" in config else None
+            self.state = config["state"] if "state" in config else None
+
         else:
             self.ticket_id = None
             self.ticket_url = None
@@ -715,7 +675,8 @@ class TicketInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Labels(ZscalerObject):
     """
     A class for Labels objects.
@@ -731,11 +692,9 @@ class Labels(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.key = config["key"]\
-                if "key" in config else None
-            self.value = config["value"]\
-                if "value" in config else None
-                
+            self.key = config["key"] if "key" in config else None
+            self.value = config["value"] if "value" in config else None
+
         else:
             self.key = None
             self.value = None

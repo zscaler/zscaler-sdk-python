@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 
+
 class NetworkServiceGroups(ZscalerObject):
     """
     A class representing a Network Service Groups object.
@@ -26,15 +27,11 @@ class NetworkServiceGroups(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
 
-            self.creator_context = config["creatorContext"] \
-                if "creatorContext" in config else None
+            self.creator_context = config["creatorContext"] if "creatorContext" in config else None
 
             self.services = ZscalerCollection.form_list(
                 config["services"] if "services" in config else [], nw_service.NetworkServices
@@ -53,7 +50,7 @@ class NetworkServiceGroups(ZscalerObject):
             "name": self.name,
             "description": self.description,
             "creatorContext": self.creator_context,
-            "services": [service.request_format() for service in self.services]
+            "services": [service.request_format() for service in self.services],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

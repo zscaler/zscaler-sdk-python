@@ -54,15 +54,13 @@ class AuthDomainsAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, str)
+        response, error = self._request_executor.execute(request, str)
 
         if error:
             return (None, response, error)

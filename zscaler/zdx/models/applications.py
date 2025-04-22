@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class ActiveApplications(ZscalerObject):
     """
     A class for ActiveApplications objects.
@@ -32,14 +33,10 @@ class ActiveApplications(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.score = config["score"] \
-                if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] \
-                if "most_impacted_geo" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.score = config["score"] if "score" in config else None
+            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
         else:
             self.id = None
             self.name = None
@@ -55,11 +52,12 @@ class ActiveApplications(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "score": self.score,
-            "most_impacted_geo": self.most_impacted_geo
+            "most_impacted_geo": self.most_impacted_geo,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ApplicationScore(ZscalerObject):
     """
     A class for ApplicationScore objects.
@@ -75,16 +73,11 @@ class ApplicationScore(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.score = config["score"] \
-                if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] \
-                if "most_impacted_geo" in config else None
-            self.stats = config["stats"] \
-                if "stats" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.score = config["score"] if "score" in config else None
+            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
+            self.stats = config["stats"] if "stats" in config else None
         else:
             self.id = None
             self.name = None
@@ -102,11 +95,12 @@ class ApplicationScore(ZscalerObject):
             "name": self.name,
             "score": self.score,
             "most_impacted_geo": self.most_impacted_geo,
-            "stats": self.stats
+            "stats": self.stats,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ApplicationScoreTrend(ZscalerObject):
     """
     A class for ApplicationScoreTrend objects.
@@ -122,11 +116,8 @@ class ApplicationScoreTrend(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.metric = config["metric"] \
-                if "metric" in config else None
-            self.datapoints = ZscalerCollection.form_list(
-                config["datapoints"] if "datapoints" in config else [], str
-            )
+            self.metric = config["metric"] if "metric" in config else None
+            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
         else:
             self.metric = None
             self.datapoints = ZscalerCollection.form_list([], str)
@@ -136,13 +127,11 @@ class ApplicationScoreTrend(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "metric": self.metric,
-            "datapoints": self.datapoints
-        }
+        current_obj_format = {"metric": self.metric, "datapoints": self.datapoints}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ApplicationMetrics(ZscalerObject):
     """
     A class for ApplicationMetrics objects.
@@ -158,13 +147,9 @@ class ApplicationMetrics(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.metric = config["metric"] \
-                if "metric" in config else None
-            self.unit = config["unit"] \
-                if "unit" in config else None
-            self.datapoints = ZscalerCollection.form_list(
-                config["datapoints"] if "datapoints" in config else [], str
-            )
+            self.metric = config["metric"] if "metric" in config else None
+            self.unit = config["unit"] if "unit" in config else None
+            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
         else:
             self.metric = None
             self.unit = None
@@ -175,10 +160,6 @@ class ApplicationMetrics(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "metric": self.metric,
-            "unit": self.unit,
-            "datapoints": self.datapoints
-        }
+        current_obj_format = {"metric": self.metric, "unit": self.unit, "datapoints": self.datapoints}
         parent_req_format.update(current_obj_format)
         return parent_req_format

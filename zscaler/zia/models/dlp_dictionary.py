@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class DLPDictionary(ZscalerObject):
     """
     A class for Dictionary objects.
@@ -25,64 +26,47 @@ class DLPDictionary(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.confidence_threshold = config["confidenceThreshold"]\
-                if "confidenceThreshold" in config else None
-            self.custom_phrase_match_type = config["customPhraseMatchType"]\
-                if "customPhraseMatchType" in config else None
-            self.name_l10n_tag = config["nameL10nTag"]\
-                if "nameL10nTag" in config else False
-            self.dictionary_type = config["dictionaryType"]\
-                if "dictionaryType" in config else None
-            self.exact_data_match_details = config["exactDataMatchDetails"]\
-                if "exactDataMatchDetails" in config else []
-            self.idm_profile_match_accuracy_details = config["idmProfileMatchAccuracyDetails"]\
-                if "idmProfileMatchAccuracyDetails" in config else []
-            self.proximity = config["proximity"]\
-                if "proximity" in config else 0
-            self.predefined_phrases = config["predefinedPhrases"]\
-                if "predefinedPhrases" in config else []
-            self.ignore_exact_match_idm_dict = config["ignoreExactMatchIdmDict"]\
-                if "ignoreExactMatchIdmDict" in config else False
-            self.include_bin_numbers = config["includeBinNumbers"]\
-                if "includeBinNumbers" in config else False
-            self.predefined_clone = config["predefinedClone"]\
-                if "predefinedClone" in config else False
-            self.threshold_allowed = config["thresholdAllowed"]\
-                if "thresholdAllowed" in config else False
-            self.hierarchical_identifiers = config["hierarchicalIdentifiers"]\
-                if "hierarchicalIdentifiers" in config else []
-            self.proximity_enabled_for_custom_dictionary = config["proximityEnabledForCustomDictionary"]\
-                if "proximityEnabledForCustomDictionary" in config else False
-            self.include_ssn_numbers = config["includeSsnNumbers"]\
-                if "includeSsnNumbers" in config else False
-            self.unicode_phrase_matching_enabled = config["unicodePhraseMatchingEnabled"]\
-                if "unicodePhraseMatchingEnabled" in config else False
-            self.dictionary_cloning_enabled = config["dictionaryCloningEnabled"]\
-                if "dictionaryCloningEnabled" in config else False
-            self.confidence_level_for_predefined_dict = config["confidenceLevelForPredefinedDict"]\
-                if "confidenceLevelForPredefinedDict" in config else None
-            self.custom = config["custom"]\
-                if "custom" in config else False
-            self.proximity_length_enabled = config["proximityLengthEnabled"]\
-                if "proximityLengthEnabled" in config else False
-            self.custom_phrase_supported = config["customPhraseSupported"]\
-                if "customPhraseSupported" in config else False
-            self.hierarchical_dictionary = config["hierarchicalDictionary"]\
-                if "hierarchicalDictionary" in config else False
-                
-            self.phrases = ZscalerCollection.form_list(
-                config["phrases"] if "phrases" in config else [], DictionaryPhrases
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.confidence_threshold = config["confidenceThreshold"] if "confidenceThreshold" in config else None
+            self.custom_phrase_match_type = config["customPhraseMatchType"] if "customPhraseMatchType" in config else None
+            self.name_l10n_tag = config["nameL10nTag"] if "nameL10nTag" in config else False
+            self.dictionary_type = config["dictionaryType"] if "dictionaryType" in config else None
+            self.exact_data_match_details = config["exactDataMatchDetails"] if "exactDataMatchDetails" in config else []
+            self.idm_profile_match_accuracy_details = (
+                config["idmProfileMatchAccuracyDetails"] if "idmProfileMatchAccuracyDetails" in config else []
             )
+            self.proximity = config["proximity"] if "proximity" in config else 0
+            self.predefined_phrases = config["predefinedPhrases"] if "predefinedPhrases" in config else []
+            self.ignore_exact_match_idm_dict = (
+                config["ignoreExactMatchIdmDict"] if "ignoreExactMatchIdmDict" in config else False
+            )
+            self.include_bin_numbers = config["includeBinNumbers"] if "includeBinNumbers" in config else False
+            self.predefined_clone = config["predefinedClone"] if "predefinedClone" in config else False
+            self.threshold_allowed = config["thresholdAllowed"] if "thresholdAllowed" in config else False
+            self.hierarchical_identifiers = config["hierarchicalIdentifiers"] if "hierarchicalIdentifiers" in config else []
+            self.proximity_enabled_for_custom_dictionary = (
+                config["proximityEnabledForCustomDictionary"] if "proximityEnabledForCustomDictionary" in config else False
+            )
+            self.include_ssn_numbers = config["includeSsnNumbers"] if "includeSsnNumbers" in config else False
+            self.unicode_phrase_matching_enabled = (
+                config["unicodePhraseMatchingEnabled"] if "unicodePhraseMatchingEnabled" in config else False
+            )
+            self.dictionary_cloning_enabled = (
+                config["dictionaryCloningEnabled"] if "dictionaryCloningEnabled" in config else False
+            )
+            self.confidence_level_for_predefined_dict = (
+                config["confidenceLevelForPredefinedDict"] if "confidenceLevelForPredefinedDict" in config else None
+            )
+            self.custom = config["custom"] if "custom" in config else False
+            self.proximity_length_enabled = config["proximityLengthEnabled"] if "proximityLengthEnabled" in config else False
+            self.custom_phrase_supported = config["customPhraseSupported"] if "customPhraseSupported" in config else False
+            self.hierarchical_dictionary = config["hierarchicalDictionary"] if "hierarchicalDictionary" in config else False
 
-            self.patterns = ZscalerCollection.form_list(
-                config["patterns"] if "patterns" in config else [], DictionaryPattern
-            )
+            self.phrases = ZscalerCollection.form_list(config["phrases"] if "phrases" in config else [], DictionaryPhrases)
+
+            self.patterns = ZscalerCollection.form_list(config["patterns"] if "patterns" in config else [], DictionaryPattern)
 
         else:
             self.id = None
@@ -166,11 +150,9 @@ class DictionaryPhrases(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.phrase = config["phrase"] \
-                if "phrase" in config else None
-             
+            self.action = config["action"] if "action" in config else None
+            self.phrase = config["phrase"] if "phrase" in config else None
+
         else:
             self.action = None
             self.phrase = None
@@ -187,6 +169,7 @@ class DictionaryPhrases(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class DictionaryPattern(ZscalerObject):
     """
     A class for DictionaryPattern objects.
@@ -202,11 +185,9 @@ class DictionaryPattern(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
-            self.pattern = config["pattern"] \
-                if "pattern" in config else None
-             
+            self.action = config["action"] if "action" in config else None
+            self.pattern = config["pattern"] if "pattern" in config else None
+
         else:
             self.action = None
             self.pattern = None
@@ -222,6 +203,7 @@ class DictionaryPattern(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class DLPPatternValidation(ZscalerObject):
     """

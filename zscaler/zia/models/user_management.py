@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.oneapi_object import ZscalerObject
 
+
 class UserManagement(ZscalerObject):
     """
     A class for UserManagement objects.
@@ -31,32 +32,23 @@ class UserManagement(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-                
-            self.name = config["name"] \
-                if "name" in config else None
-                
-            self.email = config["email"] \
-                if "email" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.comments = config["comments"] \
-                if "comments" in config else None
+            self.name = config["name"] if "name" in config else None
 
-            self.temp_auth_email = config["tempAuthEmail"] \
-                if "tempAuthEmail" in config else None
+            self.email = config["email"] if "email" in config else None
 
-            self.password = config["password"] \
-                if "password" in config else None
+            self.comments = config["comments"] if "comments" in config else None
 
-            self.admin_user = config["adminUser"] \
-                if "adminUser" in config else False
+            self.temp_auth_email = config["tempAuthEmail"] if "tempAuthEmail" in config else None
 
-            self.type = config["type"]if "type" in config else None
-            
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], Groups
-            )
+            self.password = config["password"] if "password" in config else None
+
+            self.admin_user = config["adminUser"] if "adminUser" in config else False
+
+            self.type = config["type"] if "type" in config else None
+
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], Groups)
 
             if "department" in config:
                 if isinstance(config["department"], Department):
@@ -115,16 +107,11 @@ class Department(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.comments = config["comments"] \
-                if "comments" in config else None
-            self.idp_id = config["idpId"] \
-                if "idpId" in config else None
-            self.deleted = config["deleted"] \
-                if "deleted" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.comments = config["comments"] if "comments" in config else None
+            self.idp_id = config["idpId"] if "idpId" in config else None
+            self.deleted = config["deleted"] if "deleted" in config else None
         else:
             self.id = None
             self.name = None
@@ -146,7 +133,8 @@ class Department(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Groups(ZscalerObject):
     """
     A class for Groups objects.
@@ -161,20 +149,15 @@ class Groups(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-                
-            self.name = config["name"] \
-                if "name" in config else None
-                
-            self.comments = config["comments"] \
-                if "comments" in config else None
-                
-            self.idp_id = config["idpId"] \
-                if "idpId" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.is_system_defined = config["isSystemDefined"] \
-                if "isSystemDefined" in config else None
+            self.name = config["name"] if "name" in config else None
+
+            self.comments = config["comments"] if "comments" in config else None
+
+            self.idp_id = config["idpId"] if "idpId" in config else None
+
+            self.is_system_defined = config["isSystemDefined"] if "isSystemDefined" in config else None
         else:
             self.id = None
             self.name = None

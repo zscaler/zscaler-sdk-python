@@ -68,8 +68,7 @@ class CloudAppsAPI(APIClient):
 
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
 
         if error:
             return (None, None, error)
@@ -82,9 +81,7 @@ class CloudAppsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudapplicationsAndTags(
-                    self.form_response_body(item))
-                )
+                result.append(CloudapplicationsAndTags(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -115,8 +112,7 @@ class CloudAppsAPI(APIClient):
 
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
 
         if error:
             return (None, None, error)
@@ -129,9 +125,7 @@ class CloudAppsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudapplicationsAndTags(
-                    self.form_response_body(item))
-                )
+                result.append(CloudapplicationsAndTags(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -204,8 +198,7 @@ class CloudAppsAPI(APIClient):
         if custom_tag_ids is not None:
             payload["customTags"] = self._convert_ids_to_dict_list(custom_tag_ids)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
@@ -426,8 +419,7 @@ class CloudAppsAPI(APIClient):
         headers = {"Accept": "text/csv"}  # Explicitly request a CSV response
 
         # Creating the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, error)
@@ -441,13 +433,7 @@ class CloudAppsAPI(APIClient):
         # Return the CSV content directly
         return (response.get_body(), None)
 
-    def export_shadow_it_csv(
-        self, 
-        application: str,
-        entity: str,
-        duration: str = "LAST_1_DAYS", 
-        **kwargs
-    ):
+    def export_shadow_it_csv(self, application: str, entity: str, duration: str = "LAST_1_DAYS", **kwargs):
         """
         Export the Shadow IT Report (in CSV format) for the list of users or known locations
         identified with using the cloud applications specified in the request. The report
@@ -525,8 +511,7 @@ class CloudAppsAPI(APIClient):
         params = {}
 
         # Creating the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
 
         if error:
             return (None, error)

@@ -82,9 +82,7 @@ class TestCloudApplicationRules:
             try:
                 # Update the Cloud Application Rule
                 updated_description = "Updated integration test Cloud Application Rule"
-                _, _, error = client.zia.cloudappcontrol.update_rule(
-                    rule_type, rule_id, description=updated_description
-                )
+                _, _, error = client.zia.cloudappcontrol.update_rule(rule_type, rule_id, description=updated_description)
                 assert error is None, f"Error updating Cloud App Rule: {error}"
 
                 updated_rule, _, error = client.zia.cloudappcontrol.get_rule(rule_type, rule_id)

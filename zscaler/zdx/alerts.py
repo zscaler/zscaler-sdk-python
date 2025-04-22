@@ -14,15 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.alerts import Alerts
 from zscaler.zdx.models.alerts import AlertDetails
 from zscaler.utils import format_url, zdx_params
 
+
 class AlertsAPI(APIClient):
-    
+
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
@@ -39,15 +39,16 @@ class AlertsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
                     If not entered, returns the data for the last 2 hours.
-                    
+
                 ``[query_params.department_id]`` {list}: The unique ID for the department. You can add multiple department IDs.
 
                 ``[query_params.location_id]`` {list}: The unique ID for the location. You can add multiple location IDs.
 
-                ``[query_params.geo_id]`` {list}: The unique ID for the geolocation. You can add multiple active geolocation IDs.
+                ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
+                    You can add multiple active geolocation IDs.
 
                 ``[query_params.offset]`` {str}: The next_offset value from the last request.
                     You must enter this value to get the next batch from the list.
@@ -92,8 +93,7 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -113,16 +113,14 @@ class AlertsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(Alerts(
-                    self.form_response_body(item))
-                )
+                result.append(Alerts(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def get_alert(self, alert_id: str) -> tuple:
         """
-        Returns details of a single alert including the impacted department, 
+        Returns details of a single alert including the impacted department,
         Zscaler locations, geolocation, and alert trigger.
 
         Args:
@@ -150,21 +148,17 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AlertDetails)
+        response, error = self._request_executor.execute(request, AlertDetails)
         if error:
             return (None, response, error)
 
         try:
-            result = AlertDetails(
-                self.form_response_body(response.get_body())
-            )
+            result = AlertDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -173,22 +167,23 @@ class AlertsAPI(APIClient):
     def list_historical(self, query_params=None) -> tuple:
         """
         Returns a list of alert history rules defined across an organization.
-        All alert history rules are returned if the search filter is not specified. 
+        All alert history rules are returned if the search filter is not specified.
         The default is set to the previous 2 hours.
         Alert history rules have an Ended On date.
         Note: Cannot exceed the 14-day time range limit for alert rules.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
                     If not entered, returns the data for the last 2 hours.
-                    
+
                 ``[query_params.department_id]`` {str}: The unique ID for the department. You can add multiple department IDs.
 
                 ``[query_params.location_id]`` {list}: The unique ID for the location. You can add multiple location IDs.
 
-                ``[query_params.geo_id]`` {str}: The unique ID for the geolocation. You can add multiple active geolocation IDs.
+                ``[query_params.geo_id]`` {str}: The unique ID for the geolocation.
+                    You can add multiple active geolocation IDs.
 
                 ``[query_params.offset]`` {str}: The next_offset value from the last request.
                     You must enter this value to get the next batch from the list.
@@ -233,8 +228,7 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -244,8 +238,7 @@ class AlertsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [Alerts(
-                self.form_response_body(response.get_body()))]  
+            result = [Alerts(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
@@ -263,15 +256,16 @@ class AlertsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
                     If not entered, returns the data for the last 2 hours.
-                    
+
                 ``[query_params.department_id]`` {list}: The unique ID for the department. You can add multiple department IDs.
 
                 ``[query_params.location_id]`` {list}: The unique ID for the location. You can add multiple location IDs.
 
-                ``[query_params.geo_id]`` {list}: The unique ID for the geolocation. You can add multiple active geolocation IDs.
+                ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
+                    You can add multiple active geolocation IDs.
 
                 ``[query_params.offset]`` {str}: The next_offset value from the last request.
                     You must enter this value to get the next batch from the list.
@@ -282,7 +276,7 @@ class AlertsAPI(APIClient):
 
                 ``[query_params.location_groups]`` {int}: The location group ID. You can add multiple location group IDs.
                     Minimum: 1
-                    
+
         Returns:
             :obj:`Tuple`: The list of software in ZDX.
 
@@ -312,8 +306,7 @@ class AlertsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -323,10 +316,8 @@ class AlertsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [AlertDetails(
-                self.form_response_body(response.get_body()))]  
+            result = [AlertDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-

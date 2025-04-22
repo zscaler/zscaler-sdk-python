@@ -19,7 +19,7 @@ class TestAppConnectorGroup:
         errors = []  # Initialize an empty list to collect errors
 
         group_id = None  # Initialize group_id
-        
+
         group_name = "tests-" + generate_random_string()
         group_description = "tests-" + generate_random_string()
         group_enabled = True

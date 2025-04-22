@@ -25,21 +25,15 @@ class AppServers(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.address = config["address"]\
-                if "address" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.address = config["address"] if "address" in config else None
 
             # Using .get() with default values for booleans and lists
             self.enabled = config.get("enabled", True)
-            self.description = config["description"]\
-                if "description" in config else None
-            self.app_server_group_ids = config["appServerGroupIds"]\
-                if "appServerGroupIds" in config else []
-            self.config_space = config["configSpace"]\
-                if "configSpace" in config else "DEFAULT"
+            self.description = config["description"] if "description" in config else None
+            self.app_server_group_ids = config["appServerGroupIds"] if "appServerGroupIds" in config else []
+            self.config_space = config["configSpace"] if "configSpace" in config else "DEFAULT"
         else:
             # Default values when no config is provided
             self.id = None

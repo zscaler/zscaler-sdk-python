@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
 
+
 class AuditLogs(ZscalerObject):
     """
     A class for AuditLogs objects.
@@ -43,10 +44,8 @@ class AuditLogs(ZscalerObject):
             else:
                 self.cursor = None
 
-            self.logs = ZscalerCollection.form_list(
-                config["logs"] if "logs" in config else [], Logs
-            )
-            
+            self.logs = ZscalerCollection.form_list(config["logs"] if "logs" in config else [], Logs)
+
         else:
             self.cursor = None
             self.logs = []
@@ -56,13 +55,11 @@ class AuditLogs(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "cursor": self.cursor,
-            "logs": self.logs
-        }
+        current_obj_format = {"cursor": self.cursor, "logs": self.logs}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Logs(ZscalerObject):
     """
     A class for Logs objects.
@@ -86,10 +83,8 @@ class Logs(ZscalerObject):
                 else:
                     self.action = None
 
-            self.module = config["module"] \
-                if "module" in config else None
-            self.resource = config["resource"] \
-                if "resource" in config else None
+            self.module = config["module"] if "module" in config else None
+            self.resource = config["resource"] if "resource" in config else None
         else:
             self.action = None
             self.module = None
@@ -107,7 +102,8 @@ class Logs(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Action(ZscalerObject):
     """
     A class for Action objects.
@@ -123,8 +119,7 @@ class Action(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.action = config["action"] \
-                if "action" in config else None
+            self.action = config["action"] if "action" in config else None
         else:
             self.action = None
 

@@ -32,10 +32,8 @@ class Administration(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
         else:
             self.id = None
             self.name = None
@@ -45,9 +43,6 @@ class Administration(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name
-        }
+        current_obj_format = {"id": self.id, "name": self.name}
         parent_req_format.update(current_obj_format)
         return parent_req_format

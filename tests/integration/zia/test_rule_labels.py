@@ -20,6 +20,7 @@ import pytest
 from tests.integration.zia.conftest import MockZIAClient
 import random
 
+
 @pytest.fixture
 def fs():
     yield
@@ -40,8 +41,7 @@ class TestRuleLabels:
             # Test: Add Rule Label
             try:
                 create_label, _, error = client.zia.rule_labels.add_label(
-                    name=f"TestLabel_{random.randint(1000, 10000)}",
-                    description="Test Description"
+                    name=f"TestLabel_{random.randint(1000, 10000)}", description="Test Description"
                 )
                 assert error is None, f"Add Label Error: {error}"
                 assert create_label is not None, "Label creation failed."
@@ -55,7 +55,7 @@ class TestRuleLabels:
                     update_label, _, error = client.zia.rule_labels.update_label(
                         label_id=label_id,
                         name=f"UpdatedLabel_{random.randint(1000, 10000)}",
-                        description="Updated Description"
+                        description="Updated Description",
                     )
                     assert error is None, f"Update Label Error: {error}"
                     assert update_label is not None, "Label update returned None."
@@ -74,9 +74,7 @@ class TestRuleLabels:
             # Test: List Rule Labels
             try:
                 if update_label:
-                    labels, _, error = client.zia.rule_labels.list_labels(
-                        query_params={"search": update_label.name}
-                    )
+                    labels, _, error = client.zia.rule_labels.list_labels(query_params={"search": update_label.name})
                     assert error is None, f"List Labels Error: {error}"
                     assert labels is not None and isinstance(labels, list), "No labels found or invalid format."
             except Exception as e:

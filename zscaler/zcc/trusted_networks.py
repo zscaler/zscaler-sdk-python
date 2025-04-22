@@ -54,8 +54,7 @@ class TrustedNetworksAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -93,11 +92,11 @@ class TrustedNetworksAPI(APIClient):
             hostnames (str):
             network_name (str):
             resolved_ips_for_hostname (str):
-            ssids (str):           
+            ssids (str):
             trusted_dhcp_servers (str):
-            trusted_egress_ips (str):    
-            trusted_gateways (str): 
-            trusted_subnets (str):   
+            trusted_egress_ips (str):
+            trusted_gateways (str):
+            trusted_subnets (str):
 
         Returns:
             tuple: A tuple containing the newly added Trusted Network, response, and error.
@@ -112,8 +111,7 @@ class TrustedNetworksAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -123,15 +121,12 @@ class TrustedNetworksAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrustedNetworks)
+        response, error = self._request_executor.execute(request, TrustedNetworks)
         if error:
             return (None, response, error)
 
         try:
-            result = TrustedNetworks(
-                self.form_response_body(response.get_body())
-            )
+            result = TrustedNetworks(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -147,34 +142,32 @@ class TrustedNetworksAPI(APIClient):
             tuple: A tuple containing the Update Trusted Network, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/edit
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, TrustedNetworks)
+        response, error = self._request_executor.execute(request, TrustedNetworks)
         if error:
             return (None, response, error)
 
         try:
-            result = TrustedNetworks (
-                self.form_response_body(response.get_body())
-            )
+            result = TrustedNetworks(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_trusted_network(self, network_id: int) -> tuple:
         """
         Deletes the specified Trusted Network.
@@ -186,20 +179,20 @@ class TrustedNetworksAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /webTrustedNetwork/{network_id}/delete
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

@@ -25,6 +25,7 @@ from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import rule_labels as rule_labels
 from zscaler.zia.models import common as common_reference
 
+
 class SandboxRules(ZscalerObject):
     """
     A class for SandboxRules objects.
@@ -40,46 +41,33 @@ class SandboxRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
-            self.order = config["order"] \
-                if "order" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
+            self.order = config["order"] if "order" in config else None
             self.ba_policy_categories = ZscalerCollection.form_list(
                 config["baPolicyCategories"] if "baPolicyCategories" in config else [], str
             )
-            self.description = config["description"] \
-                if "description" in config else None
+            self.description = config["description"] if "description" in config else None
             # self.cbi_profile = config["cbiProfile"] \
             #     if "cbiProfile" in config else None
             # self.cbi_profile_id = config["cbiProfileId"] \
             #     if "cbiProfileId" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
+            self.state = config["state"] if "state" in config else None
 
-            self.rank = config["rank"] \
-                if "rank" in config else None
+            self.rank = config["rank"] if "rank" in config else None
             # self.last_modified_time = config["lastModifiedTime"] \
             #     if "lastModifiedTime" in config else None
             # self.last_modified_by = config["lastModifiedBy"] \
             #     if "lastModifiedBy" in config else None
             # self.access_control = config["accessControl"] \
             #     if "accessControl" in config else None
-            self.ba_rule_action = config["baRuleAction"] \
-                if "baRuleAction" in config else None
-            self.first_time_enable = config["firstTimeEnable"] \
-                if "firstTimeEnable" in config else False
-            self.first_time_operation = config["firstTimeOperation"] \
-                if "firstTimeOperation" in config else None
-            self.ml_action_enabled = config["mlActionEnabled"] \
-                if "mlActionEnabled" in config else False
+            self.ba_rule_action = config["baRuleAction"] if "baRuleAction" in config else None
+            self.first_time_enable = config["firstTimeEnable"] if "firstTimeEnable" in config else False
+            self.first_time_operation = config["firstTimeOperation"] if "firstTimeOperation" in config else None
+            self.ml_action_enabled = config["mlActionEnabled"] if "mlActionEnabled" in config else False
 
-            self.by_threat_score = config["byThreatScore"] \
-                if "byThreatScore" in config else None
+            self.by_threat_score = config["byThreatScore"] if "byThreatScore" in config else None
             # self.default_rule = config["defaultRule"] \
             #     if "defaultRule" in config else False
 
@@ -92,24 +80,18 @@ class SandboxRules(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
             )
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
             )
-            self.file_types = ZscalerCollection.form_list(
-                config["fileTypes"] if "fileTypes" in config else [], str
-            )
+            self.file_types = ZscalerCollection.form_list(config["fileTypes"] if "fileTypes" in config else [], str)
 
         else:
             self.id = None

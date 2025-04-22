@@ -33,15 +33,10 @@ class CallQualityMetrics(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.meet_id = config["meet_id"] \
-                if "meet_id" in config else None
-            self.meet_session_id = config["meet_session_id"] \
-                if "meet_session_id" in config else None
-            self.meet_subject = config["meet_subject"] \
-                if "meet_subject" in config else None
-            self.metrics = ZscalerCollection.form_list(
-                config["metrics"] if "metrics" in config else [], str
-            )
+            self.meet_id = config["meet_id"] if "meet_id" in config else None
+            self.meet_session_id = config["meet_session_id"] if "meet_session_id" in config else None
+            self.meet_subject = config["meet_subject"] if "meet_subject" in config else None
+            self.metrics = ZscalerCollection.form_list(config["metrics"] if "metrics" in config else [], str)
         else:
             self.meet_id = None
             self.meet_session_id = None
@@ -57,7 +52,7 @@ class CallQualityMetrics(ZscalerObject):
             "meet_id": self.meet_id,
             "meet_session_id": self.meet_session_id,
             "meet_subject": self.meet_subject,
-            "metrics": self.metrics
+            "metrics": self.metrics,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

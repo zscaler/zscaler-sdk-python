@@ -37,8 +37,8 @@ class TestServiceEdgeGroupProvisioningKey:
         svc_edge_group_id = None
         svc_edge_group_key_id = None
         svc_edge_cert_id = None
-        key_type="service_edge"
-        
+        key_type = "service_edge"
+
         try:
             try:
                 # Create a Service Edge Group
@@ -66,7 +66,9 @@ class TestServiceEdgeGroupProvisioningKey:
 
             try:
                 # Retrieve the 'Service Edge' enrollment certificate
-                svc_edge_certs, _, err = client.zpa.enrollment_certificates.list_enrolment(query_params={'search': 'Service Edge'})
+                svc_edge_certs, _, err = client.zpa.enrollment_certificates.list_enrolment(
+                    query_params={"search": "Service Edge"}
+                )
                 if err:
                     errors.append(f"Retrieving 'service edge' enrolment certificate failed: {err}")
                 else:
@@ -85,7 +87,7 @@ class TestServiceEdgeGroupProvisioningKey:
                     name=connector_key_name,
                     max_usage=2,
                     enrollment_cert_id=svc_edge_cert_id,
-                    component_id=svc_edge_group_id
+                    component_id=svc_edge_group_id,
                 )
                 if err:
                     errors.append(f"SERVICE_EDGE_GRP Provisioning Key creation failed: {err}")
@@ -114,7 +116,9 @@ class TestServiceEdgeGroupProvisioningKey:
                 if err:
                     errors.append(f"Retrieving SERVICE_EDGE_GRP Provisioning Key failed: {err}")
                 else:
-                    assert retrieved_connector_key.id == svc_edge_group_key_id, "Failed to retrieve the correct SERVICE_EDGE_GRP Provisioning Key"
+                    assert (
+                        retrieved_connector_key.id == svc_edge_group_key_id
+                    ), "Failed to retrieve the correct SERVICE_EDGE_GRP Provisioning Key"
             except Exception as exc:
                 errors.append(f"Retrieving SERVICE_EDGE_GRP Provisioning Key failed: {exc}")
 
@@ -125,7 +129,6 @@ class TestServiceEdgeGroupProvisioningKey:
                 assert err is None, f"Error updating server group: {err}"
             except Exception as exc:
                 errors.append(f"Updating SERVICE_EDGE_GRP Provisioning Key failed: {exc}")
-
 
         finally:
             cleanup_errors = []
@@ -138,7 +141,9 @@ class TestServiceEdgeGroupProvisioningKey:
                     # For 204 No Content, delete_response should be None
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as cleanup_exc:
-                    cleanup_errors.append(f"Cleanup failed for Deleting SERVICE_EDGE_GRP Provisioning Key ID {svc_edge_group_key_id}: {cleanup_exc}")
+                    cleanup_errors.append(
+                        f"Cleanup failed for Deleting SERVICE_EDGE_GRP Provisioning Key ID {svc_edge_group_key_id}: {cleanup_exc}"
+                    )
 
             # Attempt to delete the Service Edge Group
             if svc_edge_group_id:

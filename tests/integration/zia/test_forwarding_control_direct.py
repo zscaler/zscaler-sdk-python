@@ -115,7 +115,6 @@ class TestForwardingControlRulesDirect:
             except Exception as exc:
                 errors.append(f"Updating Forwarding Control Rule failed: {exc}")
 
-
             # Step 6: List rules and validate presence
             try:
                 rules, _, error = client.zia.forwarding_control.list_rules()

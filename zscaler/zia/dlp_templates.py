@@ -40,8 +40,8 @@ class DLPTemplatesAPI(APIClient):
         If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
-            query_params {dict}: Map of query parameters for the request. 
-                       
+            query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -60,7 +60,8 @@ class DLPTemplatesAPI(APIClient):
 
             Print templates that match the name 'Standard_Template'
 
-            >>> template_list, response, error = client.zia.dlp_templates.list_dlp_templates(query_params={"search": 'Standard_Template'})
+            >>> template_list, response, error = client.zia.dlp_templates.list_dlp_templates(
+                query_params={"search": 'Standard_Template'})
             ... if error:
             ...     print(f"Error listing templates: {error}")
             ...     return
@@ -84,36 +85,24 @@ class DLPTemplatesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPTemplates(
-                    self.form_response_body(item))
-                )
+                results.append(DLPTemplates(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -147,8 +136,7 @@ class DLPTemplatesAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -165,10 +153,7 @@ class DLPTemplatesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_dlp_template(
-        self,
-        **kwargs
-    ) -> tuple:
+    def add_dlp_template(self, **kwargs) -> tuple:
         """
         Adds a new DLP notification template to ZIA.
 
@@ -204,8 +189,7 @@ class DLPTemplatesAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -214,24 +198,17 @@ class DLPTemplatesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, DLPTemplates)
+        response, error = self._request_executor.execute(request, DLPTemplates)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPTemplates(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPTemplates(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_dlp_template(
-        self, 
-        template_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_dlp_template(self, template_id: str, **kwargs) -> tuple:
         """
         Updates the specified DLP Notification Template.
 
@@ -271,20 +248,16 @@ class DLPTemplatesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, DLPTemplates)
+        response, error = self._request_executor.execute(request, DLPTemplates)
         if error:
             return (None, response, error)
 
         try:
-            result = DLPTemplates(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPTemplates(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -317,13 +290,11 @@ class DLPTemplatesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

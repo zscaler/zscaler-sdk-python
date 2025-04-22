@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_management import LocationManagement
 from zscaler.utils import format_url
 
+
 class LocationManagementAPI(APIClient):
     """
     A Client object for the Admin and Role resource.
@@ -36,25 +37,25 @@ class LocationManagementAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
+
                 ``[query_params.state]`` {str}: Filter based on geographical state for a location.
-                
+
                 ``[query_params.xff_enabled]`` {bool}: Filter based on whether Enforce XFF Forwarding is enabled for a location.
-                
+
                 ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce Authentication is enabled for a location.
-                
+
                 ``[query_params.bw_enforced]`` {bool}: Filter based on whether Bandwith Control is enforced for a location.
-                
+
                 ``[query_params.partner_id]`` {bool}: Not applicable to Cloud & Branch Connector.
-                
+
                 ``[query_params.enforce_aup]`` {bool}: Filter based on whether Acceptable Use Policy (AUP) is enforced for a location.
-                
+
                 ``[query_params.enable_firewall]`` {bool}: Filter based on whether firewall is enabled for a location.
-                
+
                 ``[query_params.location_type]`` {bool}: Filter based on type of location.
                     Supported values: `NONE`, `CORPORATE`, `SERVER`, `GUESTWIFI`, `IOT`, `WORKLOAD`
 
@@ -71,9 +72,9 @@ class LocationManagementAPI(APIClient):
             ... print(f"Total locations found: {len(location_list)}")
             ... for loc in location_list:
             ...     print(loc.as_dict())
-            
+
             Gets a list of all Locations.
-            
+
             >>> location_list, response, error = ztw.location_management.list_locations(
                 query_params={'search': 'Location01', 'enable_firewall': True}):
             ... if error:
@@ -97,14 +98,12 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -145,22 +144,18 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, LocationManagement)
+        response, error = self._request_executor.execute(request, LocationManagement)
 
         if error:
             return (None, response, error)
 
         try:
-            result = LocationManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -171,9 +166,9 @@ class LocationManagementAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
 
                 ``[query_params.search]`` {str}: The search string used to partially match against the location name and port attributes.
@@ -203,9 +198,9 @@ class LocationManagementAPI(APIClient):
             ... print(f"Total locations found: {len(location_list)}")
             ... for loc in location_list:
             ...     print(loc.as_dict())
-            
+
             Gets a list of all Locations.
-            
+
             >>> location_list, response, error = ztw.location_management.list_locations_lite(query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing Locations: {error}")
@@ -228,14 +223,12 @@ class LocationManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -243,11 +236,7 @@ class LocationManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(
-                    LocationManagement(
-                        self.form_response_body(item))
-                    )
+                result.append(LocationManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-

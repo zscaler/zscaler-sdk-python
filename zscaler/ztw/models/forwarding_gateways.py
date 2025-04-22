@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.ztw.models import common as common
 
+
 class ForwardingGateways(ZscalerObject):
     """
     A class representing a VPN Credentials object.
@@ -27,30 +28,21 @@ class ForwardingGateways(ZscalerObject):
 
         if config:
             # Top-level attributes
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.fail_closed = config["failClosed"]\
-                if "failClosed" in config else None
-                
-            self.manual_primary = config["manualPrimary"]\
-                if "manualPrimary" in config else None
-                
-            self.manual_secondary = config["manualSecondary"]\
-                if "manualSecondary" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.fail_closed = config["failClosed"] if "failClosed" in config else None
 
-            self.primary_type = config["primaryType"]\
-                if "primaryType" in config else None
+            self.manual_primary = config["manualPrimary"] if "manualPrimary" in config else None
 
-            self.secondary_type = config["secondaryType"]\
-                if "secondaryType" in config else None
+            self.manual_secondary = config["manualSecondary"] if "manualSecondary" in config else None
 
-            self.last_modified_time = config["lastModifiedTime"]\
-                if "lastModifiedTime" in config else None                                                
- 
+            self.primary_type = config["primaryType"] if "primaryType" in config else None
+
+            self.secondary_type = config["secondaryType"] if "secondaryType" in config else None
+
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonIDNameExternalID):
                     self.last_modified_by = config["lastModifiedBy"]
@@ -80,7 +72,7 @@ class ForwardingGateways(ZscalerObject):
                     self.subcloud_secondary = None
             else:
                 self.subcloud_secondary = None
-                     
+
         else:
             # Initialize with default None values
             self.id = None

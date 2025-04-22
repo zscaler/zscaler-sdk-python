@@ -30,13 +30,13 @@ class SystemAuditReportAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
+
     def get_config_audit(self, query_params=None) -> tuple:
         """
         Retrieves the System Audit Report.
 
         Keyword Args:
-                
+
         Returns:
             :obj:`Tuple`: Config Audit Report ZIA.
 
@@ -65,14 +65,12 @@ class SystemAuditReportAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -80,9 +78,7 @@ class SystemAuditReportAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ConfigAudit(
-                    self.form_response_body(item))
-                )
+                result.append(ConfigAudit(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

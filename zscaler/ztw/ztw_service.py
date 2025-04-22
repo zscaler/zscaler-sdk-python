@@ -32,13 +32,14 @@ from zscaler.ztw.ip_groups import IPGroupsAPI
 from zscaler.ztw.nw_service_groups import NWServiceGroupsAPI
 from zscaler.ztw.nw_service import NWServiceAPI
 
+
 class ZTWService:
     """ZTW Service client, exposing various ZTW APIs."""
 
     def __init__(self, request_executor: RequestExecutor):
         # Ensure the service gets the request executor from the Client object
         self._request_executor = request_executor
-        
+
     @property
     def account_details(self):
         """
@@ -54,7 +55,7 @@ class ZTWService:
 
         """
         return ActivationAPI(self._request_executor)
-    
+
     @property
     def admin_roles(self):
         """
@@ -87,7 +88,7 @@ class ZTWService:
         """
 
         return LocationManagementAPI(self._request_executor)
-    
+
     @property
     def location_template(self):
         """
@@ -105,7 +106,7 @@ class ZTWService:
         """
 
         return ProvisioningAPIKeyAPI(self._request_executor)
-    
+
     @property
     def provisioning_url(self):
         """
@@ -114,7 +115,7 @@ class ZTWService:
         """
 
         return ProvisioningURLAPI(self._request_executor)
-    
+
     @property
     def forwarding_gateways(self):
         """
