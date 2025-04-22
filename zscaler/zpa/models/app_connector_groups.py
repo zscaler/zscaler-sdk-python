@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class AppConnectorGroup(ZscalerObject):
     def __init__(self, config=None):
         """
@@ -88,7 +89,7 @@ class AppConnectorGroup(ZscalerObject):
             self.site_id = config["siteId"]\
                 if "siteId" in config else None
             self.site_name = config["siteName"]\
-                if "siteName" in config else None 
+                if "siteName" in config else None
             self.lss_app_connector_group = config["lssAppConnectorGroup"]\
                 if "lssAppConnectorGroup" in config else False
 
@@ -99,7 +100,7 @@ class AppConnectorGroup(ZscalerObject):
             self.np_assistant_group = NPAssistantGroup(
                 config["npAssistantGroup"] if "npAssistantGroup" in config else None
             )
-   
+
         else:
             self.id = None
             self.ip_acl = None
@@ -176,6 +177,7 @@ class AppConnectorGroup(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class NPAssistantGroup(ZscalerObject):
     def __init__(self, config=None):
         """
@@ -215,6 +217,7 @@ class NPAssistantGroup(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class LanSubnet(ZscalerObject):
     def __init__(self, config=None):
@@ -293,13 +296,14 @@ class NPDnsNsRecord(ZscalerObject):
             self.modified_by = config["modifiedBy"]\
                 if "modifiedBy" in config else None
             self.name = config["name"] if "name" in config else None
-            
+
             self.fqdn = ZscalerCollection.form_list(
                 config["fqdn"] if "fqdn" in config else [], str
             )
             self.nameserver_ips = ZscalerCollection.form_list(
                 config["nameserverIps"] if "nameserverIps" in config else [], str
             )
+
         else:
             self.id = None
             self.creation_time = None
@@ -322,5 +326,3 @@ class NPDnsNsRecord(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-
-

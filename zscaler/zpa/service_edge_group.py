@@ -40,13 +40,14 @@ class ServiceEdgeGroupAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant. 
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             :obj:`Tuple`: A tuple containing (list of ServiceEdgeGroup instances, Response, error)
-            
+
         Examples:
             >>> group_list, _, err = client.zpa.service_edge_group.list_service_edge_groups(
             ... query_params={'search': 'ServiceEdgeGRP01', 'page': '1', 'page_size': '100'})
@@ -105,7 +106,7 @@ class ServiceEdgeGroupAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The service edge group object.
-            
+
         Examples:
             >>> fetched_group, _, err = client.zpa.service_edge_group.get_service_edge_group('999999')
             ... if err:
@@ -183,19 +184,19 @@ class ServiceEdgeGroupAPI(APIClient):
 
                 ``default``, ``previous_default`` and ``new_release``
             **grace_distance_enabled (bool):
-                If enabled, allows ZPA Private Service Edge Groups within the specified 
+                If enabled, allows ZPA Private Service Edge Groups within the specified
                 distance to be prioritized over a closer ZPA Public Service Edge.
             **grace_distance_value (int):
-                Indicates the maximum distance in miles or kilometers to ZPA 
+                Indicates the maximum distance in miles or kilometers to ZPA
                 Private Service Edge groups that would override a ZPA Public Service Edge. i.e 1.0
             **grace_distance_value_unit (str):
                 Indicates the grace distance unit of measure in miles or kilometers.
                 This value is only required if graceDistanceEnabled is set to true.
                 Supported Values: `MILES`, `KMS`
-                                                                
+
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The newly created service edge group object.
-            
+
         Examples:
             >>> added_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
             ...     name=f"NewServiceEdgeGroup_{random.randint(1000, 10000)}",
@@ -234,7 +235,7 @@ class ServiceEdgeGroupAPI(APIClient):
 
         if "service_edge_ids" in body:
             body["serviceEdges"] = [{"id": id} for id in body.pop("service_edge_ids")]
-            
+
         request, error = self._request_executor.\
             create_request(http_method, api_url, body=body, params=params)
         if error:
@@ -263,7 +264,7 @@ class ServiceEdgeGroupAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: ServiceEdgeGroup: The updated service edge group object.
-            
+
         Examples:
             >>> update_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
             ...     group_id='999999'
@@ -344,7 +345,7 @@ class ServiceEdgeGroupAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
-            
+
         Examples:
             >>> _, _, err = client.zpa.service_edge_group.delete_service_edge_group(
             ...     group_id='999999'

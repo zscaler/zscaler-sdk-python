@@ -55,14 +55,14 @@ class Certificate(ZscalerObject):
                 if "serialNo" in config else None
             self.public_key = config["publicKey"]\
                 if "publicKey" in config else None
-            
+
             self.status = config["status"]\
                 if "status" in config else None
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
             self.microtenant_id = config["microtenantId"]\
                 if "microtenantId" in config else None
-                
+
             self.san = ZscalerCollection.form_list(
                 config["san"] if "san" in config else [], str
             )

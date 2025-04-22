@@ -39,7 +39,8 @@ class SAMLAttributesAPI(APIClient):
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
@@ -89,7 +90,8 @@ class SAMLAttributesAPI(APIClient):
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:

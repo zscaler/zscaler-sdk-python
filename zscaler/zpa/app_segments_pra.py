@@ -46,13 +46,14 @@ class AppSegmentsPRAAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             tuple: A tuple containing (list of AppSegmentsPRA instances, Response, error)
-            
+
         Examples:
             >>> segment_list, _, err = client.zpa.app_segments_pra.list_segments_pra(
             ... query_params={'search': 'AppSegmentPRA01', 'page': '1', 'page_size': '100'})
@@ -106,7 +107,7 @@ class AppSegmentsPRAAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing (ApplicationSegment, Response, error)
-            
+
         Examples:
             >>> fetched_segment, _, err = client.zpa.app_segments_pra.get_segment_pra('999999')
             ... if err:
@@ -180,7 +181,7 @@ class AppSegmentsPRAAPI(APIClient):
 
                 - **application_port** (str): The port used by the application.
                 - **application_protocol** (str): The protocol used (e.g., `RDP`, `SSH`).
-                - **connection_security** (str): The security mode for connections.  
+                - **connection_security** (str): The security mode for connections.
                     Values: `ANY`, `NLA`, `NLA_EXT`, `TLS`, `VM_CONNECT`, `RDP`.
                 - **enabled** (bool): Whether the application is enabled.
                 - **domain** (str): The domain name of the application.
@@ -298,7 +299,7 @@ class AppSegmentsPRAAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (ApplicationSegment, Response, error)
-            
+
         Examples:
 
            Create an application segment using **new TCP port format** (`tcp_port_range`):
@@ -364,7 +365,8 @@ class AppSegmentsPRAAPI(APIClient):
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
             # Fetch all SECURE_REMOTE_ACCESS apps (no filtering, so we get everything)
-            segments_list, _, err = app_segment_api.get_segments_by_type(application_type="SECURE_REMOTE_ACCESS", query_params={})
+            segments_list, _, err = app_segment_api.\
+                get_segments_by_type(application_type="SECURE_REMOTE_ACCESS", query_params={})
 
             if err:
                 return (None, None, f"Error fetching application segment data: {err}")
@@ -416,7 +418,7 @@ class AppSegmentsPRAAPI(APIClient):
 
         if response is None:
             return (ApplicationSegmentPRA({"id": segment_id}), None, None)
-        
+
         try:
             result = ApplicationSegmentPRA(
                 self.form_response_body(response.get_body())
@@ -427,8 +429,8 @@ class AppSegmentsPRAAPI(APIClient):
 
     def delete_segment_pra(
         self,
-        segment_id: str, 
-        force_delete: bool = False, 
+        segment_id: str,
+        force_delete: bool = False,
         microtenant_id: str = None
     ) -> tuple:
         """

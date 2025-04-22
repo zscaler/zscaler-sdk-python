@@ -47,7 +47,7 @@ class PostureProfilesAPI(APIClient):
 
         Examples:
             Retrieve posture profiles with pagination parameters:
-            
+
             >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles(
             ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -56,9 +56,9 @@ class PostureProfilesAPI(APIClient):
             ... print(f"Total posture profiles found: {len(posture_list)}")
             ... for posture in posture_list:
             ...     print(posture.as_dict())
-            
+
             Retrieve posture profiles udid with:
-            
+
             >>> posture_list, _, err = client.zpa.posture_profile.list_posture_profiles()
             ... if err:
             ...     print(f"Error listing profiles: {err}")

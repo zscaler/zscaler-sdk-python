@@ -41,7 +41,8 @@ class AppServersAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
@@ -97,7 +98,7 @@ class AppServersAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: AppServers: The corresponding server object.
-            
+
         Examples:
             >>> fetched_server, _, err = client.zpa.servers.get_server('999999')
             ... if err:
@@ -147,10 +148,10 @@ class AppServersAPI(APIClient):
                 The list of unique identifiers for the Server Group.
             **config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
             **microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
-            
+
         Returns:
             :obj:`Tuple`: AppServers: The newly created portal object.
-            
+
         Examples:
             >>> new_server, _, err = client.zpa.servers.add_server(
             ...     name="NewAppServer",
@@ -198,10 +199,10 @@ class AppServersAPI(APIClient):
         Args:
             server_id (str): The unique identifier for the server being updated.
             microtenant_id (str): The unique identifier of the Microtenant for the ZPA tenant.
-            
+
         Returns:
             :obj:`Tuple`: AppServers: The updated application server object.
-            
+
         Examples:
             >>> update_server, _, err = client.zpa.servers.update_server(
             ...     server_id="999999",
@@ -265,7 +266,7 @@ class AppServersAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
-            
+
         Examples:
             >>> _, _, err = client.zpa.servers.delete_server(
             ...     server_id='999999'

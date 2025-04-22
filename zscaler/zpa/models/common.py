@@ -15,7 +15,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
-from zscaler.oneapi_collection import ZscalerCollection 
+from zscaler.oneapi_collection import ZscalerCollection
+
 
 class CommonIDName(ZscalerObject):
     """
@@ -36,7 +37,7 @@ class CommonIDName(ZscalerObject):
                 if "id" in config else None
             self.name = config["name"] \
                 if "name" in config else None
-             
+
         else:
             self.id = None
             self.name = None
@@ -52,6 +53,7 @@ class CommonIDName(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class CommonNameReason(ZscalerObject):
     """
@@ -71,7 +73,7 @@ class CommonNameReason(ZscalerObject):
             self.name = config["name"] \
                 if "name" in config else None
             self.reason = config["reason"] \
-                if "reason" in config else None 
+                if "reason" in config else None
         else:
             self.id = None
             self.reason = None
@@ -87,6 +89,7 @@ class CommonNameReason(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class ExtranetDTO(ZscalerObject):
     """
@@ -115,15 +118,15 @@ class ExtranetDTO(ZscalerObject):
                 if "ziaErName" in config else None
             self.zia_er_id = config["ziaErId"]\
                 if "ziaErId" in config else None
-                
+
             self.location_dto = ZscalerCollection.form_list(
                 config["locationDTO"] if "locationDTO" in config else [], CommonIDName
             )
-            
+
             self.location_group_dto = ZscalerCollection.form_list(
                 config["locationGroupDTO"] if "locationGroupDTO" in config else [], LocationGroupDTO
             )
-            
+
         else:
             self.id = None
             self.modified_time = None
@@ -174,7 +177,7 @@ class LocationGroupDTO(ZscalerObject):
             self.zia_locations = ZscalerCollection.form_list(
                 config["ziaLocations"] if "ziaLocations" in config else [], CommonIDName
             )
-            
+
         else:
             self.id = None
             self.name = None
@@ -192,7 +195,8 @@ class LocationGroupDTO(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class InspectionControlException(ZscalerObject):
     """
     A class for InspectionControlException objects.
@@ -211,18 +215,18 @@ class InspectionControlException(ZscalerObject):
             self.domains = ZscalerCollection.form_list(
                 config["domains"] if "domains" in config else [], Domains
             )
-            
+
             self.paths = ZscalerCollection.form_list(
                 config["paths"] if "paths" in config else [], Paths
             )
-            
+
             self.variables = ZscalerCollection.form_list(
                 config["variables"] if "variables" in config else [], Variables
             )
 
             self.version = config["version"] \
                 if "version" in config else None
-                
+
         else:
             self.domains = None
             self.paths = None
@@ -242,7 +246,8 @@ class InspectionControlException(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Domains(ZscalerObject):
     """
     A class for Domains objects.
@@ -277,7 +282,8 @@ class Domains(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Paths(ZscalerObject):
     """
     A class for Paths objects.
@@ -312,7 +318,8 @@ class Paths(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Variables(ZscalerObject):
     """
     A class for Variables objects.
@@ -348,6 +355,7 @@ class Variables(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class PrivilegedCapabilitiesResource(ZscalerObject):
     """
     A class for PrivilegedCapabilitiesResource objects.
@@ -366,7 +374,7 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
             self.dest_addresses = ZscalerCollection.form_list(
                 config["capabilities"] if "capabilities" in config else [], str
             )
-             
+
         else:
             self.capabilities = None
 

@@ -32,7 +32,7 @@ class PolicySetControllerV2(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
-        
+
         if config:
             self.id = config["id"]\
                 if "id" in config else None
@@ -77,11 +77,11 @@ class PolicySetControllerV2(ZscalerObject):
             self.app_connector_groups = ZscalerCollection.form_list(
                 config["appConnectorGroups"] if "appConnectorGroups" in config else [], app_connector_groups.AppConnectorGroup
             )
-            
+
             self.app_server_groups = ZscalerCollection.form_list(
                 config["appServerGroups"] if "appServerGroups" in config else [], server_group.ServerGroup
             )
-            
+
             self.service_edge_groups = ZscalerCollection.form_list(
                 config["serviceEdgeGroups"] if "serviceEdgeGroups" in config else [], service_edge_groups.ServiceEdgeGroup
             )
@@ -100,7 +100,9 @@ class PolicySetControllerV2(ZscalerObject):
                 if isinstance(config["privilegedPortalCapabilities"], common.PrivilegedCapabilitiesResource):
                     self.privileged_portal_capabilities = config["privilegedPortalCapabilities"]
                 elif config["privilegedPortalCapabilities"] is not None:
-                    self.privileged_portal_capabilities = common.PrivilegedCapabilitiesResource(config["privilegedPortalCapabilities"])
+                    self.privileged_portal_capabilities = common.PrivilegedCapabilitiesResource(
+                        config["privilegedPortalCapabilities"]
+                    )
                 else:
                     self.privileged_portal_capabilities = None
             else:
@@ -115,7 +117,7 @@ class PolicySetControllerV2(ZscalerObject):
                     self.extranet_dto = None
             else:
                 self.extranet_dto = None
-                
+
             if "credential" in config:
                 if isinstance(config["credential"], Credential):
                     self.credential = config["credential"]
@@ -136,9 +138,7 @@ class PolicySetControllerV2(ZscalerObject):
             else:
                 self.credential_pool = None
 
-                
         else:
-            # Defaults when config is None
             self.policy_set_id = None
             self.name = None
             self.description = None
@@ -194,7 +194,7 @@ class PolicySetControllerV2(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
-# The Condition class used within PolicySetControllerV2
+
 class Condition(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
@@ -222,7 +222,7 @@ class Condition(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
-# The Operand class used within Condition
+
 class Operand(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
@@ -230,7 +230,8 @@ class Operand(ZscalerObject):
         if config:
             self.object_type = config.get("objectType")
             self.values = config.get("values", [])
-            self.entry_values = [{"lhs": entry["lhs"], "rhs": entry["rhs"]} for entry in config.get("entryValues", [])] if "entryValues" in config else []
+            self.entry_values = [{"lhs": entry["lhs"], "rhs": entry["rhs"]} for entry in config.get("entryValues", [])]\
+                if "entryValues" in config else []
 
         else:
             self.object_type = None
@@ -248,7 +249,6 @@ class Operand(ZscalerObject):
         return parent_req_format
 
 
-# The Credential class used within PolicySetControllerV2
 class Credential(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
@@ -256,7 +256,7 @@ class Credential(ZscalerObject):
         if config:
             self.id = config["id"]\
                 if "id" in config else None
-                
+
             self.name = config["name"]\
                 if "name" in config else None
 

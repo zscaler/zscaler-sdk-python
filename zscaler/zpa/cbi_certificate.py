@@ -82,7 +82,7 @@ class CBICertificateAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing the `CBICertificate` instance, response object, and error if any.
-    
+
         Examples:
             >>> fetched_cert, _, err = client.zpa.pra_portal.get_portal(
                 'a3a6b841-965c-4c75-8dd9-cefd83d740d4')
@@ -164,7 +164,7 @@ class CBICertificateAPI(APIClient):
 
     def update_cbi_certificate(
         self,
-        certificate_id: str, 
+        certificate_id: str,
         **kwargs
     ) -> tuple:
         """

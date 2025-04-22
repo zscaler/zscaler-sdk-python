@@ -21,6 +21,7 @@ from zscaler.zpa.models import app_connector_groups\
 from zscaler.zpa.models import policyset_controller_v1\
     as policyset_controller_v1
 
+
 class LSSResourceModel(ZscalerObject):
     """
     A class for LSSResourceModel objects.
@@ -52,7 +53,7 @@ class LSSResourceModel(ZscalerObject):
                     self.config = None
             else:
                 self.config = None
-                
+
             if "policyRule" in config:
                 if isinstance(config["policyRule"], policyset_controller_v1.PolicySetControllerV1):
                     self.policy_rule = config["policyRule"]
@@ -94,6 +95,7 @@ class LSSResourceModel(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class LSSConfig(ZscalerObject):
     """

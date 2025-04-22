@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group\
     as server_group
 
+
 class ApplicationSegmentInspection(ZscalerObject):
     """
     A class representing the Application Segment in ZPA for PRA (Privileged Remote Access).
@@ -26,7 +27,6 @@ class ApplicationSegmentInspection(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
-
         if config:
             self.id = config["id"]\
                 if "id" in config else None

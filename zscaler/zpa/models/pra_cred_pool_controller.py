@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import common as common
 
+
 class PRACredentialPoolController(ZscalerObject):
     """
     A class representing the Privileged Remote Access Credential Pool.
@@ -46,7 +47,7 @@ class PRACredentialPoolController(ZscalerObject):
                 if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
-                
+
             self.device_groups = ZscalerCollection.form_list(
                 config["credentials"] if "credentials" in config else [], common.CommonIDName
             )

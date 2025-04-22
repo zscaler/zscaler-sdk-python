@@ -41,17 +41,19 @@ class IDPControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
-                ``[query_params.scim_enabled]`` {bool}: Returns all SCIM IdPs if set to true. Returns all non SCIM IdPs if set to false.
+                ``[query_params.scim_enabled]`` {bool}: Returns all SCIM IdPs if set to true.
+                    Returns all non SCIM IdPs if set to false.
                 ``[query_params.user_attributes]`` {bool}: Returns user attributes.
 
         Returns:
             :obj:`Tuple`: A tuple containing (list of IDP instances, Response, error)
-            
+
         Examples:
             Retrieve enrollment certificates with pagination parameters:
-            
+
             >>> idp_list, _, err = client.zpa.idp.list_idps(
             ... query_params={'search': 'IDP01', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -103,7 +105,7 @@ class IDPControllerAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The corresponding identity provider object.
-            
+
         Examples:
             >>> fetched_cert, _, err = client.zpa.certificates.get_enrolment('999999')
             ... if err:

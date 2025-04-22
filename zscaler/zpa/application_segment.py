@@ -16,11 +16,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.application_segment import ApplicationSegment 
+from zscaler.zpa.models.application_segment import ApplicationSegment
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import format_url, add_id_groups
 import logging
 logger = logging.getLogger(__name__)
+
 
 class ApplicationSegmentAPI(APIClient):
     reformat_params = [
@@ -47,7 +48,8 @@ class ApplicationSegmentAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
@@ -111,7 +113,7 @@ class ApplicationSegmentAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
-            
+
         Examples:
             >>> fetched_segment, _, err = client.zpa.application_segment.get_segment('999999')
             ... if err:
@@ -181,7 +183,7 @@ class ApplicationSegmentAPI(APIClient):
             :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
 
         Examples:
-        
+
             Create an application segment using **legacy TCP port format** (`tcp_port_ranges`):
 
             >>> added_segment, _, err = client.zpa.application_segment.add_segment(
@@ -197,7 +199,7 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Error creating segment: {err}")
             ...     return
             ... print(f"segment created successfully: {added_segment.as_dict()}")
-            
+
            Create an application segment using **new TCP port format** (`tcp_port_range`):
 
             >>> added_segment, _, err = client.zpa.application_segment.add_segment(
@@ -213,7 +215,7 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Error creating segment: {err}")
             ...     return
             ... print(f"segment created successfully: {added_segment.as_dict()}")
-            
+
            Create an Browser Access application segment:
 
             >>> added_segment, _, err = client.zpa.application_segment.add_segment(
@@ -275,7 +277,7 @@ class ApplicationSegmentAPI(APIClient):
         # Convert clientless_app_ids to clientlessApps if present
         if "clientless_app_ids" in body:
             body["clientlessApps"] = body.pop("clientless_app_ids")
-            
+
         # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
@@ -311,9 +313,9 @@ class ApplicationSegmentAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing the updated `ApplicationSegment` instance, response object, and error if any.
-            
+
         Examples:
-        
+
             Update an application segment using **legacy TCP port format** (`tcp_port_ranges`):
 
             >>> update_segment, _, err = client.zpa.application_segment.add_segment(
@@ -329,7 +331,7 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Error updating segment: {err}")
             ...     return
             ... print(f"segment updated successfully: {update_segment.as_dict()}")
-            
+
             Update an application segment using **new TCP port format** (`tcp_port_range`):
 
             >>> update_segment, _, err = client.zpa.application_segment.add_segment(
@@ -345,7 +347,7 @@ class ApplicationSegmentAPI(APIClient):
             ...     print(f"Error updating segment: {err}")
             ...     return
             ... print(f"segment updated successfully: {update_segment.as_dict()}")
-            
+
             Update an Browser Access application segment
 
             >>> update_segment, _, err = client.zpa.application_segment.add_segment(
@@ -468,7 +470,7 @@ class ApplicationSegmentAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response and error (if any).
-            
+
         Examples:
             >>> _, _, err = client.zpa.application_segment.delete_segment(
             ...     segment_id='999999'
@@ -608,11 +610,11 @@ class ApplicationSegmentAPI(APIClient):
             {self._zpa_base_endpoint}
             /application/{application_id}/share
         """)
-        
+
         payload = {
             "shareToMicrotenants": kwargs.pop("share_to_microtenants", None),
         }
-        
+
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

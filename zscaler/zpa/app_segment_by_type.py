@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zpa.models.application_segment import AppSegmentByType
 
+
 class ApplicationSegmentByTypeAPI(APIClient):
     """
     A client object for the Application Segment By Type resource.

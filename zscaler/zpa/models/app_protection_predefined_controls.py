@@ -40,10 +40,14 @@ class PredefinedInspectionControlResource(ZscalerObject):
 
             self.default_group = config["defaultGroup"] \
                 if "defaultGroup" in config else None
-    
+
             self.predefined_inspection_controls = ZscalerCollection.form_list(
-                config["predefinedInspectionControls"] if "predefinedInspectionControls" in config else [], PredefinedInspectionControls
+                config["predefinedInspectionControls"]
+                if "predefinedInspectionControls" in config
+                else [],
+                PredefinedInspectionControls,
             )
+
         else:
             self.control_group = None
             self.default_group = None
@@ -61,6 +65,7 @@ class PredefinedInspectionControlResource(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class PredefinedInspectionControls(ZscalerObject):
     """
@@ -82,18 +87,18 @@ class PredefinedInspectionControls(ZscalerObject):
 
             self.name = config["name"]\
                 if "name" in config else None
-                
+
             self.description = config["description"]\
                 if "description" in config else None
-                
+
             self.action = config["action"]\
                 if "action" in config else None
-                
+
             self.action_value = config["actionValue"]\
                 if "actionValue" in config else None
-                
-            self.attachment	 = config["attachment"]\
-                if "attachment	" in config else None
+
+            self.attachment = config["attachment"]\
+                if "attachment" in config else None
 
             self.control_group = config["controlGroup"]\
                 if "controlGroup" in config else None
@@ -102,17 +107,17 @@ class PredefinedInspectionControls(ZscalerObject):
                 if "controlNumber" in config else None
 
             self.control_type = config["controlType"]\
-                if "controlType" in config else None                
+                if "controlType" in config else None
 
             self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None                
+                if "creationTime" in config else None
 
             self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None  
+                if "modifiedBy" in config else None
 
             self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None 
-                                
+                if "modifiedTime" in config else None
+
             self.default_action = config["defaultAction"]\
                 if "defaultAction" in config else None
 
@@ -123,16 +128,19 @@ class PredefinedInspectionControls(ZscalerObject):
                 if "paranoiaLevel" in config else None
 
             self.protocol_type = config["protocolType"]\
-                if "protocolType" in config else None                
+                if "protocolType" in config else None
 
             self.severity = config["severity"]\
-                if "severity" in config else None    
+                if "severity" in config else None
 
             self.version = config["version"]\
-                if "version" in config else None   
-                                                
+                if "version" in config else None
+
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
-                config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [], common.CommonIDName
+                config["associatedInspectionProfileNames"]
+                if "associatedInspectionProfileNames" in config
+                else [],
+                common.CommonIDName,
             )
 
             if "controlException" in config:
@@ -147,7 +155,7 @@ class PredefinedInspectionControls(ZscalerObject):
 
         else:
             self.id = None
-            self.name = None 
+            self.name = None
             self.description = None
             self.action = None
             self.action_value = None
@@ -157,16 +165,16 @@ class PredefinedInspectionControls(ZscalerObject):
             self.control_group = None
             self.control_number = None
             self.control_type = None
-            self.creation_time = None   
-            self.modified_by = None 
-            self.modified_time = None 
-            self.default_action = None     
+            self.creation_time = None
+            self.modified_by = None
+            self.modified_time = None
+            self.default_action = None
             self.default_action_value = None
             self.paranoia_level = None
             self.protocol_type = None
-            self.severity = None    
-            self.version = None     
-                             
+            self.severity = None
+            self.version = None
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
@@ -196,4 +204,3 @@ class PredefinedInspectionControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    

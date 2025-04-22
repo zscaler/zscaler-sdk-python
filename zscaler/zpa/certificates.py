@@ -40,7 +40,8 @@ class CertificatesAPI(APIClient):
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
@@ -49,7 +50,7 @@ class CertificatesAPI(APIClient):
 
         Examples:
             Retrieve browser certificates with pagination parameters:
-            
+
             >>> cert_list, _, err = client.zpa.certificates.list_certificates(
             ... query_params={'search': 'certificate01', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -99,7 +100,8 @@ class CertificatesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
@@ -108,7 +110,7 @@ class CertificatesAPI(APIClient):
 
         Examples:
             Retrieve browser certificates with pagination parameters:
-            
+
             >>> cert_list, _, err = client.zpa.certificates.list_issued_certificates(
             ... query_params={'search': 'certificate01', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -165,7 +167,7 @@ class CertificatesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Certificate instance, Response, error).
-            
+
         Examples:
             >>> fetched_cert, _, err = client.zpa.certificates.get_certificate('999999')
             ... if err:
@@ -214,7 +216,7 @@ class CertificatesAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The newly created certificate object.
-            
+
         Examples:
             Creating a Cloud browser isolation with the minimum required parameters:
 
@@ -272,7 +274,7 @@ class CertificatesAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The updated certificate object.
-            
+
         Examples:
             Creating a Cloud browser isolation with the minimum required parameters:
 
@@ -338,7 +340,7 @@ class CertificatesAPI(APIClient):
 
         Returns:
             Response: The response object for the delete operation.
-            
+
         Examples:
             >>> _, _, err = client.zpa.certificates.delete_certificate(
             ...     certificate_id='999999'

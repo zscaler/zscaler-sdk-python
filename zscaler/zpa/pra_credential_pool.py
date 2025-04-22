@@ -46,7 +46,7 @@ class PRACredentialPoolAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessCredential instances, Response, error)
-            
+
         Examples:
             >>> credential_list, _, err = client.zpa.pra_credential.list_credentials(
             ... query_params={'search': 'pra_console01', 'page': '1', 'page_size': '100'})

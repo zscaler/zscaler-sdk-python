@@ -40,13 +40,14 @@ class EmergencyAccessAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             :obj:`Tuple`: A tuple containing (list of Emergency Access instances, Response, error)
-            
+
         Examples:
             >>> access_list, _, err = client.zpa.emergency_access.list_users(
             ... query_params={'search': 'portal01', 'page': '1', 'page_size': '100'})
@@ -102,7 +103,7 @@ class EmergencyAccessAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
-            
+
         Examples:
             >>> fetched_user, _, err = client.zpa.emergency_access.get_user('999999')
             ... if err:
@@ -142,8 +143,9 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_user(self, 
-        activate_now=True, 
+    def add_user(
+        self,
+        activate_now=True,
         **kwargs
     ) -> tuple:
         """
@@ -158,7 +160,7 @@ class EmergencyAccessAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
-            
+
         Examples:
             >>> added_user, _, err = client.zpa.emergency_access.add_user(
             ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
@@ -211,10 +213,12 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_user(self, 
-            user_id: str,
-            activate_now=True, 
-            **kwargs) -> tuple:
+    def update_user(
+        self,
+        user_id: str,
+        activate_now=True,
+        **kwargs
+    ) -> tuple:
         """
         Updates the specified emergency access user.
 
@@ -228,10 +232,10 @@ class EmergencyAccessAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the `EmergencyAccessUser` instance, response object, and error if any.
-            
+
         Examples:
             >>> update_user, _, err = client.zpa.emergency_access.add_uupdate_userser(
-            ...     user_id='99999'    
+            ...     user_id='99999'
             ...     email_id=f"user1_{random.randint(1000, 10000)}@acme.com",
             ...     user_id="user1",
             ...     first_name="User1",
@@ -287,9 +291,9 @@ class EmergencyAccessAPI(APIClient):
         return (result, response, None)
 
     def activate_user(
-        self, 
-        user_id: str, 
-        send_email: bool = False, 
+        self,
+        user_id: str,
+        send_email: bool = False,
         **kwargs
     ) -> tuple:
         """
@@ -343,8 +347,9 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def deactivate_user(self, 
-        user_id: str, 
+    def deactivate_user(
+        self,
+        user_id: str,
         **kwargs
     ) -> tuple:
         """

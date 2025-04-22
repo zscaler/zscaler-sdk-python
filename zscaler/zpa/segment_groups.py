@@ -50,7 +50,7 @@ class SegmentGroupsAPI(APIClient):
 
         Example:
             Fetch all segment groups without filtering
-            
+
             >>> group_list, _, err = client.zpa.segment_groups.list_groups()
             ... if err:
             ...     print(f"Error listing segment groups: {err}")
@@ -111,10 +111,10 @@ class SegmentGroupsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: SegmentGroup: The corresponding segment group object.
-            
+
         Example:
             Retrieve details of a specific segment group
-            
+
             >>> fetched_group, _, err = client.zpa.segment_groups.get_group('999999')
             ... if err:
             ...     print(f"Error fetching segment group by ID: {err}")
@@ -161,7 +161,7 @@ class SegmentGroupsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: SegmentGroup: The created segment group object.
-            
+
         Example:
             # Basic example: Add a new segment group
             >>> added_group, _, err = client.zpa.segment_groups.add_group(

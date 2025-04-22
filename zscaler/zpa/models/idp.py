@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import certificates as certificates
 
+
 class IDPController(ZscalerObject):
     """
     A class for IDPController objects.
@@ -101,7 +102,7 @@ class IDPController(ZscalerObject):
             self.sso_type = ZscalerCollection.form_list(
                 config["ssoType"] if "ssoType" in config else [], str
             )
-            
+
             self.certificates = ZscalerCollection.form_list(
                 config["certificates"] if "certificates" in config else [], certificates.Certificate
             )
@@ -206,6 +207,7 @@ class IDPController(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class ServiceProvider(ZscalerObject):
     """
     A class for ServiceProvider objects.
@@ -230,7 +232,8 @@ class ServiceProvider(ZscalerObject):
             self.sp_metadata_url = config["spMetadataUrl"] \
                 if "spMetadataUrl" in config else False
             self.sp_post_url = config["spPostUrl"] \
-                if "spPostUrl" in config else False             
+                if "spPostUrl" in config else False
+
         else:
             self.certificate_url = None
             self.sp_base_url = None

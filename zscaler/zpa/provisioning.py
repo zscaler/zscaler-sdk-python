@@ -63,7 +63,8 @@ class ProvisioningKeyAPI(APIClient):
 
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
@@ -215,12 +216,12 @@ class ProvisioningKeyAPI(APIClient):
             enrollment_cert_id (str): The unique id of the enrollment certificate for this provisioning key.
             component_id (str): The unique id of the component linked to this provisioning key.
             microtenant_id (str, optional): The microtenant ID if applicable.
-            
+
             **kwargs: Additional optional attributes.
 
         Returns:
             :obj:`Tuple`: The newly created Provisioning Key resource record.
-            
+
         Examples:
             >>> new_prov_key, _, err = zpa.provisioning.add_provisioning_key(
             ...     key_type=key_type,
@@ -246,20 +247,16 @@ class ProvisioningKeyAPI(APIClient):
         """
         )
 
-        # Create a separate body dictionary from kwargs to avoid unintended modifications to kwargs
         body = kwargs.copy()
 
-        # Extract microtenant_id for query parameters if present
         microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Extract and set API-specific fields
         name = body.pop("name", None)
         max_usage = body.pop("max_usage", None)
         enrollment_cert_id = body.get("enrollment_cert_id")
         component_id = body.get("component_id")
 
-        # Update body with the API-required field names
         body.update({
             "name": name,
             "maxUsage": max_usage,
@@ -267,13 +264,11 @@ class ProvisioningKeyAPI(APIClient):
             "zcomponentId": component_id
         })
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request, ProvisioningKey)
         if error:
@@ -311,9 +306,9 @@ class ProvisioningKeyAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The updated Provisioning Key resource record.
-            
+
         Examples:
-        
+
             Updated Provisioning Key `max_usage` to `20`
             >>> update_prov_key, _, err = zpa.provisioning.add_provisioning_key(
             ...     key_type=key_type,
@@ -353,8 +348,6 @@ class ProvisioningKeyAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # If PUT request returns 204 No Content, response will be None.
-        # Just like update_group, we return a minimal ProvisioningKey object.
         if response is None:
             return (ProvisioningKey({"id": key_id}), None, None)
 
@@ -368,8 +361,8 @@ class ProvisioningKeyAPI(APIClient):
         return (result, response, None)
 
     def delete_provisioning_key(
-        self, key_id: str, 
-        key_type: str, 
+        self, key_id: str,
+        key_type: str,
         microtenant_id: str = None
     ) -> tuple:
         """
@@ -390,7 +383,7 @@ class ProvisioningKeyAPI(APIClient):
 
         Examples:
             Delete a Service Edge provisioning key:
-            
+
             >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
             ... key_id='9999', key_type='connector')
             ... if err:
@@ -399,9 +392,9 @@ class ProvisioningKeyAPI(APIClient):
             ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
 
         Examples:
-        
+
             Delete a Service Edge provisioning key:
-            
+
             >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
             ... key_id='9999', key_type='service_edge')
             ... if err:
