@@ -1,14 +1,14 @@
-app_segments
---------------
+application_segment
+--------------------
 
 The following methods allow for interaction with the ZPA
 Application Segments API endpoints.
 
-Methods are accessible via ``zpa.app_segments``
+Methods are accessible via ``zpa.application_segment``
 
-.. _zpa-app_segments:
+.. _zpa-application_segment:
 
-.. automodule:: zscaler.zpa.app_segments
+.. automodule:: zscaler.zpa.application_segment
     :members:
     :undoc-members:
     :show-inheritance:

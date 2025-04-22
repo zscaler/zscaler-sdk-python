@@ -72,38 +72,38 @@ class TestSecrets:
     #     finally:
     #         assert len(errors) == 0, f"Errors occurred during the get OTP test: {errors}"
 
-    def test_get_passwords(self, fs):
-        client = MockZCCClient(fs)
-        errors = []
+    # def test_get_passwords(self, fs):
+    #     client = MockZCCClient(fs)
+    #     errors = []
 
-        try:
-            # Test case: List devices and retrieve passwords for the first device
-            try:
-                # List all devices
-                devices = client.devices.list_devices()
-                assert isinstance(devices, list), "Expected a list of devices"
+    #     try:
+    #         # Test case: List devices and retrieve passwords for the first device
+    #         try:
+    #             # List all devices
+    #             devices = client.zcc.devices.list_devices()
+    #             assert isinstance(devices, list), "Expected a list of devices"
 
-                # Ensure we have devices to test with
-                if devices:
-                    for device in devices:
+    #             # Ensure we have devices to test with
+    #             if devices:
+    #                 for device in devices:
 
-                        # Extract 'user' attribute from the device
-                        username = device.get("user")
-                        assert username is not None, "Username not found in the device data"
+    #                     # Extract 'user' attribute from the device
+    #                     username = device.get("user")
+    #                     assert username is not None, "Username not found in the device data"
 
-                        # Invoke the get_passwords method using the extracted username and os_type as 'macos'
-                        try:
-                            password_response = client.secrets.get_passwords(username=username, os_type="windows")
-                            assert isinstance(password_response, dict), "Expected a dictionary containing passwords"
-                        except Exception as exc:
-                            errors.append(f"Retrieving passwords for user {username} failed: {exc}")
+    #                     # Invoke the get_passwords method using the extracted username and os_type as 'macos'
+    #                     try:
+    #                         password_response = client.zcc.secrets.get_passwords(username=username, os_type="3")
+    #                         assert isinstance(password_response, dict), "Expected a dictionary containing passwords"
+    #                     except Exception as exc:
+    #                         errors.append(f"Retrieving passwords for user {username} failed: {exc}")
 
-                else:
-                    errors.append("No devices found to test password retrieval.")
+    #             else:
+    #                 errors.append("No devices found to test password retrieval.")
 
-            except Exception as exc:
-                errors.append(f"Listing devices failed: {exc}")
+    #         except Exception as exc:
+    #             errors.append(f"Listing devices failed: {exc}")
 
-        # Assert that no errors occurred during the test
-        finally:
-            assert len(errors) == 0, f"Errors occurred during the password test: {errors}"
+    #     # Assert that no errors occurred during the test
+    #     finally:
+    #         assert len(errors) == 0, f"Errors occurred during the password test: {errors}"

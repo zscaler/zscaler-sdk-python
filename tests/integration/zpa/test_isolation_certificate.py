@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import cryptography.hazmat.backends as crypto_backends
 import cryptography.hazmat.primitives.asymmetric.rsa as rsa
@@ -92,11 +92,14 @@ class TestCBICertificates:
             pem, _ = self.generate_root_certificate(cert_name)
 
             try:
-                # Create a new certificate
-                created_cert = client.isolation.add_certificate(name=cert_name, pem=pem.decode("utf-8"))
-                cert_id = created_cert.id if created_cert and "id" in created_cert else None
+                # Create a new certificate and capture debug information
+                created_cert, _, err = client.zpa.cbi_certificate.add_cbi_certificate(name=cert_name, pem=pem.decode("utf-8"))
+                assert err is None, f"Error creating certificate: {err}"
+                cert_id = created_cert.id if created_cert else None
                 if not cert_id:
-                    errors.append("Failed to create certificate")
+                    errors.append("Failed to retrieve certificate ID after creation")
+                else:
+                    print(f"Created certificate ID: {cert_id}")
             except Exception as exc:
                 errors.append(f"Certificate creation failed: {str(exc)}")
 
@@ -104,8 +107,9 @@ class TestCBICertificates:
                 try:
                     # Update the certificate
                     updated_name = cert_name + " Updated"
-                    client.isolation.update_certificate(cert_id, name=updated_name)
-                    updated_cert = client.isolation.get_certificate(cert_id)
+                    client.zpa.cbi_certificate.update_cbi_certificate(cert_id, name=updated_name)
+                    updated_cert, _, err = client.zpa.cbi_certificate.get_cbi_certificate(cert_id)
+                    assert err is None, f"Error fetching updated certificate: {err}"
                     if updated_cert.name != updated_name:
                         errors.append("Failed to update certificate name")
                 except Exception as exc:
@@ -113,7 +117,8 @@ class TestCBICertificates:
 
                 try:
                     # Verify the certificate by listing
-                    certs = client.isolation.list_certificates()
+                    certs, _, err = client.zpa.cbi_certificate.list_cbi_certificates()
+                    assert err is None, f"Error listing certificates: {err}"
                     if cert_id not in [cert.id for cert in certs]:
                         errors.append("Certificate not found in list")
                 except Exception as exc:
@@ -127,9 +132,9 @@ class TestCBICertificates:
             if cert_id:
                 try:
                     # Delete the certificate
-                    delete_response_code = client.isolation.delete_certificate(cert_id)
-                    if str(delete_response_code) != "200":
-                        errors.append(f"Failed to delete certificate, status code {delete_response_code}")
+                    delete_response, _, err = client.zpa.cbi_certificate.delete_cbi_certificate(cert_id)
+                    assert err is None, f"Error deleting certificate: {err}"
+                    print(f"Certificate with ID {cert_id} deleted successfully.")
                 except Exception as exc:
                     errors.append(f"Certificate deletion failed: {str(exc)}")
 

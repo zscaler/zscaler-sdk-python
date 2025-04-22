@@ -1,264 +1,473 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-from box import Box, BoxList
-from requests import Response
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from zscaler.utils import (
-    convert_keys,
-    recursive_snake_to_camel,
-    snake_to_camel,
-    transform_common_id_fields,
-)
-from zscaler.zia import ZIAClient
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zia.models.forwarding_control_policy import ForwardingControlRule
+from zscaler.zia.models.proxy_gatways import ProxyGatways
+from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 
 
-class ForwardingControlAPI:
-    # Forwarding Control filter rule keys that only require an ID to be provided.
-    reformat_params = [
-        ("app_service_groups", "appServiceGroups"),
-        ("departments", "departments"),
-        ("devices", "devices"),
-        ("device_groups", "deviceGroups"),
-        ("dest_ip_groups", "destIpGroups"),
-        ("dest_ipv6_groups", "destIpv6Groups"),
-        ("ec_groups", "ecGroups"),
-        ("groups", "groups"),
-        ("labels", "labels"),
-        ("locations", "locations"),
-        ("location_groups", "locationGroups"),
-        ("nw_application_groups", "nwApplicationGroups"),
-        ("nw_services", "nwServices"),
-        ("nw_service_groups", "nwServiceGroups"),
-        ("proxy_gateway", "proxyGateway"),
-        ("src_ip_groups", "srcIpGroups"),
-        ("src_ipv6_groups", "srcIpv6Groups"),
-        ("users", "users"),
-        ("zpa_gateway", "zpaGateway"),
-        ("zpa_app_segments", "zpaAppSegments"),
-        ("zpa_application_segments", "zpaApplicationSegments"),
-        ("zpa_application_segment_groups", "zpaApplicationSegmentGroups"),
-    ]
+class ForwardingControlAPI(APIClient):
 
-    def __init__(self, client: ZIAClient):
-        self.rest = client
+    _zia_base_endpoint = "/zia/api/v1"
 
-    def list_rules(self) -> BoxList:
+    def __init__(self, request_executor):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+
+    def list_rules(
+        self,
+        query_params=None,
+    ) -> tuple:
         """
-        Returns a list of all forwarding control rules.
-
-        Returns:
-            :obj:`BoxList`: The list of forwarding control rules
-
-        Examples:
-            >>> for rule in zia.forwarding_control.list_rules():
-            ...    pprint(rule)
-
-        """
-        return self.rest.get("forwardingRules")
-
-    def get_rule(self, rule_id: str) -> Box:
-        """
-        Returns information for the specified forwarding control filter rule.
+        Lists forwarding control rules rules in your organization with pagination.
 
         Args:
-            rule_id (str): The unique identifier for the forwarding control filter rule.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            :obj:`Box`: The resource record for the forwarding control filter rule.
+            tuple: A tuple containing (list of forwarding control rules instances, Response, error).
 
         Examples:
-            >>> pprint(zia.forwarding_control.get_rule('431233'))
+            Print all forwarding control rule
 
-        """
-        return self.rest.get(f"forwardingRules/{rule_id}")
+            >>> rule_list, response, error = zia.forwarding_control.list_rules()
+            ... if error:
+            ...     print(f"Error listing rules: {error}")
+            ...     return
+            ... print(f"Total rules found: {len(rule_list)}")
+            ... for rule in rule_list:
+            ...     print(rule.as_dict())
 
-    def add_rule(self, name: str, forward_method: str, **kwargs) -> Box:
+            Print a forwarding control rule that match the name 'Rule01'
+
+            >>> rule_list, response, error = zia.forwarding_control.list_rules(query_params={"search": 'Rule01'})
+            ... if error:
+            ...     print(f"Error listing rules: {error}")
+            ...     return
+            ... print(f"Total rules found: {len(rule_list)}")
+            ... for rule in rule_list:
+            ...     print(rule.as_dict())
         """
-        Adds a new forwarding control filter rule.
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /forwardingRules
+        """
+        )
+
+        query_params = query_params or {}
+
+        local_search = query_params.pop("search", None)
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            results = []
+            for item in response.get_results():
+                results.append(ForwardingControlRule(self.form_response_body(item)))
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
+
+        return (results, response, None)
+
+    def get_rule(self, rule_id: str) -> tuple:
+        """
+        Returns information for the specified forwarding control rule.
 
         Args:
-            name (str): Name of the rule, max 31 chars.
-            forward_method (str): Traffic forwarding method. Options: 'INVALID', 'DIRECT',
-                'PROXYCHAIN', 'ZIA', 'ZPA', 'ECZPA', 'ECSELF', 'DROP'.
-
-        Keyword Args:
-            order (str): Rule order, defaults to bottom.
-            rank (str): Admin rank of the rule.
-            state (str): Rule state ('ENABLED' or 'DISABLED').
-            description (str): Rule description.
-            src_ips (list): Source IPs for the rule, accepts IP addresses or CIDR.
-            dest_addresses (list): Destination IPs for the rule, accepts IP addresses or CIDR.
-            dest_ip_categories (list): IP address categories for the rule.
-            dest_countries (list): Destination countries for the rule.
-            enable_full_logging (bool): If True, enables full logging.
-            nw_applications (list): Network service applications for the rule.
-            app_services (list): IDs for application services for the rule.
-            app_service_groups (list): IDs for application service groups.
-            departments (list): IDs for departments the rule applies to.
-            dest_ip_groups (list): IDs for destination IP groups the rule applies to.
-            devices (list): IDs for Zscaler Client Connector managed devices.
-            device_groups (list): IDs for device groups managed by Zscaler Client Connector.
-            groups (list): IDs for groups the rule applies to.
-            labels (list): IDs for labels the rule applies to.
-            locations (list): IDs for locations the rule applies to.
-            location_groups (list): IDs for location groups the rule applies to.
-            nw_application_groups (list): IDs for network application groups.
-            nw_services (list): IDs for network services the rule applies to.
-            nw_service_groups (list): IDs for network service groups the rule applies to.
-            time_windows (list): IDs for time windows the rule applies to.
-            users (list): IDs for users the rule applies to.
+            rule_id (str): The unique identifier for the forwarding control rule.
 
         Returns:
-            :obj:`Box`: New forwarding control filter rule resource.
+            tuple: A tuple containing (forwarding control rule instance, Response, error).
 
-        Examples:
-            Forward all traffic to Google DNS:
+        Example:
+            Retrieve a forwarding control rule by its ID:
 
-            >>> zia.forwarding_control.add_rule(rank='7',
-            ...    dest_addresses=['8.8.8.8', '8.8.4.4'],
-            ...    name='FORWARD_ANY_TO_GOOG-DNS',
-            ...    forward_method='DIRECT',
-            ...    description='TT#1965432122')
-
-            Block all traffic to Quad9 DNS for Finance Group:
-
-            >>> zia.forwarding_control.add_rule(rank='7',
-            ...    dest_addresses=['9.9.9.9'],
-            ...    name='BLOCK_FIN_TO_Q9-DNS',
-            ...    forward_method='DIRECT',
-            ...    groups=['95016183'],
-            ...    description='TT#1965432122')
+            >>> rule, response, error = zia.forwarding_control.get_rule('123456')
+            >>> if not error:
+            ...    print(rule.as_dict())
         """
-        # Convert enabled to API format if present
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /forwardingRules/{rule_id}
+            """
+        )
 
-        payload = {
-            "name": name,
-            "forwardMethod": forward_method,
-            "order": kwargs.pop("order", len(self.list_rules())),
-        }
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
+        if error:
+            return (None, None, error)
 
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
+        if error:
+            return (None, response, error)
+        try:
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-        for key, value in kwargs.items():
-            if value is not None:
-                if key == "state" and isinstance(value, bool):
-                    payload[key] = "ENABLED" if value else "DISABLED"
-                else:
-                    payload[key] = value
-
-        # Convert the entire payload's keys to camelCase before sending
-        camel_payload = recursive_snake_to_camel(payload)
-
-        # Send POST request to create the rule
-        response = self.rest.post("forwardingRules", json=camel_payload)
-        if isinstance(response, Response):
-            # Handle error response
-            status_code = response.status_code
-            if status_code != 200:
-                raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
-
-    def update_rule(self, rule_id: str, **kwargs) -> Box:
+    def add_rule(self, **kwargs) -> tuple:
         """
-        Updates an existing forwarding control  filter rule.
+        Adds a new forwarding control rule.
 
         Args:
-            rule_id (str): The unique ID for the rule that is being updated.
-            **kwargs: Optional keyword args.
+            name (str): Name of the forwarding control rule, max 31 chars.
+            action (str): Action to take place if the traffic matches the rule criteria
 
         Keyword Args:
             order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule.
+            rank (str): The admin rank of the rule. Supported values 1-7
+            forward_method (str): The type of traffic forwarding method selected from the available options
+            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
+
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
-            src_ips (list): The source IPs that this rule applies to. Individual IP addresses or CIDR ranges accepted.
-            dest_addresses (list): The destination IP addresses that this rule applies to. Individual IP addresses or
-            CIDR ranges accepted.
-            dest_ip_categories (list): The IP address categories that this rule applies to.
-            dest_countries (list): The destination countries that this rule applies to.
-            enable_full_logging (bool): Enables full logging if True.
-            nw_applications (list): The network service applications that this rule applies to.
-            app_services (list): The IDs for the application services that this rule applies to.
-            app_service_groups (list): The IDs for the application service groups that this rule applies to.
-            departments (list): The IDs for the departments that this rule applies to.
-            dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             groups (list): The IDs for the groups that this rule applies to.
+            departments (list): IDs for departments the rule applies to.
+            ec_groups (list): The IDs for the Zscaler Cloud Connector groups to which the forwarding rule applies.
+            users (list): The IDs for the users that this rule applies to.
+            protocols (list): The protocol criteria for the rule.
             labels (list): The IDs for the labels that this rule applies to.
             locations (list): The IDs for the locations that this rule applies to.
             location_groups (list): The IDs for the location groups that this rule applies to.
-            nw_application_groups (list): The IDs for the network application groups that this rule applies to.
-            nw_services (list): The IDs for the network services that this rule applies to.
-            nw_service_groups (list): The IDs for the network service groups that this rule applies to.
-            time_windows (list): The IDs for the time windows that this rule applies to.
-            users (list): The IDs for the users that this rule applies to.
+            src_ips (list): List of User-defined source IP addresses for which the rule is applicable.
+            src_ip_groups (list): The IDs for the Source IP address groups for which the rule is applicable.
+            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable.
+            dest_addresses (list): List of destination IP addresses, CIDRs or FQDNs for which the rule is applicable.
+            dest_ip_categories (list): List of destination IP categories to which the rule applies.
+            res_categories (list): List of destination domain categories to which the rule applies.
+            dest_countries (list): List of Destination countries for which the rule is applicable.
+            dest_countries (list): List of Destination countries for which the rule is applicable.
+            dest_ip_groups (list): IDs for destination IP groups.
+            dest_ipv6_groups (list): IDs for destination IPV6 groups.
+            nw_services (list): IDs for network services the rule applies to.
+            nw_service_groups (list): IDs for network service groups.
+            nw_application_groups (list): IDs for network application groups.
+            device_groups (list): Device groups managed using Zscaler Client Connector.
+            devices (list): Devices managed using Zscaler Client Connector.
+
+            zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
+                - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
+                - `name` (str): The name of the Application Segment.
+
+            proxy_gateway (dict or list[dict]): **Proxy Gateway resource(s) applicable to the rule.**
+                - `id` (int, optional): The unique identifier for the proxy gateway.
+                - `name` (str): The name of the Proxy Gateway.
+
+            zpa_gateway (dict or list[dict]): **ZPA Gateway resource(s) applicable to the rule.**
+                - `id` (int, optional): The unique identifier for the ZPA Gateway.
+                - `name` (str): The name of the ZPA Gateway.
 
         Returns:
-            :obj:`Box`: The updated forwarding control filter rule resource record.
+            :obj:`Tuple`: New forwarding control rule resource record.
 
-        Examples:
-            Update the destination IP addresses for a rule:
+        Example:
+            Add a DIRECT forwarding control rule:
 
-            >>> zia.forwarding_control.update_rule('976598',
-            ...    dest_addresses=['1.1.1.1'],
-            ...    description="TT#1965232865")
+            >>> zia.forwarding_control.add_rule(
+            ...    name='FWD_DIRECT#01',
+            ...    state="ENABLED",
+            ...    order=1,
+            ...    type="FORWARDING",
+            ...    forward_method="DIRECT",
+            ...    src_ips= ["192.168.200.200"],
+            ...    dest_addresses=["192.168.255.1"],
+            ...    dest_ip_categories=["ZSPROXY_IPS"],
+            ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ... )
 
-            Update a rule description:
+            Add a ZPA forwarding control rule:
 
-            >>> zia.forwarding_control.update_rule('976597',
-            ...    description="TT#1965232866")
-
+            >>> zia.forwarding_control.add_rule(
+            ...    name='FWD_DIRECT#01',
+            ...    state="ENABLED",
+            ...    order=1,
+            ...    type="FORWARDING",
+            ...    forward_method="ZPA",
+            ...    src_ips= ["192.168.200.200"],
+            ...    dest_addresses=["192.168.255.1"],
+            ...    dest_ip_categories=["ZSPROXY_IPS"],
+            ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ...    zpa_gateway={
+            ...     "name": "ZPAGW01",
+            ...     "external_id": "2"
+            ...    }
+            ...    zpa_app_segments=[
+            ...    {
+            ...     "name": "Inspect App Segments",
+            ...     "external_id": "2"
+            ...     }
+            ...    ]
+            ... )
         """
-        # Set payload to value of existing record and convert nested dict keys.
-        payload = convert_keys(self.get_rule(rule_id))
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /forwardingRules
+        """
+        )
 
-        # Convert enabled to API format if present in kwargs
+        body = kwargs
+
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
 
-        # Transform ID fields in kwargs
-        transform_common_id_fields(self.reformat_params, kwargs, payload)
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
 
-        # Add remaining optional parameters to payload
-        for key, value in kwargs.items():
-            if key == "state" and isinstance(value, bool):
-                payload[snake_to_camel(key)] = "ENABLED" if value else "DISABLED"
-            else:
-                payload[snake_to_camel(key)] = value
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
 
-        response = self.rest.put(f"forwardingRules/{rule_id}", json=payload)
-        if isinstance(response, Response) and not response.ok:
-            raise Exception(f"API call failed with status {response.status_code}: {response.json()}")
-        return self.get_rule(rule_id)
+        if error:
+            return (None, None, error)
 
-    def delete_rule(self, rule_id: str) -> int:
+        # Execute the request
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_rule(self, rule_id: str, **kwargs) -> tuple:
         """
-        Deletes the specified forwarding control filter rule.
+        Adds a new forwarding control rule.
 
         Args:
-            rule_id (str): The unique identifier for the forwarding control filter rule.
+            name (str): Name of the forwarding control rule, max 31 chars.
+            action (str): Action to take place if the traffic matches the rule criteria
+
+        Keyword Args:
+            order (str): The order of the rule, defaults to adding rule to bottom of list.
+            rank (str): The admin rank of the rule. Supported values 1-7
+            forward_method (str): The type of traffic forwarding method selected from the available options
+            Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
+
+            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+            description (str): Additional information about the rule
+            groups (list): The IDs for the groups that this rule applies to.
+            departments (list): IDs for departments the rule applies to.
+            ec_groups (list): The IDs for the Zscaler Cloud Connector groups to which the forwarding rule applies.
+            users (list): The IDs for the users that this rule applies to.
+            protocols (list): The protocol criteria for the rule.
+            labels (list): The IDs for the labels that this rule applies to.
+            locations (list): The IDs for the locations that this rule applies to.
+            location_groups (list): The IDs for the location groups that this rule applies to.
+            src_ips (list): List of User-defined source IP addresses for which the rule is applicable.
+            src_ip_groups (list): The IDs for the Source IP address groups for which the rule is applicable.
+            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable.
+            dest_addresses (list): List of destination IP addresses, CIDRs or FQDNs for which the rule is applicable.
+            dest_ip_categories (list): List of destination IP categories to which the rule applies.
+            res_categories (list): List of destination domain categories to which the rule applies.
+            dest_countries (list): List of Destination countries for which the rule is applicable.
+            dest_countries (list): List of Destination countries for which the rule is applicable.
+            dest_ip_groups (list): IDs for destination IP groups.
+            dest_ipv6_groups (list): IDs for destination IPV6 groups.
+            nw_services (list): IDs for network services the rule applies to.
+            nw_service_groups (list): IDs for network service groups.
+            nw_application_groups (list): IDs for network application groups.
+            device_groups (list): Device groups managed using Zscaler Client Connector.
+            devices (list): Devices managed using Zscaler Client Connector.
+
+            zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
+                - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
+                - `name` (str): The name of the Application Segment.
+
+            proxy_gateway (dict or list[dict]): **Proxy Gateway resource(s) applicable to the rule.**
+                - `id` (int, optional): The unique identifier for the proxy gateway.
+                - `name` (str): The name of the Proxy Gateway.
+
+            zpa_gateway (dict or list[dict]): **ZPA Gateway resource(s) applicable to the rule.**
+                - `id` (int, optional): The unique identifier for the ZPA Gateway.
+                - `name` (str): The name of the ZPA Gateway.
 
         Returns:
-            :obj:`int`: The status code for the operation.
+            :obj:`Tuple`: New forwarding control rule resource record.
+
+        Example:
+            Update the src_ips in the DIRECT forwarding control rule:
+
+            >>> zia.forwarding_control.add_rule(
+            ...    rule_id='282458',
+            ...    name='FWD_DIRECT#01',
+            ...    state="ENABLED",
+            ...    order=1,
+            ...    type="FORWARDING",
+            ...    forward_method="DIRECT",
+            ...    src_ips= ["192.168.200.205"],
+            ...    dest_addresses=["192.168.255.1"],
+            ...    dest_ip_categories=["ZSPROXY_IPS"],
+            ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ... )
+
+            Update a ZPA forwarding control rule:
+
+            >>> zia.forwarding_control.add_rule(
+            ...    name='FWD_DIRECT#01',
+            ...    state="ENABLED",
+            ...    order=1,
+            ...    type="FORWARDING",
+            ...    forward_method="ZPA",
+            ...    src_ips= ["192.168.200.200"],
+            ...    dest_addresses=["192.168.255.1"],
+            ...    dest_ip_categories=["ZSPROXY_IPS"],
+            ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
+            ...    zpa_gateway={
+            ...     "name": "ZPAGW01",
+            ...     "external_id": "2"
+            ...    }
+            ...    zpa_app_segments=[
+            ...    {
+            ...     "name": "Inspect App Segments",
+            ...     "external_id": "2"
+            ...     }
+            ...    ]
+            ... )
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /forwardingRules/{rule_id}
+        """
+        )
+
+        body = kwargs
+
+        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
+        if "enabled" in kwargs:
+            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+
+        # Filter out the url_categories mapping so it doesn't get processed
+        local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
+        transform_common_id_fields(local_reformat_params, body, body)
+
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def delete_rule(self, rule_id: str) -> tuple:
+        """
+        Deletes the specified forwarding control filter rule.
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /forwardingRules/{rule_id}
+        """
+        )
+
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
+
+    def get_proxy_gateways(self) -> tuple:
+        """
+        Retrieves a list of Proxy Gateways.
+
+        Returns:
+            tuple: A tuple containing:
+                N/A
 
         Examples:
-            >>> zia.forwarding_control.delete_rule('278454')
+            >>> proxy, response, err = client.zia.forwarding_control.get_proxy_gateways()
 
         """
-        return self.rest.delete(f"forwardingRules/{rule_id}").status_code
+
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /proxyGateways
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return None
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return None
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(ProxyGatways(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

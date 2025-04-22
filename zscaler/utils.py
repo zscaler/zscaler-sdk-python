@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import argparse
 import base64
@@ -25,16 +25,58 @@ import re
 import time
 from typing import Dict, Optional
 from urllib.parse import urlencode
+from datetime import datetime as dt
 
 import pytz
 from box import Box, BoxList
 from dateutil import parser
 from requests import Response
-from restfly import APIIterator
 
-from zscaler.constants import RETRYABLE_STATUS_CODES
+# from restfly import APIIterator
 
-logger = logging.getLogger("zscaler-sdk-python")
+from zscaler.constants import RETRYABLE_STATUS_CODES, DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR
+
+logger = logging.getLogger(__name__)
+
+# 1) Single global reformat_params
+reformat_params = [
+    ("app_services", "appServices"),
+    ("app_service_groups", "appServiceGroups"),
+    ("devices", "devices"),
+    ("device_groups", "deviceGroups"),
+    ("departments", "departments"),
+    ("ec_groups", "ecGroups"),
+    ("auditor", "auditor"),
+    ("dlp_engines", "dlpEngines"),
+    ("excluded_departments", "excludedDepartments"),
+    ("excluded_groups", "excludedGroups"),
+    ("excluded_users", "excludedUsers"),
+    ("source_ip_groups", "source_ip_groups"),
+    ("dest_ip_groups", "destIpGroups"),
+    ("dest_ipv6_groups", "destIpv6Groups"),
+    ("groups", "groups"),
+    ("users", "users"),
+    ("labels", "labels"),
+    ("notification_template", "notificationTemplate"),
+    ("locations", "locations"),
+    ("location_groups", "locationGroups"),
+    ("nw_application_groups", "nwApplicationGroups"),
+    ("nw_service_groups", "nwServiceGroups"),
+    ("src_ip_groups", "srcIpGroups"),
+    ("src_ipv6_groups", "srcIpv6Groups"),
+    ("proxy_gateway", "proxyGateway"),
+    ("time_windows", "timeWindows"),
+    ("tenancy_profile_ids", "tenancyProfileIds"),
+    ("sharing_domain_profiles", "sharingDomainProfiles"),
+    ("form_sharing_domain_profiles", "formSharingDomainProfiles"),
+    ("url_categories", "urlCategories"),
+    ("zpa_app_segments", "zpaAppSegments"),
+    ("zpa_application_segments", "zpaApplicationSegments"),
+    ("zpa_application_segment_groups", "zpaApplicationSegmentGroups"),
+    ("workload_groups", "workloadGroups"),
+    ("service_ids", "services"),
+    # etc. expand as needed
+]
 
 
 # Recursive function to convert all keys and nested keys from camel case
@@ -166,40 +208,65 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     return
 
 
-def transform_common_id_fields(id_groups: list, kwargs: dict, payload: dict):
-    for entry in id_groups:
-        key, payload_key = entry
-        if key in kwargs:
-            value = kwargs.pop(key)
-            if key in ["zpa_gateway", "proxy_gateway", "zpa_server_group"]:
-                # Handle zpa_gateway, proxy_gateway, and zpa_server_group
-                if isinstance(value, dict):
-                    payload[payload_key] = {
-                        snake_to_camel(k): v for k, v in value.items() if k in ["id", "name", "external_id"]
-                    }
-            elif key in ["zpa_app_segments", "zpa_application_segments", "zpa_application_segment_groups"]:
-                # Handle zpa_app_segments, zpa_application_segments, and zpa_application_segment_groups
-                if isinstance(value, list):
-                    payload[payload_key] = [{"externalId": item["external_id"], "name": item["name"]} for item in value]
-            elif key == "cbi_profile":
-                # Special handling for cbi_profile
-                if isinstance(value, dict) and all(k in value for k in ["id", "name", "url"]):
-                    payload[payload_key] = {"id": value["id"], "name": value["name"], "url": value["url"]}
-            elif key == "cloud_app_risk_profile":
-                # Special handling for cloudAppRiskProfile
-                if isinstance(value, dict) and "id" in value:
-                    payload[payload_key] = {"id": value["id"]}
-            else:
-                # General case for ID transformations
-                if isinstance(value, list):
-                    payload[payload_key] = [{"id": int(item)} if isinstance(item, (str, int)) else item for item in value]
+#### Working function
+# def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
+#     """
+#     For each (key, payload_key) in 'id_groups':
+#       - If 'key' is found in source_dict,
+#       - pop that value,
+#       - insert it into target_dict with name 'payload_key',
+#       - converting each item in the list to { "id": int(item) } if it's a string or int.
+
+#     Additional domain logic can be placed here, e.g. for zpa_app_segments or cbi_profile, etc.
+#     """
+#     for (key, payload_key) in id_groups:
+#         if key in source_dict:
+#             value = source_dict.pop(key)
+#             # Example logic: if it's a list, do the ID transform
+#             if isinstance(value, list):
+#                 target_dict[payload_key] = [
+#                     {"id": int(item)} if isinstance(item, (str, int)) else item
+#                     for item in value
+#                 ]
+#             elif isinstance(value, dict) and "id" in value:
+#                 # single dict with ID
+#                 target_dict[payload_key] = {"id": int(value["id"])}
+#     return
+
+
+def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
+    """
+    For each (key, payload_key) in 'id_groups':
+      - If 'key' in source_dict, pop it out,
+      - convert that list/dict to the final "id" structure,
+      - store in target_dict[payload_key].
+    """
+    for key, payload_key in id_groups:
+        if key in source_dict:
+            value = source_dict.pop(key)
+            if isinstance(value, list):
+                # 1) Convert list-of-str-or-int => [{ "id":... }, ...]
+                final_list = []
+                for item in value:
+                    if isinstance(item, (str, int)):
+                        final_list.append({"id": int(item)})
+                    elif isinstance(item, dict) and "id" in item:
+                        # Possibly user gave { "id": 123, ... }
+                        item["id"] = int(item["id"])
+                        final_list.append(item)
+                    else:
+                        final_list.append(item)
+                target_dict[payload_key] = final_list
+            elif isinstance(value, dict) and "id" in value:
+                # single dict with ID
+                value["id"] = int(value["id"])
+                target_dict[payload_key] = value
     return
 
 
 def transform_clientless_apps(clientless_app_ids):
     transformed_apps = []
     for app in clientless_app_ids:
-        # Transform each attribute in app as needed by your API
         transformed_apps.append(
             {
                 "name": app["name"],
@@ -312,48 +379,51 @@ def pick_version_profile(kwargs: list, payload: list):
             payload["versionProfileId"] = 2
 
 
-class Iterator(APIIterator):
-    """Iterator class."""
+# class Iterator(APIIterator):
+#     """Iterator class."""
 
-    page_size = 100
+#     page_size = 100
 
-    def __init__(self, api, path: str = "", **kw):
-        """Initialize Iterator class."""
-        super().__init__(api, **kw)
+#     def __init__(self, api, path: str = "", **kw):
+#         """Initialize Iterator class."""
+#         super().__init__(api, **kw)
 
-        self.path = path
-        self.max_items = kw.pop("max_items", 0)
-        self.max_pages = kw.pop("max_pages", 0)
-        self.payload = {}
-        if kw:
-            self.payload = {snake_to_camel(key): value for key, value in kw.items()}
+#         self.path = path
+#         self.max_items = kw.pop("max_items", 0)
+#         self.max_pages = kw.pop("max_pages", 0)
+#         self.payload = {}
+#         if kw:
+#             self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
-    def _get_page(self) -> None:
-        """Iterator function to get the page."""
-        resp = self._api.get(
-            self.path,
-            params={**self.payload, "page": self.num_pages + 1},
-        )
-        try:
-            # If we are using ZPA then the API will return records under the
-            # 'list' key.
-            self.page = resp.get("list") or []
-        except AttributeError:
-            # If the list key doesn't exist then we're likely using ZIA so just
-            # return the full response.
-            self.page = resp
-        finally:
-            # If we use the default retry-after logic in Restfly then we are
-            # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
-            # standard 1 sec rate limit on the API endpoints with pagination so
-            # we are going to include it here.
-            time.sleep(1)
+#     def _get_page(self) -> None:
+#         """Iterator function to get the page."""
+#         resp = self._api.get(
+#             self.path,
+#             params={**self.payload, "page": self.num_pages + 1},
+#         )
+#         try:
+#             # If we are using ZPA then the API will return records under the
+#             # 'list' key.
+#             self.page = resp.get("list") or []
+#         except AttributeError:
+#             # If the list key doesn't exist then we're likely using ZIA so just
+#             # return the full response.
+#             self.page = resp
+#         finally:
+#             # If we use the default retry-after logic in Restfly then we are
+#             # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
+#             # standard 1 sec rate limit on the API endpoints with pagination so
+#             # we are going to include it here.
+#             time.sleep(1)
 
 
 def calculate_epoch(hours: int):
     current_time = int(time.time())
     past_time = int(current_time - (hours * 3600))
     return current_time, past_time
+
+
+import functools
 
 
 def zdx_params(func):
@@ -370,21 +440,77 @@ def zdx_params(func):
 
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
-        since = kwargs.pop("since", None)
-        search = kwargs.pop("search", None)
-        location_id = kwargs.pop("location_id", None)
-        department_id = kwargs.pop("department_id", None)
-        geo_id = kwargs.pop("geo_id", None)
+        # Get the existing query_params dict (or create one)
+        query_params = kwargs.get("query_params", {})
 
-        if since:
-            current_time, past_time = calculate_epoch(since)
-            kwargs["to"] = current_time
-            kwargs["from"] = past_time
+        # First, process shorthand parameters passed directly as keyword args.
+        for key, target in [
+            ("since", ("from", "to")),
+            ("search", "q"),
+            ("location_id", "loc"),
+            ("department_id", "dept"),
+            ("geo_id", "geo"),
+            ("exclude_dept", "exclude_dept"),  # New: array[integer]
+            ("exclude_loc", "exclude_loc"),  # New: array[integer]
+            ("exclude_geo", "exclude_geo"),  # New: array[str]
+            ("score_bucket", "score_bucket"),  # New: str (poor, okay, good)
+            ("limit", "limit"),  # New: int
+            ("offset", "offset"),  # New: str (API-defined pagination)
+        ]:
+            if key in kwargs:
+                value = kwargs.pop(key)
+                if key == "since":
+                    current_time, past_time = calculate_epoch(value)
+                    if "from" not in query_params:
+                        query_params["from"] = past_time
+                    if "to" not in query_params:
+                        query_params["to"] = current_time
+                else:
+                    if target not in query_params:
+                        query_params[target] = value
 
-        kwargs["q"] = search or kwargs.get("q")
-        kwargs["loc"] = location_id or kwargs.get("loc")
-        kwargs["dept"] = department_id or kwargs.get("dept")
-        kwargs["geo"] = geo_id or kwargs.get("geo")
+        # Then, process shorthand parameters if provided within query_params itself.
+        if "since" in query_params:
+            value = query_params.pop("since")
+            current_time, past_time = calculate_epoch(value)
+            if "to" not in query_params:
+                query_params["to"] = current_time
+            if "from" not in query_params:
+                query_params["from"] = past_time
+
+        if "search" in query_params and "q" not in query_params:
+            query_params["q"] = query_params.pop("search")
+        if "location_id" in query_params and "loc" not in query_params:
+            query_params["loc"] = query_params.pop("location_id")
+        if "department_id" in query_params and "dept" not in query_params:
+            query_params["dept"] = query_params.pop("department_id")
+        if "geo_id" in query_params and "geo" not in query_params:
+            query_params["geo"] = query_params.pop("geo_id")
+
+        # Handle new parameters: Exclusions and score_bucket
+        if "exclude_dept" in query_params and isinstance(query_params["exclude_dept"], list):
+            query_params["exclude_dept"] = [int(i) for i in query_params["exclude_dept"]]
+
+        if "exclude_loc" in query_params and isinstance(query_params["exclude_loc"], list):
+            query_params["exclude_loc"] = [int(i) for i in query_params["exclude_loc"]]
+
+        if "exclude_geo" in query_params and isinstance(query_params["exclude_geo"], list):
+            query_params["exclude_geo"] = [str(i) for i in query_params["exclude_geo"]]
+
+        if "score_bucket" in query_params and query_params["score_bucket"] not in ["poor", "okay", "good"]:
+            raise ValueError("Invalid value for score_bucket. Supported values: 'poor', 'okay', 'good'.")
+
+        if "limit" in query_params:
+            try:
+                query_params["limit"] = int(query_params["limit"])
+            except ValueError:
+                raise ValueError("limit must be an integer.")
+
+        if "offset" in query_params:
+            query_params["offset"] = str(query_params["offset"])
+
+        # Update kwargs with the modified query_params dictionary
+        kwargs["query_params"] = query_params
 
         return func(self, *args, **kwargs)
 
@@ -431,125 +557,6 @@ class CommonFilters:
             }.items()
             if v is not None
         }
-
-
-class ZDXIterator:
-    def __init__(self, client, endpoint, filters=None):
-        self.client = client
-        self.endpoint = endpoint
-        self.filters = {k: v for k, v in (filters or {}).items() if v is not None}
-        self.next_offset = None
-        self.previous_offset = None
-        self.page = []
-        self.page_count = 0
-        self.total = 0
-        self.logger = logging.getLogger("zscaler-sdk-python")
-        self._get_page()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.page_count >= len(self.page):
-            if self.next_offset is None:
-                raise StopIteration
-            if self.next_offset == self.previous_offset:
-                self.logger.warning(
-                    f"Detected repeated next_offset: {self.next_offset}, stopping iteration to avoid infinite loop."
-                )
-                raise StopIteration
-            self.previous_offset = self.next_offset
-            self._get_page()
-            if not self.page:
-                raise StopIteration
-        item = self.page[self.page_count]
-        self.page_count += 1
-        return item
-
-    def _get_page(self):
-        params = {**self.filters, "offset": self.next_offset} if self.next_offset else self.filters
-        response = self.client.get(self.endpoint, params=params)
-
-        self.logger.debug(f"API response: {response}")
-
-        if response is None:
-            self.logger.error(f"Invalid response: {response}")
-            raise StopIteration
-
-        if isinstance(response, list):
-            self.page = response
-            self.next_offset = None
-        elif isinstance(response, dict):
-            self.next_offset = response.get("next_offset")
-            self.page = (
-                response.get("alerts", [])
-                or response.get("items", [])
-                or response.get("devices", [])
-                or response.get("probes", [])
-                or response.get("software", [])
-            )
-        else:
-            self.logger.error(f"Unexpected response type: {type(response)}")
-            raise StopIteration
-
-        if not self.page:
-            self.next_offset = None
-
-        self.total += len(self.page)
-        self.page_count = 0
-
-
-# class ZDXIterator:
-#     def __init__(self, client, endpoint, filters=None):
-#         self.client = client
-#         self.endpoint = endpoint
-#         self.filters = {k: v for k, v in (filters or {}).items() if v is not None}
-#         self.next_offset = None
-#         self.page = []
-#         self.page_count = 0
-#         self.total = 0
-#         self.logger = logging.getLogger("zscaler-sdk-python")
-#         self._get_page()
-
-#     def __iter__(self):
-#         return self
-
-#     def __next__(self):
-#         if self.page_count >= len(self.page):
-#             if self.next_offset is None:
-#                 raise StopIteration
-#             self._get_page()
-#             if not self.page:
-#                 raise StopIteration
-#         item = self.page[self.page_count]
-#         self.page_count += 1
-#         return item
-
-#     def _get_page(self):
-#         params = {**self.filters, "offset": self.next_offset} if self.next_offset else self.filters
-#         response = self.client.get(self.endpoint, params=params)
-
-#         self.logger.debug(f"API response: {response}")
-
-#         if response is None:
-#             self.logger.error(f"Invalid response: {response}")
-#             raise StopIteration
-
-#         if isinstance(response, list):
-#             self.page = response
-#             self.next_offset = None
-#         elif isinstance(response, dict):
-#             self.next_offset = response.get("next_offset")
-#             self.page = response.get("devices", []) or response.get("items", []) or response.get("probes", [])
-#         else:
-#             self.logger.error(f"Unexpected response type: {type(response)}")
-#             raise StopIteration
-
-#         if not self.page:
-#             self.next_offset = None
-
-#         self.total += len(self.page)
-#         self.page_count = 0
 
 
 def remove_cloud_suffix(str_name: str) -> str:
@@ -723,6 +730,35 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     end_epoch = int(end_time.timestamp())
 
     return start_epoch, end_epoch
+
+
+def convert_date_time_to_seconds(date_time):
+    """
+    Takes in a date time string and returns the number of seconds
+    since the epoch (Unix timestamp).
+
+    Args:
+        date_time (str): Date time string in the datetime format
+
+    Returns:
+        float: Number of seconds since the epoch
+    """
+    dt_obj = dt.strptime(date_time, DATETIME_FORMAT)
+    return float((dt_obj - dt(EPOCH_YEAR, EPOCH_MONTH, EPOCH_DAY)).total_seconds())
+
+
+def format_url(base_string):
+    """
+    Turns multiline strings in generated clients into
+    simple one-line string
+
+    Args:
+        base_string (str): multiline URL
+
+    Returns:
+        str: single line URL
+    """
+    return "".join([line.strip() for line in base_string.splitlines()])
 
 
 # Maps ZCC numeric os_type and registration_type arguments to a human-readable string

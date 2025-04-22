@@ -43,7 +43,7 @@ Features:
 Examples:
     Adding a location without gateway options:
         python3 add_ipsec_ip_location_gw_options.py --add_location --name "San Francisco Office" --ip_address "203.0.113.10" --pre_shared_key "mySecretPSK"
-    
+
     Adding a location with gateway options:
         python3 add_ipsec_ip_location_gw_options.py --add_location --name "San Francisco Office" --ip_address "203.0.113.10" --pre_shared_key "mySecretPSK" --gateway_options
 
