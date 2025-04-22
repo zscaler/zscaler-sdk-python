@@ -150,6 +150,7 @@ class LegacyZWAClientHelper:
                     delay = 1
                 logger.info(
                     f"Rate limit hit on token request. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})."
+                    # Ensure no sensitive data (e.g., key_secret) is logged.
                 )
                 time.sleep(delay)
                 continue

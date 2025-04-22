@@ -1136,7 +1136,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_predef_control_api(self) -> tuple:
+    def list_predef_control_api(self, query_params=None) -> tuple:
         """
         Returns all predefined inspection controls for the specified customer.
 

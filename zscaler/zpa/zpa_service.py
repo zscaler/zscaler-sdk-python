@@ -63,7 +63,7 @@ class ZPAService:
 
         """
         return ApplicationSegmentByTypeAPI(self._request_executor, self._config)
-    
+
     @property
     def application_segment(self):
         """
