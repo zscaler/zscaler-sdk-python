@@ -21,7 +21,7 @@
 - [Building the SDK](#building-the-sdk)
 * [Usage guide](#usage-guide)
 * [Authentication](#authentication)
-* [OneAPI New Framework](#oneapi-new-framework)
+* [Zscaler OneAPI New Framework](#zscaler-oneapi-new-framework)
 * [Zscaler Legacy API Framework](#zscaler-legacy-api-framework)
 * [Configuration reference](#configuration-reference)
 * [Pagination](#pagination)
@@ -195,7 +195,7 @@ If your Zscaler tenant has not been migrated to the new Zscaler [Zidentity platf
 
    :warning: **Caution**: Zscaler does not recommend hard-coding credentials into arguments, as they can be exposed in plain text in version control systems. Use environment variables instead.
 
-## Zscaler OneAPI New Framework (Zidentity)
+## Zscaler OneAPI New Framework
 
 As of the publication of SDK version => 0.20.x, OneAPI is available for programmatic interaction with the following products:
 
@@ -227,6 +227,8 @@ You can provide credentials via the `ZSCALER_CLIENT_ID`, `ZSCALER_CLIENT_SECRET`
 | `privateKey`       | _(String)_ A string Private key value.| `ZSCALER_PRIVATE_KEY` |
 | `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
 | `cloud`       | _(String)_ The host and basePath for the cloud services API is `$api.<cloud_name>.zsapi.net`.| `ZSCALER_CLOUD` |
+| `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
+| `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
 ### Alternative OneAPI Cloud Environments
 
@@ -247,6 +249,18 @@ export ZSCALER_CLOUD="beta"
 **Note 1**: The attribute `cloud` or environment variable `ZSCALER_CLOUD` is optional and only required when authenticating to an alternative Zidentity cloud environment.
 
 **Note 2**: By default this SDK will send the authentication request and subsequent API calls to the default base URL.
+
+**Note 3**: Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`.The following cloud environments are supported:
+
+* `zscaler`
+* `zscalerone`
+* `zscalertwo`
+* `zscalerthree`
+* `zscloud`
+* `zscalerbeta`
+* `zscalergov`
+* `zscalerten`
+* `zspreview`
 
 ### Authenticating to Zscaler Private Access (ZPA)
 
@@ -647,6 +661,8 @@ Each one of the configuration values above can be turned into an environment var
 | `proxyUsername`       | _(String)_ HTTP proxy username  | `ZSCALER_CLIENT_PROXY_USERNAME` |
 | `proxyPassword`       | _(String)_ HTTP proxy password  | `ZSCALER_CLIENT_PROXY_PASSWORD` |
 | `disableHttpsCheck`       | _(String)_ Disable SSL checks  | `ZSCALER_TESTING_TESTINGDISABLEHTTPSCHECK` |
+| `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
+| `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
 ## Zscaler Legacy API Framework
 
@@ -681,6 +697,8 @@ You can provide credentials via the `ZIA_USERNAME`, `ZIA_PASSWORD`, `ZIA_API_KEY
 | `password`       | _(String)_ A string that contains the password for the API admin.| `ZIA_PASSWORD` |
 | `api_key`       | _(String)_ A string that contains the obfuscated API key (i.e., the return value of the obfuscateApiKey() method).| `ZIA_API_KEY` |
 | `cloud`       | _(String)_ The host and basePath for the cloud services API is `$zsapi.<Zscaler Cloud Name>/api/v1`.| `ZIA_CLOUD` |
+| `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
+| `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
 ### ZIA Legacy Client Initialization
 

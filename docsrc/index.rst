@@ -293,12 +293,18 @@ environments you must provide the following values:
 |                    | ain>.zslogin.net/ |                            |
 |                    | oauth2/v1/token`` |                            |
 +--------------------+-------------------+----------------------------+
-| ``cloud``          | *(String)* The    | ``ZSCALER_CLOUD``          |
+| ``cloud``          | *(String)* The    |   ``ZSCALER_CLOUD``        |
 |                    | host and basePath |                            |
 |                    | for the cloud     |                            |
 |                    | services API is   |                            |
 |                    | ``$api.<cloud_n   |                            |
 |                    | ame>.zsapi.net``. |                            |
++--------------------+-------------------+----------------------------+
+| ``sandboxToken``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_TOKEN``  |
+|                    | Sandbox Token     |                            |
++--------------------+-------------------+----------------------------+
+| ``sandboxCloud``   | *(String)* The ZIA| ``ZSCALER_SANDBOX_CLOUD``  |
+|                    | Sandbox Cloud     |                            |
 +--------------------+-------------------+----------------------------+
 
 For example: Authenticating to Zscaler Beta environment:
@@ -314,6 +320,18 @@ an alternative Zidentity cloud environment.
 
 **Note 2**: By default this SDK will send the authentication request and
 subsequent API calls to the default base URL.
+
+**Note 3**: Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`.The following cloud environments are supported:
+
+* `zscaler`
+* `zscalerone`
+* `zscalertwo`
+* `zscalerthree`
+* `zscloud`
+* `zscalerbeta`
+* `zscalergov`
+* `zscalerten`
+* `zspreview`
 
 Authenticating to Zscaler Private Access (ZPA)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
