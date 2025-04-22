@@ -488,6 +488,16 @@ class LegacyZPAClientHelper:
         return PRACredentialAPI(self.request_executor, self.config)
 
     @property
+    def pra_credential_pool(self):
+        """
+        The interface object for the :ref:`ZPA Privileged Remote Access Credential pool interface <zpa-pra_credential_pool>`.
+
+        """
+        from zscaler.zpa.pra_credential_pool import PRACredentialPoolAPI
+
+        return PRACredentialPoolAPI(self.request_executor, self.config)
+
+    @property
     def pra_portal(self):
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Portal interface <zpa-pra_portal>`.

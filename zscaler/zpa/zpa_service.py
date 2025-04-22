@@ -28,6 +28,7 @@ from zscaler.zpa.posture_profiles import PostureProfilesAPI
 from zscaler.zpa.pra_approval import PRAApprovalAPI
 from zscaler.zpa.pra_console import PRAConsoleAPI
 from zscaler.zpa.pra_credential import PRACredentialAPI
+from zscaler.zpa.pra_credential_pool import PRACredentialPoolAPI
 from zscaler.zpa.pra_portal import PRAPortalAPI
 from zscaler.zpa.provisioning import ProvisioningKeyAPI
 from zscaler.zpa.segment_groups import SegmentGroupsAPI
@@ -272,6 +273,14 @@ class ZPAService:
         """
         return PRACredentialAPI(self._request_executor, self._config)
 
+    @property
+    def pra_credential_pool(self):
+        """
+        The interface object for the :ref:`ZPA Privileged Remote Access Credential pool interface <zpa-pra_credential_pool>`.
+
+        """
+        return PRACredentialPoolAPI(self._request_executor, self._config)
+    
     @property
     def pra_portal(self):
         """
