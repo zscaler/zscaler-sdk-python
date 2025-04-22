@@ -38,7 +38,7 @@ class PRACredentialPoolController(ZscalerObject):
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
 
-            self.device_groups = ZscalerCollection.form_list(
+            self.credentials = ZscalerCollection.form_list(
                 config["credentials"] if "credentials" in config else [], common.CommonIDName
             )
         else:
