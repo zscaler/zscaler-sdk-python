@@ -41,15 +41,16 @@ class EnrollmentCertificateAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
             :obj:`Tuple`: A tuple containing (list of EnrollmentCertificate instances, Response, error)
-            
+
         Examples:
             Retrieve enrollment certificates with pagination parameters:
-            
+
             >>> cert_list, _, err = client.zpa.enrollment_certificates.list_enrolment(
             ... query_params={'search': 'Connector', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -101,7 +102,7 @@ class EnrollmentCertificateAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing the `EnrollmentCertificate` instance, response object, and error if any.
-            
+
         Examples:
             >>> fetched_cert, _, err = client.zpa.certificates.get_enrolment('999999')
             ... if err:

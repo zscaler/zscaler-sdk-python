@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment\
     as application_segment
 
+
 class SegmentGroup(ZscalerObject):
     """
     A class for Segment Group objects.
@@ -46,7 +47,6 @@ class SegmentGroup(ZscalerObject):
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
 
-            # Handle the applications attribute using ZscalerCollection
             self.applications = (
                 ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegment)
                 if "applications" in config

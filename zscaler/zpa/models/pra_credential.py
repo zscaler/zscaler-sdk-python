@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class PrivilegedRemoteAccessCredential(ZscalerObject):
     """
     A class representing the Privileged Remote Access Credential.

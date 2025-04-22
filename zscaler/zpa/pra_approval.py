@@ -42,12 +42,13 @@ class PRAApprovalAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.sort_by]`` {str}: The sort string used to support sorting on the given field for the API.
-                ``[query_params.sort_dir]`` {str}: Specifies the sort direction (i.e., ascending or descending order). Available values : ASC, DESC                
+                ``[query_params.sort_dir]`` {str}: Specifies the sort direction (i.e., ascending or descending order).
+                    Available values : ASC, DESC
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
             tuple: A tuple containing (list of PrivilegedRemoteAccessApproval instances, Response, error)
-            
+
         Examples:
         >>> approvals_list, _, err = zpa.pra_approval.list_approval()
         ... if err:
@@ -104,7 +105,7 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (PrivilegedRemoteAccessApproval instance, Response, error)
-            
+
         Examples:
         >>> approval, _, err = client.zpa.pra_approval.get_approval(
         ... approval_id=99999
@@ -159,7 +160,7 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             PrivilegedRemoteAccessApproval: The newly created PRA approval
-            
+
         Examples:
         >>> added_approval, _, error = client.zpa.pra_approval.add_approval(
         ... email_ids=['jdoe@acme.com'],
@@ -251,7 +252,7 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             PrivilegedRemoteAccessApproval: The updated approval resource
-            
+
         Examples:
         >>> updated_approval, _, error = client.zpa.pra_approval.add_approval(
         ... approval_id='99999',
@@ -354,7 +355,7 @@ class PRAApprovalAPI(APIClient):
 
         Returns:
             int: Status code of the delete operation.
-            
+
         Examples:
         >>> _, _, err = client.zpa.pra_approval.delete_approval(
         ... approval_id=99999

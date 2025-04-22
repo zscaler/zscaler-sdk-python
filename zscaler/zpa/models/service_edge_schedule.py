@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class ServiceEdgeSchedule(ZscalerObject):
     def __init__(self, config=None):
         """

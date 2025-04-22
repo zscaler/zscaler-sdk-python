@@ -45,7 +45,8 @@ class AppConnectorControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
@@ -205,12 +206,9 @@ class AppConnectorControllerAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # Handle case where no content is returned (204 No Content)
         if response is None:
-            # Return a meaningful result to indicate success
             return (AppConnectorController({"id": connector_id}), None, None)
 
-        # Parse the response into an AppConnectorGroup instance
         try:
             result = AppConnectorController(
                 self.form_response_body(response.get_body())

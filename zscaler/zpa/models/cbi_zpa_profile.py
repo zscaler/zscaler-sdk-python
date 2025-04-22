@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class ZPACBIProfile(ZscalerObject):
     """
     A class representing a ZPA Profile object.
@@ -73,7 +74,8 @@ class ZPACBIProfile(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class CBIProfile(ZscalerObject):
     """
     A class representing a ZPA Profile object.

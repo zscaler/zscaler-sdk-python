@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class CBICertificate(ZscalerObject):
     """
     A class representing a Cloud Browser Isolation Certificate object.

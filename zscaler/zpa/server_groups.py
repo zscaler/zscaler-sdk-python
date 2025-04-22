@@ -45,7 +45,8 @@ class ServerGroupsAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
@@ -105,7 +106,7 @@ class ServerGroupsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
-            
+
         Examples:
             >>> fetched_group, _, err = client.zpa.server_groups.get_group('999999')
             ... if err:
@@ -150,9 +151,8 @@ class ServerGroupsAPI(APIClient):
 
         Args:
             name (str): The name for the server group.
-            app_connector_group_ids (list of str): 
-                A list of application connector IDs that will be attached to the server group.
-                
+            app_connector_group_ids (list of str): A list of App connector IDs that will be attached to the server group.
+
             **kwargs:
                 Optional params.
 
@@ -170,7 +170,7 @@ class ServerGroupsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
-            
+
         Examples:
             Create a server group with the minimum params:
 
@@ -248,7 +248,7 @@ class ServerGroupsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing (ServerGroup, Response, error)
-            
+
         Examples:
 
             >>> update_group, _, err = client.zpa.server_groups.update_group(
@@ -276,21 +276,16 @@ class ServerGroupsAPI(APIClient):
         if err:
             return (None, None, f"Error fetching the existing group: {err}")
 
-        # Use the existing group's data as the base body, to ensure mandatory fields are preserved
-        body = existing_group.request_format()  # Fetch the current group representation
+        body = existing_group.request_format()
 
-        # Update the body with the fields passed in kwargs (overwrite existing fields with updates)
         body.update(kwargs)
 
-        # Ensure dynamicDiscovery is always included, default to True if not provided
         if "dynamicDiscovery" not in body:
             body["dynamicDiscovery"] = True
 
-        # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat app_connector_group_ids to match the expected API format (appConnectorGroups)
         if "app_connector_group_ids" in body:
             body["appConnectorGroups"] = [{"id": group_id} for group_id in body.pop("app_connector_group_ids")]
 
@@ -309,12 +304,9 @@ class ServerGroupsAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # Handle case where no content is returned (204 No Content)
         if response is None:
-            # Return a meaningful result to indicate success
             return (ServerGroup({"id": group_id}), None, None)
 
-        # Parse the response into a ServerGroup instance
         try:
             result = ServerGroup(
                 self.form_response_body(response.get_body())
@@ -338,7 +330,7 @@ class ServerGroupsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (None, Response, error)
-            
+
         Examples:
             >>> _, _, err = client.zpa.server_groups.delete_group(
             ...     group_id='999999'

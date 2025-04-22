@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class PostureProfile(ZscalerObject):
     """
     A class representing a Posture Profile object.
@@ -57,7 +58,7 @@ class PostureProfile(ZscalerObject):
 
             self.posture_type = config["postureType"]\
                 if config and "postureType" in config else None
-                
+
             self.zscaler_cloud = config["zscalerCloud"]\
                 if config and "zscalerCloud" in config else None
 
@@ -66,7 +67,7 @@ class PostureProfile(ZscalerObject):
 
             self.zscaler_customer_id = config["zscalerCustomerId"]\
                 if config and "zscalerCustomerId" in config else None
-                                
+
             self.platform = ZscalerCollection.form_list(
                 config["platform"] if "platform" in config else [], str
             )
@@ -87,7 +88,7 @@ class PostureProfile(ZscalerObject):
             self.zscaler_customer_id = None
             self.posture_type = None
             self.root_cert = None
-                                    
+
     def request_format(self):
         """
         Prepare the object in a format suitable for sending as a request payload.

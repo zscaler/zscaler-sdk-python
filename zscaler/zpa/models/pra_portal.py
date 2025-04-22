@@ -15,8 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
-from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models.application_segment_pra import ApplicationSegmentPRA
+
 
 class PrivilegedRemoteAccessPortal(ZscalerObject):
     """

@@ -19,68 +19,73 @@ from zscaler.oneapi_collection import ZscalerCollection
 
 
 class Microtenant(ZscalerObject):
-    def __init__(self, config=None):
-        """
-        Initialize the Microtenant model based on API response.
+    """
+    Initialize the Microtenant model based on API response.
 
-        Args:
-            config (dict): A dictionary representing the microtenant configuration.
-        """
+    Args:
+        config (dict): A dictionary representing the microtenant configuration.
+    """
+    def __init__(self, config=None):
         super().__init__(config)
-        self.id = config["id"]\
-            if config and "id" in config else None
-        self.modified_time = config["modifiedTime"]\
-            if config and "modifiedTime" in config else None
-        self.creation_time = config["creationTime"]\
-            if config and "creationTime" in config else None
-        self.modified_by = config["modifiedBy"]\
-            if config and "modifiedBy" in config else None
-        self.name = config["name"]\
-            if config and "name" in config else None
-        self.description = config["description"]\
-            if config and "description" in config else None
-        self.enabled = config["enabled"]\
-            if config and "enabled" in config else None
-        self.operator = config["operator"]\
-            if config and "operator" in config else None
-        self.criteria_attribute = config["criteriaAttribute"]\
-            if config and "criteriaAttribute" in config else None
-        self.criteria_attribute_values = (
-            config["criteriaAttributeValues"]\
-                if config and "criteriaAttributeValues" in config else None
-        )
-        self.privileged_approvals_enabled = (
-            config["privilegedApprovalsEnabled"]\
+        if config:
+            self.id = config["id"]\
+                if "id" in config else None
+            self.modified_time = config["modifiedTime"]\
+                if config and "modifiedTime" in config else None
+            self.creation_time = config["creationTime"]\
+                if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"]\
+                if config and "modifiedBy" in config else None
+            self.name = config["name"]\
+                if config and "name" in config else None
+            self.description = config["description"]\
+                if config and "description" in config else None
+            self.enabled = config["enabled"]\
+                if config and "enabled" in config else None
+            self.operator = config["operator"]\
+                if config and "operator" in config else None
+            self.criteria_attribute = config["criteriaAttribute"]\
+                if config and "criteriaAttribute" in config else None
+
+            self.privileged_approvals_enabled = config["privilegedApprovalsEnabled"]\
                 if config and "privilegedApprovalsEnabled" in config else None
-        )
+
+            self.criteria_attribute_values = ZscalerCollection.form_list(
+                    config["criteriaAttributeValues"] if "criteriaAttributeValues" in config else [], str
+                )
+
+        else:
+            self.id = None
+            self.name = None
+            self.description = None
+            self.enabled = None
+            self.creation_time = None
+            self.modified_by = None
+            self.modified_time = None
+            self.operator = None
+            self.criteria_attribute = None
+            self.criteria_attribute_values = None
+            self.privileged_approvals_enabled = None
 
     def request_format(self):
+        """
+        Formats the Segment Group data into a dictionary suitable for API requests.
+        """
         parent_req_format = super().request_format()
-        current_obj_format = {}
+        current_obj_format = {
 
-        if self.id is not None:
-            current_obj_format["id"] = self.id
-        if self.modified_time is not None:
-            current_obj_format["modifiedTime"] = self.modified_time
-        if self.creation_time is not None:
-            current_obj_format["creationTime"] = self.creation_time
-        if self.modified_by is not None:
-            current_obj_format["modifiedBy"] = self.modified_by
-        if self.name is not None:
-            current_obj_format["name"] = self.name
-        if self.description is not None:
-            current_obj_format["description"] = self.description
-        if self.enabled is not None:
-            current_obj_format["enabled"] = self.enabled
-        if self.operator is not None:
-            current_obj_format["operator"] = self.operator
-        if self.criteria_attribute is not None:
-            current_obj_format["criteriaAttribute"] = self.criteria_attribute
-        if self.criteria_attribute_values is not None:
-            current_obj_format["criteriaAttributeValues"] = self.criteria_attribute_values
-        if self.privileged_approvals_enabled is not None:
-            current_obj_format["privilegedApprovalsEnabled"] = self.privileged_approvals_enabled
-
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "enabled": self.enabled,
+            "modifiedTime": self.modified_time,
+            "modifiedBy": self.modified_by,
+            "creationTime": self.creation_time,
+            "operator": self.operator,
+            "criteriaAttribute": self.criteria_attribute,
+            "criteriaAttributeValues": self.criteria_attribute_values,
+            "privilegedApprovalsEnabled": self.privileged_approvals_enabled
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -100,34 +105,15 @@ class MicrotenantSearch(ZscalerObject):
         super().__init__(config)
 
         if config:
-            
+
             filter_and_sort = config.get("filterAndSortDto", {})
-            
+
             self.filter_by = ZscalerCollection.form_list(
                 config["filterBy"] if "filterBy" in config else [], FilterBy
             )
 
             self.page_by = PageBy(filter_and_sort["pageBy"]) if "pageBy" in filter_and_sort else None
-            self.sort_by = SortBy(filter_and_sort["sortBy"]) if "sortBy" in filter_and_sort else None           
-            # if "pageBy" in config:
-            #     if isinstance(config["pageBy"], PageBy):
-            #         self.page_by = config["pageBy"]
-            #     elif config["pageBy"] is not None:
-            #         self.page_by = PageBy(config["pageBy"])
-            #     else:
-            #         self.page_by = None
-            # else:
-            #     self.page_by = None
-
-            # if "sortBy" in config:
-            #     if isinstance(config["sortBy"], SortBy):
-            #         self.sort_by = config["pageBy"]
-            #     elif config["sortBy"] is not None:
-            #         self.sort_by = SortBy(config["sortBy"])
-            #     else:
-            #         self.sort_by = None
-            # else:
-            #     self.sort_by = None
+            self.sort_by = SortBy(filter_and_sort["sortBy"]) if "sortBy" in filter_and_sort else None
 
         else:
             self.filter_by = []
@@ -148,7 +134,8 @@ class MicrotenantSearch(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class FilterBy(ZscalerObject):
     """
     A class for FilterBy objects.
@@ -170,7 +157,7 @@ class FilterBy(ZscalerObject):
                 if "filterName" in config else None
             self.operator = config["operator"]\
                 if "operator" in config else None
-                
+
             self.values = ZscalerCollection.form_list(
                 config["values"] if "values" in config else [], str
             )
@@ -193,7 +180,8 @@ class FilterBy(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class PageBy(ZscalerObject):
     """
     A class for PageBy objects.
@@ -236,7 +224,8 @@ class PageBy(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class SortBy(ZscalerObject):
     """
     A class for SortBy objects.

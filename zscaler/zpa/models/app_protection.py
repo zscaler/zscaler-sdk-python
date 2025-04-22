@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_protection_predefined_controls as app_protection_predefined_controls
 from zscaler.zpa.models import common as common
 
+
 class InspectionProfile(ZscalerObject):
     """
     A class for InspectionProfile objects.
@@ -71,9 +72,14 @@ class InspectionProfile(ZscalerObject):
             self.predefined_api_controls = ZscalerCollection.form_list(
                 config["predefinedApiControls"] if "predefinedApiControls" in config else [], str
             )
+
             self.predefined_controls = ZscalerCollection.form_list(
-                config["predefinedControls"] if "predefinedControls" in config else [], app_protection_predefined_controls.PredefinedInspectionControlResource
+                config["predefinedControls"]
+                if "predefinedControls" in config
+                else [],
+                app_protection_predefined_controls.PredefinedInspectionControlResource,
             )
+
             self.predefined_controls_version = config["predefinedControlsVersion"] \
                 if "predefinedControlsVersion" in config else None
             self.threatlabz_controls = ZscalerCollection.form_list(
@@ -193,7 +199,10 @@ class AppProtectionCustomControl(ZscalerObject):
                 if "version" in config else None
 
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
-                config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [], common.CommonIDName
+                config["associatedInspectionProfileNames"]
+                if "associatedInspectionProfileNames" in config
+                else [],
+                common.CommonIDName,
             )
 
             self.rules = ZscalerCollection.form_list(
@@ -264,6 +273,7 @@ class AppProtectionCustomControl(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class InspectionRule(ZscalerObject):
     """
     A class for Rules objects.
@@ -286,7 +296,7 @@ class InspectionRule(ZscalerObject):
             self.conditions = ZscalerCollection.form_list(
                 config["conditions"] if "conditions" in config else [], InspectionRuleCondition
             )
-             
+
         else:
             self.names = None
             self.type = None
@@ -304,7 +314,8 @@ class InspectionRule(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class InspectionRuleCondition(ZscalerObject):
     """
     A class for InspectionRuleCondition objects.
@@ -325,7 +336,8 @@ class InspectionRuleCondition(ZscalerObject):
             self.op = config["op"] \
                 if "op" in config else None
             self.rhs = config["rhs"] \
-                if "rhs" in config else None             
+                if "rhs" in config else None
+
         else:
             self.lhs = None
             self.op = None

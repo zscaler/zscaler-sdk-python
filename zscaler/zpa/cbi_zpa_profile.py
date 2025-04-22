@@ -88,7 +88,7 @@ class CBIZPAProfileAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing a list of `ZPAProfile` instances, response object, and error if any.
-            
+
         Examples:
             >>> profile_list, _, err = client.zpa.cbi_zpa_profile.list_isolation_profiles()
             ... if err:

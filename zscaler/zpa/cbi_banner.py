@@ -134,7 +134,7 @@ class CBIBannerAPI(APIClient):
             ...     text_color= "#FFFFFF",
             ...     banner=True,
             ...     notification_title= "Heads up, you've been redirected to Browser Isolation!",
-            ...     notification_text= "The website you were trying to access is now rendered in a fully isolated environment to protect you from malicious content.",
+            ...     notification_text= "The website you were trying to access",
             ... )
             ... if err:
             ...     print(f"Error adding cbi banner: {err}")
@@ -186,7 +186,7 @@ class CBIBannerAPI(APIClient):
             ...     text_color= "#FFFFFF",
             ...     banner=True,
             ...     notification_title= "Heads up, you've been redirected to Browser Isolation!",
-            ...     notification_text= "The website you were trying to access is now rendered in a fully isolated environment to protect you from malicious content.",
+            ...     notification_text= "The website you were trying to access",
             ... )
             ... if err:
             ...     print(f"Error updating cbi banner: {err}")

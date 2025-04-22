@@ -50,7 +50,7 @@ class MicrotenantsAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: A tuple containing (list of Microtenants instances, Response, error)
-            
+
             >>> microtenant_list, _, err = client.zpa.microtenants.list_microtenants(
             ... query_params={'search': 'Microtenant_A', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -208,7 +208,7 @@ class MicrotenantsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing:
-            
+
                 - **MicrotenantSearch**: The parsed response object containing filter results, paging, and sorting.
                 - **Response**: The raw response object returned by the request executor.
                 - **Error**: An exception if one occurred, otherwise `None`.

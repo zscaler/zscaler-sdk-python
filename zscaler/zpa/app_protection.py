@@ -54,7 +54,7 @@ class InspectionControllerAPI(APIClient):
                 }
             )
         return rule_set
-    
+
     def list_profiles(
         self,
         query_params=None,
@@ -67,7 +67,8 @@ class InspectionControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -77,8 +78,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -117,8 +117,7 @@ class InspectionControllerAPI(APIClient):
             f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}
-            """
-        )
+            """)
 
         request, error = self._request_executor\
             .create_request(http_method, api_url, {}, kwargs)
@@ -353,8 +352,6 @@ class InspectionControllerAPI(APIClient):
         # Debugging: Log the payload before sending the request
         print("Payload being sent:", payload)
 
-
-        # Create the request
         request, error = self._request_executor.create_request(
             http_method, api_url, body=payload, headers={}, params={}
         )
@@ -477,8 +474,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionProfile/{profile_id}/patch
-        """
-        )
+        """)
 
         # Fetch all predefined control groups
         control_groups, _, err = self.list_predef_controls()
@@ -566,7 +562,8 @@ class InspectionControllerAPI(APIClient):
                 ``[query_params.page]`` {int}: Specifies the page number.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.sort_dir]`` {str}: Specifies the sorting order (ascending/descending) for the search results. Available values : ASC, DESC
+                ``[query_params.sort_dir]`` {str}: Specifies the sorting order (ascending/descending) for the search results.
+                    Available values : ASC, DESC
 
         Returns:
             tuple: A tuple containing (list of AppProtectionCustomControl instances, Response, error)
@@ -575,18 +572,15 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
-        # Prepare request
         request, error = self._request_executor\
             .create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -616,8 +610,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f""""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/{control_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor\
             .create_request(http_method, api_url, {})
@@ -724,8 +717,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/{control_id}
-        """
-        )
+        """)
 
         # Fetch existing control and handle errors
         existing_control, _, err = self.get_custom_control(control_id)
@@ -760,7 +752,9 @@ class InspectionControllerAPI(APIClient):
             return (AppProtectionCustomControl({"id": control_id}), None, None)
 
         try:
-            result = AppProtectionCustomControl(self.form_response_body(response.get_body()))
+            result = AppProtectionCustomControl(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -779,15 +773,13 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/{control_id}
-        """
-        )
+        """)
 
         request, error = self._request_executor\
             .create_request(http_method, api_url, {})
         if error:
             return None
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -819,14 +811,12 @@ class InspectionControllerAPI(APIClient):
             ...         query_params={"search": "controlGroup", "search_field": "Protocol Issues"}):
             ...     print(control)
         """
-        # Initialize URL and HTTP method
         http_method = "get".upper()
         encoded_version = quote("OWASP_CRS/3.3.0", safe="")
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined?version={encoded_version}
-        """
-        )
+        """)
 
         # Handle query parameters
         query_params = query_params or {}
@@ -840,15 +830,11 @@ class InspectionControllerAPI(APIClient):
             additional_params = "&".join(f"{key}={quote(str(value))}" for key, value in query_params.items())
             api_url = f"{api_url}&{additional_params}"
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
+
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
             .execute(request)
         if error:
@@ -877,36 +863,30 @@ class InspectionControllerAPI(APIClient):
             ...     print(action_type)
 
         """
-        # Initialize URL and HTTP method
         http_method = "get".upper()
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/actionTypes
-        """
-        )
+        """)
 
-        # Prepare request body and headers
         body = {}
         headers = {}
         form = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, form)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, str)  # Expecting a list of strings
+            .execute(request, str)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
-            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
 
@@ -928,30 +908,26 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/severityTypes
-        """
-        )
+        """)
 
         body = {}
         headers = {}
         form = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, form)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, str)  # Expecting a list of strings
+            .execute(request, str)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
-            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
 
@@ -973,31 +949,26 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/controlTypes
-        """
-        )
+        """)
 
-        # Prepare request body and headers
         body = {}
         headers = {}
         form = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, form)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, str)  # Expecting a list of strings
+            .execute(request, str)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
-            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
 
@@ -1019,30 +990,26 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/custom/httpMethods
-        """
-        )
+        """)
 
         body = {}
         headers = {}
         form = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, form)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, str)  # Expecting a list of strings
+            .execute(request, str)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
-            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
 
@@ -1064,30 +1031,26 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/versions
-        """
-        )
+        """)
 
         body = {}
         headers = {}
         form = {}
 
-        # Create the request
         request, error = self._request_executor\
             .create_request(http_method, api_url, body, headers, form)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor\
-            .execute(request, str)  # Expecting a list of strings
+            .execute(request, str)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
-            result = response.get_body()  # In this case, response is a list of strings like ["PASS", "BLOCK", "REDIRECT"]
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
 
@@ -1108,8 +1071,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/adp
-        """
-        )
+        """)
 
         query_params = query_params or {}
 
@@ -1151,8 +1113,7 @@ class InspectionControllerAPI(APIClient):
         api_url = format_url(f"""
             {self._zpa_base_endpoint}
             /inspectionControls/predefined/api
-        """
-        )
+        """)
 
         query_params = query_params or {}
 

@@ -97,7 +97,8 @@ class LSSConfigControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 20. The max page size is 500.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
 
         Returns:
@@ -192,7 +193,7 @@ class LSSConfigControllerAPI(APIClient):
         Adds a new LSS Receiver Config to ZPA.
 
         Args:
-            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups associated with this LSS Config. `Defaults to None.`
+            app_connector_group_ids (list): A list of unique IDs for the App Connector Groups associated with this LSS Config.
             enabled (bool): Enable the LSS Receiver. `Defaults to True`.
             lss_host (str): The IP address of the LSS Receiver.
             lss_port (str): The port number for the LSS Receiver.

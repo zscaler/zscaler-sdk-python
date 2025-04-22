@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class EnrollmentCertificate(ZscalerObject):
     def __init__(self, config=None):
         """
@@ -88,12 +89,12 @@ class EnrollmentCertificate(ZscalerObject):
             self.private_key_present = None
             self.client_cert_type = None
             self.csr = None
-            self.parent_cert_id = None          
+            self.parent_cert_id = None
             self.parent_cert_name = None
             self.zrsa_encrypted_private_key = None
             self.zrsa_encrypted_session_key = None
             self.microtenant_id = None
-                        
+
     def request_format(self):
         """
         Formats the model data for API requests.

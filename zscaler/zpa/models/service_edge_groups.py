@@ -20,7 +20,8 @@ from zscaler.zpa.models import trusted_network\
     as trusted_networks
 from zscaler.zpa.models import service_edges\
     as service_edges
-    
+
+
 class ServiceEdgeGroup(ZscalerObject):
     """
     A class representing the Service Edge Group.
@@ -84,7 +85,7 @@ class ServiceEdgeGroup(ZscalerObject):
             self.site_id = config["siteId"]\
                 if "siteId" in config else None
             self.site_name = config["siteName"]\
-                if "siteName" in config else None                
+                if "siteName" in config else None
             self.upgrade_priority = config["upgradePriority"]\
                 if "upgradePriority" in config else None
             self.upgrade_time_in_secs = config["upgradeTimeInSecs"]\
@@ -93,15 +94,15 @@ class ServiceEdgeGroup(ZscalerObject):
                 if "useInDrMode" in config else False
             self.use_in_dr_mode = config["useInDrMode"]\
                 if "useInDrMode" in config else False
-                                                
+
             self.app_service_groups = ZscalerCollection.form_list(
                 config["trustedNetworks"] if "trustedNetworks" in config else [], trusted_networks.TrustedNetwork
             )
-            
+
             self.app_service_groups = ZscalerCollection.form_list(
                 config["serviceEdges"] if "serviceEdges" in config else [], service_edges.ServiceEdge
             )
-            
+
         else:
             self.id = None
             self.modified_time = None

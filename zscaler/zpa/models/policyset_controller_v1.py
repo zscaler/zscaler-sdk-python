@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
-from zscaler.oneapi_collection import ZscalerCollection 
+from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_connector_groups\
     as app_connector_groups
 from zscaler.zpa.models import server_group\
@@ -92,11 +92,11 @@ class PolicySetControllerV1(ZscalerObject):
             self.app_connector_groups = ZscalerCollection.form_list(
                 config["appConnectorGroups"] if "appConnectorGroups" in config else [], app_connector_groups.AppConnectorGroup
             )
-            
+
             self.app_server_groups = ZscalerCollection.form_list(
                 config["appServerGroups"] if "appServerGroups" in config else [], server_group.ServerGroup
             )
-            
+
             self.service_edge_groups = ZscalerCollection.form_list(
                 config["serviceEdgeGroups"] if "serviceEdgeGroups" in config else [], service_edge_groups.ServiceEdgeGroup
             )
@@ -115,7 +115,9 @@ class PolicySetControllerV1(ZscalerObject):
                 if isinstance(config["privilegedPortalCapabilities"], common.PrivilegedCapabilitiesResource):
                     self.privileged_portal_capabilities = config["privilegedPortalCapabilities"]
                 elif config["privilegedPortalCapabilities"] is not None:
-                    self.privileged_portal_capabilities = common.PrivilegedCapabilitiesResource(config["privilegedPortalCapabilities"])
+                    self.privileged_portal_capabilities = common.PrivilegedCapabilitiesResource(
+                        config["privilegedPortalCapabilities"]
+                    )
                 else:
                     self.privileged_portal_capabilities = None
             else:
@@ -130,7 +132,7 @@ class PolicySetControllerV1(ZscalerObject):
                     self.extranet_dto = None
             else:
                 self.extranet_dto = None
-                
+
             if "credential" in config:
                 if isinstance(config["credential"], credentials.Credential):
                     self.credential = config["credential"]
@@ -264,7 +266,7 @@ class Condition(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
-# The Operand class used within Condition
+
 class Operand(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)

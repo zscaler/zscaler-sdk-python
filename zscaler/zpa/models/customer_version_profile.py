@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class CustomerVersionProfile(ZscalerObject):
     def __init__(self, config=None):
         """
@@ -63,11 +64,11 @@ class CustomerVersionProfile(ZscalerObject):
                 if "visibilityScope" in config else None
 
             self.custom_scope_request_customer_ids = config.get("customScopeRequestCustomerIds", {})
-            
+
             self.custom_scope_customer_ids = ZscalerCollection.form_list(
                 config["customScopeCustomerIds"] if "customScopeCustomerIds" in config else [], str
             )
-            
+
         else:
             self.id = None
             self.name = None
@@ -86,7 +87,7 @@ class CustomerVersionProfile(ZscalerObject):
             self.visibility_scope = None
             self.custom_scope_request_customer_ids = {}
             self.custom_scope_customer_ids = []
-            
+
     def request_format(self):
         parent_req_format = super().request_format()
         current_obj_format = {

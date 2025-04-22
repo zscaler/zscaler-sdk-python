@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment as application_segment
 
+
 class PrivilegedRemoteAccessApproval(ZscalerObject):
     """
     A class representing the Privileged Remote Access Approval.
@@ -55,8 +56,8 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
                 else:
                     self.working_hours = None
             else:
-                self.working_hours = None   
-            
+                self.working_hours = None
+
         else:
             self.id = None
             self.start_time = None
@@ -87,8 +88,8 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
-    
+
+
 class WorkingHours(ZscalerObject):
     """
     A class for WorkingHours objects.

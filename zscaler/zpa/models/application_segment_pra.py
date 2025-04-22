@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group\
     as server_group
 
+
 class ApplicationSegmentPRA(ZscalerObject):
     """
     A class representing the Application Segment in ZPA for PRA (Privileged Remote Access).
@@ -26,7 +27,6 @@ class ApplicationSegmentPRA(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
-
         if config:
             self.id = config["id"]\
                 if "id" in config else None
@@ -99,7 +99,7 @@ class ApplicationSegmentPRA(ZscalerObject):
                         self.server_groups.append(group)
                     else:
                         self.server_groups.append(server_group.ServerGroup(group))
-            
+
             # Handle PRA applications (commonAppsDto)
             self.common_apps_dto = config.get("commonAppsDto", {})
             if "appsConfig" in self.common_apps_dto:
@@ -204,11 +204,11 @@ class ApplicationSegmentPRA(ZscalerObject):
             "commonAppsDto": self.common_apps_dto,
             "praApps": self.pra_apps,
         }
-        
+
+
 class AppConfig(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
-
         if config:
             self.app_types = config["appTypes"]\
                 if "appTypes" in config else []
@@ -232,7 +232,7 @@ class AppConfig(ZscalerObject):
             self.enabled = True
             self.domain = None
             self.name = None
-            
+
     def request_format(self):
         """
         Formats the AppConfig data into a dictionary suitable for API requests.

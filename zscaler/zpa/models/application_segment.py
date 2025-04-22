@@ -20,6 +20,7 @@ from zscaler.zpa.models import server_group\
     as server_group
 from zscaler.zpa.models import common as common
 
+
 class ApplicationSegment(ZscalerObject):
     """
     A class representing the Application Segment in Zscaler.
@@ -27,7 +28,6 @@ class ApplicationSegment(ZscalerObject):
 
     def __init__(self, config=None):
         super().__init__(config)
-        
         if config:
             self.id = config["id"]\
                 if "id" in config else None
@@ -104,7 +104,7 @@ class ApplicationSegment(ZscalerObject):
             self.udp_protocols = ZscalerCollection.form_list(
                 config["udpProtocols"] if "udpProtocols" in config else [], str
             )
- 
+
             self.server_groups = ZscalerCollection.form_list(config.get("serverGroups", []), server_group.ServerGroup)
 
             self.tcp_port_ranges = ZscalerCollection.form_list(
@@ -114,7 +114,6 @@ class ApplicationSegment(ZscalerObject):
                 config["udpPortRanges"] if "udpPortRanges" in config else [], str
             )
 
-            # Handle tcpPortRange using conditionals for defensive programming
             self.tcp_port_range = []
             if "tcpPortRange" in config:
                 for port_range in config["tcpPortRange"]:
@@ -138,7 +137,7 @@ class ApplicationSegment(ZscalerObject):
             ) if "clientlessApps" in config else []
 
             if "sharedMicrotenantDetails" in config:
-                if isinstance(config["sharedMicrotenantDetails"], SharedMicrotenantDetails	):
+                if isinstance(config["sharedMicrotenantDetails"], SharedMicrotenantDetails):
                     self.shared_microtenant_details = config["sharedMicrotenantDetails"]
                 elif config["sharedMicrotenantDetails"] is not None:
                     self.shared_microtenant_details = SharedMicrotenantDetails(config["sharedMicrotenantDetails"])
@@ -255,6 +254,7 @@ class ApplicationSegment(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class AppSegmentClientlessApps(ZscalerObject):
     """
     A class for Clientless Application Segment Entity objects.
@@ -296,17 +296,18 @@ class AppSegmentClientlessApps(ZscalerObject):
             self.cname = config["cname"]\
                 if "cname" in config else None
             self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None   
+                if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
             self.ext_domain = config["extDomain"]\
-                if "extDomain" in config else None     
+                if "extDomain" in config else None
             self.ext_domain_name = config["extDomainName"]\
-                if "extDomainName" in config else None       
+                if "extDomainName" in config else None
+
             self.ext_label = config["extLabel"]\
-                if "extLabel" in config else None         
+                if "extLabel" in config else None
+
         else:
-            # Default values when no config is provided
             self.id = None
             self.name = None
             self.description = None
@@ -319,7 +320,7 @@ class AppSegmentClientlessApps(ZscalerObject):
             self.app_id = None
             self.hidden = None
             self.local_domain = None
-            self.portal = None           
+            self.portal = None
             self.trust_untrusted_cert = None
             self.allow_options = None
             self.cname = None
@@ -359,6 +360,7 @@ class AppSegmentClientlessApps(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class SharedMicrotenantDetails(ZscalerObject):
     """
@@ -411,6 +413,7 @@ class SharedMicrotenantDetails(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class SharedFromMicrotenant(ZscalerObject):
     """
     A class for SharedFromMicrotenant objects.
@@ -446,7 +449,8 @@ class SharedFromMicrotenant(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class SharedToMicrotenants(ZscalerObject):
     """
     A class for SharedToMicrotenants objects.
@@ -482,7 +486,7 @@ class SharedToMicrotenants(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class ZPNExtranetResource(ZscalerObject):
     """
@@ -516,7 +520,8 @@ class ZPNExtranetResource(ZscalerObject):
             self.zia_modified_time = config["ziaModifiedTime"] \
                 if "ziaModifiedTime" in config else None
             self.zia_org_id = config["ziaOrgId"] \
-                if "ziaOrgId" in config else None                                                     
+                if "ziaOrgId" in config else None
+
         else:
             self.id = None
             self.modified_time = None
@@ -581,7 +586,7 @@ class AppSegmentByType(ZscalerObject):
                 if "hidden" in config else None
             self.microtenant_name = config["microtenantName"]\
                 if "microtenantName" in config else None
-                
+
             if "appResource" in config:
                 if isinstance(config["appResource"], AppResource):
                     self.app_resource = config["appResource"]
@@ -623,7 +628,7 @@ class AppSegmentByType(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class AppResource(ZscalerObject):
     """
@@ -640,9 +645,8 @@ class AppResource(ZscalerObject):
         """
         super().__init__(config)
         if config:
-
             if "appResource" in config:
-                if isinstance(config["appResource"], ApplicationSegment	):
+                if isinstance(config["appResource"], ApplicationSegment):
                     self.app_resource = config["appResource"]
                 elif config["appResource"] is not None:
                     self.app_resource = ApplicationSegment(config["appResource"])

@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment_pra as application_segment_pra
 from zscaler.zpa.models import pra_portal as pra_portal
 
+
 class PrivilegedRemoteAccessConsole(ZscalerObject):
     """
     A class representing the Privileged Remote Access Console.
@@ -55,11 +56,11 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
                     self.pra_application = None
             else:
                 self.pra_application = None
-                
-            # Handling the nested PRA Portals (list)
+
             self.pra_portals = ZscalerCollection.form_list(
                 config["praPortals"], pra_portal.PrivilegedRemoteAccessPortal
             ) if "praPortals" in config else []
+
         else:
             self.id = None
             self.name = None
@@ -70,7 +71,7 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
             self.description = None
             self.pra_application = None
             self.microtenant_id = None
-            self.microtenant_name = "Default"
+            self.microtenant_name = None
             self.pra_portals = []
 
     def request_format(self):
@@ -84,11 +85,11 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
             "description": self.description,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
-            "praApplication": self.pra_application.request_format() \
-                if self.pra_application else None,
+            "praApplication": self.pra_application,
             "praPortals": [portal.request_format() for portal in self.pra_portals],
         }
-        
+
+
 class PRAApplication(ZscalerObject):
     """
     A class for PRAApplication objects.

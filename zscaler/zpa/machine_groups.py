@@ -32,7 +32,9 @@ class MachineGroupsAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
     def list_machine_groups(
-        self, query_params=None) -> tuple:
+        self,
+        query_params=None
+    ) -> tuple:
         """
         Enumerates machine groups in your organization with pagination.
         A subset of machine groups can be returned that match a supported
@@ -50,7 +52,7 @@ class MachineGroupsAPI(APIClient):
 
         Examples:
             Retrieve machine groups with pagination parameters:
-            
+
             >>> group_list, _, err = client.zpa.machine_groups.list_machine_groups(
             ... query_params={'search': 'MGRP01', 'page': '1', 'page_size': '100'})
             ... if err:
@@ -106,7 +108,7 @@ class MachineGroupsAPI(APIClient):
 
         Returns:
             dict: The machine group object.
-            
+
         Examples:
             >>> fetched_group, _, err = client.zpa.machine_groups.get_group('999999')
             ... if err:

@@ -59,14 +59,14 @@ class ServerGroup(ZscalerObject):
             self.dynamic_discovery = config["dynamicDiscovery"] \
                 if "dynamicDiscovery" in config else True
 
-            # Handle the nested list of applications
-            if "applications" in config:
-                self.applications = [application_segment.ApplicationSegment(app) for app in config["applications"]]
-            else:
-                self.applications = []
-                
-            self.app_connector_groups = ZscalerCollection.form_list(config.get("appConnectorGroups", []), app_connector_groups.AppConnectorGroup)
-            
+            self.applications = ZscalerCollection.form_list(
+                config["applications"] if "applications" in config else [], application_segment.ApplicationSegment
+            )
+
+            self.app_connector_groups = ZscalerCollection.form_list(
+                config["appConnectorGroups"] if "appConnectorGroups" in config else [], app_connector_groups.AppConnectorGroup
+            )
+
         else:
             self.id = None
             self.modified_time = None
