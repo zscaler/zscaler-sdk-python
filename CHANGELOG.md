@@ -11,13 +11,15 @@
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
-  - Starting at v3.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
+  - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
   - The new OneAPI framework is compatible only with the following products `ZCC/ZIA/ZPA`.
   - The following products `ZTW` - Cloud Connector and `ZDX` and Zscaler Digital Experience, authentication methods remain unnaffected.
   - The package `ZCON` (Zscaler Cloud and Branch Connector) has been renamed to `ZTW`
   - The following products `ZWA` - Zscaler Workflow Automation authentication methods remain unnaffected.
 
 Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/README.md) page for details on client instantiation, and authentication requirements on each individual product.
+
+**WARNING**: Attention Government customers. OneAPI and Zidentity is not currently supported for the following ZIA clouds: `zscalergov` and `zscalerten` or ZPA `GOV`, and `GOVUS`. Please refer to the Zscaler Legacy API Framework section in the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/README.md) for more information on how authenticate to these environments using the built-in Legacy API method.
 
 [PR #255](https://github.com/zscaler/zscaler-sdk-python/pull/255): All API clients now support Config Setter object `ZCC/ZTW/ZDX/ZIA/ZPA/ZWA`
 
