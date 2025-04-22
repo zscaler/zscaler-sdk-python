@@ -52,5 +52,3 @@ Actions:
 ```shell
 $ python3 sandbox_md5_hash_submission.py --action get_behavioral_analysis
 ```
-
-

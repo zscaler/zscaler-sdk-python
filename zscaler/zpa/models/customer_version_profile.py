@@ -1,0 +1,104 @@
+"""
+Copyright (c) 2023, Zscaler Inc.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
+from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
+
+
+class CustomerVersionProfile(ZscalerObject):
+    def __init__(self, config=None):
+        """
+        Initialize the CustomerVersionProfile model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the Customer version profile configuration.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.number_of_assistants = config["numberOfAssistants"] if "numberOfAssistants" in config else None
+            self.number_of_customers = config["numberOfCustomers"] if "numberOfCustomers" in config else None
+            self.number_of_private_brokers = config["numberOfPrivateBrokers"] if "numberOfPrivateBrokers" in config else None
+            self.number_of_site_controllers = (
+                config["numberOfSiteControllers"] if "numberOfSiteControllers" in config else None
+            )
+            self.number_of_updated_assistants = (
+                config["numberOfUpdatedAssistants"] if "numberOfUpdatedAssistants" in config else None
+            )
+            self.number_of_updated_private_brokers = (
+                config["numberOfUpdatedPrivateBrokers"] if "numberOfUpdatedPrivateBrokers" in config else None
+            )
+            self.number_of_updated_site_controllers = (
+                config["numberOfUpdatedSiteControllers"] if "numberOfUpdatedSiteControllers" in config else None
+            )
+            self.upgrade_priority = config["upgradePriority"] if "upgradePriority" in config else None
+            self.versions = config["versions"] if "versions" in config else None
+            self.visibility_scope = config["visibilityScope"] if "visibilityScope" in config else None
+
+            self.custom_scope_request_customer_ids = config.get("customScopeRequestCustomerIds", {})
+
+            self.custom_scope_customer_ids = ZscalerCollection.form_list(
+                config["customScopeCustomerIds"] if "customScopeCustomerIds" in config else [], str
+            )
+
+        else:
+            self.id = None
+            self.name = None
+            self.description = None
+            self.enabled = None
+            self.customer_id = None
+            self.modified_time = None
+            self.modified_by = None
+            self.creation_time = None
+            self.number_of_assistants = None
+            self.number_of_customers = None
+            self.number_of_private_brokers = None
+            self.number_of_updated_site_controllers = None
+            self.upgrade_priority = None
+            self.versions = None
+            self.visibility_scope = None
+            self.custom_scope_request_customer_ids = {}
+            self.custom_scope_customer_ids = []
+
+    def request_format(self):
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "customerId": self.customer_id,
+            "modifiedTime": self.modified_time,
+            "modifiedBy": self.modified_by,
+            "creationTime": self.creation_time,
+            "numberOfAssistants": self.number_of_assistants,
+            "numberOfCustomers": self.number_of_customers,
+            "numberOfPrivateBrokers": self.number_of_private_brokers,
+            "numberOfSiteControllers": self.number_of_site_controllers,
+            "numberOfUpdatedAssistants": self.number_of_updated_assistants,
+            "numberOfUpdatedPrivateBrokers": self.number_of_updated_private_brokers,
+            "numberOfUpdatedSiteControllers": self.number_of_updated_site_controllers,
+            "upgradePriority": self.upgrade_priority,
+            "versions": self.versions,
+            "visibilityScope": self.visibility_scope,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

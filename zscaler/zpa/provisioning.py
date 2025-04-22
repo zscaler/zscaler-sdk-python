@@ -1,29 +1,35 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
-from box import Box, BoxList
-from requests import Response
-
-from zscaler.utils import snake_to_camel
-from zscaler.zpa.client import ZPAClient
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.provisioning_keys import ProvisioningKey
+from zscaler.utils import format_url
 
 
 def simplify_key_type(key_type):
-    # Simplify the key type for our users
+    """
+    Simplifies the key type for the user. Accepted values are 'connector' and 'service_edge'.
+
+    Args:
+        key_type (str): The key type provided by the user.
+
+    Returns:
+        str: The simplified key type.
+    """
     if key_type == "connector":
         return "CONNECTOR_GRP"
     elif key_type == "service_edge":
@@ -32,219 +38,295 @@ def simplify_key_type(key_type):
         raise ValueError("Unexpected key type.")
 
 
-class ProvisioningKeyAPI:
-    def __init__(self, client: ZPAClient):
-        self.rest = client
+class ProvisioningKeyAPI(APIClient):
+    """
+    A client object for the Provisioning Keys resource.
+    """
 
-    def list_provisioning_keys(self, key_type: str, **kwargs) -> BoxList:
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+
+    def list_provisioning_keys(self, key_type: str, query_params=None) -> tuple:
         """
         Returns a list of all configured provisioning keys that match the specified ``key_type``.
 
         Args:
-            key_type (str): The type of provisioning key, accepted values are:
+            key_type (str): The type of provisioning key. Accepted values are:
                 ``connector`` and ``service_edge``.
-            **kwargs: Optional keyword args.
 
-        Keyword Args:
-            max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            pagesize (int, optional):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            search (str, optional):
-                The search string used to match against features and fields.
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`BoxList`: A list containing the requested provisioning keys.
+            tuple: A tuple containing (list of ProvisioningKey instances, Response, error)
 
         Examples:
-            List all App Connector provisioning keys.
+            List all App Connector Groups provisioning keys:
 
-            >>> for key in zpa.provisioning.list_provisioning_keys(key_type="connector"):
-            ...    print(key)
+            >>> key_list, _, err = client.zpa.provisioning.list_provisioning_keys(
+            ... key_type=connector
+            ... query_params={'search': 'Connector_ProvKey01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing provisioning key: {err}")
+            ...     return
+            ... print(f"Total provisioning key found: {len(key_list)}")
+            ... for key in key_list:
+            ...     print(keys.as_dict())
 
-            List all Service Edge provisioning keys.
+            List all Service Edge Groups provisioning keys:
 
-            >>> for key in zpa.provisioning.list_provisioning_keys(key_type="service_edge"):
-            ...    print(key)
-
+            >>> key_list, _, err = client.zpa.provisioning.list_provisioning_keys(
+            ... key_type=service_edge
+            ... query_params={'search': 'ServiceEdge_ProvKey01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing provisioning key: {err}")
+            ...     return
+            ... print(f"Total provisioning key found: {len(key_list)}")
+            ... for key in key_list:
+            ...     print(keys.as_dict())
         """
-        list, _ = self.rest.get_paginated_data(
-            path=f"/associationType/{simplify_key_type(key_type)}/provisioningKey",
-            **kwargs,
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}/provisioningKey
+        """
         )
-        return list
 
-    def get_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(ProvisioningKey(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_provisioning_key(self, key_id: str, key_type: str, query_params=None) -> tuple:
         """
         Returns information on the specified provisioning key.
 
         Args:
             key_id (str): The unique id of the provisioning key.
             key_type (str): The type of provisioning key, accepted values are:
-
                 ``connector`` and ``service_edge``.
-            **kwargs: Optional keyword arguments.
 
-        Keyword Args:
-            microtenant_id (str): The unique identifier for the microtenant.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
         Returns:
-            :obj:`Box`: The requested provisioning key resource record.
+            :obj:`Tuple`: The requested provisioning key resource record.
 
         Examples:
             Get the specified App Connector key.
 
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("999999",
-            ...    key_type="connector")
+        Examples:
+            >>> fetched_key, _, err = client.zpa.provisioning.get_provisioning_key(
+                key_id='9999', key_type=connector
+            ... if err:
+            ...     print(f"Error fetching provisioning key by ID: {err}")
+            ...     return
+            ... print(f"Fetched provisioning key by ID: {fetched_key.as_dict()}")
 
             Get the specified Service Edge key.
 
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("888888",
-            ...    key_type="service_edge")
-
-            Get the specified App Connector key for a microtenant.
-
-            >>> provisioning_key = zpa.provisioning.get_provisioning_key("999999",
-            ...    key_type="connector", microtenant_id="12345")
-
+            >>> fetched_key, _, err = client.zpa.provisioning.get_provisioning_key(
+                key_id='9999', key_type=service_edge
+            ... if err:
+            ...     print(f"Error fetching provisioning key by ID: {err}")
+            ...     return
+            ... print(f"Fetched provisioning key by ID: {fetched_key.as_dict()}")
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.get(f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params)
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""{
+            self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
+        """
+        )
 
-    def add_provisioning_key(
-        self,
-        key_type: str,
-        name: str,
-        max_usage: str,
-        enrollment_cert_id: str,
-        component_id: str,
-        **kwargs,
-    ) -> Box:
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, ProvisioningKey)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ProvisioningKey(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def add_provisioning_key(self, key_type: str, **kwargs) -> tuple:
         """
         Adds a new provisioning key to ZPA.
 
         Args:
             key_type (str): The type of provisioning key, accepted values are:
-
                 ``connector`` and ``service_edge``.
             name (str): The name of the provisioning key.
             max_usage (int): The maximum amount of times this key can be used.
-            enrollment_cert_id (str):
-                The unique id of the enrollment certificate that will be used for this provisioning key.
-            component_id (str):
-                The unique id of the component that this provisioning key will be linked to. For App Connectors, this
-                will be the App Connector Group Id. For Service Edges, this will be the Service Edge Group Id.
-            **kwargs: Optional keyword args.
+            enrollment_cert_id (str): The unique id of the enrollment certificate for this provisioning key.
+            component_id (str): The unique id of the component linked to this provisioning key.
+            microtenant_id (str, optional): The microtenant ID if applicable.
 
-        Keyword Args:
-            enabled (bool): Enable the provisioning key. Defaults to ``True``.
-            microtenant_id (str): The microtenant ID to be used for this request.
+            **kwargs: Additional optional attributes.
 
         Returns:
-            :obj:`Box`: The newly created Provisioning Key resource record.
+            :obj:`Tuple`: The newly created Provisioning Key resource record.
 
         Examples:
-            Add a new App Connector Provisioning Key that can be used a maximum of 2 times.
-
-            >>> key = zpa.provisioning.add_provisioning_key(key_type="connector",
-            ...    name="Example App Connector Provisioning Key",
-            ...    max_usage=2,
-            ...    enrollment_cert_id="99999",
-            ...    component_id="888888")
-
-            Add a new Service Edge Provisioning Key in the disabled state that can be used once.
-
-            >>> key = zpa.provisioning.add_provisioning_key(key_type="service_edge",
-            ...    name="Example Service Edge Provisioning Key",
-            ...    max_usage=1,
-            ...    enrollment_cert_id="99999",
-            ...    component_id="777777"
-            ...    enabled=False)
-
+            >>> new_prov_key, _, err = zpa.provisioning.add_provisioning_key(
+            ...     key_type=key_type,
+            ...     name=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     description=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     max_usage="10",
+            ...     enrollment_cert_id="2519",
+            ...     component_id="72058304855047746",
+            ... )
+            ... if err:
+            ...     print(f"Error creating provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key created successfully: {new_prov_key.as_dict()}")
         """
-        payload = {
-            "name": name,
-            "maxUsage": max_usage,
-            "enrollmentCertId": enrollment_cert_id,
-            "zcomponentId": component_id,
-        }
+        if not key_type:
+            raise ValueError("key_type must be provided.")
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""{
+            self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}/provisioningKey
+        """
+        )
 
-        microtenant_id = kwargs.pop("microtenant_id", None)
+        body = kwargs.copy()
+
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        response = self.rest.post(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey", json=payload, params=params
-        )
-        if isinstance(response, Response):
-            status_code = response.status_code
-            raise Exception(f"API call failed with status {status_code}: {response.json()}")
-        return response
+        name = body.pop("name", None)
+        max_usage = body.pop("max_usage", None)
+        enrollment_cert_id = body.get("enrollment_cert_id")
+        component_id = body.get("component_id")
 
-    def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> Box:
+        body.update(
+            {"name": name, "maxUsage": max_usage, "enrollmentCertId": enrollment_cert_id, "zcomponentId": component_id}
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, ProvisioningKey)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ProvisioningKey(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> tuple:
         """
         Updates the specified provisioning key.
 
         Args:
             key_id (str): The unique id of the Provisioning Key being updated.
             key_type (str): The type of provisioning key, accepted values are:
-
                 ``connector`` and ``service_edge``.
-            **kwargs: Optional keyword args.
 
         Keyword Args:
-            name (str): The name of the provisioning key.
-            max_usage (int): The maximum amount of times this key can be used.
-            enrollment_cert_id (str):
-                The unique id of the enrollment certificate that will be used for this provisioning key.
-            component_id (str):
-                The unique id of the component that this provisioning key will be linked to. For App Connectors, this
-                will be the App Connector Group Id. For Service Edges, this will be the Service Edge Group Id.
-            microtenant_id (str): The microtenant ID to be used for this request.
+            name (str, optional): The new name for the provisioning key.
+            max_usage (int, optional): The new maximum usage count.
+            enrollment_cert_id (str, optional): The enrollment certificate ID to associate.
+            component_id (str, optional): The component ID to associate (mapped to zcomponentId).
+            microtenant_id (str, optional): The microtenant ID.
 
         Returns:
-            :obj:`Box`: The updated Provisioning Key resource record.
+            :obj:`Tuple`: The updated Provisioning Key resource record.
 
         Examples:
-            Update the name of an App Connector provisioning key:
 
-            >>> updated_key = zpa.provisioning.update_provisioning_key('999999',
-            ...    key_type="connector",
-            ...    name="Updated Name")
-
-            Change the max usage of a Service Edge provisioning key:
-
-            >>> updated_key = zpa.provisioning.update_provisioning_key('888888',
-            ...    key_type="service_edge",
-            ...    max_usage=10)
-
+            Updated Provisioning Key `max_usage` to `20`
+            >>> update_prov_key, _, err = zpa.provisioning.add_provisioning_key(
+            ...     key_type=key_type,
+            ...     name=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     description=f"NewProvisioningKey_{random.randint(1000, 10000)}",
+            ...     max_usage="20",
+            ...     enrollment_cert_id="2519",
+            ...     component_id="72058304855047746",
+            ... )
+            ... if err:
+            ...     print(f"Error creating provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key created successfully: {new_prov_key.as_dict()}")
         """
+        if not key_type:
+            raise ValueError("key_type must be provided.")
 
-        # Get the provided provisioning key record
-        payload = {snake_to_camel(k): v for k, v in self.get_provisioning_key(key_id, key_type=key_type).items()}
+        http_method = "PUT"
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
+            """
+        )
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
-        microtenant_id = kwargs.pop("microtenant_id", None)
+        body = kwargs.copy()
+        microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        resp = self.rest.put(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", json=payload, params=params
-        ).status_code
+        request, error = self._request_executor.create_request(http_method, api_url, body, params, {})
+        if error:
+            return (None, None, error)
 
-        if not isinstance(resp, Response):
-            return self.get_provisioning_key(key_id, key_type=key_type)
+        response, error = self._request_executor.execute(request, ProvisioningKey)
+        if error:
+            return (None, response, error)
 
-    def delete_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> int:
+        if response is None:
+            return (ProvisioningKey({"id": key_id}), None, None)
+
+        try:
+            result = ProvisioningKey(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def delete_provisioning_key(self, key_id: str, key_type: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified provisioning key from ZPA.
 
@@ -262,20 +344,42 @@ class ProvisioningKeyAPI:
             :obj:`int`: The status code for the operation.
 
         Examples:
-            Delete an App Connector provisioning key:
+            Delete a Service Edge provisioning key:
 
-            >>> zpa.provisioning.delete_provisioning_key(key_id="999999",
-            ...    key_type="connector")
+            >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
+            ... key_id='9999', key_type='connector')
+            ... if err:
+            ...     print(f"Error deleting provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
+
+        Examples:
 
             Delete a Service Edge provisioning key:
 
-            >>> zpa.provisioning.delete_provisioning_key(key_id="888888",
-            ...    key_type="service_edge")
-
+            >>> _, _, err = client.zpa.provisioning.delete_provisioning_key(
+            ... key_id='9999', key_type='service_edge')
+            ... if err:
+            ...     print(f"Error deleting provisioning key: {err}")
+            ...     return
+            ... print(f"provisioning key with ID {updated_key.id} deleted successfully.")
         """
-        params = {}
-        if "microtenant_id" in kwargs:
-            params["microtenantId"] = kwargs.pop("microtenant_id")
-        return self.rest.delete(
-            f"associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}", params=params
-        ).status_code
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
+        """
+        )
+
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)

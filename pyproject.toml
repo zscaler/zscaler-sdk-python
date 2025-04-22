@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "0.10.7"
+version = "1.0.0"
 description = "Official Python SDK for the Zscaler Products (Beta)"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -8,9 +8,9 @@ readme = "README.md"
 homepage = "https://github.com/zscaler/zscaler-sdk-python"
 repository = "https://github.com/zscaler/zscaler-sdk-python"
 documentation = "https://zscaler-sdk-python.readthedocs.io"
-keywords = ["zscaler", "sdk", "zpa", "zia", "zdx", "zcc", "zcon"]
+keywords = ["zscaler", "sdk", "zpa", "zia", "zdx", "zcc", "ztw", "zwa"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.8",
@@ -29,46 +29,35 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
-arrow = "*"
-certifi = ">=2024.2.2"
-charset-normalizer = "*"
-idna = ">=3.10"
-python-box = ">=7.3.0"
-python-dateutil = "*"
 requests = ">=2.32.3"
-responses = ">=0.25.3"
-restfly = ">=1.5.0"
-six = ">=1.17.0"
-flatdict = "*"
-pyyaml = "*"
-xmltodict = ">=0.14.2"
-yarl = ">=1.17.0"
-pycryptodomex = ">=3.20.0"
-aenum = "*"
-pydash = ">=8.0.3"
-flake8 = "*"
-pytz = ">=2024.2"
-black = ">=24.3.0"
 cryptography = ">=43.0.0"
-okta = ">=2.9.7"
-jinja2 = ">=3.1.6"
+pyyaml = ">=6.0.0"
+pytz = ">=2024.2"
+python-box = ">=7.3.0"
+python-dateutil = ">=2.9.0"
+flatdict = ">=4.0.0"
+pyjwt = ">=2.8.0"
+aenum = ">=3.1.11"
+pydash = ">=8.0.3"
+arrow = ">=1.3.0"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=24.3.0"
-pytest = ">=8.3.1"
-pytest-asyncio = "^0.25.3"
-pytest-mock = "*"
-pytest-recording = "^0.13.2"
-pytest-cov = "*"
-pyfakefs = ">=5.7.4"
-isort = "*"
-wheel = ">=0.45.1"
-sphinx = "^7.4.7"
-sphinx-autobuild = "*"
-sphinx_rtd_theme = "*"
+flake8 = ">=7.0.0"
+isort = ">=5.13.0"
+pytest = ">=8.0.0"
+pytest-mock = ">=3.12.0"
+pytest-asyncio = ">=0.23.0"
+pytest-cov = ">=4.1.0"
+pyfakefs = ">=5.7.0"
+responses = ">=0.25.0"
+sphinx = ">=7.2.0"
+sphinx-autobuild = ">=2024.1.0"
+sphinx_rtd_theme = ">=1.3.0"
+wheel = ">=0.42.0"
 
 [tool.poetry.extras]
-dev = ["black", "pytest", "pytest-asyncio", "pytest-mock", "pytest-recording", "pytest-cov", "pyfakefs", "aenum", "isort", "wheel", "pydash"]
+dev = ["black", "pytest", "pytest-asyncio", "pytest-mock", "pytest-recording", "pytest-cov", "pyfakefs", "isort", "wheel"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

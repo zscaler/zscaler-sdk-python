@@ -1,121 +1,200 @@
-# -*- coding: utf-8 -*-
+"""
+Copyright (c) 2023, Zscaler Inc.
 
-# Copyright (c) 2023, Zscaler Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
 
 import mimetypes
-
-from box import Box
-
-from zscaler.zia import ZIAClient
+import time
+from zscaler.request_executor import RequestExecutor
+from zscaler.utils import format_url
 
 
 class CloudSandboxAPI:
-    def __init__(self, client: ZIAClient):
-        self.rest = client
-        self.sandbox_token = client.sandbox_token
-        self.env_cloud = client.env_cloud
+    """
+    A Client object for the Cloud Sandbox resource.
+    """
 
-    def submit_file(self, file: str, force: bool = False) -> Box:
+    _sandbox_base_endpoint = "/zscsb"
+    _zia_base_endpoint = "/zia/api/v1"
+
+    def __init__(self, request_executor):
+        self._request_executor: RequestExecutor = request_executor
+
+    def submit_file(self, file_path: str, force: bool = False) -> tuple:
         """
         Submits a file to the ZIA Advanced Cloud Sandbox for analysis.
 
         Args:
-            file (str): The filename that will be submitted for sandbox analysis.
+            file_path (str): The filename that will be submitted for sandbox analysis.
             force (bool): Force ZIA to analyse the file even if it has been submitted previously.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox submission response information.
+            :obj:`Tuple`: The Cloud Sandbox submission response information.
 
         Examples:
             Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
 
-            >>> zia.sandbox.submit_file('malware.exe', force=True)
-
+            >>> script_dir = os.path.dirname(os.path.abspath(__file__))
+            ... file_path = os.path.join(script_dir, "test-pe-file.exe")
+            ... force_analysis = True
+            ...     submit, _, err = client.zia.sandbox.submit_file(
+                file_path=file_path, force=force_analysis)
+            >>>     if err:
+            ...         print(f"Error submitting file: {err}")
+            ...     else:
+            ...         print("File submitted successfully!")
+            ...         print(f"Response: {submit}")
         """
-        with open(file, "rb") as f:
-            file_content = f.read()
-
-        content_type, _ = mimetypes.guess_type(file)
-        if not content_type:
-            content_type = "application/octet-stream"
-        params = {
-            "api_token": self.sandbox_token,
-        }
-
-        params = {
-            "api_token": self.sandbox_token,
-            "force": int(force),  # convert boolean to int for ZIA
-        }
-
-        url = "/zscsb/submit"
-
-        return self.rest.post(
-            url,
-            data=file_content,
-            params=params,
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._sandbox_base_endpoint}
+            /submit
+            """
         )
 
-    def submit_file_for_inspection(self, file: str) -> Box:
+        with open(file_path, "rb") as file:
+            file_content = file.read()
+
+        params = {
+            "force": int(force),
+        }
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=file_content,
+            params=params,
+            headers={"Content-Type": "application/octet-stream"},
+            use_raw_data_for_body=True,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def submit_file_for_inspection(self, file_path: str) -> tuple:
         """
-        Submits raw or archive files to Zscaler service for out-of-band file inspection.
+        Submits a file for inspection.
 
         Args:
-            file (str): The filename that will be submitted for inspection.
+            file_path (str): The path to the file to be inspected.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox inspection response information.
+            tuple: A tuple containing the result, response, and error.
 
         Examples:
-            Submit a file in the current directory called sample.zip for inspection.
+            Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
 
-            >>> zia.sandbox.submit_file_for_inspection('sample.zip')
-
+            >>> script_dir = os.path.dirname(os.path.abspath(__file__))
+            ... file_path = os.path.join(script_dir, "test-pe-file.exe")
+            ... force_analysis = True
+            ...     submit, _, err = client.zia.sandbox.submit_file_for_inspection(
+                file_path=file_path, force=force_analysis)
+            >>>     if err:
+            ...         print(f"Error submitting file: {err}")
+            ...     else:
+            ...         print("File submitted successfully!")
+            ...         print(f"Response: {submit}")
         """
-        with open(file, "rb") as f:
-            file_content = f.read()
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._sandbox_base_endpoint}
+            /discan
+            """
+        )
 
-        content_type, _ = mimetypes.guess_type(file)
+        with open(file_path, "rb") as file:
+            file_content = file.read()
+        content_type, _ = mimetypes.guess_type(file_path)
         if not content_type:
             content_type = "application/octet-stream"
 
-        params = {
-            "api_token": self.sandbox_token,
-        }
+        params = {}
 
-        return self.rest.post(
-            "/zscsb/discan",
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=file_content,
             params=params,
-            data=file_content,
             headers={"Content-Type": content_type},
+            use_raw_data_for_body=True,
         )
 
-    def get_quota(self) -> Box:
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_quota(self) -> tuple:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
 
         Returns:
-            :obj:`Box`: The Cloud Sandbox quota report.
-
-        Examples:
-            >>> pprint(zia.sandbox.get_quota())
-
+            tuple: A tuple containing the result, response, and error.
         """
-        return self.rest.get("sandbox/report/quota")[0]
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /sandbox/report/quota
+            """
+        )
 
-    def get_report(self, md5_hash: str, report_details: str = "summary") -> Box:
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_report(self, md5_hash: str, report_details: str = "summary") -> tuple:
         """
         Returns the Cloud Sandbox Report for the provided hash.
 
@@ -126,35 +205,74 @@ class CloudSandboxAPI:
                 The type of report. Accepted values are 'full' or 'summary'. Defaults to 'summary'.
 
         Returns:
-            :obj:`Box`: The cloud sandbox report.
-
-        Examples:
-            Get a summary report:
-
-            >>> zia.sandbox.get_report('8350dED6D39DF158E51D6CFBE36FB012')
-
-            Get a full report:
-
-            >>> zia.sandbox.get_report('8350dED6D39DF158E51D6CFBE36FB012', 'full')
-
+            tuple: A tuple containing the result, response, and error.
         """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /sandbox/report/{md5_hash}?details={report_details}
+            """
+        )
 
-        return self.rest.get(f"sandbox/report/{md5_hash}?details={report_details}")
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
 
-    def get_behavioral_analysis(self) -> Box:
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_behavioral_analysis(self) -> tuple:
         """
         Returns the custom list of MD5 file hashes that are blocked by Sandbox.
 
         Returns:
-            :obj:`Box`: The custom list of MD5 file hashes that are blocked by Sandbox.
-
-        Examples:
-            >>> pprint(zia.sandbox.get_behavioral_analysis())
-
+            tuple: A tuple containing the result, response, and error.
         """
-        return self.rest.get("behavioralAnalysisAdvancedSettings")
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings
+            """
+        )
 
-    def get_file_hash_count(self) -> Box:
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def get_file_hash_count(self) -> tuple:
         """
         Retrieves the Cloud Sandbox used and unused quota for blocking MD5 file hashes.
 
@@ -162,20 +280,39 @@ class CloudSandboxAPI:
         quota available for blocking additional hashes.
 
         Returns:
-            Box: A Box object containing the used and unused quotas for MD5 hash blocking.
-
-        Examples:
-            >>> file_hash_quota = zia.sandbox.get_file_hash_count()
-            >>> pprint(file_hash_quota)
-
-        The returned Box object contains the following keys:
-        - blocked_file_hashes_count: The number of unique MD5 file hashes that are currently blocked.
-        - remaining_file_hashes: The remaining quota available for blocking additional MD5 file hashes.
+            tuple: A tuple containing the result, response, and error.
         """
-        response = self.rest.get("behavioralAnalysisAdvancedSettings/fileHashCount")
-        return response
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings/fileHashCount
+            """
+        )
 
-    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> Box:
+        # Create the request
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+        )
+
+        if error:
+            return (None, None, error)
+
+        # Execute the request
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = response.get_body()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
+
+    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> tuple:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
 
@@ -184,18 +321,26 @@ class CloudSandboxAPI:
                 The list of MD5 Hashes to be added. Pass an empty list to clear the blocklist.
 
         Returns:
-            :obj:`Box`: The updated custom list of MD5 Hashes.
-
-        Examples:
-            >>> zia.sandbox.add_hash_to_custom_list(['42914d6d213a20a2684064be5c80ffa9', 'c0202cf6aeab8437c638533d14563d35'])
-            >>> zia.sandbox.add_hash_to_custom_list([])  # Clear the list
-
+            tuple: A tuple containing the result, response, and error.
         """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /behavioralAnalysisAdvancedSettings
+            """
+        )
 
         payload = {"fileHashesToBeBlocked": file_hashes_to_be_blocked}
 
-        # Update the custom list with the provided hashes
-        self.rest.put("behavioralAnalysisAdvancedSettings", json=payload)
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
-        # Return the most up-to-date list after the update
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+        time.sleep(2)
         return self.get_behavioral_analysis()

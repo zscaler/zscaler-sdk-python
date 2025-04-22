@@ -17,7 +17,7 @@ Zscaler SDK Python is an SDK that provides a uniform and easy-to-use interface f
 Support Disclaimer
 ========================
 
--> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider. 
+-> **Disclaimer:** Please refer to our `General Support Statement <docs/guides/support.rst>`_ before proceeding with the use of this provider.
 You can also refer to our `troubleshooting guide <docs/guides/troubleshooting.rst>`_ for guidance on typical problems.
 
 .. attention:: This SDK is supported and maintained by the Zscaler Technology Alliances team.
@@ -101,7 +101,7 @@ Contributing
 At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in future releases.
 Issues
 
-Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_ 
+Please feel free to open an issue using `Github Issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_
 if you run into any problems using Zscaler SDK Python or please refer to our `General Support Statement <docs/guides/support.rst>`_
 
 Contributors

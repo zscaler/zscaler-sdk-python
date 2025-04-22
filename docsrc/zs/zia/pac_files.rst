@@ -1,7 +1,8 @@
 pac_files
-==================
+-----------
 
-The following methods allow for interaction with the ZIA Pac Files API endpoints.
+The following methods allow for interaction with the ZIA
+PAC Files API endpoints.
 
 Methods are accessible via ``zia.pac_files``
 

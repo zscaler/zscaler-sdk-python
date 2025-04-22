@@ -1,1 +1,1 @@
-from .exceptions import HTTPException, ZpaAPIException  # noqa
+from .exceptions import HTTPException, ZscalerAPIException  # noqa
