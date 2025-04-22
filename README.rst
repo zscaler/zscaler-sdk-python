@@ -1,5 +1,5 @@
 ======================================
-Official Python SDK for the Zscaler Products (Beta)
+Official Python SDK for the Zscaler Products
 ======================================
 
 .. image:: https://img.shields.io/pypi/dw/zscaler-sdk-python
