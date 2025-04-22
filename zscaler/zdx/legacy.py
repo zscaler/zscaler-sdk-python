@@ -90,7 +90,9 @@ class LegacyZDXClientHelper:
                     delay = int(rate_limit_reset) + 1 if rate_limit_reset else 1
                 except Exception:
                     delay = 1
-                logger.info(f"Rate limit hit on GET {url}. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries}).")
+                # logger.info(f"Rate limit hit on GET {url}. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries}).")
+                sanitized_url = url.split('?')[0]  # Remove query parameters to avoid logging sensitive data
+                logger.info(f"Rate limit hit on GET {sanitized_url}. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries}).")
                 time.sleep(delay)
                 continue
             try:
@@ -118,7 +120,8 @@ class LegacyZDXClientHelper:
         try:
             validate_response = self._get_with_rate_limiting(session, validate_url)
             validate_data = validate_response.json()
-            logger.debug(f"Token validation response: {validate_data}")
+            # logger.debug(f"Token validation response: {validate_data}")
+            logger.debug(f"Token validation response: {{'valid': {validate_data.get('valid', False)}}}")
             if not validate_data.get("valid", False):
                 raise Exception("Token validation failed: token is not valid.")
             else:
@@ -131,7 +134,9 @@ class LegacyZDXClientHelper:
         try:
             jwks_response = self._get_with_rate_limiting(session, jwks_url)
             jwks_data = jwks_response.json()
-            logger.debug(f"JWKS response: {json.dumps(jwks_data, indent=2)}")
+            # logger.debug(f"JWKS response: {json.dumps(jwks_data, indent=2)}")
+            sanitized_jwks_data = {"keys": [{"kid": key.get("kid")} for key in jwks_data.get("keys", [])]}
+            logger.debug(f"Sanitized JWKS response: {json.dumps(sanitized_jwks_data, indent=2)}")
         except Exception as e:
             logger.error("Failed to retrieve JWKS: %s", e)
             raise Exception(f"Failed to retrieve JWKS: {e}")
@@ -159,7 +164,7 @@ class LegacyZDXClientHelper:
             }
 
             token_url = f"{self.url}/v1/oauth/token"
-            logger.debug(f"Token request URL: {token_url}")
+            # logger.debug(f"Token request URL: {token_url}")
             response = requests.post(
                 token_url,
                 json=payload,
@@ -177,7 +182,10 @@ class LegacyZDXClientHelper:
                 except Exception:
                     delay = 1
                 logger.info(
-                    f"Rate limit hit on token request. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})."
+                    # f"Rate limit hit on token request. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})."
+                    "Rate limit hit on token request. Retrying after a delay. Attempt %d of %d.",
+                    attempt + 1,
+                    max_retries,
                 )
                 time.sleep(delay)
                 continue
