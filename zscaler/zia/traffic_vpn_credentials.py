@@ -37,12 +37,15 @@ class TrafficVPNCredentialAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.type]`` {str}: The type of VPN credential. Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
+
                 ``[query_params.include_only_without_location]`` {bool}: Include VPN credential only
                     if not associated with any location.
+
                 ``[query_params.location_id]`` {int}: Gets the VPN credentials for the specified location ID.
                 ``[query_params.managed_by]`` {int}: Gets the VPN credentials managed by the given partner.
 

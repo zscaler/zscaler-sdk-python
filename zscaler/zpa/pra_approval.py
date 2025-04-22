@@ -38,12 +38,15 @@ class PRAApprovalAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {str}: Specifies the page number.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.sort_by]`` {str}: The sort string used to support sorting on the given field for the API.
+
                 ``[query_params.sort_dir]`` {str}: Specifies the sort direction (i.e., ascending or descending order).
                     Available values : ASC, DESC
+
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:

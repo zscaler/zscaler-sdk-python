@@ -18,7 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.policyset_controller_v1 import PolicySetControllerV1
 from zscaler.zpa.models.policyset_controller_v2 import PolicySetControllerV2
-from zscaler.utils import format_url, snake_to_camel, convert_keys, add_id_groups
+from zscaler.utils import format_url, add_id_groups
 from threading import Lock
 from functools import wraps
 
@@ -386,9 +386,12 @@ class PolicySetControllerAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {str}: Specifies the page number.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
+
                 ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 

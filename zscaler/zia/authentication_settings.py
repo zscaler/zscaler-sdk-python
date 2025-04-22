@@ -239,31 +239,29 @@ class AuthenticationSettingsAPI(APIClient):
         Updates the organization's default authentication settings information.
 
         Args:
-            settings (:obj:`AuthenticationSettings`):
-                An instance of `AuthenticationSettings` containing the updated configuration.
+            settings (:obj:`AuthenticationSettings`): An instance of `AuthenticationSettings`
+            containing the updated configuration.
 
-                Supported attributes:
-                    **Authentication Settings:**
-                    - **org_auth_type (str)**: User authentication type
-                        Setting it to an LDAP-based authentication requires a complete LdapProperties configuration
-                    - **one_time_auth (str)**: When the orgAuthType is NONE,
-                        administrators must manually provide the password to new end users
-                    - **saml_enabled (bool)**: Whether or not to authenticate users using SAML Single Sign-On
-                    - **kerberos_enabled (bool)**: Whether or not to authenticate users using Kerberos
-                    - **kerberos_pwd (str)**: Read Only. Kerberos password can only be set through generateKerberosPassword api
-                    - **auth_frequency (str)**: How frequently the users are required to authenticate
-                        (i.e., cookie expiration duration after a user is first authenticated).
-                    - **auth_custom_frequency (int)**: How frequently the users are required to authenticate
-                        This field is customized to set the value in days. Valid range is 1-180.
-                    - **password_strength (str)**: Password strength required for form-based authentication of hosted DB users
-                        Supported values: NONE, MEDIUM, STRONG
-                    - **password_expiry (str)**: Password expiration required for form-based authentication of hosted DB users
-                        Supported values: NEVER, ONE_MONTH, THREE_MONTHS, SIX_MONTHS
-                    - **last_sync_start_time (int)**: Timestamp epoch time in seconds. Start of the last LDAP sync
-                    - **last_sync_end_time (int)**: Timestamp (epoch time in seconds). End of the last LDAP sync
-                    - **mobile_admin_saml_idp_enabled (bool)**: Indicate the use of Mobile Admin as IdP
-                    - **auto_provision (bool)**: Enable SAML Auto-Provisioning
-                    - **directory_sync_migrate_to_scim_enabled (bool)**: Enable to disable directory synchronization.
+        Supported attributes:
+            - org_auth_type (str): User authentication type. Setting this to an LDAP-based authentication
+              requires a complete LdapProperties configuration.
+            - one_time_auth (str): When the org_auth_type is NONE, administrators must manually
+              provide the password to new end users.
+            - saml_enabled (bool): Whether or not to authenticate users using SAML Single Sign-On.
+            - kerberos_enabled (bool): Whether or not to authenticate users using Kerberos.
+            - kerberos_pwd (str): Read-only. Can only be set through the generateKerberosPassword API.
+            - auth_frequency (str): How frequently users are required to authenticate (e.g., cookie
+              expiration duration).
+            - auth_custom_frequency (int): Custom frequency in days for authentication. Valid range: 1–180.
+            - password_strength (str): Password strength for form-based authentication.
+              Supported values: NONE, MEDIUM, STRONG.
+            - password_expiry (str): Password expiration for hosted DB users.
+              Supported values: NEVER, ONE_MONTH, THREE_MONTHS, SIX_MONTHS.
+            - last_sync_start_time (int): Epoch timestamp representing start of last LDAP sync.
+            - last_sync_end_time (int): Epoch timestamp representing end of last LDAP sync.
+            - mobile_admin_saml_idp_enabled (bool): Indicates use of Mobile Admin as an IdP.
+            - auto_provision (bool): Enables SAML Auto-Provisioning.
+            - directory_sync_migrate_to_scim_enabled (bool): Enables migration to SCIM by disabling legacy sync.
 
         Returns:
             tuple: A tuple containing:
@@ -272,16 +270,16 @@ class AuthenticationSettingsAPI(APIClient):
                 - error: An error message if the update failed; otherwise, `None`.
 
         Examples:
-            Update Authentication Settings by enabling saml_enabled and auth_frequency:
+            Update authentication settings:
 
             >>> settings, _, error = client.zia.authentication_settings.update_authentication_settings(
-            ... org_auth_type='ANY',
-            ... auth_frequency = "DAILY_COOKIE",
+            ...     org_auth_type='ANY',
+            ...     auth_frequency='DAILY_COOKIE',
             ... )
             >>> if error:
             ...     print(f"Error updating authentication settings: {error}")
-            ...     return
-            ... print(f"Authentication settings updated successfully: {settings.as_dict()}")
+            ... else:
+            ...     print(f"Settings updated: {settings.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(

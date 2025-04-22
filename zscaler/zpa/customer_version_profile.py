@@ -40,9 +40,12 @@ class CustomerVersionProfileAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {str}: Specifies the page number.
+
                 ``[query_params.page_size]`` {str}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:

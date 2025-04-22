@@ -681,9 +681,12 @@ class LocationsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {int}: Page size for pagination.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.group_type]`` {str}: The location group's type (i.e., Static or Dynamic).
                 ``[query_params.name]`` {str}: The location group's name.
@@ -699,7 +702,7 @@ class LocationsAPI(APIClient):
 
         Examples:
             Get a list of all configured location groups:
-            >>> location = zia.locations.list_location_groups()
+            >>> location, _, error = zia.locations.list_location_groups()
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -775,8 +778,10 @@ class LocationsAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Page size for pagination.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
@@ -786,7 +791,7 @@ class LocationsAPI(APIClient):
 
         Examples:
             Get a list of all configured location groups:
-            >>> location = zia.locations.list_location_groups_lite()
+            >>> location, _, error = zia.locations.list_location_groups_lite()
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -984,15 +989,17 @@ class LocationsAPI(APIClient):
 
     def list_cities_by_name(self, query_params=None) -> tuple:
         """
-        Retrieves the list of cities (along with their geographical data) that match the prefix search. The geographical
-        data includes the latitude and longitude coordinates of the city, geographical ID of the city and state,
-        country, postal code, etc.
+        Retrieves the list of cities (along with their geographical data) that match the prefix search.
+        The geographical data includes the latitude and longitude coordinates of the city, geographical
+        ID of the city and state, country, postal code, etc.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
+
                 ``[query_params.prefix]`` {str}: Prefix search of the city or region.
+
                     It can contain names of city, state, country in the following format: city name,
                     state name, country name.
 
@@ -1002,7 +1009,8 @@ class LocationsAPI(APIClient):
         Examples:
             Get the list of cities (along with their geographical data) that match the prefix search::
 
-                result, response, error = zia.locations.list_cities_by_name(query_params={"prefix": "San Jose"})
+                result, response, error = zia.locations.list_cities_by_name(
+                    query_params={"prefix": "San Jose"})
                 if not error:
                     for city in result:
                         print(city)
