@@ -6,7 +6,8 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.0.0 (April, 21 2025) - BREAKING CHANGES
+1.0.0 (April, 22 2025) - BREAKING CHANGES
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Notes
 ^^^^^^
@@ -15,7 +16,7 @@ Notes
 
 
 Zscaler OneAPI Support
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 (`#255 <https://github.com/zscaler/zscaler-sdk-python/pull/255>`_): Added support for (`OneAPI <https://help.zscaler.com/zidentity/what-zidentity>`_) Oauth2 authentication support through (`Zidentity <https://help.zscaler.com/zidentity/what-zidentity>`_)
 
@@ -28,7 +29,8 @@ Zscaler OneAPI Support
 
 Refer to the (`README <hhttps://github.com/zscaler/zscaler-sdk-python/blob/master/README.md>`_) page for details on client instantiation, and authentication requirements on each individual product.
 
-**WARNING**: Attention Government customers. OneAPI and Zidentity is not currently supported for the following ZIA clouds: `zscalergov` and `zscalerten` or ZPA `GOV`, and `GOVUS`. Please refer to the Zscaler Legacy API Framework section in the (`README <https://zscaler-sdk-python.readthedocs.io/en/latest/index.html>`_) for more information on how authenticate to these environments using the built-in Legacy API method.
+**WARNING**: Attention Government customers. OneAPI and Zidentity is not currently supported for the following ZIA clouds: `zscalergov` and `zscalerten` or ZPA `GOV`, and `GOVUS`. 
+See the Zscaler Legacy API Framework section in the (`README Docs <https://zscaler-sdk-python.readthedocs.io/en/latest/index.html>`_) for more information on how authenticate to these environments using the built-in Legacy API method.
 
 (`#255 <https://github.com/zscaler/zscaler-sdk-python/pull/255>`_): All API clients now support Config Setter object `ZCC/ZTW/ZDX/ZIA/ZPA/ZWA`
 
@@ -208,7 +210,7 @@ ZIA Remote Assistance Support
   - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 (`#255 <https://github.com/zscaler/zscaler-sdk-python/pull/255>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /orgInformation` to retrieve detailed organization information, including headquarter location, geolocation, address, and contact details.
@@ -373,7 +375,8 @@ Bug Fixes
 
 * (`251 <https://github.com/zscaler/zscaler-sdk-python/pull/251>`_) - Enhanced `pac_files` function resources.
   - `clone_pac_file` - The function pre-checks if total number of pac file versions within a specific pac file is == 10. If so, it triggers a error requiring the use of the parameter/attribute `delete_version`.
-    **NOTE** A maximum of 10 pac file versions is supported. If the total limit is reached you must explicitly indicate via the `delete_version` parameter which version must be removed prior to invoking the `clone_pac_file` method again.
+    
+**NOTE** A maximum of 10 pac file versions is supported. If the total limit is reached you must explicitly indicate via the `delete_version` parameter which version must be removed prior to invoking the `clone_pac_file` method again.
 
   - `update_pac_file` - The function now validates the current `pac_version_status` prior to attempting an update. The API endpoint behind the `update_pac_file` method requires the `pac_version_status` to have specific value in order to accept the call.
 
