@@ -70,7 +70,7 @@ class ConfigValidator:
         # Raise exception if errors exist
         if errors:
             newline = "\n"
-            logging.error(f"Configuration validation failed with errors: {errors}")
+            # logging.error(f"Configuration validation failed with errors: {errors}")
             raise ValueError(
                 f"{newline}Errors:" f"{newline + newline.join(errors) + 2*newline}" f"Please check your configuration."
             )
