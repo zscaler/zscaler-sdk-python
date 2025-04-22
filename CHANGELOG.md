@@ -8,6 +8,278 @@
 
 
 #### Zscaler OneAPI Support
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
+
+**NOTES**
+  - Starting at v1.0.0 version this SDK provides dual API client functionality and is backwards compatible with the legacy Zscaler API framework.
+  - The new OneAPI framework is compatible only with the following products `ZCC/ZIA/ZPA`.
+  - The following products `ZTW` - Cloud Connector and `ZDX` and Zscaler Digital Experience, authentication methods remain unnaffected.
+  - The package `ZCON` (Zscaler Cloud and Branch Connector) has been renamed to `ZTW`
+  - The following products `ZWA` - Zscaler Workflow Automation authentication methods remain unnaffected.
+
+Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/README.md) page for details on client instantiation, and authentication requirements on each individual product.
+
+**WARNING**: Attention Government customers. OneAPI and Zidentity is not currently supported for the following ZIA clouds: `zscalergov` and `zscalerten` or ZPA `GOV`, and `GOVUS`. Please refer to the Zscaler Legacy API Framework section in the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/README.md) for more information on how authenticate to these environments using the built-in Legacy API method.
+
+[PR #257](https://github.com/zscaler/zscaler-sdk-python/pull/257): All API clients now support Config Setter object `ZCC/ZTW/ZDX/ZIA/ZPA/ZWA`
+
+#### ZCC New Endpoints
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZCC API Endpoints:
+  - Added `GET /downloadServiceStatus` to download service status for all devices.
+  - Added `GET /getDeviceCleanupInfo` to retrieve device cleanup information.
+  - Added `PUT /setDeviceCleanupInfo` to cleanup device information.
+  - Added `GET /getDeviceDetails` to retrieve device detailed information.
+  - Added `GET /getAdminUsers` to retrieve mobile portal admin user.
+  - Added `PUT /editAdminUser` to update mobile portal admin user.
+  - Added `GET /getAdminUsersSyncInfo` to retrieve mobile portal admin user sync information.
+  - Added `POST /syncZiaZdxAdminUsers` to retrieve mobile portal admin users ZIA and ZDX sync information.
+  - Added `POST /syncZpaAdminUsers` to retrieve mobile portal admin users ZPA sync information.
+  - Added `GET /getAdminRoles` to retrieve mobile portal admin roles.
+  - Added `GET /getCompanyInfo` to retrieve company information.
+  - Added `GET /getZdxGroupEntitlements` to retrieve ZDX Group entitlement enablement.
+  - Added `PUT /updateZdxGroupEntitlement` to retrieve ZDX Group entitlement enablement.
+  - Added `GET /updateZpaGroupEntitlement` to retrieve ZPA Group entitlement enablement.
+  - Added `GET /web/policy/listByCompany` to retrieve Web Policy By Company ID.
+  - Added `PUT /web/policy/activate` to activate mobile portal web policy
+  - Added `PUT /web/policy/edit` to update mobile portal web policy
+  - Added `DELETE /web/policy/{policyId}/delete` to delete mobile portal web policy.
+  - Added `GET /webAppService/listByCompany` to retrieve Web App Service information By Company ID.
+  - Added `GET /webFailOpenPolicy/listByCompany` to retrieve web Fail Open Policy information By Company ID.
+  - Added `PUT /webFailOpenPolicy/edit` to update mobile portal web Fail Open Policy.
+  - Added `GET /webForwardingProfile/listByCompany` to retrieve Web Forwarding Profile information By Company ID.
+  - Added `POST /webForwardingProfile/edit` to create a Web Forwarding Profile.
+  - Added `DELETE /webForwardingProfile/{profileId}/delete` to delete Web Forwarding Profile.
+  - Added `GET /webTrustedNetwork/listByCompany` to retrieve multiple Web Trusted Network information By Company ID.
+  - Added `POST /webTrustedNetwork/edit` to create Web Trusted Network resource.
+  - Added `PUT /webTrustedNetwork/edit` to update Web Trusted Network resource.
+  - Added `DELETE /webTrustedNetwork/{networkId}/delete` to delete Web Trusted Network resource.
+  - Added `GET /getWebPrivacyInfo` to retrieve Web Privacy Info.
+  - Added `GET /setWebPrivacyInfo` to update Web Privacy Info.
+
+#### ZIA Sandbox Submission - BREAKING CHANGES
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Authentication to Zscaler Sandbox now use the following attributes during client instantiation.
+ - `sandboxToken` - Can also be sourced from the `ZSCALER_SANDBOX_TOKEN` environment variable.
+ - `sandboxCloud` - Can also be sourced from the `ZSCALER_SANDBOX_CLOUD` environment variable.
+
+**NOTE** The previous `ZIA_SANDBOX_TOKEN` has been deprecated.
+
+#### ZIA Sandbox Rules
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /sandboxRules` to retrieve the list of all Sandbox policy rules.
+  - Added `GET /sandboxRules/{ruleId}` to retrieve the Sandbox policy rule information based on the specified ID.
+  - Added `POST /sandboxRules` to add a Sandbox policy rule.
+  - Added `PUT /sandboxRules/{ruleId}` to update the Sandbox policy rule configuration for the specified ID.
+  - Added `DELETE /sandboxRules/{ruleId}` to delete the Sandbox policy rule based on the specified ID.
+
+#### ZIA DNS Control Rules
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /firewallDnsRules` to retrieve the list of all DNS Control policy rules.
+  - Added `GET /firewallDnsRules/{ruleId}` to retrieve the DNS Control policy rule information based on the specified ID.
+  - Added `POST /firewallDnsRules` to add a DNS Control policy rules.
+  - Added `PUT /firewallDnsRules/{ruleId}` to update the DNS Control policy rule configuration for the specified ID.
+  - Added `DELETE /firewallDnsRules/{ruleId}` to delete the DNS Control policy rule based on the specified ID.
+
+#### ZIA IPS Control Rules
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /firewallIpsRules` to retrieve the list of all IPS Control policy rules.
+  - Added `GET /firewallIpsRules/{ruleId}` to retrieve the IPS Control policy rule information based on the specified ID.
+  - Added `POST /firewallIpsRules` to add a IPS Control policy rule.
+  - Added `PUT /firewallIpsRules/{ruleId}` to update the IPS Control policy rule configuration for the specified ID.
+  - Added `DELETE /firewallIpsRules/{ruleId}` to delete the IPS Control policy rule based on the specified ID.
+
+#### ZIA File Type Control Policy
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /fileTypeRules` to retrieve the list of all File Type Control policy rules.
+  - Added `GET /fileTypeRules/lite` to retrieve the list of all File Type Control policy rules.
+  - Added `GET /fileTypeRules/{ruleId}` to retrieve the File Type Control policy rule information based on the specified ID.
+  - Added `POST /fileTypeRules` to add a File Type Control policy rule.
+  - Added `PUT /fileTypeRules/{ruleId}` to update the File Type Control policy rule configuration for the specified ID.
+  - Added `DELETE /fileTypeRules/{ruleId}` to delete the File Type Control policy rule based on the specified ID.
+
+#### ZIA Forwarding Control Policy - Proxy Gateways
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /proxyGateways` to retrieve the proxy gateway information.
+  - Added `GET /proxyGateways/lite` to retrieve the name and ID of the proxy.
+
+#### ZIA Cloud Nanolog Streaming Service (NSS)
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /nssFeeds` to retrieve the cloud NSS feeds.
+  - Added `GET /nssFeeds/{feedId}` to retrieve information about cloud NSS feed based on the specified ID.
+  - Added `POST /nssFeeds` to add a new cloud NSS feed.
+  - Added `PUT /nssFeeds/{feedId}` to update cloud NSS feed configuration based on the specified ID.
+  - Added `DELETE /nssFeeds/{feedId}` to delete cloud NSS feed configuration based on the specified ID.
+  - Added `GET /nssFeeds/feedOutputDefaults` to retrieve the default cloud NSS feed output format for different log types.
+  - Added `GET /nssFeeds/testConnectivity/{feedId}` to test the connectivity of cloud NSS feed based on the specified ID
+  - Added `POST /nssFeeds/validateFeedFormat` to validates the cloud NSS feed format and returns the validation result
+
+#### ZIA Advanced Threat Protection Policy
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /cyberThreatProtection/advancedThreatSettings` to retrieve the advanced threat configuration settings.
+  - Added `PUT /cyberThreatProtection/advancedThreatSettings` to update the advanced threat configuration settings.
+  - Added `GET /cyberThreatProtection/maliciousUrls` to retrieve the malicious URLs added to the denylist in the Advanced Threat Protection (ATP) policy
+  - Added `PUT /cyberThreatProtection/maliciousUrls` to updates the malicious URLs added to the denylist in ATP policy
+  - Added `GET /cyberThreatProtection/securityExceptions` to retrieves information about the security exceptions configured for the ATP policy
+  - Added `PUT /cyberThreatProtection/securityExceptions` to update security exceptions for the ATP policy
+
+#### ZIA Advanced Threat Protection Policy
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /cyberThreatProtection/atpMalwareInspection` to retrieve the traffic inspection configurations of Malware Protection policy
+  - Added `PUT /cyberThreatProtection/atpMalwareInspection` to update the traffic inspection configurations of Malware Protection policy.
+  - Added `GET /cyberThreatProtection/atpMalwareProtocols` to retrieve the protocol inspection configurations of Malware Protection policy
+  - Added `PUT /cyberThreatProtection/atpMalwareProtocols` to update the protocol inspection configurations of Malware Protection policy.
+  - Added `GET /cyberThreatProtection/malwareSettings` to retrieve the malware protection policy configuration details
+  - Added `PUT /cyberThreatProtection/malwareSettings` to update the malware protection policy configuration details.
+  - Added `GET /cyberThreatProtection/malwarePolicy` to retrieve information about the security exceptions configured for the Malware Protection policy
+  - Added `PUT /cyberThreatProtection/malwarePolicy` to update security exceptions for the Malware Protection policy.
+
+#### ZIA URL & Cloud App Control Policy Settings
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /advancedUrlFilterAndCloudAppSettings` to retrieve information about URL and Cloud App Control advanced policy settings
+  - Added `PUT /advancedUrlFilterAndCloudAppSettings` to update the URL and Cloud App Control advanced policy settings
+
+#### ZIA Authentication Settings
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /authSettings` to retrieve the organization's default authentication settings information, including authentication profile and Kerberos authentication information.
+  - Added `GET /authSettings/lite` to retrieve organization's default authentication settings information.
+  - Added `PUT /authSettings` to update the organization's default authentication settings information.
+
+#### ZIA Advanced Settings
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /advancedSettings` to retrieve information about the advanced settings.
+  - Added `PUT /advancedSettings` to update the advanced settings configuration.
+
+#### ZIA Cloud Applications
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /cloudApplications/policy` Retrieves a list of Predefined and User Defined Cloud Applications associated with the DLP rules, Cloud App Control rules, Advanced Settings, Bandwidth Classes, and File Type Control rules.
+  - Added `GET /cloudApplications/sslPolicy` Retrieves a list of Predefined and User Defined Cloud Applications associated with the SSL Inspection rules.
+
+#### ZIA Shadow IT Report
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+- Added `PUT /cloudApplications/bulkUpdate` To Update application status and tag information for predefined or custom cloud applications based on the IDs specified
+- Added `GET /cloudApplications/lite` Gets the list of predefined and custom cloud applications
+- Added `GET /customTags` Gets the list of custom tags available to assign to cloud applications
+- Added `POST /shadowIT/applications/export` Export the Shadow IT Report (in CSV format) for the cloud applications recognized by Zscaler based on their usage in your organization.
+- Added `POST /shadowIT/applications/{entity}/exportCsv` Export the Shadow IT Report (in CSV format) for the list of users or known locations identified with using the cloud applications specified in the request.
+
+#### ZIA Remote Assistance Support
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+
+#### ZIA Organization Details
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /orgInformation` to retrieve detailed organization information, including headquarter location, geolocation, address, and contact details.
+  - Added `GET /orgInformation/lite` to retrieve minimal organization information.
+  - Added `GET /subscriptions` to retrieve information about the list of subscriptions enabled for your tenant. Subscriptions define the various features and levels of functionality that are available to your organization.
+
+#### ZIA End User Notification
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /eun` to retrieve information browser-based end user notification (EUN) configuration details.
+  - Added `PUT /eun` to update the browser-based end user notification (EUN) configuration details.
+
+#### ZIA Admin Audit Logs
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /auditlogEntryReport` to retrieve the status of a request for an audit log report.
+  - Added `POST /auditlogEntryReport` to create an audit log report for the specified time period and saves it as a CSV file.
+  - Added `DELETE /auditlogEntryReport` to cancel the request to create an audit log report.
+  - Added `GET /auditlogEntryReport/download` to download the most recently created audit log report.
+
+#### ZIA Extranets
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /extranet` to retrieve the list of extranets configured for the organization
+  - Added `GET /extranet/lite` Retrieves the name-ID pairs of all extranets configured for an organization
+  - Added `GET /extranet/{Id}` Retrieves information about an extranet based on the specified ID.
+  - Added `POST /extranet` Adds a new extranet for the organization.
+  - Added `PUT /extranet/{Id}` Updates an extranet based on the specified ID
+  - Added `DELETE /extranet/{Id}` Deletes an extranet based on the specified ID
+
+#### ZIA IOT Endpoint
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA IOT API Endpoints:
+  - Added `GET /iotDiscovery/deviceTypes` Retrieve the mapping between device type universally unique identifier (UUID) values and the device type names for all the device types supported by the Zscaler AI/ML.
+  - Added `GET /iotDiscovery/categories` Retrieve the mapping between the device category universally unique identifier (UUID) values and the category names for all the device categories supported by the Zscaler AI/ML. The parent of device category is device type.
+  - Added `GET /iotDiscovery/classifications` Retrieve the mapping between the device classification universally unique identifier (UUID) values and the classification names for all the device classifications supported by Zscaler AI/ML. The parent of device classification is device category.
+  - Added `GET /iotDiscovery/deviceList` Retrieve a list of discovered devices with the following key contexts, IP address, location, ML auto-label, classification, category, and type.
+
+#### ZIA 3rd-Party App Governance
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+  - Added `GET /apps/app` to search the 3rd-Party App Governance App Catalog by either app ID or URL.
+  - Added `POST /apps/app` to submis an app for analysis in the 3rd-Party App Governance Sandbox.
+  - Added `GET /apps/search` to search for an app by name. Any app whose name contains the search term (appName) is returned.
+  - Added `GET /app_views/list` to retrieve the list of custom views that you have configured in the 3rd-Party App Governance.
+  - Added `GET /app_views/{appViewId}/apps` to retrieves all assets (i.e., apps) that are related to a specified argument (i.e., custom view).
+
+### ZIA Admin Role Endpoints
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZIA API Endpoints:
+    - Added `GET /adminRoles/{roleId}` Retrieves the admin role based on the specified ID
+    - Added `GET /adminRoles/lite` Retrieves a name and ID dictionary of all admin roles. The list only includes the name and ID for all admin roles.
+    - Added `POST /adminRoles` Adds an admin role.
+    - Added `PUT /adminRoles/{roleId}` Updates the admin role based on the specified ID.
+    - Added `DELETE /adminRoles/{roleId}` Deletes the admin role based on the specified ID.
+
+### ZPA Credential Pool (New)
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added new ZPA endpoint:
+  - Added `GET /credential-pool` Gets the privileged credential pool details for the specified customer.
+  - Added `GET /credential-pool/{id}` Gets the privileged credential pool details for the specified customer.
+  - Added `GET /credential-pool/{id}/credential` Given Privileged credential pool id gets mapped privileged credential info
+  - Added `POST /credential-pool` Adds a new privileged credential pool for the specified customer.
+  - Added `PUT /credential-pool/{id}` Updates the existing credential pool for the specified customer.
+  - Added `DELETE /credential-pool/{id}` Updates the existing credential pool for the specified customer.
+
+#### ZWA - Zscaler Workflow Automation (NEW)
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added new ZWA endpoint:
+  - Added `GET /dlp/v1/incidents/transactions/{transactionId}` Gets the list of all DLP incidents associated with the transaction ID
+  - Added `GET /dlp/v1/incidents/{dlpIncidentId}` Gets the DLP incident details based on the incident ID.
+  - Added `DELETE /dlp/v1/incidents/{dlpIncidentId}` Deletes the DLP incident for the specified incident ID.
+  - Added `GET /dlp/v1/incidents{dlpIncidentId}/change-history` Gets the details of updates made to an incident based on the given ID and timeline.
+  - Added `GET /dlp/v1/incidents/{dlpIncidentId}/tickets` Gets the information of the ticket generated for the incident. For example, ticket type, ticket ID, ticket status, etc.
+  - Added `POST /dlp/v1/incidents/{dlpIncidentId}/incident-groups/search` Filters a list of DLP incident groups to which the specified incident ID belongs.
+  - Added `POST /dlp/v1/incidents/{dlpIncidentId}/close` Updates the status of the incident to resolved and closes the incident with a resolution label and a resolution code.
+  - Added `POST /dlp/v1/incidents/{dlpIncidentId}/notes` Adds notes to the incident during updates or status changes.
+  - Added `POST /dlp/v1/incidents/{dlpIncidentId}/labels` Assign lables (a label name and it's associated value) to DLP incidents.
+  - Added `POST /dlp/v1/incidents/search` Filters DLP incidents based on the given time range and the field values.
+  - Added `GET /dlp/v1/incidents/{dlpIncidentId}/triggers` Downloads the actual data that triggered the incident.
+  - Added `GET /dlp/v1/incidents/{dlpIncidentId}/evidence` Gets the evidence URL of the incident.
+
+### Cloud & Branch Connector - OneAPI Support
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Cloud & Branch Connector package is now compatible with OneAPI and Legacy API framework. Please refer to README for details.
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Cloud & Branch Connector package has been renamed from `zcon` to `ztw`
+
+### ZTW Policy Management
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZTW API Endpoints:
+    - Added `GET /ecRules/ecRdr` Retrieves the list of traffic forwarding rules.
+    - Added `PUT /ecRules/ecRdr/{ruleId}` Updates a traffic forwarding rule configuration based on the specified ID.
+    - Added `POST /ecRules/ecRdr` Creates a new traffic forwarding rule.
+    - Added `GET /ecRules/ecRdr/count` Retrieves the count of traffic forwarding rules available in the Cloud & Branch Connector Admin Portal.
+
+### ZTW Policy Resources
+[PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256) - Added the following new ZTW API Endpoints:
+    - Added `GET /ipSourceGroups` Retrieves the list of source IP groups.
+    - Added `GET /ipSourceGroups/lite` Retrieves the list of source IP groups. This request retrieves basic information about the source IP groups, such as name and ID. For extensive details, use the GET /ipSourceGroups request.
+    - Added `POST /ipSourceGroups` Adds a new custom source IP group.
+    - Added `DELETE /ipSourceGroups/{ipGroupId}` Deletes a source IP group based on the specified ID.
+    - Added `GET /ipDestinationGroups` Retrieves the list of destination IP groups.
+    - Added `GET /ipDestinationGroups/lite` Retrieves the list of destination IP groups. This request retrieves basic information about the destination IP groups, ID, name, and type. For extensive details, use the GET /ipDestinationGroups request.
+    - Added `POST /ipDestinationGroups` Adds a new custom destination IP group.
+    - Added `DELETE /ipDestinationGroups/{ipGroupId}` Deletes the destination IP group based on the specified ID. Default destination groups that are automatically created cannot be deleted.
+    - Added `GET /ipGroups` Retrieves the list of IP pools.
+    - Added `GET /ipGroups/lite` Retrieves the list of IP pools. This request retrieves basic information about the IP pools, such as name and ID. For extensive details, use the GET /ipGroups request.
+    - Added `POST /ipGroups` Adds a new custom IP pool.
+    - Added `DELETE /ipGroups/{ipGroupId}` Deletes an IP pool based on the specified ID.
+    - Added `GET /networkServices` Retrieves the list of all network services. The search parameters find matching values within the name or description attributes.
+    - Added `POST /networkServices` Creates a new network service.
+    - Added `PUT /networkServices/{serviceId}` Updates the network service information for the specified service ID.
+    - Added `DELETE /networkServices/{serviceId}` Deletes the network service for the specified ID.
+    - Added `GET /networkServicesGroups` Retrieves the list of network service groups.
+    - Added `GET /zpaResources/applicationSegments` Retrieves the list of ZPA application segments that can be configured in traffic forwarding rule criteria.
+
+## 1.0.1 (April, 22 2025) - BREAKING CHANGES
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+
+#### Zscaler OneAPI Support
 [PR #256](https://github.com/zscaler/zscaler-sdk-python/pull/256): Added support for [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi) Oauth2 authentication support through [Zidentity](https://help.zscaler.com/zidentity/what-zidentity).
 
 **NOTES**
