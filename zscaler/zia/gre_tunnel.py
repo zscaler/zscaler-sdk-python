@@ -594,7 +594,8 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -617,33 +618,32 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
         Args:
-            query_params (dict):
-                Map of query parameters for the request.
+            query_params (dict): Map of query parameters for the request.
 
-                ``[query_params.dc]`` {str}: Filter based on data center.
-                ``[query_params.region]`` {str}: Filter based on region.
-                ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size.
-                    The default size is 100, but the maximum size is 1000.
-                ``[query_params.include]`` {str}: Include all, private, or public VIPs in the list.
-                    Values: `all`, `private`, `public`
-                ``[query_params.sub_cloud]`` {str}: Filter based on the subcloud for the VIP.
+                - dc (str): Filter based on data center.
+                - region (str): Filter based on region.
+                - page (int): Specifies the page offset.
+                - page_size (int): Specifies the page size. The default size is 100, and the maximum is 1000.
+                - include (str): Include all, private, or public VIPs. Values: "all", "private", "public".
+                - sub_cloud (str): Filter based on the subcloud for the VIP.
 
         Returns:
-            tuple: A tuple containing (list of VIPs, Response, error)
+            tuple: A tuple containing:
+                - list: List of VIPs.
+                - Response: The raw HTTP response object.
+                - error: Any error encountered during the request.
 
         Examples:
             List VIPs using default settings:
 
-            >>> vips, response, err = zia.vips.list_vips()
-
-            List VIPs, limiting to a maximum of 10 items:
-
-            >>> vips, response, err = zia.vips.list_vips(query_params={"max_items": 10})
-
-            List VIPs, returning 200 items per page for a maximum of 2 pages:
-
-            >>> vips, response, err = zia.vips.list_vips(query_params={"page_size": 200, "max_pages": 2})
+            >>> vip_list, _, err = client.zia.gre_tunnel.list_vips(
+            ...     query_params={'dc': 'DFW1', 'region': 'NorthAmerica'})
+            >>> if err:
+            ...     print(f"Error listing vips: {err}")
+            ...     return
+            >>> print(f"Total vips found: {len(vip_list)}")
+            >>> for vip in vip_list:
+            ...     print(vip)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -658,7 +658,8 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)

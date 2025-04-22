@@ -80,6 +80,7 @@ class TrafficIPV6ConfigAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: String used to match against a DNS64 prefix's name,
                     description, or prefixMask attributes.
 
@@ -137,8 +138,10 @@ class TrafficIPV6ConfigAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     The default size is 100 and the maximum size is 1000.
+
                 ``[query_params.search]`` {str}: String used to match against a DNS64 prefix's name,
                     description, or prefixMask attributes.
 

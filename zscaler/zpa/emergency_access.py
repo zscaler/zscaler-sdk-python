@@ -39,9 +39,12 @@ class EmergencyAccessAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {str}: Specifies the page number.
+
                 ``[query_params.page_size]`` {str}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
@@ -66,7 +69,6 @@ class EmergencyAccessAPI(APIClient):
         """
         )
 
-        # Handle query parameters (including microtenant_id if provided)
         query_params = query_params or {}
         query_params.update(kwargs)
 
@@ -74,7 +76,8 @@ class EmergencyAccessAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 

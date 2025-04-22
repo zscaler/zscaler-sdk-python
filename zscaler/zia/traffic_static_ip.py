@@ -37,10 +37,13 @@ class TrafficStaticIPAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
+
                 ``[query_params.available_for_gre_tunnel]`` {bool}: The type of VPN credential.
                     Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
+
                 ``[query_params.ip_address]`` {str}: Include VPN credential only if not associated with any location.
 
         Returns:

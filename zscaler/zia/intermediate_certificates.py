@@ -284,17 +284,23 @@ class IntermediateCertsAPI(APIClient):
         Creates a custom intermediate CA certificate that can be used for SSL inspection.
 
         Args:
-            name (str): Name of the intermediate CA certificate
-            description (str): Description for the intermediate CA certificate
-            type (str): Type of the intermediate CA certificate. Supported values: ZSCALER, CUSTOM_SW, CUSTOM_HSM
-            region (str): Location of the HSM resources. Required for custom Interm. CA certificates with cloud HSM protection.
-                Supported values: GLOBAL, ASIA, EUROPE, US
-            status (str): Determines whether the intermediate CA certificate is enabled or disabled for SSL inspection.
-                Supported values: ENABLED, DISABLED
-            default_certificate (bool): If set to true, the intermediate CA certificate is the default intermediate certificate
-            current_state (str): Tracks the progress of the intermediate CA certificate in the configuration workflow
-                Values: GENERAL_DONE, KEYGEN_DONE, PUBKEY_DONE, ATTESTATION_DONE, ATTESTATION_VERIFY_DONE, CSRGEN_DONE,
-                    INTCERT_UPLOAD_DONE, CERTCHAIN_UPLOAD_DONE, CERT_READY
+            **kwargs:
+                - name (str): Name of the intermediate CA certificate.
+                - description (str): Description for the intermediate CA certificate.
+
+                - type (str): Type of the intermediate CA certificate.
+                    Supported values: ZSCALER, CUSTOM_SW, CUSTOM_HSM.
+
+                - region (str): Location of the HSM resources. Required for custom Interm.
+                    CA certificates with cloud HSM protection.
+
+                Supported values: GLOBAL, ASIA, EUROPE, US.
+                - status (str): Whether the certificate is enabled or disabled for SSL inspection.
+                Supported values: ENABLED, DISABLED.
+                - default_certificate (bool): If true, this is the default intermediate certificate.
+                - current_state (str): Current stage of the certificate in the configuration workflow.
+                Supported values: GENERAL_DONE, KEYGEN_DONE, PUBKEY_DONE, ATTESTATION_DONE, ATTESTATION_VERIFY_DONE,
+                CSRGEN_DONE, INTCERT_UPLOAD_DONE, CERTCHAIN_UPLOAD_DONE, CERT_READY.
 
         Returns:
             tuple: A tuple containing the newly added Rule Label (Box), response, and error.
@@ -318,13 +324,15 @@ class IntermediateCertsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, IntermediateCACertificate)
+        response, error = self._request_executor.\
+            execute(request, IntermediateCACertificate)
         if error:
             return (None, response, error)
 
         try:
-            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
+            result = IntermediateCACertificate(
+                self.form_response_body(response.get_body())
+            )
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

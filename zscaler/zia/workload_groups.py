@@ -40,7 +40,9 @@ class WorkloadGroupsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     The default size is 100, but the maximum size is 1000.
 
@@ -49,9 +51,15 @@ class WorkloadGroupsAPI(APIClient):
 
 
         Examples:
-            >>> for workloads in zia.workload_groups.list_groups():
-            ...    pprint(workloads)
+            List users using default settings:
 
+            >>> group_list, _, err = client.zia.workload_groups.list_groups()
+            ... if err:
+            ...     print(f"Error listing groups: {err}")
+            ...     return
+            ... print(f"Total groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -63,7 +71,8 @@ class WorkloadGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)

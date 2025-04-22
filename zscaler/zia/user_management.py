@@ -39,10 +39,12 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.dept]`` {str}: Filters by department name. This is a `starts with` match.
                 ``[query_params.group]`` {str}: Filters by group name. This is a `starts with` match.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                                                     The default size is 100, but the maximum size is 1000.
 
@@ -128,7 +130,8 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -151,9 +154,11 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.include_admin_users]`` {bool}: Include the administrator users when retrieving the list.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                                                     The default size is 100, but the maximum size is 1000.
 
@@ -163,19 +168,13 @@ class UserManagementAPI(APIClient):
         Examples:
             List users using default settings:
 
-            >>> for user in zia.users.list_users():
-            ...    print(user)
-
-            List users, limiting to a maximum of 10 items:
-
-            >>> for user in zia.users.list_users(max_items=10):
-            ...    print(user)
-
-            List users, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for user in zia.users.list_users(page_size=200, max_pages=2):
-            ...    print(user)
-
+            >>> user_list, zscaler_resp, err = client.zia.user_management.list_users()
+            ... if err:
+            ...     print(f"Error listing users: {err}")
+            ...     return
+            ... print(f"Total users found: {len(user_list)}")
+            ... for user in user_list:
+            ...     print(user.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -190,7 +189,8 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -246,7 +246,7 @@ class UserManagementAPI(APIClient):
         Examples:
             Add a user with the minimum required params:
 
-            >>> user, zscaler_resp, err = zia.users.add_user(name='Jane Doe',
+            >>> user, _, err = zia.users.add_user(name='Jane Doe',
             ...    email='jane.doe@example.com',
             ...    groups=[{
             ...      'id': '49916183'}]
@@ -418,11 +418,14 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.limit_search]`` {bool}: Limits the search to match against the department name only.
                 ``[query_params.search]`` {str}: Search string used to match against an admin/auditor user's Login ID or Name.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                                                     The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
 
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`
@@ -683,11 +686,14 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string used to match against an admin/auditor user's Login ID or Name
                 ``[query_params.defined_by]`` {str}: The string value defined by the group name or other applicable attributes
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                                                     The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
 
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`, `mod_time`
@@ -702,19 +708,14 @@ class UserManagementAPI(APIClient):
         Examples:
             List groups using default settings:
 
-            >>> for group in zia.users.list_groups():
-            ...    print(group)
-
-            List groups, limiting to a maximum of 10 items:
-
-            >>> for group in zia.users.list_groups(max_items=10):
-            ...    print(group)
-
-            List groups, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for group in zia.users.list_groups(page_size=200, max_pages=2):
-            ...    print(group)
-
+            >>> group_list, response, error = client.zia.user_management.list_groups(
+                query_params={'page_size': 2000})
+            ... if error:
+            ...     print(f"Error listing groups: {error}")
+            ...     return
+            ... print(f"Total groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -955,10 +956,12 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.dept]`` {str}: Filters by department name. This is a `starts with` match.
                 ``[query_params.group]`` {str}: Filters by group name. This is a `starts with` match.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                                                     The default size is 100, but the maximum size is 1000.
 
