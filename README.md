@@ -1,4 +1,4 @@
-# Official Python SDK for the Zscaler Products (Beta)
+# Official Python SDK for the Zscaler Products
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dw/zscaler-sdk-python)](https://pypistats.org/packages/zscaler-sdk-python)
 [![License](https://img.shields.io/github/license/zscaler/zscaler-sdk-python.svg)](https://github.com/zscaler/zscaler-sdk-python)

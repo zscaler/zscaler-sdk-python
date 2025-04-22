@@ -6,17 +6,18 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+
 1.0.0 (April, 22 2025) - BREAKING CHANGES
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------------
 
 Notes
-^^^^^^
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
 
 Zscaler OneAPI Support
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 (`#255 <https://github.com/zscaler/zscaler-sdk-python/pull/255>`_): Added support for (`OneAPI <https://help.zscaler.com/zidentity/what-zidentity>`_) Oauth2 authentication support through (`Zidentity <https://help.zscaler.com/zidentity/what-zidentity>`_)
 
