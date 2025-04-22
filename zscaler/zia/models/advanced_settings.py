@@ -273,7 +273,8 @@ class AdvancedSettings(ZscalerObject):
             "trackHttpTunnelOnHttpPorts": self.track_http_tunnel_on_http_ports,
             "blockHttpTunnelOnNonHttpPorts": self.block_http_tunnel_on_non_http_ports,
             "blockDomainFrontingOnHostHeader": self.block_domain_fronting_on_host_header,
-            "zscalerClientConnector1AndPacRoadWarriorInFirewall": self.zscaler_client_connector1_and_pac_road_warrior_in_firewall,
+            "zscalerClientConnector1AndPacRoadWarriorInFirewall":
+                self.zscaler_client_connector1_and_pac_road_warrior_in_firewall,
             "cascadeUrlFiltering": self.cascade_url_filtering,
             "enablePolicyForUnauthenticatedTraffic": self.enable_policy_for_unauthenticated_traffic,
             "blockNonCompliantHttpRequestOnHttpPorts": self.block_non_compliant_http_request_on_http_ports,
@@ -299,8 +300,10 @@ class AdvancedSettings(ZscalerObject):
             "digestAuthBypassUrlCategories": self.digest_auth_bypass_url_categories,
             "digestAuthBypassUrls": self.digest_auth_bypass_urls,
             "digestAuthBypassApps": self.digest_auth_bypass_apps,
-            "dnsResolutionOnTransparentProxyExemptUrlCategories": self.dns_resolution_on_transparent_proxy_exempt_url_categories,
-            "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories": self.dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories,
+            "dnsResolutionOnTransparentProxyExemptUrlCategories":
+                self.dns_resolution_on_transparent_proxy_exempt_url_categories,
+            "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":
+                self.dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories,
             "dnsResolutionOnTransparentProxyExemptUrls": self.dns_resolution_on_transparent_proxy_exempt_urls,
             "dnsResolutionOnTransparentProxyExemptApps": self.dns_resolution_on_transparent_proxy_exempt_apps,
             "dnsResolutionOnTransparentProxyIPv6ExemptApps": self.dns_resolution_on_transparent_proxy_ipv6_exempt_apps,
