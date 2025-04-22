@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_map
+from zscaler.utils import format_url
 from zscaler.zcc.models.admin_user import AdminUser
 from zscaler.zcc.models.admin_roles import AdminRoles
 
