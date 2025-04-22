@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class TimeWindows(ZscalerObject):
     """
     A class representing a Cloud Firewall Time Windows object.
@@ -25,18 +26,12 @@ class TimeWindows(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.start_time = config["startTime"]\
-                if "startTime" in config else None
-            self.end_time = config["endTime"]\
-                if "endTime" in config else None
-                
-            self.days_of_week = ZscalerCollection.form_list(
-                config["dayOfWeek"] if "dayOfWeek" in config else [], str
-            )
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.start_time = config["startTime"] if "startTime" in config else None
+            self.end_time = config["endTime"] if "endTime" in config else None
+
+            self.days_of_week = ZscalerCollection.form_list(config["dayOfWeek"] if "dayOfWeek" in config else [], str)
         else:
             self.id = None
             self.name = None

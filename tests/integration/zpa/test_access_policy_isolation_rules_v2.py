@@ -63,19 +63,19 @@ class TestAccessPolicyIsolationRuleV2:
                 profiles, _, err = client.zpa.cbi_zpa_profile.list_isolation_profiles()
                 if err:
                     raise AssertionError(f"Error listing Isolation profiles: {err}")
-    
+
                 # Make sure we got back a list (not None or a single object)
                 if not isinstance(profiles, list):
                     raise AssertionError(f"Expected a list of Isolation profiles objects, got {type(profiles)}")
-    
+
                 if not profiles:
                     raise AssertionError("No Isolation profiles found at all.")
-    
+
                 # profiles[0] is a IsolationProfiles model, so use dot-notation:
-                profile_id = profiles[0].id 
-    
+                profile_id = profiles[0].id
+
                 print(f"First Isolation profiles: {profile_id}")
-    
+
             except Exception as exc:
                 errors.append(f"Listing Isolation profiles failed: {exc}")
             try:

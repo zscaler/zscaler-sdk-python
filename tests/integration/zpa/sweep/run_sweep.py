@@ -33,10 +33,7 @@ class TestSweepUtility:
         vanity_domain = config.get("vanityDomain", os.getenv("ZSCALER_VANITY_DOMAIN"))
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
 
-        logging_config = config.get("logging", {
-            "enabled": False, 
-            "verbose": False
-        })
+        logging_config = config.get("logging", {"enabled": False, "verbose": False})
 
         client_config = {
             "clientId": client_id,
@@ -44,10 +41,7 @@ class TestSweepUtility:
             "customerId": customer_id,
             "vanityDomain": vanity_domain,
             "cloud": cloud,
-            "logging": {
-                "enabled": logging_config.get("enabled", True),
-                "verbose": logging_config.get("verbose", True)
-            }
+            "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
         }
 
         self.client = ZscalerClient(client_config)
@@ -125,7 +119,6 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping rule: {str(e)}")
             raise
 
-
     @suppress_warnings
     def sweep_pra_portal(self):
         logging.info("Starting to sweep pra portal")
@@ -138,9 +131,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_portals)} pra portal named starting with 'tests-' to delete.")
 
             for portal in test_portals:
-                logging.info(
-                    f"sweep_pra_portal: Attempting to delete pra portal : Name='{portal.name}', ID='{portal.id}'"
-                )
+                logging.info(f"sweep_pra_portal: Attempting to delete pra portal : Name='{portal.name}', ID='{portal.id}'")
                 _, _, error = self.client.zpa.pra_portal.delete_portal(portal_id=portal.id)
                 if error:
                     logging.error(f"Failed to delete rule label ID={portal.id} — {error}")
@@ -183,7 +174,7 @@ class TestSweepUtility:
             portals, _, error = self.client.zpa.pra_approval.list_approval()
             if error:
                 raise Exception(f"Error listing pra approvals: {error}")
-        
+
             test_approvals = [
                 pra for pra in portals if "email_ids" in pra and any("tests-" in email for email in pra.email_ids)
             ]
@@ -215,9 +206,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_portals)} pra console named starting with 'tests-' to delete.")
 
             for console in test_portals:
-                logging.info(
-                    f"sweep_pra_consoles: Attempting to delete pra console : Name='{console.id}', ID='{console.id}'"
-                )
+                logging.info(f"sweep_pra_consoles: Attempting to delete pra console : Name='{console.id}', ID='{console.id}'")
                 _, _, error = self.client.zpa.pra_console.delete_console(console_id=console.id)
                 if error:
                     logging.error(f"Failed to delete pra console ID={console.id} — {error}")
@@ -265,9 +254,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_segments)} app segments named starting with 'tests-' to delete.")
 
             for segment in test_segments:
-                logging.info(
-                    f"sweep_app_segments: Attempting to delete app segment: Name='{segment.name}', ID='{segment.id}'"
-                )
+                logging.info(f"sweep_app_segments: Attempting to delete app segment: Name='{segment.name}', ID='{segment.id}'")
                 _, _, error = self.client.zpa.application_segment.delete_segment(segment_id=segment.id)
                 if error:
                     logging.error(f"Failed to delete application segment ID={segment.id} — {error}")
@@ -290,9 +277,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_groups)} segment group to delete.")
 
             for group in test_groups:
-                logging.info(
-                    f"sweep_segment_group: Attempting to delete segment group: Name='{group.name}', ID='{group.id}'"
-                )
+                logging.info(f"sweep_segment_group: Attempting to delete segment group: Name='{group.name}', ID='{group.id}'")
                 _, _, error = self.client.zpa.segment_groups.delete_group(group_id=group.id)
                 if error:
                     logging.error(f"Failed to delete segment group ID={group.id} — {error}")
@@ -315,9 +300,7 @@ class TestSweepUtility:
             logging.info(f"Found {len(test_groups)} server groups to delete.")
 
             for group in test_groups:
-                logging.info(
-                    f"sweep_server_group: Attempting to delete server group: Name='{group.name}', ID='{group.id}'"
-                )
+                logging.info(f"sweep_server_group: Attempting to delete server group: Name='{group.name}', ID='{group.id}'")
                 _, _, error = self.client.zpa.server_groups.delete_group(group_id=group.id)
                 if error:
                     logging.error(f"Failed to delete rule label ID={group.id} — {error}")
@@ -360,7 +343,6 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping provisioning keys: {str(e)}")
             raise
-
 
     @suppress_warnings
     def sweep_lss_controller(self):
@@ -536,6 +518,7 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping service edge groups: {str(e)}")
             raise
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

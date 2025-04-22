@@ -26,14 +26,14 @@ class WebPrivacyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-        
+
     def get_web_privacy(self) -> tuple:
         """
         Returns Web Privacy Information from the Client Connector Portal.
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns Web Privacy Information in the Client Connector Portal.
 
@@ -55,8 +55,7 @@ class WebPrivacyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return None
@@ -71,7 +70,7 @@ class WebPrivacyAPI(APIClient):
             return None
 
         return result
-    
+
     def set_web_privacy_info(self, **kwargs) -> tuple:
         """
         Web Privacy Information
@@ -93,32 +92,29 @@ class WebPrivacyAPI(APIClient):
             tuple: A tuple containing the updated Web Privacy Information, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /setWebPrivacyInfo
         """
         )
-        
+
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, WebPrivacy)
+        response, error = self._request_executor.execute(request, WebPrivacy)
         if error:
             return (None, response, error)
 
         try:
-            result = WebPrivacy(
-                self.form_response_body(response.get_body())
-            )
+            result = WebPrivacy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

@@ -39,7 +39,7 @@ class SubCloudsAPI(APIClient):
         Keyword Args:
                 ``[query_params.page]`` {int, optional}: Page offset.
                 ``[query_params.page_size]`` {int, optional}: Specifies the page size. The default size is 100.
-                
+
         Returns:
             :obj:`Tuple`: A list of Sub Clouds configured in ZIA.
 
@@ -68,14 +68,12 @@ class SubCloudsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -83,9 +81,7 @@ class SubCloudsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(TenantSubClouds(
-                    self.form_response_body(item))
-                )
+                result.append(TenantSubClouds(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -101,37 +97,31 @@ class SubCloudsAPI(APIClient):
             tuple: A tuple containing the updated Sub Clouds, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /subclouds/{cloud_id}
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = TenantSubClouds(
-                self.form_response_body(response.get_body())
-            )
+            result = TenantSubClouds(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_sub_cloud_last_dc_in_country(
-        self,
-        cloud_id: int,
-        query_params=None
-    ) -> tuple:
+    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params=None) -> tuple:
         """
         Returns information for the list of all the excluded data centers in a country.
 
@@ -147,7 +137,7 @@ class SubCloudsAPI(APIClient):
             >>> subclouds, response, err = zia.sub_clouds.get_sub_cloud_last_dc_in_country(
             ...     cloud_id=31649, query_params={"dc_id": [5313]}
             ... )
-            """
+        """
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -157,31 +147,26 @@ class SubCloudsAPI(APIClient):
         )
 
         query_params = query_params or {}
-        
+
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = [
-                LastDCInCountry(item) for item in response.get_body()
-            ]
+            result = [LastDCInCountry(item) for item in response.get_body()]
         except Exception as error:
             return (None, response, error)
 

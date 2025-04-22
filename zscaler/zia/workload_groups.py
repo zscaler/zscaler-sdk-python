@@ -41,7 +41,8 @@ class WorkloadGroupsAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of WorkloadGroups instances, Response, error)
@@ -53,24 +54,21 @@ class WorkloadGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}/workloadGroups
-        """)
+        """
+        )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -78,9 +76,7 @@ class WorkloadGroupsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(WorkloadGroups(
-                    self.form_response_body(item))
-                )
+                result.append(WorkloadGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

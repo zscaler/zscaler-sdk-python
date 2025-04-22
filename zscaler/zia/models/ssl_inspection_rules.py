@@ -29,6 +29,7 @@ from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
 
+
 class SSLInspectionRules(ZscalerObject):
     """
     A class for SSLInspectionRules objects.
@@ -44,16 +45,11 @@ class SSLInspectionRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
 
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
@@ -64,17 +60,12 @@ class SSLInspectionRules(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
-            self.platforms = ZscalerCollection.form_list(
-                config["platforms"] if "platforms" in config else [], str
-            )
-            self.road_warrior_for_kerberos = config["roadWarriorForKerberos"] \
-                if "roadWarriorForKerberos" in config else False
+            self.platforms = ZscalerCollection.form_list(config["platforms"] if "platforms" in config else [], str)
+            self.road_warrior_for_kerberos = config["roadWarriorForKerberos"] if "roadWarriorForKerberos" in config else False
 
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
@@ -93,14 +84,10 @@ class SSLInspectionRules(ZscalerObject):
             else:
                 self.action = None
 
-            self.state = config["state"] \
-                if "state" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] \
-                if "lastModifiedBy" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.dest_ip_groups = ZscalerCollection.form_list(
                 config["destIpGroups"] if "destIpGroups" in config else [], destination_groups.IPDestinationGroups
             )
@@ -114,18 +101,14 @@ class SSLInspectionRules(ZscalerObject):
             self.user_agent_types = ZscalerCollection.form_list(
                 config["userAgentTypes"] if "userAgentTypes" in config else [], str
             )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
             )
@@ -136,11 +119,9 @@ class SSLInspectionRules(ZscalerObject):
             self.time_windows = ZscalerCollection.form_list(
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
-            self.default_rule = config["defaultRule"]\
-                if "defaultRule" in config else False
-                
-            self.predefined = config["predefined"]\
-                if "predefined" in config else False
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else False
+
+            self.predefined = config["predefined"] if "predefined" in config else False
         else:
             self.id = None
             self.access_control = None
@@ -202,18 +183,14 @@ class SSLInspectionRules(ZscalerObject):
             "lastModifiedBy": self.last_modified_by,
             "destIpGroups": [dig.request_format() for dig in (self.dest_ip_groups or [])],
             "sourceIpGroups": [sig.request_format() for sig in (self.source_ip_groups or [])],
-            "proxyGateways": [
-                proxy.as_dict() if isinstance(proxy, ZscalerObject) else proxy
-                for proxy in self.proxy_gateways
-            ],
+            "proxyGateways": [proxy.as_dict() if isinstance(proxy, ZscalerObject) else proxy for proxy in self.proxy_gateways],
             "userAgentTypes": self.user_agent_types,
             "devices": self.devices,
             "deviceGroups": self.device_groups,
             "deviceTrustLevels": self.device_trust_levels,
             "labels": self.labels,
             "zpaAppSegments": [
-                segment.as_dict() if isinstance(segment, ZscalerObject) else segment
-                for segment in self.zpa_app_segments
+                segment.as_dict() if isinstance(segment, ZscalerObject) else segment for segment in self.zpa_app_segments
             ],
             "workloadGroups": self.workload_groups,
             "timeWindows": self.time_windows,
@@ -222,6 +199,7 @@ class SSLInspectionRules(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class Action(ZscalerObject):
     """
@@ -241,18 +219,14 @@ class Action(ZscalerObject):
         # import pprint
         # pprint.pprint(config)
         if config:
-            self.type = config["type"] \
-                if "type" in config else None
+            self.type = config["type"] if "type" in config else None
 
             # print("💥 showEUN Debug:",
             #     config.get("show_eun"),
             #     config.get("showEun"),
             #     config.get("showEUN"))
-            
-            self.show_eun = next(
-                (config[k] for k in ["show_eun", "showEun", "showEUN"] if k in config),
-                False
-            )
+
+            self.show_eun = next((config[k] for k in ["show_eun", "showEun", "showEUN"] if k in config), False)
 
             self.show_eun = (
                 config.get("show_eun")  # ← used by the converted keys
@@ -267,14 +241,15 @@ class Action(ZscalerObject):
             #     config.get("showEUNATP"))    # PascalCase (not used here)
 
             self.show_eun_atp = (
-                config.get("show_eun_atp") or
-                config.get("showEunatp") or  # ← use this instead
-                config.get("showEUNATP") or
-                False
+                config.get("show_eun_atp")
+                or config.get("showEunatp")  # ← use this instead
+                or config.get("showEUNATP")
+                or False
             )
 
-            self.override_default_certificate = config["overrideDefaultCertificate"] \
-                if "overrideDefaultCertificate" in config else None
+            self.override_default_certificate = (
+                config["overrideDefaultCertificate"] if "overrideDefaultCertificate" in config else None
+            )
 
             if "decryptSubActions" in config:
                 if isinstance(config["decryptSubActions"], DecryptSubActions):
@@ -309,7 +284,7 @@ class Action(ZscalerObject):
             # ✅ Print debug values here after all parsing is done
             # print(f"✅ show_eun = {self.show_eun}")
             # print(f"✅ show_eun_atp = {self.show_eun_atp}")
-            # print(f"✅ show_eun_atp = {self.show_eun_atp}")                                         
+            # print(f"✅ show_eun_atp = {self.show_eun_atp}")
         else:
             self.type = None
             self.show_eun = False
@@ -329,22 +304,16 @@ class Action(ZscalerObject):
             "showEUN": self.show_eun,
             "showEUNATP": self.show_eun_atp,
             "overrideDefaultCertificate": self.override_default_certificate,
-            "decryptSubActions": (
-                self.decrypt_sub_actions.request_format()
-                if self.decrypt_sub_actions else None
-            ),
+            "decryptSubActions": (self.decrypt_sub_actions.request_format() if self.decrypt_sub_actions else None),
             "doNotDecryptSubActions": (
-                self.do_not_decrypt_sub_actions.request_format()
-                if self.do_not_decrypt_sub_actions else None
+                self.do_not_decrypt_sub_actions.request_format() if self.do_not_decrypt_sub_actions else None
             ),
-            "sslInterceptionCert": (
-                self.ssl_interception_cert.request_format()
-                if self.ssl_interception_cert else None
-            ),
+            "sslInterceptionCert": (self.ssl_interception_cert.request_format() if self.ssl_interception_cert else None),
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class SSLInterceptionCert(ZscalerObject):
     """
     A class for SSLInterceptionCert objects.
@@ -360,13 +329,10 @@ class SSLInterceptionCert(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.default_certificate = config["defaultCertificate"] \
-                if "defaultCertificate" in config else None
-                                
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.default_certificate = config["defaultCertificate"] if "defaultCertificate" in config else None
+
         else:
             self.id = None
             self.name = None
@@ -384,7 +350,8 @@ class SSLInterceptionCert(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DoNotDecryptSubActions(ZscalerObject):
     """
     A class for DoNotDecryptSubActions objects.
@@ -403,15 +370,13 @@ class DoNotDecryptSubActions(ZscalerObject):
         # import pprint
         # pprint.pprint(config)
         if config:
-            self.bypass_other_policies = config["bypassOtherPolicies"] \
-                if "bypassOtherPolicies" in config else None
-            self.server_certificates = config["serverCertificates"] \
-                if "serverCertificates" in config else None
-            self.ocsp_check = config["ocspCheck"] \
-                if "ocspCheck" in config else None
-            self.block_ssl_traffic_with_no_sni_enabled = config["blockSslTrafficWithNoSniEnabled"] \
-                if "blockSslTrafficWithNoSniEnabled" in config else None 
-                 
+            self.bypass_other_policies = config["bypassOtherPolicies"] if "bypassOtherPolicies" in config else None
+            self.server_certificates = config["serverCertificates"] if "serverCertificates" in config else None
+            self.ocsp_check = config["ocspCheck"] if "ocspCheck" in config else None
+            self.block_ssl_traffic_with_no_sni_enabled = (
+                config["blockSslTrafficWithNoSniEnabled"] if "blockSslTrafficWithNoSniEnabled" in config else None
+            )
+
             # print("💥 minTLSVersion Debug:",
             #     config.get("min_tls_version"),
             #     config.get("minTlsVersion"),
@@ -445,7 +410,8 @@ class DoNotDecryptSubActions(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DecryptSubActions(ZscalerObject):
     """
     A class for DoNotDecryptSubActions objects.
@@ -464,25 +430,24 @@ class DecryptSubActions(ZscalerObject):
         # import pprint
         # pprint.pprint(config)
         if config:
-            self.server_certificates = config["serverCertificates"] \
-                if "serverCertificates" in config else None
-            self.ocsp_check = config["ocspCheck"] \
-                if "ocspCheck" in config else None
-            self.block_ssl_traffic_with_no_sni_enabled = config["blockSslTrafficWithNoSniEnabled"] \
-                if "blockSslTrafficWithNoSniEnabled" in config else None
-            
+            self.server_certificates = config["serverCertificates"] if "serverCertificates" in config else None
+            self.ocsp_check = config["ocspCheck"] if "ocspCheck" in config else None
+            self.block_ssl_traffic_with_no_sni_enabled = (
+                config["blockSslTrafficWithNoSniEnabled"] if "blockSslTrafficWithNoSniEnabled" in config else None
+            )
+
             # print("💥 minServerTLSVersion Debug:",
             #     config.get("min_server_tls_version"),
             #     config.get("minServerTlsVersion"),
             #     config.get("minServerTLSVersion"))
-            
+
             self.min_server_tls_version = (
                 config.get("min_server_tls_version")
                 or config.get("minServerTlsVersion")
                 or config.get("minServerTLSVersion")
                 or None
             )
-            
+
             # print("💥 minClientTLSVersion Debug:",
             #     config.get("min_client_tls_version"),
             #     config.get("minClientTlsVersion"),
@@ -495,14 +460,12 @@ class DecryptSubActions(ZscalerObject):
                 or None
             )
 
-            self.block_undecrypt = config["blockUndecrypt"] \
-                if "blockUndecrypt" in config else None   
-            self.http2_enabled = config["http2Enabled"] \
-                if "http2Enabled" in config else None   
+            self.block_undecrypt = config["blockUndecrypt"] if "blockUndecrypt" in config else None
+            self.http2_enabled = config["http2Enabled"] if "http2Enabled" in config else None
             # ✅ Print debug values here after all parsing is done
             # print(f"✅ min_client_tls_version = {self.min_client_tls_version}")
             # print(f"✅ min_server_tls_version = {self.min_server_tls_version}")
-                                                               
+
         else:
             self.server_certificates = None
             self.ocsp_check = None

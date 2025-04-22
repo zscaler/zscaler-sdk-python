@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class ShadowITReport(ZscalerObject):
     """
     A class representing a Shadow IT Report object.
@@ -29,27 +30,19 @@ class ShadowITReport(ZscalerObject):
             self.app_name = config["appName"] if "appName" in config else None
 
             # Handling simple lists
-            self.application = ZscalerCollection.form_list(
-                config["application"] if "application" in config else [], str
-            )
+            self.application = ZscalerCollection.form_list(config["application"] if "application" in config else [], str)
             self.application_category = ZscalerCollection.form_list(
                 config["applicationCategory"] if "applicationCategory" in config else [], str
             )
-            self.risk_index = ZscalerCollection.form_list(
-                config["riskIndex"] if "riskIndex" in config else [], int
-            )
+            self.risk_index = ZscalerCollection.form_list(config["riskIndex"] if "riskIndex" in config else [], int)
             self.sanctioned_state = ZscalerCollection.form_list(
                 config["sanctionedState"] if "sanctionedState" in config else [], str
             )
-            self.employees = ZscalerCollection.form_list(
-                config["employees"] if "employees" in config else [], str
-            )
+            self.employees = ZscalerCollection.form_list(config["employees"] if "employees" in config else [], str)
             self.source_ip_restriction = ZscalerCollection.form_list(
                 config["sourceIpRestriction"] if "sourceIpRestriction" in config else [], str
             )
-            self.mfa_support = ZscalerCollection.form_list(
-                config["mfaSupport"] if "mfaSupport" in config else [], str
-            )
+            self.mfa_support = ZscalerCollection.form_list(config["mfaSupport"] if "mfaSupport" in config else [], str)
             self.admin_audit_logs = ZscalerCollection.form_list(
                 config["adminAuditLogs"] if "adminAuditLogs" in config else [], str
             )
@@ -62,18 +55,12 @@ class ShadowITReport(ZscalerObject):
             self.password_strength = ZscalerCollection.form_list(
                 config["passwordStrength"] if "passwordStrength" in config else [], str
             )
-            self.ssl_pinned = ZscalerCollection.form_list(
-                config["sslPinned"] if "sslPinned" in config else [], str
-            )
-            self.evasive = ZscalerCollection.form_list(
-                config["evasive"] if "evasive" in config else [], str
-            )
+            self.ssl_pinned = ZscalerCollection.form_list(config["sslPinned"] if "sslPinned" in config else [], str)
+            self.evasive = ZscalerCollection.form_list(config["evasive"] if "evasive" in config else [], str)
             self.have_https_security_header_support = ZscalerCollection.form_list(
                 config["haveHTTPSecurityHeaderSupport"] if "haveHTTPSecurityHeaderSupport" in config else [], str
             )
-            self.dns_caa_policy = ZscalerCollection.form_list(
-                config["dnsCAAPolicy"] if "dnsCAAPolicy" in config else [], str
-            )
+            self.dns_caa_policy = ZscalerCollection.form_list(config["dnsCAAPolicy"] if "dnsCAAPolicy" in config else [], str)
             self.have_weak_cipher_support = ZscalerCollection.form_list(
                 config["haveWeakCipherSupport"] if "haveWeakCipherSupport" in config else [], str
             )
@@ -83,9 +70,7 @@ class ShadowITReport(ZscalerObject):
             self.malware_scanning_content = ZscalerCollection.form_list(
                 config["malwareScanningContent"] if "malwareScanningContent" in config else [], str
             )
-            self.file_sharing = ZscalerCollection.form_list(
-                config["fileSharing"] if "fileSharing" in config else [], str
-            )
+            self.file_sharing = ZscalerCollection.form_list(config["fileSharing"] if "fileSharing" in config else [], str)
             self.remote_access_screen_sharing = ZscalerCollection.form_list(
                 config["remoteAccessScreenSharing"] if "remoteAccessScreenSharing" in config else [], str
             )
@@ -101,12 +86,8 @@ class ShadowITReport(ZscalerObject):
             self.vulnerable_disclosure_program = ZscalerCollection.form_list(
                 config["vulnerableDisclosureProgram"] if "vulnerableDisclosureProgram" in config else [], str
             )
-            self.waf_support = ZscalerCollection.form_list(
-                config["wafSupport"] if "wafSupport" in config else [], str
-            )
-            self.vulnerability = ZscalerCollection.form_list(
-                config["vulnerability"] if "vulnerability" in config else [], str
-            )
+            self.waf_support = ZscalerCollection.form_list(config["wafSupport"] if "wafSupport" in config else [], str)
+            self.vulnerability = ZscalerCollection.form_list(config["vulnerability"] if "vulnerability" in config else [], str)
             self.valid_ssl_certificate = ZscalerCollection.form_list(
                 config["validSSLCertificate"] if "validSSLCertificate" in config else [], str
             )
@@ -127,29 +108,56 @@ class ShadowITReport(ZscalerObject):
             )
 
             # Handling nested objects with lists
-            self.order = {
-                "on": config["order"]["on"] if "order" in config and "on" in config["order"] else None,
-                "by": config["order"]["by"] if "order" in config and "by" in config["order"] else None
-            } if "order" in config else None
+            self.order = (
+                {
+                    "on": config["order"]["on"] if "order" in config and "on" in config["order"] else None,
+                    "by": config["order"]["by"] if "order" in config and "by" in config["order"] else None,
+                }
+                if "order" in config
+                else None
+            )
 
             # Handling nested object for certKeySize and supportedCertifications
-            self.cert_key_size = {
-                "operation": config["certKeySize"]["operation"] if "certKeySize" in config and "operation" in config["certKeySize"] else None,
-                "value": ZscalerCollection.form_list(config["certKeySize"]["value"], str) \
-                    if "certKeySize" in config and "value" in config["certKeySize"] else []
-            } if "certKeySize" in config else None
+            self.cert_key_size = (
+                {
+                    "operation": (
+                        config["certKeySize"]["operation"]
+                        if "certKeySize" in config and "operation" in config["certKeySize"]
+                        else None
+                    ),
+                    "value": (
+                        ZscalerCollection.form_list(config["certKeySize"]["value"], str)
+                        if "certKeySize" in config and "value" in config["certKeySize"]
+                        else []
+                    ),
+                }
+                if "certKeySize" in config
+                else None
+            )
 
-            self.supported_certifications = {
-                "operation": config["supportedCertifications"]["operation"] if "supportedCertifications" in config and "operation" in config["supportedCertifications"] else None,
-                "value": ZscalerCollection.form_list(config["supportedCertifications"]["value"], str) \
-                    if "supportedCertifications" in config and "value" in config["supportedCertifications"] else []
-            } if "supportedCertifications" in config else None
+            self.supported_certifications = (
+                {
+                    "operation": (
+                        config["supportedCertifications"]["operation"]
+                        if "supportedCertifications" in config and "operation" in config["supportedCertifications"]
+                        else None
+                    ),
+                    "value": (
+                        ZscalerCollection.form_list(config["supportedCertifications"]["value"], str)
+                        if "supportedCertifications" in config and "value" in config["supportedCertifications"]
+                        else []
+                    ),
+                }
+                if "supportedCertifications" in config
+                else None
+            )
 
             # Handling lists of objects for dataConsumed
-            self.data_consumed = [
-                {"min": data["min"], "max": data["max"]}
-                for data in config["dataConsumed"]
-            ] if "dataConsumed" in config else []
+            self.data_consumed = (
+                [{"min": data["min"], "max": data["max"]} for data in config["dataConsumed"]]
+                if "dataConsumed" in config
+                else []
+            )
 
         else:
             # Defaults when config is None
@@ -235,24 +243,24 @@ class ShadowITReport(ZscalerObject):
             "order": self.order,
             "certKeySize": self.cert_key_size,
             "supportedCertifications": self.supported_certifications,
-            "dataConsumed": self.data_consumed
+            "dataConsumed": self.data_consumed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class CloudapplicationsAndTags(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
-        self.id = config["id"]\
-            if "id" in config else None
-        self.name = config["name"]\
-            if "name" in config else None
+        self.id = config["id"] if "id" in config else None
+        self.name = config["name"] if "name" in config else None
 
     def request_format(self):
         return {
             "id": self.id,
             "name": self.name,
         }
+
 
 class CloudApplicationBulkUpdate(ZscalerObject):
     """
@@ -262,14 +270,15 @@ class CloudApplicationBulkUpdate(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.sanctioned_state = config["sanctionedState"]\
-                if "sanctionedState" in config else None
-                
-            self.application_ids = ZscalerCollection.form_list(config["applicationIds"]\
-                if "applicationIds" in config else [], int)
-            
-            self.custom_tags = ZscalerCollection.form_list(config["customTags"]\
-                if "customTags" in config else [], CloudapplicationsAndTags)
+            self.sanctioned_state = config["sanctionedState"] if "sanctionedState" in config else None
+
+            self.application_ids = ZscalerCollection.form_list(
+                config["applicationIds"] if "applicationIds" in config else [], int
+            )
+
+            self.custom_tags = ZscalerCollection.form_list(
+                config["customTags"] if "customTags" in config else [], CloudapplicationsAndTags
+            )
         else:
             self.sanctioned_state = None
             self.application_ids = []
@@ -287,4 +296,3 @@ class CloudApplicationBulkUpdate(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    

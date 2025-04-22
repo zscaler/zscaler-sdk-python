@@ -69,30 +69,23 @@ class PRAPortalAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(PrivilegedRemoteAccessPortal(
-                    self.form_response_body(item)))
+                result.append(PrivilegedRemoteAccessPortal(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_portal(
-        self,
-        portal_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_portal(self, portal_id: str, query_params=None) -> tuple:
         """
         Provides information on the specified PRA portal.
 
@@ -124,20 +117,16 @@ class PRAPortalAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PrivilegedRemoteAccessPortal)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessPortal(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -183,20 +172,16 @@ class PRAPortalAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PrivilegedRemoteAccessPortal)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessPortal(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -243,13 +228,11 @@ class PRAPortalAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PrivilegedRemoteAccessPortal)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessPortal)
         if error:
             return (None, response, error)
 
@@ -257,18 +240,12 @@ class PRAPortalAPI(APIClient):
             return (PrivilegedRemoteAccessPortal({"id": portal_id}), None, None)
 
         try:
-            result = PrivilegedRemoteAccessPortal(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessPortal(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_portal(
-        self,
-        portal_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_portal(self, portal_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified PRA portal.
 
@@ -298,13 +275,11 @@ class PRAPortalAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

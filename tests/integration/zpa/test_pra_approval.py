@@ -79,7 +79,7 @@ class TestPRAApproval:
             try:
                 time.sleep(2)
                 segment_group_name = "tests-" + generate_random_string()
-                created_segment_group, _, err  = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
+                created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 segment_group_id = created_segment_group.id
             except Exception as exc:
@@ -118,7 +118,7 @@ class TestPRAApproval:
                 assert err is None, f"Error creating application segment: {err}"
                 assert app_segment is not None, "No application segment data returned"
                 assert app_segment.name == app_segment_name
-                
+
                 app_segment_id = app_segment.id
             except Exception as exc:
                 errors.append(f"Creating Application Segment failed: {exc}")
@@ -170,7 +170,7 @@ class TestPRAApproval:
                 errors.append(f"Failed to retrieve PRA approval: {exc}")
 
         finally:
-            
+
             if approval_id:
                 try:
                     time.sleep(2)
@@ -183,7 +183,9 @@ class TestPRAApproval:
             if app_segment_id:
                 try:
                     time.sleep(2)
-                    delete_response, _, err = client.zpa.application_segment.delete_segment(segment_id=app_segment_id, force_delete=True)
+                    delete_response, _, err = client.zpa.application_segment.delete_segment(
+                        segment_id=app_segment_id, force_delete=True
+                    )
                     assert err is None, f"App Segment deletion failed: {err}"
                     assert delete_response is None, f"Expected None for 204 No Content, got {delete_response}"
                 except Exception as exc:

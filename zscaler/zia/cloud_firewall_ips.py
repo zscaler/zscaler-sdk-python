@@ -53,7 +53,7 @@ class FirewallIPSRulesAPI(APIClient):
             ... print(f"Total rules found: {len(rules_list)}")
             ... for rule in rules_list:
             ...    print(rule.as_dict())
-            
+
             filtering rule results by rule name :
 
             >>> rules_list, response, error = client.zia.cloud_firewall_ips.list_rules(
@@ -67,10 +67,12 @@ class FirewallIPSRulesAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /firewallIpsRules
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
@@ -79,14 +81,7 @@ class FirewallIPSRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -97,18 +92,13 @@ class FirewallIPSRulesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(FirewallIPSrules(
-                    self.form_response_body(item))
-                )
+                results.append(FirewallIPSrules(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -145,23 +135,19 @@ class FirewallIPSRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, FirewallIPSrules)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallIPSrules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -179,13 +165,14 @@ class FirewallIPSRulesAPI(APIClient):
         Keyword Args:
             order (str): The order of the rule, defaults to adding rule to bottom of list.
             rank (str): The admin rank of the rule. Supported values 1-7
-            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+            enabled (bool): The rule state.
             description (str): Additional information about the rule
             enable_full_logging (bool): If True, enables full logging.
             capture_pcap (bool): Indicates whether packet capture (PCAP) is enabled or not.
             predefined (bool): Indicates that the rule is predefined by using a true value
             default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            action (str): Action that must take place if the traffic matches the rule criteria. Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS 
+            action (str): Action that must take place if the traffic matches the rule criteria.
+                Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
@@ -211,7 +198,7 @@ class FirewallIPSRulesAPI(APIClient):
             nw_service_groups (list): The IDs for the network service groups that this rule applies to.
             threat_categories (list): The IDs for the network service groups that this rule applies to.
             zpa_app_segments (list): The IDs for the network service groups that this rule applies to.
-            
+
         Returns:
             :obj:`tuple`: New firewall ips rule resource record.
 
@@ -236,15 +223,12 @@ class FirewallIPSRulesAPI(APIClient):
 
         body = kwargs
 
-        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -253,16 +237,12 @@ class FirewallIPSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, FirewallIPSrules)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallIPSrules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -279,13 +259,14 @@ class FirewallIPSRulesAPI(APIClient):
             name (str): Name of the rule, max 31 chars.
             order (str): The order of the rule, defaults to adding rule to bottom of list.
             rank (str): The admin rank of the rule. Supported values 1-7
-            state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
+            enabled (bool): The rule state.
             description (str): Additional information about the rule
             enable_full_logging (bool): If True, enables full logging.
             capture_pcap (bool): Indicates whether packet capture (PCAP) is enabled or not.
             predefined (bool): Indicates that the rule is predefined by using a true value
             default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            action (str): Action that must take place if the traffic matches the rule criteria. Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS 
+            action (str): Action that must take place if the traffic matches the rule criteria.
+                Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
@@ -335,15 +316,12 @@ class FirewallIPSRulesAPI(APIClient):
 
         body = kwargs
 
-        # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -352,20 +330,16 @@ class FirewallIPSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, FirewallIPSrules)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(
-                self.form_response_body(response.get_body())
-            )
+            result = FirewallIPSrules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_rule(self, rule_id: int) -> tuple:
         """
         Deletes the specified firewall ips rule.
@@ -390,13 +364,11 @@ class FirewallIPSRulesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

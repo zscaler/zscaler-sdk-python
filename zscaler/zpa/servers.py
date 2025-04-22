@@ -59,32 +59,30 @@ class AppServersAPI(APIClient):
             ...     print(server.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /server
-        """)
+        """
+        )
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(AppServers(
-                    self.form_response_body(item))
-                )
+                result.append(AppServers(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -107,30 +105,28 @@ class AppServersAPI(APIClient):
             ... print(f"Fetched app server by ID: {fetched_server.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """)
+        """
+        )
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AppServers)
+        response, error = self._request_executor.execute(request, AppServers)
         if error:
             return (None, response, error)
 
         try:
-            result = AppServers(
-                self.form_response_body(response.get_body())
-            )
+            result = AppServers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -165,29 +161,27 @@ class AppServersAPI(APIClient):
             ... print(f"app server created successfully: {new_portal.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
-            /server""")
+            /server"""
+        )
 
         body = kwargs
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AppServers)
+        response, error = self._request_executor.execute(request, AppServers)
         if error:
             return (None, response, error)
 
         try:
-            result = AppServers(
-                self.form_response_body(response.get_body())
-            )
+            result = AppServers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -216,10 +210,12 @@ class AppServersAPI(APIClient):
             ... print(f"application servers created successfully: {new_portal.as_dict()}")
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """)
+        """
+        )
 
         body = {}
 
@@ -229,13 +225,11 @@ class AppServersAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AppServers)
+        response, error = self._request_executor.execute(request, AppServers)
         if error:
             return (None, response, error)
 
@@ -245,18 +239,12 @@ class AppServersAPI(APIClient):
             return (AppServers({"id": server_id}), None, None)
 
         try:
-            result = AppServers(
-                self.form_response_body(response.get_body())
-            )
+            result = AppServers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_server(
-        self,
-        server_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_server(self, server_id: str, microtenant_id: str = None) -> tuple:
         """
         Delete the specified server.
 
@@ -277,20 +265,20 @@ class AppServersAPI(APIClient):
             ... print(f"application server with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /server/{server_id}
-        """)
+        """
+        )
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

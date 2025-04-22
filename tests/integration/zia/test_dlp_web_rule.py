@@ -54,9 +54,9 @@ class TestDLPWebRule:
             assert created_rule is not None, "DLP Web Rule creation returned None"
             rule_id = created_rule.id
         except Exception as exc:
-                errors.append(f"DLP Web Rule creation failed: {exc}")
+            errors.append(f"DLP Web Rule creation failed: {exc}")
 
-            # Step 4: Retrieve the DLP Web Rule by ID
+        # Step 4: Retrieve the DLP Web Rule by ID
         try:
             retrieved_rule, _, error = client.zia.dlp_web_rules.get_rule(rule_id)
             assert error is None, f"Error retrieving DLP Web Rule: {error}"

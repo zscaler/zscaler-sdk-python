@@ -31,87 +31,54 @@ class AppConnectorController(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
             self.enabled = config["enabled"] if "enabled" in config else True
-            self.fingerprint = config["fingerprint"]\
-                if "fingerprint" in config else None
-            self.current_version = config["currentVersion"]\
-                if "currentVersion" in config else None
-            self.previous_version = config["previousVersion"]\
-                if "previousVersion" in config else None
-            self.expected_version = config["expectedVersion"]\
-                if "expectedVersion" in config else None
-            self.upgrade_status = config["upgradeStatus"]\
-                if "upgradeStatus" in config else None
-            self.upgrade_attempt = config["upgradeAttempt"]\
-                if "upgradeAttempt" in config else 0
-            self.control_channel_status = config["controlChannelStatus"]\
-                if "controlChannelStatus" in config else None
-            self.private_ip = config["privateIp"]\
-                if "privateIp" in config else None
+            self.fingerprint = config["fingerprint"] if "fingerprint" in config else None
+            self.current_version = config["currentVersion"] if "currentVersion" in config else None
+            self.previous_version = config["previousVersion"] if "previousVersion" in config else None
+            self.expected_version = config["expectedVersion"] if "expectedVersion" in config else None
+            self.upgrade_status = config["upgradeStatus"] if "upgradeStatus" in config else None
+            self.upgrade_attempt = config["upgradeAttempt"] if "upgradeAttempt" in config else 0
+            self.control_channel_status = config["controlChannelStatus"] if "controlChannelStatus" in config else None
+            self.private_ip = config["privateIp"] if "privateIp" in config else None
             self.public_ip = config["publicIp"] if "publicIp" in config else None
-            self.latitude = config["latitude"]\
-                if "latitude" in config else None
-            self.longitude = config["longitude"]\
-                if "longitude" in config else None
-            self.location = config["location"]\
-                if "location" in config else None
-            self.provisioning_key_id = config["provisioningKeyId"]\
-                if "provisioningKeyId" in config else None
-            self.provisioning_key_name = config["provisioningKeyName"]\
-                if "provisioningKeyName" in config else None
-            self.app_connector_group_id = config["appConnectorGroupId"]\
-                if "appConnectorGroupId" in config else None
-            self.app_connector_group_name = config["appConnectorGroupName"]\
-                if "appConnectorGroupName" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.location = config["location"] if "location" in config else None
+            self.provisioning_key_id = config["provisioningKeyId"] if "provisioningKeyId" in config else None
+            self.provisioning_key_name = config["provisioningKeyName"] if "provisioningKeyName" in config else None
+            self.app_connector_group_id = config["appConnectorGroupId"] if "appConnectorGroupId" in config else None
+            self.app_connector_group_name = config["appConnectorGroupName"] if "appConnectorGroupName" in config else None
             self.platform = config["platform"] if "platform" in config else None
-            self.platform_detail = config["platformDetail"]\
-                if "platformDetail" in config else None
-            self.runtime_os = config["runtimeOS"]\
-                if "runtimeOS" in config else None
-            self.sarge_version = config["sargeVersion"]\
-                if "sargeVersion" in config else None
-            self.issued_cert_id = config["issuedCertId"]\
-                if "issuedCertId" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else 0
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else 0
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else 0
-            self.last_broker_connect_time = config["lastBrokerConnectTime"]\
-                if "lastBrokerConnectTime" in config else 0
-            self.last_broker_connect_time_duration = config["lastBrokerConnectTimeDuration"]\
-                if "lastBrokerConnectTimeDuration" in config else None
-            self.last_broker_disconnect_time = config["lastBrokerDisconnectTime"]\
-                if "lastBrokerDisconnectTime" in config else 0
-            self.last_broker_disconnect_time_duration = config["lastBrokerDisconnectTimeDuration"]\
-                if "lastBrokerDisconnectTimeDuration" in config else None
-            self.last_upgrade_time = config["lastUpgradeTime"]\
-                if "lastUpgradeTime" in config else 0
-            self.expected_upgrade_time = config["expectedUpgradeTime"]\
-                if "expectedUpgradeTime" in config else 0
-            self.ctrl_broker_name = config["ctrlBrokerName"]\
-                if "ctrlBrokerName" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
-            self.enrollment_cert = config["enrollmentCert"]\
-                if "enrollmentCert" in config else None
-            self.application_start_time = config["applicationStartTime"]\
-                if "applicationStartTime" in config else 0
-            self.ip_acl = config["ipAcl"]\
-                if "ipAcl" in config else []
-            self.zpn_sub_module_upgrade_list = config["zpnSubModuleUpgradeList"]\
-                if "zpnSubModuleUpgradeList" in config else []
-            self.assistant_version = config["assistantVersion"]\
-                if "assistantVersion" in config else {}
+            self.platform_detail = config["platformDetail"] if "platformDetail" in config else None
+            self.runtime_os = config["runtimeOS"] if "runtimeOS" in config else None
+            self.sarge_version = config["sargeVersion"] if "sargeVersion" in config else None
+            self.issued_cert_id = config["issuedCertId"] if "issuedCertId" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else 0
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else 0
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else 0
+            self.last_broker_connect_time = config["lastBrokerConnectTime"] if "lastBrokerConnectTime" in config else 0
+            self.last_broker_connect_time_duration = (
+                config["lastBrokerConnectTimeDuration"] if "lastBrokerConnectTimeDuration" in config else None
+            )
+            self.last_broker_disconnect_time = (
+                config["lastBrokerDisconnectTime"] if "lastBrokerDisconnectTime" in config else 0
+            )
+            self.last_broker_disconnect_time_duration = (
+                config["lastBrokerDisconnectTimeDuration"] if "lastBrokerDisconnectTimeDuration" in config else None
+            )
+            self.last_upgrade_time = config["lastUpgradeTime"] if "lastUpgradeTime" in config else 0
+            self.expected_upgrade_time = config["expectedUpgradeTime"] if "expectedUpgradeTime" in config else 0
+            self.ctrl_broker_name = config["ctrlBrokerName"] if "ctrlBrokerName" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.enrollment_cert = config["enrollmentCert"] if "enrollmentCert" in config else None
+            self.application_start_time = config["applicationStartTime"] if "applicationStartTime" in config else 0
+            self.ip_acl = config["ipAcl"] if "ipAcl" in config else []
+            self.zpn_sub_module_upgrade_list = config["zpnSubModuleUpgradeList"] if "zpnSubModuleUpgradeList" in config else []
+            self.assistant_version = config["assistantVersion"] if "assistantVersion" in config else {}
         else:
             self.id = None
             self.name = None

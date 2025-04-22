@@ -34,22 +34,17 @@ class ZdxGroupEntitlements(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.collect_zdx_location = config["collectZdxLocation"] \
-                if "collectZdxLocation" in config else None
-            self.compute_device_groups_for_zdx = config["computeDeviceGroupsForZDX"] \
-                if "computeDeviceGroupsForZDX" in config else None
-            self.logout_zcc_for_zdx_service = config["logoutZCCForZDXService"] \
-                if "logoutZCCForZDXService" in config else None
-            self.total_count = config["totalCount"] \
-                if "totalCount" in config else None
+            self.collect_zdx_location = config["collectZdxLocation"] if "collectZdxLocation" in config else None
+            self.compute_device_groups_for_zdx = (
+                config["computeDeviceGroupsForZDX"] if "computeDeviceGroupsForZDX" in config else None
+            )
+            self.logout_zcc_for_zdx_service = config["logoutZCCForZDXService"] if "logoutZCCForZDXService" in config else None
+            self.total_count = config["totalCount"] if "totalCount" in config else None
             self.upm_device_group_list = ZscalerCollection.form_list(
                 config["upmDeviceGroupList"] if "upmDeviceGroupList" in config else [], str
             )
-            self.upm_enable_for_all = config["upmEnableForAll"] \
-                if "upmEnableForAll" in config else None
-            self.upm_group_list = ZscalerCollection.form_list(
-                config["upmGroupList"] if "upmGroupList" in config else [], str
-            )
+            self.upm_enable_for_all = config["upmEnableForAll"] if "upmEnableForAll" in config else None
+            self.upm_group_list = ZscalerCollection.form_list(config["upmGroupList"] if "upmGroupList" in config else [], str)
         else:
             self.collect_zdx_location = None
             self.compute_device_groups_for_zdx = None
@@ -71,7 +66,7 @@ class ZdxGroupEntitlements(ZscalerObject):
             "totalCount": self.total_count,
             "upmDeviceGroupList": self.upm_device_group_list,
             "upmEnableForAll": self.upm_enable_for_all,
-            "upmGroupList": self.upm_group_list
+            "upmGroupList": self.upm_group_list,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

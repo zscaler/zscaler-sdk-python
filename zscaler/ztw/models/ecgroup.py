@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import common as common
 
+
 class ECGroup(ZscalerObject):
     """
     A class for Ecgroup objects.
@@ -33,32 +34,19 @@ class ECGroup(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.desc = config["desc"] \
-                if "desc" in config else None
-            self.deploy_type = config["deployType"] \
-                if "deployType" in config else None
-            self.status = ZscalerCollection.form_list(
-                config["status"] if "status" in config else [], str
-            )
-            self.platform = config["platform"] \
-                if "platform" in config else None
-            self.aws_availability_zone = config["awsAvailabilityZone"] \
-                if "awsAvailabilityZone" in config else None
-            self.azure_availability_zone = config["azureAvailabilityZone"] \
-                if "azureAvailabilityZone" in config else None
-            self.max_ec_count = config["maxEcCount"] \
-                if "maxEcCount" in config else None
-            self.tunnel_mode = config["tunnelMode"] \
-                if "tunnelMode" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.desc = config["desc"] if "desc" in config else None
+            self.deploy_type = config["deployType"] if "deployType" in config else None
+            self.status = ZscalerCollection.form_list(config["status"] if "status" in config else [], str)
+            self.platform = config["platform"] if "platform" in config else None
+            self.aws_availability_zone = config["awsAvailabilityZone"] if "awsAvailabilityZone" in config else None
+            self.azure_availability_zone = config["azureAvailabilityZone"] if "azureAvailabilityZone" in config else None
+            self.max_ec_count = config["maxEcCount"] if "maxEcCount" in config else None
+            self.tunnel_mode = config["tunnelMode"] if "tunnelMode" in config else None
 
-            self.ec_vms = ZscalerCollection.form_list(
-                config["ecVMs"] if "ecVMs" in config else [], ECVMS
-            )
-            
+            self.ec_vms = ZscalerCollection.form_list(config["ecVMs"] if "ecVMs" in config else [], ECVMS)
+
             if "location" in config:
                 if isinstance(config["location"], common.CommonIDNameExternalID):
                     self.location = config["location"]
@@ -112,11 +100,12 @@ class ECGroup(ZscalerObject):
             "maxEcCount": self.max_ec_count,
             "provTemplate": self.prov_template,
             "tunnelMode": self.tunnel_mode,
-            "ecVMs": self.ec_v_ms
+            "ecVMs": self.ec_v_ms,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ECVMS(ZscalerObject):
     """
     A class for ECVMS objects.
@@ -148,7 +137,9 @@ class ECVMS(ZscalerObject):
             else:
                 self.management_nw = None
 
-            self.ec_instances = ZscalerCollection.form_list(config["ecInstances"] if "ecInstances" in config else [], EcInstance)
+            self.ec_instances = ZscalerCollection.form_list(
+                config["ecInstances"] if "ecInstances" in config else [], EcInstance
+            )
 
             self.city_geo_id = config["cityGeoId"] if "cityGeoId" in config else None
             self.nat_ip = config["natIp"] if "natIp" in config else None
@@ -202,7 +193,7 @@ class ECVMS(ZscalerObject):
             "upgradeStatus": self.upgrade_status,
             "upgradeStartTime": self.upgrade_start_time,
             "upgradeEndTime": self.upgrade_end_time,
-            "upgradeDayOfWeek": self.upgrade_day_of_week
+            "upgradeDayOfWeek": self.upgrade_day_of_week,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -231,6 +222,7 @@ class EcInstance(ZscalerObject):
             self.instance_type = None
             self.service_ips = None
 
+
 class ManagementNW(ZscalerObject):
     """
     A class for ManagementNW objects.
@@ -252,7 +244,6 @@ class ManagementNW(ZscalerObject):
             self.netmask = config["netmask"] if "netmask" in config else None
             self.default_gateway = config["defaultGateway"] if "defaultGateway" in config else None
             self.nw_type = config["nwType"] if "nwType" in config else None
-
 
             if "dns" in config:
                 if isinstance(config["dns"], DNS):
@@ -289,7 +280,8 @@ class ManagementNW(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DNS(ZscalerObject):
     """
     A class for DNS objects.
@@ -307,9 +299,7 @@ class DNS(ZscalerObject):
         if config:
             self.id = config["id"] if "id" in config else None
             self.dns_type = config["dnsType"] if "dnsType" in config else None
-            self.ips = ZscalerCollection.form_list(
-                config["ips"] if "ips" in config else [], str
-            )
+            self.ips = ZscalerCollection.form_list(config["ips"] if "ips" in config else [], str)
 
         else:
             self.id = None
@@ -328,7 +318,8 @@ class DNS(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ECInstances(ZscalerObject):
     """
     A class for ECInstances objects.
@@ -350,7 +341,6 @@ class ECInstances(ZscalerObject):
             self.nat_ip = config["natIp"] if "natIp" in config else None
             self.dns_ip = config["dnsIp"] if "dnsIp" in config else None
             self.nw_type = config["nwType"] if "nwType" in config else None
-
 
             if "serviceIps" in config:
                 if isinstance(config["serviceIps"], ServiceIPs):
@@ -396,6 +386,7 @@ class ECInstances(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class ServiceIPs(ZscalerObject):
     """
     A class for ServiceIPs objects.
@@ -429,7 +420,8 @@ class ServiceIPs(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class LBIPAddr(ZscalerObject):
     """
     A class for LBIPAddr objects.

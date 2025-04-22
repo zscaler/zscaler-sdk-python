@@ -25,24 +25,17 @@ class PrivilegedRemoteAccessCredential(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.user_domain = config["userDomain"]\
-                if "userDomain" in config else None
-            self.user_name = config["userName"]\
-                if "userName" in config else None
-            self.credential_type = config["credentialType"]\
-                if "credentialType" in config else None
-            self.last_credential_reset_time = config["lastCredentialResetTime"]\
-                if "lastCredentialResetTime" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.user_domain = config["userDomain"] if "userDomain" in config else None
+            self.user_name = config["userName"] if "userName" in config else None
+            self.credential_type = config["credentialType"] if "credentialType" in config else None
+            self.last_credential_reset_time = (
+                config["lastCredentialResetTime"] if "lastCredentialResetTime" in config else None
+            )
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
         else:
             self.id = None
             self.name = None

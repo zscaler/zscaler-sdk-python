@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
 from zscaler.zwa.models import incident_details as incident_details
 
+
 class IncidentSearch(ZscalerObject):
     """
     A class for IncidentSearch objects.
@@ -44,9 +45,7 @@ class IncidentSearch(ZscalerObject):
             else:
                 self.cursor = None
 
-            self.incidents = ZscalerCollection.form_list(
-                config["incidents"] if "incidents" in config else [], Incidents
-            )
+            self.incidents = ZscalerCollection.form_list(config["incidents"] if "incidents" in config else [], Incidents)
         else:
             self.cursor = None
             self.incidents = ZscalerCollection.form_list([], str)
@@ -56,13 +55,11 @@ class IncidentSearch(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "cursor": self.cursor,
-            "incidents": self.incidents
-        }
+        current_obj_format = {"cursor": self.cursor, "incidents": self.incidents}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Incidents(ZscalerObject):
     """
     A class for Incidents objects.
@@ -80,7 +77,7 @@ class Incidents(ZscalerObject):
         if config:
             self.incidents = ZscalerCollection.form_list(
                 config["incidents"] if "incidents" in config else [], incident_details.IncidentDLPDetails
-            )              
+            )
         else:
             self.incidents = None
 

@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.advanced_threat_settings import AdvancedThreatProtectionSettings
 from zscaler.utils import format_url
 
+
 class ATPPolicyAPI(APIClient):
     """
     A Client object for the Advanced Threat Protection Policy resource.
@@ -60,9 +61,7 @@ class ATPPolicyAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
@@ -85,7 +84,7 @@ class ATPPolicyAPI(APIClient):
         This method pushes updated advanced threat protection policy settings.
 
         Args:
-            settings (:obj:`AdvancedThreatProtectionSettings`): 
+            settings (:obj:`AdvancedThreatProtectionSettings`):
                 An instance of `AdvancedThreatProtectionSettings` containing the updated configuration.
 
                 Supported attributes:
@@ -155,16 +154,12 @@ class ATPPolicyAPI(APIClient):
 
         payload = settings.request_format()
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url, payload
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, payload)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -196,13 +191,11 @@ class ATPPolicyAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -213,7 +206,7 @@ class ATPPolicyAPI(APIClient):
             return (bypass_urls, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def update_atp_security_exceptions(self, bypass_urls: list[str]) -> tuple:
         """
         Updates the list of bypassed URLs in ATP security exceptions.
@@ -247,13 +240,11 @@ class ATPPolicyAPI(APIClient):
 
         payload = {"bypassUrls": bypass_urls}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload)
+        request, error = self._request_executor.create_request(http_method, api_url, payload)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -289,13 +280,11 @@ class ATPPolicyAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url)
+        request, error = self._request_executor.create_request(http_method, api_url)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -306,7 +295,7 @@ class ATPPolicyAPI(APIClient):
             return (malicious_urls, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def add_atp_malicious_urls(self, malicious_urls: list) -> tuple:
         """
         Adds the provided malicious URLs to the deny list.
@@ -345,26 +334,24 @@ class ATPPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, payload, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         return self.get_atp_malicious_urls()
-    
+
     def delete_atp_malicious_urls(self, malicious_urls: list) -> tuple:
         """
         Removes the specified malicious URLs from the deny list.
 
         Note:
-            The malicious_urls list must include at least one URL already present in the deny list. 
+            The malicious_urls list must include at least one URL already present in the deny list.
             The API does not allow an empty list.
 
         Args:
@@ -401,14 +388,12 @@ class ATPPolicyAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, payload, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)

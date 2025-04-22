@@ -20,6 +20,7 @@ from tests.integration.zia.conftest import MockZIAClient
 from tests.test_utils import generate_random_password, generate_random_string
 import time
 
+
 @pytest.fixture
 def fs():
     yield
@@ -42,7 +43,7 @@ class TestUsers:
         try:
             # Step 1: Retrieve department
             try:
-                departments, _, error = client.zia.user_management.list_departments(query_params={'search': 'A000'})
+                departments, _, error = client.zia.user_management.list_departments(query_params={"search": "A000"})
                 assert error is None, f"Department listing error: {error}"
                 department = next((d for d in departments if hasattr(d, "id")), None)
                 assert department, "No valid departments available for assignment"
@@ -52,7 +53,7 @@ class TestUsers:
 
             # Step 2: Retrieve group
             try:
-                groups, _, error = client.zia.user_management.list_groups(query_params={'search': 'A000'})
+                groups, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
                 assert error is None, f"Group listing error: {error}"
                 group = next((g for g in groups if hasattr(g, "id")), None)
                 assert group, "No valid groups available for assignment"
@@ -102,7 +103,9 @@ class TestUsers:
                         department={"id": department_id},
                     )
                     assert error is None, f"User update error: {error}"
-                    assert updated_user and updated_user.comments == "Updated test user via integration test", "Update verification failed"
+                    assert (
+                        updated_user and updated_user.comments == "Updated test user via integration test"
+                    ), "Update verification failed"
                 except Exception as exc:
                     errors.append(f"Updating user account failed: {exc}")
 

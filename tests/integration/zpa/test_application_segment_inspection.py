@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import time
 import pytest
 
@@ -79,10 +78,7 @@ class TestApplicationSegmentInspection:
             #
             try:
                 segment_group_name = "tests-" + generate_random_string()
-                created_segment_group, resp, err = client.zpa.segment_groups.add_group(
-                    name=segment_group_name,
-                    enabled=True
-                )
+                created_segment_group, resp, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 assert created_segment_group is not None, "No segment group data returned"
 
@@ -191,7 +187,7 @@ class TestApplicationSegmentInspection:
 
         finally:
             cleanup_errors = []
-            
+
             time.sleep(5)
             if app_segment_id:
                 try:

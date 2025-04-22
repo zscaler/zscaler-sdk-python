@@ -39,7 +39,7 @@ class TestServerGroup:
 
         group_name = "tests-" + generate_random_string()
         group_description = "tests-" + generate_random_string()
-        
+
         try:
             # Create the App Connector Group
             created_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
@@ -66,8 +66,12 @@ class TestServerGroup:
             assert created_connector_group.description == group_description
 
             # Debugging: Check if the `enabled` field exists
-            assert "enabled" in created_connector_group.__dict__, f"'enabled' field missing in response: {created_connector_group.__dict__}"
-            assert created_connector_group.enabled is True, f"Expected 'enabled' to be True, got: {created_connector_group.enabled}"
+            assert (
+                "enabled" in created_connector_group.__dict__
+            ), f"'enabled' field missing in response: {created_connector_group.__dict__}"
+            assert (
+                created_connector_group.enabled is True
+            ), f"Expected 'enabled' to be True, got: {created_connector_group.enabled}"
 
             connector_group_id = created_connector_group.id  # Capture the group_id for later use
         except Exception as exc:
@@ -79,7 +83,7 @@ class TestServerGroup:
                 name=group_name,
                 description=group_description,
                 dynamic_discovery=True,
-                app_connector_group_ids=[connector_group_id]  # Pass the connector group ID
+                app_connector_group_ids=[connector_group_id],  # Pass the connector group ID
             )
             assert err is None, f"Error creating server group: {err}"
             assert created_server_group is not None
@@ -87,7 +91,9 @@ class TestServerGroup:
             assert created_server_group.description == group_description
 
             # Debugging: Check if the `enabled` field exists in the server group
-            assert "enabled" in created_server_group.__dict__, f"'enabled' field missing in response: {created_server_group.__dict__}"
+            assert (
+                "enabled" in created_server_group.__dict__
+            ), f"'enabled' field missing in response: {created_server_group.__dict__}"
             assert created_server_group.enabled is True, f"Expected 'enabled' to be True, got: {created_server_group.enabled}"
 
             server_group_id = created_server_group.id
@@ -117,7 +123,7 @@ class TestServerGroup:
                 assert any(group.id == server_group_id for group in groups_list)
         except Exception as exc:
             errors.append(f"Server group operation failed: {exc}")
-                            
+
         finally:
             # Cleanup - delete the server group first, then the app connector group
             cleanup_errors = []

@@ -32,7 +32,7 @@ class IncidentGroupSearch(ZscalerObject):
             config (dict): A dictionary representing the configuration.
         """
         super().__init__(config)
-            
+
         if config:
             self.incident_groups = ZscalerCollection.form_list(
                 config["incidentGroups"] if "incidentGroups" in config else [], common.IncidentGroups

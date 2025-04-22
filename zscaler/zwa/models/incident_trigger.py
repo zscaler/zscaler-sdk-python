@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class IncidentTrigger(ZscalerObject):
     """
     A class for IncidentTrigger objects.
@@ -39,8 +40,6 @@ class IncidentTrigger(ZscalerObject):
         Returns the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "triggers": self.triggers
-        }
+        current_obj_format = {"triggers": self.triggers}
         parent_req_format.update(current_obj_format)
         return parent_req_format

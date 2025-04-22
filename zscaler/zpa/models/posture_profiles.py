@@ -33,44 +33,32 @@ class PostureProfile(ZscalerObject):
         super().__init__(config)
         if config:
             # Handle optional fields
-            self.id = config["id"]\
-                if config and "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if config and "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if config and "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if config and "modifiedBy" in config else None
-            self.name = config["name"]\
-                if config and "name" in config else None
-            self.posture_udid = config["postureUdid"]\
-                if config and "postureUdid" in config else None
+            self.id = config["id"] if config and "id" in config else None
+            self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+            self.name = config["name"] if config and "name" in config else None
+            self.posture_udid = config["postureUdid"] if config and "postureUdid" in config else None
 
-            self.apply_to_machine_tunnel_enabled = config["applyToMachineTunnelEnabled"]\
-                if config and "applyToMachineTunnelEnabled" in config else False
-            self.crl_check_enabled = config["crlCheckEnabled"]\
-                if config and "crlCheckEnabled" in config else False
-            self.non_exportable_private_key_enabled = config["nonExportablePrivateKeyEnabled"]\
-                if config and "nonExportablePrivateKeyEnabled" in config else False
-
-            self.root_cert = config["rootCert"]\
-                if config and "rootCert" in config else None
-
-            self.posture_type = config["postureType"]\
-                if config and "postureType" in config else None
-
-            self.zscaler_cloud = config["zscalerCloud"]\
-                if config and "zscalerCloud" in config else None
-
-            self.master_customer_id = config["masterCustomerId"]\
-                if config and "masterCustomerId" in config else None
-
-            self.zscaler_customer_id = config["zscalerCustomerId"]\
-                if config and "zscalerCustomerId" in config else None
-
-            self.platform = ZscalerCollection.form_list(
-                config["platform"] if "platform" in config else [], str
+            self.apply_to_machine_tunnel_enabled = (
+                config["applyToMachineTunnelEnabled"] if config and "applyToMachineTunnelEnabled" in config else False
             )
+            self.crl_check_enabled = config["crlCheckEnabled"] if config and "crlCheckEnabled" in config else False
+            self.non_exportable_private_key_enabled = (
+                config["nonExportablePrivateKeyEnabled"] if config and "nonExportablePrivateKeyEnabled" in config else False
+            )
+
+            self.root_cert = config["rootCert"] if config and "rootCert" in config else None
+
+            self.posture_type = config["postureType"] if config and "postureType" in config else None
+
+            self.zscaler_cloud = config["zscalerCloud"] if config and "zscalerCloud" in config else None
+
+            self.master_customer_id = config["masterCustomerId"] if config and "masterCustomerId" in config else None
+
+            self.zscaler_customer_id = config["zscalerCustomerId"] if config and "zscalerCustomerId" in config else None
+
+            self.platform = ZscalerCollection.form_list(config["platform"] if "platform" in config else [], str)
 
         else:
             self.id = None

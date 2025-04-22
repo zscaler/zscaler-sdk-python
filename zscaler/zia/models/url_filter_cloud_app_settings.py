@@ -33,46 +33,34 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.enable_dynamic_content_cat = config["enableDynamicContentCat"] \
-                if "enableDynamicContentCat" in config else False
-            self.consider_embedded_sites = config["considerEmbeddedSites"] \
-                if "considerEmbeddedSites" in config else False
-            self.enforce_safe_search = config["enforceSafeSearch"] \
-                if "enforceSafeSearch" in config else False
-            self.enable_office365 = config["enableOffice365"] \
-                if "enableOffice365" in config else False
-            self.enable_msft_o365 = config["enableMsftO365"] \
-                if "enableMsftO365" in config else False
-            self.enable_ucaas_zoom = config["enableUcaasZoom"] \
-                if "enableUcaasZoom" in config else False
-            self.enable_ucaas_log_me_in = config["enableUcaasLogMeIn"] \
-                if "enableUcaasLogMeIn" in config else False
-            self.enable_ucaas_ring_central = config["enableUcaasRingCentral"] \
-                if "enableUcaasRingCentral" in config else False
-            self.enable_ucaas_webex = config["enableUcaasWebex"] \
-                if "enableUcaasWebex" in config else False
-            self.enable_ucaas_talkdesk = config["enableUcaasTalkdesk"] \
-                if "enableUcaasTalkdesk" in config else False
-            self.enable_chat_gpt_prompt = config["enableChatGptPrompt"] \
-                if "enableChatGptPrompt" in config else False
-            self.enable_microsoft_copilot_prompt = config["enableMicrosoftCoPilotPrompt"] \
-                if "enableMicrosoftCoPilotPrompt" in config else False
-            self.enable_gemini_prompt = config["enableGeminiPrompt"] \
-                if "enableGeminiPrompt" in config else False
-            self.enable_poe_prompt = config["enablePOEPrompt"] \
-                if "enablePOEPrompt" in config else False
-            self.enable_meta_prompt = config["enableMetaPrompt"] \
-                if "enableMetaPrompt" in config else False
-            self.enable_perplexity_prompt = config["enablePerPlexityPrompt"] \
-                if "enablePerPlexityPrompt" in config else False
-            self.block_skype = config["blockSkype"] \
-                if "blockSkype" in config else False
-            self.enable_newly_registered_domains = config["enableNewlyRegisteredDomains"] \
-                if "enableNewlyRegisteredDomains" in config else False
-            self.enable_block_override_for_non_auth_user = config["enableBlockOverrideForNonAuthUser"] \
-                if "enableBlockOverrideForNonAuthUser" in config else False
-            self.enable_cipa_compliance = config["enableCIPACompliance"] \
-                if "enableCIPACompliance" in config else False
+            self.enable_dynamic_content_cat = (
+                config["enableDynamicContentCat"] if "enableDynamicContentCat" in config else False
+            )
+            self.consider_embedded_sites = config["considerEmbeddedSites"] if "considerEmbeddedSites" in config else False
+            self.enforce_safe_search = config["enforceSafeSearch"] if "enforceSafeSearch" in config else False
+            self.enable_office365 = config["enableOffice365"] if "enableOffice365" in config else False
+            self.enable_msft_o365 = config["enableMsftO365"] if "enableMsftO365" in config else False
+            self.enable_ucaas_zoom = config["enableUcaasZoom"] if "enableUcaasZoom" in config else False
+            self.enable_ucaas_log_me_in = config["enableUcaasLogMeIn"] if "enableUcaasLogMeIn" in config else False
+            self.enable_ucaas_ring_central = config["enableUcaasRingCentral"] if "enableUcaasRingCentral" in config else False
+            self.enable_ucaas_webex = config["enableUcaasWebex"] if "enableUcaasWebex" in config else False
+            self.enable_ucaas_talkdesk = config["enableUcaasTalkdesk"] if "enableUcaasTalkdesk" in config else False
+            self.enable_chat_gpt_prompt = config["enableChatGptPrompt"] if "enableChatGptPrompt" in config else False
+            self.enable_microsoft_copilot_prompt = (
+                config["enableMicrosoftCoPilotPrompt"] if "enableMicrosoftCoPilotPrompt" in config else False
+            )
+            self.enable_gemini_prompt = config["enableGeminiPrompt"] if "enableGeminiPrompt" in config else False
+            self.enable_poe_prompt = config["enablePOEPrompt"] if "enablePOEPrompt" in config else False
+            self.enable_meta_prompt = config["enableMetaPrompt"] if "enableMetaPrompt" in config else False
+            self.enable_perplexity_prompt = config["enablePerPlexityPrompt"] if "enablePerPlexityPrompt" in config else False
+            self.block_skype = config["blockSkype"] if "blockSkype" in config else False
+            self.enable_newly_registered_domains = (
+                config["enableNewlyRegisteredDomains"] if "enableNewlyRegisteredDomains" in config else False
+            )
+            self.enable_block_override_for_non_auth_user = (
+                config["enableBlockOverrideForNonAuthUser"] if "enableBlockOverrideForNonAuthUser" in config else False
+            )
+            self.enable_cipa_compliance = config["enableCIPACompliance"] if "enableCIPACompliance" in config else False
         else:
             self.enable_dynamic_content_cat = False
             self.consider_embedded_sites = False
@@ -120,7 +108,7 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
             "blockSkype": self.block_skype,
             "enableNewlyRegisteredDomains": self.enable_newly_registered_domains,
             "enableBlockOverrideForNonAuthUser": self.enable_block_override_for_non_auth_user,
-            "enableCIPACompliance": self.enable_cipa_compliance
+            "enableCIPACompliance": self.enable_cipa_compliance,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -30,6 +30,8 @@ from zscaler.zia.models import cloud_firewall_nw_service_groups as nw_service_gr
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 from zscaler.zia.models import common as common
 from zscaler.zia.models import common as common
+
+
 class FirewallIPSrules(ZscalerObject):
     """
     A class for FirewallIPSrules objects.
@@ -45,28 +47,17 @@ class FirewallIPSrules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.action = config["action"] \
-                if "action" in config else None
-            self.capture_pcap = config["capturePCAP"] \
-                if "capturePCAP" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] \
-                if "lastModifiedBy" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.capture_pcap = config["capturePCAP"] if "capturePCAP" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
 
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
@@ -77,18 +68,14 @@ class FirewallIPSrules(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
             self.time_windows = ZscalerCollection.form_list(
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str
-            )
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
             self.src_ip_groups = ZscalerCollection.form_list(
                 config["srcIpGroups"] if config and "srcIpGroups" in config else [], source_groups.IPSourceGroup
             )
@@ -122,29 +109,22 @@ class FirewallIPSrules(ZscalerObject):
             self.nw_service_groups = ZscalerCollection.form_list(
                 config["nwServiceGroups"] if "nwServiceGroups" in config else [], nw_service_groups.NetworkServiceGroups
             )
-            
+
             self.threat_categories = ZscalerCollection.form_list(
                 config["threatCategories"] if "threatCategories" in config else [], common.CommonIDNameTag
             )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
             # Reuse the external ZPAAppSegment class
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common.ResourceReference
             )
-            self.enable_full_logging = config["enableFullLogging"] \
-                if "enableFullLogging" in config else None
-            self.predefined = config["predefined"] \
-                if "predefined" in config else False
-            self.default_rule = config["defaultRule"] \
-                if "defaultRule" in config else False
+            self.enable_full_logging = config["enableFullLogging"] if "enableFullLogging" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else False
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else False
         else:
             self.access_control = None
             self.id = None
@@ -226,7 +206,7 @@ class FirewallIPSrules(ZscalerObject):
             "zpaAppSegments": [zpa.request_format() for zpa in (self.zpa_app_segments or [])],
             "enableFullLogging": self.enable_full_logging,
             "predefined": self.predefined,
-            "defaultRule": self.default_rule
+            "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

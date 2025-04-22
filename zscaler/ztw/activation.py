@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.activation import Activation
 from zscaler.utils import format_url
 
+
 class ActivationAPI(APIClient):
     """
     A Client object for the Activation resource.
@@ -60,15 +61,12 @@ class ActivationAPI(APIClient):
         api_url = format_url(f"{self._ztw_base_endpoint}{endpoint_path}")
 
         # Create the request
-        request, error = self._request_executor.create_request(
-            http_method, api_url, body={}, headers={}, params={}
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
         if error:
             return (None, None, error)
 
         # Execute the request and parse the response using the Activation model
-        response, error = self._request_executor.\
-            execute(request, Activation)
+        response, error = self._request_executor.execute(request, Activation)
         if error:
             return (None, response, error)
 
@@ -100,16 +98,12 @@ class ActivationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)

@@ -39,7 +39,8 @@ class TrafficStaticIPAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.available_for_gre_tunnel]`` {bool}: The type of VPN credential. Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
+                ``[query_params.available_for_gre_tunnel]`` {bool}: The type of VPN credential.
+                    Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
                 ``[query_params.ip_address]`` {str}: Include VPN credential only if not associated with any location.
 
         Returns:
@@ -63,24 +64,24 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /staticIP
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -88,8 +89,7 @@ class TrafficStaticIPAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(TrafficStaticIP(self.form_response_body(item))
-            )
+                result.append(TrafficStaticIP(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -110,30 +110,28 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /staticIP/{static_ip_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, TrafficStaticIP)
+        response, error = self._request_executor.execute(request, TrafficStaticIP)
 
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficStaticIP(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficStaticIP(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -178,15 +176,16 @@ class TrafficStaticIPAPI(APIClient):
             ... print(f"static_ip added successfully: {added_static_ip.as_dict()}")
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /staticIP
-        """)
+        """
+        )
 
         body = kwargs
-        
-        request, error = self._request_executor\
-            .create_request(
+
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -195,15 +194,12 @@ class TrafficStaticIPAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, TrafficStaticIP)
+        response, error = self._request_executor.execute(request, TrafficStaticIP)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficStaticIP(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficStaticIP(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -244,8 +240,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, None, ValueError("The IP address cannot be updated once it is set."))
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -255,15 +250,12 @@ class TrafficStaticIPAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, TrafficStaticIP)
+        response, error = self._request_executor.execute(request, TrafficStaticIP)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficStaticIP(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficStaticIP(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -284,20 +276,20 @@ class TrafficStaticIPAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""{
+        api_url = format_url(
+            f"""{
             self._zia_base_endpoint}
             /staticIP/{static_ip_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -323,17 +315,18 @@ class TrafficStaticIPAPI(APIClient):
         """
         # Define the HTTP method and API endpoint
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /staticIP/validate
-        """)
+        """
+        )
 
         # Create the payload with the IP address
         payload = {"ipAddress": ip_address}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(method=http_method, endpoint=api_url, body=payload)
+        request, error = self._request_executor.create_request(method=http_method, endpoint=api_url, body=payload)
 
         if error:
             return (False, None, error)

@@ -443,7 +443,7 @@ class LegacyZTWClientHelper:
         from zscaler.ztw.nw_service import NWServiceAPI
 
         return NWServiceAPI(self.request_executor)
-                            
+
     """
     Misc
     """

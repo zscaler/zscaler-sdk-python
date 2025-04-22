@@ -69,31 +69,23 @@ class PRACredentialAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(PrivilegedRemoteAccessCredential(
-                    self.form_response_body(item))
-                )
+                result.append(PrivilegedRemoteAccessCredential(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_credential(
-        self,
-        credential_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_credential(self, credential_id: str, query_params=None) -> tuple:
         """
         Returns information on the specified privileged remote access credential.
 
@@ -125,20 +117,16 @@ class PRACredentialAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessCredential)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessCredential)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessCredential(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessCredential(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -209,29 +197,21 @@ class PRACredentialAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessCredential)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessCredential)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessCredential(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessCredential(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_credential(
-        self,
-        credential_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_credential(self, credential_id: str, **kwargs) -> tuple:
         """
         Updates a specified credential based on provided keyword arguments.
 
@@ -295,13 +275,11 @@ class PRACredentialAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, PrivilegedRemoteAccessCredential)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessCredential)
         if error:
             return (None, response, error)
 
@@ -309,18 +287,12 @@ class PRACredentialAPI(APIClient):
             return (PrivilegedRemoteAccessCredential({"id": credential_id}), None, None)
 
         try:
-            result = PrivilegedRemoteAccessCredential(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessCredential(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_credential(
-        self,
-        credential_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_credential(self, credential_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified privileged remote access credential.
 
@@ -350,22 +322,16 @@ class PRACredentialAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
 
-    def credential_move(
-        self,
-        credential_id: str,
-        query_params=None
-    ) -> tuple:
+    def credential_move(self, credential_id: str, query_params=None) -> tuple:
         """
         Moves privileged remote access credentials between parent tenant and microtenants.
 
@@ -408,13 +374,11 @@ class PRACredentialAPI(APIClient):
         if "microtenant_id" in query_params:
             query_params["microtenantId"] = query_params.pop("microtenant_id")
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, str)
+        response, error = self._request_executor.execute(request, str)
         if error:
             return (None, response, error)
 

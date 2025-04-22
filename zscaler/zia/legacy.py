@@ -158,7 +158,7 @@ class LegacyZIAClientHelper:
     def is_session_expired(self):
         """
         Checks whether the current session is expired.
-        
+
         Returns:
             bool: True if the session is expired or if the session details are missing.
         """
@@ -418,8 +418,9 @@ class LegacyZIAClientHelper:
 
         """
         from zscaler.zia.cloud_browser_isolation import CBIProfileAPI
+
         return CBIProfileAPI(self.request_executor)
-    
+
     @property
     def cloud_nss(self):
         """
@@ -767,7 +768,7 @@ class LegacyZIAClientHelper:
         from zscaler.zia.system_audit import SystemAuditReportAPI
 
         return SystemAuditReportAPI(self.request_executor)
-    
+
     @property
     def iot_report(self):
         """
@@ -776,8 +777,7 @@ class LegacyZIAClientHelper:
         """
         from zscaler.zia.iot_report import IOTReportAPI
 
-        return IOTReportAPI(self.request_executor)  
-    
+        return IOTReportAPI(self.request_executor)
 
     """
     Misc

@@ -14,11 +14,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zia.models import admin_roles\
-    as admin_roles
+from zscaler.zia.models import admin_roles as admin_roles
+
 
 class AdminUser(ZscalerObject):
     """
@@ -28,58 +27,50 @@ class AdminUser(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-                
-            self.login_name = config["loginName"]\
-                if "loginName" in config else None
-                
-            self.user_name = config["userName"]\
-                if "userName" in config else None
-                
-            self.email = config["email"]\
-                if "email" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.comments = config["comments"]\
-                if "comments" in config else None
+            self.login_name = config["loginName"] if "loginName" in config else None
 
-            self.is_non_editable = config["isNonEditable"]\
-                if "isNonEditable" in config else False
+            self.user_name = config["userName"] if "userName" in config else None
 
-            self.disabled = config["disabled"]\
-                if "disabled" in config else False
+            self.email = config["email"] if "email" in config else None
 
-            self.is_auditor = config["isAuditor"]\
-                if "isAuditor" in config else False
+            self.comments = config["comments"] if "comments" in config else None
 
-            self.password = config["password"]\
-                if "password" in config else None
+            self.is_non_editable = config["isNonEditable"] if "isNonEditable" in config else False
 
-            self.is_password_login_allowed = config["isPasswordLoginAllowed"]\
-                if "isPasswordLoginAllowed" in config else False
+            self.disabled = config["disabled"] if "disabled" in config else False
 
-            self.is_security_report_comm_enabled = config["isSecurityReportCommEnabled"]\
-                if "isSecurityReportCommEnabled" in config else False
+            self.is_auditor = config["isAuditor"] if "isAuditor" in config else False
 
-            self.is_service_update_comm_enabled = config["isServiceUpdateCommEnabled"]\
-                if "isServiceUpdateCommEnabled" in config else False
+            self.password = config["password"] if "password" in config else None
 
-            self.is_product_update_comm_enabled = config["isProductUpdateCommEnabled"]\
-                if "isProductUpdateCommEnabled" in config else False
+            self.is_password_login_allowed = config["isPasswordLoginAllowed"] if "isPasswordLoginAllowed" in config else False
 
-            self.is_password_expired = config["isPasswordExpired"]\
-                if "isPasswordExpired" in config else False
+            self.is_security_report_comm_enabled = (
+                config["isSecurityReportCommEnabled"] if "isSecurityReportCommEnabled" in config else False
+            )
 
-            self.is_exec_mobile_app_enabled = config["isExecMobileAppEnabled"]\
-                if "isExecMobileAppEnabled" in config else False
+            self.is_service_update_comm_enabled = (
+                config["isServiceUpdateCommEnabled"] if "isServiceUpdateCommEnabled" in config else False
+            )
 
-            self.new_location_create_allowed = config["newLocationCreateAllowed"]\
-                if "newLocationCreateAllowed" in config else False
+            self.is_product_update_comm_enabled = (
+                config["isProductUpdateCommEnabled"] if "isProductUpdateCommEnabled" in config else False
+            )
+
+            self.is_password_expired = config["isPasswordExpired"] if "isPasswordExpired" in config else False
+
+            self.is_exec_mobile_app_enabled = config["isExecMobileAppEnabled"] if "isExecMobileAppEnabled" in config else False
+
+            self.new_location_create_allowed = (
+                config["newLocationCreateAllowed"] if "newLocationCreateAllowed" in config else False
+            )
 
             self.exec_mobile_app_tokens = ZscalerCollection.form_list(
                 config["execMobileAppTokens"] if "execMobileAppTokens" in config else [], ExecMobileAppTokens
             )
-                                                                                                     
+
             if "role" in config:
                 if isinstance(config["role"], admin_roles.AdminRoles):
                     self.role = config["role"]
@@ -99,8 +90,10 @@ class AdminUser(ZscalerObject):
                     self.admin_scope = None
             else:
                 self.admin_scope = None
-                
-            self.admin_scope_group_member_entities = config["adminScopescopeGroupMemberEntities"] if "adminScopescopeGroupMemberEntities" in config else []
+
+            self.admin_scope_group_member_entities = (
+                config["adminScopescopeGroupMemberEntities"] if "adminScopescopeGroupMemberEntities" in config else []
+            )
             self.admin_scope_type = config["adminScopeType"] if "adminScopeType" in config else None
             self.admin_scope_scope_entities = config["adminScopeScopeEntities"] if "adminScopeScopeEntities" in config else []
         else:
@@ -155,6 +148,7 @@ class AdminUser(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class AdminScope(ZscalerObject):
     """
     A class for AdminScope objects.
@@ -170,8 +164,7 @@ class AdminScope(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.type = config["Type"]\
-                if "Type" in config else None   
+            self.type = config["Type"] if "Type" in config else None
 
             self.scope_group_member_entities = ZscalerCollection.form_list(
                 config["scopeGroupMemberEntities"] if "scopeGroupMemberEntities" in config else [], ScopeGroupMemberEntities
@@ -179,7 +172,7 @@ class AdminScope(ZscalerObject):
             self.scope_entities = ZscalerCollection.form_list(
                 config["ScopeEntities"] if "ScopeEntities" in config else [], ScopeEntities
             )
-    
+
         else:
             self.scope_group_member_entities = []
 
@@ -193,7 +186,8 @@ class AdminScope(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ScopeGroupMemberEntities(ZscalerObject):
     """
     A class for ScopeGroupMemberEntities objects.
@@ -209,12 +203,9 @@ class ScopeGroupMemberEntities(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.external_id = config["externalId"]\
-                if "externalId" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
             self.extensions = config if isinstance(config, dict) else {}
 
         else:
@@ -236,7 +227,8 @@ class ScopeGroupMemberEntities(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ScopeEntities(ZscalerObject):
     """
     A class for ScopeEntities objects.
@@ -252,13 +244,10 @@ class ScopeEntities(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.external_id = config["externalId"]\
-                if "externalId" in config else None
-                   
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.external_id = config["externalId"] if "externalId" in config else None
+
             self.extensions = config if isinstance(config, dict) else {}
 
         else:
@@ -280,7 +269,8 @@ class ScopeEntities(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ExecMobileAppTokens(ZscalerObject):
     """
     A class for ExecMobileAppTokens objects.
@@ -296,24 +286,15 @@ class ExecMobileAppTokens(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cloud = config["cloud"]\
-                if "cloud" in config else None
-            self.org_id = config["orgId"]\
-                if "orgId" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.token_id = config["tokenId"]\
-                if "tokenId" in config else None
-            self.token = config["token"]\
-                if "token" in config else None
-            self.token_expiry = config["tokenExpiry"]\
-                if "tokenExpiry" in config else None
-            self.create_time = config["createTime"]\
-                if "createTime" in config else None
-            self.device_id = config["deviceId"]\
-                if "deviceId" in config else None
-            self.device_name = config["deviceName"]\
-                if "deviceName" in config else None
+            self.cloud = config["cloud"] if "cloud" in config else None
+            self.org_id = config["orgId"] if "orgId" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.token_id = config["tokenId"] if "tokenId" in config else None
+            self.token = config["token"] if "token" in config else None
+            self.token_expiry = config["tokenExpiry"] if "tokenExpiry" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
+            self.device_id = config["deviceId"] if "deviceId" in config else None
+            self.device_name = config["deviceName"] if "deviceName" in config else None
 
         else:
             self.cloud = None
@@ -325,7 +306,7 @@ class ExecMobileAppTokens(ZscalerObject):
             self.create_time = None
             self.device_id = None
             self.device_name = None
-                   
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

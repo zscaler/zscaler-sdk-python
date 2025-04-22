@@ -68,31 +68,23 @@ class PRAConsoleAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(PrivilegedRemoteAccessConsole(
-                    self.form_response_body(item))
-                )
+                result.append(PrivilegedRemoteAccessConsole(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_console(
-        self,
-        console_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_console(self, console_id: str, query_params=None) -> tuple:
         """
         Returns information on a specific PRA console.
 
@@ -124,29 +116,21 @@ class PRAConsoleAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessConsole)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessConsole)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessConsole(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessConsole(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_console_portal(
-        self,
-        portal_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_console_portal(self, portal_id: str, query_params=None) -> tuple:
         """
         Returns information on a Privileged Remote Consoles for Specified Portal.
 
@@ -176,20 +160,16 @@ class PRAConsoleAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessConsole)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessConsole)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessConsole(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessConsole(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -250,20 +230,16 @@ class PRAConsoleAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create and send the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessConsole)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessConsole)
         if error:
             return (None, response, error)
 
         try:
-            result = PrivilegedRemoteAccessConsole(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessConsole(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -319,13 +295,11 @@ class PRAConsoleAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PrivilegedRemoteAccessConsole)
+        response, error = self._request_executor.execute(request, PrivilegedRemoteAccessConsole)
         if error:
             return (None, response, error)
 
@@ -333,18 +307,12 @@ class PRAConsoleAPI(APIClient):
             return (PrivilegedRemoteAccessConsole({"id": console_id}), None, None)
 
         try:
-            result = PrivilegedRemoteAccessConsole(
-                self.form_response_body(response.get_body())
-            )
+            result = PrivilegedRemoteAccessConsole(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_console(
-        self,
-        console_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_console(self, console_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified PRA console.
 
@@ -374,22 +342,16 @@ class PRAConsoleAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
 
-    def add_bulk_console(
-        self,
-        consoles: list,
-        **kwargs
-    ) -> tuple:
+    def add_bulk_console(self, consoles: list, **kwargs) -> tuple:
         """
         Adds multiple Privileged Remote Access (PRA) consoles in bulk.
 
@@ -468,8 +430,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [PrivilegedRemoteAccessConsole(
-                self.form_response_body(console)) for console in response.get_body()]
+            result = [PrivilegedRemoteAccessConsole(self.form_response_body(console)) for console in response.get_body()]
         except Exception as error:
             return (None, response, error)
 

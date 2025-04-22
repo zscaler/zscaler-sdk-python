@@ -20,6 +20,7 @@ from zscaler.ztw.models import location_templates as location_templates
 from zscaler.ztw.models import common as common
 from zscaler.ztw.models import ecgroup as ecgroup
 
+
 class ProvisioningURL(ZscalerObject):
     """
     A class for ProvisioningURL objects.
@@ -35,24 +36,17 @@ class ProvisioningURL(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.desc = config["desc"] \
-                if "desc" in config else None
-            self.prov_url = config["provUrl"] \
-                if "provUrl" in config else None
-            self.prov_url_type = config["provUrlType"] \
-                if "provUrlType" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.desc = config["desc"] if "desc" in config else None
+            self.prov_url = config["provUrl"] if "provUrl" in config else None
+            self.prov_url_type = config["provUrlType"] if "provUrlType" in config else None
             self.used_in_ec_groups = ZscalerCollection.form_list(
                 config["usedInEcGroups"] if "usedInEcGroups" in config else [], str
             )
-            self.status = config["status"] \
-                if "status" in config else None
-            self.last_mod_time = config["lastModTime"] \
-                if "lastModTime" in config else None
-                
+            self.status = config["status"] if "status" in config else None
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+
             if "provUrlData" in config:
                 if isinstance(config["provUrlData"], ProvURLData):
                     self.prov_url_data = config["provUrlData"]
@@ -110,11 +104,12 @@ class ProvisioningURL(ZscalerObject):
             "usedInEcGroups": self.used_in_ec_groups,
             "status": self.status,
             "lastModUid": self.last_mod_uid,
-            "lastModTime": self.last_mod_time
+            "lastModTime": self.last_mod_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ProvURLData(ZscalerObject):
     """
     A class for ProvURLData objects.
@@ -130,29 +125,18 @@ class ProvURLData(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.zs_cloud_domain = config["zsCloudDomain"]\
-                if "zsCloudDomain" in config else None
-            self.org_id = config["orgId"]\
-                if "orgId" in config else None
-            self.config_server = config["configServer"]\
-                if "configServer" in config else None
-            self.registration_server = config["registrationServer"]\
-                if "registrationServer" in config else None
-            self.api_server = config["apiServer"]\
-                if "apiServer" in config else None  
-            self.pac_server = config["pacServer"]\
-                if "pacServer" in config else None 
-            self.editable = config["editable"]\
-                if "editable" in config else None 
-            self.last_mod_time = config["lastModTime"]\
-                if "lastModTime" in config else None 
-            self.cloud_provider_type = config["cloudProviderType"]\
-                if "cloudProviderType" in config else None 
-            self.form_factor = config["formFactor"]\
-                if "formFactor" in config else None 
-            self.hypervisors = config["hyperVisors"]\
-                if "hyperVisors" in config else None 
-                                                                
+            self.zs_cloud_domain = config["zsCloudDomain"] if "zsCloudDomain" in config else None
+            self.org_id = config["orgId"] if "orgId" in config else None
+            self.config_server = config["configServer"] if "configServer" in config else None
+            self.registration_server = config["registrationServer"] if "registrationServer" in config else None
+            self.api_server = config["apiServer"] if "apiServer" in config else None
+            self.pac_server = config["pacServer"] if "pacServer" in config else None
+            self.editable = config["editable"] if "editable" in config else None
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+            self.cloud_provider_type = config["cloudProviderType"] if "cloudProviderType" in config else None
+            self.form_factor = config["formFactor"] if "formFactor" in config else None
+            self.hypervisors = config["hyperVisors"] if "hyperVisors" in config else None
+
             if "locationTemplate" in config:
                 if isinstance(config["locationTemplate"], location_templates.LocationTemplate):
                     self.location_template = config["locationTemplate"]
@@ -202,7 +186,7 @@ class ProvURLData(ZscalerObject):
                     self.bc_group = None
             else:
                 self.bc_group = None
-                                                
+
         else:
             self.zs_cloud_domain = None
             self.org_id = None

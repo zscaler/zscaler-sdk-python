@@ -1,5 +1,6 @@
-from zscaler.helpers import to_snake_case 
+from zscaler.helpers import to_snake_case
 from zscaler.helpers import convert_keys_to_snake_case
+
 
 class ZscalerObject:
     """
@@ -60,7 +61,7 @@ class ZscalerObject:
 
             # If it's a dict, recursively snake_case its contents
             elif isinstance(val, dict):
-               result[to_snake_case(key)] = convert_keys_to_snake_case(val)
+                result[to_snake_case(key)] = convert_keys_to_snake_case(val)
 
             # Otherwise it's a simple type (string, int, etc.)
             else:

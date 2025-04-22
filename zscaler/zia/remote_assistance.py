@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.remoteassistance import RemoteAssistance
 from zscaler.utils import format_url
 
+
 class RemoteAssistanceAPI(APIClient):
     """
     A Client object for the Remote Assistance resource.
@@ -33,7 +34,7 @@ class RemoteAssistanceAPI(APIClient):
     def get_remote_assistance(self) -> tuple:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
-        Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal 
+        Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal
         for a specified time period to troubleshoot issues.
 
         Returns:
@@ -59,16 +60,12 @@ class RemoteAssistanceAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -78,23 +75,24 @@ class RemoteAssistanceAPI(APIClient):
             return (remote_assistance, response, None)
         except Exception as ex:
             return (None, response, ex)
-    
+
     def update_remote_assistance(self, **kwargs) -> tuple:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
-        
+
         Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal
         for a specified time period to troubleshoot issues.
 
         Args:
-            settings (:obj:`RemoteAssistance`): 
+            settings (:obj:`RemoteAssistance`):
                 An instance of `RemoteAssistance` containing the updated configuration.
 
                 Supported attributes:
-                    - **view_only_until (int)**: The time until when view-only access is granted. Unix time is used.
-                    - **full_access_until (int)**: Indicates whether the user names for single sign-on users should be obfuscated or visible
-                    - **username_obfuscated (bool)**: Indicates whether the user names for single sign-on users should be obfuscated or visible
-                    - **device_info_obfuscate (bool)**: Indicates whether the device information (Device Hostname, Device Name, and Device Owner) should be obfuscated or visible on the Dashboard and Analytics pages
+                    - view_only_until (int): Unix timestamp until which view-only access is allowed
+                    - full_access_until (int): Unix timestamp until which full access is allowed
+                    - username_obfuscated (bool): Whether usernames for SSO users are obfuscated
+                    - device_info_obfuscate (bool): Whether device info (hostname, name, owner) is hidden in UI
+
         Returns:
             tuple: A tuple containing:
                 - RemoteAssistance: The updated remote assistance object.
@@ -126,22 +124,18 @@ class RemoteAssistanceAPI(APIClient):
 
         body = {}
         body.update(kwargs)
-        
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, RemoteAssistance)
+        response, error = self._request_executor.execute(request, RemoteAssistance)
         if error:
             return (None, response, error)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
-                result = RemoteAssistance(
-                    self.form_response_body(response.get_body())
-                )
+                result = RemoteAssistance(self.form_response_body(response.get_body()))
             else:
                 result = RemoteAssistance()
         except Exception as error:

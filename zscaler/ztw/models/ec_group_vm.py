@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import ecgroup as ecgroup
 
+
 class ECGroupVM(ZscalerObject):
     """
     A class for Ecgroupvm objects.
@@ -33,42 +34,26 @@ class ECGroupVM(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.status = ZscalerCollection.form_list(
-                config["status"] if "status" in config else [], str
-            )
-            self.operational_status = config["operationalStatus"] \
-                if "operationalStatus" in config else None
-            self.form_factor = config["formFactor"] \
-                if "formFactor" in config else None
-            self.city_geo_id = config["cityGeoId"] \
-                if "cityGeoId" in config else None
-            self.nat_ip = config["natIp"] \
-                if "natIp" in config else None
-            self.zia_gateway = config["ziaGateway"] \
-                if "ziaGateway" in config else None
-            self.zpa_broker = config["zpaBroker"] \
-                if "zpaBroker" in config else None
-            self.build_version = config["buildVersion"] \
-                if "buildVersion" in config else None
-            self.last_upgrade_time = config["lastUpgradeTime"] \
-                if "lastUpgradeTime" in config else None
-            self.upgrade_status = config["upgradeStatus"] \
-                if "upgradeStatus" in config else None
-            self.upgrade_start_time = config["upgradeStartTime"] \
-                if "upgradeStartTime" in config else None
-            self.upgrade_end_time = config["upgradeEndTime"] \
-                if "upgradeEndTime" in config else None
-            self.upgrade_day_of_week = config["upgradeDayOfWeek"] \
-                if "upgradeDayOfWeek" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.status = ZscalerCollection.form_list(config["status"] if "status" in config else [], str)
+            self.operational_status = config["operationalStatus"] if "operationalStatus" in config else None
+            self.form_factor = config["formFactor"] if "formFactor" in config else None
+            self.city_geo_id = config["cityGeoId"] if "cityGeoId" in config else None
+            self.nat_ip = config["natIp"] if "natIp" in config else None
+            self.zia_gateway = config["ziaGateway"] if "ziaGateway" in config else None
+            self.zpa_broker = config["zpaBroker"] if "zpaBroker" in config else None
+            self.build_version = config["buildVersion"] if "buildVersion" in config else None
+            self.last_upgrade_time = config["lastUpgradeTime"] if "lastUpgradeTime" in config else None
+            self.upgrade_status = config["upgradeStatus"] if "upgradeStatus" in config else None
+            self.upgrade_start_time = config["upgradeStartTime"] if "upgradeStartTime" in config else None
+            self.upgrade_end_time = config["upgradeEndTime"] if "upgradeEndTime" in config else None
+            self.upgrade_day_of_week = config["upgradeDayOfWeek"] if "upgradeDayOfWeek" in config else None
 
             self.ec_instances = ZscalerCollection.form_list(
                 config["ecInstances"] if "ecInstances" in config else [], ecgroup.ECInstances
             )
-            
+
             if "managementNw" in config:
                 if isinstance(config["managementNw"], ecgroup.ManagementNW):
                     self.management_nw = config["managementNw"]
@@ -130,7 +115,7 @@ class ECGroupVM(ZscalerObject):
             "upgradeStatus": self.upgrade_status,
             "upgradeStartTime": self.upgrade_start_time,
             "upgradeEndTime": self.upgrade_end_time,
-            "upgradeDayOfWeek": self.upgrade_day_of_week
+            "upgradeDayOfWeek": self.upgrade_day_of_week,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

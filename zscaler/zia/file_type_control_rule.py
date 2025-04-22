@@ -38,8 +38,8 @@ class FileTypeControlRuleAPI(APIClient):
         filter expression or query.
 
         Args:
-            query_params {dict}: Map of query parameters for the request. 
-                       
+            query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -55,10 +55,12 @@ class FileTypeControlRuleAPI(APIClient):
             ...    print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /fileTypeRules
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
@@ -67,15 +69,13 @@ class FileTypeControlRuleAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -83,9 +83,7 @@ class FileTypeControlRuleAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(FileTypeControlRules(
-                    self.form_response_body(item))
-            )
+                result.append(FileTypeControlRules(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -122,23 +120,19 @@ class FileTypeControlRuleAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FileTypeControlRules)
+        response, error = self._request_executor.execute(request, FileTypeControlRules)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FileTypeControlRules(
-                self.form_response_body(response.get_body())
-            )
+            result = FileTypeControlRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -212,14 +206,13 @@ class FileTypeControlRuleAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -229,15 +222,12 @@ class FileTypeControlRuleAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FileTypeControlRules)
+        response, error = self._request_executor.execute(request, FileTypeControlRules)
         if error:
             return (None, response, error)
 
         try:
-            result = FileTypeControlRules(
-                self.form_response_body(response.get_body())
-            )
+            result = FileTypeControlRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -283,7 +273,7 @@ class FileTypeControlRuleAPI(APIClient):
             devices (list[dict]): Devices managed using Zscaler Client Connector.
             device_trust_levels (list[str]): Device trust levels based on posture configurations.
             zpa_app_segments (list[dict]): ZPA Application Segments applicable to the rule.
-            
+
         Returns:
             tuple: Updated firewall dns filtering rule resource record.
 
@@ -310,14 +300,13 @@ class FileTypeControlRuleAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -327,19 +316,16 @@ class FileTypeControlRuleAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, FileTypeControlRules)
+        response, error = self._request_executor.execute(request, FileTypeControlRules)
         if error:
             return (None, response, error)
 
         try:
-            result = FileTypeControlRules(
-                self.form_response_body(response.get_body())
-            )
+            result = FileTypeControlRules(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_rule(self, rule_id: int) -> tuple:
         """
         Deletes the specified file type control rules filter rule.
@@ -364,13 +350,11 @@ class FileTypeControlRuleAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

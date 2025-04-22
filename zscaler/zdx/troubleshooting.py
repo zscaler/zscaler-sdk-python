@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.troubleshooting import DeviceDeepTraces
@@ -28,6 +27,7 @@ from zscaler.zdx.models.troubleshooting import DeepTraceEvents
 from zscaler.zdx.models.troubleshooting import DeviceApplicationAnalysis
 from zscaler.utils import format_url, zdx_params
 
+
 class TroubleshootingAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
@@ -35,11 +35,7 @@ class TroubleshootingAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_deeptraces(
-        self,
-        device_id: str, 
-        query_params=None
-    ) -> tuple:
+    def list_deeptraces(self, device_id: str, query_params=None) -> tuple:
         """
         Returns a list of all deep traces for a specific device.
 
@@ -74,8 +70,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -87,24 +82,17 @@ class TroubleshootingAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DeviceDeepTraces(item))  
+                results.append(DeviceDeepTraces(item))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
-    def get_deeptrace(
-        self, 
-        device_id: str, 
-        trace_id: str
-    ) -> tuple:
+    def get_deeptrace(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns information on a single deeptrace for a specific device.
 
@@ -126,38 +114,33 @@ class TroubleshootingAPI(APIClient):
             ...             print(trace.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = [DeviceDeepTraces(
-                self.form_response_body(response.get_body()))]  
+            result = [DeviceDeepTraces(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
-    def start_deeptrace(
-        self,
-        device_id: str, 
-        **kwargs
-    ) -> tuple:
+
+    def start_deeptrace(self, device_id: str, **kwargs) -> tuple:
         """
         Starts a deep trace for a specific device and application.
 
@@ -197,11 +180,10 @@ class TroubleshootingAPI(APIClient):
             /devices/{device_id}/deeptraces
         """
         )
-        
+
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -210,24 +192,17 @@ class TroubleshootingAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, StartDeepTrace)
+        response, error = self._request_executor.execute(request, StartDeepTrace)
         if error:
             return (None, response, error)
 
         try:
-            result = StartDeepTrace(
-                self.form_response_body(response.get_body())
-            )
+            result = StartDeepTrace(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_deeptrace(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+    def delete_deeptrace(self, device_id: str, trace_id: str) -> tuple:
         """
         Deletes a single deeptrace session and associated data for a specific device.
 
@@ -248,20 +223,20 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Trace with ID {trace_id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zdx_base_endpoint}
             /devices/{device_id}/deeptraces/{trace_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -301,8 +276,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -312,18 +286,13 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceTopProcesses(
-                self.form_response_body(response.get_body()))]  
+            result = [DeviceTopProcesses(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def get_deeptrace_webprobe_metrics(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+    def get_deeptrace_webprobe_metrics(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns web probe metrics for a specific deeptrace.
 
@@ -337,7 +306,8 @@ class TroubleshootingAPI(APIClient):
         Examples:
             Print web probe metrics for a deeptrace.
 
-            >>> metrics_list, _, err = client.zdx.troubleshooting.get_deeptrace_webprobe_metrics('132559212', '342941739947287')
+            >>> metrics_list, _, err = client.zdx.troubleshooting.get_deeptrace_webprobe_metrics(
+                '132559212', '342941739947287')
             ... if err:
             ...     print(f"Error listing web probe metrics: {err}")
             ...     return
@@ -355,8 +325,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -366,18 +335,13 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeepTraceWebProbeMetrics(
-                self.form_response_body(response.get_body()))]  
+            result = [DeepTraceWebProbeMetrics(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
-    def get_deeptrace_cloudpath_metrics(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+
+    def get_deeptrace_cloudpath_metrics(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns cloudpath metrics for a specific deeptrace.
 
@@ -391,7 +355,8 @@ class TroubleshootingAPI(APIClient):
         Examples:
             Print cloudpath metrics for a deeptrace.
 
-            >>> path_matric, _, err = client.zdx.troubleshooting.get_deeptrace_cloudpath_metrics('132559212', '342941739947287')
+            >>> path_matric, _, err = client.zdx.troubleshooting.get_deeptrace_cloudpath_metrics(
+                '132559212', '342941739947287')
             ... if err:
             ...     print(f"Error listing cloud path metrics: {err}")
             ...     return
@@ -409,8 +374,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -420,18 +384,13 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeepTraceCloudPathMetric(
-                self.form_response_body(response.get_body()))]  
+            result = [DeepTraceCloudPathMetric(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
-    def get_deeptrace_cloudpath(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+
+    def get_deeptrace_cloudpath(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns cloudpath for a specific deeptrace.
 
@@ -463,8 +422,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -474,18 +432,13 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeepTraceCloudPath(
-                self.form_response_body(response.get_body()))]  
+            result = [DeepTraceCloudPath(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
-    def get_deeptrace_health_metrics(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+
+    def get_deeptrace_health_metrics(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns health metrics for a specific deeptrace.
 
@@ -499,7 +452,8 @@ class TroubleshootingAPI(APIClient):
         Examples:
             Print health metrics for a deeptrace.
 
-            >>> health_metrics, _, err = client.zdx.troubleshooting.get_deeptrace_health_metrics('132559212', '342941739947287')
+            >>> health_metrics, _, err = client.zdx.troubleshooting.get_deeptrace_health_metrics(
+                '132559212', '342941739947287')
             ... if err:
             ...     print(f"Error listing health metrics: {err}")
             ...     return
@@ -517,8 +471,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -528,18 +481,13 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeepTraceHealthMetrics(
-                self.form_response_body(response.get_body()))]  
+            result = [DeepTraceHealthMetrics(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
-    def get_deeptrace_events(
-        self,
-        device_id: str,
-        trace_id: str
-    ) -> tuple:
+
+    def get_deeptrace_events(self, device_id: str, trace_id: str) -> tuple:
         """
         Returns events for a specific deeptrace.
 
@@ -571,8 +519,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -582,24 +529,20 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeepTraceEvents(
-                self.form_response_body(response.get_body()))]  
+            result = [DeepTraceEvents(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def start_analysis(
-        self,
-        **kwargs
-    ) -> tuple:
+    def start_analysis(self, **kwargs) -> tuple:
         """
         Starts a ZDX Score analysis on a device for a specific application.
 
         Args:
             device_id (str): The unique ID for the device.
             app_id (str): The unique ID for the application.
-            t0 (int): 
+            t0 (int):
             t1 (int):
 
         Returns:
@@ -624,11 +567,10 @@ class TroubleshootingAPI(APIClient):
             /analysis
         """
         )
-        
+
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -637,19 +579,16 @@ class TroubleshootingAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, DeviceApplicationAnalysis)
+        response, error = self._request_executor.execute(request, DeviceApplicationAnalysis)
         if error:
             return (None, response, error)
 
         try:
-            result = DeviceApplicationAnalysis(
-                self.form_response_body(response.get_body())
-            )
+            result = DeviceApplicationAnalysis(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def get_analysis(
         self,
         analysis_id: str,
@@ -684,8 +623,7 @@ class TroubleshootingAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -695,13 +633,12 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [(
-                self.form_response_body(response.get_body()))]  
+            result = [self.form_response_body(response.get_body())]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
+
     def delete_analysis(
         self,
         analysis_id: str,
@@ -725,20 +662,20 @@ class TroubleshootingAPI(APIClient):
             ... print(f"Trace Analysis with ID {trace_id} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zdx_base_endpoint}
             /analysis/{analysis_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class IPSourceGroup(ZscalerObject):
     """
     A class representing a Cloud Firewall IP Source Group object.
@@ -25,21 +26,14 @@ class IPSourceGroup(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
             # self.creator_context = config["creatorContext"]\
             #     if "creatorContext" in config else None
-            self.is_non_editable = config["isNonEditable"]\
-                if "isNonEditable" in config else False
-                
-            self.ip_addresses = ZscalerCollection.form_list(
-                config["ipAddresses"] if "ipAddresses" in config else [],
-                str
-            )
+            self.is_non_editable = config["isNonEditable"] if "isNonEditable" in config else False
+
+            self.ip_addresses = ZscalerCollection.form_list(config["ipAddresses"] if "ipAddresses" in config else [], str)
         else:
             self.id = None
             self.name = None

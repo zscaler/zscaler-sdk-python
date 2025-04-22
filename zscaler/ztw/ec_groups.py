@@ -21,6 +21,7 @@ from zscaler.ztw.models.ec_group_vm import ECGroupVM
 from zscaler.ztw.models.common import CommonIDNameExternalID
 from zscaler.utils import format_url
 
+
 class ECGroupsAPI(APIClient):
     """
     A Client object for the ECGroupsAPI resource.
@@ -38,9 +39,9 @@ class ECGroupsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
@@ -54,24 +55,24 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecgroup
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -79,9 +80,7 @@ class ECGroupsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ECGroup(
-                    self.form_response_body(item))
-                )
+                result.append(ECGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -95,9 +94,9 @@ class ECGroupsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 250.
 
         Returns:
@@ -110,24 +109,24 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -135,9 +134,7 @@ class ECGroupsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ECGroup(
-                    self.form_response_body(item))
-                )
+                result.append(ECGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -148,9 +145,9 @@ class ECGroupsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
+
                 ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 20.
 
         Returns:
@@ -164,24 +161,24 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecgroup/lite
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -189,9 +186,7 @@ class ECGroupsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ECGroup(
-                    self.form_response_body(item))
-                )
+                result.append(ECGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -221,29 +216,27 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecInstance/lite
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CommonIDNameExternalID)
+        response, error = self._request_executor.execute(request, CommonIDNameExternalID)
         if error:
             return (None, response, error)
 
         try:
-            result = CommonIDNameExternalID(
-                self.form_response_body(response.get_body())
-            )
+            result = CommonIDNameExternalID(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -266,29 +259,27 @@ class ECGroupsAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}/{vm_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ECGroupVM)
+        response, error = self._request_executor.execute(request, ECGroupVM)
         if error:
             return (None, response, error)
 
         try:
-            result = ECGroupVM(
-                self.form_response_body(response.get_body())
-            )
+            result = ECGroupVM(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -309,20 +300,20 @@ class ECGroupsAPI(APIClient):
                 print(ztw.ecgroups.delete_ec_group_vm("123456789"))
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /ecgroup/{group_id}/{vm_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

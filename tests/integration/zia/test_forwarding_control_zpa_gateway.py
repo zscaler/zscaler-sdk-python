@@ -21,6 +21,7 @@ from tests.integration.zpa.conftest import MockZPAClient
 from tests.test_utils import generate_random_string
 import time
 
+
 @pytest.fixture
 def fs():
     yield
@@ -71,8 +72,7 @@ class TestForwardingControlZPAGateway:
             # Step 2: Create Segment Group
             try:
                 created_segment_group, _, error = zpaClient.zpa.segment_groups.add_group(
-                    name="tests-" + generate_random_string(),
-                    enabled=True
+                    name="tests-" + generate_random_string(), enabled=True
                 )
                 assert error is None, f"Segment Group creation failed: {error}"
                 segment_group_id = created_segment_group.id
@@ -126,10 +126,12 @@ class TestForwardingControlZPAGateway:
                         "external_id": server_group_id,
                         "name": server_group_name,
                     },
-                    zpa_app_segments=[{
-                        "external_id": app_segment_id,
-                        "name": app_segment_name,
-                    }],
+                    zpa_app_segments=[
+                        {
+                            "external_id": app_segment_id,
+                            "name": app_segment_name,
+                        }
+                    ],
                 )
                 assert error is None, f"ZPA Gateway creation failed: {error}"
                 gateway_id = created_gateway.id
@@ -158,10 +160,12 @@ class TestForwardingControlZPAGateway:
                         "external_id": server_group_id,
                         "name": server_group_name,
                     },
-                    zpa_app_segments=[{
-                        "external_id": app_segment_id,
-                        "name": app_segment_name,
-                    }],
+                    zpa_app_segments=[
+                        {
+                            "external_id": app_segment_id,
+                            "name": app_segment_name,
+                        }
+                    ],
                 )
                 assert error is None, f"Error updating gateway: {error}"
                 assert updated_gateway.description == updated_description, "ZPA Gateway update failed"
@@ -178,7 +182,7 @@ class TestForwardingControlZPAGateway:
             except Exception as exc:
                 errors.append(f"Listing gateway failed: {exc}")
             time.sleep(2)
-            
+
         finally:
             cleanup_errors = []
             try:
@@ -190,7 +194,9 @@ class TestForwardingControlZPAGateway:
 
             if app_segment_id:
                 try:
-                    _, _, error = zpaClient.zpa.application_segment.delete_segment(segment_id=app_segment_id, force_delete=True)
+                    _, _, error = zpaClient.zpa.application_segment.delete_segment(
+                        segment_id=app_segment_id, force_delete=True
+                    )
                     assert error is None, f"Application Segment deletion failed: {error}"
                 except Exception as exc:
                     errors.append(f"Deleting Application Segment failed: {exc}")

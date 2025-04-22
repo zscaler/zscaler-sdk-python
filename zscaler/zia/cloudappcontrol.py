@@ -64,15 +64,13 @@ class CloudAppControlAPI(APIClient):
         body = {"cloudApps": cloud_apps}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-        execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -97,7 +95,7 @@ class CloudAppControlAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
                 ``[query_params.rule_type]`` {str}: The type of rules to retrieve (e.g., "STREAMING_MEDIA").
@@ -127,15 +125,13 @@ class CloudAppControlAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -143,9 +139,7 @@ class CloudAppControlAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudApplicationControl(
-                    self.form_response_body(item))
-            )
+                result.append(CloudApplicationControl(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -169,33 +163,31 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}/{rule_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
         # Create the reques
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, CloudApplicationControl)
+        response, error = self._request_executor.execute(request, CloudApplicationControl)
 
         if error:
             return (None, response, error)
 
         # Parse the response
         try:
-            result = CloudApplicationControl(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationControl(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -214,33 +206,31 @@ class CloudAppControlAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /webApplicationRules/ruleTypeMapping
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
         # Create the reques
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         # Parse the response
         try:
-            result = (
-                self.form_response_body(response.get_body())
-            )
+            result = self.form_response_body(response.get_body())
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -410,22 +400,23 @@ class CloudAppControlAPI(APIClient):
                 - `ISOLATE_WEBMAIL_VIEW`
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /webApplicationRules/{rule_type}
-        """)
+        """
+        )
 
         body = kwargs
-        
+
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -434,8 +425,7 @@ class CloudAppControlAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, CloudApplicationControl)
+        response, error = self._request_executor.execute(request, CloudApplicationControl)
         if error:
             return (None, response, error)
 
@@ -623,12 +613,11 @@ class CloudAppControlAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -637,16 +626,13 @@ class CloudAppControlAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            result = CloudApplicationControl(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationControl(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -676,13 +662,11 @@ class CloudAppControlAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -766,11 +750,10 @@ class CloudAppControlAPI(APIClient):
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         transform_common_id_fields(reformat_params, body, body)
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -779,15 +762,12 @@ class CloudAppControlAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, CloudApplicationControl)
+        response, error = self._request_executor.execute(request, CloudApplicationControl)
         if error:
             return (None, response, error)
 
         try:
-            result = CloudApplicationControl(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationControl(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

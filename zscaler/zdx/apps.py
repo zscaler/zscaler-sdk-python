@@ -21,12 +21,12 @@ from zscaler.zdx.models.applications import ApplicationScore
 from zscaler.zdx.models.applications import ApplicationScoreTrend
 from zscaler.zdx.models.applications import ApplicationMetrics
 from zscaler.zdx.models.users import UserDetails
-from zscaler.zdx.models.application_users import  ApplicationUserDetails
+from zscaler.zdx.models.application_users import ApplicationUserDetails
 from zscaler.utils import format_url, zdx_params
 
 
 class AppsAPI(APIClient):
-    
+
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
@@ -39,13 +39,13 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
-                
+
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
 
         Returns:
@@ -60,7 +60,7 @@ class AppsAPI(APIClient):
             ...     return
             ... for app in app_list:
             ...     print(app.as_dict())
-            
+
             List applications in ZDX for a specific time frame:
 
             >>> app_list, _, err = client.zdx.apps.list_apps(
@@ -84,8 +84,7 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -97,19 +96,13 @@ class AppsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ActiveApplications(
-                    self.form_response_body(item))
-                )
+                result.append(ActiveApplications(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     @zdx_params
-    def get_app(
-        self,
-        app_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_app(self, app_id: str, query_params=None) -> tuple:
         """
         Returns information on the application's ZDX Score (for the previous 2 hours).
         Including most impacted locations, and the total number of users impacted.
@@ -119,13 +112,13 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
-                
+
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
 
         Returns:
@@ -154,8 +147,7 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -165,19 +157,14 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ApplicationScore(
-                self.form_response_body(response.get_body()))]  
+            result = [ApplicationScore(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
     @zdx_params
-    def get_app_score(
-        self,
-        app_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_app_score(self, app_id: str, query_params=None) -> tuple:
         """
         Returns the ZDX score trend for the specified application configured within the ZDX tenant.
 
@@ -186,13 +173,13 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
-                
+
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
 
         Returns:
@@ -207,7 +194,7 @@ class AppsAPI(APIClient):
             ...     return
             ... for app in app_score:
             ...     print(app.as_dict())
-            
+
             Return the ZDX score trend for the application with the ID of 999999999 and location_id 125584:
 
             >>> app_score, _, err = client.zdx.apps.get_app_score(
@@ -231,8 +218,7 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -242,19 +228,14 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ApplicationScoreTrend(
-                self.form_response_body(response.get_body()))]  
+            result = [ApplicationScoreTrend(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
+
     @zdx_params
-    def get_app_metrics(
-        self,
-        app_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_app_metrics(self, app_id: str, query_params=None) -> tuple:
         """
         Returns the ZDX metrics for the specified application configured within the ZDX tenant.
 
@@ -263,13 +244,13 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
-                
+
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
 
                 ``[query_params.metric_name]`` {str}: The name of the metric to return. Available values are:
@@ -314,8 +295,7 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -325,19 +305,14 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ApplicationMetrics(
-                self.form_response_body(response.get_body()))]  
+            result = [ApplicationMetrics(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
     @zdx_params
-    def list_app_users(
-        self,
-        app_id: str, 
-        query_params=None
-    ) -> tuple:
+    def list_app_users(self, app_id: str, query_params=None) -> tuple:
         """
         Returns a list of users and devices that were used to access the specified application configured within
         the ZDX tenant.
@@ -347,16 +322,16 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                    
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department.
 
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation.
-                
-                ``[query_params.score_bucket]`` {str}: The ZDX score bucket to filter by. Available values are:                            
+
+                ``[query_params.score_bucket]`` {str}: The ZDX score bucket to filter by. Available values are:
                     * `poor` - 0-33
                     * `okay` - 34-65
                     * `good` - 66-100
@@ -373,7 +348,7 @@ class AppsAPI(APIClient):
             ...     return
             ... for app in app_users:
             ...     print(app.as_dict())
-            
+
             Return a list of users and devices who have accessed the application with the ID of 999999999
             with score_bucket of poor:
 
@@ -397,8 +372,7 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -409,7 +383,7 @@ class AppsAPI(APIClient):
 
         # try:
         #     result = [ApplicationUsers(
-        #         self.form_response_body(response.get_body()))]  
+        #         self.form_response_body(response.get_body()))]
         # except Exception as error:
         #     return (None, response, error)
 
@@ -423,14 +397,9 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         return (result, response, None)
-    
+
     @zdx_params
-    def get_app_user(
-        self,
-        app_id: str,
-        user_id: str, 
-        query_params=None
-    ) -> tuple:
+    def get_app_user(self, app_id: str, user_id: str, query_params=None) -> tuple:
         """
         Returns information on the specified user and device that was used to access the specified application
         configured within the ZDX tenant.
@@ -441,7 +410,7 @@ class AppsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
 
         Returns:
@@ -457,7 +426,7 @@ class AppsAPI(APIClient):
             ...     return
             ... for app in app_list:
             ...     print(app.as_dict())
-            
+
             Return information on the application ID 1 and user with the ID of 24328827 for the past 2 hours.
 
             >>> app_list, _, err = client.zdx.apps.get_app_user(
@@ -481,20 +450,17 @@ class AppsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = [ApplicationUserDetails(
-                self.form_response_body(response.get_body()))]  
+            result = [ApplicationUserDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

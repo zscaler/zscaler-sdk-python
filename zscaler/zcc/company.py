@@ -18,6 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 
+
 class CompanyInfoAPI(APIClient):
 
     def __init__(self, request_executor):
@@ -31,7 +32,7 @@ class CompanyInfoAPI(APIClient):
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns company information in the Client Connector Portal.
 
@@ -53,8 +54,7 @@ class CompanyInfoAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return None

@@ -29,56 +29,55 @@ class TestDevice:
     Integration Tests for the ZCC Devices
     """
 
-#     def test_download_devices(self, fs):
-#         client = MockZCCClient(fs)
-#         errors = []
+    #     def test_download_devices(self, fs):
+    #         client = MockZCCClient(fs)
+    #         errors = []
 
-#         test_file_1 = "test_devices.csv"
-#         test_file_2 = "all_devices.csv"
+    #         test_file_1 = "test_devices.csv"
+    #         test_file_2 = "all_devices.csv"
 
-#         try:
-#             # Test 1: Download with filters
-#             try:
-#                 downloaded_file, response, err = None, None, None
-#                 try:
-#                     downloaded_file = client.zcc.devices.download_devices(
-#                         filename=test_file_1,
-#                         os_types=["windows", "macos"],
-#                         registration_types=["registered"]
-#                     )
-#                 except Exception as exc:
-#                     err = str(exc)
+    #         try:
+    #             # Test 1: Download with filters
+    #             try:
+    #                 downloaded_file, response, err = None, None, None
+    #                 try:
+    #                     downloaded_file = client.zcc.devices.download_devices(
+    #                         filename=test_file_1,
+    #                         os_types=["windows", "macos"],
+    #                         registration_types=["registered"]
+    #                     )
+    #                 except Exception as exc:
+    #                     err = str(exc)
 
-#                 assert downloaded_file == test_file_1, "Filename mismatch"
-#                 assert os.path.exists(downloaded_file), "File not found after download"
-#                 assert err is None, f"Error downloading devices with filters: {err}"
-#             except Exception as exc:
-#                 errors.append(f"Download with filters failed: {exc}")
+    #                 assert downloaded_file == test_file_1, "Filename mismatch"
+    #                 assert os.path.exists(downloaded_file), "File not found after download"
+    #                 assert err is None, f"Error downloading devices with filters: {err}"
+    #             except Exception as exc:
+    #                 errors.append(f"Download with filters failed: {exc}")
 
-#             # Test 2: Download without filters
-#             try:
-#                 downloaded_file, response, err = None, None, None
-#                 try:
-#                     downloaded_file = client.zcc.devices.download_devices(filename=test_file_2)
-#                 except Exception as exc:
-#                     err = str(exc)
+    #             # Test 2: Download without filters
+    #             try:
+    #                 downloaded_file, response, err = None, None, None
+    #                 try:
+    #                     downloaded_file = client.zcc.devices.download_devices(filename=test_file_2)
+    #                 except Exception as exc:
+    #                     err = str(exc)
 
-#                 assert downloaded_file == test_file_2, "Filename mismatch"
-#                 assert os.path.exists(downloaded_file), "File not found after download"
-#                 assert err is None, f"Error downloading devices without filters: {err}"
-#             except Exception as exc:
-#                 errors.append(f"Download without filters failed: {exc}")
+    #                 assert downloaded_file == test_file_2, "Filename mismatch"
+    #                 assert os.path.exists(downloaded_file), "File not found after download"
+    #                 assert err is None, f"Error downloading devices without filters: {err}"
+    #             except Exception as exc:
+    #                 errors.append(f"Download without filters failed: {exc}")
 
-#         finally:
-#             for file in [test_file_1, test_file_2]:
-#                 try:
-#                     if os.path.exists(file):
-#                         os.remove(file)
-#                 except Exception as exc:
-#                     errors.append(f"Cleanup failed for {file}: {exc}")
+    #         finally:
+    #             for file in [test_file_1, test_file_2]:
+    #                 try:
+    #                     if os.path.exists(file):
+    #                         os.remove(file)
+    #                 except Exception as exc:
+    #                     errors.append(f"Cleanup failed for {file}: {exc}")
 
-#         assert not errors, f"Errors occurred during the ZCC device download test:\n{chr(10).join(errors)}"
-
+    #         assert not errors, f"Errors occurred during the ZCC device download test:\n{chr(10).join(errors)}"
 
     def test_list_devices(self, fs):
         client = MockZCCClient(fs)
@@ -87,9 +86,7 @@ class TestDevice:
         try:
             # Test case: List devices with a specific OS type
             try:
-                devices, _, err = client.zcc.devices.list_devices(query_params={
-                    "os_type": "3", "page": 1, "page_size": 10
-                })
+                devices, _, err = client.zcc.devices.list_devices(query_params={"os_type": "3", "page": 1, "page_size": 10})
                 assert err is None, f"Error occurred while listing with OS filter: {err}"
                 assert isinstance(devices, list), "Expected a list of devices"
                 assert len(devices) <= 10, "Page size limit exceeded"

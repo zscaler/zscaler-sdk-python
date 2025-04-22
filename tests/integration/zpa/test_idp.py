@@ -45,7 +45,7 @@ class TestIdP:
                 assert idp_id is not None, "IDP ID should not be None"
         except Exception as exc:
             errors.append(f"Listing identity providers failed: {str(exc)}")
-            
+
         if idp_id:
             # Fetch the selected identity provider by its ID
             try:

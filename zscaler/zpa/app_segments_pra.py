@@ -80,13 +80,11 @@ class AppSegmentsPRAAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -129,20 +127,16 @@ class AppSegmentsPRAAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentPRA(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -269,20 +263,16 @@ class AppSegmentsPRAAPI(APIClient):
         # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentPRA(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -365,8 +355,9 @@ class AppSegmentsPRAAPI(APIClient):
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
             # Fetch all SECURE_REMOTE_ACCESS apps (no filtering, so we get everything)
-            segments_list, _, err = app_segment_api.\
-                get_segments_by_type(application_type="SECURE_REMOTE_ACCESS", query_params={})
+            segments_list, _, err = app_segment_api.get_segments_by_type(
+                application_type="SECURE_REMOTE_ACCESS", query_params={}
+            )
 
             if err:
                 return (None, None, f"Error fetching application segment data: {err}")
@@ -405,14 +396,12 @@ class AppSegmentsPRAAPI(APIClient):
         add_id_groups(self.reformat_params, kwargs, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)
 
@@ -420,19 +409,12 @@ class AppSegmentsPRAAPI(APIClient):
             return (ApplicationSegmentPRA({"id": segment_id}), None, None)
 
         try:
-            result = ApplicationSegmentPRA(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_segment_pra(
-        self,
-        segment_id: str,
-        force_delete: bool = False,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_segment_pra(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> tuple:
         """
         Delete an PRA application segment.
 
@@ -471,14 +453,12 @@ class AppSegmentsPRAAPI(APIClient):
             params["forceDelete"] = "true"
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

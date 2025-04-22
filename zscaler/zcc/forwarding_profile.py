@@ -26,7 +26,7 @@ class ForwardingProfileAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-        
+
     def list_by_company(self, query_params=None) -> tuple:
         """
         Returns the list of Forwarding Profiles By Company ID in the Client Connector Portal.
@@ -61,8 +61,7 @@ class ForwardingProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -78,7 +77,7 @@ class ForwardingProfileAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def update_forwarding_profile(self, **kwargs) -> tuple:
         """
         Create Forwarding Profile
@@ -90,34 +89,32 @@ class ForwardingProfileAPI(APIClient):
             tuple: A tuple containing the Create Forwarding Profile, response, and error.
         """
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /webForwardingProfile/edit
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, ForwardingProfile)
+        response, error = self._request_executor.execute(request, ForwardingProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = ForwardingProfile (
-                self.form_response_body(response.get_body())
-            )
+            result = ForwardingProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def delete_forwarding_profile(self, profile_id: int) -> tuple:
         """
         Deletes the specified Forwarding Profile.
@@ -129,20 +126,20 @@ class ForwardingProfileAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /webForwardingProfile/{profile_id}/delete
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

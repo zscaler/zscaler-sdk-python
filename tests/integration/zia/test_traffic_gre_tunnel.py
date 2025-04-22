@@ -42,8 +42,7 @@ class TestTrafficGRETunnel:
             # Step 1: Create Static IP for GRE Tunnel
             try:
                 created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
-                    ip_address=randomIP,
-                    comment="tests-" + generate_random_string()
+                    ip_address=randomIP, comment="tests-" + generate_random_string()
                 )
                 assert error is None, f"Error creating static IP: {error}"
                 static_ip_id = created_static_ip.id
@@ -128,8 +127,7 @@ class TestTrafficGRETunnel:
             # Step 1: Create Static IP
             try:
                 created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
-                    ip_address=static_ip_address,
-                    comment="tests-" + generate_random_string()
+                    ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
                 assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
@@ -173,8 +171,7 @@ class TestTrafficGRETunnel:
             # Step 1: Create Static IP
             try:
                 created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
-                    ip_address=static_ip_address,
-                    comment="tests-" + generate_random_string()
+                    ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
                 assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
@@ -218,8 +215,7 @@ class TestTrafficGRETunnel:
             # Step 1: Create Static IP
             try:
                 created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
-                    ip_address=static_ip_address,
-                    comment="tests-" + generate_random_string()
+                    ip_address=static_ip_address, comment="tests-" + generate_random_string()
                 )
                 assert error is None, f"Error creating static IP: {error}"
                 assert created_static_ip is not None, "Static IP creation returned None"
@@ -258,7 +254,7 @@ class TestTrafficGRETunnel:
         try:
             # Step 1: List VIPs with a page size of 10.
             try:
-                vips, _, error = client.zia.gre_tunnel.list_vips(query_params={'page_size': '10'})
+                vips, _, error = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
                 assert error is None, f"Error listing VIPs with page_size 10: {error}"
                 assert isinstance(vips, list), "Expected VIPs to be returned as a list."
                 assert len(vips) <= 10, f"Expected at most 10 VIPs, but got {len(vips)}."
@@ -267,7 +263,7 @@ class TestTrafficGRETunnel:
 
             # Step 2: List VIPs with the same query parameters for additional validation.
             try:
-                vips_large, _, error = client.zia.gre_tunnel.list_vips(query_params={'page_size': '10'})
+                vips_large, _, error = client.zia.gre_tunnel.list_vips(query_params={"page_size": "10"})
                 assert error is None, f"Error listing VIPs with the same query: {error}"
                 assert isinstance(vips_large, list), "Expected VIPs to be returned as a list."
                 # Optionally, further validations on vips_large can be added if needed.

@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zwa.models.audit_logs import AuditLogs
 from zscaler.utils import format_url
 
+
 class AuditLogsAPI(APIClient):
 
     def __init__(self, request_executor):
@@ -26,13 +27,7 @@ class AuditLogsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"
 
-    def audit_logs(
-        self,
-        query_params=None,
-        fields=None,
-        time_range=None,
-        **kwargs
-    ) -> tuple:
+    def audit_logs(self, query_params=None, fields=None, time_range=None, **kwargs) -> tuple:
         """
         Filters audit logs based on the specified time period and field values.
 
@@ -40,14 +35,14 @@ class AuditLogsAPI(APIClient):
         in the Workflow Automation Admin Portal and the actions made through APIs.
 
         **Supported field values**:
-        
+
         - ``Action``
         - ``Resource``
         - ``Admin``
         - ``Module``
 
         **Supported time range values**:
-        
+
         - ``Start date and time``
         - ``End date and time``
 
@@ -126,15 +121,12 @@ class AuditLogsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, AuditLogs)
+        response, error = self._request_executor.execute(request, AuditLogs)
         if error:
             return (None, response, error)
 
         try:
-            result = AuditLogs(
-                self.form_response_body(response.get_body())
-            )
+            result = AuditLogs(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

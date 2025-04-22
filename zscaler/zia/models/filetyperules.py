@@ -27,6 +27,7 @@ from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
 
+
 class FileTypeControlRules(ZscalerObject):
     """
     A class for FileTypeControlRules objects.
@@ -42,45 +43,25 @@ class FileTypeControlRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
-            self.order = config["order"] \
-                if "order" in config else None
-            self.time_quota = config["timeQuota"] \
-                if "timeQuota" in config else None
-            self.size_quota = config["sizeQuota"] \
-                if "sizeQuota" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.min_size = config["minSize"] \
-                if "minSize" in config else 0
-            self.max_size = config["maxSize"] \
-                if "maxSize" in config else 0
-            self.filtering_action = config["filteringAction"] \
-                if "filteringAction" in config else None
-            self.capture_pcap = config["capturePCAP"] \
-                if "capturePCAP" in config else False
-            self.operation = config["operation"] \
-                if "operation" in config else None
-            self.active_content = config["activeContent"] \
-                if "activeContent" in config else False
-            self.unscannable = config["unscannable"] \
-                if "unscannable" in config else False
-            self.state = config["state"] \
-                if "state" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] \
-                if "lastModifiedBy" in config else None
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
+            self.order = config["order"] if "order" in config else None
+            self.time_quota = config["timeQuota"] if "timeQuota" in config else None
+            self.size_quota = config["sizeQuota"] if "sizeQuota" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.min_size = config["minSize"] if "minSize" in config else 0
+            self.max_size = config["maxSize"] if "maxSize" in config else 0
+            self.filtering_action = config["filteringAction"] if "filteringAction" in config else None
+            self.capture_pcap = config["capturePCAP"] if "capturePCAP" in config else False
+            self.operation = config["operation"] if "operation" in config else None
+            self.active_content = config["activeContent"] if "activeContent" in config else False
+            self.unscannable = config["unscannable"] if "unscannable" in config else False
+            self.state = config["state"] if "state" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.name = config["name"] if "name" in config else None
 
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
@@ -91,9 +72,7 @@ class FileTypeControlRules(ZscalerObject):
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
             )
-            self.file_types = ZscalerCollection.form_list(
-                config["fileTypes"] if "fileTypes" in config else [], str
-            )
+            self.file_types = ZscalerCollection.form_list(config["fileTypes"] if "fileTypes" in config else [], str)
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
             )
@@ -103,24 +82,18 @@ class FileTypeControlRules(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups
-            )
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
             self.time_windows = ZscalerCollection.form_list(
                 config["timeWindows"] if "timeWindows" in config else [], time_windows.TimeWindows
             )
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
 
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
@@ -199,7 +172,7 @@ class FileTypeControlRules(ZscalerObject):
             "lastModifiedBy": self.last_modified_by,
             "accessControl": self.access_control,
             "name": self.name,
-            "cloudApplications": self.cloud_applications
+            "cloudApplications": self.cloud_applications,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

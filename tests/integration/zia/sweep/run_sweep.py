@@ -33,10 +33,7 @@ class TestSweepUtility:
         vanity_domain = config.get("vanityDomain", os.getenv("ZSCALER_VANITY_DOMAIN"))
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
 
-        logging_config = config.get("logging", {
-            "enabled": False, 
-            "verbose": False
-        })
+        logging_config = config.get("logging", {"enabled": False, "verbose": False})
 
         client_config = {
             "clientId": client_id,
@@ -44,10 +41,7 @@ class TestSweepUtility:
             "customerId": customer_id,
             "vanityDomain": vanity_domain,
             "cloud": cloud,
-            "logging": {
-                "enabled": logging_config.get("enabled", True),
-                "verbose": logging_config.get("verbose", True)
-            }
+            "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
         }
 
         self.client = ZscalerClient(client_config)
@@ -118,7 +112,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing cloud firewall rules: {error}")
 
-            test_rules = [fw for fw in rules if  hasattr(fw, "name") and fw.name.startswith("tests-")]
+            test_rules = [fw for fw in rules if hasattr(fw, "name") and fw.name.startswith("tests-")]
             logging.info(f"Found {len(test_rules)} cloud firewall rule to delete.")
 
             for rule in test_rules:
@@ -293,13 +287,11 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing dlp web rules: {error}")
 
-            test_rules = [fw for fw in rules if  hasattr(fw, "name") and fw.name.startswith("tests-")]
+            test_rules = [fw for fw in rules if hasattr(fw, "name") and fw.name.startswith("tests-")]
             logging.info(f"Found {len(test_rules)} dlp web rule to delete.")
 
             for rule in test_rules:
-                logging.info(
-                    f"sweep_dlp_web_rule: Attempting to delete dlp web rule: Name='{rule.id}', ID='{rule.id}'"
-                )
+                logging.info(f"sweep_dlp_web_rule: Attempting to delete dlp web rule: Name='{rule.id}', ID='{rule.id}'")
                 _, _, error = self.client.zia.dlp_web_rules.delete_rule(rule_id=rule.id)
                 if error:
                     logging.error(f"Failed to delete dlp web rule ID={rule.id} — {error}")
@@ -318,7 +310,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing cloud firewall rules: {error}")
 
-            test_rules = [fw for fw in rules if  hasattr(fw, "name") and fw.name.startswith("tests-")]
+            test_rules = [fw for fw in rules if hasattr(fw, "name") and fw.name.startswith("tests-")]
             logging.info(f"Found {len(test_rules)} forwarding control rule to delete.")
 
             for rule in test_rules:
@@ -343,7 +335,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing url filtering rules: {error}")
 
-            test_rules = [fw for fw in rules if  hasattr(fw, "name") and fw.name.startswith("tests-")]
+            test_rules = [fw for fw in rules if hasattr(fw, "name") and fw.name.startswith("tests-")]
             logging.info(f"Found {len(test_rules)} url filtering rule to delete.")
 
             for rule in test_rules:
@@ -368,7 +360,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing locations: {error}")
 
-            test_locations = [loc for loc in locations if  hasattr(loc, "name") and loc.name.startswith("tests-")]
+            test_locations = [loc for loc in locations if hasattr(loc, "name") and loc.name.startswith("tests-")]
             location_ids = [loc["id"] for loc in test_locations]
             logging.info(f"Found {len(test_locations)} location management to delete.")
 
@@ -388,23 +380,26 @@ class TestSweepUtility:
     def sweep_vpn_credentials(self):
         logging.info("Starting to sweep VPN credentials")
         try:
-            credentials, _, error = self.client.zia.traffic_vpn_credentials.list_vpn_credentials(query_params={'type': "UFQDN"})
+            credentials, _, error = self.client.zia.traffic_vpn_credentials.list_vpn_credentials(
+                query_params={"type": "UFQDN"}
+            )
             if error:
                 raise Exception(f"Error listing vpn credentials: {error}")
 
             # Model-aware check
             test_creds = [
-                vpn for vpn in credentials
-                if getattr(vpn, "type", None) == "UFQDN"
-                and hasattr(vpn, "fqdn")
-                and vpn.fqdn.startswith("tests-")
+                vpn
+                for vpn in credentials
+                if getattr(vpn, "type", None) == "UFQDN" and hasattr(vpn, "fqdn") and vpn.fqdn.startswith("tests-")
             ]
             credential_ids = [vpn.id for vpn in test_creds]
             logging.info(f"Found {len(test_creds)} VPN credentials to delete.")
 
             if credential_ids:
                 logging.info(f"sweep_vpn_credentials: Attempting to bulk delete VPN credentials: IDs={credential_ids}")
-                _, _, error = self.client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(credential_ids=credential_ids)
+                _, _, error = self.client.zia.traffic_vpn_credentials.bulk_delete_vpn_credentials(
+                    credential_ids=credential_ids
+                )
                 if error:
                     logging.error(f"Failed to bulk delete vpn credentials — {error}")
                 else:
@@ -413,7 +408,6 @@ class TestSweepUtility:
         except Exception as e:
             logging.error(f"An error occurred while sweeping vpn credentials: {str(e)}")
             raise
-
 
     @suppress_warnings
     def sweep_gre_tunnels(self):
@@ -424,7 +418,8 @@ class TestSweepUtility:
                 raise Exception(f"Error listing GRE tunnels: {error}")
 
             test_gre_tunnels = [
-                gre for gre in gre_tunnels
+                gre
+                for gre in gre_tunnels
                 if hasattr(gre, "comment") and isinstance(gre.comment, str) and gre.comment.startswith("tests-")
             ]
             logging.info(f"Found {len(test_gre_tunnels)} GRE tunnels to delete.")
@@ -452,7 +447,8 @@ class TestSweepUtility:
                 raise Exception(f"Error listing static IPs: {error}")
 
             test_static_ips = [
-                ip for ip in static_ips
+                ip
+                for ip in static_ips
                 if hasattr(ip, "comment") and isinstance(ip.comment, str) and ip.comment.startswith("tests-")
             ]
             logging.info(f"Found {len(test_static_ips)} static IPs to delete.")
@@ -480,15 +476,12 @@ class TestSweepUtility:
                 raise Exception(f"Error listing dlp engines: {error}")
 
             test_engines = [
-                ip for ip in engines
-                if hasattr(ip, "comment") and isinstance(ip.name, str) and ip.name.startswith("tests-")
+                ip for ip in engines if hasattr(ip, "comment") and isinstance(ip.name, str) and ip.name.startswith("tests-")
             ]
             logging.info(f"Found {len(test_engines)} static IPs to delete.")
 
             for engine in test_engines:
-                logging.info(
-                    f"sweep_dlp_engine: Attempting to delete dlp engine: Name='{engine.id}', ID='{engine.id}'"
-                )
+                logging.info(f"sweep_dlp_engine: Attempting to delete dlp engine: Name='{engine.id}', ID='{engine.id}'")
                 _, _, error = self.client.zia.dlp_engine.delete_dlp_engine(engine_id=engine.id)
                 if error:
                     logging.error(f"Failed to delete dlp engine ID={engine.id} — {error}")
@@ -507,7 +500,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing dlp dictionaries: {error}")
 
-            test_dictionaries = [dlp for dlp in dictionaries if  hasattr(dlp, "name") and dlp.name.startswith("tests-")]
+            test_dictionaries = [dlp for dlp in dictionaries if hasattr(dlp, "name") and dlp.name.startswith("tests-")]
             logging.info(f"Found {len(test_dictionaries)} dlp dictionary to delete.")
 
             for dictionary in test_dictionaries:
@@ -532,7 +525,7 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing dlp notification templates: {error}")
 
-            test_templates = [dlp for dlp in templates if  hasattr(dlp, "name") and dlp.name.startswith("tests-")]
+            test_templates = [dlp for dlp in templates if hasattr(dlp, "name") and dlp.name.startswith("tests-")]
             logging.info(f"Found {len(test_templates)} dlp notification template to delete.")
 
             for template in test_templates:
@@ -557,13 +550,11 @@ class TestSweepUtility:
             if error:
                 raise Exception(f"Error listing zpa gateways: {error}")
 
-            test_gateways = [gw for gw in gateways if  hasattr(gw, "name") and gw.name.startswith("tests-")]
+            test_gateways = [gw for gw in gateways if hasattr(gw, "name") and gw.name.startswith("tests-")]
             logging.info(f"Found {len(test_gateways)} zpa gateway to delete.")
 
             for gateway in test_gateways:
-                logging.info(
-                    f"sweep_zpa_gateway: Attempting to delete zpa gateway: Name='{gateway.name}', ID='{gateway.id}'"
-                )
+                logging.info(f"sweep_zpa_gateway: Attempting to delete zpa gateway: Name='{gateway.name}', ID='{gateway.id}'")
                 _, _, error = self.client.zia.zpa_gateway.delete_gateway(gateway_id=gateway.id)
                 if error:
                     logging.error(f"Failed to delete zpa gateway ID={gateway.id} — {error}")

@@ -42,8 +42,7 @@ class TestTrafficVPNCredential:
             # Step 1: Create Static IP for IP-based VPN Credential
             try:
                 created_static_ip, _, error = client.zia.traffic_static_ip.add_static_ip(
-                    ip_address=randomIP,
-                    comment="tests-" + generate_random_string()
+                    ip_address=randomIP, comment="tests-" + generate_random_string()
                 )
                 assert error is None, f"Error creating static IP: {error}"
                 static_ip_id = created_static_ip.id

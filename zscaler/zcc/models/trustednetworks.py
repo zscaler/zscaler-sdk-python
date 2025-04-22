@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class TrustedNetworks(ZscalerObject):
     """
     A class for TrustedNetworks objects.
@@ -32,40 +33,23 @@ class TrustedNetworks(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.active = config["active"] \
-                if "active" in config else None
-            self.company_id = config["companyId"] \
-                if "companyId" in config else None
-            self.condition_type = config["conditionType"] \
-                if "conditionType" in config else None
-            self.created_by = config["createdBy"] \
-                if "createdBy" in config else None
-            self.dns_search_domains = config["dnsSearchDomains"] \
-                if "dnsSearchDomains" in config else None
-            self.dns_servers = config["dnsServers"] \
-                if "dnsServers" in config else None
-            self.edited_by = config["editedBy"] \
-                if "editedBy" in config else None
-            self.guid = config["guid"] \
-                if "guid" in config else None
-            self.hostnames = config["hostnames"] \
-                if "hostnames" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.network_name = config["networkName"] \
-                if "networkName" in config else None
-            self.resolved_ips_for_hostname = config["resolvedIpsForHostname"] \
-                if "resolvedIpsForHostname" in config else None
-            self.ssids = config["ssids"] \
-                if "ssids" in config else None
-            self.trusted_dhcp_servers = config["trustedDhcpServers"] \
-                if "trustedDhcpServers" in config else None
-            self.trusted_egress_ips = config["trustedEgressIps"] \
-                if "trustedEgressIps" in config else None
-            self.trusted_gateways = config["trustedGateways"] \
-                if "trustedGateways" in config else None
-            self.trusted_subnets = config["trustedSubnets"] \
-                if "trustedSubnets" in config else None
+            self.active = config["active"] if "active" in config else None
+            self.company_id = config["companyId"] if "companyId" in config else None
+            self.condition_type = config["conditionType"] if "conditionType" in config else None
+            self.created_by = config["createdBy"] if "createdBy" in config else None
+            self.dns_search_domains = config["dnsSearchDomains"] if "dnsSearchDomains" in config else None
+            self.dns_servers = config["dnsServers"] if "dnsServers" in config else None
+            self.edited_by = config["editedBy"] if "editedBy" in config else None
+            self.guid = config["guid"] if "guid" in config else None
+            self.hostnames = config["hostnames"] if "hostnames" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.network_name = config["networkName"] if "networkName" in config else None
+            self.resolved_ips_for_hostname = config["resolvedIpsForHostname"] if "resolvedIpsForHostname" in config else None
+            self.ssids = config["ssids"] if "ssids" in config else None
+            self.trusted_dhcp_servers = config["trustedDhcpServers"] if "trustedDhcpServers" in config else None
+            self.trusted_egress_ips = config["trustedEgressIps"] if "trustedEgressIps" in config else None
+            self.trusted_gateways = config["trustedGateways"] if "trustedGateways" in config else None
+            self.trusted_subnets = config["trustedSubnets"] if "trustedSubnets" in config else None
         else:
             self.active = None
             self.company_id = None
@@ -107,7 +91,7 @@ class TrustedNetworks(ZscalerObject):
             "trustedDhcpServers": self.trusted_dhcp_servers,
             "trustedEgressIps": self.trusted_egress_ips,
             "trustedGateways": self.trusted_gateways,
-            "trustedSubnets": self.trusted_subnets
+            "trustedSubnets": self.trusted_subnets,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

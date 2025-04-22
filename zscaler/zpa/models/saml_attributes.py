@@ -27,24 +27,15 @@ class SAMLAttribute(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.user_attribute = config["userAttribute"]\
-                if "userAttribute" in config else None
-            self.idp_id = config["idpId"]\
-                if "idpId" in config else None
-            self.saml_name = config["samlName"]\
-                if "samlName" in config else None
-            self.idp_name = config["idpName"]\
-                if "idpName" in config else None
-            self.delta = config["delta"]\
-                if "delta" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.user_attribute = config["userAttribute"] if "userAttribute" in config else None
+            self.idp_id = config["idpId"] if "idpId" in config else None
+            self.saml_name = config["samlName"] if "samlName" in config else None
+            self.idp_name = config["idpName"] if "idpName" in config else None
+            self.delta = config["delta"] if "delta" in config else None
         else:
             self.id = None
             self.creation_time = None

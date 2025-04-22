@@ -31,26 +31,16 @@ class ZPACBIProfile(ZscalerObject):
         """
         super().__init__(config)
 
-        self.id = config["id"]\
-            if config and "id" in config else None
-        self.modified_time = config["modifiedTime"]\
-            if config and "modifiedTime" in config else None
-        self.creation_time = config["creationTime"]\
-            if config and "creationTime" in config else None
-        self.modified_by = config["modifiedBy"]\
-            if config and "modifiedBy" in config else None
-        self.name = config["name"] \
-            if config and "name" in config else None
-        self.cbi_tenant_id = config["cbiTenantId"]\
-            if config and "cbiTenantId" in config else None
-        self.cbi_profile_id = config["cbiProfileId"]\
-            if config and "cbiProfileId" in config else None
-        self.description = config["description"]\
-            if config and "description" in config else None
-        self.cbi_url = config["cbiUrl"]\
-            if config and "cbiUrl" in config else None
-        self.enabled = config["enabled"]\
-            if config and "enabled" in config else True
+        self.id = config["id"] if config and "id" in config else None
+        self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+        self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+        self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+        self.name = config["name"] if config and "name" in config else None
+        self.cbi_tenant_id = config["cbiTenantId"] if config and "cbiTenantId" in config else None
+        self.cbi_profile_id = config["cbiProfileId"] if config and "cbiProfileId" in config else None
+        self.description = config["description"] if config and "description" in config else None
+        self.cbi_url = config["cbiUrl"] if config and "cbiUrl" in config else None
+        self.enabled = config["enabled"] if config and "enabled" in config else True
 
     def request_format(self):
         """
@@ -90,30 +80,18 @@ class CBIProfile(ZscalerObject):
         """
         super().__init__(config)
 
-        self.id = config["id"]\
-            if config and "id" in config else None
-        self.name = config["name"]\
-            if config and "name" in config else None
-        self.description = config["description"]\
-            if config and "description" in config else None
-        self.enabled = config["enabled"]\
-            if config and "enabled" in config else None
-        self.modified_time = config["modifiedTime"]\
-            if config and "modifiedTime" in config else None
-        self.creation_time = config["creationTime"]\
-            if config and "creationTime" in config else None
-        self.modified_by = config["modifiedBy"]\
-            if config and "modifiedBy" in config else None
-        self.isolation_profile_id = config["isolationProfileId"]\
-            if config and "isolationProfileId" in config else None
-        self.isolation_tenant_id = config["isolationTenantId"]\
-            if config and "isolationTenantId" in config else None
-        self.isolation_url = config["isolationUrl"]\
-            if config and "isolationUrl" in config else None
-        self.microtenant_id = config["microtenantId"]\
-            if config and "microtenantId" in config else None
-        self.microtenant_name = config["microtenantName"]\
-            if config and "microtenantName" in config else True
+        self.id = config["id"] if config and "id" in config else None
+        self.name = config["name"] if config and "name" in config else None
+        self.description = config["description"] if config and "description" in config else None
+        self.enabled = config["enabled"] if config and "enabled" in config else None
+        self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+        self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+        self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+        self.isolation_profile_id = config["isolationProfileId"] if config and "isolationProfileId" in config else None
+        self.isolation_tenant_id = config["isolationTenantId"] if config and "isolationTenantId" in config else None
+        self.isolation_url = config["isolationUrl"] if config and "isolationUrl" in config else None
+        self.microtenant_id = config["microtenantId"] if config and "microtenantId" in config else None
+        self.microtenant_name = config["microtenantName"] if config and "microtenantName" in config else True
 
     def request_format(self):
         """
@@ -136,7 +114,6 @@ class CBIProfile(ZscalerObject):
             "isolationUrl": self.isolation_url,
             "microtenant_id": self.microtenant_id,
             "microtenant_name": self.microtenant_name,
-
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

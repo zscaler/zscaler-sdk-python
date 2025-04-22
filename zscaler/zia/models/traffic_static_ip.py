@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 
+
 class TrafficStaticIP(ZscalerObject):
     """
     A class representing a VPN Credentials object.
@@ -26,22 +27,14 @@ class TrafficStaticIP(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.comment = config["comment"]\
-                if "comment" in config else None
-            self.ip_address = config["ipAddress"]\
-                if "ipAddress" in config else None
-            self.geo_override = config["geoOverride"]\
-                if "geoOverride" in config else None
-            self.latitude = config["latitude"]\
-                if "latitude" in config else None
-            self.longitude = config["longitude"]\
-                if "longitude" in config else None 
-            self.routable_ip = config["routableIP"]\
-                if "routableIP" in config else None                 
-            self.last_modification_time = config["lastModificationTime"]\
-                if "lastModificationTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.comment = config["comment"] if "comment" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.geo_override = config["geoOverride"] if "geoOverride" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.routable_ip = config["routableIP"] if "routableIP" in config else None
+            self.last_modification_time = config["lastModificationTime"] if "lastModificationTime" in config else None
 
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):
@@ -60,7 +53,7 @@ class TrafficStaticIP(ZscalerObject):
                     self.city = None
             else:
                 self.city = None
-                                       
+
         else:
             self.id = None
             self.comment = None
@@ -73,7 +66,7 @@ class TrafficStaticIP(ZscalerObject):
             self.last_modification_time = None
             self.last_modified_by = None
             self.city = None
-            
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.

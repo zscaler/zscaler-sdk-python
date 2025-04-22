@@ -28,26 +28,16 @@ class CBIBanner(ZscalerObject):
         super().__init__(config)
 
         # Using defensive programming to check each key's presence
-        self.id = config["id"]\
-            if config and "id" in config else None
-        self.name = config["name"]\
-            if config and "name" in config else None
-        self.primary_color = config["primaryColor"]\
-            if config and "primaryColor" in config else None
-        self.text_color = config["textColor"]\
-            if config and "textColor" in config else None
-        self.notification_title = config["notificationTitle"]\
-            if config and "notificationTitle" in config else None
-        self.notification_text = config["notificationText"]\
-            if config and "notificationText" in config else None
-        self.logo = config["logo"]\
-            if config and "logo" in config else None
-        self.banner = config["banner"]\
-            if config and "banner" in config else None
-        self.persist = config["persist"]\
-            if config and "persist" in config else None
-        self.is_default = config["isDefault"]\
-            if config and "isDefault" in config else None
+        self.id = config["id"] if config and "id" in config else None
+        self.name = config["name"] if config and "name" in config else None
+        self.primary_color = config["primaryColor"] if config and "primaryColor" in config else None
+        self.text_color = config["textColor"] if config and "textColor" in config else None
+        self.notification_title = config["notificationTitle"] if config and "notificationTitle" in config else None
+        self.notification_text = config["notificationText"] if config and "notificationText" in config else None
+        self.logo = config["logo"] if config and "logo" in config else None
+        self.banner = config["banner"] if config and "banner" in config else None
+        self.persist = config["persist"] if config and "persist" in config else None
+        self.is_default = config["isDefault"] if config and "isDefault" in config else None
 
     def request_format(self):
         """

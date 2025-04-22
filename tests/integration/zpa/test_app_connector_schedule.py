@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 # import pytest
 # from pprint import pprint
 # from tests.integration.zpa.conftest import MockZPAClient
@@ -89,4 +88,3 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         # Final assertion to ensure no errors occurred
 #         assert len(errors) == 0, f"Errors occurred: {errors}"
-

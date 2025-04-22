@@ -81,9 +81,9 @@ class TestURLFilteringRule:
             assert created_rule is not None, "URL Filtering Rule creation returned None"
             rule_id = created_rule.id
         except Exception as exc:
-                errors.append(f"URL Filtering Rule creation failed: {exc}")
+            errors.append(f"URL Filtering Rule creation failed: {exc}")
 
-            # Step 4: Retrieve the URL Filtering Rule by ID
+        # Step 4: Retrieve the URL Filtering Rule by ID
         try:
             retrieved_rule, _, error = client.zia.url_filtering.get_rule(rule_id)
             assert error is None, f"Error retrieving URL Filtering Rule: {error}"
@@ -99,44 +99,46 @@ class TestURLFilteringRule:
                     rule_id=rule_id,
                     name=rule_name,
                     description=updated_description,
-                enabled=True,
-                action="BLOCK",
-                order=1,
-                rank=7,
-                url_categories=["ANY"],
-                protocols=["ANY_RULE"],
-                device_trust_levels=[
-                    "UNKNOWN_DEVICETRUSTLEVEL",
-                    "LOW_TRUST",
-                    "MEDIUM_TRUST",
-                    "HIGH_TRUST",
-                ],
-                user_agent_types=[
-                    "OPERA",
-                    "FIREFOX",
-                    "MSIE",
-                    "MSEDGE",
-                    "CHROME",
-                    "SAFARI",
-                    "MSCHREDGE",
-                    "OTHER",
-                ],
-                user_risk_score_levels=["LOW", "MEDIUM", "HIGH", "CRITICAL"],
-                request_methods=[
-                    "CONNECT",
-                    "DELETE",
-                    "GET",
-                    "HEAD",
-                    "OPTIONS",
-                    "OTHER",
-                    "POST",
-                    "PUT",
-                    "TRACE",
-                ],
+                    enabled=True,
+                    action="BLOCK",
+                    order=1,
+                    rank=7,
+                    url_categories=["ANY"],
+                    protocols=["ANY_RULE"],
+                    device_trust_levels=[
+                        "UNKNOWN_DEVICETRUSTLEVEL",
+                        "LOW_TRUST",
+                        "MEDIUM_TRUST",
+                        "HIGH_TRUST",
+                    ],
+                    user_agent_types=[
+                        "OPERA",
+                        "FIREFOX",
+                        "MSIE",
+                        "MSEDGE",
+                        "CHROME",
+                        "SAFARI",
+                        "MSCHREDGE",
+                        "OTHER",
+                    ],
+                    user_risk_score_levels=["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+                    request_methods=[
+                        "CONNECT",
+                        "DELETE",
+                        "GET",
+                        "HEAD",
+                        "OPTIONS",
+                        "OTHER",
+                        "POST",
+                        "PUT",
+                        "TRACE",
+                    ],
                 )
                 assert error is None, f"Error updating URL Filtering Rule: {error}"
                 assert updated_rule is not None, "Updated URL Filtering Rule is None"
-                assert updated_rule.description == updated_description, f"URL Filtering Rule update failed: {updated_rule.as_dict()}"
+                assert (
+                    updated_rule.description == updated_description
+                ), f"URL Filtering Rule update failed: {updated_rule.as_dict()}"
             except Exception as exc:
                 errors.append(f"Updating URL Filtering Rule failed: {exc}")
 

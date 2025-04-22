@@ -34,103 +34,80 @@ class AdvancedThreatProtectionSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.risk_tolerance = config["riskTolerance"] \
-                if "riskTolerance" in config else None
-            self.risk_tolerance_capture = config["riskToleranceCapture"] \
-                if "riskToleranceCapture" in config else None
-            self.cmd_ctl_server_blocked = config["cmdCtlServerBlocked"] \
-                if "cmdCtlServerBlocked" in config else None
-            self.cmd_ctl_server_capture = config["cmdCtlServerCapture"] \
-                if "cmdCtlServerCapture" in config else None
-            self.cmd_ctl_traffic_blocked = config["cmdCtlTrafficBlocked"] \
-                if "cmdCtlTrafficBlocked" in config else None
-            self.cmd_ctl_traffic_capture = config["cmdCtlTrafficCapture"] \
-                if "cmdCtlTrafficCapture" in config else None
-            self.malware_sites_blocked = config["malwareSitesBlocked"] \
-                if "malwareSitesBlocked" in config else None
-            self.malware_sites_capture = config["malwareSitesCapture"] \
-                if "malwareSitesCapture" in config else None
-            self.active_x_blocked = config["activeXBlocked"] \
-                if "activeXBlocked" in config else None
-            self.active_x_capture = config["activeXCapture"] \
-                if "activeXCapture" in config else None
-            self.browser_exploits_blocked = config["browserExploitsBlocked"] \
-                if "browserExploitsBlocked" in config else None
-            self.browser_exploits_capture = config["browserExploitsCapture"] \
-                if "browserExploitsCapture" in config else None
-            self.file_format_vunerabilites_blocked = config["fileFormatVunerabilitesBlocked"] \
-                if "fileFormatVunerabilitesBlocked" in config else None
-            self.file_format_vunerabilites_capture = config["fileFormatVunerabilitesCapture"] \
-                if "fileFormatVunerabilitesCapture" in config else None
-            self.known_phishing_sites_blocked = config["knownPhishingSitesBlocked"] \
-                if "knownPhishingSitesBlocked" in config else None
-            self.known_phishing_sites_capture = config["knownPhishingSitesCapture"] \
-                if "knownPhishingSitesCapture" in config else None
-            self.suspected_phishing_sites_blocked = config["suspectedPhishingSitesBlocked"] \
-                if "suspectedPhishingSitesBlocked" in config else None
-            self.suspected_phishing_sites_capture = config["suspectedPhishingSitesCapture"] \
-                if "suspectedPhishingSitesCapture" in config else None
-            self.suspect_adware_spyware_sites_blocked = config["suspectAdwareSpywareSitesBlocked"] \
-                if "suspectAdwareSpywareSitesBlocked" in config else None
-            self.suspect_adware_spyware_sites_capture = config["suspectAdwareSpywareSitesCapture"] \
-                if "suspectAdwareSpywareSitesCapture" in config else None
-            self.webspam_blocked = config["webspamBlocked"] \
-                if "webspamBlocked" in config else None
-            self.webspam_capture = config["webspamCapture"] \
-                if "webspamCapture" in config else None
-            self.irc_tunnelling_blocked = config["ircTunnellingBlocked"] \
-                if "ircTunnellingBlocked" in config else None
-            self.irc_tunnelling_capture = config["ircTunnellingCapture"] \
-                if "ircTunnellingCapture" in config else None
-            self.anonymizer_blocked = config["anonymizerBlocked"] \
-                if "anonymizerBlocked" in config else None
-            self.anonymizer_capture = config["anonymizerCapture"] \
-                if "anonymizerCapture" in config else None
-            self.cookie_stealing_blocked = config["cookieStealingBlocked"] \
-                if "cookieStealingBlocked" in config else None
-            self.cookie_stealing_pcap_enabled = config["cookieStealingPCAPEnabled"] \
-                if "cookieStealingPCAPEnabled" in config else None
-            self.potential_malicious_requests_blocked = config["potentialMaliciousRequestsBlocked"] \
-                if "potentialMaliciousRequestsBlocked" in config else None
-            self.potential_malicious_requests_capture = config["potentialMaliciousRequestsCapture"] \
-                if "potentialMaliciousRequestsCapture" in config else None
+            self.risk_tolerance = config["riskTolerance"] if "riskTolerance" in config else None
+            self.risk_tolerance_capture = config["riskToleranceCapture"] if "riskToleranceCapture" in config else None
+            self.cmd_ctl_server_blocked = config["cmdCtlServerBlocked"] if "cmdCtlServerBlocked" in config else None
+            self.cmd_ctl_server_capture = config["cmdCtlServerCapture"] if "cmdCtlServerCapture" in config else None
+            self.cmd_ctl_traffic_blocked = config["cmdCtlTrafficBlocked"] if "cmdCtlTrafficBlocked" in config else None
+            self.cmd_ctl_traffic_capture = config["cmdCtlTrafficCapture"] if "cmdCtlTrafficCapture" in config else None
+            self.malware_sites_blocked = config["malwareSitesBlocked"] if "malwareSitesBlocked" in config else None
+            self.malware_sites_capture = config["malwareSitesCapture"] if "malwareSitesCapture" in config else None
+            self.active_x_blocked = config["activeXBlocked"] if "activeXBlocked" in config else None
+            self.active_x_capture = config["activeXCapture"] if "activeXCapture" in config else None
+            self.browser_exploits_blocked = config["browserExploitsBlocked"] if "browserExploitsBlocked" in config else None
+            self.browser_exploits_capture = config["browserExploitsCapture"] if "browserExploitsCapture" in config else None
+            self.file_format_vunerabilites_blocked = (
+                config["fileFormatVunerabilitesBlocked"] if "fileFormatVunerabilitesBlocked" in config else None
+            )
+            self.file_format_vunerabilites_capture = (
+                config["fileFormatVunerabilitesCapture"] if "fileFormatVunerabilitesCapture" in config else None
+            )
+            self.known_phishing_sites_blocked = (
+                config["knownPhishingSitesBlocked"] if "knownPhishingSitesBlocked" in config else None
+            )
+            self.known_phishing_sites_capture = (
+                config["knownPhishingSitesCapture"] if "knownPhishingSitesCapture" in config else None
+            )
+            self.suspected_phishing_sites_blocked = (
+                config["suspectedPhishingSitesBlocked"] if "suspectedPhishingSitesBlocked" in config else None
+            )
+            self.suspected_phishing_sites_capture = (
+                config["suspectedPhishingSitesCapture"] if "suspectedPhishingSitesCapture" in config else None
+            )
+            self.suspect_adware_spyware_sites_blocked = (
+                config["suspectAdwareSpywareSitesBlocked"] if "suspectAdwareSpywareSitesBlocked" in config else None
+            )
+            self.suspect_adware_spyware_sites_capture = (
+                config["suspectAdwareSpywareSitesCapture"] if "suspectAdwareSpywareSitesCapture" in config else None
+            )
+            self.webspam_blocked = config["webspamBlocked"] if "webspamBlocked" in config else None
+            self.webspam_capture = config["webspamCapture"] if "webspamCapture" in config else None
+            self.irc_tunnelling_blocked = config["ircTunnellingBlocked"] if "ircTunnellingBlocked" in config else None
+            self.irc_tunnelling_capture = config["ircTunnellingCapture"] if "ircTunnellingCapture" in config else None
+            self.anonymizer_blocked = config["anonymizerBlocked"] if "anonymizerBlocked" in config else None
+            self.anonymizer_capture = config["anonymizerCapture"] if "anonymizerCapture" in config else None
+            self.cookie_stealing_blocked = config["cookieStealingBlocked"] if "cookieStealingBlocked" in config else None
+            self.cookie_stealing_pcap_enabled = (
+                config["cookieStealingPCAPEnabled"] if "cookieStealingPCAPEnabled" in config else None
+            )
+            self.potential_malicious_requests_blocked = (
+                config["potentialMaliciousRequestsBlocked"] if "potentialMaliciousRequestsBlocked" in config else None
+            )
+            self.potential_malicious_requests_capture = (
+                config["potentialMaliciousRequestsCapture"] if "potentialMaliciousRequestsCapture" in config else None
+            )
             self.blocked_countries = ZscalerCollection.form_list(
                 config["blockedCountries"] if "blockedCountries" in config else [], str
             )
-            self.block_countries_capture = config["blockCountriesCapture"] \
-                if "blockCountriesCapture" in config else None
-            self.bit_torrent_blocked = config["bitTorrentBlocked"] \
-                if "bitTorrentBlocked" in config else None
-            self.bit_torrent_capture = config["bitTorrentCapture"] \
-                if "bitTorrentCapture" in config else None
-            self.tor_blocked = config["torBlocked"] \
-                if "torBlocked" in config else None
-            self.tor_capture = config["torCapture"] \
-                if "torCapture" in config else None
-            self.google_talk_blocked = config["googleTalkBlocked"] \
-                if "googleTalkBlocked" in config else None
-            self.google_talk_capture = config["googleTalkCapture"] \
-                if "googleTalkCapture" in config else None
-            self.ssh_tunnelling_blocked = config["sshTunnellingBlocked"] \
-                if "sshTunnellingBlocked" in config else None
-            self.ssh_tunnelling_capture = config["sshTunnellingCapture"] \
-                if "sshTunnellingCapture" in config else None
-            self.crypto_mining_blocked = config["cryptoMiningBlocked"] \
-                if "cryptoMiningBlocked" in config else None
-            self.crypto_mining_capture = config["cryptoMiningCapture"] \
-                if "cryptoMiningCapture" in config else None
-            self.ad_spyware_sites_blocked = config["adSpywareSitesBlocked"] \
-                if "adSpywareSitesBlocked" in config else None
-            self.ad_spyware_sites_capture = config["adSpywareSitesCapture"] \
-                if "adSpywareSitesCapture" in config else None
-            self.dga_domains_blocked = config["dgaDomainsBlocked"] \
-                if "dgaDomainsBlocked" in config else None
-            self.alert_for_unknown_or_suspicious_c2_traffic = config["alertForUnknownOrSuspiciousC2Traffic"] \
-                if "alertForUnknownOrSuspiciousC2Traffic" in config else None
-            self.dga_domains_capture = config["dgaDomainsCapture"] \
-                if "dgaDomainsCapture" in config else None
-            self.malicious_urls_capture = config["maliciousUrlsCapture"] \
-                if "maliciousUrlsCapture" in config else None
+            self.block_countries_capture = config["blockCountriesCapture"] if "blockCountriesCapture" in config else None
+            self.bit_torrent_blocked = config["bitTorrentBlocked"] if "bitTorrentBlocked" in config else None
+            self.bit_torrent_capture = config["bitTorrentCapture"] if "bitTorrentCapture" in config else None
+            self.tor_blocked = config["torBlocked"] if "torBlocked" in config else None
+            self.tor_capture = config["torCapture"] if "torCapture" in config else None
+            self.google_talk_blocked = config["googleTalkBlocked"] if "googleTalkBlocked" in config else None
+            self.google_talk_capture = config["googleTalkCapture"] if "googleTalkCapture" in config else None
+            self.ssh_tunnelling_blocked = config["sshTunnellingBlocked"] if "sshTunnellingBlocked" in config else None
+            self.ssh_tunnelling_capture = config["sshTunnellingCapture"] if "sshTunnellingCapture" in config else None
+            self.crypto_mining_blocked = config["cryptoMiningBlocked"] if "cryptoMiningBlocked" in config else None
+            self.crypto_mining_capture = config["cryptoMiningCapture"] if "cryptoMiningCapture" in config else None
+            self.ad_spyware_sites_blocked = config["adSpywareSitesBlocked"] if "adSpywareSitesBlocked" in config else None
+            self.ad_spyware_sites_capture = config["adSpywareSitesCapture"] if "adSpywareSitesCapture" in config else None
+            self.dga_domains_blocked = config["dgaDomainsBlocked"] if "dgaDomainsBlocked" in config else None
+            self.alert_for_unknown_or_suspicious_c2_traffic = (
+                config["alertForUnknownOrSuspiciousC2Traffic"] if "alertForUnknownOrSuspiciousC2Traffic" in config else None
+            )
+            self.dga_domains_capture = config["dgaDomainsCapture"] if "dgaDomainsCapture" in config else None
+            self.malicious_urls_capture = config["maliciousUrlsCapture"] if "maliciousUrlsCapture" in config else None
         else:
             self.risk_tolerance = None
             self.risk_tolerance_capture = None
@@ -234,7 +211,7 @@ class AdvancedThreatProtectionSettings(ZscalerObject):
             "dgaDomainsBlocked": self.dga_domains_blocked,
             "alertForUnknownOrSuspiciousC2Traffic": self.alert_for_unknown_or_suspicious_c2_traffic,
             "dgaDomainsCapture": self.dga_domains_capture,
-            "maliciousUrlsCapture": self.malicious_urls_capture
+            "maliciousUrlsCapture": self.malicious_urls_capture,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

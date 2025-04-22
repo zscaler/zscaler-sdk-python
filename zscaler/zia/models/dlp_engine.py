@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class DLPEngine(ZscalerObject):
     """
     A class representing a DLP Engine object.
@@ -24,18 +25,12 @@ class DLPEngine(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.predefined_engine_name = config["predefinedEngineName"]\
-                if "predefinedEngineName" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.engine_expression = config["engineExpression"]\
-                if "engineExpression" in config else None
-            self.custom_dlp_engine = config["customDlpEngine"]\
-                if "customDlpEngine" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.predefined_engine_name = config["predefinedEngineName"] if "predefinedEngineName" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.engine_expression = config["engineExpression"] if "engineExpression" in config else None
+            self.custom_dlp_engine = config["customDlpEngine"] if "customDlpEngine" in config else False
 
         else:
             self.id = None
@@ -57,10 +52,10 @@ class DLPEngine(ZscalerObject):
             "description": self.description,
             "engineExpression": self.engine_expression,
             "customDlpEngine": self.custom_dlp_engine,
-            
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class DLPVAlidateExpression(ZscalerObject):
     """

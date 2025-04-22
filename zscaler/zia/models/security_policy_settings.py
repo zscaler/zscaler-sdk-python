@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class SecurityPolicySettings(ZscalerObject):
     """
     A class for Security Policy Settings objects.
@@ -29,7 +30,7 @@ class SecurityPolicySettings(ZscalerObject):
             config (dict): A dictionary representing the Security Policy Settings configuration.
         """
         super().__init__(config)
-        
+
         # Defensive programming strategy with conditionals
         if config and isinstance(config, dict):
             self.whitelist_urls = config.get("whitelistUrls", []) if isinstance(config.get("whitelistUrls"), list) else []
@@ -44,5 +45,5 @@ class SecurityPolicySettings(ZscalerObject):
         """
         return {
             "whitelistUrls": self.whitelist_urls if isinstance(self.whitelist_urls, list) else [],
-            "blacklistUrls": self.blacklist_urls if isinstance(self.blacklist_urls, list) else []
+            "blacklistUrls": self.blacklist_urls if isinstance(self.blacklist_urls, list) else [],
         }

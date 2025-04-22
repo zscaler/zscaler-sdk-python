@@ -36,20 +36,18 @@ class ZpaGroupEntitlements(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.compute_device_groups_for_zpa = config["computeDeviceGroupsForZPA"] \
-                if "computeDeviceGroupsForZPA" in config else None
+            self.compute_device_groups_for_zpa = (
+                config["computeDeviceGroupsForZPA"] if "computeDeviceGroupsForZPA" in config else None
+            )
             self.device_group_list = ZscalerCollection.form_list(
                 config["deviceGroupList"] if "deviceGroupList" in config else [], str
             )
-            self.group_list = ZscalerCollection.form_list(
-                config["groupList"] if "groupList" in config else [], str
+            self.group_list = ZscalerCollection.form_list(config["groupList"] if "groupList" in config else [], str)
+            self.machine_tun_enabled_for_all = (
+                config["machineTunEnabledForAll"] if "machineTunEnabledForAll" in config else None
             )
-            self.machine_tun_enabled_for_all = config["machineTunEnabledForAll"] \
-                if "machineTunEnabledForAll" in config else None
-            self.total_count = config["totalCount"] \
-                if "totalCount" in config else None
-            self.zpa_enable_for_all = config["zpaEnableForAll"] \
-                if "zpaEnableForAll" in config else None
+            self.total_count = config["totalCount"] if "totalCount" in config else None
+            self.zpa_enable_for_all = config["zpaEnableForAll"] if "zpaEnableForAll" in config else None
         else:
             self.compute_device_groups_for_zpa = None
             self.device_group_list = ZscalerCollection.form_list([], str)
@@ -69,7 +67,7 @@ class ZpaGroupEntitlements(ZscalerObject):
             "groupList": self.group_list,
             "machineTunEnabledForAll": self.machine_tun_enabled_for_all,
             "totalCount": self.total_count,
-            "zpaEnableForAll": self.zpa_enable_for_all
+            "zpaEnableForAll": self.zpa_enable_for_all,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

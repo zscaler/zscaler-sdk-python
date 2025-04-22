@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common as common_reference
 
+
 class Alerts(ZscalerObject):
     def __init__(self, config=None):
         """
@@ -58,10 +59,11 @@ class Alerts(ZscalerObject):
             "num_geolocations": self.num_geolocations,
             "num_devices": self.num_devices,
             "started_on": self.started_on,
-            "ended_on": self.ended_on
+            "ended_on": self.ended_on,
         }
         # print(f"DEBUG: as_dict() output: {alert_dict}")  # ✅ Debugging as_dict()
         return alert_dict
+
 
 class AlertDetails(ZscalerObject):
     """
@@ -78,18 +80,12 @@ class AlertDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.rule_name = config["rule_name"] \
-                if "rule_name" in config else None
-            self.severity = config["severity"] \
-                if "severity" in config else None
-            self.alert_type = config["alert_type"] \
-                if "alert_type" in config else None
-            self.alert_status = config["alert_status"] \
-                if "alert_status" in config else None
-            self.application = config["application"] \
-                if "application" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.rule_name = config["rule_name"] if "rule_name" in config else None
+            self.severity = config["severity"] if "severity" in config else None
+            self.alert_type = config["alert_type"] if "alert_type" in config else None
+            self.alert_status = config["alert_status"] if "alert_status" in config else None
+            self.application = config["application"] if "application" in config else None
             self.geolocations = ZscalerCollection.form_list(
                 config["geolocations"] if "geolocations" in config else [], common_reference.GeoLocations
             )
@@ -99,10 +95,8 @@ class AlertDetails(ZscalerObject):
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], common_reference.Locations
             )
-            self.started_on = config["started_on"] \
-                if "started_on" in config else None
-            self.ended_on = config["ended_on"] \
-                if "ended_on" in config else None
+            self.started_on = config["started_on"] if "started_on" in config else None
+            self.ended_on = config["ended_on"] if "ended_on" in config else None
         else:
             self.id = None
             self.rule_name = None
@@ -132,7 +126,7 @@ class AlertDetails(ZscalerObject):
             "departments": self.departments,
             "locations": self.locations,
             "started_on": self.started_on,
-            "ended_on": self.ended_on
+            "ended_on": self.ended_on,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class IOTReport(ZscalerObject):
     """
     A class for IOTReport objects.
@@ -32,14 +33,10 @@ class IOTReport(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.cloud_name = config["cloudName"]\
-                if "cloudName" in config else None
-            self.customer_id = config["customerId"]\
-                if "customerId" in config else None
+            self.cloud_name = config["cloudName"] if "cloudName" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
 
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], Devices
-            )
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], Devices)
         else:
             self.cloud_name = None
             self.customer_id = None
@@ -58,6 +55,7 @@ class IOTReport(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class Devices(ZscalerObject):
     """
     A class for Devices objects.
@@ -73,24 +71,15 @@ class Devices(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.location_id = config["locationId"]\
-                if "locationId" in config else None
-            self.device_uuid = config["deviceUuid"]\
-                if "deviceUuid" in config else None
-            self.ip_address = config["ipAddress"]\
-                if "ipAddress" in config else None
-            self.device_type_uuid = config["deviceTypeUuid"]\
-                if "deviceTypeUuid" in config else None
-            self.auto_label = config["autoLabel"]\
-                if "autoLabel" in config else None
-            self.classification_uuid = config["classificationUuid"]\
-                if "classificationUuid" in config else None
-            self.category_uuid = config["categoryUuid"]\
-                if "categoryUuid" in config else None
-            self.flow_start_time = config["flowStartTime"]\
-                if "flowStartTime" in config else None
-            self.flow_end_time = config["flowEndTime"]\
-                if "flowEndTime" in config else None
+            self.location_id = config["locationId"] if "locationId" in config else None
+            self.device_uuid = config["deviceUuid"] if "deviceUuid" in config else None
+            self.ip_address = config["ipAddress"] if "ipAddress" in config else None
+            self.device_type_uuid = config["deviceTypeUuid"] if "deviceTypeUuid" in config else None
+            self.auto_label = config["autoLabel"] if "autoLabel" in config else None
+            self.classification_uuid = config["classificationUuid"] if "classificationUuid" in config else None
+            self.category_uuid = config["categoryUuid"] if "categoryUuid" in config else None
+            self.flow_start_time = config["flowStartTime"] if "flowStartTime" in config else None
+            self.flow_end_time = config["flowEndTime"] if "flowEndTime" in config else None
         else:
             self.location_id = None
             self.device_uuid = None

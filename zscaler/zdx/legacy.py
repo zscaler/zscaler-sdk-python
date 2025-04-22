@@ -90,9 +90,10 @@ class LegacyZDXClientHelper:
                     delay = int(rate_limit_reset) + 1 if rate_limit_reset else 1
                 except Exception:
                     delay = 1
-                # logger.info(f"Rate limit hit on GET {url}. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries}).")
-                sanitized_url = url.split('?')[0]  # Remove query parameters to avoid logging sensitive data
-                logger.info(f"Rate limit hit on GET {sanitized_url}. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries}).")
+                sanitized_url = url.split("?")[0]
+                logger.info(
+                    f"Rate limit hit on GET {sanitized_url}.Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})"
+                )
                 time.sleep(delay)
                 continue
             try:

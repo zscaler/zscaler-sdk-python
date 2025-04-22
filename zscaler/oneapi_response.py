@@ -4,6 +4,7 @@ import uuid
 
 logger = logging.getLogger(__name__)
 
+
 class ZscalerAPIResponse:
     """
     Class for defining the wrapper of a Zscaler API response.
@@ -79,19 +80,19 @@ class ZscalerAPIResponse:
 
         if res_details:
             content_type = res_details.headers.get("Content-Type", "").lower()
-        #     if "application/json" in content_type:
-        #         self._build_json_response(response_body)
-        #     else:
-        #         # Attempt JSON parse, else store as text
-        #         try:
-        #             self._build_json_response(response_body)
-        #         except json.JSONDecodeError:
-        #             self._body = response_body
-        # else:
-        #     try:
-        #         self._build_json_response(response_body)
-        #     except json.JSONDecodeError:
-        #         self._body = response_body
+            #     if "application/json" in content_type:
+            #         self._build_json_response(response_body)
+            #     else:
+            #         # Attempt JSON parse, else store as text
+            #         try:
+            #             self._build_json_response(response_body)
+            #         except json.JSONDecodeError:
+            #             self._body = response_body
+            # else:
+            #     try:
+            #         self._build_json_response(response_body)
+            #     except json.JSONDecodeError:
+            #         self._body = response_body
             if "application/json" in content_type:
                 try:
                     self._build_json_response(response_body)
@@ -191,7 +192,7 @@ class ZscalerAPIResponse:
     def has_next(self):
         """
         Returns True if there are more pages to fetch, False otherwise.
-        
+
         Returns:
             bool: Existence of next page of results
         """
@@ -278,7 +279,7 @@ class ZscalerAPIResponse:
             # This logic may need refinement depending on API behavior, but follows a pattern:
             #   If the previous page was not empty, we assume another page might exist.
             #   If next() returns empty, we won't continue.
-            has_next = bool(self._list) and (self._pages_fetched == 1 or self._page < 9999999) 
+            has_next = bool(self._list) and (self._pages_fetched == 1 or self._page < 9999999)
             # The above large number is a placeholder. Ideally, you'd base this on known API behavior.
             # If the API doesn't give a clear signal that there's another page, we may need a heuristic.
             logger.debug("Has next page for ZIA/ZCC: %s", has_next)

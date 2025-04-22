@@ -65,22 +65,18 @@ class AppSegmentsInspectionAPI(APIClient):
         query_params = query_params or {}
         query_params.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body={}, headers={}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ApplicationSegmentInspection(
-                    self.form_response_body(item))
-                )
+                result.append(ApplicationSegmentInspection(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -110,20 +106,16 @@ class AppSegmentsInspectionAPI(APIClient):
 
         query_params = query_params or {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentInspection)
+        response, error = self._request_executor.execute(request, ApplicationSegmentInspection)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentInspection(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentInspection(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -258,21 +250,17 @@ class AppSegmentsInspectionAPI(APIClient):
         add_id_groups(self.reformat_params, kwargs, body)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentInspection)
+        response, error = self._request_executor.execute(request, ApplicationSegmentInspection)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentInspection(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentInspection(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -439,13 +427,11 @@ class AppSegmentsInspectionAPI(APIClient):
         # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ApplicationSegmentInspection)
+        response, error = self._request_executor.execute(request, ApplicationSegmentInspection)
         if error:
             return (None, response, error)
 
@@ -453,9 +439,7 @@ class AppSegmentsInspectionAPI(APIClient):
             return (ApplicationSegmentInspection({"id": segment_id}), None, None)
 
         try:
-            result = ApplicationSegmentInspection(
-                self.form_response_body(response.get_body())
-            )
+            result = ApplicationSegmentInspection(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -495,13 +479,11 @@ class AppSegmentsInspectionAPI(APIClient):
         if force_delete:
             params["forceDelete"] = "true"
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

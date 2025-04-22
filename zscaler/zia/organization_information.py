@@ -63,16 +63,12 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -82,7 +78,7 @@ class OrganizationInformationAPI(APIClient):
             return (advanced_settings, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def get_org_info_lite(self) -> tuple:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
@@ -113,16 +109,12 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -132,7 +124,7 @@ class OrganizationInformationAPI(APIClient):
             return (advanced_settings, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def get_subscriptions(self) -> tuple:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
@@ -163,16 +155,12 @@ class OrganizationInformationAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)

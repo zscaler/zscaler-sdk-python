@@ -71,31 +71,23 @@ class ServiceEdgeGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ServiceEdgeGroup(
-                    self.form_response_body(item))
-                )
+                result.append(ServiceEdgeGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_service_edge_group(
-        self,
-        group_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_service_edge_group(self, group_id: str, query_params=None) -> tuple:
         """
         Retrieves information about a specific service edge group.
 
@@ -128,21 +120,17 @@ class ServiceEdgeGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ServiceEdgeGroup)
+        response, error = self._request_executor.execute(request, ServiceEdgeGroup)
         if error:
             return (None, response, error)
 
         # Parse the response into an AppConnectorGroup instance
         try:
-            result = ServiceEdgeGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -236,20 +224,16 @@ class ServiceEdgeGroupAPI(APIClient):
         if "service_edge_ids" in body:
             body["serviceEdges"] = [{"id": id} for id in body.pop("service_edge_ids")]
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ServiceEdgeGroup)
+        response, error = self._request_executor.execute(request, ServiceEdgeGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = ServiceEdgeGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -308,13 +292,11 @@ class ServiceEdgeGroupAPI(APIClient):
         if "service_edge_ids" in body:
             body["serviceEdges"] = [{"id": id} for id in body.pop("service_edge_ids")]
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ServiceEdgeGroup)
+        response, error = self._request_executor.execute(request, ServiceEdgeGroup)
         if error:
             return (None, response, error)
 
@@ -324,18 +306,12 @@ class ServiceEdgeGroupAPI(APIClient):
 
         # Parse the response into a ServiceEdgeGroup instance
         try:
-            result = ServiceEdgeGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdgeGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_service_edge_group(
-        self,
-        group_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_service_edge_group(self, group_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified service edge group.
 
@@ -366,13 +342,11 @@ class ServiceEdgeGroupAPI(APIClient):
         # Handle microtenant_id in URL params if provided
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

@@ -41,7 +41,8 @@ class TrafficVPNCredentialAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Page size for pagination.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.type]`` {str}: The type of VPN credential. Must be one of 'CN', 'IP', 'UFQDN', 'XAUTH'.
-                ``[query_params.include_only_without_location]`` {bool}: Include VPN credential only if not associated with any location.
+                ``[query_params.include_only_without_location]`` {bool}: Include VPN credential only
+                    if not associated with any location.
                 ``[query_params.location_id]`` {int}: Gets the VPN credentials for the specified location ID.
                 ``[query_params.managed_by]`` {int}: Gets the VPN credentials managed by the given partner.
 
@@ -49,22 +50,24 @@ class TrafficVPNCredentialAPI(APIClient):
             tuple: A tuple containing (list of VPN credentials instances, Response, error)
 
         Examples:
-            List VPN credentials using default settings:
+            List VPN credentials of type UFQDN:
 
-            >>> for credential in zia.traffic.list_vpn_credentials():
-            ...    pprint(credential)
-
-            List VPN credentials, limiting to a maximum of 10 items:
-
-            >>> for credential in zia.traffic.list_vpn_credentials(query_params={"page": 1, "page_size": 10}):
-            ...    print(credential)
-
+            >>> credentials_list, _, err = client.zia.traffic_vpn_credentials.list_vpn_credentials(
+                query_params={"type": "UFQDN"})
+            ... if err:
+            ...     print(f"Error listing credentials: {err}")
+            ...     return
+            ... print(f"Total UFQDN credentials found: {len(credentials_list)}")
+            ... for credential in credentials_list:
+            ...     print(credential.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /vpnCredentials
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
@@ -83,15 +86,13 @@ class TrafficVPNCredentialAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -99,9 +100,7 @@ class TrafficVPNCredentialAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(TrafficVPNCredentials(
-                    self.form_response_body(item))
-                )
+                result.append(TrafficVPNCredentials(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -126,30 +125,28 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-            """)
+            """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, TrafficVPNCredentials)
+        response, error = self._request_executor.execute(request, TrafficVPNCredentials)
 
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficVPNCredentials(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficVPNCredentials(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -191,46 +188,36 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, None, ValueError("Pre-shared key must be provided."))
 
         http_method = "post".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /vpnCredentials
-        """)
+        """
+        )
 
         # Prepare the request body from kwargs
         body = kwargs
         headers = {}
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-            headers=headers
+            method=http_method, endpoint=api_url, body=body, headers=headers
         )
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(
-            request, 
-            TrafficVPNCredentials
-        )
+        response, error = self._request_executor.execute(request, TrafficVPNCredentials)
 
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficVPNCredentials(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficVPNCredentials(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_vpn_credential(
-        self,
-        credential_id: int, 
-        **kwargs
-    ) -> tuple:
+    def update_vpn_credential(self, credential_id: int, **kwargs) -> tuple:
         """
         Update VPN credentials with the specified ID.
 
@@ -248,10 +235,12 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-        """)
+        """
+        )
 
         # Retrieve the current VPN credential for validation
         current_credential, _, err = self.get_vpn_credential(credential_id)
@@ -276,29 +265,21 @@ class TrafficVPNCredentialAPI(APIClient):
 
         # Create the request after passing validation
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=body,
-            headers=headers
+            method=http_method, endpoint=api_url, body=body, headers=headers
         )
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(
-            request, 
-            TrafficVPNCredentials
-        )
+        response, error = self._request_executor.execute(request, TrafficVPNCredentials)
 
         if error:
             return (None, response, error)
 
         # Parse the response
         try:
-            result = TrafficVPNCredentials(
-                self.form_response_body(response.get_body())
-            )
+            result = TrafficVPNCredentials(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -320,20 +301,20 @@ class TrafficVPNCredentialAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""{
+        api_url = format_url(
+            f"""{
             self._zia_base_endpoint}
             /vpnCredentials/{credential_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -355,7 +336,7 @@ class TrafficVPNCredentialAPI(APIClient):
         # Validate input before making the request
         if not credential_ids:
             return (None, ValueError("Empty credential_ids list provided"))
-        
+
         if len(credential_ids) > 100:
             return (None, ValueError("Maximum 100 credential IDs allowed per bulk delete request"))
 
@@ -370,11 +351,7 @@ class TrafficVPNCredentialAPI(APIClient):
         payload = {"ids": credential_ids}
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=payload,
-            headers={},
-            params={}
+            method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
         if error:
             return (None, error)

@@ -71,22 +71,18 @@ class ServiceEdgeControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ServiceEdge(
-                    self.form_response_body(item))
-                )
+                result.append(ServiceEdge(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -121,13 +117,11 @@ class ServiceEdgeControllerAPI(APIClient):
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return None
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return None
 
@@ -177,13 +171,11 @@ class ServiceEdgeControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, ServiceEdge)
+        response, error = self._request_executor.execute(request, ServiceEdge)
         if error:
             return (None, response, error)
 
@@ -193,18 +185,12 @@ class ServiceEdgeControllerAPI(APIClient):
             return (ServiceEdge({"id": service_edge_id}), None, None)
 
         try:
-            result = ServiceEdge(
-                self.form_response_body(response.get_body())
-            )
+            result = ServiceEdge(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_service_edge(
-        self,
-        service_edge_id: str,
-        **kwargs
-    ) -> int:
+    def delete_service_edge(self, service_edge_id: str, **kwargs) -> int:
         """
         Deletes the specified ZPA Service Edge.
 

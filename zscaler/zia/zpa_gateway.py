@@ -75,8 +75,7 @@ class ZPAGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -88,9 +87,7 @@ class ZPAGatewayAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ZPAGateway(
-                    self.form_response_body(item))
-                )
+                result.append(ZPAGateway(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -123,22 +120,18 @@ class ZPAGatewayAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ZPAGateway)
+        response, error = self._request_executor.execute(request, ZPAGateway)
 
         if error:
             return (None, response, error)
 
         try:
-            result = ZPAGateway(
-                self.form_response_body(response.get_body())
-            )
+            result = ZPAGateway(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -171,7 +164,7 @@ class ZPAGatewayAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The newly added ZPA Gateway resource record.
-            
+
         Examples:
             Adding a new ZPA Gateway
 
@@ -198,7 +191,7 @@ class ZPAGatewayAPI(APIClient):
             return (None, None, ValueError("zpa_server_group is required"))
         if not zpa_app_segments:
             return (None, None, ValueError("zpa_app_segments is required"))
-        
+
         http_method = "post".upper()
         api_url = format_url(
             f"""
@@ -223,27 +216,18 @@ class ZPAGatewayAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ZPAGateway)
+        response, error = self._request_executor.execute(request, ZPAGateway)
         if error:
             return (None, response, error)
 
         try:
-            result = ZPAGateway(
-                self.form_response_body(response.get_body())
-            )
+            result = ZPAGateway(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def update_gateway(
-        self,
-        gateway_id: str,
-        zpa_server_group: dict = None,
-        zpa_app_segments: dict = None,
-        **kwargs
-    ) -> tuple:
+    def update_gateway(self, gateway_id: str, zpa_server_group: dict = None, zpa_app_segments: dict = None, **kwargs) -> tuple:
         """
         Updates information for the specified ZPA Gateway.
 
@@ -266,7 +250,7 @@ class ZPAGatewayAPI(APIClient):
 
         Returns:
             :obj:`Tuple`: The updated ZPA Gateway resource record.
-            
+
         Examples:
             Updating a new ZPA Gateway
 
@@ -319,15 +303,12 @@ class ZPAGatewayAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ZPAGateway)
+        response, error = self._request_executor.execute(request, ZPAGateway)
         if error:
             return (None, response, error)
 
         try:
-            result = ZPAGateway(
-                self.form_response_body(response.get_body())
-            )
+            result = ZPAGateway(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -360,13 +341,11 @@ class ZPAGatewayAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

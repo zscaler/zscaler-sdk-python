@@ -26,7 +26,7 @@ class WebAppServiceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-        
+
     def list_by_company(self, query_params=None) -> tuple:
         """
         Returns the list of Fail Open Policy By Company in the Client Connector Portal.
@@ -63,8 +63,7 @@ class WebAppServiceAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)

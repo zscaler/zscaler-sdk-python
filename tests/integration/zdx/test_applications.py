@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import pytest
 import time
 from pprint import pprint
@@ -66,7 +65,7 @@ class TestApplications:
             errors.append(f"Exception occurred: {e}")
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-        
+
     # def test_get_app_score(self, fs):
     #     client = MockZDXClient(fs)
     #     errors = []
@@ -232,4 +231,3 @@ class TestApplications:
     #         errors.append(f"Exception occurred: {e}")
 
     #     assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
-

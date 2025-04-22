@@ -109,4 +109,3 @@ class TestAppProtectionControls:
 
         # Assert that no errors occurred during the test
         assert not errors, f"Errors occurred: {errors}"
-

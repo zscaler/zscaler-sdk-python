@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class CBIProfile(ZscalerObject):
     """
     A class representing a Devices object.
@@ -24,15 +25,11 @@ class CBIProfile(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.url = config["url"]\
-                if "url" in config else None
-            self.default_profile = config["defaultProfile"]\
-                if "defaultProfile" in config else None
-         
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.url = config["url"] if "url" in config else None
+            self.default_profile = config["defaultProfile"] if "defaultProfile" in config else None
+
         else:
             self.id = None
             self.name = None
@@ -52,4 +49,3 @@ class CBIProfile(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-

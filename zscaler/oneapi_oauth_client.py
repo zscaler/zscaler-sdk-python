@@ -122,7 +122,7 @@ class OAuth:
         auth_url = self._get_auth_url(vanity_domain, cloud)
 
         # **Step 1: Determine the Private Key Type**
-        if private_key.strip().startswith("{"):  
+        if private_key.strip().startswith("{"):
             # **JWK JSON Format**
             logging.info("Using JWK JSON format for private key.")
             jwk_key = json.loads(private_key.strip())  # Convert JWK string to dict
@@ -139,9 +139,7 @@ class OAuth:
             # **Assume it's a file path and read the private key**
             logging.info("Using private key from file.")
             with open(private_key, "rb") as key_file:
-                private_key_obj = serialization.load_pem_private_key(
-                    key_file.read(), password=None, backend=default_backend()
-                )
+                private_key_obj = serialization.load_pem_private_key(key_file.read(), password=None, backend=default_backend())
 
         # **Step 2: Create JWT for Client Assertion**
         now = int(time.time())
@@ -179,7 +177,6 @@ class OAuth:
 
         logging.info("Authentication with JWT private key successful.")
         return response
-
 
     def _get_access_token(self):
         """

@@ -43,7 +43,7 @@ class DLPResourcesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
-        
+
         Returns:
             tuple: A tuple containing (list of DLP ICAP Server instances, Response, error)
 
@@ -57,7 +57,7 @@ class DLPResourcesAPI(APIClient):
             ... print(f"Total icaps found: {len(icap_list)}")
             ... for icap in icap_list:
             ...    print(icap.as_dict())
-            
+
             filtering dlp icap by name :
 
             >>> icap_list, response, error = client.dlp_resources.list_dlp_icap_servers(
@@ -86,14 +86,7 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -104,18 +97,13 @@ class DLPResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPICAPServer(
-                    self.form_response_body(item))
-                )
+                results.append(DLPICAPServer(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -144,7 +132,7 @@ class DLPResourcesAPI(APIClient):
             ... print(f"Total icaps found: {len(icap_list)}")
             ... for icap in icap_list:
             ...    print(icap.as_dict())
-            
+
             filtering dlp icap by name :
 
             >>> icap_list, response, error = client.dlp_resources.list_dlp_icap_servers_lite(
@@ -173,14 +161,7 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -191,18 +172,13 @@ class DLPResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPICAPServer(
-                    self.form_response_body(item))
-                )
+                results.append(DLPICAPServer(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -234,22 +210,18 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPICAPServer(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPICAPServer(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -264,7 +236,7 @@ class DLPResourcesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: The search string used to match against a Icap server name attributes.
-        
+
         Returns:
             tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
 
@@ -278,7 +250,7 @@ class DLPResourcesAPI(APIClient):
             ... print(f"Total incident receivers found: {len(receiver_list)}")
             ... for receiver in receiver_list:
             ...    print(receiver.as_dict())
-            
+
             filtering incident receivers by name :
 
             >>> receiver_list, response, error = client.dlp_resources.list_dlp_incident_receiver(
@@ -307,14 +279,7 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -325,18 +290,13 @@ class DLPResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPICAPServer(
-                    self.form_response_body(item))
-                )
+                results.append(DLPICAPServer(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -350,7 +310,7 @@ class DLPResourcesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: The search string used to match against a Incident Receiver name attributes.
-        
+
         Returns:
             tuple: A tuple containing (list of DLP Incident Receivers instances, Response, error)
 
@@ -364,7 +324,7 @@ class DLPResourcesAPI(APIClient):
             ... print(f"Total incident receivers found: {len(receiver_list)}")
             ... for receiver in receiver_list:
             ...    print(receiver.as_dict())
-            
+
             filtering incident receivers by name :
 
             >>> receiver_list, response, error = client.dlp_resources.list_dlp_incident_receiver_lite(
@@ -393,14 +353,7 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -411,18 +364,13 @@ class DLPResourcesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(DLPICAPServer(
-                    self.form_response_body(item))
-                )
+                results.append(DLPICAPServer(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -448,28 +396,21 @@ class DLPResourcesAPI(APIClient):
         """
         )
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPICAPServer(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPICAPServer(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -513,14 +454,12 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -528,9 +467,7 @@ class DLPResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DLPIDMProfile(
-                    self.form_response_body(item))
-                )
+                result.append(DLPIDMProfile(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -560,22 +497,18 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DLPIDMProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = DLPIDMProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -590,9 +523,10 @@ class DLPResourcesAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -616,14 +550,12 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -631,9 +563,7 @@ class DLPResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DLPEDMSchema(
-                    self.form_response_body(item))
-                )
+                result.append(DLPEDMSchema(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -685,14 +615,12 @@ class DLPResourcesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -700,9 +628,7 @@ class DLPResourcesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DLPEDMSchema(
-                    self.form_response_body(item))
-                )
+                result.append(DLPEDMSchema(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 

@@ -51,9 +51,8 @@ class ForwardingControlRule(ZscalerObject):
             self.zpa_broker_rule = config["zpaBrokerRule"] if "zpaBrokerRule" in config else None
 
             # Handling lists of simple values
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str)
-            
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
+
             self.dest_addresses = ZscalerCollection.form_list(
                 config["destAddresses"] if "destAddresses" in config else [], str
             )
@@ -83,9 +82,8 @@ class ForwardingControlRule(ZscalerObject):
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
-            self.groups = ZscalerCollection.form_list(
-                config["groups"] if "groups" in config else [], user_management.Groups)
-            
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
+
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )
@@ -131,7 +129,6 @@ class ForwardingControlRule(ZscalerObject):
                 common_reference.ResourceReference,
             )
 
-
             if "proxyGateway" in config:
                 if isinstance(config["proxyGateway"], common_reference.CommonBlocks):
                     self.proxy_gateway = config["proxyGateway"]
@@ -141,7 +138,7 @@ class ForwardingControlRule(ZscalerObject):
                     self.proxy_gateway = None
             else:
                 self.proxy_gateway = None
-                
+
             if "zpaGateway" in config:
                 if isinstance(config["zpaGateway"], common_reference.CommonBlocks):
                     self.zpa_gateway = config["zpaGateway"]

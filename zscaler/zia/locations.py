@@ -42,11 +42,12 @@ class LocationsAPI(APIClient):
 
                 ``[query_params.page]`` (int): Specifies the page offset.
 
-                ``[query_params.page_size]`` (int): Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` (int): Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
 
-                ``[query_params.search]`` (str): The search string used to partially match against a location's name and port attributes.
+                ``[query_params.search]`` (str): String used to partially match against a location's name and port attributes.
 
-                ``[query_params.ssl_scan_enabled]`` (bool): This parameter was deprecated and no longer has an effect on SSL policy.
+                ``[query_params.ssl_scan_enabled]`` (bool): Parameter was deprecated and no longer has an effect on SSL policy.
 
                 ``[query_params.xff_enabled]`` (bool):
                     Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled
@@ -97,14 +98,12 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -112,9 +111,7 @@ class LocationsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(LocationManagement(
-                    self.form_response_body(item))
-                )
+                result.append(LocationManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -145,30 +142,23 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, LocationManagement)
+        response, error = self._request_executor.execute(request, LocationManagement)
 
         if error:
             return (None, response, error)
 
         try:
-            result = LocationManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def add_location(
-        self,
-        **kwargs
-    ) -> tuple:
+    def add_location(self, **kwargs) -> tuple:
         """
         Adds a new location.
 
@@ -288,8 +278,7 @@ class LocationsAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -298,24 +287,18 @@ class LocationsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, LocationManagement)
+        response, error = self._request_executor.execute(request, LocationManagement)
 
         if error:
             return (None, response, error)
 
         try:
-            result = LocationManagement(
-                self.form_response_body(response.get_body()))
+            result = LocationManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_location(
-        self,
-        location_id: int, 
-        **kwargs
-    ) -> tuple:
+    def update_location(self, location_id: int, **kwargs) -> tuple:
         """
         Update the specified location.
 
@@ -446,20 +429,16 @@ class LocationsAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, LocationManagement)
+        response, error = self._request_executor.execute(request, LocationManagement)
         if error:
             return (None, response, error)
 
         try:
-            result = LocationManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -489,13 +468,11 @@ class LocationsAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -517,7 +494,7 @@ class LocationsAPI(APIClient):
         # Validate input before making the request
         if not location_ids:
             return (None, ValueError("Empty location_ids list provided"))
-        
+
         if len(location_ids) > 100:
             return (None, ValueError("Maximum 100 location IDs allowed per bulk delete request"))
 
@@ -532,31 +509,23 @@ class LocationsAPI(APIClient):
         payload = {"ids": location_ids}
 
         request, error = self._request_executor.create_request(
-            method=http_method,
-            endpoint=api_url,
-            body=payload,
-            headers={},
-            params={}
+            method=http_method, endpoint=api_url, body=payload, headers={}, params={}
         )
         if error:
             return (None, error)
 
         response, error = self._request_executor.execute(request)
-        
+
         # For 204 No Content responses, the executor may return None
         if error:
             return (None, error)
         elif response is None:
             # This is the expected case for 204 No Content
             return (None, None)
-        
+
         return (response, None)
 
-    def list_sub_locations(
-        self,
-        location_id: int,
-        query_params: dict = None
-    ) -> tuple:
+    def list_sub_locations(self, location_id: int, query_params: dict = None) -> tuple:
         """
         Returns sub-location information for the specified location ID.
 
@@ -608,8 +577,7 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -622,9 +590,7 @@ class LocationsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(LocationManagement(
-                    self.form_response_body(item))
-                )
+                result.append(LocationManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -635,25 +601,26 @@ class LocationsAPI(APIClient):
 
         Keyword Args:
             query_params {dict}: Optional query parameters.
-            
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
-                
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
+
                 ``[query_params.state]`` {str}: Filter based on geographical state for a location.
-                
-                ``[query_params.xff_enabled]`` {bool}: Filter based on whether Enforce XFF Forwarding is enabled for a location.
-                
-                ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce Authentication is enabled for a location.
-                
+
+                ``[query_params.xff_enabled]`` {bool}: Filter based on whether xff_enabled is true for a location.
+
+                ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce Authentication is enabled.
+
                 ``[query_params.bw_enforced]`` {bool}: Filter based on whether Bandwith Control is enforced for a location.
-                
+
                 ``[query_params.partner_id]`` {bool}: Not applicable to Cloud & Branch Connector.
-                
-                ``[query_params.enforce_aup]`` {bool}: Filter based on whether Acceptable Use Policy (AUP) is enforced for a location.
-                
+
+                ``[query_params.enforce_aup]`` {bool}: Filter based on whether Acceptable Use Policy (AUP) is enforced.
+
                 ``[query_params.enable_firewall]`` {bool}: Filter based on whether firewall is enabled for a location.
-                
+
                 ``[query_params.location_type]`` {bool}: Filter based on type of location.
                     Supported values: `NONE`, `CORPORATE`, `SERVER`, `GUESTWIFI`, `IOT`, `WORKLOAD`
 
@@ -690,8 +657,7 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -704,34 +670,30 @@ class LocationsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(LocationManagement(
-                    self.form_response_body(item))
-                )
+                result.append(LocationManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def list_location_groups(
-        self,
-        query_params=None
-    ) -> tuple:
+    def list_location_groups(self, query_params=None) -> tuple:
         """
         Return a list of location groups in ZIA.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Page size for pagination.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``[query_params.group_type]`` {str}: The location group's type (i.e., Static or Dynamic).
                 ``[query_params.name]`` {str}: The location group's name.
                 ``[query_params.last_mod_user]`` {str}: The location group's name.
-                ``[query_params.version]`` {int}: The version parameter is for Zscaler internal use only. 
+                ``[query_params.version]`` {int}: The version parameter is for Zscaler internal use only.
                 ``[query_params.comments]`` {str}:  Additional comments or information about the location group.
                 ``[query_params.location_id]`` {int}:  The unique identifier for a location within a location group.
 
         Keyword Args:
-            
+
         Returns:
             :obj:`Tuple`: A list of location group resource records.
 
@@ -752,14 +714,12 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -767,9 +727,7 @@ class LocationsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(LocationGroup(
-                    self.form_response_body(item))
-                )
+                result.append(LocationGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -785,29 +743,27 @@ class LocationsAPI(APIClient):
             tuple: A tuple containing (Rule Label instance, Response, error).
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /locations/groups/{group_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, LocationGroup)
+        response, error = self._request_executor.execute(request, LocationGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = LocationGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = LocationGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -819,7 +775,8 @@ class LocationsAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Page size for pagination.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Keyword Args:
@@ -844,14 +801,12 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -898,8 +853,7 @@ class LocationsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -919,12 +873,8 @@ class LocationsAPI(APIClient):
                 raise ValueError(f"Unexpected response format: {body}")
         except Exception as error:
             return (None, response, error)
-    
-    def list_region_geo_coordinates(
-        self,
-        latitude: float,
-        longitude: float
-    ) -> tuple:
+
+    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> tuple:
         """
         Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
         coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
@@ -1042,7 +992,9 @@ class LocationsAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Page size for pagination.
-                ``[query_params.prefix]`` {str}: The string used in the prefix search of the city or region. It can contain names of city, state, country in the following format: city name, state name, country name.
+                ``[query_params.prefix]`` {str}: Prefix search of the city or region.
+                    It can contain names of city, state, country in the following format: city name,
+                    state name, country name.
 
         Returns:
             :obj:`tuple`: A list of dictionaries containing the cities' geographical data and the raw response.

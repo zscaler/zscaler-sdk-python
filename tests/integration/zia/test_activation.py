@@ -46,7 +46,10 @@ class TestActivation:
             config_activation, _, error = client.zia.activate.activate()
             assert error is None, f"Error during activation: {error}"
             assert hasattr(config_activation, "status"), "Missing 'status' attribute in Activation object"
-            assert config_activation.status in ["ACTIVE", "PENDING"], f"Unexpected activation result: {config_activation.status}"
+            assert config_activation.status in [
+                "ACTIVE",
+                "PENDING",
+            ], f"Unexpected activation result: {config_activation.status}"
         except Exception as exc:
             errors.append(f"Activation trigger failed: {exc}")
 

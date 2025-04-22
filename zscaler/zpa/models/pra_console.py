@@ -28,24 +28,15 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else True
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else "Default"
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else True
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else "Default"
 
             if "praApplication" in config:
                 if isinstance(config["praApplication"], PRAApplication):
@@ -57,9 +48,11 @@ class PrivilegedRemoteAccessConsole(ZscalerObject):
             else:
                 self.pra_application = None
 
-            self.pra_portals = ZscalerCollection.form_list(
-                config["praPortals"], pra_portal.PrivilegedRemoteAccessPortal
-            ) if "praPortals" in config else []
+            self.pra_portals = (
+                ZscalerCollection.form_list(config["praPortals"], pra_portal.PrivilegedRemoteAccessPortal)
+                if "praPortals" in config
+                else []
+            )
 
         else:
             self.id = None
@@ -105,36 +98,21 @@ class PRAApplication(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.app_id = config["appId"] \
-                if "appId" in config else None
-            self.application_port = config["applicationPort"] \
-                if "applicationPort" in config else None
-            self.application_protocol = config["applicationProtocol"] \
-                if "applicationProtocol" in config else None
-            self.connection_security = config["connectionSecurity"] \
-                if "connectionSecurity" in config else None
-            self.creation_time = config["creationTime"] \
-                if "creationTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.domain = config["domain"] \
-                if "domain" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else None
-            self.hidden = config["hidden"] \
-                if "hidden" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.modified_by = config["modifiedBy"] \
-                if "modifiedBy" in config else None
-            self.modified_time = config["modifiedTime"] \
-                if "modifiedTime" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.microtenant_id = config["microtenantId"] \
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"] \
-                if "microtenantName" in config else None
+            self.app_id = config["appId"] if "appId" in config else None
+            self.application_port = config["applicationPort"] if "applicationPort" in config else None
+            self.application_protocol = config["applicationProtocol"] if "applicationProtocol" in config else None
+            self.connection_security = config["connectionSecurity"] if "connectionSecurity" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.domain = config["domain"] if "domain" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else None
+            self.hidden = config["hidden"] if "hidden" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
         else:
             self.app_id = None
             self.application_port = None
@@ -172,7 +150,7 @@ class PRAApplication(ZscalerObject):
             "modifiedTime": self.modified_time,
             "name": self.name,
             "microtenantId": self.microtenant_id,
-            "microtenantName": self.microtenant_name
+            "microtenantName": self.microtenant_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

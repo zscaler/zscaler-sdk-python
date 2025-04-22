@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class AuthenticationSettings(ZscalerObject):
     """
     A class for AuthenticationSettings objects.
@@ -31,34 +32,24 @@ class AuthenticationSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.org_auth_type = config["orgAuthType"] \
-                if "orgAuthType" in config else None
-            self.one_time_auth = config["oneTimeAuth"] \
-                if "oneTimeAuth" in config else None
-            self.saml_enabled = config["samlEnabled"] \
-                if "samlEnabled" in config else False
-            self.kerberos_enabled = config["kerberosEnabled"] \
-                if "kerberosEnabled" in config else False
-            self.kerberos_pwd = config["kerberosPwd"] \
-                if "kerberosPwd" in config else None
-            self.auth_frequency = config["authFrequency"] \
-                if "authFrequency" in config else None
-            self.auth_custom_frequency = config["authCustomFrequency"] \
-                if "authCustomFrequency" in config else None
-            self.password_strength = config["passwordStrength"] \
-                if "passwordStrength" in config else None
-            self.password_expiry = config["passwordExpiry"] \
-                if "passwordExpiry" in config else None
-            self.last_sync_start_time = config["lastSyncStartTime"] \
-                if "lastSyncStartTime" in config else None
-            self.last_sync_end_time = config["lastSyncEndTime"] \
-                if "lastSyncEndTime" in config else None
-            self.mobile_admin_saml_idp_enabled = config["mobileAdminSamlIdpEnabled"] \
-                if "mobileAdminSamlIdpEnabled" in config else False
-            self.auto_provision = config["autoProvision"] \
-                if "autoProvision" in config else False
-            self.directory_sync_migrate_to_scim_enabled = config["directorySyncMigrateToScimEnabled"] \
-                if "directorySyncMigrateToScimEnabled" in config else False
+            self.org_auth_type = config["orgAuthType"] if "orgAuthType" in config else None
+            self.one_time_auth = config["oneTimeAuth"] if "oneTimeAuth" in config else None
+            self.saml_enabled = config["samlEnabled"] if "samlEnabled" in config else False
+            self.kerberos_enabled = config["kerberosEnabled"] if "kerberosEnabled" in config else False
+            self.kerberos_pwd = config["kerberosPwd"] if "kerberosPwd" in config else None
+            self.auth_frequency = config["authFrequency"] if "authFrequency" in config else None
+            self.auth_custom_frequency = config["authCustomFrequency"] if "authCustomFrequency" in config else None
+            self.password_strength = config["passwordStrength"] if "passwordStrength" in config else None
+            self.password_expiry = config["passwordExpiry"] if "passwordExpiry" in config else None
+            self.last_sync_start_time = config["lastSyncStartTime"] if "lastSyncStartTime" in config else None
+            self.last_sync_end_time = config["lastSyncEndTime"] if "lastSyncEndTime" in config else None
+            self.mobile_admin_saml_idp_enabled = (
+                config["mobileAdminSamlIdpEnabled"] if "mobileAdminSamlIdpEnabled" in config else False
+            )
+            self.auto_provision = config["autoProvision"] if "autoProvision" in config else False
+            self.directory_sync_migrate_to_scim_enabled = (
+                config["directorySyncMigrateToScimEnabled"] if "directorySyncMigrateToScimEnabled" in config else False
+            )
         else:
             self.org_auth_type = None
             self.one_time_auth = None
@@ -94,7 +85,7 @@ class AuthenticationSettings(ZscalerObject):
             "lastSyncEndTime": self.last_sync_end_time,
             "mobileAdminSamlIdpEnabled": self.mobile_admin_saml_idp_enabled,
             "autoProvision": self.auto_provision,
-            "directorySyncMigrateToScimEnabled": self.directory_sync_migrate_to_scim_enabled
+            "directorySyncMigrateToScimEnabled": self.directory_sync_migrate_to_scim_enabled,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

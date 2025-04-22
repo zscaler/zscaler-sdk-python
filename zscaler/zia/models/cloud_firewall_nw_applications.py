@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class NetworkApplications(ZscalerObject):
     """
     A class representing a Cloud Firewall Network Applications object.
@@ -24,14 +25,10 @@ class NetworkApplications(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.parent_category = config["parentCategory"]\
-                if "parentCategory" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.deprecated = config["deprecated"]\
-                if "deprecated" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.parent_category = config["parentCategory"] if "parentCategory" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.deprecated = config["deprecated"] if "deprecated" in config else False
 
         else:
             self.id = None

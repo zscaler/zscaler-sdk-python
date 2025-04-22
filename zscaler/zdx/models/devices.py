@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common as common_reference
 
+
 class Devices(ZscalerObject):
     """
     A class for Devices objects.
@@ -34,29 +35,24 @@ class Devices(ZscalerObject):
         print(f"DEBUG: Raw config received in devices: {config}")  # Debugging input
 
         if config:
-            self.users = ZscalerCollection.form_list(
-                config.get("devices", []), common_reference.Common
-            )
-            self.next_offset = config["next_offset"] \
-                if "next_offset" in config else None
+            self.users = ZscalerCollection.form_list(config.get("devices", []), common_reference.Common)
+            self.next_offset = config["next_offset"] if "next_offset" in config else None
         else:
             self.devices = ZscalerCollection.form_list([], str)
             self.next_offset = None
 
         print(f"DEBUG: Parsed Devices object - {len(self.devices)} devices found")
-        
+
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "devices": [device.as_dict() for device in self.devices],
-            "next_offset": self.next_offset
-        }
+        current_obj_format = {"devices": [device.as_dict() for device in self.devices], "next_offset": self.next_offset}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceModelInfo(ZscalerObject):
     """
     A class for DeviceModelInfo objects.
@@ -72,17 +68,11 @@ class DeviceModelInfo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.hardware = config["hardware"] \
-                if "hardware" in config else None
-            self.network = ZscalerCollection.form_list(
-                config["network"] if "network" in config else [], str
-            )
-            self.software = config["software"] \
-                if "software" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.hardware = config["hardware"] if "hardware" in config else None
+            self.network = ZscalerCollection.form_list(config["network"] if "network" in config else [], str)
+            self.software = config["software"] if "software" in config else None
         else:
             self.id = None
             self.name = None
@@ -100,11 +90,12 @@ class DeviceModelInfo(ZscalerObject):
             "name": self.name,
             "hardware": self.hardware,
             "network": self.network,
-            "software": self.software
+            "software": self.software,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceActiveApplications(ZscalerObject):
     """
     A class for DeviceActiveApplications objects.
@@ -120,12 +111,9 @@ class DeviceActiveApplications(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.score = config["score"] \
-                if "score" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.score = config["score"] if "score" in config else None
         else:
             self.id = None
             self.name = None
@@ -136,13 +124,10 @@ class DeviceActiveApplications(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "score": self.score
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "score": self.score}
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class DeviceAppScoreTrend(ZscalerObject):
     """
@@ -159,11 +144,8 @@ class DeviceAppScoreTrend(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.metric = config["metric"] \
-                if "metric" in config else None
-            self.datapoints = ZscalerCollection.form_list(
-                config["datapoints"] if "datapoints" in config else [], str
-            )
+            self.metric = config["metric"] if "metric" in config else None
+            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
         else:
             self.metric = None
             self.datapoints = ZscalerCollection.form_list([], str)
@@ -173,13 +155,11 @@ class DeviceAppScoreTrend(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "metric": self.metric,
-            "datapoints": self.datapoints
-        }
+        current_obj_format = {"metric": self.metric, "datapoints": self.datapoints}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceHealthMetrics(ZscalerObject):
     """
     A class for DeviceHealthMetrics objects.
@@ -195,11 +175,8 @@ class DeviceHealthMetrics(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.category = config["category"] \
-                if "category" in config else None
-            self.instances = ZscalerCollection.form_list(
-                config["instances"] if "instances" in config else [], str
-            )
+            self.category = config["category"] if "category" in config else None
+            self.instances = ZscalerCollection.form_list(config["instances"] if "instances" in config else [], str)
         else:
             self.category = None
             self.instances = ZscalerCollection.form_list([], str)
@@ -209,13 +186,11 @@ class DeviceHealthMetrics(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "category": self.category,
-            "instances": self.instances
-        }
+        current_obj_format = {"category": self.category, "instances": self.instances}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceAppCloudPathProbes(ZscalerObject):
     """
     A class for DeviceAppCloudPathProbes objects.
@@ -231,15 +206,10 @@ class DeviceAppCloudPathProbes(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.num_probes = config["num_probes"] \
-                if "num_probes" in config else None
-            self.avg_latencies = ZscalerCollection.form_list(
-                config["avg_latencies"] if "avg_latencies" in config else [], str
-            )
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.num_probes = config["num_probes"] if "num_probes" in config else None
+            self.avg_latencies = ZscalerCollection.form_list(config["avg_latencies"] if "avg_latencies" in config else [], str)
         else:
             self.id = None
             self.name = None
@@ -255,11 +225,12 @@ class DeviceAppCloudPathProbes(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "num_probes": self.num_probes,
-            "avg_latencies": self.avg_latencies
+            "avg_latencies": self.avg_latencies,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceAppWebProbes(ZscalerObject):
     """
     A class for DeviceAppWebProbes objects.
@@ -275,16 +246,11 @@ class DeviceAppWebProbes(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.num_probes = config["num_probes"] \
-                if "num_probes" in config else None
-            self.avg_score = config["avg_score"] \
-                if "avg_score" in config else None
-            self.avg_pft = config["avg_pft"] \
-                if "avg_pft" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.num_probes = config["num_probes"] if "num_probes" in config else None
+            self.avg_score = config["avg_score"] if "avg_score" in config else None
+            self.avg_pft = config["avg_pft"] if "avg_pft" in config else None
         else:
             self.id = None
             self.name = None
@@ -302,11 +268,12 @@ class DeviceAppWebProbes(ZscalerObject):
             "name": self.name,
             "num_probes": self.num_probes,
             "avg_score": self.avg_score,
-            "avg_pft": self.avg_pft
+            "avg_pft": self.avg_pft,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceWebProbePageFetch(ZscalerObject):
     """
     A class for DeviceWebProbePageFetch objects.
@@ -322,13 +289,9 @@ class DeviceWebProbePageFetch(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.metric = config["metric"] \
-                if "metric" in config else None
-            self.unit = config["unit"] \
-                if "unit" in config else None
-            self.datapoints = ZscalerCollection.form_list(
-                config["datapoints"] if "datapoints" in config else [], str
-            )
+            self.metric = config["metric"] if "metric" in config else None
+            self.unit = config["unit"] if "unit" in config else None
+            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
         else:
             self.metric = None
             self.unit = None
@@ -339,14 +302,11 @@ class DeviceWebProbePageFetch(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "metric": self.metric,
-            "unit": self.unit,
-            "datapoints": self.datapoints
-        }
+        current_obj_format = {"metric": self.metric, "unit": self.unit, "datapoints": self.datapoints}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceCloudPathProbesMetric(ZscalerObject):
     """
     A class for DeviceCloudPathProbesMetric objects.
@@ -362,13 +322,9 @@ class DeviceCloudPathProbesMetric(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.leg_src = config["leg_src"] \
-                if "leg_src" in config else None
-            self.leg_dst = config["leg_dst"] \
-                if "leg_dst" in config else None
-            self.stats = ZscalerCollection.form_list(
-                config["stats"] if "stats" in config else [], str
-            )
+            self.leg_src = config["leg_src"] if "leg_src" in config else None
+            self.leg_dst = config["leg_dst"] if "leg_dst" in config else None
+            self.stats = ZscalerCollection.form_list(config["stats"] if "stats" in config else [], str)
         else:
             self.leg_src = None
             self.leg_dst = None
@@ -379,14 +335,11 @@ class DeviceCloudPathProbesMetric(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "leg_src": self.leg_src,
-            "leg_dst": self.leg_dst,
-            "stats": self.stats
-        }
+        current_obj_format = {"leg_src": self.leg_src, "leg_dst": self.leg_dst, "stats": self.stats}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceEvents(ZscalerObject):
     """
     A class for DeviceEvents objects.
@@ -402,11 +355,8 @@ class DeviceEvents(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.timestamp = config["timestamp"] \
-                if "timestamp" in config else None
-            self.events = ZscalerCollection.form_list(
-                config["events"] if "events" in config else [], str
-            )
+            self.timestamp = config["timestamp"] if "timestamp" in config else None
+            self.events = ZscalerCollection.form_list(config["events"] if "events" in config else [], str)
         else:
             self.timestamp = None
             self.events = ZscalerCollection.form_list([], str)
@@ -416,13 +366,11 @@ class DeviceEvents(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "timestamp": self.timestamp,
-            "events": self.events
-        }
+        current_obj_format = {"timestamp": self.timestamp, "events": self.events}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceCloudPathProbesHopData(ZscalerObject):
     """
     A class for DeviceCloudPathProbesHopData objects.
@@ -438,10 +386,8 @@ class DeviceCloudPathProbesHopData(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.timestamp = config["timestamp"] \
-                if "timestamp" in config else None
-            self.cloudpath = config["cloudpath"] \
-                if "cloudpath" in config else None
+            self.timestamp = config["timestamp"] if "timestamp" in config else None
+            self.cloudpath = config["cloudpath"] if "cloudpath" in config else None
         else:
             self.timestamp = None
             self.cloudpath = None
@@ -451,13 +397,11 @@ class DeviceCloudPathProbesHopData(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "timestamp": self.timestamp,
-            "cloudpath": self.cloudpath
-        }
+        current_obj_format = {"timestamp": self.timestamp, "cloudpath": self.cloudpath}
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeviceActiveGeo(ZscalerObject):
     """
     A class for DeviceActiveGeo objects.
@@ -473,15 +417,10 @@ class DeviceActiveGeo(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.geo_type = config["geo_type"] \
-                if "geo_type" in config else None
-            self.children = ZscalerCollection.form_list(
-                config["children"] if "children" in config else [], str
-            )
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.geo_type = config["geo_type"] if "geo_type" in config else None
+            self.children = ZscalerCollection.form_list(config["children"] if "children" in config else [], str)
         else:
             self.id = None
             self.name = None
@@ -493,11 +432,6 @@ class DeviceActiveGeo(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "geo_type": self.geo_type,
-            "children": self.children
-        }
+        current_obj_format = {"id": self.id, "name": self.name, "geo_type": self.geo_type, "children": self.children}
         parent_req_format.update(current_obj_format)
         return parent_req_format

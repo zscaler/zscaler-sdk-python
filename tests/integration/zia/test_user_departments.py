@@ -20,6 +20,7 @@ import pytest
 from tests.integration.zia.conftest import MockZIAClient
 import random
 
+
 @pytest.fixture
 def fs():
     yield
@@ -74,9 +75,7 @@ class TestUserDepartment:
             # Test: List Departments
             try:
                 if update_dept:
-                    depts, _, error = client.zia.user_management.list_departments(
-                        query_params={"search": update_dept.name}
-                    )
+                    depts, _, error = client.zia.user_management.list_departments(query_params={"search": update_dept.name})
                     assert error is None, f"List Departments Error: {error}"
                     assert depts is not None and isinstance(depts, list), "No departments found or invalid format."
             except Exception as e:

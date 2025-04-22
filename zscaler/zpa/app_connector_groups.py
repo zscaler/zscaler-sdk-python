@@ -59,41 +59,35 @@ class AppConnectorGroupAPI(APIClient):
             ...     print(group.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup
-        """)
+        """
+        )
 
         query_params = query_params or {}
         microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(AppConnectorGroup(
-                    self.form_response_body(item))
-                )
+                result.append(AppConnectorGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def get_connector_group(
-        self,
-        group_id: str,
-        query_params=None
-    ) -> tuple:
+    def get_connector_group(self, group_id: str, query_params=None) -> tuple:
         """
         Fetches a specific connector group by ID.
 
@@ -125,20 +119,16 @@ class AppConnectorGroupAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AppConnectorGroup)
+        response, error = self._request_executor.execute(request, AppConnectorGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = AppConnectorGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -218,30 +208,22 @@ class AppConnectorGroupAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AppConnectorGroup)
+        response, error = self._request_executor.execute(request, AppConnectorGroup)
         if error:
             return (None, response, error)
 
         try:
-            result = AppConnectorGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_connector_group(
-        self,
-        group_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_connector_group(self, group_id: str, **kwargs) -> tuple:
         """
         Updates an existing ZPA App Connector Group.
 
@@ -320,14 +302,12 @@ class AppConnectorGroupAPI(APIClient):
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AppConnectorGroup)
+        response, error = self._request_executor.execute(request, AppConnectorGroup)
         if error:
             return (None, response, error)
 
@@ -335,18 +315,12 @@ class AppConnectorGroupAPI(APIClient):
             return (AppConnectorGroup({"id": group_id}), None, None)
 
         try:
-            result = AppConnectorGroup(
-                self.form_response_body(response.get_body())
-            )
+            result = AppConnectorGroup(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_connector_group(
-        self,
-        group_id: str,
-        microtenant_id: str = None
-    ) -> tuple:
+    def delete_connector_group(self, group_id: str, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified App Connector Group from ZPA.
 
@@ -367,20 +341,20 @@ class AppConnectorGroupAPI(APIClient):
             ... print(f"app connector group with ID {'999999'} deleted successfully.")
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zpa_base_endpoint}
             /appConnectorGroup/{group_id}
-        """)
+        """
+        )
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 

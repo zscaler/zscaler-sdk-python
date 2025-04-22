@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 
+
 class Activation(ZscalerObject):
     """
     A class for Activation objects.
@@ -40,8 +41,6 @@ class Activation(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {
-            "status": self.status
-        }
+        current_obj_format = {"status": self.status}
         parent_req_format.update(current_obj_format)
         return parent_req_format

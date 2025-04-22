@@ -16,14 +16,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import app_connector_groups\
-    as app_connector_groups
-from zscaler.zpa.models import server_group\
-    as server_group
-from zscaler.zpa.models import service_edge_groups\
-    as service_edge_groups
-from zscaler.zpa.models import policyset_controller_v2\
-    as credentials
+from zscaler.zpa.models import app_connector_groups as app_connector_groups
+from zscaler.zpa.models import server_group as server_group
+from zscaler.zpa.models import service_edge_groups as service_edge_groups
+from zscaler.zpa.models import policyset_controller_v2 as credentials
 from zscaler.zpa.models import common as common
 
 
@@ -37,54 +33,32 @@ class PolicySetControllerV1(ZscalerObject):
 
         if config:
             # Handle fields
-            self.id = config["id"]\
-                if "id" in config else None
-            self.policy_set_id = config["policySetId"]\
-                if "policySetId" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.rule_order = config["ruleOrder"]\
-                if "ruleOrder" in config else None
-            self.priority = config["priority"]\
-                if "priority" in config else None
-            self.policy_type = config["policyType"]\
-                if "policyType" in config else None
-            self.operator = config["operator"]\
-                if "operator" in config else None
-            self.action = config["action"]\
-                if "action" in config else None
-            self.reauth_idle_timeout = config["reauthIdleTimeout"]\
-                if "reauthIdleTimeout" in config else None
-            self.reauth_timeout = config["reauthTimeout"]\
-                if "reauthTimeout" in config else None
-            self.custom_msg = config["customMsg"]\
-                if "customMsg" in config else None
-            self.disabled = config["disabled"]\
-                if "disabled" in config else None
-            self.extranet_enabled = config["extranetEnabled"]\
-                if "extranetEnabled" in config else False
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
-            self.zpn_isolation_profile_id = config["zpnIsolationProfileId"]\
-                if "zpnIsolationProfileId" in config else None
-            self.zpn_inspection_profile_id = config["zpnInspectionProfileId"]\
-                if "zpnInspectionProfileId" in config else None
-            self.zpn_inspection_profile_name = config["zpnInspectionProfileName"]\
-                if "zpnInspectionProfileName" in config else None
-            self.version = config["version"]\
-                if "version" in config else None
-            self.default_rule = config["defaultRule"]\
-                if "defaultRule" in config else False
+            self.id = config["id"] if "id" in config else None
+            self.policy_set_id = config["policySetId"] if "policySetId" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.rule_order = config["ruleOrder"] if "ruleOrder" in config else None
+            self.priority = config["priority"] if "priority" in config else None
+            self.policy_type = config["policyType"] if "policyType" in config else None
+            self.operator = config["operator"] if "operator" in config else None
+            self.action = config["action"] if "action" in config else None
+            self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
+            self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
+            self.custom_msg = config["customMsg"] if "customMsg" in config else None
+            self.disabled = config["disabled"] if "disabled" in config else None
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.zpn_isolation_profile_id = config["zpnIsolationProfileId"] if "zpnIsolationProfileId" in config else None
+            self.zpn_inspection_profile_id = config["zpnInspectionProfileId"] if "zpnInspectionProfileId" in config else None
+            self.zpn_inspection_profile_name = (
+                config["zpnInspectionProfileName"] if "zpnInspectionProfileName" in config else None
+            )
+            self.version = config["version"] if "version" in config else None
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else False
 
             # Handle conditions using ZscalerCollection
             self.conditions = ZscalerCollection.form_list(config.get("conditions", []), Condition)
@@ -221,7 +195,7 @@ class PolicySetControllerV1(ZscalerObject):
             "conditions": [condition.request_format() for condition in self.conditions],
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
             "appServerGroups": [group.request_format() for group in self.app_server_groups],
-            "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups]
+            "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -261,7 +235,7 @@ class Condition(ZscalerObject):
             "modifiedBy": self.modified_by,
             "operator": self.operator,
             "negated": self.negated,
-            "operands": [operand.request_format() for operand in self.operands]
+            "operands": [operand.request_format() for operand in self.operands],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -307,7 +281,7 @@ class Operand(ZscalerObject):
             "rhs": self.rhs,
             "name": self.name,
             "idpId": self.idp_id,
-            "idpName": self.idp_name
+            "idpName": self.idp_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

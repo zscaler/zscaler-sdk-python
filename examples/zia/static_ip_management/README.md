@@ -32,4 +32,3 @@ $ python3 static_ip_management.py -l
 ```shell
 $ python3 static_ip_management.py -c --ip_address "203.0.113.11"
 ```
-

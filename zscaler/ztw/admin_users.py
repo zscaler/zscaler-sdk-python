@@ -31,13 +31,7 @@ class AdminUsersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def change_password(
-        self,
-        username: str,
-        old_password: str,
-        new_password: str,
-        **kwargs
-    ) -> tuple:
+    def change_password(self, username: str, old_password: str, new_password: str, **kwargs) -> tuple:
         """
         Change the password for the specified admin user.
 
@@ -62,17 +56,17 @@ class AdminUsersAPI(APIClient):
             /passwordChange
         """
         )
-        
+
         # Define the fixed payload
         payload = {
             "userName": username,
             "oldPassword": old_password,
             "newPassword": new_password,
         }
-        
+
         # Merge the fixed payload with any additional kwargs
         body = {**payload, **kwargs}
-        
+
         # Create the request with the merged body
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -81,12 +75,12 @@ class AdminUsersAPI(APIClient):
         )
         if error:
             return (None, None, error)
-        
+
         # Execute the request
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
-        
+
         try:
             result = self.form_response_body(response.get_body())
         except Exception as error:
@@ -139,15 +133,13 @@ class AdminUsersAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -155,9 +147,7 @@ class AdminUsersAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(AdminUsers(
-                    self.form_response_body(item))
-                )
+                result.append(AdminUsers(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -180,7 +170,8 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}/adminUsers/{admin_id}
             """
         )
@@ -189,37 +180,26 @@ class AdminUsersAPI(APIClient):
         headers = {}
 
         # Create the request
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AdminUsers)
+        response, error = self._request_executor.execute(request, AdminUsers)
 
         if error:
             return (None, response, error)
 
         # Parse the response
         try:
-            result = AdminUsers(
-                self.form_response_body(response.get_body())
-            )
+            result = AdminUsers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def add_admin(
-        self, user_name: str,
-        login_name: str,
-        role: str,
-        email: str,
-        password: str,
-        **kwargs
-    ) -> tuple:
+    def add_admin(self, user_name: str, login_name: str, role: str, email: str, password: str, **kwargs) -> tuple:
         """
         Create a new admin user.
 
@@ -284,7 +264,7 @@ class AdminUsersAPI(APIClient):
             /adminUsers
         """
         )
-        
+
         payload = {
             "loginName": login_name,
             "userName": user_name,
@@ -296,8 +276,7 @@ class AdminUsersAPI(APIClient):
         body = {**payload, **kwargs}
 
         # Create the request with no empty param handling logic
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -307,15 +286,12 @@ class AdminUsersAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, AdminUsers)
+        response, error = self._request_executor.execute(request, AdminUsers)
         if error:
             return (None, response, error)
 
         try:
-            result = AdminUsers(
-                self.form_response_body(response.get_body())
-            )
+            result = AdminUsers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -364,28 +340,26 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /adminUsers/{admin_id}
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AdminUsers)
+        response, error = self._request_executor.execute(request, AdminUsers)
         if error:
             return (None, response, error)
 
         try:
-            result = AdminUsers(
-                self.form_response_body(response.get_body())
-            )
+            result = AdminUsers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -407,20 +381,20 @@ class AdminUsersAPI(APIClient):
 
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._ztw_base_endpoint}
             /adminUsers/{admin_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

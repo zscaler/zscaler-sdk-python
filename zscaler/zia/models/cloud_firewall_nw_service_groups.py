@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 
+
 class NetworkServiceGroups(ZscalerObject):
     """
     A class representing a Cloud Firewall Network Service Groups object.
@@ -45,7 +46,7 @@ class NetworkServiceGroups(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "services": [service.request_format() for service in self.services]
+            "services": [service.request_format() for service in self.services],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

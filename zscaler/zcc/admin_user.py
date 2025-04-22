@@ -27,7 +27,7 @@ class AdminUserAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
-        
+
     def list_admin_users(self, query_params=None) -> tuple:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
@@ -37,7 +37,7 @@ class AdminUserAPI(APIClient):
                 ``[query_params.user_type]`` {str}: Filter based on type of user.
                 ``[query_params.page]`` {int}: Specifies the page offset.
                 ``[query_params.page_size]`` {int}: Specifies the page size.
-                
+
         Returns:
             :obj:`list`: A list containing Admin Users in the Client Connector Portal.
 
@@ -62,8 +62,7 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -86,7 +85,7 @@ class AdminUserAPI(APIClient):
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: A list containing Admin Users in the Client Connector Portal.
 
@@ -108,8 +107,7 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return None
@@ -158,8 +156,7 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -175,14 +172,14 @@ class AdminUserAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def sync_zia_zdx_admin_users(self) -> tuple:
         """
         Sync Admin Users Information for ZDX and ZIA Client Connector Portal.
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns Sync Admin Users Information for ZDX and ZIA.
 
@@ -205,8 +202,7 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -229,7 +225,7 @@ class AdminUserAPI(APIClient):
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns Sync Admin Users Information for ZPA.
 
@@ -252,8 +248,7 @@ class AdminUserAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)

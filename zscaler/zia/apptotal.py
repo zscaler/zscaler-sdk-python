@@ -60,22 +60,18 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, AppTotal)
+        response, error = self._request_executor.execute(request, AppTotal)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotal(
-                self.form_response_body(response.get_body())
-            )
+            result = AppTotal(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -110,21 +106,17 @@ class AppTotalAPI(APIClient):
             "appId": app_id,
         }
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, AppTotal)
+        response, error = self._request_executor.execute(request, AppTotal)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotal(
-                self.form_response_body(response.get_body())
-            )
+            result = AppTotal(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -162,22 +154,18 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, AppTotalSearch)
+        response, error = self._request_executor.execute(request, AppTotalSearch)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotalSearch(
-                self.form_response_body(response.get_body())
-            )
+            result = AppTotalSearch(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -215,22 +203,18 @@ class AppTotalAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, AppTotalSearch)
+        response, error = self._request_executor.execute(request, AppTotalSearch)
 
         if error:
             return (None, response, error)
 
         try:
-            result = AppTotalSearch(
-                self.form_response_body(response.get_body())
-            )
+            result = AppTotalSearch(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

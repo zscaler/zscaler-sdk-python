@@ -18,6 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 
+
 class IOTReportAPI(APIClient):
     """
     A Client object for the IOT Report resource.
@@ -56,30 +57,27 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            iot_report = (response.get_body())
+            iot_report = response.get_body()
             return (iot_report, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def get_categories(self) -> tuple:
         """
-        Retrieve the mapping between the device category universally unique identifier (UUID) values and the category names for all the device
-        categories supported by the Zscaler AI/ML. The parent of device category is device type.
+        Retrieve the mapping between the device category universally unique identifier (UUID)
+        values and the category names for all the device categories supported by the Zscaler AI/ML.
+        The parent of device category is device type.
 
         Returns:
             tuple: A tuple containing:
@@ -103,30 +101,27 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            iot_report = (response.get_body())
+            iot_report = response.get_body()
             return (iot_report, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def get_classifications(self) -> tuple:
         """
-        Retrieve the mapping between the device classification universally unique identifier (UUID) values and the classification names for all the
-        device classifications supported by Zscaler AI/ML. The parent of device classification is device category.
+        Retrieve the mapping between the device classification universally unique identifier (UUID)
+        values and the classification names for all the device classifications supported by Zscaler AI/ML.
+        The parent of device classification is device category.
 
         Returns:
             tuple: A tuple containing:
@@ -150,29 +145,26 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            iot_report = (response.get_body())
+            iot_report = response.get_body()
             return (iot_report, response, None)
         except Exception as ex:
             return (None, response, ex)
-        
+
     def get_device_list(self) -> tuple:
         """
-        Retrieve a list of discovered devices with the following key contexts, IP address, location, ML auto-label, classification, category, and type.
+        Retrieve a list of discovered devices with the following key contexts, IP address,
+        location, ML auto-label, classification, category, and type.
 
         Returns:
             tuple: A tuple containing:
@@ -196,22 +188,18 @@ class IOTReportAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor\
-            .create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            iot_report = (response.get_body())
+            iot_report = response.get_body()
             return (iot_report, response, None)
         except Exception as ex:
             return (None, response, ex)

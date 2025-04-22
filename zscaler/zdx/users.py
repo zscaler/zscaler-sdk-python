@@ -20,33 +20,31 @@ from zscaler.zdx.models.users import Users
 from zscaler.zdx.models.users import UserDetails
 from zscaler.utils import format_url, zdx_params
 
+
 class UsersAPI(APIClient):
-    
+
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_users(
-        self,
-        query_params=None
-    ) -> tuple:
+    def list_users(self, query_params=None) -> tuple:
         """
         Returns a list of all active users configured within the ZDX tenant.
 
         Keyword Args:
         Keyword Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.since]`` {int}: The number of hours to look back for devices.
-                
+
                 ``[query_params.location_id]`` {list}: The unique ID for the location. You can add multiple location IDs.
 
                 ``[query_params.exclude_loc]`` {list}: The location IDs. You can exclude multiple location IDs.
 
                 ``[query_params.department_id]`` {list}: The unique ID for the department. You can add multiple location IDs.
-                
+
                 ``[query_params.exclude_dept]`` {list}: The department IDs. You can exclude multiple department IDs.
 
                 ``[query_params.geo_id]`` {list}: The unique ID for the geolocation. You can add multiple location IDs.
@@ -54,7 +52,7 @@ class UsersAPI(APIClient):
                 ``[query_params.offset]`` {str}: The next_offset value from the last request.
                     You must enter this value to get the next batch from the list.
                     When the next_offset value becomes null, the list is complete.
-                    
+
                 ``[query_params.limit]`` {int}: The number of items that must be returned per request from the list.
                     Minimum: 1
 
@@ -70,7 +68,7 @@ class UsersAPI(APIClient):
             ...     return
             ... for user in user_list:
             ...     print(user)
-            
+
             List all users in ZDX for the past 2 hours:
 
             >>> user_list, _, err = client.zdx.users.list_users(query_params={"since": 2})
@@ -93,8 +91,7 @@ class UsersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -114,11 +111,7 @@ class UsersAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_user(
-        self,
-        user_id: str, 
-        query_params=None
-    ) -> tuple:
+    def get_user(self, user_id: str, query_params=None) -> tuple:
         """
         Returns information on the specified user configured within the ZDX tenant.
 
@@ -145,18 +138,19 @@ class UsersAPI(APIClient):
             ...     print(user)
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zdx_base_endpoint}
             /users/{user_id}
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -166,8 +160,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [UserDetails(
-                self.form_response_body(response.get_body()))]  
+            result = [UserDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

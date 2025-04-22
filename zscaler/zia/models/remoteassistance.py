@@ -33,14 +33,10 @@ class RemoteAssistance(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.view_only_until = config["viewOnlyUntil"] \
-                if "viewOnlyUntil" in config else None
-            self.full_access_until = config["fullAccessUntil"] \
-                if "fullAccessUntil" in config else None
-            self.username_obfuscated = config["usernameObfuscated"] \
-                if "usernameObfuscated" in config else False
-            self.device_info_obfuscate = config["deviceInfoObfuscate"] \
-                if "deviceInfoObfuscate" in config else False
+            self.view_only_until = config["viewOnlyUntil"] if "viewOnlyUntil" in config else None
+            self.full_access_until = config["fullAccessUntil"] if "fullAccessUntil" in config else None
+            self.username_obfuscated = config["usernameObfuscated"] if "usernameObfuscated" in config else False
+            self.device_info_obfuscate = config["deviceInfoObfuscate"] if "deviceInfoObfuscate" in config else False
         else:
             self.view_only_until = None
             self.full_access_until = None
@@ -56,7 +52,7 @@ class RemoteAssistance(ZscalerObject):
             "viewOnlyUntil": self.view_only_until,
             "fullAccessUntil": self.full_access_until,
             "usernameObfuscated": self.username_obfuscated,
-            "deviceInfoObfuscate": self.device_info_obfuscate
+            "deviceInfoObfuscate": self.device_info_obfuscate,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -27,6 +27,7 @@ from zscaler.zcc.web_policy import WebPolicyAPI
 from zscaler.zcc.web_privacy import WebPrivacyAPI
 from zscaler.zcc.web_app_service import WebAppServiceAPI
 
+
 class ZCCService:
     """ZCC Service client, exposing various ZCC APIs."""
 
@@ -64,7 +65,7 @@ class ZCCService:
 
         """
         return AdminUserAPI(self._request_executor)
-    
+
     @property
     def company(self):
         """
@@ -72,7 +73,7 @@ class ZCCService:
 
         """
         return CompanyInfoAPI(self._request_executor)
-    
+
     @property
     def entitlements(self):
         """
@@ -96,7 +97,7 @@ class ZCCService:
 
         """
         return FailOpenPolicyAPI(self._request_executor)
-    
+
     @property
     def web_policy(self):
         """
@@ -112,7 +113,7 @@ class ZCCService:
 
         """
         return WebAppServiceAPI(self._request_executor)
-    
+
     @property
     def web_privacy(self):
         """
@@ -120,7 +121,7 @@ class ZCCService:
 
         """
         return WebPrivacyAPI(self._request_executor)
-    
+
     @property
     def trusted_networks(self):
         """

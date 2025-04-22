@@ -26,32 +26,26 @@ class MockZDXClient(LegacyZDXClient):
         """
         Initialize the MockZDXClient with support for environment variables and
         optional inline config.
-        
+
         Args:
             fs: Fixture to pause/resume the filesystem mock for pyfakefs.
             config: Optional dictionary containing client configuration (client_id, client_secret, etc.).
         """
         # If config is not provided, initialize it as an empty dictionary
         config = config or {}
-        
+
         # Fetch credentials from environment variables, allowing them to be overridden by the config dictionary
         client_id = config.get("client_id", os.getenv("ZDX_CLIENT_ID"))
         client_secret = config.get("client_secret", os.getenv("ZDX_CLIENT_SECRET"))
 
         # Extract logging configuration or use defaults
-        logging_config = config.get("logging", {
-            "enabled": False, 
-            "verbose": False
-        })
-        
+        logging_config = config.get("logging", {"enabled": False, "verbose": False})
+
         # Set up the client config dictionary
         client_config = {
             "client_id": client_id,
             "client_secret": client_secret,
-            "logging": {
-                "enabled": logging_config.get("enabled", True), 
-                "verbose": logging_config.get("verbose", True)
-            },
+            "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
         }
 
         if PYTEST_MOCK_CLIENT in os.environ:

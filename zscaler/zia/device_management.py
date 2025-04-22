@@ -41,10 +41,11 @@ class DeviceManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-            
+
                 ``[query_params.include_device_info]`` {bool}: Include or exclude device information.
-                
-                ``[query_params.include_pseudo_groups]`` {bool}: Include or exclude Zscaler Client Connector and Cloud Browser Isolation-related device groups.
+
+                ``[query_params.include_pseudo_groups]`` {bool}: Include or exclude Zscaler Client Connector and
+                    Cloud Browser Isolation-related device groups.
 
         Returns:
             tuple: A tuple containing (list of Device Group instances, Response, error)
@@ -68,19 +69,15 @@ class DeviceManagementAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -88,9 +85,7 @@ class DeviceManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(DeviceGroups(
-                    self.form_response_body(item))
-                )
+                result.append(DeviceGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -106,14 +101,15 @@ class DeviceManagementAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.name]`` {str}: The device group name. This is a `starts with` match.
-                
+
                 ``[query_params.user_ids]`` {list}: Used to list devices for specific users.
-                
+
                 ``[query_params.include_all]`` {bool}: Used to include or exclude Cloud Browser Isolation devices.
-                
+
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of Devices instances, Response, error)
@@ -130,25 +126,23 @@ class DeviceManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /deviceGroups/devices
-        """)
+        """
+        )
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -156,9 +150,7 @@ class DeviceManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(Devices(
-                    self.form_response_body(item))
-                )
+                result.append(Devices(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -189,7 +181,6 @@ class DeviceManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        # Prepare the request (GET request, no body needed)
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:

@@ -36,4 +36,4 @@ $env:cloud='<zpa_cloud_name>'
 
 !> **WARNING:** Hard-coding credentials into any Terraform configuration is not recommended, and risks secret leakage should this file be committed to public version control
 
-Static credentials can be provided by specifying the `client_id`, `client_secret` and `customer_id`, and cloud 
+Static credentials can be provided by specifying the `client_id`, `client_secret` and `customer_id`, and cloud

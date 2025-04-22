@@ -46,11 +46,7 @@ class DevicesAPI(APIClient):
 
         # Handle OS types
         if os_types:
-            os_types_resolved = [
-                str(zcc_param_map["os"].get(item))
-                for item in os_types
-                if zcc_param_map["os"].get(item)
-            ]
+            os_types_resolved = [str(zcc_param_map["os"].get(item)) for item in os_types if zcc_param_map["os"].get(item)]
             if not os_types_resolved:
                 raise ValueError("Invalid os_type specified.")
             params["osTypes"] = ",".join(os_types_resolved)
@@ -58,9 +54,7 @@ class DevicesAPI(APIClient):
         # Handle Registration types
         if registration_types:
             reg_types_resolved = [
-                str(zcc_param_map["reg_type"].get(item))
-                for item in registration_types
-                if zcc_param_map["reg_type"].get(item)
+                str(zcc_param_map["reg_type"].get(item)) for item in registration_types if zcc_param_map["reg_type"].get(item)
             ]
             if not reg_types_resolved:
                 raise ValueError("Invalid registration_type specified.")
@@ -71,16 +65,12 @@ class DevicesAPI(APIClient):
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadDevices")
 
         # Create the request properly
-        request, error = self._request_executor.create_request(
-            http_method, api_url, params=params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             raise Exception("Error creating request for downloading devices.")
 
         # Execute request and download file
-        response, error = self._request_executor.execute(
-            request, return_raw_response=True
-        )
+        response, error = self._request_executor.execute(request, return_raw_response=True)
         if error or response is None:
             raise Exception("Error executing request for downloading devices.")
 
@@ -88,13 +78,8 @@ class DevicesAPI(APIClient):
         content_type = response.headers.get("Content-Type", "").lower()
 
         # Check for valid CSV-like content
-        if (
-            not content_type.startswith("application/octet-stream")
-            and not response.text.startswith('"User","Device type"')
-        ):
-            raise Exception(
-                "Invalid response content type or unexpected response format."
-            )
+        if not content_type.startswith("application/octet-stream") and not response.text.startswith('"User","Device type"'):
+            raise Exception("Invalid response content type or unexpected response format.")
 
         # Save file to disk
         with open(filename, "wb") as f:
@@ -146,8 +131,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -170,7 +154,7 @@ class DevicesAPI(APIClient):
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns device cleanup sync information in the Client Connector Portal.
 
@@ -193,8 +177,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -222,41 +205,39 @@ class DevicesAPI(APIClient):
             tuple: A tuple containing the updated Device Cleaup Information, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zcc_base_endpoint}
             /setDeviceCleanupInfo
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
         # Create the request
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor\
-            .execute(request, SetDeviceCleanupInfo)
+        response, error = self._request_executor.execute(request, SetDeviceCleanupInfo)
         if error:
             return (None, response, error)
 
         try:
-            result = SetDeviceCleanupInfo(
-                self.form_response_body(response.get_body())
-            )
+            result = SetDeviceCleanupInfo(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def get_device_details(self) -> tuple:
         """
         Returns device detail information from the Client Connector Portal.
 
         Args:
             N/A
-                
+
         Returns:
             :obj:`list`: Returns device detail information  in the Client Connector Portal.
 
@@ -279,8 +260,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -296,7 +276,7 @@ class DevicesAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def download_service_status(
         self,
         filename: str = None,
@@ -313,11 +293,7 @@ class DevicesAPI(APIClient):
 
         # Handle OS types
         if os_types:
-            os_types_resolved = [
-                str(zcc_param_map["os"].get(item))
-                for item in os_types
-                if zcc_param_map["os"].get(item)
-            ]
+            os_types_resolved = [str(zcc_param_map["os"].get(item)) for item in os_types if zcc_param_map["os"].get(item)]
             if not os_types_resolved:
                 raise ValueError("Invalid os_type specified.")
             params["osTypes"] = ",".join(os_types_resolved)
@@ -325,9 +301,7 @@ class DevicesAPI(APIClient):
         # Handle Registration types
         if registration_types:
             reg_types_resolved = [
-                str(zcc_param_map["reg_type"].get(item))
-                for item in registration_types
-                if zcc_param_map["reg_type"].get(item)
+                str(zcc_param_map["reg_type"].get(item)) for item in registration_types if zcc_param_map["reg_type"].get(item)
             ]
             if not reg_types_resolved:
                 raise ValueError("Invalid registration_type specified.")
@@ -338,16 +312,12 @@ class DevicesAPI(APIClient):
         api_url = format_url(f"{self._zcc_base_endpoint}/downloadServiceStatus")
 
         # Create the request properly
-        request, error = self._request_executor.create_request(
-            http_method, api_url, params=params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             raise Exception("Error creating request for downloading devices.")
 
         # Execute request and download file
-        response, error = self._request_executor.execute(
-            request, return_raw_response=True
-        )
+        response, error = self._request_executor.execute(request, return_raw_response=True)
         if error or response is None:
             raise Exception("Error executing request for downloading devices.")
 
@@ -355,13 +325,8 @@ class DevicesAPI(APIClient):
         content_type = response.headers.get("Content-Type", "").lower()
 
         # Check for valid CSV-like content
-        if (
-            not content_type.startswith("application/octet-stream")
-            and not response.text.startswith('"User","Device type"')
-        ):
-            raise Exception(
-                "Invalid response content type or unexpected response format."
-            )
+        if not content_type.startswith("application/octet-stream") and not response.text.startswith('"User","Device type"'):
+            raise Exception("Invalid response content type or unexpected response format.")
 
         # Save file to disk
         with open(filename, "wb") as f:
@@ -401,8 +366,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -418,7 +382,7 @@ class DevicesAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def force_remove_devices(self, query_params=None) -> tuple:
         """
         Force remove of the devices from the Client Connector Portal.
@@ -451,8 +415,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -468,7 +431,7 @@ class DevicesAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def remove_machine_tunnel(self) -> tuple:
         """
         Remove machine tunnel devices from the Client Connector Portal.
@@ -498,8 +461,7 @@ class DevicesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, {})
 
         if error:
             return (None, None, error)

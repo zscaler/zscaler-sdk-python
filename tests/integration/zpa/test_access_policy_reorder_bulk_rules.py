@@ -41,9 +41,7 @@ class TestAccessPolicyBulkReorderRule:
                     rule_name = f"tests-{generate_random_string()}"
                     rule_description = f"tests-{generate_random_string()}"
                     created_rule, _, err = client.zpa.policies.add_access_rule(
-                        name=rule_name,
-                        description=rule_description,
-                        action="allow"
+                        name=rule_name, description=rule_description, action="allow"
                     )
                     assert err is None, f"Error creating access rule: {err}"
                     assert created_rule is not None, "Created rule is None"
@@ -81,10 +79,7 @@ class TestAccessPolicyBulkReorderRule:
 
             # Step 4: Bulk reorder the rules
             try:
-                _, _, err = client.zpa.policies.bulk_reorder_rules(
-                    policy_type="access",
-                    rules_orders=new_rule_order
-                )
+                _, _, err = client.zpa.policies.bulk_reorder_rules(policy_type="access", rules_orders=new_rule_order)
                 assert err is None, f"Error reordering access rules: {err}"
                 print(f"Rules reordered successfully: {reversed_rule_ids}")
             except Exception as exc:
@@ -94,15 +89,11 @@ class TestAccessPolicyBulkReorderRule:
             try:
                 reordered_rules, _, err = client.zpa.policies.list_rules(policy_type="access")
                 assert err is None, f"Error listing reordered rules: {err}"
-                reordered_rules = [
-                    rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in reordered_rules
-                ]
+                reordered_rules = [rule.as_dict() if hasattr(rule, "as_dict") else rule for rule in reordered_rules]
                 reordered_rule_ids = [rule["id"] for rule in reordered_rules]
 
                 # Validate if the top N rule IDs match the reversed order of the created rules
-                assert reordered_rule_ids[:5] == reversed_rule_ids, (
-                    "Rules were not reordered correctly"
-                )
+                assert reordered_rule_ids[:5] == reversed_rule_ids, "Rules were not reordered correctly"
                 print(f"Reordered Rules: {reordered_rules[:5]}")
             except Exception as exc:
                 errors.append(f"Reordered rules validation failed: {exc}")

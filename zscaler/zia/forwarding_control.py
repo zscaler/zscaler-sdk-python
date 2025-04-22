@@ -37,8 +37,8 @@ class ForwardingControlAPI(APIClient):
         Lists forwarding control rules rules in your organization with pagination.
 
         Args:
-            query_params {dict}: Map of query parameters for the request. 
-                       
+            query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
@@ -66,11 +66,12 @@ class ForwardingControlAPI(APIClient):
             ...     print(rule.as_dict())
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /forwardingRules
         """
-    )
+        )
 
         query_params = query_params or {}
 
@@ -79,36 +80,24 @@ class ForwardingControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(
-            http_method,
-            api_url,
-            body,
-            headers,
-            params=query_params
-        )
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
             results = []
             for item in response.get_results():
-                results.append(ForwardingControlRule(
-                    self.form_response_body(item))
-                )
+                results.append(ForwardingControlRule(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
         if local_search:
             lower_search = local_search.lower()
-            results = [
-                r for r in results
-                if lower_search in (r.name.lower() if r.name else "")
-            ]
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -137,19 +126,15 @@ class ForwardingControlAPI(APIClient):
             """
         )
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, ForwardingControlRule)
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
         if error:
             return (None, response, error)
         try:
-            result = ForwardingControlRule(
-                self.form_response_body(response.get_body())
-            )
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -167,7 +152,7 @@ class ForwardingControlAPI(APIClient):
             rank (str): The admin rank of the rule. Supported values 1-7
             forward_method (str): The type of traffic forwarding method selected from the available options
             Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
-             
+
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
             groups (list): The IDs for the groups that this rule applies to.
@@ -180,7 +165,7 @@ class ForwardingControlAPI(APIClient):
             location_groups (list): The IDs for the location groups that this rule applies to.
             src_ips (list): List of User-defined source IP addresses for which the rule is applicable.
             src_ip_groups (list): The IDs for the Source IP address groups for which the rule is applicable.
-            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable. 
+            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable.
             dest_addresses (list): List of destination IP addresses, CIDRs or FQDNs for which the rule is applicable.
             dest_ip_categories (list): List of destination IP categories to which the rule applies.
             res_categories (list): List of destination domain categories to which the rule applies.
@@ -193,11 +178,11 @@ class ForwardingControlAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
-            
+
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
                 - `name` (str): The name of the Application Segment.
-                
+
             proxy_gateway (dict or list[dict]): **Proxy Gateway resource(s) applicable to the rule.**
                 - `id` (int, optional): The unique identifier for the proxy gateway.
                 - `name` (str): The name of the Proxy Gateway.
@@ -205,7 +190,7 @@ class ForwardingControlAPI(APIClient):
             zpa_gateway (dict or list[dict]): **ZPA Gateway resource(s) applicable to the rule.**
                 - `id` (int, optional): The unique identifier for the ZPA Gateway.
                 - `name` (str): The name of the ZPA Gateway.
-            
+
         Returns:
             :obj:`Tuple`: New forwarding control rule resource record.
 
@@ -223,7 +208,7 @@ class ForwardingControlAPI(APIClient):
             ...    dest_ip_categories=["ZSPROXY_IPS"],
             ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
             ... )
-            
+
             Add a ZPA forwarding control rule:
 
             >>> zia.forwarding_control.add_rule(
@@ -257,18 +242,17 @@ class ForwardingControlAPI(APIClient):
         )
 
         body = kwargs
-        
+
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
-            
+
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
-        
+
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -278,15 +262,12 @@ class ForwardingControlAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, ForwardingControlRule)
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
         if error:
             return (None, response, error)
 
         try:
-            result = ForwardingControlRule(
-                self.form_response_body(response.get_body())
-            )
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -304,7 +285,7 @@ class ForwardingControlAPI(APIClient):
             rank (str): The admin rank of the rule. Supported values 1-7
             forward_method (str): The type of traffic forwarding method selected from the available options
             Supported Values: `INVALID`, `DIRECT`, `PROXYCHAIN`, `ZIA`, `ZPA`, `ECZPA`, `ECSELF`, `DROP`
-             
+
             state (str): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             description (str): Additional information about the rule
             groups (list): The IDs for the groups that this rule applies to.
@@ -317,7 +298,7 @@ class ForwardingControlAPI(APIClient):
             location_groups (list): The IDs for the location groups that this rule applies to.
             src_ips (list): List of User-defined source IP addresses for which the rule is applicable.
             src_ip_groups (list): The IDs for the Source IP address groups for which the rule is applicable.
-            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable. 
+            src_ipv6_groups (list): The IDs for theSource IPv6 address groups for which the rule is applicable.
             dest_addresses (list): List of destination IP addresses, CIDRs or FQDNs for which the rule is applicable.
             dest_ip_categories (list): List of destination IP categories to which the rule applies.
             res_categories (list): List of destination domain categories to which the rule applies.
@@ -330,7 +311,7 @@ class ForwardingControlAPI(APIClient):
             nw_application_groups (list): IDs for network application groups.
             device_groups (list): Device groups managed using Zscaler Client Connector.
             devices (list): Devices managed using Zscaler Client Connector.
-            
+
             zpa_app_segments (list[dict]): **ZPA Application Segments applicable to the rule.**
                 - `external_id` (str): Indicates the external ID. Applicable only when this reference is of an external entity.
                 - `name` (str): The name of the Application Segment.
@@ -342,7 +323,7 @@ class ForwardingControlAPI(APIClient):
             zpa_gateway (dict or list[dict]): **ZPA Gateway resource(s) applicable to the rule.**
                 - `id` (int, optional): The unique identifier for the ZPA Gateway.
                 - `name` (str): The name of the ZPA Gateway.
-            
+
         Returns:
             :obj:`Tuple`: New forwarding control rule resource record.
 
@@ -361,7 +342,7 @@ class ForwardingControlAPI(APIClient):
             ...    dest_ip_categories=["ZSPROXY_IPS"],
             ...    dest_countries=["COUNTRY_CA", "COUNTRY_US"],
             ... )
-            
+
             Update a ZPA forwarding control rule:
 
             >>> zia.forwarding_control.add_rule(
@@ -403,10 +384,9 @@ class ForwardingControlAPI(APIClient):
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
-        
+
         # Create the request
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -416,15 +396,12 @@ class ForwardingControlAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.\
-            execute(request, ForwardingControlRule)
+        response, error = self._request_executor.execute(request, ForwardingControlRule)
         if error:
             return (None, response, error)
 
         try:
-            result = ForwardingControlRule(
-                self.form_response_body(response.get_body())
-            )
+            result = ForwardingControlRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -443,13 +420,11 @@ class ForwardingControlAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
@@ -479,8 +454,7 @@ class ForwardingControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return None
@@ -492,10 +466,7 @@ class ForwardingControlAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(ProxyGatways(
-                    self.form_response_body(item)
-                )
-            )
+                result.append(ProxyGatways(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 

@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
@@ -77,7 +76,7 @@ class TestPostureProfiles:
                 assert profile_id is not None, "Posture Profile ID should not be None"
         except Exception as exc:
             errors.append(f"Listing posture profiles failed: {str(exc)}")
-            
+
         if profile_id:
             # Fetch the selected posture profile by its ID
             try:
@@ -87,6 +86,6 @@ class TestPostureProfiles:
                 assert fetched_group.id == profile_id, "Mismatch in posture profile ID"
             except Exception as exc:
                 errors.append(f"Fetching posture profile by ID failed: {str(exc)}")
-                    
+
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during posture profile operations test: {errors}"

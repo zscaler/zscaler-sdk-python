@@ -28,40 +28,31 @@ class CustomerVersionProfile(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.customer_id = config["customerId"]\
-                if "customerId" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.number_of_assistants = config["numberOfAssistants"]\
-                if "numberOfAssistants" in config else None
-            self.number_of_customers = config["numberOfCustomers"]\
-                if "numberOfCustomers" in config else None
-            self.number_of_private_brokers = config["numberOfPrivateBrokers"]\
-                if "numberOfPrivateBrokers" in config else None
-            self.number_of_site_controllers = config["numberOfSiteControllers"]\
-                if "numberOfSiteControllers" in config else None
-            self.number_of_updated_assistants = config["numberOfUpdatedAssistants"]\
-                if "numberOfUpdatedAssistants" in config else None
-            self.number_of_updated_private_brokers = config["numberOfUpdatedPrivateBrokers"]\
-                if "numberOfUpdatedPrivateBrokers" in config else None
-            self.number_of_updated_site_controllers = config["numberOfUpdatedSiteControllers"]\
-                if "numberOfUpdatedSiteControllers" in config else None
-            self.upgrade_priority = config["upgradePriority"]\
-                if "upgradePriority" in config else None
-            self.versions = config["versions"]\
-                if "versions" in config else None
-            self.visibility_scope = config["visibilityScope"]\
-                if "visibilityScope" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.customer_id = config["customerId"] if "customerId" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.number_of_assistants = config["numberOfAssistants"] if "numberOfAssistants" in config else None
+            self.number_of_customers = config["numberOfCustomers"] if "numberOfCustomers" in config else None
+            self.number_of_private_brokers = config["numberOfPrivateBrokers"] if "numberOfPrivateBrokers" in config else None
+            self.number_of_site_controllers = (
+                config["numberOfSiteControllers"] if "numberOfSiteControllers" in config else None
+            )
+            self.number_of_updated_assistants = (
+                config["numberOfUpdatedAssistants"] if "numberOfUpdatedAssistants" in config else None
+            )
+            self.number_of_updated_private_brokers = (
+                config["numberOfUpdatedPrivateBrokers"] if "numberOfUpdatedPrivateBrokers" in config else None
+            )
+            self.number_of_updated_site_controllers = (
+                config["numberOfUpdatedSiteControllers"] if "numberOfUpdatedSiteControllers" in config else None
+            )
+            self.upgrade_priority = config["upgradePriority"] if "upgradePriority" in config else None
+            self.versions = config["versions"] if "versions" in config else None
+            self.visibility_scope = config["visibilityScope"] if "visibilityScope" in config else None
 
             self.custom_scope_request_customer_ids = config.get("customScopeRequestCustomerIds", {})
 

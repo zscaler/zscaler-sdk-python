@@ -27,14 +27,16 @@ class HTTPClient:
 
     raise_exception = False
 
-    def __init__(self,
-                 http_config={},
-                 zcc_legacy_client: LegacyZCCClientHelper = None,
-                 ztw_legacy_client: LegacyZTWClientHelper = None,
-                 zdx_legacy_client: LegacyZDXClientHelper = None,
-                 zpa_legacy_client: LegacyZPAClientHelper = None,
-                 zia_legacy_client: LegacyZIAClientHelper = None,
-                 zwa_legacy_client: LegacyZWAClientHelper = None):
+    def __init__(
+        self,
+        http_config={},
+        zcc_legacy_client: LegacyZCCClientHelper = None,
+        ztw_legacy_client: LegacyZTWClientHelper = None,
+        zdx_legacy_client: LegacyZDXClientHelper = None,
+        zpa_legacy_client: LegacyZPAClientHelper = None,
+        zia_legacy_client: LegacyZIAClientHelper = None,
+        zwa_legacy_client: LegacyZWAClientHelper = None,
+    ):
 
         # Get headers from Request Executor
         self._default_headers = http_config.get("headers", {})
@@ -64,10 +66,8 @@ class HTTPClient:
 
         # Setup SSL context or handle disableHttpsCheck
         if "sslContext" in http_config:
-            self._ssl_context = http_config[
-                "sslContext"]  # Use the custom SSL context
-        elif "disableHttpsCheck" in http_config and http_config[
-                "disableHttpsCheck"]:
+            self._ssl_context = http_config["sslContext"]  # Use the custom SSL context
+        elif "disableHttpsCheck" in http_config and http_config["disableHttpsCheck"]:
             self._ssl_context = False  # Disable SSL certificate validation if disableHttpsCheck is true
         else:
             self._ssl_context = True  # Enable SSL certificate validation by default
@@ -138,11 +138,13 @@ class HTTPClient:
                     logger.error(error_msg)
                     return (None, ValueError(error_msg))
 
-                params.update({
-                    "url": legacy_request["url"],
-                    "params": legacy_request["params"],
-                    "headers": legacy_request["headers"],
-                })
+                params.update(
+                    {
+                        "url": legacy_request["url"],
+                        "params": legacy_request["params"],
+                        "headers": legacy_request["headers"],
+                    }
+                )
 
             elif self.use_zcc_legacy_client:
                 parsed_url = urlparse(request["url"])
@@ -163,17 +165,19 @@ class HTTPClient:
                     logger.error(error_msg)
                     return (None, ValueError(error_msg))
 
-                params.update({
-                    "url": legacy_request["url"],
-                    "params": legacy_request["params"],
-                    "headers": legacy_request["headers"],
-                })
+                params.update(
+                    {
+                        "url": legacy_request["url"],
+                        "params": legacy_request["params"],
+                        "headers": legacy_request["headers"],
+                    }
+                )
 
             elif self.use_zdx_legacy_client:
                 parsed_url = urlparse(request["url"])
                 path = parsed_url.path
                 logger.debug(f"Sending request via ZDX legacy client. Path: {path}")
-                
+
                 # Unpack the returned tuple into response and legacy_req_info
                 response, legacy_req_info = self.zdx_legacy_client.send(
                     method=request["method"],
@@ -190,17 +194,19 @@ class HTTPClient:
                     return (None, ValueError(error_msg))
 
                 # Update params with the correct dictionary from the legacy client's response
-                params.update({
-                    "url": legacy_req_info["url"],
-                    "params": legacy_req_info["params"],
-                    "headers": legacy_req_info["headers"],
-                })
+                params.update(
+                    {
+                        "url": legacy_req_info["url"],
+                        "params": legacy_req_info["params"],
+                        "headers": legacy_req_info["headers"],
+                    }
+                )
 
             elif self.use_zwa_legacy_client:
                 parsed_url = urlparse(request["url"])
                 path = parsed_url.path
                 logger.debug(f"Sending request via ZWA legacy client. Path: {path}")
-                
+
                 # Unpack the returned tuple into response and legacy_req_info
                 response, legacy_req_info = self.zwa_legacy_client.send(
                     method=request["method"],
@@ -217,11 +223,13 @@ class HTTPClient:
                     return (None, ValueError(error_msg))
 
                 # Update params with the correct dictionary from the legacy client's response
-                params.update({
-                    "url": legacy_req_info["url"],
-                    "params": legacy_req_info["params"],
-                    "headers": legacy_req_info["headers"],
-                })
+                params.update(
+                    {
+                        "url": legacy_req_info["url"],
+                        "params": legacy_req_info["params"],
+                        "headers": legacy_req_info["headers"],
+                    }
+                )
 
             elif self.use_zia_legacy_client:
                 parsed_url = urlparse(request["url"])
@@ -242,12 +250,14 @@ class HTTPClient:
                     logger.error(error_msg)
                     return (None, ValueError(error_msg))
 
-                params.update({
-                    "url": legacy_request["url"],
-                    "params": legacy_request["params"],
-                    "headers": legacy_request["headers"],
-                })
-                
+                params.update(
+                    {
+                        "url": legacy_request["url"],
+                        "params": legacy_request["params"],
+                        "headers": legacy_request["headers"],
+                    }
+                )
+
             elif self.use_ztw_legacy_client:
                 parsed_url = urlparse(request["url"])
                 path = parsed_url.path
@@ -267,11 +277,13 @@ class HTTPClient:
                     logger.error(error_msg)
                     return (None, ValueError(error_msg))
 
-                params.update({
-                    "url": legacy_request["url"],
-                    "params": legacy_request["params"],
-                    "headers": legacy_request["headers"],
-                })
+                params.update(
+                    {
+                        "url": legacy_request["url"],
+                        "params": legacy_request["params"],
+                        "headers": legacy_request["headers"],
+                    }
+                )
 
             else:
                 # Use Standard Session
@@ -339,8 +351,7 @@ class HTTPClient:
             Tuple(dict repr of response (if no error), any error found)
         """
         # Check if response is JSON and parse it
-        if "application/json" in response_details.headers.get(
-                "Content-Type", ""):
+        if "application/json" in response_details.headers.get("Content-Type", ""):
             try:
                 formatted_response = json.loads(response_body)
                 # logger.debug("Successfully parsed JSON response")
@@ -353,9 +364,7 @@ class HTTPClient:
         if 200 <= response_details.status_code < 300:
             return formatted_response, None
 
-        logger.error(
-            f"Error response from {url}: {response_details.status_code} - {formatted_response}"
-        )
+        logger.error(f"Error response from {url}: {response_details.status_code} - {formatted_response}")
 
         status_code = response_details.status_code
 
@@ -365,8 +374,7 @@ class HTTPClient:
         else:
             # create errors
             try:
-                error = ZscalerAPIError(url, response_details,
-                                        formatted_response)
+                error = ZscalerAPIError(url, response_details, formatted_response)
                 if HTTPClient.raise_exception:
                     raise ZscalerAPIException(formatted_response)
             except ZscalerAPIException:

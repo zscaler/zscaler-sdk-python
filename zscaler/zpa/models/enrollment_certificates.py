@@ -27,48 +27,31 @@ class EnrollmentCertificate(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if config and "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if config and "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if config and "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if config and "modifiedBy" in config else None
-            self.get_cname = config["getcName"]\
-                if config and "getcName" in config else None
-            self.valid_from = config["validFromInEpochSec"]\
-                if config and "validFromInEpochSec" in config else None
-            self.valid_to = config["validToInEpochSec"]\
-                if config and "validToInEpochSec" in config else None
-            self.certificate = config["certificate"]\
-                if config and "certificate" in config else None
-            self.issued_to = config["issuedTo"]\
-                if config and "issuedTo" in config else None
-            self.issued_by = config["issuedBy"]\
-                if config and "issuedBy" in config else None
-            self.serial_no = config["serialNo"]\
-                if config and "serialNo" in config else None
-            self.name = config["name"]\
-                if config and "name" in config else None
-            self.allow_signing = config["allowSigning"]\
-                if config and "allowSigning" in config else None
-            self.private_key_present = config["privateKeyPresent"]\
-                if config and "privateKeyPresent" in config else None
-            self.client_cert_type = config["clientCertType"]\
-                if config and "clientCertType" in config else None
-            self.csr = config["csr"]\
-                if config and "csr" in config else None
-            self.parent_cert_id = config["parentCertId"]\
-                if config and "parentCertId" in config else None
-            self.parent_cert_name = config["parentCertName"]\
-                if config and "parentCertName" in config else None
-            self.zrsa_encrypted_private_key = config["zrsaencryptedprivatekey"]\
-                if config and "zrsaencryptedprivatekey" in config else None
-            self.zrsa_encrypted_session_key = config["zrsaencryptedsessionkey"]\
-                if config and "zrsaencryptedsessionkey" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
+            self.id = config["id"] if config and "id" in config else None
+            self.modified_time = config["modifiedTime"] if config and "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+            self.get_cname = config["getcName"] if config and "getcName" in config else None
+            self.valid_from = config["validFromInEpochSec"] if config and "validFromInEpochSec" in config else None
+            self.valid_to = config["validToInEpochSec"] if config and "validToInEpochSec" in config else None
+            self.certificate = config["certificate"] if config and "certificate" in config else None
+            self.issued_to = config["issuedTo"] if config and "issuedTo" in config else None
+            self.issued_by = config["issuedBy"] if config and "issuedBy" in config else None
+            self.serial_no = config["serialNo"] if config and "serialNo" in config else None
+            self.name = config["name"] if config and "name" in config else None
+            self.allow_signing = config["allowSigning"] if config and "allowSigning" in config else None
+            self.private_key_present = config["privateKeyPresent"] if config and "privateKeyPresent" in config else None
+            self.client_cert_type = config["clientCertType"] if config and "clientCertType" in config else None
+            self.csr = config["csr"] if config and "csr" in config else None
+            self.parent_cert_id = config["parentCertId"] if config and "parentCertId" in config else None
+            self.parent_cert_name = config["parentCertName"] if config and "parentCertName" in config else None
+            self.zrsa_encrypted_private_key = (
+                config["zrsaencryptedprivatekey"] if config and "zrsaencryptedprivatekey" in config else None
+            )
+            self.zrsa_encrypted_session_key = (
+                config["zrsaencryptedsessionkey"] if config and "zrsaencryptedsessionkey" in config else None
+            )
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
         else:
             self.id = None

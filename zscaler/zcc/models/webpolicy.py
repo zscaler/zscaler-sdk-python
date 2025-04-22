@@ -33,12 +33,9 @@ class WebPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.active = config["active"] \
-                if "active" in config else None
-            self.allow_unreachable_pac = config["allowUnreachablePac"] \
-                if "allowUnreachablePac" in config else None
-            self.android_policy = config["androidPolicy"] \
-                if "androidPolicy" in config else None
+            self.active = config["active"] if "active" in config else None
+            self.allow_unreachable_pac = config["allowUnreachablePac"] if "allowUnreachablePac" in config else None
+            self.android_policy = config["androidPolicy"] if "androidPolicy" in config else None
             self.app_identity_names = ZscalerCollection.form_list(
                 config["appIdentityNames"] if "appIdentityNames" in config else [], str
             )
@@ -48,78 +45,48 @@ class WebPolicy(ZscalerObject):
             self.app_service_names = ZscalerCollection.form_list(
                 config["appServiceNames"] if "appServiceNames" in config else [], str
             )
-            self.bypass_app_ids = ZscalerCollection.form_list(
-                config["bypassAppIds"] if "bypassAppIds" in config else [], str
-            )
+            self.bypass_app_ids = ZscalerCollection.form_list(config["bypassAppIds"] if "bypassAppIds" in config else [], str)
             self.bypass_custom_app_ids = ZscalerCollection.form_list(
                 config["bypassCustomAppIds"] if "bypassCustomAppIds" in config else [], str
             )
-            self.description = config["description"] \
-                if "description" in config else None
+            self.description = config["description"] if "description" in config else None
             self.device_group_ids = ZscalerCollection.form_list(
                 config["deviceGroupIds"] if "deviceGroupIds" in config else [], str
             )
             self.device_group_names = ZscalerCollection.form_list(
                 config["deviceGroupNames"] if "deviceGroupNames" in config else [], str
             )
-            self.device_type = config["device_type"] \
-                if "device_type" in config else None
-            self.disaster_recovery = config["disasterRecovery"] \
-                if "disasterRecovery" in config else None
-            self.enable_device_groups = config["enableDeviceGroups"] \
-                if "enableDeviceGroups" in config else None
-            self.forwarding_profile_id = config["forwardingProfileId"] \
-                if "forwardingProfileId" in config else None
-            self.group_all = config["groupAll"] \
-                if "groupAll" in config else None
-            self.group_ids = ZscalerCollection.form_list(
-                config["groupIds"] if "groupIds" in config else [], str
+            self.device_type = config["device_type"] if "device_type" in config else None
+            self.disaster_recovery = config["disasterRecovery"] if "disasterRecovery" in config else None
+            self.enable_device_groups = config["enableDeviceGroups"] if "enableDeviceGroups" in config else None
+            self.forwarding_profile_id = config["forwardingProfileId"] if "forwardingProfileId" in config else None
+            self.group_all = config["groupAll"] if "groupAll" in config else None
+            self.group_ids = ZscalerCollection.form_list(config["groupIds"] if "groupIds" in config else [], str)
+            self.group_names = ZscalerCollection.form_list(config["groupNames"] if "groupNames" in config else [], str)
+            self.highlight_active_control = config["highlightActiveControl"] if "highlightActiveControl" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.ios_policy = config["iosPolicy"] if "iosPolicy" in config else None
+            self.linux_policy = config["linuxPolicy"] if "linuxPolicy" in config else None
+            self.log_file_size = config["logFileSize"] if "logFileSize" in config else None
+            self.log_level = config["logLevel"] if "logLevel" in config else None
+            self.log_mode = config["logMode"] if "logMode" in config else None
+            self.mac_policy = config["macPolicy"] if "macPolicy" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.pac_url = config["pac_url"] if "pac_url" in config else None
+            self.policy_extension = config["policyExtension"] if "policyExtension" in config else None
+            self.reactivate_web_security_minutes = (
+                config["reactivateWebSecurityMinutes"] if "reactivateWebSecurityMinutes" in config else None
             )
-            self.group_names = ZscalerCollection.form_list(
-                config["groupNames"] if "groupNames" in config else [], str
+            self.reauth_period = config["reauth_period"] if "reauth_period" in config else None
+            self.rule_order = config["ruleOrder"] if "ruleOrder" in config else None
+            self.send_disable_service_reason = (
+                config["sendDisableServiceReason"] if "sendDisableServiceReason" in config else None
             )
-            self.highlight_active_control = config["highlightActiveControl"] \
-                if "highlightActiveControl" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.ios_policy = config["iosPolicy"] \
-                if "iosPolicy" in config else None
-            self.linux_policy = config["linuxPolicy"] \
-                if "linuxPolicy" in config else None
-            self.log_file_size = config["logFileSize"] \
-                if "logFileSize" in config else None
-            self.log_level = config["logLevel"] \
-                if "logLevel" in config else None
-            self.log_mode = config["logMode"] \
-                if "logMode" in config else None
-            self.mac_policy = config["macPolicy"] \
-                if "macPolicy" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.pac_url = config["pac_url"] \
-                if "pac_url" in config else None
-            self.policy_extension = config["policyExtension"] \
-                if "policyExtension" in config else None
-            self.reactivate_web_security_minutes = config["reactivateWebSecurityMinutes"] \
-                if "reactivateWebSecurityMinutes" in config else None
-            self.reauth_period = config["reauth_period"] \
-                if "reauth_period" in config else None
-            self.rule_order = config["ruleOrder"] \
-                if "ruleOrder" in config else None
-            self.send_disable_service_reason = config["sendDisableServiceReason"] \
-                if "sendDisableServiceReason" in config else None
-            self.tunnel_zapp_traffic = config["tunnelZappTraffic"] \
-                if "tunnelZappTraffic" in config else None
-            self.user_ids = ZscalerCollection.form_list(
-                config["userIds"] if "userIds" in config else [], str
-            )
-            self.user_names = ZscalerCollection.form_list(
-                config["userNames"] if "userNames" in config else [], str
-            )
-            self.windows_policy = config["windowsPolicy"] \
-                if "windowsPolicy" in config else None
-            self.zia_posture_config_id = config["ziaPostureConfigId"] \
-                if "ziaPostureConfigId" in config else None
+            self.tunnel_zapp_traffic = config["tunnelZappTraffic"] if "tunnelZappTraffic" in config else None
+            self.user_ids = ZscalerCollection.form_list(config["userIds"] if "userIds" in config else [], str)
+            self.user_names = ZscalerCollection.form_list(config["userNames"] if "userNames" in config else [], str)
+            self.windows_policy = config["windowsPolicy"] if "windowsPolicy" in config else None
+            self.zia_posture_config_id = config["ziaPostureConfigId"] if "ziaPostureConfigId" in config else None
         else:
             self.active = None
             self.allow_unreachable_pac = None
@@ -203,7 +170,7 @@ class WebPolicy(ZscalerObject):
             "userIds": self.user_ids,
             "userNames": self.user_names,
             "windowsPolicy": self.windows_policy,
-            "ziaPostureConfigId": self.zia_posture_config_id
+            "ziaPostureConfigId": self.zia_posture_config_id,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

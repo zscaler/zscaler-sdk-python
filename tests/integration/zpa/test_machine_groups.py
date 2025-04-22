@@ -14,7 +14,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
@@ -46,7 +45,7 @@ class TestMachineGroups:
                 assert group_id is not None, "Machine Group ID should not be None"
         except Exception as exc:
             errors.append(f"Listing machine groups failed: {str(exc)}")
-            
+
         if group_id:
             # Fetch the selected machine group by its ID
             try:

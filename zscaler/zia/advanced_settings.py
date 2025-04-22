@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.advanced_settings import AdvancedSettings
 from zscaler.utils import format_url
 
+
 class AdvancedSettingsAPI(APIClient):
     """
     A Client object for the Advanced Settings resource.
@@ -60,16 +61,12 @@ class AdvancedSettingsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(
-            http_method, api_url
-        )
+        request, error = self._request_executor.create_request(http_method, api_url)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -79,12 +76,12 @@ class AdvancedSettingsAPI(APIClient):
             return (advanced_settings, response, None)
         except Exception as ex:
             return (None, response, ex)
-    
+
     def update_advanced_settings(self, **kwargs) -> tuple:
         """
         Updates advanced settings in the ZIA Admin Portal with the provided configuration.
 
-        This method pushes updated advanced settings such as traffic control, DNS optimizations, 
+        This method pushes updated advanced settings such as traffic control, DNS optimizations,
         authentication bypass rules, and session management configurations.
 
         Args:
@@ -193,22 +190,18 @@ class AdvancedSettingsAPI(APIClient):
 
         body = {}
         body.update(kwargs)
-        
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, AdvancedSettings)
+        response, error = self._request_executor.execute(request, AdvancedSettings)
         if error:
             return (None, response, error)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
-                result = AdvancedSettings(
-                    self.form_response_body(response.get_body())
-                )
+                result = AdvancedSettings(self.form_response_body(response.get_body()))
             else:
                 result = AdvancedSettings()
         except Exception as error:

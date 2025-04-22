@@ -43,7 +43,8 @@ class UserManagementAPI(APIClient):
                 ``[query_params.group]`` {str}: Filters by group name. This is a `starts with` match.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                                                    The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of UserManagement instances, Response, error)
@@ -80,14 +81,12 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -95,9 +94,7 @@ class UserManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(UserManagement(
-                    self.form_response_body(item))
-                )
+                result.append(UserManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -131,39 +128,34 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, UserManagement)
+        response, error = self._request_executor.execute(request, UserManagement)
 
         if error:
             return (None, response, error)
 
         try:
-            result = UserManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = UserManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def list_user_references(
-        self,
-        query_params=None
-    ) -> tuple:
+    def list_user_references(self, query_params=None) -> tuple:
         """
-        Returns the list of Name-ID pairs for all users in the ZIA Admin Portal that can be referenced in user criteria within policies.
+        Returns the list of Name-ID pairs for all users in the ZIA Admin Portal
+        that can be referenced in user criteria within policies.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.include_admin_users]`` {bool}: Whether to include the administrator users when retrieving the list Default is True.
+                ``[query_params.include_admin_users]`` {bool}: Include the administrator users when retrieving the list.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                                                    The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of UserManagement instances, Response, error)
@@ -198,14 +190,12 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -213,9 +203,7 @@ class UserManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(
-                    UserManagement(self.form_response_body(item))
-                )
+                result.append(UserManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -276,8 +264,7 @@ class UserManagementAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -286,25 +273,18 @@ class UserManagementAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, UserManagement)
+        response, error = self._request_executor.execute(request, UserManagement)
         if error:
             return (None, response, error)
 
         try:
-            result = UserManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = UserManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
 
-    def update_user(
-        self,
-        user_id: str,
-        **kwargs
-    ) -> tuple:
+    def update_user(self, user_id: str, **kwargs) -> tuple:
         """
         Updates the details for the specified user.
 
@@ -340,38 +320,33 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /users/{user_id}
-        """)
-        
+        """
+        )
+
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
-        
-        response, error = self._request_executor.\
-            execute(request, UserManagement)
+
+        response, error = self._request_executor.execute(request, UserManagement)
 
         if error:
             return (None, response, error)
 
         try:
-            result = UserManagement(
-                self.form_response_body(response.get_body())
-            )
+            result = UserManagement(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def delete_user(
-        self,
-        user_id: str
-    ) -> tuple:
+    def delete_user(self, user_id: str) -> tuple:
         """
         Deletes the specified user ID.
 
@@ -385,7 +360,8 @@ class UserManagementAPI(APIClient):
             >>> user = zia.users.delete_user('99999')
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /users/{user_id}
         """
@@ -393,13 +369,11 @@ class UserManagementAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -428,13 +402,11 @@ class UserManagementAPI(APIClient):
 
         payload = {"ids": user_ids}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, payload, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, payload, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -447,9 +419,10 @@ class UserManagementAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.limit_search]`` {bool}: Limits the search to match against the department name only.
-                ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
+                ``[query_params.search]`` {str}: Search string used to match against an admin/auditor user's Login ID or Name.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                                                    The default size is 100, but the maximum size is 1000.
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
 
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`
@@ -457,45 +430,47 @@ class UserManagementAPI(APIClient):
                 ``[query_params.sort_order]`` {str}: Sorts the order of departments based on available values
 
                     Supported Values: `asc`, `desc`, `rule_execution`
-     
+
         Returns:
             tuple: A tuple containing (list of AdminUser instances, Response, error)
 
         Examples:
-            List departments using default settings:
+            List of departments:
 
-            >>> for department in zia.users.list_departments():
-            ...   print(department)
+            >>> fetched_department, response, error = client.zia.user_management.get_department()
+            ... if error:
+            ...     print(f"Error fetching department by ID: {error}")
+            ...     return
+            ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
 
-            List departments, limiting to a maximum of 10 items:
+            Search specific department by name:
 
-            >>> for department in zia.users.list_departments(max_items=10):
-            ...    print(department)
-
-            List departments, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
-            ...    print(department)
+            >>> fetched_department, response, error = client.zia.user_management.get_department(
+                query_params={'search': 'Finance'})
+            ... if error:
+            ...     print(f"Error fetching department by ID: {error}")
+            ...     return
+            ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /departments
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, UserManagement)
+        response, error = self._request_executor.execute(request, UserManagement)
 
         if error:
             return (None, response, error)
@@ -503,9 +478,7 @@ class UserManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(UserManagement(
-                    self.form_response_body(item))
-                )
+                result.append(UserManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -525,30 +498,28 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /departments/{department_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, Department)
+        response, error = self._request_executor.execute(request, Department)
 
         if error:
             return (None, response, error)
 
         try:
-            result = Department(
-                self.form_response_body(response.get_body())
-            )
+            result = Department(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -568,30 +539,28 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /departments/lite/{department_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, Department)
+        response, error = self._request_executor.execute(request, Department)
 
         if error:
             return (None, response, error)
 
         try:
-            result = Department(
-                self.form_response_body(response.get_body())
-            )
+            result = Department(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -617,8 +586,7 @@ class UserManagementAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -627,15 +595,12 @@ class UserManagementAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, Department)
+        response, error = self._request_executor.execute(request, Department)
         if error:
             return (None, response, error)
 
         try:
-            result = Department(
-                self.form_response_body(response.get_body())
-            )
+            result = Department(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -651,29 +616,26 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the updated Department, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /departments/{department_id}
         """
         )
-        
+
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, Department)
+        response, error = self._request_executor.execute(request, Department)
         if error:
             return (None, response, error)
 
         try:
-            result = Department(
-                self.form_response_body(response.get_body())
-            )
+            result = Department(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -687,22 +649,30 @@ class UserManagementAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Example:
+            Delete department:
+
+            >>> _, _, error = client.zia.user_management.delete_department('554458')
+            ... if error:
+            ...     print(f"Error deleting department: {error}")
+            ...     return
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /departments/{deparment_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
@@ -713,10 +683,11 @@ class UserManagementAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to partially match against an admin/auditor user's Login ID or Name.
+                ``[query_params.search]`` {str}: Search string used to match against an admin/auditor user's Login ID or Name
                 ``[query_params.defined_by]`` {str}: The string value defined by the group name or other applicable attributes
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                                                    The default size is 100, but the maximum size is 1000.
                 ``[query_params.sort_by]`` {str}: Sorts the departments based on available values.
 
                     Supported Values: `id`, `name`, `expiry`, `status`, `external_id`, `rank`, `mod_time`
@@ -746,23 +717,23 @@ class UserManagementAPI(APIClient):
 
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /groups
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
-        response, error = self._request_executor\
-            .execute(request, Groups)
+        response, error = self._request_executor.execute(request, Groups)
 
         if error:
             return (None, response, error)
@@ -770,9 +741,7 @@ class UserManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(Groups(
-                    self.form_response_body(item)
-                    ))
+                result.append(Groups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -788,34 +757,35 @@ class UserManagementAPI(APIClient):
             :obj:`Tuple`: The user group resource record.
 
         Examples:
-            >>> user_group = zia.users.get_group('99999')
-
+            >>> fetched_department, _, error = client.zia.user_management.get_group('545225')
+            ... if error:
+            ...     print(f"Error fetching department by ID: {error}")
+            ...     return
+            ... print(f"Fetched department by ID: {fetched_department.as_dict()}")
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """)
+        """
+        )
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, Groups)
+        response, error = self._request_executor.execute(request, Groups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = Groups(
-                self.form_response_body(response.get_body())
-            )
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -827,10 +797,11 @@ class UserManagementAPI(APIClient):
         Args:
             query_params (dict, optional): Map of query parameters for the request.
 
-                - ``limit_search`` (bool, optional): Limits the search to match against the department name only.
-                - ``search`` (str, optional): The search string used to partially match against an admin/auditor user's Login ID or Name.
+                - ``limit_search`` (bool, optional): Limits the search to match against the department name only
+                - ``search`` (str, optional): Search string used to match against an admin/auditor user's Login ID or Name
                 - ``page`` (int, optional): Specifies the page offset.
-                - ``page_size`` (int, optional): Specifies the page size. The default size is 100, but the maximum size is 1000.
+                - ``page_size`` (int, optional): Specifies the page size.
+                                                The default size is 100, but the maximum size is 1000.
                 - ``sort_by`` (str, optional): Sorts the departments based on available values.
 
                     Supported Values: ``id``, ``name``, ``expiry``, ``status``, ``external_id``, ``rank``
@@ -846,32 +817,30 @@ class UserManagementAPI(APIClient):
             >>> user_group = zia.users.get_group('99999')
         """
         http_method = "get".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /groups/lite
-        """)
+        """
+        )
 
         query_params = query_params or {}
 
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, Groups)
+        response, error = self._request_executor.execute(request, Groups)
 
         if error:
             return (None, response, error)
 
         try:
-            result = Groups(
-                self.form_response_body(response.get_body())
-            )
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -897,8 +866,7 @@ class UserManagementAPI(APIClient):
 
         body = kwargs
 
-        request, error = self._request_executor\
-            .create_request(
+        request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
@@ -907,15 +875,12 @@ class UserManagementAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, Groups)
+        response, error = self._request_executor.execute(request, Groups)
         if error:
             return (None, response, error)
 
         try:
-            result = Groups(
-                self.form_response_body(response.get_body())
-            )
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -931,28 +896,26 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the updated Group, response, and error.
         """
         http_method = "put".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """)
+        """
+        )
         body = {}
 
         body.update(kwargs)
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request, Groups)
+        response, error = self._request_executor.execute(request, Groups)
         if error:
             return (None, response, error)
 
         try:
-            result = Groups(
-                self.form_response_body(response.get_body())
-            )
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -968,27 +931,27 @@ class UserManagementAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
         """
         http_method = "delete".upper()
-        api_url = format_url(f"""
+        api_url = format_url(
+            f"""
             {self._zia_base_endpoint}
             /groups/{group_id}
-        """)
+        """
+        )
 
         params = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)
 
     def list_auditors(self, query_params=None) -> tuple:
         """
-        Returns the list of users.
+        Returns the list of auditor users.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
@@ -996,26 +959,20 @@ class UserManagementAPI(APIClient):
                 ``[query_params.group]`` {str}: Filters by group name. This is a `starts with` match.
                 ``[query_params.name]`` {str}: Filters by user name. This is a `starts with` match.
                 ``[query_params.page]`` {int}: Specifies the page offset.
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                                                    The default size is 100, but the maximum size is 1000.
 
         Returns:
             tuple: A tuple containing (list of UserManagement instances, Response, error)
 
-        Examples:
-            List users using default settings:
+        Example:
+            List all auditor users:
 
-            >>> for user in zia.users.list_auditors():
-            ...    print(user)
-
-            List users, limiting to a maximum of 10 items:
-
-            >>> for user in zia.users.list_auditors(max_items=10):
-            ...    print(user)
-
-            List users, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for user in zia.users.list_auditors(page_size=200, max_pages=2):
-            ...    print(user)
+            >>> user_list, response, error = zia.user_management.list_rules(
+            ...    query_params={'page': 1, "page_size": 10}
+            ... )
+            >>> for user in user_list:
+            ...    print(user.as_dict())
 
         """
         http_method = "get".upper()
@@ -1030,14 +987,12 @@ class UserManagementAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -1045,9 +1000,7 @@ class UserManagementAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(UserManagement(
-                    self.form_response_body(item))
-                )
+                result.append(UserManagement(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 

@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
+
 class DLPICAPServer(ZscalerObject):
     """
     A class representing DLP ICAP Server objects.
@@ -48,37 +49,8 @@ class DLPICAPServer(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-        
-    def __init__(self, config=None):
-        super().__init__(config)
-        if config:
-            self.id = config["id"] if "id" in config else None
-            self.name = config["name"] if "name" in config else None
-            self.url = config["url"] if "url" in config else None
-            self.status = config["status"] if "status" in config else None
-            self.flags = config["flags"] if "flags" in config else None
-        else:
-            self.id = None
-            self.name = None
-            self.url = None
-            self.status = None
-            self.flags = None
 
-    def request_format(self):
-        """
-        Return the object as a dictionary in the format expected for API requests.
-        """
-        parent_req_format = super().request_format()
-        current_obj_format = {
-            "id": self.id,
-            "name": self.name,
-            "url": self.url,
-            "status": self.status,
-            "flags": self.flags,
-        }
-        parent_req_format.update(current_obj_format)
-        return parent_req_format
-        
+
 class DLPIDMProfile(ZscalerObject):
     """
     A class representing DLP IDM Profile objects.
@@ -143,7 +115,8 @@ class DLPIDMProfile(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-        
+
+
 class DLPEDMSchema(ZscalerObject):
     """
     A class representing DLP EDM Schema objects.
@@ -166,7 +139,7 @@ class DLPEDMSchema(ZscalerObject):
             self.created_by = config["createdBy"] if "createdBy" in config else None
             self.cells_used = config["cellsUsed"] if "cellsUsed" in config else None
             self.schema_active = config["schemaActive"] if "schemaActive" in config else None
-            
+
             # Handling the tokenList using ZscalerCollection
             self.token_list = ZscalerCollection.form_list(config.get("tokenList", []), dict)
 

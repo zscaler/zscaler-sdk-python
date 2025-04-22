@@ -89,7 +89,7 @@ def fs():
 #                 credential_id=credential_id,
 #                 query_params={
 #                     "microtenant_id": "0",
-#                     "target_microtenant_id": microtenant_id 
+#                     "target_microtenant_id": microtenant_id
 #                 }
 #             )
 #             assert err is None, f"Error moving PRA Credential to Microtenant ID {microtenant_id}: {err}"

@@ -13,6 +13,7 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
+
 import pytest
 
 from tests.integration.zpa.conftest import MockZPAClient
@@ -44,7 +45,7 @@ class TestTrustedNetworks:
                 assert network_id is not None, "Trusted network ID should not be None"
         except Exception as exc:
             errors.append(f"Listing trusted networks failed: {str(exc)}")
-            
+
         if network_id:
             # Fetch the selected trusted network by its ID
             try:
@@ -54,6 +55,6 @@ class TestTrustedNetworks:
                 assert fetched_group.id == network_id, "Mismatch in trusted network ID"
             except Exception as exc:
                 errors.append(f"Fetching trusted network by ID failed: {str(exc)}")
-                 
+
         # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during trusted network operations test: {errors}"

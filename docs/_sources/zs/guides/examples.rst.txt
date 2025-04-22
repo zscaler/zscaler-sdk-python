@@ -6,7 +6,7 @@ Examples
 Example scripts
 ---------------
 
-There are several example scripts written as CLI programs in the 
+There are several example scripts written as CLI programs in the
 `examples directory <https://github.com/zscaler/zscaler-sdk-python/tree/master/examples>`_
 for both ZPA and ZIA interactions:
 

@@ -40,7 +40,7 @@ class TestSandboxRules:
         try:
             # Step 1: Retrieve department
             try:
-                departments, _, error = client.zia.user_management.list_departments(query_params={'search': 'A000'})
+                departments, _, error = client.zia.user_management.list_departments(query_params={"search": "A000"})
                 assert error is None, f"Department listing error: {error}"
                 department = next((d for d in departments if hasattr(d, "id")), None)
                 assert department, "No valid departments available for assignment"
@@ -50,7 +50,7 @@ class TestSandboxRules:
 
             # Step 2: Retrieve group
             try:
-                groups, _, error = client.zia.user_management.list_groups(query_params={'search': 'A000'})
+                groups, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
                 assert error is None, f"Group listing error: {error}"
                 group = next((g for g in groups if hasattr(g, "id")), None)
                 assert group, "No valid groups available for assignment"

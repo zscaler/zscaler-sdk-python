@@ -96,8 +96,7 @@ class SecretsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return None, None, error
 

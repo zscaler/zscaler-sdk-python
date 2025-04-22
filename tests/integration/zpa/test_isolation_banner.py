@@ -35,7 +35,7 @@ class TestCBIBanners:
         errors = []  # Initialize an empty list to collect errors
         banner_name = "tests-" + generate_random_string()
         banner_id = None
-        
+
         try:
             # Step 1: Create a new isolation banner
             created_banner, _, err = client.zpa.cbi_banner.add_cbi_banner(
@@ -82,7 +82,7 @@ class TestCBIBanners:
                     banner=True,
                     notification_title="Heads up, you've been redirected to Browser Isolation!",
                     notification_text="The website you were trying to access is now rendered in a fully isolated environment to protect you from malicious content.",
-                    )
+                )
                 assert err is None, f"Error updating banner: {err}"
                 assert updated_banner is not None, "Updated banner is None"
                 # assert updated_banner.name == updated_name, f"Expected updated name {updated_name}, but got {updated_banner.name}"

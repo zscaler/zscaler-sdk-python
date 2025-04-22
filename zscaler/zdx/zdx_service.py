@@ -21,13 +21,14 @@ from zscaler.zdx.devices import DevicesAPI
 from zscaler.zdx.inventory import InventoryAPI
 from zscaler.zdx.troubleshooting import TroubleshootingAPI
 from zscaler.zdx.users import UsersAPI
-        
+
+
 class ZDXService:
     """ZDX Service client, exposing various ZDX APIs."""
 
     def __init__(self, client):
         self._request_executor = client._request_executor
-        
+
     @property
     def admin(self):
         """
@@ -35,36 +36,36 @@ class ZDXService:
 
         """
         return AdminAPI(self._request_executor)
-    
+
     @property
     def alerts(self):
         """
         The interface object for the :ref:`ZDX Alerts interface <zdx-alerts>`.
-        
+
         """
         return AlertsAPI(self._request_executor)
-    
+
     @property
     def apps(self):
         """
         The interface object for the :ref:`ZDX Apps interface <zdx-apps>`.
-        
+
         """
         return AppsAPI(self._request_executor)
-    
+
     @property
     def devices(self):
         """
         The interface object for the :ref:`ZDX Devices interface <zdx-devices>`.
-        
+
         """
         return DevicesAPI(self._request_executor)
-    
+
     @property
     def inventory(self):
         """
         The interface object for the :ref:`ZDX Inventory interface <zdx-inventory>`.
-        
+
         """
         return InventoryAPI(self._request_executor)
 
@@ -72,7 +73,7 @@ class ZDXService:
     def troubleshooting(self):
         """
         The interface object for the :ref:`ZDX Troubleshooting interface <zdx-troubleshooting>`.
-        
+
         """
         return TroubleshootingAPI(self._request_executor)
 
@@ -80,6 +81,6 @@ class ZDXService:
     def users(self):
         """
         The interface object for the :ref:`ZDX Users interface <zdx-users>`.
-        
+
         """
         return UsersAPI(self._request_executor)

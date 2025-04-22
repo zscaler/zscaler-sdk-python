@@ -16,10 +16,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zpa.models import application_segment\
-    as application_segment
-from zscaler.zpa.models import app_connector_groups\
-    as app_connector_groups
+from zscaler.zpa.models import application_segment as application_segment
+from zscaler.zpa.models import app_connector_groups as app_connector_groups
 
 
 class ServerGroup(ZscalerObject):
@@ -30,34 +28,20 @@ class ServerGroup(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.id = config["id"]\
-                if "id" in config else None
-            self.modified_time = config["modifiedTime"]\
-                if "modifiedTime" in config else None
-            self.creation_time = config["creationTime"]\
-                if "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if "modifiedBy" in config else None
-            self.enabled = config["enabled"] \
-                if "enabled" in config else True
-            self.name = config["name"]\
-                if "name" in config else None
-            self.description = config["description"]\
-                if "description" in config else None
-            self.ip_anchored = config["ipAnchored"]\
-                if "ipAnchored" in config else None
-            self.config_space = config["configSpace"]\
-                if "configSpace" in config else None
-            self.weight = config["weight"]\
-                if "weight" in config else None
-            self.extranet_enabled = config["extranetEnabled"]\
-                if "extranetEnabled" in config else None
-            self.microtenant_id = config["microtenantId"]\
-                if "microtenantId" in config else None
-            self.microtenant_name = config["microtenantName"]\
-                if "microtenantName" in config else None
-            self.dynamic_discovery = config["dynamicDiscovery"] \
-                if "dynamicDiscovery" in config else True
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.enabled = config["enabled"] if "enabled" in config else True
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else None
+            self.config_space = config["configSpace"] if "configSpace" in config else None
+            self.weight = config["weight"] if "weight" in config else None
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else None
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.dynamic_discovery = config["dynamicDiscovery"] if "dynamicDiscovery" in config else True
 
             self.applications = ZscalerCollection.form_list(
                 config["applications"] if "applications" in config else [], application_segment.ApplicationSegment

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 
+
 class NWServiceGroupsAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
@@ -26,7 +27,7 @@ class NWServiceGroupsAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
+
     def list_network_svc_groups(
         self,
         query_params=None,
@@ -45,7 +46,7 @@ class NWServiceGroupsAPI(APIClient):
 
         Examples:
             Gets a list of all network services group.
-            
+
             >>> group_list, response, error = ztw.nw_service_groups.list_network_svc_groups():
             ... if error:
             ...     print(f"Error listing network services group: {error}")
@@ -53,9 +54,9 @@ class NWServiceGroupsAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-            
+
             Gets a list of all network services group.
-            
+
             >>> group_list, response, error = ztw.nw_service_groups.list_network_svc_groups(query_params={"search": 'Group01'}):
             ... if error:
             ...     print(f"Error listing network services group: {error}")
@@ -78,14 +79,12 @@ class NWServiceGroupsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor\
-            .create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor\
-            .execute(request)
+        response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
@@ -93,9 +92,7 @@ class NWServiceGroupsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(NetworkServiceGroups(
-                    self.form_response_body(item))
-                )
+                result.append(NetworkServiceGroups(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 

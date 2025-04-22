@@ -74,7 +74,7 @@ class TestApplicationSegment:
             # Create a Segment Group
             try:
                 segment_group_name = "tests-" + generate_random_string()
-                created_segment_group, _, err  = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
+                created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 segment_group_id = created_segment_group.id
             except Exception as exc:
@@ -94,7 +94,7 @@ class TestApplicationSegment:
                 server_group_id = created_server_group.id
             except Exception as exc:
                 errors.append(f"Creating Server Group failed: {exc}")
-                
+
             try:
                 app_segment_name = "tests-" + generate_random_string()
                 app_segment_description = "tests-" + generate_random_string()
@@ -114,7 +114,6 @@ class TestApplicationSegment:
                 app_segment_id = app_segment.id
             except Exception as exc:
                 errors.append(f"Creating Application Segment failed: {exc}")
-
 
             # Test listing Application Segments - Filter by the unique name
             try:
@@ -141,7 +140,7 @@ class TestApplicationSegment:
                         name=updated_name,
                         description="UpdatedDescription " + generate_random_string(),
                         enabled=True,
-                        domain_names=["test.example.com"],  
+                        domain_names=["test.example.com"],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
                         tcp_port_ranges=["8081", "8081"],
@@ -156,7 +155,6 @@ class TestApplicationSegment:
             except Exception as exc:
                 errors.append(f"Updating Application Segment failed: {exc}")
 
-
         finally:
             # Cleanup resources
             if app_segment_id:
@@ -164,7 +162,7 @@ class TestApplicationSegment:
                     client.zpa.application_segment.delete_segment(segment_id=app_segment_id, force_delete=True)
                 except Exception as exc:
                     errors.append(f"Deleting Application Segment failed: {exc}")
-                    
+
             if server_group_id:
                 try:
                     client.zpa.server_groups.delete_group(group_id=server_group_id)

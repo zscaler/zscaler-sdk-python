@@ -25,22 +25,14 @@ class CloudConnectorGroup(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.creation_time = config["creationTime"]\
-                if config and "creationTime" in config else None
-            self.modified_by = config["modifiedBy"]\
-                if config and "modifiedBy" in config else None
-            self.id = config["id"]\
-                if config and "id" in config else None
-            self.name = config["name"]\
-                if config and "name" in config else None
-            self.enabled = config["enabled"]\
-                if config and "enabled" in config else True
-            self.description = config["description"]\
-                if config and "description" in config else None
-            self.zia_cloud = config["ziaCloud"]\
-                if config and "ziaCloud" in config else None
-            self.zia_org_id = config["ziaOrgId"]\
-                if config and "ziaOrgId" in config else None
+            self.creation_time = config["creationTime"] if config and "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
+            self.id = config["id"] if config and "id" in config else None
+            self.name = config["name"] if config and "name" in config else None
+            self.enabled = config["enabled"] if config and "enabled" in config else True
+            self.description = config["description"] if config and "description" in config else None
+            self.zia_cloud = config["ziaCloud"] if config and "ziaCloud" in config else None
+            self.zia_org_id = config["ziaOrgId"] if config and "ziaOrgId" in config else None
         else:
             self.creation_time = None
             self.modified_by = None
