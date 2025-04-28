@@ -148,15 +148,14 @@ class RiskProfilesAPI(APIClient):
             tuple: A tuple containing (Risk Profile instance, Response, error).
             
         Examples:
-            List risk profile :
+            Print a specific Risk Profile
 
-            >>> profile_list, _, error = client.zia.risk_profiles.get_risk_profile_lite()
+            >>> fetched_profile, _, error = client.zia.risk_profiles.get_risk_profile(
+                '1254654')
             >>> if error:
-            ...     print(f"Error listing profiles: {error}")
+            ...     print(f"Error fetching Risk Profile by ID: {error}")
             ...     return
-            ... print(f"Total profiles found: {len(profile_list)}")
-            ... for profile in profile_list:
-            ...     print(profile.as_dict())
+            ... print(f"Fetched Risk Profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(

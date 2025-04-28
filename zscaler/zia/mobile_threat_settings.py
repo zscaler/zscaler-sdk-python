@@ -134,17 +134,21 @@ class MobileAdvancedSettingsAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, MobileAdvancedThreatSettings)
+        response, error = self._request_executor.\
+            execute(request, MobileAdvancedThreatSettings)
         if error:
             return (None, response, error)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
-                result = MobileAdvancedThreatSettings(self.form_response_body(response.get_body()))
+                result = MobileAdvancedThreatSettings(
+                    self.form_response_body(response.get_body())
+                )
             else:
                 result = MobileAdvancedThreatSettings()
         except Exception as error:

@@ -42,25 +42,25 @@ class CloudApplicationInstancesAPI(APIClient):
                 ``[query_params.instance_type]`` {bool}: The cloud application instance type
                     Supported values: `SHAREPOINTONLINE`, `ONEDRIVE`, `BOXNET`, `OKTA`, `APPSPACE`,
                         `BITBUCKET`, `GITHUB`, `SLACK`, `QUICK_BASE`, `ZEPLIN`, `SOURCEFORGE`, `ZOOM`,
-                        `WORKDAY`, `GDRIVE`, `GOOGLE_WEBMAIL`, `WINDOWS_LIVE_HOTMAIL`, `MSTEAM"
+                        `WORKDAY`, `GDRIVE`, `GOOGLE_WEBMAIL`, `WINDOWS_LIVE_HOTMAIL`, `MSTEAM`
 
                 ``[query_params.page]`` (int): Specifies the page offset.
 
-                ``[query_params.page_size]`` (int): Specifies the page size. The default size is 255.
+                ``[query_params.page_size]`` (int): Specifies the page size.
 
         Returns:
-            tuple: A tuple containing (list of Device Group instances, Response, error)
+            tuple: A tuple containing (list of Cloud application instances, Response, error)
 
         Examples:
-            Print all device groups
+            Print all Cloud application instances
 
-            >>> for device group in zia.device_management.list_device_groups():
-            ...    pprint(device)
-
-            Print Device Groups that match the name or description 'Windows'
-
-            >>> pprint(zia.device_management.list_device_groups('Windows'))
-
+            >>> instance_list, _, error = client.zia.cloud_app_instances.list_cloud_app_instances()
+            >>> if error:
+            ...     print(f"Error listing cloud application instances: {error}")
+            ...     return
+            ... print(f"Total cloud application instances found: {len(instance_list)}")
+            ... for app in instance_list:
+            ...     print(app.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -104,6 +104,16 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (cloud application instance, Response, error).
+            
+        Examples:
+            Print a specific Cloud application instances
+
+            >>> fetched_instance, _, error = client.zia.cloud_app_instances.get_cloud_app_instances(
+                '1254654')
+            >>> if error:
+            ...     print(f"Error fetching cloud application instance by ID: {error}")
+            ...     return
+            ... print(f"Fetched cloud application instance by ID: {fetched_instance.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -140,22 +150,41 @@ class CloudApplicationInstancesAPI(APIClient):
         Add a new cloud application instance.
 
         Args:
-            instance_id(str): Cloud application instance ID
-            instance_type (str): Cloud application instance type
-                Supported Values: `SHAREPOINTONLINE`, `ONEDRIVE`, `BOXNET`, `OKTA`,
-                    `APPSPACE`, `BITBUCKET`, `GITHUB`, `SLACK`, `QUICK_BASE`,
-                    `ZEPLIN`, `SOURCEFORGE`, `ZOOM`, `WORKDAY`, `GDRIVE`,
-                    `GOOGLE_WEBMAIL`, `WINDOWS_LIVE_HOTMAIL`, `MSTEAM`
-
-            instance_name (str): Cloud application instance name
-            instance_identifiers (list): List of cloud application instance identifiers
-                instance_identifier (str): Cloud application instance identifier, such as URL, IP address, or keyword.
-                instance_identifier_name (str): Name of the cloud application instance identifier
-                instance_type (str): Type of the cloud application instance identifier
-                    Supported Values: `URL`, `REFURL`, `KEYWORD`
+            instance_id (str): Cloud application instance ID.
+            instance_type (str): Cloud application instance type.
+                Supported values: SHAREPOINTONLINE, ONEDRIVE, BOXNET, OKTA, APPSPACE,
+                BITBUCKET, GITHUB, SLACK, QUICK_BASE, ZEPLIN, SOURCEFORGE, ZOOM,
+                WORKDAY, GDRIVE, GOOGLE_WEBMAIL, WINDOWS_LIVE_HOTMAIL, MSTEAM.
+            instance_name (str): Cloud application instance name.
+            instance_identifiers (list): List of instance identifiers. Each identifier must include:
+                * instance_identifier (str): URL, IP address, or keyword.
+                * instance_identifier_name (str): Name of the identifier.
+                * instance_type (str): Type of identifier (URL, REFURL, or KEYWORD).
 
         Returns:
-            tuple: A tuple containing the newly added cloud application instance, response, and error.
+            tuple: A tuple containing:
+                - CloudApplicationInstances: The newly added instance.
+                - Response: The raw API response object.
+                - Error: An error message, if applicable.
+
+        Examples:
+            Add a new cloud application instance
+
+            >>> added_instance, _, error = client.zia.cloud_app_instances.add_cloud_app_instances(
+            ...     instance_name=f"Instance01_{random.randint(1000, 10000)}",
+            ...     instance_type='SHAREPOINTONLINE',
+            ...     instance_identifiers=[
+            ...         {
+            ...             "instance_identifier_name": 'instance01',
+            ...             "instance_identifier": 'instance01.sharepoint.com',
+            ...             "identifier_type": 'URL',
+            ...         }
+            ...     ]
+            ... )
+            >>> if error:
+            ...     print(f"Error adding cloud application instance: {error}")
+            ...     return
+            ... print(f"cloud application instance added successfully: {added_instance.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -198,6 +227,26 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated cloud application instance, response, and error.
+            
+        Examples:
+            Update a cloud application instance
+
+            >>> updated_instance, _, error = client.zia.cloud_app_instances.add_cloud_app_instances(
+            ...     instance_id='458554'
+            ...     instance_name=f"Instance01_{random.randint(1000, 10000)}",
+            ...     instance_type='SHAREPOINTONLINE',
+            ...     instance_identifiers=[
+            ...         {
+            ...             "instance_identifier_name": 'instance01',
+            ...             "instance_identifier": 'instance01.sharepoint.com',
+            ...             "identifier_type": 'URL',
+            ...         }
+            ...     ]
+            ... )
+            >>> if error:
+            ...     print(f"Error updating cloud application instance: {error}")
+            ...     return
+            ... print(f"cloud application instance updated successfully: {updated_instance.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -237,6 +286,16 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+            
+        Examples:
+            Delete a specific Cloud application instances
+
+            >>> _, _, error = client.zia.cloud_app_instances.delete_cloud_app_instances(
+                '1254654')
+            >>> if error:
+            ...     print(f"Error deleting cloud application instance: {error}")
+            ...     return
+            ... print(f"cloud application instance with ID {'1254654'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
