@@ -51,18 +51,14 @@ class RuleLabelsAPI(APIClient):
         Examples:
             List Rule Labels using default settings:
 
-            >>> for label in zia.labels.list_labels():
-            ...   print(label)
-
-            List labels, limiting to a maximum of 10 items:
-
-            >>> for label in zia.labels.list_labels(max_items=10):
-            ...    print(label)
-
-            List labels, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for label in zia.labels.list_labels(page_size=200, max_pages=2):
-            ...    print(label)
+            >>> label_list, _, error = client.zia.rule_labels.list_labels(
+                query_params={'search': updated_label.name})
+            >>> if error:
+            ...     print(f"Error listing labels: {error}")
+            ...     return
+            ... print(f"Total labels found: {len(label_list)}")
+            ... for label in label_list:
+            ...     print(label.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -77,7 +73,8 @@ class RuleLabelsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -136,8 +133,11 @@ class RuleLabelsAPI(APIClient):
         Creates a new ZIA Rule Label.
 
         Args:
-            label (dict or object):
-                The label data to be sent in the request.
+            name (str): The name of the Proxy.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            description (str): Additional notes or information
 
         Returns:
             tuple: A tuple containing the newly added Rule Label, response, and error.

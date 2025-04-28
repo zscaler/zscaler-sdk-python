@@ -23,8 +23,11 @@ from zscaler.zia.admin_users import AdminUsersAPI
 from zscaler.zia.apptotal import AppTotalAPI
 from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
+from zscaler.zia.bandwidth_classes import BandwidthClassesAPI
+from zscaler.zia.bandwidth_control_rules import BandwidthControlRulesAPI
 from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.cloud_applications import CloudApplicationsAPI
+from zscaler.zia.cloud_app_instances import CloudApplicationInstancesAPI
 from zscaler.zia.cloud_nss import CloudNSSAPI
 from zscaler.zia.cloud_browser_isolation import CBIProfileAPI
 from zscaler.zia.sandbox import CloudSandboxAPI
@@ -41,12 +44,15 @@ from zscaler.zia.cloud_firewall_ips import FirewallIPSRulesAPI
 from zscaler.zia.cloud_firewall_rules import FirewallPolicyAPI
 from zscaler.zia.cloud_firewall import FirewallResourcesAPI
 from zscaler.zia.forwarding_control import ForwardingControlAPI
+from zscaler.zia.ftp_control_policy import FTPControlPolicyAPI
 from zscaler.zia.ipv6_config import TrafficIPV6ConfigAPI
 from zscaler.zia.malware_protection_policy import MalwareProtectionPolicyAPI
 from zscaler.zia.locations import LocationsAPI
 from zscaler.zia.organization_information import OrganizationInformationAPI
 from zscaler.zia.pac_files import PacFilesAPI
 from zscaler.zia.policy_export import PolicyExportAPI
+from zscaler.zia.proxies import ProxiesAPI
+from zscaler.zia.risk_profiles import RiskProfilesAPI
 from zscaler.zia.remote_assistance import RemoteAssistanceAPI
 from zscaler.zia.rule_labels import RuleLabelsAPI
 from zscaler.zia.sandbox_rules import SandboxRulesAPI
@@ -65,7 +71,13 @@ from zscaler.zia.zpa_gateway import ZPAGatewayAPI
 from zscaler.zia.sub_clouds import SubCloudsAPI
 from zscaler.zia.system_audit import SystemAuditReportAPI
 from zscaler.zia.iot_report import IOTReportAPI
-
+from zscaler.zia.mobile_threat_settings import MobileAdvancedSettingsAPI
+from zscaler.zia.dns_gatways import DNSGatewayAPI
+from zscaler.zia.alert_subscriptions import AlertSubscriptionsAPI
+from zscaler.zia.tenancy_restriction_profile import TenancyRestrictionProfileAPI
+from zscaler.zia.time_intervals import TimeIntervalsAPI
+from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
+from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
@@ -477,3 +489,120 @@ class ZIAService:
         """
 
         return IOTReportAPI(self._request_executor)
+
+    @property
+    def mobile_threat_settings(self):
+        """
+        The interface object for the :ref:`ZIA Mobile Threat Settings interface <zia-mobile_threat_settings>`.
+
+        """
+
+        return MobileAdvancedSettingsAPI(self._request_executor)
+    
+    @property
+    def dns_gatways(self):
+        """
+        The interface object for the :ref:`ZIA DNS Gateway interface <zia-dns_gatways>`.
+
+        """
+
+        return DNSGatewayAPI(self._request_executor)
+    
+    @property
+    def alert_subscriptions(self):
+        """
+        The interface object for the :ref:`ZIA Alert Subscriptions interface <zia-alert_subscriptions>`.
+
+        """
+
+        return AlertSubscriptionsAPI(self._request_executor)
+    
+    @property
+    def bandwidth_classes(self):
+        """
+        The interface object for the :ref:`ZIA Bandwidth Classes interface <zia-bandwidth_classes>`.
+
+        """
+
+        return BandwidthClassesAPI(self._request_executor)
+    
+    @property
+    def bandwidth_control_rules(self):
+        """
+        The interface object for the :ref:`ZIA Bandwidth Control Rule interface <zia-bandwidth_control_rules>`.
+
+        """
+
+        return BandwidthControlRulesAPI(self._request_executor)
+    
+    @property
+    def risk_profiles(self):
+        """
+        The interface object for the :ref:`ZIA Risk Profiles interface <zia-risk_profiles>`.
+
+        """
+
+        return RiskProfilesAPI(self._request_executor)
+    
+    @property
+    def cloud_app_instances(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Application Instances interface <zia-cloud_app_instances>`.
+
+        """
+
+        return CloudApplicationInstancesAPI(self._request_executor)
+    
+    @property
+    def tenancy_restriction_profile(self):
+        """
+        The interface object for the :ref:`ZIA Tenant Restriction Profile interface <zia-tenancy_restriction_profile>`.
+
+        """
+
+        return TenancyRestrictionProfileAPI(self._request_executor)
+
+    @property
+    def time_intervals(self):
+        """
+        The interface object for the :ref:`ZIA Time Intervals interface <zia-time_intervals>`.
+
+        """
+
+        return TimeIntervalsAPI(self._request_executor)
+    
+    @property
+    def ftp_control_policy(self):
+        """
+        The interface object for the :ref:`ZIA FTP Control Policy interface <zia-ftp_control_policy>`.
+
+        """
+
+        return FTPControlPolicyAPI(self._request_executor)
+    
+    @property
+    def proxies(self):
+        """
+        The interface object for the :ref:`ZIA Proxies interface <zia-proxies>`.
+
+        """
+
+        return ProxiesAPI(self._request_executor)
+    
+    @property
+    def dedicated_ip_gateways(self):
+        """
+        The interface object for the :ref:`ZIA Dedicated IP Gateways interface <zia-dedicated_ip_gateways>`.
+
+        """
+
+        return DedicatedIPGatewaysAPI(self._request_executor)
+    
+    @property
+    def traffic_datacenters(self):
+        """
+        The interface object for the :ref:`ZIA Traffic Datacenters interface <zia-traffic_datacenters>`.
+
+        """
+
+        return TrafficDatacentersAPI(self._request_executor)

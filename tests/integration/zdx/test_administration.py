@@ -30,8 +30,8 @@ class TestAdministration:
     Integration Tests for the administration
     """
 
-    def test_list_departments(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_departments(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -50,8 +50,8 @@ class TestAdministration:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_locations(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_locations(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:

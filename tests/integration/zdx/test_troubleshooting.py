@@ -144,8 +144,8 @@ class TestTroubleshooting:
 
     #     assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_deeptrace_webprobe_metrics(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_deeptrace_webprobe_metrics(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -189,8 +189,8 @@ class TestTroubleshooting:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_deeptrace_cloudpath_metrics(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_deeptrace_cloudpath_metrics(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -234,8 +234,8 @@ class TestTroubleshooting:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_deeptrace_health_metrics(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_deeptrace_health_metrics(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -279,8 +279,8 @@ class TestTroubleshooting:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_deeptrace_events(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_deeptrace_events(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -322,8 +322,8 @@ class TestTroubleshooting:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_deeptrace_top_processes(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_deeptrace_top_processes(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:

@@ -165,7 +165,6 @@ class TrafficExtranetAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
@@ -176,6 +175,7 @@ class TrafficExtranetAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    # Needs to file a bug as method is returning 405 Error
     def update_extranet(self, extranet_id: int, **kwargs) -> tuple:
         """
         Updates information for the specified ZIA Extranet.
@@ -193,16 +193,13 @@ class TrafficExtranetAPI(APIClient):
             /extranet/{extranet_id}
         """
         )
-        body = {}
+        body = kwargs.copy()
+        body["id"] = extranet_id
 
-        body.update(kwargs)
-
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)

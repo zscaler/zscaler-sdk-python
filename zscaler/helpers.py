@@ -50,6 +50,9 @@ def to_snake_case(string):
         "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories": "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories",
         "endPointDLPLogType": "end_point_dlp_log_type",
         "emailDLPLogType": "email_dlp_log_type",
+        "extranetDNSList": "extranet_dns_list",
+        "primaryDNSServer": "primary_dns_server",
+        "secondaryDNSServer": "secondary_dns_server",
     }
 
     if string in FIELD_EXCEPTIONS:
@@ -108,6 +111,9 @@ def to_lower_camel_case(string):
         "dns_resolution_on_transparent_proxy_ipv6_exempt_url_categories": "dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories",
         "end_point_dlp_log_type": "endPointDLPLogType",
         "email_dlp_log_type": "emailDLPLogType",
+        "extranet_dns_list": "extranetDNSList",
+        "primary_dns_server": "primaryDNSServer",
+        "secondary_dns_server": "secondaryDNSServer",
     }
 
     if string in FIELD_EXCEPTIONS:

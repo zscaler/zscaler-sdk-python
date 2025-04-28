@@ -26,7 +26,7 @@ from zscaler.zia.models import rule_labels as rule_labels
 from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
-
+from zscaler.zia.models import common
 
 class FileTypeControlRules(ZscalerObject):
     """
@@ -59,7 +59,6 @@ class FileTypeControlRules(ZscalerObject):
             self.state = config["state"] if "state" in config else None
             self.rank = config["rank"] if "rank" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.access_control = config["accessControl"] if "accessControl" in config else None
             self.name = config["name"] if "name" in config else None
 
@@ -98,6 +97,17 @@ class FileTypeControlRules(ZscalerObject):
             self.zpa_app_segments = ZscalerCollection.form_list(
                 config["zpaAppSegments"] if "zpaAppSegments" in config else [], common_reference.ResourceReference
             )
+
+            # Handle nested CommonBlocks for last_modified_by
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
 
         else:
             self.id = None

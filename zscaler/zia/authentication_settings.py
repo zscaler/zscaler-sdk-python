@@ -249,10 +249,10 @@ class AuthenticationSettingsAPI(APIClient):
               provide the password to new end users.
             - saml_enabled (bool): Whether or not to authenticate users using SAML Single Sign-On.
             - kerberos_enabled (bool): Whether or not to authenticate users using Kerberos.
-            - kerberos_pwd (str): Read-only. Can only be set through the generateKerberosPassword API.
+            - kerberos_pwd (str): Read-only. Can only be set through the generate KerberosPassword API.
             - auth_frequency (str): How frequently users are required to authenticate (e.g., cookie
               expiration duration).
-            - auth_custom_frequency (int): Custom frequency in days for authentication. Valid range: 1–180.
+            - auth_custom_frequency (int): Custom frequency in days for authentication. Valid range: 1-180.
             - password_strength (str): Password strength for form-based authentication.
               Supported values: NONE, MEDIUM, STRONG.
             - password_expiry (str): Password expiration for hosted DB users.

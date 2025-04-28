@@ -17,7 +17,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.forwarding_control_policy import ForwardingControlRule
-from zscaler.zia.models.proxy_gatways import ProxyGatways
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 
 
@@ -429,45 +428,3 @@ class ForwardingControlAPI(APIClient):
             return (None, response, error)
 
         return (None, response, None)
-
-    def get_proxy_gateways(self) -> tuple:
-        """
-        Retrieves a list of Proxy Gateways.
-
-        Returns:
-            tuple: A tuple containing:
-                N/A
-
-        Examples:
-            >>> proxy, response, err = client.zia.forwarding_control.get_proxy_gateways()
-
-        """
-
-        http_method = "get".upper()
-        api_url = format_url(
-            f"""
-            {self._zia_base_endpoint}
-            /proxyGateways
-        """
-        )
-
-        body = {}
-        headers = {}
-
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
-        if error:
-            return None
-
-        response, error = self._request_executor.execute(request)
-        if error:
-            return None
-
-        try:
-            result = []
-            for item in response.get_results():
-                result.append(ProxyGatways(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-
-        return (result, response, None)
