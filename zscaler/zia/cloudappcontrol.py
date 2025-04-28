@@ -60,23 +60,20 @@ class CloudAppControlAPI(APIClient):
             """
         )
 
-        # Prepare request payload
         body = {"cloudApps": cloud_apps}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, {})
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
         try:
-            # Since the API returns a list, no need for `.get()`
             result = response.get_body()
             if not isinstance(result, list):
                 raise ValueError("Unexpected response format: Expected a list.")
@@ -120,17 +117,15 @@ class CloudAppControlAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
@@ -139,7 +134,9 @@ class CloudAppControlAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudApplicationControl(self.form_response_body(item)))
+                result.append(
+                    CloudApplicationControl(self.form_response_body(item))
+                )
         except Exception as error:
             return (None, response, error)
 
@@ -216,19 +213,17 @@ class CloudAppControlAPI(APIClient):
         body = {}
         headers = {}
 
-        # Create the reques
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response
         try:
             result = self.form_response_body(response.get_body())
         except Exception as error:

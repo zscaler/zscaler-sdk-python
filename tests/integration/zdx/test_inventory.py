@@ -29,8 +29,8 @@ class TestInventory:
     Integration Tests for the inventory
     """
 
-    def test_list_softwares(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_softwares(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -48,8 +48,8 @@ class TestInventory:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_software_keys(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_software_keys(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:

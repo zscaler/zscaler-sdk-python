@@ -29,8 +29,8 @@ class TestDevices:
     Integration Tests for the devices
     """
 
-    def test_list_devices(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_devices(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -48,8 +48,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_device(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_device(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -84,8 +84,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_device_apps(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_device_apps(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -120,8 +120,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_device_apps(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_device_apps(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -176,8 +176,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_cloudpath_probes(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_cloudpath_probes(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -232,8 +232,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_call_quality_metrics(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_call_quality_metrics(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -288,8 +288,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_health_metrics(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_health_metrics(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -318,8 +318,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_events(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_events(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -354,8 +354,8 @@ class TestDevices:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_geolocations(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_geolocations(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:

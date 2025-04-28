@@ -31,6 +31,7 @@ class SystemAuditReportAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
+    # Returning {"code":"RBA_LIMITED","message":"Functional scope restriction requires Reports"}
     def get_config_audit(self, query_params=None) -> tuple:
         """
         Retrieves the System Audit Report.

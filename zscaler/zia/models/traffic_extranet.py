@@ -35,9 +35,12 @@ class TrafficExtranet(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] if "id" in config else None
-            self.name = config["name"] if "name" in config else None
-            self.description = config["description"] if "description" in config else None
+            self.id = config["id"] \
+                if "id" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.description = config["description"] \
+                if "description" in config else None
 
             self.extranet_dns_list = ZscalerCollection.form_list(
                 config["extranetDNSList"] if "extranetDNSList" in config else [], ExtranetDNSList

@@ -30,8 +30,8 @@ class TestApplications:
     Integration Tests for the applications
     """
 
-    def test_get_app(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_app(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
