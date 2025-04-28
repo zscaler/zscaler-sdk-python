@@ -96,6 +96,18 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Bandwidth Class instance, Response, error).
+            
+        Examples:
+            List Bandwidth Classes All:
+
+            >>> classes_list, _, error = client.zia.bandwidth_classes.list_bwd_class_lite(
+                query_params={'search': BWD_Classes01})
+            >>> if error:
+            ...     print(f"Error listing classes: {error}")
+            ...     return
+            ... print(f"Total Classes found: {len(classes_list)}")
+            ... for bwd in classes_list:
+            ...     print(bwd.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -135,6 +147,15 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Bandwidth Class instance, Response, error).
+            
+        Examples:
+            List Bandwidth Classes All:
+
+            >>> fetched_class, _, error = client.zia.bandwidth_classes.get_bwd_class(updated_class.id)
+            >>>     if error:   
+            ...         print(f"Error fetching class by ID: {error}")
+            ...         return
+            ...     print(f"Fetched class by ID: {fetched_class.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -175,6 +196,20 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added Bandwidth Class, response, and error.
+            
+        Examples:
+            Create Bandwidth Classes:
+
+            >>> added_class, _, error = client.zia.bandwidth_classes.add_bwd_class(
+            ...     name=f"NewBDW_{random.randint(1000, 10000)}",
+            ...     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
+            ...     urls=["chatgpt.com"],
+            ...     url_categories=["ADULT_THEMES", "ADULT_SEX_EDUCATION"],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding class: {error}")
+            ...     return
+            ... print(f"Class added successfully: {added_class.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -217,6 +252,21 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Bandwidth Class, response, and error.
+            
+        Examples:
+            Update Bandwidth Classes:
+
+            >>> updated_class, _, error = client.zia.bandwidth_classes.add_bwd_class(
+            ...     bwd_id='125245' 
+            ...     name=f"UpdateBDW_{random.randint(1000, 10000)}",
+            ...     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
+            ...     urls=["chatgpt.com"],
+            ...     url_categories=["ADULT_THEMES", "ADULT_SEX_EDUCATION"],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding class: {error}")
+            ...     return
+            ... print(f"Class added successfully: {updated_class.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -256,6 +306,15 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+            
+        Examples:
+            Delete a Bandwidth Classes:
+
+            >>> _, _, error = client.zia.bandwidth_classes.delete_bwd_class('125454')
+            >>>     if error:
+            ...         print(f"Error deleting class: {error}")
+            ...         return
+            ...     print(f"Class with ID {'125454'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

@@ -37,30 +37,21 @@ class TenancyRestrictionProfileAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
 
-                ``[query_params.instance_name]`` {str}: The restricted tenant profile name
-
-                ``[query_params.instance_type]`` {bool}: The restricted tenant profile type
-                    Supported values: `SHAREPOINTONLINE`, `ONEDRIVE`, `BOXNET`, `OKTA`, `APPSPACE`,
-                        `BITBUCKET`, `GITHUB`, `SLACK`, `QUICK_BASE`, `ZEPLIN`, `SOURCEFORGE`, `ZOOM`,
-                        `WORKDAY`, `GDRIVE`, `GOOGLE_WEBMAIL`, `WINDOWS_LIVE_HOTMAIL`, `MSTEAM"
-
-                ``[query_params.page]`` (int): Specifies the page offset.
-
-                ``[query_params.page_size]`` (int): Specifies the page size. The default size is 255.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
         Returns:
-            tuple: A tuple containing (list of Device Group instances, Response, error)
+            tuple: A tuple containing (list of Tenancy Restiction Profiles, Response, error)
 
         Examples:
-            Print all device groups
+            Print all Tenancy Restiction Profiles
 
-            >>> for device group in zia.device_management.list_device_groups():
-            ...    pprint(device)
-
-            Print Device Groups that match the name or description 'Windows'
-
-            >>> pprint(zia.device_management.list_device_groups('Windows'))
-
+            >>> profile_list, _, error = client.zia.tenancy_restriction_profile.list_restriction_profile()
+            >>> if error:
+            ...     print(f"Error listing Tenancy Restiction Profiles: {error}")
+            ...     return
+            ... print(f"Total Tenancy Restiction Profiles found: {len(profile_list)}")
+            ... for profile in profile_list:
+            ...     print(profile.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -110,6 +101,16 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (restricted tenant profile, Response, error).
+            
+        Examples:
+            Print a specific Tenancy Restriction Profile
+
+            >>> fetched_profile, _, error = client.zia.tenancy_restriction_profile.get_restriction_profile(
+                '1254654')
+            >>> if error:
+            ...     print(f"Error fetching Tenancy Restriction Profile by ID: {error}")
+            ...     return
+            ... print(f"Fetched Tenancy Restriction Profile by ID: {fetched_profile.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -146,66 +147,74 @@ class TenancyRestrictionProfileAPI(APIClient):
         Creates restricted tenant profiles.
 
         Args:
-            id(str): restricted tenant profile ID
-            name (str): Tenant profile name
-            description (str): Additional information about the profile
+            id (str): Restricted tenant profile ID.
+            name (str): Tenant profile name.
+            description (str): Additional information about the profile.
+            app_type (str): Application type.
+                Supported values: `YOUTUBE`, `GOOGLE`, `MSLOGINSERVICES`, `SLACK`, `BOX`,
+                `FACEBOOK`, `AWS`, `DROPBOX`, `WEBEX_LOGIN_SERVICES`, `AMAZON_S3`,
+                `ZOHO_LOGIN_SERVICES`, `GOOGLE_CLOUD_PLATFORM`, `ZOOM`, `IBMSMARTCLOUD`,
+                `GITHUB`, `CHATGPT_AI`.
+            item_type_primary (str): Primary item type for the profile.
+                Supported values: `TENANT_RESTRICTION_TEAM_ID`, `TENANT_RESTRICTION_ALLOWED_WORKSPACE_ID`,
+                `TENANT_RESTRICTION_DOMAIN`, `TENANT_RESTRICTION_TENANT_NAME`,
+                `TENANT_RESTRICTION_TENANT_DIRECTORY`, `TENANT_RESTRICTION_CHANNEL_ID`,
+                `TENANT_RESTRICTION_CATEGORY_ID`, `TENANT_RESTRICTION_SCHOOL_ID`,
+                `TENANT_RESTRICTION_REQUEST_WORKSPACE_ID`, `TENANT_RESTRICTION_EXP_BUCKET_OWNERID`,
+                `TENANT_RESTRICTION_EXP_BUCKET_SRC_OWNERID`, `TENANT_RESTRICTION_RESTRICT_MSA`,
+                `TENANT_RESTRICTION_TENANT_POLICY_ID`, `TENANT_RESTRICTION_ACCOUNT_ID`,
+                `TENANT_RESTRICTION_TENANT_ORG_ID`, `TENANT_RESTRICTION_POLICY_LABEL`,
+                `TENANT_RESTRICTION_ENTERPRISE_SLUG`, `TENANT_RESTRICTION_WORKSPACE_ID`.
+            item_data_primary (list): Primary item data.
+            item_type_secondary (str): Secondary item type for the profile.
+                Supported values: Same as item_type_primary.
+            item_data_secondary (list): Secondary item data.
+            item_value (list): Tenant profile item value for YouTube categories.
+                Supported values: `TENANT_RESTRICTION_FILM_AND_ANIMATION`, `TENANT_RESTRICTION_AUTOS_AND_VEHICLES`,
+                `TENANT_RESTRICTION_MUSIC`, `TENANT_RESTRICTION_PETS_AND_ANIMALS`,
+                `TENANT_RESTRICTION_SPORTS`, `TENANT_RESTRICTION_SHORT_MOVIES`,
+                `TENANT_RESTRICTION_TRAVEL_AND_EVENTS`, `TENANT_RESTRICTION_GAMING`,
+                `TENANT_RESTRICTION_VIDEOBLOGGING`, `TENANT_RESTRICTION_PEOPLE_AND_BLOGS`,
+                `TENANT_RESTRICTION_COMEDY`, `TENANT_RESTRICTION_ENTERTAINMENT`,
+                `TENANT_RESTRICTION_NEWS_AND_POLITICS`, `TENANT_RESTRICTION_HOWTO_AND_STYLE`,
+                `TENANT_RESTRICTION_EDUCATION`, `TENANT_RESTRICTION_SCIENCE_AND_TECHNOLOGY`,
+                `TENANT_RESTRICTION_MOVIES`, `TENANT_RESTRICTION_ANIME_OR_ANIMATION`,
+                `TENANT_RESTRICTION_ACTION_OR_ADVENTURE`, `TENANT_RESTRICTION_CLASSICS`,
+                `TENANT_RESTRICTION_DOCUMENTARY`, `TENANT_RESTRICTION_DRAMA`,
+                `TENANT_RESTRICTION_FAMILY`, `TENANT_RESTRICTION_FOREIGN`,
+                `TENANT_RESTRICTION_HORROR`, `TENANT_RESTRICTION_SCIFI_OR_FANTASY`,
+                `TENANT_RESTRICTION_THRILLER`, `TENANT_RESTRICTION_SHORTS`,
+                `TENANT_RESTRICTION_SHOWS`, `TENANT_RESTRICTION_TRAILERS`,
+                `TENANT_RESTRICTION_NONPROFITS_AND_ACTIVISM`.
+            restrict_personal_o365_domains (bool): Flag to restrict personal domains for Office 365.
+            allow_google_consumers (bool): Flag to allow Google consumers.
+            ms_login_services_trv2 (bool): Flag to choose between v1 and v2 for MS Login services.
+            allow_google_visitors (bool): Flag to allow Google visitors.
+            allow_gcp_cloud_storage_read (bool): Flag to allow or disallow GCP cloud storage reads.
 
-            app_type (str): Restricted tenant profile application type
-                Supported Values: `YOUTUBE`, `GOOGLE`, `MSLOGINSERVICES`, `SLACK`, `BOX`,
-                    `FACEBOOK`, `AWS`, `DROPBOX`, `WEBEX_LOGIN_SERVICES`, 
-                    `AMAZON_S3`, `ZOHO_LOGIN_SERVICES`, `GOOGLE_CLOUD_PLATFORM`,
-                    `ZOOM`, `IBMSMARTCLOUD`, `GITHUB`, `CHATGPT_AI`
-
-            item_type_primary (str): Tenant profile primary item type
-                Supported Values: `TENANT_RESTRICTION_TEAM_ID`, `TENANT_RESTRICTION_ALLOWED_WORKSPACE_ID`,
-                    `TENANT_RESTRICTION_DOMAIN`, `TENANT_RESTRICTION_TENANT_NAME`,
-                    `TENANT_RESTRICTION_TENANT_DIRECTORY`, `TENANT_RESTRICTION_CHANNEL_ID`,
-                    `TENANT_RESTRICTION_CATEGORY_ID`, `TENANT_RESTRICTION_SCHOOL_ID`,
-                    `TENANT_RESTRICTION_REQUEST_WORKSPACE_ID`, `TENANT_RESTRICTION_EXP_BUCKET_OWNERID`,
-                    `TENANT_RESTRICTION_EXP_BUCKET_SRC_OWNERID`, `TENANT_RESTRICTION_RESTRICT_MSA`,
-                    `TENANT_RESTRICTION_TENANT_POLICY_ID`, `TENANT_RESTRICTION_ACCOUNT_ID`,
-                    `TENANT_RESTRICTION_TENANT_ORG_ID`, `TENANT_RESTRICTION_POLICY_LABEL`,
-                    `TENANT_RESTRICTION_ENTERPRISE_SLUG`, `TENANT_RESTRICTION_WORKSPACE_ID`
-
-            item_data_primary (list): Tenant profile primary item data
-
-            item_type_secondary (str): Tenant profile secondary item type
-                Supported Values: `TENANT_RESTRICTION_TEAM_ID`, `TENANT_RESTRICTION_ALLOWED_WORKSPACE_ID`,
-                    `TENANT_RESTRICTION_DOMAIN`, `TENANT_RESTRICTION_TENANT_NAME`,
-                    `TENANT_RESTRICTION_TENANT_DIRECTORY`, `TENANT_RESTRICTION_CHANNEL_ID`,
-                    `TENANT_RESTRICTION_CATEGORY_ID`, `TENANT_RESTRICTION_SCHOOL_ID`,
-                    `TENANT_RESTRICTION_REQUEST_WORKSPACE_ID`, `TENANT_RESTRICTION_EXP_BUCKET_OWNERID`,
-                    `TENANT_RESTRICTION_EXP_BUCKET_SRC_OWNERID`, `TENANT_RESTRICTION_RESTRICT_MSA`,
-                    `TENANT_RESTRICTION_TENANT_POLICY_ID`, `TENANT_RESTRICTION_ACCOUNT_ID`,
-                    `TENANT_RESTRICTION_TENANT_ORG_ID`, `TENANT_RESTRICTION_POLICY_LABEL`,
-                    `TENANT_RESTRICTION_ENTERPRISE_SLUG`, `TENANT_RESTRICTION_WORKSPACE_ID`
-
-            item_data_secondary (list): Tenant profile secondary item data
-            item_value (list): Tenant profile item value for YouTube category
-                Supported Values: `TENANT_RESTRICTION_FILM_AND_ANIMATION`, `TENANT_RESTRICTION_AUTOS_AND_VEHICLES`,
-                    `TENANT_RESTRICTION_MUSIC`, `TENANT_RESTRICTION_PETS_AND_ANIMALS`,
-                    `TENANT_RESTRICTION_SPORTS`, `TENANT_RESTRICTION_SHORT_MOVIES`,
-                    `TENANT_RESTRICTION_TRAVEL_AND_EVENTS`, `TENANT_RESTRICTION_GAMING`,
-                    `TENANT_RESTRICTION_VIDEOBLOGGING`, `TENANT_RESTRICTION_PEOPLE_AND_BLOGS`,
-                    `TENANT_RESTRICTION_COMEDY`, `TENANT_RESTRICTION_ENTERTAINMENT`,
-                    `TENANT_RESTRICTION_NEWS_AND_POLITICS`, `TENANT_RESTRICTION_HOWTO_AND_STYLE`,
-                    `TENANT_RESTRICTION_EDUCATION`, `TENANT_RESTRICTION_SCIENCE_AND_TECHNOLOGY`,
-                    `TENANT_RESTRICTION_MOVIES`, `TENANT_RESTRICTION_ANIME_OR_ANIMATION`,
-                    `TENANT_RESTRICTION_ACTION_OR_ADVENTURE`, `TENANT_RESTRICTION_CLASSICS`,
-                    `TENANT_RESTRICTION_DOCUMENTARY`, `TENANT_RESTRICTION_DRAMA`,
-                    `TENANT_RESTRICTION_FAMILY`, `TENANT_RESTRICTION_FOREIGN`,
-                    `TENANT_RESTRICTION_HORROR`, `TENANT_RESTRICTION_SCIFI_OR_FANTASY`,
-                    `TENANT_RESTRICTION_THRILLER`, `TENANT_RESTRICTION_SHORTS`,
-                    `TENANT_RESTRICTION_SHOWS`,`TENANT_RESTRICTION_TRAILERS`,
-                    `TENANT_RESTRICTION_NONPROFITS_AND_ACTIVISM`
-            restrict_personal_o365_domains: (bool): Flag to restrict personal domains for Office 365
-            allow_google_consumers: (bool): Flag to allow Google consumers
-            ms_login_services_trv2: (bool): Flag to decide between v1 and v2 for tenant restriction on MSLOGINSERVICES
-            allow_google_visitors: (bool): Flag to allow Google visitors
-            allow_gcp_cloud_storage_read: (bool): Flag to allow or disallow cloud storage resources for GCP
-                     
         Returns:
-            tuple: A tuple containing the newly added restricted tenant profile, response, and error.
+            tuple: A tuple containing:
+                - The newly added restricted tenant profile.
+                - The HTTP response.
+                - Any error message encountered.
+                
+        Examples:
+            Add a new restricted tenant profile
+
+            >>> added_tenancy, _, error = client.zia.tenancy_restriction_profile.add_restriction_profile(
+            ...     name=f"UpdateMSProfile01_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateMSProfile01_{random.randint(1000, 10000)}",
+            ...     restrict_personal_o365_domains=False,
+            ...     app_type='MSLOGINSERVICES',
+            ...     item_type_primary='TENANT_RESTRICTION_TENANT_DIRECTORY',
+            ...     item_data_primary=["76b66e9c-201a-49dc-bb7e-e9d77604a4c2"],
+            ...     item_type_secondary="TENANT_RESTRICTION_TENANT_NAME",
+            ...     item_data_secondary=[ "securitygeek.dev", "securitygeekio.ca"]
+            ... )
+            >>> if error:
+            ...     print(f"Error adding tenancy restriction profile: {error}")
+            ...     return
+            ... print(f"tenancy restriction profile added successfully: {added_tenancy.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -248,6 +257,25 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated restricted tenant profile, response, and error.
+            
+        Examples:
+            Update a restricted tenant profile
+
+            >>> updated_tenancy, _, error = client.zia.tenancy_restriction_profile.update_restriction_profile(
+            ...     profile_id=added_tenancy.id,
+            ...     name=f"UpdateMSProfile01_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateMSProfile01_{random.randint(1000, 10000)}",
+            ...     restrict_personal_o365_domains=False,
+            ...     app_type='MSLOGINSERVICES',
+            ...     item_type_primary='TENANT_RESTRICTION_TENANT_DIRECTORY',
+            ...     item_data_primary=["76b66e9c-201a-49dc-bb7e-e9d77604a4c2"],
+            ...     item_type_secondary="TENANT_RESTRICTION_TENANT_NAME",
+            ...     item_data_secondary=[ "securitygeek.dev", "securitygeekio.ca"]
+            ... )
+            >>> if error:
+            ...     print(f"Error updating tenancy restriction profile: {error}")
+            ...     return
+            ... print(f"tenancy restriction profile updated successfully: {updated_tenancy.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -287,6 +315,16 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+            
+        Examples:
+            Delete a specific Tenant Restriction Profile
+
+            >>> _, _, error = client.zia.tenancy_restriction_profile.delete_restriction_profile(
+                '1254654')
+            >>> if error:
+            ...     print(f"Error deleting Tenant Restriction Profile: {error}")
+            ...     return
+            ... print(f"Tenant Restriction Profile with ID {'1254654'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -314,40 +352,42 @@ class TenancyRestrictionProfileAPI(APIClient):
         item_type: str,
     ) -> tuple:
         """
-        Retrieves the item count of the specified item type for a given application, excluding any specified profile
+        Retrieves the item count of the specified item type for a given application, excluding any specified profile.
 
         Args:
-            **app_type (str): The type of rule for which actions should be retrieved.
-                Supported Values: `YOUTUBE`, `GOOGLE`, `MSLOGINSERVICES`, `SLACK`,
-                    `BOX`, `FACEBOOK`, `AWS`, `DROPBOX`, `WEBEX_LOGIN_SERVICES`,
-                    `AMAZON_S3`,`ZOHO_LOGIN_SERVICES`, `GOOGLE_CLOUD_PLATFORM`,
-                    `ZOOM`, `IBMSMARTCLOUD`, `GITHUB`,`CHATGPT_AI`
-            **item_type (str): Item type
-                Supported Values: `TENANT_RESTRICTION_TEAM_ID`, `TENANT_RESTRICTION_ALLOWED_WORKSPACE_ID`,
-                    `TENANT_RESTRICTION_DOMAIN`, `TENANT_RESTRICTION_TENANT_NAME`,
-                    `TENANT_RESTRICTION_TENANT_DIRECTORY`, `TENANT_RESTRICTION_CHANNEL_ID`,
-                    `TENANT_RESTRICTION_CATEGORY_ID`, `TENANT_RESTRICTION_SCHOOL_ID`,
-                    `TENANT_RESTRICTION_REQUEST_WORKSPACE_ID`, `TENANT_RESTRICTION_EXP_BUCKET_OWNERID`,
-                    `TENANT_RESTRICTION_EXP_BUCKET_SRC_OWNERID`, `TENANT_RESTRICTION_RESTRICT_MSA`,
-                    `TENANT_RESTRICTION_TENANT_POLICY_ID`, `TENANT_RESTRICTION_ACCOUNT_ID`,
-                    `TENANT_RESTRICTION_TENANT_ORG_ID`, `TENANT_RESTRICTION_POLICY_LABEL`,
-                    `TENANT_RESTRICTION_ENTERPRISE_SLUG`, `TENANT_RESTRICTION_WORKSPACE_ID`
-            **exclude_profile (int): Specifies the profile ID that is excluded from the item count calculation
+            app_type (str): The type of application for which item count is retrieved.
+                Supported values: YOUTUBE, GOOGLE, MSLOGINSERVICES, SLACK,
+                BOX, FACEBOOK, AWS, DROPBOX, WEBEX_LOGIN_SERVICES,
+                AMAZON_S3, ZOHO_LOGIN_SERVICES, GOOGLE_CLOUD_PLATFORM,
+                ZOOM, IBMSMARTCLOUD, GITHUB, CHATGPT_AI.
+            item_type (str): The item type to retrieve the count for.
+                Supported values: TENANT_RESTRICTION_TEAM_ID, TENANT_RESTRICTION_ALLOWED_WORKSPACE_ID,
+                TENANT_RESTRICTION_DOMAIN, TENANT_RESTRICTION_TENANT_NAME,
+                TENANT_RESTRICTION_TENANT_DIRECTORY, TENANT_RESTRICTION_CHANNEL_ID,
+                TENANT_RESTRICTION_CATEGORY_ID, TENANT_RESTRICTION_SCHOOL_ID,
+                TENANT_RESTRICTION_REQUEST_WORKSPACE_ID, TENANT_RESTRICTION_EXP_BUCKET_OWNERID,
+                TENANT_RESTRICTION_EXP_BUCKET_SRC_OWNERID, TENANT_RESTRICTION_RESTRICT_MSA,
+                TENANT_RESTRICTION_TENANT_POLICY_ID, TENANT_RESTRICTION_ACCOUNT_ID,
+                TENANT_RESTRICTION_TENANT_ORG_ID, TENANT_RESTRICTION_POLICY_LABEL,
+                TENANT_RESTRICTION_ENTERPRISE_SLUG, TENANT_RESTRICTION_WORKSPACE_ID.
+            exclude_profile (int, optional): Profile ID to exclude from the item count calculation.
 
         Returns:
             tuple: A tuple containing:
-                - result (list): A list of actions supported for the given rule type.
-                - response (object): The full API response object.
-                - error (object): Any error encountered during the request.
+                - list: List of item counts matching the application and item type.
+                - Response: The full API response object.
+                - error: Any error encountered during the request.
 
         Examples:
-            Retrieve available actions for a specific rule type:
-                >>> actions, response, error = zia.tenancy_restriction_profile.list_app_item_count(
-                    query_params=
-                ... )
-                >>> if actions:
-                ...     for action in actions:
-                ...         print(action)
+            Retrieve item counts for a specific app type:
+
+            >>> items, response, error = zia.tenancy_restriction_profile.list_app_item_count(
+            ...     app_type="GOOGLE",
+            ...     item_type="TENANT_RESTRICTION_DOMAIN"
+            ... )
+            >>> if items:
+            ...     for item in items:
+            ...         print(item)
         """
         http_method = "get".upper()
         api_url = format_url(

@@ -101,6 +101,15 @@ class TimeIntervalsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Time Interval instance, Response, error).
+
+        Examples:
+            Retrieve a specific time interval:
+
+            >>> fetched_interval, _, error = client.zia.time_intervals.get_time_intervals('125245')
+            >>> if error:
+            ...     print(f"Error fetching time interval by ID: {error}")
+            ...     return
+            ... print(f"Fetched time interval by ID: {fetched_interval.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -149,6 +158,20 @@ class TimeIntervalsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added Time Interval, response, and error.
+            
+        Examples:
+            Add a new Time Interval
+
+            >>> added_interval, _, error = client.zia.time_intervals.add_time_intervals(
+            ...     name=f"NewTimeInterval01_{random.randint(1000, 10000)}",
+            ...     start_time='0',
+            ...     end_time='1439',
+            ...     days_of_week=["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+            ... ) 
+            >>> if error:
+            ...     print(f"Error adding Time Interval: {error}")
+            ...     return
+            ... print(f"Time Interval added successfully: {added_interval.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -188,6 +211,21 @@ class TimeIntervalsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Time Interval, response, and error.
+            
+        Examples:
+            Update a Time Interval
+
+            >>> added_interval, _, error = client.zia.time_intervals.update_time_intervals(
+                    interval_id='15455'
+            ...     name=f"UpdateTimeInterval01_{random.randint(1000, 10000)}",
+            ...     start_time='0',
+            ...     end_time='1439',
+            ...     days_of_week=["SUN", "MON", "TUE", "WED", "THU"],
+            ... ) 
+            >>> if error:
+            ...     print(f"Error updating Time Interval: {error}")
+            ...     return
+            ... print(f"Time Interval updated successfully: {added_interval.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -224,6 +262,15 @@ class TimeIntervalsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete Time Interval:
+
+            >>> _, _, error = client.zia.time_intervals.delete_time_intervals('73459')
+            >>> if error:
+            ...     print(f"Error deleting Time Interval: {error}")
+            ...     return
+            ... print(f"Time Interval with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

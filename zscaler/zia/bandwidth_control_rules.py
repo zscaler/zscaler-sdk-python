@@ -81,7 +81,8 @@ class BandwidthControlRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -233,15 +234,22 @@ class BandwidthControlRulesAPI(APIClient):
             :obj:`tuple`: New bandwidth control rule resource record.
 
         Example:
-            Add a bandwidth control rule to block specific file types:
+            Add a bandwidth control rule:
 
-            >>> zia.bandwidth_control_rules.add_rule(
-            ...    name='BLOCK_EXE_FILES',
-            ...    ba_rule_action='BLOCK',
-            ...    file_types=['FTCATEGORY_EXE', 'FTCATEGORY_DLL'],
-            ...    protocols=['HTTP_RULE', 'HTTPS_RULE'],
-            ...    state='ENABLED'
-            ... )
+            >>> added_rule, _, error = client.zia.bandwidth_control_rules.add_rule(
+            ...     name=f"NewBWDRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewBWDRule_{random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     max_bandwidth='100',
+            ...     min_bandwidth='20',
+            ...     bandwidth_class_ids=['4', '8'],
+            ...     protocols=[ "WEBSOCKETSSL_RULE", "WEBSOCKET_RULE", "DOHTTPS_RULE"],
+                )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -307,14 +315,23 @@ class BandwidthControlRulesAPI(APIClient):
             tuple: Updated bandwidth control rule resource record.
 
         Example:
-            Update an existing rule to change its name and action:
+            Add a bandwidth control rule:
 
-            >>> zia.bandwidth_control_rules.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
-            ... )
+            >>> updated_rule, _, error = client.zia.bandwidth_control_rules.add_rule(
+            ...     rule_id='15545' 
+            ...     name=f"UpdateBWDRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateBWDRule_{random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     max_bandwidth='100',
+            ...     min_bandwidth='20',
+            ...     bandwidth_class_ids=['4', '8'],
+            ...     protocols=[ "WEBSOCKETSSL_RULE", "WEBSOCKET_RULE", "DOHTTPS_RULE"],
+                )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -361,8 +378,13 @@ class BandwidthControlRulesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.cloudBandwidthControlRules.delete_rule('278454')
+            Delete a Bandwidth rule:
 
+            >>> _, _, error = client.zia.bandwidth_control_rules.delete_delete_ruled_class('125454')
+            >>>     if error:
+            ...         print(f"Error deleting Bandwidth rule: {error}")
+            ...         return
+            ...     print(f"Bandwidth rule with ID {'125454'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
