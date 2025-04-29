@@ -86,18 +86,16 @@ class MobileAdvancedSettingsAPI(APIClient):
             settings (:obj:`MobileAdvancedThreatSettings`):
                 An instance of `MobileAdvancedThreatSettings` containing the updated configuration.
 
-                Supported attributes:
-                    - block_apps_with_malicious_activity (bool): Blocks applications that are known to be malicious,
-                        compromised, or perform activities unknown to or hidden from the user
-                    - block_apps_with_known_vulnerabilities (bool): Blocks applications that contain vulnerabilities or that use insecure features, modules, or protocols
-                    - block_apps_sending_unencrypted_user_credentials (bool): Blocks an application from leaking a user's credentials in an unencrypted format
-                    - block_apps_sending_location_info (bool): Blocks an application from leaking device location details via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_sending_personally_identifiable_info (bool): Blocks an application from leaking a user's personally identifiable information (PII)
-                        via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_sending_device_identifier (bool): Blocks an application from leaking device identifiers via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_communicating_with_ad_websites (bool): Blocks an application from communicating with known advertisement websites
-                    - block_apps_communicating_with_remote_unknown_servers (bool): Blocks an application from communicating with unknown servers
-                        (i.e., servers not normally or historically associated with the application)
+            Supported attributes:
+                - block_apps_with_malicious_activity (bool): Blocks malicious or hidden applications
+                - block_apps_with_known_vulnerabilities (bool): Block app with known vulnerabilities or insecure modules
+                - block_apps_sending_unencrypted_user_credentials (bool): Block app leaking user credentials unencrypted
+                - block_apps_sending_location_info (bool): Block app leaking device location unencrypted for unknown purpose
+                - block_apps_sending_personally_identifiable_info (bool): Block app leaking PII unencrypted for unknown purpose
+                - block_apps_sending_device_identifier (bool): Block app leaking device IDs unencrypted or for unknown purposes
+                - block_apps_communicating_with_ad_websites (bool): Block app communicating with known ad websites
+                - block_apps_communicating_with_remote_unknown_servers (bool): Block app talking to unknown remote servers
+
         Returns:
             tuple:
                 - **MobileAdvancedThreatSettings**: The updated advanced settings object.
@@ -109,10 +107,10 @@ class MobileAdvancedSettingsAPI(APIClient):
 
             >>> malware_settings, _, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
             ...     block_apps_with_malicious_activity = True,
-            ...     block_apps_with_known_vulnerabilities = True, 
+            ...     block_apps_with_known_vulnerabilities = True,
             ...     block_apps_sending_unencrypted_user_credentials = True,
             ...     block_apps_sending_location_info = True,
-            ...     block_apps_sending_personally_identifiable_info = True, 
+            ...     block_apps_sending_personally_identifiable_info = True,
             ...     block_apps_sending_device_identifier = True,
             ...     block_apps_communicating_with_ad_websites = True,
             ...     block_apps_communicating_with_remote_unknown_servers = True
@@ -134,21 +132,17 @@ class MobileAdvancedSettingsAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, MobileAdvancedThreatSettings)
+        response, error = self._request_executor.execute(request, MobileAdvancedThreatSettings)
         if error:
             return (None, response, error)
 
         try:
             if response and hasattr(response, "get_body") and response.get_body():
-                result = MobileAdvancedThreatSettings(
-                    self.form_response_body(response.get_body())
-                )
+                result = MobileAdvancedThreatSettings(self.form_response_body(response.get_body()))
             else:
                 result = MobileAdvancedThreatSettings()
         except Exception as error:

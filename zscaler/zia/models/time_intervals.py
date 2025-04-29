@@ -33,18 +33,12 @@ class TimeIntervals(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.start_time = config["startTime"] \
-                if "startTime" in config else None
-            self.end_time = config["endTime"] \
-                if "endTime" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.start_time = config["startTime"] if "startTime" in config else None
+            self.end_time = config["endTime"] if "endTime" in config else None
 
-            self.days_of_week = ZscalerCollection.form_list(
-                config["daysOfWeek"] if "daysOfWeek" in config else [], str
-            )
+            self.days_of_week = ZscalerCollection.form_list(config["daysOfWeek"] if "daysOfWeek" in config else [], str)
         else:
             self.id = None
             self.name = None
@@ -62,7 +56,7 @@ class TimeIntervals(ZscalerObject):
             "name": self.name,
             "startTime": self.start_time,
             "endTime": self.end_time,
-            "daysOfWeek": self.days_of_week
+            "daysOfWeek": self.days_of_week,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

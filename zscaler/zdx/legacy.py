@@ -1,7 +1,6 @@
 import logging
 import os
 import time
-import json
 import requests
 import random
 from hashlib import sha256
@@ -15,6 +14,7 @@ setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 _token_cache = {}
 _jwks_cache = {}
+
 
 class LegacyZDXClientHelper:
     """
@@ -186,8 +186,7 @@ class LegacyZDXClientHelper:
                 delay = 1 + random.uniform(0, 0.5)  # Default 1s backoff + jitter
                 if remaining_int is not None and remaining_int < 2:
                     logger.warning(
-                        "Rate limit exceeded on token request. Remaining=%s. Retrying in %.2fs (attempt %d/%d)",
-                        remaining,
+                        "Rate limit exceeded on token request. Retrying in %.2fs (attempt %d/%d)",
                         delay,
                         attempt + 1,
                         max_retries,
@@ -214,7 +213,6 @@ class LegacyZDXClientHelper:
             return token_data
 
         raise Exception(f"Failed to retrieve token after {max_retries} attempts due to rate limiting.")
-
 
     def validate_token(self):
         """
@@ -246,10 +244,14 @@ class LegacyZDXClientHelper:
         retry_threshold = self.config["client"]["rateLimit"].get("remainingThreshold", 2)
 
         for attempt in range(max_retries):
-            response = requests.get(jwks_url, headers={
-                "Authorization": f"Bearer {self.auth_token}",
-                "User-Agent": self.user_agent,
-            }, timeout=self.timeout)
+            response = requests.get(
+                jwks_url,
+                headers={
+                    "Authorization": f"Bearer {self.auth_token}",
+                    "User-Agent": self.user_agent,
+                },
+                timeout=self.timeout,
+            )
 
             remaining = response.headers.get("X-Ratelimit-Remaining-Second")
             try:

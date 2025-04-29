@@ -34,25 +34,16 @@ class Proxies(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.address = config["address"] \
-                if "address" in config else None
-            self.port = config["port"] \
-                if "port" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.address = config["address"] if "address" in config else None
+            self.port = config["port"] if "port" in config else None
 
-            self.description = config["description"] \
-                if "description" in config else None
-            self.insert_xau_header = config["insertXauHeader"] \
-                if "insertXauHeader" in config else None
-            self.base64_encode_xau_header = config["base64EncodeXauHeader"] \
-                if "base64EncodeXauHeader" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.insert_xau_header = config["insertXauHeader"] if "insertXauHeader" in config else None
+            self.base64_encode_xau_header = config["base64EncodeXauHeader"] if "base64EncodeXauHeader" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):
                     self.last_modified_by = config["lastModifiedBy"]
@@ -102,7 +93,7 @@ class Proxies(ZscalerObject):
             "insertXauHeader": self.insert_xau_header,
             "base64EncodeXauHeader": self.base64_encode_xau_header,
             "lastModifiedBy": self.last_modified_by,
-            "lastModifiedTime": self.last_modified_time
+            "lastModifiedTime": self.last_modified_time,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

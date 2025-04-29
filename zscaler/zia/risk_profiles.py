@@ -33,7 +33,7 @@ class RiskProfilesAPI(APIClient):
 
     def list_risk_profiles(self, query_params=None) -> tuple:
         """
-        Retrieves the cloud application risk profile  
+        Retrieves the cloud application risk profile
 
         Args:
             query_params {dict}: Map of query parameters for the request.
@@ -68,8 +68,7 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -96,7 +95,7 @@ class RiskProfilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (risk profile lite instance, Response, error).
-            
+
         Examples:
             List risk profile :
 
@@ -119,8 +118,7 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -146,7 +144,7 @@ class RiskProfilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Risk Profile instance, Response, error).
-            
+
         Examples:
             Print a specific Risk Profile
 
@@ -168,8 +166,7 @@ class RiskProfilesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -203,7 +200,7 @@ class RiskProfilesAPI(APIClient):
                                     `SSAE_18`, `NIST`, `ISO_14001`, `SOC`, `TRUSTE`,
                                     `ISO_26262`, `ISO_20252`, `RGPD`, `ISO_20243`, `JIS_Q_27001`
                                     `ISO_10002`, `JIS_Q_15001_2017`, `ISMAP`, `GAAP`,
-            poor_items_of_service (str): Filters applications based on the presence of questionable terms and conditions in their legal agreements
+            poor_items_of_service (str): Filters apps based on questionable terms/conditions in legal agreements.
                 Supported Values: `ANY`, `YES`, `NO`, `UN_KNOWN`
             admin_audit_logs (str): Support for admin activity audit logs.
                 Supported Values: `ANY`, `YES`, `NO`, `UN_KNOWN`
@@ -261,7 +258,7 @@ class RiskProfilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the added Risk Profile object, response, and error.
-            
+
         Examples:
             Add a new Risk Profile :
 
@@ -344,12 +341,12 @@ class RiskProfilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Risk Profile, response, and error.
-            
+
         Examples:
             Add a new Risk Profile :
 
             >>> update_profile, _, error = client.zia.risk_profiles.add_risk_profile(
-            ... profile_id='876868' 
+            ... profile_id='876868'
             ... profile_name=f"RiskProfile_{random.randint(1000, 10000)}",
             ... status="SANCTIONED",
             ... risk_index=[1, 2, 3, 4, 5],
@@ -424,7 +421,7 @@ class RiskProfilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             List risk profile :
 

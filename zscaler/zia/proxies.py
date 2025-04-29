@@ -60,8 +60,7 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return None
@@ -87,7 +86,7 @@ class ProxiesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Proxies instance, Response, error).
-            
+
         Examples:
             >>> gw_list, _, error = client.zia.proxies.list_proxy_gateway_lite()
             >>> if error:
@@ -108,8 +107,7 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -168,8 +166,7 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -195,7 +192,7 @@ class ProxiesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Proxies instance, Response, error).
-            
+
         Example:
             List all proxies:
 
@@ -218,8 +215,7 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -257,8 +253,7 @@ class ProxiesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -286,7 +281,7 @@ class ProxiesAPI(APIClient):
             type (str): DGateway type. Supported Values: `PROXYCHAIN`, `ZIA`, `ECSELF`
             address (list): The IP address or the FQDN of the third-party proxy service
             port (str): The port number on which the third-party proxy service listens to the requests forwarded from Zscaler
-            cert (list): The root certificate used by the third-party proxy to perform SSL inspection. 
+            cert (list): The root certificate used by the third-party proxy to perform SSL inspection.
             insert_xau_header (bool): Flag indicating whether X-Authenticated-User header is added by the proxy.
             base64_encode_xau_header (bool): Flag indicating whether the added X-Authenticated-User header is Base64 encoded.
 
@@ -356,8 +351,7 @@ class ProxiesAPI(APIClient):
         body = kwargs.copy()
         body["id"] = proxy_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
@@ -366,9 +360,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = Proxies(
-                self.form_response_body(response.get_body())
-            )
+            result = Proxies(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -393,8 +385,7 @@ class ProxiesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 

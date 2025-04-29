@@ -68,8 +68,7 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -96,7 +95,7 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Bandwidth Class instance, Response, error).
-            
+
         Examples:
             List Bandwidth Classes All:
 
@@ -120,8 +119,7 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -147,12 +145,12 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Bandwidth Class instance, Response, error).
-            
+
         Examples:
             List Bandwidth Classes All:
 
             >>> fetched_class, _, error = client.zia.bandwidth_classes.get_bwd_class(updated_class.id)
-            >>>     if error:   
+            >>>     if error:
             ...         print(f"Error fetching class by ID: {error}")
             ...         return
             ...     print(f"Fetched class by ID: {fetched_class.as_dict()}")
@@ -168,8 +166,7 @@ class BandwidthClassesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -190,13 +187,13 @@ class BandwidthClassesAPI(APIClient):
 
         Keyword Args:
             name (str): Name of the bandwidth class
-            web_applications (:obj:`list` of :obj:`str`): The web conferencing applications included in the bandwidth class. 
+            web_applications (:obj:`list` of :obj:`str`): The web conferencing applications included in the bandwidth class.
             urls (:obj:`list` of :obj:`str`): The rule state. Accepted values are 'ENABLED' or 'DISABLED'.
             url_categories (:obj:`list` of :obj:`str`): The URL categories to add to the bandwidth class
 
         Returns:
             tuple: A tuple containing the newly added Bandwidth Class, response, and error.
-            
+
         Examples:
             Create Bandwidth Classes:
 
@@ -230,15 +227,12 @@ class BandwidthClassesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, BandwidthClasses)
+        response, error = self._request_executor.execute(request, BandwidthClasses)
         if error:
             return (None, response, error)
 
         try:
-            result = BandwidthClasses(
-                self.form_response_body(response.get_body())
-            )
+            result = BandwidthClasses(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -252,12 +246,12 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Bandwidth Class, response, and error.
-            
+
         Examples:
             Update Bandwidth Classes:
 
             >>> updated_class, _, error = client.zia.bandwidth_classes.add_bwd_class(
-            ...     bwd_id='125245' 
+            ...     bwd_id='125245'
             ...     name=f"UpdateBDW_{random.randint(1000, 10000)}",
             ...     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
             ...     urls=["chatgpt.com"],
@@ -279,20 +273,16 @@ class BandwidthClassesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, BandwidthClasses)
+        response, error = self._request_executor.execute(request, BandwidthClasses)
         if error:
             return (None, response, error)
 
         try:
-            result = BandwidthClasses(
-                self.form_response_body(response.get_body())
-            )
+            result = BandwidthClasses(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -306,7 +296,7 @@ class BandwidthClassesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             Delete a Bandwidth Classes:
 
@@ -326,8 +316,7 @@ class BandwidthClassesAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 

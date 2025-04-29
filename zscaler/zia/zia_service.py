@@ -79,6 +79,7 @@ from zscaler.zia.time_intervals import TimeIntervalsAPI
 from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
 from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 
+
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
 
@@ -498,7 +499,7 @@ class ZIAService:
         """
 
         return MobileAdvancedSettingsAPI(self._request_executor)
-    
+
     @property
     def dns_gatways(self):
         """
@@ -507,7 +508,7 @@ class ZIAService:
         """
 
         return DNSGatewayAPI(self._request_executor)
-    
+
     @property
     def alert_subscriptions(self):
         """
@@ -516,7 +517,7 @@ class ZIAService:
         """
 
         return AlertSubscriptionsAPI(self._request_executor)
-    
+
     @property
     def bandwidth_classes(self):
         """
@@ -525,7 +526,7 @@ class ZIAService:
         """
 
         return BandwidthClassesAPI(self._request_executor)
-    
+
     @property
     def bandwidth_control_rules(self):
         """
@@ -534,7 +535,7 @@ class ZIAService:
         """
 
         return BandwidthControlRulesAPI(self._request_executor)
-    
+
     @property
     def risk_profiles(self):
         """
@@ -543,7 +544,7 @@ class ZIAService:
         """
 
         return RiskProfilesAPI(self._request_executor)
-    
+
     @property
     def cloud_app_instances(self):
         """
@@ -552,7 +553,7 @@ class ZIAService:
         """
 
         return CloudApplicationInstancesAPI(self._request_executor)
-    
+
     @property
     def tenancy_restriction_profile(self):
         """
@@ -570,7 +571,7 @@ class ZIAService:
         """
 
         return TimeIntervalsAPI(self._request_executor)
-    
+
     @property
     def ftp_control_policy(self):
         """
@@ -579,7 +580,7 @@ class ZIAService:
         """
 
         return FTPControlPolicyAPI(self._request_executor)
-    
+
     @property
     def proxies(self):
         """
@@ -588,7 +589,7 @@ class ZIAService:
         """
 
         return ProxiesAPI(self._request_executor)
-    
+
     @property
     def dedicated_ip_gateways(self):
         """
@@ -597,7 +598,7 @@ class ZIAService:
         """
 
         return DedicatedIPGatewaysAPI(self._request_executor)
-    
+
     @property
     def traffic_datacenters(self):
         """

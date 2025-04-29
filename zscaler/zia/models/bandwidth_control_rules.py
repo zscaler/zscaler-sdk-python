@@ -41,44 +41,32 @@ class BandwidthControlRules(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.name = config["name"] \
-                if "name" in config else None
+            self.name = config["name"] if "name" in config else None
 
-            self.order = config["order"] \
-                if "order" in config else None
+            self.order = config["order"] if "order" in config else None
 
-            self.state = config["state"] \
-                if "state" in config else None
+            self.state = config["state"] if "state" in config else None
 
-            self.description = config["description"] \
-                if "description" in config else None
+            self.description = config["description"] if "description" in config else None
 
-            self.max_bandwidth = config["maxBandwidth"] \
-                if "maxBandwidth" in config else None
+            self.max_bandwidth = config["maxBandwidth"] if "maxBandwidth" in config else None
 
-            self.min_bandwidth = config["minBandwidth"] \
-                if "minBandwidth" in config else None
+            self.min_bandwidth = config["minBandwidth"] if "minBandwidth" in config else None
 
-            self.rank = config["rank"] \
-                if "rank" in config else None
+            self.rank = config["rank"] if "rank" in config else None
 
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
 
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
-            self.protocols = ZscalerCollection.form_list(
-                config["protocols"] if "protocols" in config else [], str
-            )
+            self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
 
             self.bandwidth_classes = ZscalerCollection.form_list(
                 config["bandwidthClasses"] if "bandwidthClasses" in config else [], bandwidth_classes.BandwidthClasses
             )
-            
+
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
             )
@@ -97,21 +85,16 @@ class BandwidthControlRules(ZscalerObject):
                     self.last_modified_by = None
             else:
                 self.last_modified_by = None
-                
+
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
             )
-            
-            self.devices = ZscalerCollection.form_list(
-                config["devices"] if "devices" in config else [], devices.Devices
-            )
-            
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
 
-            self.default_rule = config["defaultRule"] \
-                if "defaultRule" in config else None
+            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
+
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
+
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else None
         else:
             self.id = None
             self.name = None
@@ -159,7 +142,7 @@ class BandwidthControlRules(ZscalerObject):
             "labels": self.labels,
             "devices": self.devices,
             "deviceGroups": self.device_groups,
-            "defaultRule": self.default_rule
+            "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

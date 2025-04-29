@@ -81,8 +81,7 @@ class BandwidthControlRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -112,7 +111,7 @@ class BandwidthControlRulesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Bandwidth Control Rules instance, Response, error).
-            
+
         Example:
             List all cloud bandwidth control rules:
 
@@ -135,8 +134,7 @@ class BandwidthControlRulesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -213,22 +211,19 @@ class BandwidthControlRulesAPI(APIClient):
             name (str): Name of the rule, max 31 chars.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule. Supported values 1-7
-            enabled (bool): The rule state.
-            description (str): Additional information about the rule
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            bandwidth_class_ids (list): The bandwidth classes to which you want to apply this rule.
-                You first must add URLs or cloud applications to predefined or custom bandwidth classes.
-            max_bandwidth (int): The maximum percentage of a location's bandwidth to be guaranteed for each selected bandwidth class.
-                This percentage includes bandwidth for uploads and downloads.
-            min_bandwidth (int): The minimum percentage of a location's bandwidth you want to be guaranteed for each selected bandwidth class.
-                This percentage includes bandwidth for uploads and downloads.
-            protocols (list): The protocol criteria for the rule.
-            labels (list): The IDs for the labels that this rule applies to.
-            locations (list): The IDs for the locations that this rule applies to.
-            location_groups (list): The IDs for the location groups that this rule applies to.
-            time_windows (list): IDs for time windows the rule applies to.
+            order (str): Rule order, defaults to bottom of the list.
+            rank (str): Admin rank for the rule. Supported values 1-7.
+            enabled (bool): Whether the rule is enabled or disabled.
+            description (str): Additional description for the rule.
+            default_rule (bool): Whether the rule is the default bandwidth control rule.
+            bandwidth_class_ids (list): IDs of bandwidth classes this rule applies to.
+            max_bandwidth (int): Maximum % of location bandwidth for each selected class (upload + download).
+            min_bandwidth (int): Minimum % of location bandwidth guaranteed for each selected class (upload + download).
+            protocols (list): Protocols to which the rule applies.
+            labels (list): IDs of labels this rule applies to.
+            locations (list): IDs of locations this rule applies to.
+            location_groups (list): IDs of location groups this rule applies to.
+            time_windows (list): IDs of time windows this rule applies to.
 
         Returns:
             :obj:`tuple`: New bandwidth control rule resource record.
@@ -294,22 +289,19 @@ class BandwidthControlRulesAPI(APIClient):
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule. Supported values 1-7
-            enabled (bool): The rule state.
-            description (str): Additional information about the rule
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            bandwidth_classes (list): The bandwidth classes to which you want to apply this rule.
-                You first must add URLs or cloud applications to predefined or custom bandwidth classes.
-            max_bandwidth (int): The maximum percentage of a location's bandwidth to be guaranteed for each selected bandwidth class.
-                This percentage includes bandwidth for uploads and downloads.
-            min_bandwidth (int): The minimum percentage of a location's bandwidth you want to be guaranteed for each selected bandwidth class.
-                This percentage includes bandwidth for uploads and downloads.
-            protocols (list): The protocol criteria for the rule.
-            labels (list): The IDs for the labels that this rule applies to.
-            locations (list): The IDs for the locations that this rule applies to.
-            location_groups (list): The IDs for the location groups that this rule applies to.
-            time_windows (list): IDs for time windows the rule applies to.
+            order (str): Rule order, defaults to bottom of the list.
+            rank (str): Admin rank for the rule. Supported values 1-7.
+            enabled (bool): Whether the rule is enabled or disabled.
+            description (str): Additional description for the rule.
+            default_rule (bool): Whether the rule is the default bandwidth control rule.
+            bandwidth_class_ids (list): IDs of bandwidth classes this rule applies to.
+            max_bandwidth (int): Maximum % of location bandwidth for each selected class (upload + download).
+            min_bandwidth (int): Minimum % of location bandwidth guaranteed for each selected class (upload + download).
+            protocols (list): Protocols to which the rule applies.
+            labels (list): IDs of labels this rule applies to.
+            locations (list): IDs of locations this rule applies to.
+            location_groups (list): IDs of location groups this rule applies to.
+            time_windows (list): IDs of time windows this rule applies to.
 
         Returns:
             tuple: Updated bandwidth control rule resource record.
@@ -318,7 +310,7 @@ class BandwidthControlRulesAPI(APIClient):
             Add a bandwidth control rule:
 
             >>> updated_rule, _, error = client.zia.bandwidth_control_rules.add_rule(
-            ...     rule_id='15545' 
+            ...     rule_id='15545'
             ...     name=f"UpdateBWDRule_{random.randint(1000, 10000)}",
             ...     description=f"UpdateBWDRule_{random.randint(1000, 10000)}",
             ...     enabled=True,

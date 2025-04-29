@@ -83,18 +83,16 @@ class FTPControlPolicyAPI(APIClient):
             settings (:obj:`FTPControlPolicy`):
                 An instance of `FTPControlPolicy` containing the updated configuration.
 
-                Supported attributes:
-                    - block_apps_with_malicious_activity (bool): Blocks applications that are known to be malicious,
-                        compromised, or perform activities unknown to or hidden from the user
-                    - block_apps_with_known_vulnerabilities (bool): Blocks applications that contain vulnerabilities or that use insecure features, modules, or protocols
-                    - block_apps_sending_unencrypted_user_credentials (bool): Blocks an application from leaking a user's credentials in an unencrypted format
-                    - block_apps_sending_location_info (bool): Blocks an application from leaking device location details via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_sending_personally_identifiable_info (bool): Blocks an application from leaking a user's personally identifiable information (PII)
-                        via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_sending_device_identifier (bool): Blocks an application from leaking device identifiers via communication in an unencrypted format or for an unknown purpose
-                    - block_apps_communicating_with_ad_websites (bool): Blocks an application from communicating with known advertisement websites
-                    - block_apps_communicating_with_remote_unknown_servers (bool): Blocks an application from communicating with unknown servers
-                        (i.e., servers not normally or historically associated with the application)
+        Supported attributes:
+            - block_apps_with_malicious_activity (bool): Blocks malicious or hidden applications
+            - block_apps_with_known_vulnerabilities (bool): Block apps with known vulnerabilities or insecure modules
+            - block_apps_sending_unencrypted_user_credentials (bool): Block apps leaking user credentials unencrypted
+            - block_apps_sending_location_info (bool): Block apps leaking device location unencrypted or for unknown purposes
+            - block_apps_sending_personally_identifiable_info (bool): Block app leaking PII unencrypted or for unknown purposes
+            - block_apps_sending_device_identifier (bool): Block apps leaking device IDs unencrypted or for unknown purposes
+            - block_apps_communicating_with_ad_websites (bool): Block apps communicating with known ad websites
+            - block_apps_communicating_with_remote_unknown_servers (bool): Block apps talking to unknown remote servers
+
         Returns:
             tuple:
                 - **MobileAdvancedThreatSettings**: The updated advanced settings object.
@@ -106,10 +104,10 @@ class FTPControlPolicyAPI(APIClient):
 
             >>> malware_settings, _, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
             ...     block_apps_with_malicious_activity = True,
-            ...     block_apps_with_known_vulnerabilities = True, 
+            ...     block_apps_with_known_vulnerabilities = True,
             ...     block_apps_sending_unencrypted_user_credentials = True,
             ...     block_apps_sending_location_info = True,
-            ...     block_apps_sending_personally_identifiable_info = True, 
+            ...     block_apps_sending_personally_identifiable_info = True,
             ...     block_apps_sending_device_identifier = True,
             ...     block_apps_communicating_with_ad_websites = True,
             ...     block_apps_communicating_with_remote_unknown_servers = True
@@ -131,8 +129,7 @@ class FTPControlPolicyAPI(APIClient):
         body = {}
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 

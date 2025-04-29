@@ -34,22 +34,18 @@ class CloudApplicationInstances(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.instance_id = config["instanceId"] \
-                if "instanceId" in config else None
+            self.instance_id = config["instanceId"] if "instanceId" in config else None
 
-            self.instance_type = config["instanceType"] \
-                if "instanceType" in config else None
+            self.instance_type = config["instanceType"] if "instanceType" in config else None
 
-            self.instance_name = config["instanceName"] \
-                if "instanceName" in config else None
+            self.instance_name = config["instanceName"] if "instanceName" in config else None
 
-            self.modified_at = config["modifiedAt"] \
-                if "modifiedAt" in config else None
-            
+            self.modified_at = config["modifiedAt"] if "modifiedAt" in config else None
+
             self.instance_identifiers = ZscalerCollection.form_list(
                 config["instanceIdentifiers"] if "instanceIdentifiers" in config else [], InstanceIdentifiers
             )
-            
+
             if "modifiedBy" in config:
                 if isinstance(config["modifiedBy"], common.CommonBlocks):
                     self.modified_by = config["modifiedBy"]
@@ -78,7 +74,7 @@ class CloudApplicationInstances(ZscalerObject):
             "instanceName": self.instance_name,
             "modifiedBy": self.modified_by,
             "modifiedAt": self.modified_at,
-            "instanceIdentifiers": self.instance_identifiers
+            "instanceIdentifiers": self.instance_identifiers,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -99,21 +95,16 @@ class InstanceIdentifiers(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.instance_id = config["instanceId"] \
-                if "instanceId" in config else None
+            self.instance_id = config["instanceId"] if "instanceId" in config else None
 
-            self.instance_identifier = config["instanceIdentifier"] \
-                if "instanceIdentifier" in config else None
+            self.instance_identifier = config["instanceIdentifier"] if "instanceIdentifier" in config else None
 
-            self.instance_identifier_name = config["instanceIdentifierName"] \
-                if "instanceIdentifierName" in config else None
+            self.instance_identifier_name = config["instanceIdentifierName"] if "instanceIdentifierName" in config else None
 
-            self.identifier_type = config["identifierType"] \
-                if "identifierType" in config else None
-                
-            self.modified_at = config["modifiedAt"] \
-                if "modifiedAt" in config else None
-            
+            self.identifier_type = config["identifierType"] if "identifierType" in config else None
+
+            self.modified_at = config["modifiedAt"] if "modifiedAt" in config else None
+
             if "modifiedBy" in config:
                 if isinstance(config["modifiedBy"], common.CommonBlocks):
                     self.modified_by = config["modifiedBy"]

@@ -33,23 +33,15 @@ class BandwidthClasses(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.is_name_l10n_tag = config["isNameL10nTag"] \
-                if "isNameL10nTag" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], str
-            )
+            self.id = config["id"] if "id" in config else None
+            self.is_name_l10n_tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
+            self.type = config["type"] if "type" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.applications = ZscalerCollection.form_list(config["applications"] if "applications" in config else [], str)
             self.web_applications = ZscalerCollection.form_list(
                 config["webApplications"] if "webApplications" in config else [], str
             )
-            self.urls = ZscalerCollection.form_list(
-                config["urls"] if "urls" in config else [], str
-            )
+            self.urls = ZscalerCollection.form_list(config["urls"] if "urls" in config else [], str)
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
             )
@@ -76,7 +68,7 @@ class BandwidthClasses(ZscalerObject):
             "applications": self.applications,
             "webApplications": self.web_applications,
             "urls": self.urls,
-            "urlCategories": self.url_categories
+            "urlCategories": self.url_categories,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -34,79 +34,49 @@ class RiskProfiles(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.profile_name = config["profileName"] \
-                if "profileName" in config else None
-            self.profile_type = config["profileType"] \
-                if "profileType" in config else None
-            self.risk_index = ZscalerCollection.form_list(
-                config["riskIndex"] if "riskIndex" in config else [], str
-            )
-            self.status = config["status"] \
-                if "status" in config else None
-            self.exclude_certificates = config["excludeCertificates"] \
-                if "excludeCertificates" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.profile_name = config["profileName"] if "profileName" in config else None
+            self.profile_type = config["profileType"] if "profileType" in config else None
+            self.risk_index = ZscalerCollection.form_list(config["riskIndex"] if "riskIndex" in config else [], str)
+            self.status = config["status"] if "status" in config else None
+            self.exclude_certificates = config["excludeCertificates"] if "excludeCertificates" in config else None
             self.certifications = ZscalerCollection.form_list(
                 config["certifications"] if "certifications" in config else [], str
             )
-            self.poor_items_of_service = config["poorItemsOfService"] \
-                if "poorItemsOfService" in config else None
-            self.admin_audit_logs = config["adminAuditLogs"] \
-                if "adminAuditLogs" in config else None
-            self.data_breach = config["dataBreach"] \
-                if "dataBreach" in config else None
-            self.source_ip_restrictions = config["sourceIpRestrictions"] \
-                if "sourceIpRestrictions" in config else None
-            self.mfa_support = config["mfaSupport"] \
-                if "mfaSupport" in config else None
-            self.ssl_pinned = config["sslPinned"] \
-                if "sslPinned" in config else None
-            self.http_security_headers = config["httpSecurityHeaders"] \
-                if "httpSecurityHeaders" in config else None
-            self.evasive = config["evasive"] \
-                if "evasive" in config else None
-            self.dns_caa_policy = config["dnsCaaPolicy"] \
-                if "dnsCaaPolicy" in config else None
-            self.weak_cipher_support = config["weakCipherSupport"] \
-                if "weakCipherSupport" in config else None
-            self.password_strength = config["passwordStrength"] \
-                if "passwordStrength" in config else None
-            self.ssl_cert_validity = config["sslCertValidity"] \
-                if "sslCertValidity" in config else None
-            self.vulnerability = config["vulnerability"] \
-                if "vulnerability" in config else None
-            self.malware_scanning_for_content = config["malwareScanningForContent"] \
-                if "malwareScanningForContent" in config else None
-            self.file_sharing = config["fileSharing"] \
-                if "fileSharing" in config else None
-            self.ssl_cert_key_size = config["sslCertKeySize"] \
-                if "sslCertKeySize" in config else None
-            self.vulnerable_to_heart_bleed = config["vulnerableToHeartBleed"] \
-                if "vulnerableToHeartBleed" in config else None
-            self.vulnerable_to_log_jam = config["vulnerableToLogJam"] \
-                if "vulnerableToLogJam" in config else None
-            self.vulnerable_to_poodle = config["vulnerableToPoodle"] \
-                if "vulnerableToPoodle" in config else None
-            self.vulnerability_disclosure = config["vulnerabilityDisclosure"] \
-                if "vulnerabilityDisclosure" in config else None
-            self.support_for_waf = config["supportForWaf"] \
-                if "supportForWaf" in config else None
-            self.remote_screen_sharing = config["remoteScreenSharing"] \
-                if "remoteScreenSharing" in config else None
-            self.sender_policy_framework = config["senderPolicyFramework"] \
-                if "senderPolicyFramework" in config else None
-            self.domain_keys_identified_mail = config["domainKeysIdentifiedMail"] \
-                if "domainKeysIdentifiedMail" in config else None
-            self.domain_based_message_auth = config["domainBasedMessageAuth"] \
-                if "domainBasedMessageAuth" in config else None
+            self.poor_items_of_service = config["poorItemsOfService"] if "poorItemsOfService" in config else None
+            self.admin_audit_logs = config["adminAuditLogs"] if "adminAuditLogs" in config else None
+            self.data_breach = config["dataBreach"] if "dataBreach" in config else None
+            self.source_ip_restrictions = config["sourceIpRestrictions"] if "sourceIpRestrictions" in config else None
+            self.mfa_support = config["mfaSupport"] if "mfaSupport" in config else None
+            self.ssl_pinned = config["sslPinned"] if "sslPinned" in config else None
+            self.http_security_headers = config["httpSecurityHeaders"] if "httpSecurityHeaders" in config else None
+            self.evasive = config["evasive"] if "evasive" in config else None
+            self.dns_caa_policy = config["dnsCaaPolicy"] if "dnsCaaPolicy" in config else None
+            self.weak_cipher_support = config["weakCipherSupport"] if "weakCipherSupport" in config else None
+            self.password_strength = config["passwordStrength"] if "passwordStrength" in config else None
+            self.ssl_cert_validity = config["sslCertValidity"] if "sslCertValidity" in config else None
+            self.vulnerability = config["vulnerability"] if "vulnerability" in config else None
+            self.malware_scanning_for_content = (
+                config["malwareScanningForContent"] if "malwareScanningForContent" in config else None
+            )
+            self.file_sharing = config["fileSharing"] if "fileSharing" in config else None
+            self.ssl_cert_key_size = config["sslCertKeySize"] if "sslCertKeySize" in config else None
+            self.vulnerable_to_heart_bleed = config["vulnerableToHeartBleed"] if "vulnerableToHeartBleed" in config else None
+            self.vulnerable_to_log_jam = config["vulnerableToLogJam"] if "vulnerableToLogJam" in config else None
+            self.vulnerable_to_poodle = config["vulnerableToPoodle"] if "vulnerableToPoodle" in config else None
+            self.vulnerability_disclosure = config["vulnerabilityDisclosure"] if "vulnerabilityDisclosure" in config else None
+            self.support_for_waf = config["supportForWaf"] if "supportForWaf" in config else None
+            self.remote_screen_sharing = config["remoteScreenSharing"] if "remoteScreenSharing" in config else None
+            self.sender_policy_framework = config["senderPolicyFramework"] if "senderPolicyFramework" in config else None
+            self.domain_keys_identified_mail = (
+                config["domainKeysIdentifiedMail"] if "domainKeysIdentifiedMail" in config else None
+            )
+            self.domain_based_message_auth = config["domainBasedMessageAuth"] if "domainBasedMessageAuth" in config else None
             self.data_encryption_in_transit = ZscalerCollection.form_list(
                 config["dataEncryptionInTransit"] if "dataEncryptionInTransit" in config else [], str
             )
-            self.last_mod_time = config["lastModTime"] \
-                if "lastModTime" in config else None
-            self.create_time = config["createTime"] \
-                if "createTime" in config else None
+            self.last_mod_time = config["lastModTime"] if "lastModTime" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
             if "modifiedBy" in config:
                 if isinstance(config["modifiedBy"], common.CommonBlocks):
                     self.modified_by = config["modifiedBy"]
@@ -116,9 +86,7 @@ class RiskProfiles(ZscalerObject):
                     self.modified_by = None
             else:
                 self.modified_by = None
-            self.custom_tags = ZscalerCollection.form_list(
-                config["customTags"] if "customTags" in config else [], str
-            )
+            self.custom_tags = ZscalerCollection.form_list(config["customTags"] if "customTags" in config else [], str)
         else:
             self.id = None
             self.profile_name = None
@@ -200,7 +168,7 @@ class RiskProfiles(ZscalerObject):
             "lastModTime": self.last_mod_time,
             "createTime": self.create_time,
             "modifiedBy": self.modified_by,
-            "customTags": self.custom_tags
+            "customTags": self.custom_tags,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

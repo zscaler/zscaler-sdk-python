@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_app_instances import CloudApplicationInstances
 from zscaler.utils import format_url
 
+
 class CloudApplicationInstancesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
@@ -73,8 +74,7 @@ class CloudApplicationInstancesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -87,14 +87,12 @@ class CloudApplicationInstancesAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(CloudApplicationInstances(
-                    self.form_response_body(item))
-                )
+                result.append(CloudApplicationInstances(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
-    
+
     def get_cloud_app_instances(self, instance_id: int) -> tuple:
         """
         Retrieves information about a cloud application instance based on the specified ID
@@ -104,7 +102,7 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (cloud application instance, Response, error).
-            
+
         Examples:
             Print a specific Cloud application instances
 
@@ -126,21 +124,17 @@ class CloudApplicationInstancesAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, CloudApplicationInstances)
+        response, error = self._request_executor.execute(request, CloudApplicationInstances)
         if error:
             return (None, response, error)
 
         try:
-            result = CloudApplicationInstances(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationInstances(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -205,15 +199,12 @@ class CloudApplicationInstancesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, CloudApplicationInstances)
+        response, error = self._request_executor.execute(request, CloudApplicationInstances)
         if error:
             return (None, response, error)
 
         try:
-            result = CloudApplicationInstances(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationInstances(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -227,7 +218,7 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated cloud application instance, response, and error.
-            
+
         Examples:
             Update a cloud application instance
 
@@ -259,20 +250,16 @@ class CloudApplicationInstancesAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, CloudApplicationInstances)
+        response, error = self._request_executor.execute(request, CloudApplicationInstances)
         if error:
             return (None, response, error)
 
         try:
-            result = CloudApplicationInstances(
-                self.form_response_body(response.get_body())
-            )
+            result = CloudApplicationInstances(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -286,7 +273,7 @@ class CloudApplicationInstancesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             Delete a specific Cloud application instances
 

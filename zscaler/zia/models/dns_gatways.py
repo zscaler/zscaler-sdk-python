@@ -34,40 +34,29 @@ class DNSGateways(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-                
-            self.name = config["name"] \
-                if "name" in config else None
-                
-            self.dns_gateway_type = config["dnsGatewayType"] \
-                if "dnsGatewayType" in config else None
+            self.id = config["id"] if "id" in config else None
 
-            self.nat_ztr_gateway = config["natZtrGateway"] \
-                if "natZtrGateway" in config else False
-                
-            self.primary_ip_or_fqdn = config["primaryIpOrFqdn"] \
-                if "primaryIpOrFqdn" in config else None
+            self.name = config["name"] if "name" in config else None
 
-            self.primary_ports = ZscalerCollection.form_list(
-                config.get("primaryPorts", []), str
-            )
-            
+            self.dns_gateway_type = config["dnsGatewayType"] if "dnsGatewayType" in config else None
+
+            self.nat_ztr_gateway = config["natZtrGateway"] if "natZtrGateway" in config else False
+
+            self.primary_ip_or_fqdn = config["primaryIpOrFqdn"] if "primaryIpOrFqdn" in config else None
+
+            self.primary_ports = ZscalerCollection.form_list(config.get("primaryPorts", []), str)
+
             self.secondary_ip_or_fqdn = config["secondaryIpOrFqdn"] if "secondaryIpOrFqdn" in config else None
 
-            self.secondary_ports = ZscalerCollection.form_list(
-                config.get("secondaryPorts", []), str
-            )
-            
+            self.secondary_ports = ZscalerCollection.form_list(config.get("secondaryPorts", []), str)
+
             self.failure_behavior = config["failureBehavior"] if "failureBehavior" in config else None
 
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
             self.auto_created = config["autoCreated"] if "autoCreated" in config else False
 
-            self.protocols = ZscalerCollection.form_list(
-                config.get("protocols", []), str
-            )
+            self.protocols = ZscalerCollection.form_list(config.get("protocols", []), str)
 
             # Handle nested CommonBlocks for last_modified_by
             if "lastModifiedBy" in config:

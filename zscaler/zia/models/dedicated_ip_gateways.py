@@ -34,18 +34,12 @@ class DedicatedIPGateways(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.create_time = config["createTime"] \
-                if "createTime" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.default = config["default"] \
-                if "default" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.default = config["default"] if "default" in config else None
 
             if "primaryDataCenter" in config:
                 if isinstance(config["primaryDataCenter"], common.CommonBlocks):
@@ -102,7 +96,7 @@ class DedicatedIPGateways(ZscalerObject):
             "createTime": self.create_time,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
-            "default": self.default
+            "default": self.default,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

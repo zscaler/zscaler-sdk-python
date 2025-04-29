@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.zia.models.tenancy_restriction_profile import TenancyRestrictionProfile
 from zscaler.utils import format_url
 
+
 class TenancyRestrictionProfileAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
@@ -68,8 +69,7 @@ class TenancyRestrictionProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -80,9 +80,7 @@ class TenancyRestrictionProfileAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(TenancyRestrictionProfile(
-                    self.form_response_body(item))
-                )
+                results.append(TenancyRestrictionProfile(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
@@ -91,7 +89,7 @@ class TenancyRestrictionProfileAPI(APIClient):
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
-    
+
     def get_restriction_profile(self, profile_id: int) -> tuple:
         """
         Retrieves the restricted tenant profile based on the specified ID
@@ -101,7 +99,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (restricted tenant profile, Response, error).
-            
+
         Examples:
             Print a specific Tenancy Restriction Profile
 
@@ -123,21 +121,17 @@ class TenancyRestrictionProfileAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, TenancyRestrictionProfile)
+        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = TenancyRestrictionProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -197,7 +191,7 @@ class TenancyRestrictionProfileAPI(APIClient):
                 - The newly added restricted tenant profile.
                 - The HTTP response.
                 - Any error message encountered.
-                
+
         Examples:
             Add a new restricted tenant profile
 
@@ -235,15 +229,12 @@ class TenancyRestrictionProfileAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, TenancyRestrictionProfile)
+        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = TenancyRestrictionProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -257,7 +248,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated restricted tenant profile, response, and error.
-            
+
         Examples:
             Update a restricted tenant profile
 
@@ -288,20 +279,16 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, TenancyRestrictionProfile)
+        response, error = self._request_executor.execute(request, TenancyRestrictionProfile)
         if error:
             return (None, response, error)
 
         try:
-            result = TenancyRestrictionProfile(
-                self.form_response_body(response.get_body())
-            )
+            result = TenancyRestrictionProfile(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -315,7 +302,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             Delete a specific Tenant Restriction Profile
 
@@ -336,8 +323,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
@@ -399,8 +385,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         # body = {"cloudApps": cloud_apps}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, {}, {})
 
         if error:
             return (None, None, error)
