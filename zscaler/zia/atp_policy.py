@@ -77,7 +77,7 @@ class ATPPolicyAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_atp_settings(self, settings: AdvancedThreatProtectionSettings) -> tuple:
+    def update_atp_settings(self, **kwargs) -> tuple:
         """
         Updates advanced threat protection settings in the ZIA Admin Portal.
 
@@ -152,20 +152,26 @@ class ATPPolicyAPI(APIClient):
             """
         )
 
-        payload = settings.request_format()
+        body = {}
+        body.update(kwargs)
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload)
-
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
-
+        response, error = self._request_executor.execute(request, AdvancedThreatProtectionSettings)
         if error:
             return (None, response, error)
 
-        # Fetch updated settings from API after successful update
-        return self.get_atp_settings()
+        try:
+            if response and hasattr(response, "get_body") and response.get_body():
+                result = AdvancedThreatProtectionSettings(self.form_response_body(response.get_body()))
+            else:
+                result = AdvancedThreatProtectionSettings()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)
 
     def get_atp_security_exceptions(self) -> tuple:
         """

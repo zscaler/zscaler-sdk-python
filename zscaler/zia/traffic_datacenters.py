@@ -18,7 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_datacenters import TrafficDatacenters
 from zscaler.zia.models.traffic_dc_exclusions import TrafficDcExclusions
-from zscaler.utils import format_url
+from zscaler.utils import format_url, validate_and_convert_times
 
 
 class TrafficDatacentersAPI(APIClient):
@@ -51,14 +51,11 @@ class TrafficDatacentersAPI(APIClient):
         Examples:
             List DC Exclusions:
 
-            >>> exclusion_list, _, error = client.zia.traffic_datacenters.list_dc_exclusions()
-            >>> if error:
-            ...     print(f"Error listing exclusions: {error}")
-            ...     return
-            ... print(f"Total exclusions found: {len(exclusion_list)}")
-            ... for dc in exclusion_list:
-            ...     print(dc.as_dict())
-
+            >>> fetched_dc, _, error = client.zia.traffic_datacenters.list_dc_exclusions()
+            >>>     if error:
+            ...         print(f"Error fetching dc by ID: {error}")
+            ...         return
+            ...     print(f"Fetched dc by ID: {fetched_dc[0].as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -75,7 +72,8 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.\
+            create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -118,6 +116,32 @@ class TrafficDatacentersAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added DC Exclusion, response, and error.
+
+        Examples:
+            Add a multiple DC Exclusion
+
+            >>> added_dc, _, error = client.zia.traffic_datacenters.add_dc_exclusion(
+            ...     description=f"NewDCExclusion_{random.randint(1000, 10000)}",
+            ...     start_time="Tue, 29 Apr 2025 14:51:00 PST",
+            ...     end_time="Thu, 01 May 2025 14:00:00 PST",
+            ... )
+            >>> if error:
+            ...     print(f"Error adding dc: {error}")
+            ...     return
+            ... for dc in added_dc:
+            ...     print(dc.as_dict())
+
+            Add a single DC Exclusion
+
+            >>> added_dc, _, error = client.zia.traffic_datacenters.add_dc_exclusion(
+            ...     description=f"NewDCExclusion_{random.randint(1000, 10000)}",
+            ...     start_time="Tue, 29 Apr 2025 14:51:00 PST",
+            ...     end_time="Thu, 01 May 2025 14:00:00 PST",
+            ... )
+            >>> if error:
+            ...     print(f"Error adding dc: {error}")
+            ...     return
+            ... print(f"DC added successfully: {added_dc[0].as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -127,28 +151,57 @@ class TrafficDatacentersAPI(APIClient):
         """
         )
 
-        body = kwargs
+        try:
+            start_time = kwargs.get("start_time")
+            end_time = kwargs.get("end_time")
+            time_zone = kwargs.get("time_zone", "UTC")
+
+            if isinstance(start_time, str) and isinstance(end_time, str):
+                start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
+            else:
+                start_epoch = int(start_time)
+                end_epoch = int(end_time)
+
+            dcid = kwargs.get("dcid")
+            if not dcid:
+                dc_list, _, error = self.list_datacenters()
+                if error:
+                    return (None, None, error)
+                if not dc_list:
+                    return (None, None, ValueError("No data centers found to use as default."))
+                dcid = dc_list[0].id
+
+        except Exception as e:
+            return (None, None, e)
+
+        body = [{
+            "dcid": dcid,
+            "startTime": start_epoch,
+            "endTime": end_epoch,
+        }]
 
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
             body=body,
         )
-
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, TrafficDcExclusions)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = TrafficDcExclusions(self.form_response_body(response.get_body()))
+            result = [TrafficDcExclusions(
+                self.form_response_body(item)) for item in response.get_body()]
         except Exception as error:
             return (None, response, error)
+
         return (result, response, None)
 
-    def update_dc_exclusions(self, dc_id: int, **kwargs) -> tuple:
+    # Submit JIRA Case - Method is returning 405.
+    def update_dc_exclusion(self, dcid: int, **kwargs) -> tuple:
         """
         Updates a Zscaler data center DC Exclusion configuration based on the specified ID.
 
@@ -162,12 +215,38 @@ class TrafficDatacentersAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /dcExclusions/{dc_id}
+            /dcExclusions/{dcid}
         """
         )
-        body = {}
 
-        body.update(kwargs)
+        try:
+            start_time = kwargs.get("start_time")
+            end_time = kwargs.get("end_time")
+            time_zone = kwargs.get("time_zone", "UTC")
+
+            if isinstance(start_time, str) and isinstance(end_time, str):
+                start_epoch, end_epoch = validate_and_convert_times(start_time, end_time, time_zone)
+            else:
+                start_epoch = int(start_time)
+                end_epoch = int(end_time)
+
+            dcid = kwargs.get("dcid")
+            if not dcid:
+                dc_list, _, error = self.list_datacenters()
+                if error:
+                    return (None, None, error)
+                if not dc_list:
+                    return (None, None, ValueError("No data centers found to use as default."))
+                dcid = dc_list[0].id
+
+        except Exception as e:
+            return (None, None, e)
+
+        body = [{
+            "dcid": dcid,
+            "startTime": start_epoch,
+            "endTime": end_epoch,
+        }]
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
@@ -193,6 +272,15 @@ class TrafficDatacentersAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete DC Exclusion:
+
+            >>> _, _, error = client.zia.traffic_datacenters.delete_dc_exclusion(added_dc[0].dcid)
+            >>>     if error:
+            ...         print(f"Error deleting dc: {error}")
+            ...         return
+            ...     print(f"DC with ID {added_dc[0].dcid} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

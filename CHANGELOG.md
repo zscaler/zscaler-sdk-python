@@ -6,6 +6,11 @@
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
+### ZIA Password Expiry Settings
+[PR #267](https://github.com/zscaler/zscaler-sdk-python/pull/267) - Added the following new ZIA API Endpoints:
+    - Added `GET /passwordExpiry/settings` Retrieves the password expiration information for all the admins
+    - Added `PUT /passwordExpiry/settings` Updates the password expiration information for all the admins.
+
 ### ZIA Alerts
 [PR #267](https://github.com/zscaler/zscaler-sdk-python/pull/267) - Added the following new ZIA API Endpoints:
     - Added `GET /alertSubscriptions` Retrieves a list of all alert subscriptions
