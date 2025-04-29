@@ -32,52 +32,29 @@ class TrafficDatacenters(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.provider = config["provider"] \
-                if "provider" in config else None
-            self.city = config["city"] \
-                if "city" in config else None
-            self.timezone = config["timezone"] \
-                if "timezone" in config else None
-            self.lat = config["lat"] \
-                if "lat" in config else None
-            self.longi = config["longi"] \
-                if "longi" in config else None
-            self.latitude = config["latitude"] \
-                if "latitude" in config else None
-            self.longitude = config["longitude"] \
-                if "longitude" in config else None
-            self.gov_only = config["govOnly"] \
-                if "govOnly" in config else None
-            self.third_party_cloud = config["thirdPartyCloud"] \
-                if "thirdPartyCloud" in config else None
-            self.upload_bandwidth = config["uploadBandwidth"] \
-                if "uploadBandwidth" in config else None
-            self.download_bandwidth = config["downloadBandwidth"] \
-                if "downloadBandwidth" in config else None
-            self.owned_by_customer = config["ownedByCustomer"] \
-                if "ownedByCustomer" in config else None
-            self.managed_bcp = config["managedBcp"] \
-                if "managedBcp" in config else None
-            self.dont_publish = config["dontPublish"] \
-                if "dontPublish" in config else None
-            self.dont_provision = config["dontProvision"] \
-                if "dontProvision" in config else None
-            self.not_ready_for_use = config["notReadyForUse"] \
-                if "notReadyForUse" in config else None
-            self.for_future_use = config["forFutureUse"] \
-                if "forFutureUse" in config else None
-            self.regional_surcharge = config["regionalSurcharge"] \
-                if "regionalSurcharge" in config else None
-            self.create_time = config["createTime"] \
-                if "createTime" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
-            self.virtual = config["virtual"] \
-                if "virtual" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.provider = config["provider"] if "provider" in config else None
+            self.city = config["city"] if "city" in config else None
+            self.timezone = config["timezone"] if "timezone" in config else None
+            self.lat = config["lat"] if "lat" in config else None
+            self.longi = config["longi"] if "longi" in config else None
+            self.latitude = config["latitude"] if "latitude" in config else None
+            self.longitude = config["longitude"] if "longitude" in config else None
+            self.gov_only = config["govOnly"] if "govOnly" in config else None
+            self.third_party_cloud = config["thirdPartyCloud"] if "thirdPartyCloud" in config else None
+            self.upload_bandwidth = config["uploadBandwidth"] if "uploadBandwidth" in config else None
+            self.download_bandwidth = config["downloadBandwidth"] if "downloadBandwidth" in config else None
+            self.owned_by_customer = config["ownedByCustomer"] if "ownedByCustomer" in config else None
+            self.managed_bcp = config["managedBcp"] if "managedBcp" in config else None
+            self.dont_publish = config["dontPublish"] if "dontPublish" in config else None
+            self.dont_provision = config["dontProvision"] if "dontProvision" in config else None
+            self.not_ready_for_use = config["notReadyForUse"] if "notReadyForUse" in config else None
+            self.for_future_use = config["forFutureUse"] if "forFutureUse" in config else None
+            self.regional_surcharge = config["regionalSurcharge"] if "regionalSurcharge" in config else None
+            self.create_time = config["createTime"] if "createTime" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
+            self.virtual = config["virtual"] if "virtual" in config else None
         else:
             self.id = None
             self.name = None
@@ -131,7 +108,7 @@ class TrafficDatacenters(ZscalerObject):
             "regionalSurcharge": self.regional_surcharge,
             "createTime": self.create_time,
             "lastModifiedTime": self.last_modified_time,
-            "virtual": self.virtual
+            "virtual": self.virtual,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

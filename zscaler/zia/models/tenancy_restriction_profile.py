@@ -33,38 +33,29 @@ class TenancyRestrictionProfile(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.app_type = config["appType"] \
-                if "appType" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
-            self.item_type_primary = config["itemTypePrimary"] \
-                if "itemTypePrimary" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.app_type = config["appType"] if "appType" in config else None
+            self.description = config["description"] if "description" in config else None
+            self.item_type_primary = config["itemTypePrimary"] if "itemTypePrimary" in config else None
             self.item_data_primary = ZscalerCollection.form_list(
                 config["itemDataPrimary"] if "itemDataPrimary" in config else [], str
             )
-            self.item_type_secondary = config["itemTypeSecondary"] \
-                if "itemTypeSecondary" in config else None
+            self.item_type_secondary = config["itemTypeSecondary"] if "itemTypeSecondary" in config else None
 
             self.item_data_secondary = ZscalerCollection.form_list(
                 config["itemDataSecondary"] if "itemDataSecondary" in config else [], str
             )
-            self.item_value = ZscalerCollection.form_list(
-                config["itemValue"] if "itemValue" in config else [], str
+            self.item_value = ZscalerCollection.form_list(config["itemValue"] if "itemValue" in config else [], str)
+            self.restrict_personal_o365_domains = (
+                config["restrictPersonalO365Domains"] if "restrictPersonalO365Domains" in config else None
             )
-            self.restrict_personal_o365_domains = config["restrictPersonalO365Domains"] \
-                if "restrictPersonalO365Domains" in config else None
-            self.allow_google_consumers = config["allowGoogleConsumers"] \
-                if "allowGoogleConsumers" in config else None
-            self.ms_login_services_tr_v2 = config["msLoginServicesTrV2"] \
-                if "msLoginServicesTrV2" in config else None
-            self.allow_google_visitors = config["allowGoogleVisitors"] \
-                if "allowGoogleVisitors" in config else None
-            self.allow_gcp_cloud_storage_read = config["allowGcpCloudStorageRead"] \
-                if "allowGcpCloudStorageRead" in config else None
+            self.allow_google_consumers = config["allowGoogleConsumers"] if "allowGoogleConsumers" in config else None
+            self.ms_login_services_tr_v2 = config["msLoginServicesTrV2"] if "msLoginServicesTrV2" in config else None
+            self.allow_google_visitors = config["allowGoogleVisitors"] if "allowGoogleVisitors" in config else None
+            self.allow_gcp_cloud_storage_read = (
+                config["allowGcpCloudStorageRead"] if "allowGcpCloudStorageRead" in config else None
+            )
         else:
             self.id = None
             self.name = None
@@ -100,7 +91,7 @@ class TenancyRestrictionProfile(ZscalerObject):
             "allowGoogleConsumers": self.allow_google_consumers,
             "msLoginServicesTrV2": self.ms_login_services_tr_v2,
             "allowGoogleVisitors": self.allow_google_visitors,
-            "allowGcpCloudStorageRead": self.allow_gcp_cloud_storage_read
+            "allowGcpCloudStorageRead": self.allow_gcp_cloud_storage_read,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -33,16 +33,11 @@ class TrafficDcExclusions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.dcid = config["dcid"] \
-                if "dcid" in config else None
-            self.expired = config["expired"] \
-                if "expired" in config else None
-            self.start_time = config["startTime"] \
-                if "startTime" in config else None
-            self.end_time = config["endTime"] \
-                if "endTime" in config else None
-            self.description = config["description"] \
-                if "description" in config else None
+            self.dcid = config["dcid"] if "dcid" in config else None
+            self.expired = config["expired"] if "expired" in config else None
+            self.start_time = config["startTime"] if "startTime" in config else None
+            self.end_time = config["endTime"] if "endTime" in config else None
+            self.description = config["description"] if "description" in config else None
 
             if "dcName" in config:
                 if isinstance(config["dcName"], common.CommonBlocks):
@@ -72,7 +67,7 @@ class TrafficDcExclusions(ZscalerObject):
             "startTime": self.start_time,
             "endTime": self.end_time,
             "description": self.description,
-            "dcName": self.dc_name
+            "dcName": self.dc_name,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

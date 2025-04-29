@@ -32,22 +32,36 @@ class MobileAdvancedThreatSettings(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.block_apps_with_malicious_activity = config["blockAppsWithMaliciousActivity"] \
-                if "blockAppsWithMaliciousActivity" in config else None
-            self.block_apps_with_known_vulnerabilities = config["blockAppsWithKnownVulnerabilities"] \
-                if "blockAppsWithKnownVulnerabilities" in config else None
-            self.block_apps_sending_unencrypted_user_credentials = config["blockAppsSendingUnencryptedUserCredentials"] \
-                if "blockAppsSendingUnencryptedUserCredentials" in config else None
-            self.block_apps_sending_location_info = config["blockAppsSendingLocationInfo"] \
-                if "blockAppsSendingLocationInfo" in config else None
-            self.block_apps_sending_personally_identifiable_info = config["blockAppsSendingPersonallyIdentifiableInfo"] \
-                if "blockAppsSendingPersonallyIdentifiableInfo" in config else None
-            self.block_apps_sending_device_identifier = config["blockAppsSendingDeviceIdentifier"] \
-                if "blockAppsSendingDeviceIdentifier" in config else None
-            self.block_apps_communicating_with_ad_websites = config["blockAppsCommunicatingWithAdWebsites"] \
-                if "blockAppsCommunicatingWithAdWebsites" in config else None
-            self.block_apps_communicating_with_remote_unknown_servers = config["blockAppsCommunicatingWithRemoteUnknownServers"] \
-                if "blockAppsCommunicatingWithRemoteUnknownServers" in config else None
+            self.block_apps_with_malicious_activity = (
+                config["blockAppsWithMaliciousActivity"] if "blockAppsWithMaliciousActivity" in config else None
+            )
+            self.block_apps_with_known_vulnerabilities = (
+                config["blockAppsWithKnownVulnerabilities"] if "blockAppsWithKnownVulnerabilities" in config else None
+            )
+            self.block_apps_sending_unencrypted_user_credentials = (
+                config["blockAppsSendingUnencryptedUserCredentials"]
+                if "blockAppsSendingUnencryptedUserCredentials" in config
+                else None
+            )
+            self.block_apps_sending_location_info = (
+                config["blockAppsSendingLocationInfo"] if "blockAppsSendingLocationInfo" in config else None
+            )
+            self.block_apps_sending_personally_identifiable_info = (
+                config["blockAppsSendingPersonallyIdentifiableInfo"]
+                if "blockAppsSendingPersonallyIdentifiableInfo" in config
+                else None
+            )
+            self.block_apps_sending_device_identifier = (
+                config["blockAppsSendingDeviceIdentifier"] if "blockAppsSendingDeviceIdentifier" in config else None
+            )
+            self.block_apps_communicating_with_ad_websites = (
+                config["blockAppsCommunicatingWithAdWebsites"] if "blockAppsCommunicatingWithAdWebsites" in config else None
+            )
+            self.block_apps_communicating_with_remote_unknown_servers = (
+                config["blockAppsCommunicatingWithRemoteUnknownServers"]
+                if "blockAppsCommunicatingWithRemoteUnknownServers" in config
+                else None
+            )
         else:
             self.block_apps_with_malicious_activity = None
             self.block_apps_with_known_vulnerabilities = None
@@ -71,7 +85,7 @@ class MobileAdvancedThreatSettings(ZscalerObject):
             "blockAppsSendingPersonallyIdentifiableInfo": self.block_apps_sending_personally_identifiable_info,
             "blockAppsSendingDeviceIdentifier": self.block_apps_sending_device_identifier,
             "blockAppsCommunicatingWithAdWebsites": self.block_apps_communicating_with_ad_websites,
-            "blockAppsCommunicatingWithRemoteUnknownServers": self.block_apps_communicating_with_remote_unknown_servers
+            "blockAppsCommunicatingWithRemoteUnknownServers": self.block_apps_communicating_with_remote_unknown_servers,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

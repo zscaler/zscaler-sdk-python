@@ -73,8 +73,7 @@ class RuleLabelsAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -101,7 +100,7 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Rule Label instance, Response, error).
-            
+
         Examples:
             Print a specific Rule Label
 
@@ -151,7 +150,7 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added Rule Label, response, and error.
-            
+
         Examples:
             Add a new Rule Label :
 
@@ -202,7 +201,7 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Rule Label, response, and error.
-            
+
         Examples:
             Add a new Rule Label :
 
@@ -250,7 +249,7 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             List Rule Label:
 

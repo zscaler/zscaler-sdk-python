@@ -102,8 +102,6 @@ class DNSGatewayAPI(APIClient):
         except Exception as exc:
             return (None, response, exc)
 
-
-
         if local_search:
             lower_search = local_search.lower()
             results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
@@ -191,20 +189,17 @@ class DNSGatewayAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, DNSGateways)
+        response, error = self._request_executor.execute(request, DNSGateways)
 
         if error:
             return (None, response, error)
 
         try:
-            result = DNSGateways(
-                self.form_response_body(response.get_body())
-            )
+            result = DNSGateways(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def update_dns_gateway(self, gateway_id: int, **kwargs) -> tuple:
         """
         Updates information for the specified ZIA DNS Gateway.
@@ -264,13 +259,11 @@ class DNSGatewayAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
         return (None, response, None)

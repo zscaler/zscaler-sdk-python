@@ -62,8 +62,7 @@ class CloudAppControlAPI(APIClient):
 
         body = {"cloudApps": cloud_apps}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {})
 
         if error:
             return (None, None, error)
@@ -120,8 +119,7 @@ class CloudAppControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -134,9 +132,7 @@ class CloudAppControlAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(
-                    CloudApplicationControl(self.form_response_body(item))
-                )
+                result.append(CloudApplicationControl(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
 
@@ -213,8 +209,7 @@ class CloudAppControlAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)

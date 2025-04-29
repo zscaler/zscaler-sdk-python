@@ -28,6 +28,7 @@ from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import common
 
+
 class FileTypeControlRules(ZscalerObject):
     """
     A class for FileTypeControlRules objects.

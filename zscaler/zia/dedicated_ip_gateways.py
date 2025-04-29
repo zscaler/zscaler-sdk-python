@@ -31,7 +31,7 @@ class DedicatedIPGatewaysAPI(APIClient):
     def __init__(self, request_executor):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
-        
+
     def list_dedicated_ip_gw_lite(
         self,
         query_params=None,
@@ -43,7 +43,7 @@ class DedicatedIPGatewaysAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Proxies instance, Response, error).
-            
+
         Examples:
             >>> gw_list, _, error = client.zia.dedicated_ip_gateways.list_dedicated_ip_gw_lite()
             >>> if error:
@@ -64,8 +64,7 @@ class DedicatedIPGatewaysAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)

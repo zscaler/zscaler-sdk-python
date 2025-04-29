@@ -808,7 +808,7 @@ class LegacyZIAClientHelper:
         from zscaler.zia.alert_subscriptions import AlertSubscriptionsAPI
 
         return AlertSubscriptionsAPI(self.request_executor)
-    
+
     @property
     def bandwidth_classes(self):
         """
@@ -887,7 +887,7 @@ class LegacyZIAClientHelper:
         """
         from zscaler.zia.proxies import ProxiesAPI
 
-        return ProxiesAPI(self.request_executor)    
+        return ProxiesAPI(self.request_executor)
 
     @property
     def dedicated_ip_gateways(self):
@@ -898,7 +898,7 @@ class LegacyZIAClientHelper:
         from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
 
         return DedicatedIPGatewaysAPI(self.request_executor)
-    
+
     @property
     def traffic_datacenters(self):
         """
@@ -908,7 +908,6 @@ class LegacyZIAClientHelper:
         from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 
         return TrafficDatacentersAPI(self.request_executor)
-    
 
     """
     Misc

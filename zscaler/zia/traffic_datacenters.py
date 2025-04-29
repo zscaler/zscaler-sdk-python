@@ -75,8 +75,7 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -87,9 +86,7 @@ class TrafficDatacentersAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(TrafficDcExclusions(
-                    self.form_response_body(item))
-                )
+                results.append(TrafficDcExclusions(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
@@ -172,8 +169,7 @@ class TrafficDatacentersAPI(APIClient):
 
         body.update(kwargs)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, {})
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
@@ -208,8 +204,7 @@ class TrafficDatacentersAPI(APIClient):
 
         params = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
@@ -229,7 +224,7 @@ class TrafficDatacentersAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (risk profile lite instance, Response, error).
-            
+
         Examples:
             List datacenters:
 
@@ -254,8 +249,7 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)

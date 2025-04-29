@@ -20,13 +20,16 @@ from zscaler.oneapi_client import LegacyZDXClient
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
+
 @pytest.fixture(scope="function")
 def zdx_client(fs):
     return MockZDXClient(fs)
 
+
 def test_token_validation(zdx_client):
     info = zdx_client.validate_token()
     assert info.get("valid", False) is True
+
 
 class MockZDXClient(LegacyZDXClient):
     def __init__(self, fs, config=None):

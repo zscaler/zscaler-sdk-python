@@ -33,17 +33,13 @@ class FTPControlPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.ftp_over_http_enabled = config["ftpOverHttpEnabled"] \
-                if "ftpOverHttpEnabled" in config else None
-            self.ftp_enabled = config["ftpEnabled"] \
-                if "ftpEnabled" in config else None
+            self.ftp_over_http_enabled = config["ftpOverHttpEnabled"] if "ftpOverHttpEnabled" in config else None
+            self.ftp_enabled = config["ftpEnabled"] if "ftpEnabled" in config else None
 
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], str
             )
-            self.urls = ZscalerCollection.form_list(
-                config["urls"] if "urls" in config else [], str
-            )
+            self.urls = ZscalerCollection.form_list(config["urls"] if "urls" in config else [], str)
         else:
             self.ftp_over_http_enabled = None
             self.ftp_enabled = None
@@ -59,7 +55,7 @@ class FTPControlPolicy(ZscalerObject):
             "ftpOverHttpEnabled": self.ftp_over_http_enabled,
             "ftpEnabled": self.ftp_enabled,
             "urlCategories": self.url_categories,
-            "urls": self.urls
+            "urls": self.urls,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

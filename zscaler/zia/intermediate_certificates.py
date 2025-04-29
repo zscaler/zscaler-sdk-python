@@ -324,15 +324,12 @@ class IntermediateCertsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, IntermediateCACertificate)
+        response, error = self._request_executor.execute(request, IntermediateCACertificate)
         if error:
             return (None, response, error)
 
         try:
-            result = IntermediateCACertificate(
-                self.form_response_body(response.get_body())
-            )
+            result = IntermediateCACertificate(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

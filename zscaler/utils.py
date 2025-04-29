@@ -75,7 +75,7 @@ reformat_params = [
     ("zpa_application_segment_groups", "zpaApplicationSegmentGroups"),
     ("workload_groups", "workloadGroups"),
     ("service_ids", "services"),
-    ("bandwidth_class_ids", "bandwidthClasses")
+    ("bandwidth_class_ids", "bandwidthClasses"),
 ]
 
 
