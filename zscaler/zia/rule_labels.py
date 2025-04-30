@@ -51,18 +51,14 @@ class RuleLabelsAPI(APIClient):
         Examples:
             List Rule Labels using default settings:
 
-            >>> for label in zia.labels.list_labels():
-            ...   print(label)
-
-            List labels, limiting to a maximum of 10 items:
-
-            >>> for label in zia.labels.list_labels(max_items=10):
-            ...    print(label)
-
-            List labels, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for label in zia.labels.list_labels(page_size=200, max_pages=2):
-            ...    print(label)
+            >>> label_list, _, error = client.zia.rule_labels.list_labels(
+                query_params={'search': updated_label.name})
+            >>> if error:
+            ...     print(f"Error listing labels: {error}")
+            ...     return
+            ... print(f"Total labels found: {len(label_list)}")
+            ... for label in label_list:
+            ...     print(label.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -104,6 +100,16 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Rule Label instance, Response, error).
+
+        Examples:
+            Print a specific Rule Label
+
+            >>> fetched_label, _, error = client.zia.rule_labels.get_label(
+                '1254654')
+            >>> if error:
+            ...     print(f"Error fetching Rule Label by ID: {error}")
+            ...     return
+            ... print(f"Fetched Rule Label by ID: {fetched_label.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -136,11 +142,26 @@ class RuleLabelsAPI(APIClient):
         Creates a new ZIA Rule Label.
 
         Args:
-            label (dict or object):
-                The label data to be sent in the request.
+            name (str): The name of the Proxy.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            description (str): Additional notes or information
 
         Returns:
             tuple: A tuple containing the newly added Rule Label, response, and error.
+
+        Examples:
+            Add a new Rule Label :
+
+            >>> added_label, _, error = client.zia.rule_labels.add_label(
+            ... name=f"RuleLabel_{random.randint(1000, 10000)}",
+            ... description=f"RuleLabel_{random.randint(1000, 10000)}",
+            ... )
+            >>> if error:
+            ...     print(f"Error adding Rule Label: {error}")
+            ...     return
+            ... print(f"Rule Label added successfully: {added_profile.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -180,6 +201,19 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Rule Label, response, and error.
+
+        Examples:
+            Add a new Rule Label :
+
+            >>> updated_label, _, error = client.zia.rule_labels.add_label(
+                label_id='1524566'
+            ... name=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
+            ... description=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
+            ... )
+            >>> if error:
+            ...     print(f"Error updating Rule Label: {error}")
+            ...     return
+            ... print(f"Rule Label updated successfully: {updated_label.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -215,6 +249,15 @@ class RuleLabelsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            List Rule Label:
+
+            >>> _, _, error = client.zia.rule_labels.delete_label('73459')
+            >>> if error:
+            ...     print(f"Error deleting Rule Label: {error}")
+            ...     return
+            ... print(f"Rule Label with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

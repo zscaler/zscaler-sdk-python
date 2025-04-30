@@ -74,8 +74,7 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
@@ -125,20 +124,16 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PRACredentialPoolController)
+        response, error = self._request_executor.execute(request, PRACredentialPoolController)
         if error:
             return (None, response, error)
 
         try:
-            result = PRACredentialPoolController(
-                self.form_response_body(response.get_body())
-            )
+            result = PRACredentialPoolController(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -177,13 +172,11 @@ class PRACredentialPoolAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PRACredentialPoolController)
+        response, error = self._request_executor.execute(request, PRACredentialPoolController)
         if error:
             return (None, response, error)
 
@@ -236,8 +229,7 @@ class PRACredentialPoolAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body=body, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
@@ -294,13 +286,11 @@ class PRACredentialPoolAPI(APIClient):
 
         add_id_groups(self.reformat_params, kwargs, body)
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, {}, params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.\
-            execute(request, PRACredentialPoolController)
+        response, error = self._request_executor.execute(request, PRACredentialPoolController)
         if error:
             return (None, response, error)
 
@@ -343,8 +333,7 @@ class PRACredentialPoolAPI(APIClient):
 
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 

@@ -30,8 +30,8 @@ class TestAlerts:
     Integration Tests for the alerts
     """
 
-    def test_list_ongoing(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_ongoing(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -49,8 +49,8 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_historical(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_historical(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -68,8 +68,8 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_get_alert(self, fs):
-        client = MockZDXClient(fs)
+    def test_get_alert(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
@@ -104,8 +104,8 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
-    def test_list_affected_devices(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_affected_devices(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:

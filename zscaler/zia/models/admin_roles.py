@@ -91,3 +91,41 @@ class AdminRoles(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class PasswordExpiry(ZscalerObject):
+    """
+    A class for PasswordExpiry objects.
+    Handles Password Expiry attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the PasswordExpiry model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.password_expiration_enabled = config["passwordExpirationEnabled"] \
+                if "passwordExpirationEnabled" in config else None
+
+            self.password_expiry_days = config["passwordExpiryDays"] \
+                if "passwordExpiryDays" in config else None
+
+        else:
+            self.password_expiration_enabled = None
+            self.password_expiry_days = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "passwordExpirationEnabled": self.password_expiration_enabled,
+            "passwordExpiryDays": self.password_expiry_days,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
