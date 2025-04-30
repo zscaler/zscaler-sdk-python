@@ -308,7 +308,8 @@ class AdvancedSettings(ZscalerObject):
             "dnsResolutionOnTransparentProxyExemptApps": self.dns_resolution_on_transparent_proxy_exempt_apps,
             "dnsResolutionOnTransparentProxyIPv6ExemptApps": self.dns_resolution_on_transparent_proxy_ipv6_exempt_apps,
             "dnsResolutionOnTransparentProxyUrlCategories": self.dns_resolution_on_transparent_proxy_url_categories,
-            "dnsResolutionOnTransparentProxyIPv6UrlCategories": self.dns_resolution_on_transparent_proxy_ipv6_url_categories,
+            "dnsResolutionOnTransparentProxyIPv6UrlCategories":
+                self.dns_resolution_on_transparent_proxy_ipv6_url_categories,
             "dnsResolutionOnTransparentProxyUrls": self.dns_resolution_on_transparent_proxy_urls,
             "dnsResolutionOnTransparentProxyApps": self.dns_resolution_on_transparent_proxy_apps,
             "dnsResolutionOnTransparentProxyIPv6Apps": self.dns_resolution_on_transparent_proxy_ipv6_apps,

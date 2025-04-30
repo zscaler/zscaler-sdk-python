@@ -1,8 +1,8 @@
 import logging
 import os
 import time
-import json
 import requests
+import random
 from hashlib import sha256
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
@@ -12,6 +12,8 @@ from zscaler.user_agent import UserAgent
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
+_token_cache = {}
+_jwks_cache = {}
 
 
 class LegacyZDXClientHelper:
@@ -82,20 +84,37 @@ class LegacyZDXClientHelper:
         Helper method to perform a GET request with rate limiting retry logic.
         """
         max_retries = self.config["client"]["rateLimit"].get("maxRetries", 3)
+        retry_threshold = self.config["client"]["rateLimit"].get("remainingThreshold", 2)
+
         for attempt in range(max_retries):
             response = session.get(url, timeout=self.timeout)
-            if response.status_code == 429:
-                rate_limit_reset = response.headers.get("RateLimit-Reset")
-                try:
-                    delay = int(rate_limit_reset) + 1 if rate_limit_reset else 1
-                except Exception:
-                    delay = 1
+
+            remaining = response.headers.get("X-Ratelimit-Remaining-Second")
+            limit = response.headers.get("X-Ratelimit-Limit-Second")
+
+            try:
+                remaining_int = int(remaining) if remaining else None
+                limit_int = int(limit) if limit else None
+            except Exception:
+                remaining_int, limit_int = None, None
+
+            # Proactive backoff before hitting the limit
+            if remaining_int is not None and remaining_int < retry_threshold:
+                delay = 1 + random.uniform(0, 0.5)  # Add jitter
                 sanitized_url = url.split("?")[0]
                 logger.info(
-                    f"Rate limit hit on GET {sanitized_url}.Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})"
+                    f"Rate limit approaching on GET {sanitized_url}. "
+                    f"Remaining={remaining_int}, Limit={limit_int}. "
+                    f"Backing off for {delay:.2f}s (attempt {attempt + 1}/{max_retries})"
                 )
                 time.sleep(delay)
                 continue
+
+            if response.status_code == 429:
+                logger.warning(f"429 received from {url}. Retrying with fallback delay.")
+                time.sleep(1 + random.uniform(0, 0.5))
+                continue
+
             try:
                 response.raise_for_status()
             except Exception as e:
@@ -117,31 +136,6 @@ class LegacyZDXClientHelper:
 
         session.headers.update({"Authorization": f"Bearer {token}"})
 
-        validate_url = f"{self.url}/v1/oauth/validate"
-        try:
-            validate_response = self._get_with_rate_limiting(session, validate_url)
-            validate_data = validate_response.json()
-            # logger.debug(f"Token validation response: {validate_data}")
-            logger.debug(f"Token validation response: {{'valid': {validate_data.get('valid', False)}}}")
-            if not validate_data.get("valid", False):
-                raise Exception("Token validation failed: token is not valid.")
-            else:
-                logger.info("Token validated successfully.")
-        except Exception as e:
-            logger.error("Token validation failed: %s", e)
-            raise Exception(f"Token validation failed: {e}")
-
-        jwks_url = f"{self.url}/v1/oauth/jwks"
-        try:
-            jwks_response = self._get_with_rate_limiting(session, jwks_url)
-            jwks_data = jwks_response.json()
-            # logger.debug(f"JWKS response: {json.dumps(jwks_data, indent=2)}")
-            sanitized_jwks_data = {"keys": [{"kid": key.get("kid")} for key in jwks_data.get("keys", [])]}
-            logger.debug(f"Sanitized JWKS response: {json.dumps(sanitized_jwks_data, indent=2)}")
-        except Exception as e:
-            logger.error("Failed to retrieve JWKS: %s", e)
-            raise Exception(f"Failed to retrieve JWKS: {e}")
-
         return session
 
     def create_token(self):
@@ -152,6 +146,13 @@ class LegacyZDXClientHelper:
         Raises:
             Exception: If token retrieval fails.
         """
+        cache_key = f"{self._client_id}:{self._client_secret}"
+        if cache_key in _token_cache:
+            logger.info("Using cached ZDX token.")
+            self.auth_token = _token_cache[cache_key]
+            self.request_executor._default_headers["Authorization"] = f"Bearer {self.auth_token}"
+            return {"token": self.auth_token}
+
         max_retries = self.config["client"]["rateLimit"].get("maxRetries", 3)
         for attempt in range(max_retries):
             epoch_time = int(time.time())
@@ -165,7 +166,6 @@ class LegacyZDXClientHelper:
             }
 
             token_url = f"{self.url}/v1/oauth/token"
-            # logger.debug(f"Token request URL: {token_url}")
             response = requests.post(
                 token_url,
                 json=payload,
@@ -177,22 +177,25 @@ class LegacyZDXClientHelper:
             )
 
             if response.status_code == 429:
-                rate_limit_reset = response.headers.get("RateLimit-Reset")
+                remaining = response.headers.get("X-Ratelimit-Remaining-Second")
                 try:
-                    delay = int(rate_limit_reset) + 1 if rate_limit_reset else 1
+                    remaining_int = int(remaining) if remaining else None
                 except Exception:
-                    delay = 1
-                logger.info(
-                    # f"Rate limit hit on token request. Retrying in {delay} seconds (attempt {attempt + 1}/{max_retries})."
-                    "Rate limit hit on token request. Retrying after a delay. Attempt %d of %d.",
-                    attempt + 1,
-                    max_retries,
-                )
-                time.sleep(delay)
-                continue
+                    remaining_int = None
+
+                delay = 1 + random.uniform(0, 0.5)  # Default 1s backoff + jitter
+                if remaining_int is not None and remaining_int < 2:
+                    logger.warning(
+                        "Rate limit exceeded on token request. Retrying in %.2fs (attempt %d/%d)",
+                        delay,
+                        attempt + 1,
+                        max_retries,
+                    )
+                    time.sleep(delay)
+                    continue
 
             try:
-                response.raise_for_status()  # Raise exception for non-2xx responses
+                response.raise_for_status()
             except Exception as e:
                 logger.error("Failed to retrieve token: %s", e)
                 raise Exception(f"Failed to retrieve token: {e}")
@@ -204,6 +207,7 @@ class LegacyZDXClientHelper:
 
             # Save the token and update default headers for subsequent requests
             self.auth_token = token
+            _token_cache[cache_key] = token  # ✅ Cache it
             self.request_executor._default_headers["Authorization"] = f"Bearer {token}"
 
             return token_data
@@ -231,12 +235,60 @@ class LegacyZDXClientHelper:
         Returns:
             dict: The JWKS response.
         """
-        response, error = self.request_executor.execute(self.request_executor.create_request("GET", "/v1/oauth/jwks"))
+        if self._client_id in _jwks_cache:
+            logger.info("Using cached JWKS data.")
+            return _jwks_cache[self._client_id]
 
-        if error:
-            raise Exception(f"Failed to retrieve JWKS: {error}")
+        jwks_url = f"{self.url}/v1/oauth/jwks"
+        max_retries = self.config["client"]["rateLimit"].get("maxRetries", 3)
+        retry_threshold = self.config["client"]["rateLimit"].get("remainingThreshold", 2)
 
-        return response.data
+        for attempt in range(max_retries):
+            response = requests.get(
+                jwks_url,
+                headers={
+                    "Authorization": f"Bearer {self.auth_token}",
+                    "User-Agent": self.user_agent,
+                },
+                timeout=self.timeout,
+            )
+
+            remaining = response.headers.get("X-Ratelimit-Remaining-Second")
+            try:
+                remaining_int = int(remaining) if remaining else None
+            except Exception:
+                remaining_int = None
+
+            # Proactive backoff
+            if remaining_int is not None and remaining_int < retry_threshold:
+                delay = 1 + random.uniform(0, 0.5)
+                logger.info(
+                    "Rate limit approaching on JWKS request. Remaining=%s. Backing off %.2fs (attempt %d/%d)",
+                    remaining,
+                    delay,
+                    attempt + 1,
+                    max_retries,
+                )
+                time.sleep(delay)
+                continue
+
+            if response.status_code == 429:
+                delay = 1 + random.uniform(0, 0.5)
+                logger.warning("429 on JWKS request. Retrying after %.2fs (attempt %d/%d)", delay, attempt + 1, max_retries)
+                time.sleep(delay)
+                continue
+
+            try:
+                response.raise_for_status()
+            except Exception as e:
+                logger.error("Failed to retrieve JWKS: %s", e)
+                raise Exception(f"Failed to retrieve JWKS: {e}")
+
+            jwks_data = response.json()
+            _jwks_cache[self._client_id] = jwks_data  # ✅ Cache the JWKS data
+            return jwks_data
+
+        raise Exception(f"Failed to retrieve JWKS after {max_retries} attempts due to rate limiting.")
 
     def get_base_url(self, endpoint):
         return self.url

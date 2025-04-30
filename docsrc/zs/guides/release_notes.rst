@@ -6,6 +6,161 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.1.0 (April, 28 2025)
+-----------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+ZIA Password Expiry Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /passwordExpiry/settings` Retrieves the password expiration information for all the admins
+    - Added `PUT /passwordExpiry/settings` Updates the password expiration information for all the admins.
+
+ZIA Alerts
+^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /alertSubscriptions` Retrieves a list of all alert subscriptions
+    - Added `GET /alertSubscriptions/{subscription_id}` Retrieves the alert subscription information based on the specified ID
+    - Added `POST /alertSubscriptions` Adds a new alert subscription.
+    - Added `PUT /alertSubscriptions/{subscription_id}` Updates an existing alert subscription based on the specified ID
+
+ZIA Bandwidth Classes
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /bandwidthClasses` Retrieves a list of bandwidth classes for an organization.
+    - Added `GET /bandwidthClasses/lite` Retrieves a list of bandwidth classes for an organization
+    - Added `GET /bandwidthClasses/{class_id}` Retrieves the alert subscription information based on the specified ID
+    - Added `POST /bandwidthClasses` Adds a new bandwidth class.
+    - Added `PUT /bandwidthClasses/{class_id}` Updates a bandwidth class based on the specified ID
+    - Added `DELETE /bandwidthClasses/{class_id}` Deletes a bandwidth class based on the specified ID
+
+ZIA Bandwidth Control Rules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /bandwidthControlRules` Retrieves all the rules in the Bandwidth Control policy.
+    - Added `GET /bandwidthControlRules/lite` Retrieves all the rules in the Bandwidth Control policy
+    - Added `GET /bandwidthControlRules/{rule_id}` Retrieves the Bandwidth Control policy rule based on the specified ID
+    - Added `POST /bandwidthControlRules` Adds a new Bandwidth Control policy rule.
+    - Added `PUT /bandwidthControlRules/{rule_id}` Updates the Bandwidth Control policy rule based on the specified ID
+    - Added `DELETE /bandwidthControlRules/{rule_id}` Deletes a Bandwidth Control policy rule based on the specified ID
+
+ZIA Risk Profiles
+^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /riskProfiles` Retrieves the cloud application risk profile.
+    - Added `GET /riskProfiles/lite` Retrieves the cloud application risk profile
+    - Added `GET /riskProfiles/{profile_id}` Retrieves the cloud application risk profile based on the specified ID
+    - Added `POST /riskProfiles` Adds a new cloud application risk profile. 
+    - Added `PUT /riskProfiles/{profile_id}` Updates the cloud application risk profile based on the specified ID
+    - Added `DELETE /riskProfiles/{profile_id}` Deletes the cloud application risk profile based on the specified ID
+
+ZIA Cloud Application Instances
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /cloudApplicationInstances` Retrieves the list of cloud application instances configured in the ZIA Admin Portal.
+    - Added `GET /cloudApplicationInstances/{instance_id}` Retrieves information about a cloud application instance based on the specified ID
+    - Added `POST /cloudApplicationInstances` Add a new cloud application instance. 
+    - Added `PUT /cloudApplicationInstances/{instance_id}` Updates information about a cloud application instance based on the specified ID
+    - Added `DELETE /cloudApplicationInstances/{instance_id}` Deletes a cloud application instance based on the specified ID
+
+ZIA Cloud Application Instances
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /cloudApplicationInstances` Retrieves the list of cloud application instances configured in the ZIA Admin Portal
+    - Added `GET /cloudApplicationInstances/{instance_id}` Retrieves information about a cloud application instance based on the specified ID
+    - Added `POST /cloudApplicationInstances` Add a new cloud application instance
+    - Added `PUT /cloudApplicationInstances/{instance_id}` Updates information about a cloud application instance based on the specified ID
+    - Added `DELETE /cloudApplicationInstances/{instance_id}` Deletes a cloud application instance based on the specified ID
+
+ZIA Tenancy Restriction Profile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /tenancyRestrictionProfile` Retrieves all the restricted tenant profiles
+    - Added `GET /tenancyRestrictionProfile/{profile_id}` Retrieves the restricted tenant profile based on the specified ID
+    - Added `POST /tenancyRestrictionProfile` Creates restricted tenant profiles
+    - Added `PUT /tenancyRestrictionProfile/{profile_id}` Updates the restricted tenant profile based on the specified ID
+    - Added `DELETE /tenancyRestrictionProfile/{profile_id}` Deletes the restricted tenant profile based on the specified ID
+    - Added `GET /tenancyRestrictionProfile/app-item-count/{app_type}/{item_type}` Retrieves the item count of the specified item type for a given application, excluding any specified profile
+
+ZIA DNS Gateway
+^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /dnsGateways` Retrieves a list of DNS Gateways
+    - Added `GET /dnsGateways/lite` Retrieves a list of DNS Gateways
+    - Added `GET /dnsGateways/{gateway_id}` Retrieves the DNS Gateway based on the specified ID
+    - Added `POST /dnsGateways` Adds a new DNS Gateway
+    - Added `PUT /dnsGateways/{gateway_id}` Updates the DNS Gateway based on the specified ID
+    - Added `DELETE /dnsGateways/{gateway_id}` Deletes a DNS Gateway based on the specified ID
+
+ZIA Proxies
+^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /proxies` Retrieves a list of all proxies configured for third-party proxy services.
+    - Added `GET /proxies/lite` Retrieves a list of all proxies configured for third-party proxy services
+    - Added `GET /proxies/{proxy_id}` Retrieves the proxy information based on the specified ID
+    - Added `POST /proxies` Adds a new proxy for a third-party proxy service
+    - Added `PUT /proxies/{proxy_id}` Updates an existing proxy based on the specified ID
+    - Added `DELETE /proxies/{proxy_id}` Deletes an existing proxy based on the specified ID
+    - Added `DELETE /dedicatedIPGateways/lite` Retrieves a list of dedicated IP gateways
+
+ZIA FTP Settings
+^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /ftpSettings` Retrieves the FTP Control status and the list of URL categories for which FTP is allowed.
+    - Added `PUT /ftpSettings` Updates the FTP Control settings
+
+ZIA Mobile Malware Protection Policy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /mobileAdvanceThreatSettings` Retrieves all the rules in the Mobile Malware Protection policy
+    - Added `PUT /mobileAdvanceThreatSettings` Updates the Mobile Malware Protection rule information
+
+ZIA Mobile Malware Protection Policy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /configAudit` Retrieves the System Audit Report.
+    - Added `GET /configAudit/ipVisibility` Retrieves the IP visibility audit report
+    - Added `GET /configAudit/pacFile` Retrieves the PAC file audit report
+
+**Note**: This endpoint is accessible via Zscaler OneAPI only
+
+ZIA Time Intervals
+^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /timeIntervals` Retrieves the System Audit Report
+    - Added `GET /timeIntervals/{interval_id}` Retrieves the configured time interval based on the specified ID
+    - Added `POST /timeIntervals/{interval_id}` Adds a new time interval
+    - Added `PUT /timeIntervals/{interval_id}` Updates the time interval based on the specified ID
+    - Added `DELETE /timeIntervals/{interval_id}` Deletes a time interval based on the specified ID
+
+ZIA Data Center Exclusions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /dcExclusions` Retrieves the list of Zscaler data centers (DCs) that are currently excluded from service to your organization based on configured exclusions in the ZIA Admin Portal
+    - Added `POST /dcExclusions/{dc_id}` Adds a data center (DC) exclusion to disable the tunnels terminating at a virtual IP address of a Zscaler DC
+    - Added `PUT /dcExclusions/{dc_id}` Updates a Zscaler data center (DC) exclusion configuration based on the specified ID.
+    - Added `DELETE /dcExclusions/{dc_id}` Deletes a Zscaler data center (DC) exclusion configuration based on the specified ID. 
+    - Added `GET /datacenters` Retrieves the list of Zscaler data centers (DCs) that can be excluded from service to your organization
+
 1.0.3 (April, 22 2025) - BREAKING CHANGES
 -----------------------------------------
 

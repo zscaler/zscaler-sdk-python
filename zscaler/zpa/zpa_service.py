@@ -280,7 +280,7 @@ class ZPAService:
 
         """
         return PRACredentialPoolAPI(self._request_executor, self._config)
-    
+
     @property
     def pra_portal(self):
         """

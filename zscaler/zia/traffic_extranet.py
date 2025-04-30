@@ -48,21 +48,15 @@ class TrafficExtranetAPI(APIClient):
             tuple: A tuple containing (list of Extranet instances, Response, error)
 
         Examples:
-            List Extranets using default settings:
+            List  all extranets:
 
-            >>> for extranet in zia.traffic_extranet.list_extranets():
-            ...   print(extranet)
-
-            List extranets, limiting to a maximum of 10 items:
-
-            >>> for extranet in zia.traffic_extranet.list_extranets(max_items=10):
-            ...    print(extranet)
-
-            List extranets, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for extranet in zia.traffic_extranet.list_extranets(page_size=200, max_pages=2):
-            ...    print(extranet)
-
+            >>> extranet_list, _, error = client.zia.traffic_extranet.list_extranets()
+            >>> if error:
+            ...     print(f"Error listing extranets: {error}")
+            ...     return
+            ... print(f"Total extranets found: {len(extranet_list)}")
+            ... for extranet in extranet_list:
+            ...     print(extranet.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -74,17 +68,14 @@ class TrafficExtranetAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
@@ -107,6 +98,15 @@ class TrafficExtranetAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Extranet instance, Response, error).
+
+        Examples:
+            Retrieve a specific extranet:
+
+            >>> fetched_extranet, _, error = client.zia.traffic_extranet.get_extranet('125245')
+            >>> if error:
+            ...     print(f"Error fetching Extranet by ID: {error}")
+            ...     return
+            ... print(f"Fetched Extranet by ID: {fetched_extranet.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -145,6 +145,34 @@ class TrafficExtranetAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added Extranet, response, and error.
+
+        Examples:
+            Add a new Extranet
+
+            >>> added_extranet, _, error = client.zia.traffic_extranet.add_extranet(
+            ...     name=f"NewExtranet {random.randint(1000, 10000)}",
+            ...     description=f"NewExtranet {random.randint(1000, 10000)}",
+            ...     extranet_dns_list=[
+            ...         {
+            ...             "name": f"NewExtranet {random.randint(1000, 10000)}",
+            ...             "primary_dns_server": "8.8.8.8",
+            ...             "secondary_dns_server": "4.4.2.2",
+            ...             "use_as_default": True,
+            ...         }
+            ...     ],
+            ...     extranet_ip_pool_list=[
+            ...         {
+            ...             "name": f"NewExtranet {random.randint(1000, 10000)}",
+            ...             "ip_start": "192.168.200.1",
+            ...             "ip_end": "192.168.200.21",
+            ...             "use_as_default": True,
+            ...         }
+            ...     ]
+            ... )
+            >>> if error:
+            ...     print(f"Error adding extranet: {error}")
+            ...     return
+            ... print(f"Extranet added successfully: {added_extranet.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -165,7 +193,6 @@ class TrafficExtranetAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
@@ -176,6 +203,7 @@ class TrafficExtranetAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    # Needs to file a bug as method is returning 405 Error
     def update_extranet(self, extranet_id: int, **kwargs) -> tuple:
         """
         Updates information for the specified ZIA Extranet.
@@ -185,6 +213,35 @@ class TrafficExtranetAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Extranet, response, and error.
+
+        Examples:
+            Updated a Extranet
+
+            >>> updated_extranet, _, error = client.zia.traffic_extranet.add_extranet(
+            ...     extranet_id='125245'
+            ...     name=f"UpdateExtranet_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateExtranet_{random.randint(1000, 10000)}",
+            ...     extranet_dns_list=[
+            ...         {
+            ...             "name": f"UpdateExtranet_{random.randint(1000, 10000)}",
+            ...             "primary_dns_server": "8.8.8.8",
+            ...             "secondary_dns_server": "4.4.2.2",
+            ...             "use_as_default": True,
+            ...         }
+            ...     ],
+            ...     extranet_ip_pool_list=[
+            ...         {
+            ...             "name": f"UpdateExtranet_{random.randint(1000, 10000)}",
+            ...             "ip_start": "192.168.200.1",
+            ...             "ip_end": "192.168.200.21",
+            ...             "use_as_default": True,
+            ...         }
+            ...     ]
+            ... )
+            >>> if error:
+            ...     print(f"Error updating extranet: {error}")
+            ...     return
+            ... print(f"Extranet updated successfully: {updated_extranet.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -193,16 +250,13 @@ class TrafficExtranetAPI(APIClient):
             /extranet/{extranet_id}
         """
         )
-        body = {}
+        body = kwargs.copy()
+        body["id"] = extranet_id
 
-        body.update(kwargs)
-
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrafficExtranet)
         if error:
             return (None, response, error)
@@ -222,6 +276,15 @@ class TrafficExtranetAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete a Extranet:
+
+            >>> _, _, error = client.zia.traffic_extranet.delete_extranet('73459')
+            >>> if error:
+            ...     print(f"Error deleting Extranet: {error}")
+            ...     return
+            ... print(f"Extranet with ID {'73459' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

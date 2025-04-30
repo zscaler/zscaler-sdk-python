@@ -127,7 +127,6 @@ class DLPWebRuleAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, DLPWebRules)
 
         if error:

@@ -220,38 +220,31 @@ class URLCategoriesAPI(APIClient):
         """
         )
 
-        # Basic validation
         if not super_category:
             raise ValueError("`super_category` is required.")
         if not urls:
             raise ValueError("`urls` cannot be empty.")
 
-        # Pull out `custom_category` (snake_case).
-        # If the user doesn't pass it, default to False.
         custom_category = kwargs.pop("custom_category", False)
 
-        # Build the base payload in snake_case
         payload = {
-            "type": "URL_CATEGORY",  # Always set
+            "type": "URL_CATEGORY",
             "super_category": super_category,
             "urls": urls,
             "custom_category": custom_category,
         }
 
-        # If `custom_category=True`, ensure `configured_name` is provided
         if custom_category:
             if not configured_name:
                 raise ValueError("`configured_name` is required when `custom_category=True`.")
             payload["configured_name"] = configured_name
 
-        # Merge in any other optional fields (e.g. description, db_categorized_urls, etc.)
         payload.update(kwargs)
 
-        # Create and send the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
-            body=payload,  # Snake_case. The SDK will convert to camelCase if that's how it's configured
+            body=payload,
         )
         if error:
             return (None, None, error)

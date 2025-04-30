@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_roles import AdminRoles
+from zscaler.zia.models.admin_roles import PasswordExpiry
 from zscaler.utils import format_url
 
 
@@ -242,3 +243,108 @@ class AdminRolesAPI(APIClient):
         if error:
             return (None, response, error)
         return (None, response, None)
+
+    def get_password_expiry_settings(self) -> tuple:
+        """
+        Retrieves the password expiration information for all the admins
+
+        Note: This method is not compatible with Zidentity enabled Tenants
+
+        Returns:
+            tuple: A tuple containing:
+                - PasswordExpiry: The current password expiry settings object.
+                - Response: The raw HTTP response returned by the API.
+                - error: An error message if the request failed; otherwise, `None`.
+
+        Examples:
+            Retrieves the password expiration information for all the admins
+
+            >>> settings, _, err = client.zia.admin_roles.get_password_expiry_settings()
+            >>> if err:
+            ...     print(f"Error fetching password expiry settings: {err}")
+            ...     return
+            ... print("Current password expiry settings fetched successfully.")
+            ... print(settings)
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /passwordExpiry/settings
+        """
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            advanced_settings = PasswordExpiry(response.get_body())
+            return (advanced_settings, response, None)
+        except Exception as ex:
+            return (None, response, ex)
+
+    def update_password_expiry_settings(self, **kwargs) -> tuple:
+        """
+        Updates the password expiration information for all the admins.
+
+        Note: This method is not compatible with Zidentity enabled Tenants
+
+        Args:
+            Supported attributes:
+                - password_expiration_enabled (bool): Specifies whether password expiration is enabled for the admin
+                - password_expiry_days (int): Password expiration duration, calculated in days
+
+        Returns:
+            tuple: A tuple containing:
+                - PasswordExpiry: The updated password expiry settings object.
+                - Response: The raw HTTP response returned by the API.
+                - error: An error message if the update failed; otherwise, `None`.
+
+        Examples:
+            Update advanced threat protection settings by blocking specific threats:
+
+            >>> settings, _, err = client.zia.admin_roles.update_password_expiry_settings(
+            ...     password_expiration_enabled = True,
+            ...     password_expiry_days = '90',
+            ... )
+            >>> if err:
+            ...     print(f"Error fetching password expiry: {err}")
+            ...     return
+            ... print("Current password expiry fetched successfully.")
+            ... print(settings)
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /cyberThreatProtection/advancedThreatSettings
+            """
+        )
+
+        body = {}
+        body.update(kwargs)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PasswordExpiry)
+        if error:
+            return (None, response, error)
+
+        try:
+            if response and hasattr(response, "get_body") and response.get_body():
+                result = PasswordExpiry(self.form_response_body(response.get_body()))
+            else:
+                result = PasswordExpiry()
+        except Exception as error:
+            return (None, response, error)
+
+        return (result, response, None)

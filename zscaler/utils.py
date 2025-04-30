@@ -75,7 +75,7 @@ reformat_params = [
     ("zpa_application_segment_groups", "zpaApplicationSegmentGroups"),
     ("workload_groups", "workloadGroups"),
     ("service_ids", "services"),
-    # etc. expand as needed
+    ("bandwidth_class_ids", "bandwidthClasses"),
 ]
 
 
@@ -675,7 +675,6 @@ def is_valid_ssh_key(private_key: str) -> bool:
     ]
     return any(re.search(pattern, private_key) for pattern in ssh_key_patterns)
 
-
 def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     """
     Validates and converts provided time strings to epoch.
@@ -731,6 +730,27 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
 
     return start_epoch, end_epoch
 
+def convert_dc_exclusion_times(start_time_str, end_time_str, time_zone_str):
+    """
+    Converts and validates DC exclusion times based on API rules:
+    - start_time must be >= 5 min in the future and within 30 days
+    - end_time must be >= 2 hours after start_time and within 15 days
+    """
+    start_epoch, end_epoch = validate_and_convert_times(start_time_str, end_time_str, time_zone_str)
+
+    now = int(datetime.datetime.now(pytz.timezone(time_zone_str)).timestamp())
+
+    if start_epoch < now + 300:
+        raise ValueError("Start time must be at least 5 minutes in the future.")
+    if start_epoch > now + (30 * 86400):
+        raise ValueError("Start time must be within 30 days from now.")
+
+    if end_epoch < start_epoch + 7200:
+        raise ValueError("End time must be at least 2 hours after start time.")
+    if end_epoch > start_epoch + (15 * 86400):
+        raise ValueError("End time must be within 15 days from start time.")
+
+    return start_epoch, end_epoch
 
 def convert_date_time_to_seconds(date_time):
     """

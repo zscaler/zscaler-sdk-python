@@ -30,8 +30,8 @@ class TestUsers:
     Integration Tests for the users
     """
 
-    def test_list_users(self, fs):
-        client = MockZDXClient(fs)
+    def test_list_users(self, fs, zdx_client):
+        client = zdx_client
         errors = []
 
         try:
