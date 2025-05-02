@@ -36,7 +36,8 @@ class NssServersAPI(APIClient):
         Lists NSS servers in your organization.
 
         Args:
-            query_params (dict, optional): A dictionary of query parameters.
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.type]`` {str}: Filtering results by type.
                 The most common key is "type", which filters NSS servers by type.
                 Supported values include:
                 - NONE
@@ -165,6 +166,10 @@ class NssServersAPI(APIClient):
             status (str): Enables or disables the status of the NSS server.
                 Supported values: `ENABLED`, `DISABLED`, `DISABLED_BY_SERVICE_PROVIDER`,
                 `NOT_PROVISIONED_IN_SERVICE_PROVIDER`, `IN_TRIAL`
+            type (str): The type of the NSS server.
+                Supported values: `NONE`, `SOFTWARE_AA_FLAG`, `NSS_FOR_WEB`,
+                `NSS_FOR_FIREWALL`, `VZEN`, `VZEN_SME`, `VZEN_SMLB`, `PINNED_NSS`,
+                `MD5_CAPABLE`, `ADP`, `ZIRSVR`, `NSS_FOR_ZPA`
 
         Returns:
             tuple: A tuple containing the newly added NSS server, response, and error.
@@ -222,11 +227,11 @@ class NssServersAPI(APIClient):
             tuple: A tuple containing the updated nss server, response, and error.
 
         Examples:
-            Add a new nss server :
+            Update a existing nss server :
 
-            >>> added_server, _, error = client.zia.nss_servers.update_nss_server(
+            >>> updated_server, _, error = client.zia.nss_servers.update_nss_server(
             ... nss_id='12343',
-            ... name=f"NSSServer_{random.randint(1000, 10000)}",
+            ... name=f"UpdateNSSServer_{random.randint(1000, 10000)}",
             ... status='ENABLED',
             ... type='NSS_FOR_FIREWALL',
             ... )

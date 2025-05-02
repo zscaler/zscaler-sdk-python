@@ -163,28 +163,24 @@ class NatControlPolicyAPI(APIClient):
             name (str): Name of the rule, max 31 chars.
 
         Keyword Args:
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule. Supported values 1-7
-            enabled (bool): The rule state.
             description (str): Additional information about the rule
-            enable_full_logging (bool): If True, enables full logging.
-            predefined (bool): Indicates that the rule is predefined by using a true value
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
+            order (str): The order of the rule, defaults to adding rule to bottom of list.
+            rank (int): The admin rank of the rule. Supported values 1-7
+            redirect_ip (str): IP address to which the traffic is redirected to when the DNAT rule is triggered
+            redirect_fqdn (str): FQDN to which the traffic is redirected to when the DNAT rule is triggered
+            redirect_port (int): Port to which the traffic is redirected to when the DNAT rule is triggered
+            enabled (bool): The rule state.
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
             dest_addresses (list): Destination IPs for the rule. Accepts IP addresses or CIDR.
             src_ips (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            source_countries (list): The countries of origin of traffic for which the rule is applicable.
             src_ip_groups (list): The IDs for the source IP groups that this rule applies to.
             src_ipv6_groups (list): The IDs for the source IPV6 groups that this rule applies to.
             dest_ip_categories (list): IP address categories for the rule.
-            dest_countries (list): Destination countries for the rule.
             groups (list): The IDs for the groups that this rule applies to.
             users (list): The IDs for the users that this rule applies to.
-            res_categories (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            devices (list): IDs for devices managed by Zscaler Client Connector.
-            device_groups (list): IDs for device groups managed by Zscaler Client Connector.
+            res_categories (list): Resolved categories of destination for which the DNAT rule is applicable.
             labels (list): The IDs for the labels that this rule applies to.
             locations (list): The IDs for the locations that this rule applies to.
             location_groups (list): The IDs for the location groups that this rule applies to.
@@ -196,15 +192,23 @@ class NatControlPolicyAPI(APIClient):
             :obj:`tuple`: New nat control rule resource record.
 
         Example:
-            Add a nat control rule to block specific file types:
+            Add a new nat control rule:
 
-            >>> zia.nat_control_policy.add_rule(
-            ...    name='BLOCK_EXE_FILES',
-            ...    ba_rule_action='BLOCK',
-            ...    file_types=['FTCATEGORY_EXE', 'FTCATEGORY_DLL'],
-            ...    protocols=['HTTP_RULE', 'HTTPS_RULE'],
-            ...    state='ENABLED'
+            >>> added_rule, _, error = client.zia.nat_control_policy.add_rule(
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     rank=7,
+            ...     redirect_port='2000',
+            ...     redirect_ip='1.1.1.1',
+            ...     src_ips=['192.168.100.0/24', '192.168.200.1'],
+            ...     dest_addresses=['3.217.228.0-3.217.231.255', 'server1.acme.com', '*.acme.com'],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -250,28 +254,24 @@ class NatControlPolicyAPI(APIClient):
 
         Keyword Args:
             name (str): Name of the rule, max 31 chars.
-            order (str): The order of the rule, defaults to adding rule to bottom of list.
-            rank (str): The admin rank of the rule. Supported values 1-7
-            enabled (bool): The rule state.
             description (str): Additional information about the rule
-            enable_full_logging (bool): If True, enables full logging.
-            predefined (bool): Indicates that the rule is predefined by using a true value
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
+            order (str): The order of the rule, defaults to adding rule to bottom of list.
+            rank (int): The admin rank of the rule. Supported values 1-7
+            redirect_ip (str): IP address to which the traffic is redirected to when the DNAT rule is triggered
+            redirect_fqdn (str): FQDN to which the traffic is redirected to when the DNAT rule is triggered
+            redirect_port (int): Port to which the traffic is redirected to when the DNAT rule is triggered
+            enabled (bool): The rule state.
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
             dest_addresses (list): Destination IPs for the rule. Accepts IP addresses or CIDR.
             src_ips (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            source_countries (list): The countries of origin of traffic for which the rule is applicable.
             src_ip_groups (list): The IDs for the source IP groups that this rule applies to.
             src_ipv6_groups (list): The IDs for the source IPV6 groups that this rule applies to.
             dest_ip_categories (list): IP address categories for the rule.
-            dest_countries (list): Destination countries for the rule.
             groups (list): The IDs for the groups that this rule applies to.
             users (list): The IDs for the users that this rule applies to.
-            res_categories (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            devices (list): IDs for devices managed by Zscaler Client Connector.
-            device_groups (list): IDs for device groups managed by Zscaler Client Connector.
+            res_categories (list): Resolved categories of destination for which the DNAT rule is applicable.
             labels (list): The IDs for the labels that this rule applies to.
             locations (list): The IDs for the locations that this rule applies to.
             location_groups (list): The IDs for the location groups that this rule applies to.
@@ -283,14 +283,24 @@ class NatControlPolicyAPI(APIClient):
             tuple: Updated nat control rule resource record.
 
         Example:
-            Update an existing rule to change its name and action:
+            Update an existing nat control rule:
 
-            >>> zia.nat_control_policy.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
+            >>> updated_rule, _, error = client.zia.nat_control_policy.add_rule(
+            ...     rule_id='877846',
+            ...     name=f"UpdateNewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     rank=7,
+            ...     redirect_port='2000',
+            ...     redirect_ip='1.1.1.1',
+            ...     src_ips=['192.168.100.0/24', '192.168.200.1'],
+            ...     dest_addresses=['3.217.228.0-3.217.231.255', 'server1.acme.com', '*.acme.com'],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
