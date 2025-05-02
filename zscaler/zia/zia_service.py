@@ -78,6 +78,8 @@ from zscaler.zia.tenancy_restriction_profile import TenancyRestrictionProfileAPI
 from zscaler.zia.time_intervals import TimeIntervalsAPI
 from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
 from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
+from zscaler.zia.nss_servers import NssServersAPI
+from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 
 
 class ZIAService:
@@ -607,3 +609,21 @@ class ZIAService:
         """
 
         return TrafficDatacentersAPI(self._request_executor)
+
+    @property
+    def nss_servers(self):
+        """
+        The interface object for the :ref:`ZIA NSS Servers interface <zia-nss_servers>`.
+
+        """
+
+        return NssServersAPI(self._request_executor)
+
+    @property
+    def nat_control_policy(self):
+        """
+        The interface object for the :ref:`ZIA NAT Control Policy interface <zia-nat_control_policy>`.
+
+        """
+
+        return NatControlPolicyAPI(self._request_executor)
