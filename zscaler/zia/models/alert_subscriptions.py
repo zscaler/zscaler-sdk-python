@@ -33,9 +33,13 @@ class AlertSubscriptions(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] if "id" in config else None
-            self.description = config["description"] if "description" in config else None
-            self.email = config["email"] if "email" in config else None
+            self.id = config["id"] \
+                if "id" in config else None
+            self.description = config["description"] \
+                if "description" in config else None
+            self.email = config["email"] \
+                if "email" in config else None
+
             self.pt0_severities = ZscalerCollection.form_list(
                 config["pt0Severities"] if "pt0Severities" in config else [], str
             )
@@ -51,7 +55,7 @@ class AlertSubscriptions(ZscalerObject):
             self.system_severities = ZscalerCollection.form_list(
                 config["systemSeverities"] if "systemSeverities" in config else [], str
             )
-            self.deleted = config["deleted"] if "deleted" in config else None
+            self.deleted = config["deleted"] if "deleted" in config else False
         else:
             self.id = None
             self.description = None

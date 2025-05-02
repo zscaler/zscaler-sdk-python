@@ -35,23 +35,23 @@ class AlertSubscriptionsAPI(APIClient):
         """
         Retrieves a list of all alert subscriptions.
 
-        This method makes a GET request to the ZIA Admin API and returns detailed advanced settings,
+        This method makes a GET request to the ZIA Admin API and returns detailed alert subscriptions,
         including various bypass rules, DNS optimization configurations, and traffic control settings.
 
         Returns:
             tuple: A tuple containing:
-                - AdvancedSettings: The current advanced settings object.
+                - AlertSubscriptions: The current alert subscriptions object.
                 - Response: The raw HTTP response returned by the API.
                 - error: An error message if the request failed; otherwise, `None`.
 
         Examples:
-            Retrieve and print the current advanced settings:
+            Retrieve and print the current alert subscriptions:
 
-            >>> settings, response, err = client.zia.advanced_settings.get_advanced_settings()
-            >>> if err:
-            ...     print(f"Error fetching settings: {err}")
-            ... else:
-            ...     print(f"Enable Office365: {settings.enable_office365}")
+            >>> alert_list, _, error = client.zia.alert_subscriptions.list_alert_subscriptions()
+            >>> if error:
+            ...     print(f"Error listing alert subscription: {error}")
+            ...     return
+            ... print(f"Alert Subscription added successfully: {alert_list.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -85,7 +85,16 @@ class AlertSubscriptionsAPI(APIClient):
             subscription_id (int): The unique identifier for the Alert Subscription.
 
         Returns:
-            tuple: A tuple containing (Alert Subscriptioninstance, Response, error).
+            tuple: A tuple containing Alert Subscription instance, Response, error).
+
+        Examples:
+            Retrieve and print specific alert subscription:
+
+            >>> fetched_alert, _, error = client.zia.alert_subscriptions.get_alert_subscription(updated_alert.id)
+            >>> if error:
+            ...     print(f"Error fetching alert subscription by ID: {error}")
+            ...     return
+            ... print(f"Fetched alert subscription by ID: {fetched_alert.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -120,7 +129,28 @@ class AlertSubscriptionsAPI(APIClient):
         Args:
 
         Returns:
-            tuple: A tuple containing the newly added alert subscription, response, and error.
+            tuple:
+                - **AlertSubscriptions**: The updated alert subscription object.
+                - **Response**: The raw HTTP response returned by the API.
+                - **error**: An error message if the update failed; otherwise, `None`.
+
+        Examples:
+            Add a new alert subscription:
+
+            >>> added_alert, _, err = client.zia.alert_subscriptions.update_alert_subscription(
+            ...     description = 'Zscaler Subscription Alert',
+            ...     email = 'alert@acme.com',
+            ...     pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     secure_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     manage_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     comply_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     system_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     deleted = False
+            ... )
+            >>> if err:
+            ...     print(f"Error adding alert subscription: {err}")
+            ...     return
+            ... print(f"Alert Subscription added successfully: {added_alert.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -160,39 +190,44 @@ class AlertSubscriptionsAPI(APIClient):
                 An instance of `AlertSubscriptions` containing the updated configuration.
 
             Supported attributes:
-                - block_apps_with_malicious_activity (bool): Blocks apps known to be malicious or hidden from users
-                - block_apps_with_known_vulnerabilities (bool): Blocks apps with known vulnerabilities or insecure modules
-                - block_apps_sending_unencrypted_user_credentials (bool): Blocks apps leaking user credentials unencrypted
-                - block_apps_sending_location_info (bool): Blocks apps leaking device location unencrypted or unknown purpose
-                - block_apps_sending_personally_identifiable_info (bool): Blocks apps leaking PII in unencrypted communications
-                - block_apps_sending_device_identifier (bool): Blocks apps leaking device identifiers in unencrypted form
-                - block_apps_communicating_with_ad_websites (bool): Blocks apps communicating with known ad websites
-                - block_apps_communicating_with_remote_unknown_servers (bool): Blocks apps communicating with unknown servers
+                - description (str): Additional comments or information about the alert subscription
+                - email (str): The email address of the alert recipient
+                - pt0_severities (list[str]): Lists the severity levels of the Patient 0 Alert
+                    class information that the recipient receives
+                    Supported Values: `CRITICAL`, `MAJOR`, `MINOR`, `INFO`, `DEBUG`
+                - secure_severities (list[str]): Lists the severity levels of the Secure
+                    Alert class information that the recipient receives
+                    Supported Values: `CRITICAL`, `MAJOR`, `MINOR`, `INFO`, `DEBUG`
+                - manage_severities (list[str]): Supported Values: `CRITICAL`, `MAJOR`, `MINOR`, `INFO`, `DEBUG`
+                - comply_severities (list[str]): Supported Values: `CRITICAL`, `MAJOR`, `MINOR`, `INFO`, `DEBUG`
+                - system_severities (list[str]): Lists the severity levels of the System Alerts
+                    class information that the recipient receives
+                    Supported Values: `CRITICAL`, `MAJOR`, `MINOR`, `INFO`, `DEBUG`
+                - deleted (bool): Deletes an existing alert subscription
 
         Returns:
             tuple:
-                - **MobileAdvancedThreatSettings**: The updated advanced settings object.
+                - **AlertSubscriptions**: The updated alert subscription object.
                 - **Response**: The raw HTTP response returned by the API.
                 - **error**: An error message if the update failed; otherwise, `None`.
 
         Examples:
-            Update mobile setting options:
+            Add a new alert subscription:
 
-            >>> malware_settings, _, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
-            ...     block_apps_with_malicious_activity = True,
-            ...     block_apps_with_known_vulnerabilities = True,
-            ...     block_apps_sending_unencrypted_user_credentials = True,
-            ...     block_apps_sending_location_info = True,
-            ...     block_apps_sending_personally_identifiable_info = True,
-            ...     block_apps_sending_device_identifier = True,
-            ...     block_apps_communicating_with_ad_websites = True,
-            ...     block_apps_communicating_with_remote_unknown_servers = True
+            >>> updated_alert, _, err = client.zia.alert_subscriptions.update_alert_subscription(
+            ...     description = 'Zscaler Subscription Alert',
+            ...     email = 'alert@acme.com',
+            ...     pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     secure_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     manage_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     comply_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     system_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+            ...     deleted = False
             ... )
             >>> if err:
-            ...     print(f"Error fetching malware settings: {err}")
+            ...     print(f"Error updating alert subscription: {err}")
             ...     return
-            ... print("Current malware settings fetched successfully.")
-            ... print(malware_settings)
+            ... print(f"Alert Subscription updated successfully: {updated_alert.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -202,8 +237,8 @@ class AlertSubscriptionsAPI(APIClient):
             """
         )
 
-        body = {}
-        body.update(kwargs)
+        body = kwargs.copy()
+        body["id"] = subscription_id
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:

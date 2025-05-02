@@ -323,16 +323,16 @@ class RequestExecutor:
         """
         try:
             request, response, response_body, error = self.fire_request(request)
+            logger.debug(f"[DEBUG] Got response: {response} (status: {getattr(response, 'status_code', 'N/A')}) | error: {error}")
         except Exception as ex:
             logger.error(f"Exception during HTTP request: {ex}")
             return None, ex
 
-        if not response:
-            logger.error("Response is None after executing request.")
-            return None, ValueError("Response is None")
+        if response is None and error is None:
+            return None, None  # silently return None without manufacturing errors
 
         if error:
-            logger.error(f"Error during request execution: {error}")
+            # logger.error(f"Error during request execution: {error}")
             return None, error
 
         if response.status_code == 204:
@@ -350,7 +350,7 @@ class RequestExecutor:
             return None, ex
 
         if error:
-            logger.error(f"Error in HTTP response: {error}")
+            # logger.error(f"Error in HTTP response: {error}")
             return None, error
 
         logger.debug(f"Successful response from {request['url']}")
@@ -466,8 +466,8 @@ class RequestExecutor:
         response, error = self._http_client.send_request(request)
 
         if error:
-            logger.error(f"Error sending request: {error}")
-            return None, None, None, error
+            # logger.error(f"Error sending request: {error}")
+            return request, response, response.text if response else None, error
 
         headers = response.headers
 

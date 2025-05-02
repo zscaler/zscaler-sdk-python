@@ -75,6 +75,8 @@ class TestSweepUtility:
             self.sweep_dlp_dictionary,
             self.sweep_dlp_template,
             self.sweep_zpa_gateway,
+            self.sweep_nss_servers,
+            self.sweep_nat_control_policy,
         ]
 
         for func in sweep_functions:
@@ -565,6 +567,53 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping zpa gateways: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_nss_servers(self):
+        logging.info("Starting to sweep nss servers")
+        try:
+            nss_servers, _, error = self.client.zia.nss_servers.list_nss_servers()
+            if error:
+                raise Exception(f"Error listing nss servers: {error}")
+
+            test_nss = [gw for gw in nss_servers if hasattr(gw, "name") and gw.name.startswith("tests-")]
+            logging.info(f"Found {len(test_nss)} nss server to delete.")
+
+            for nss in test_nss:
+                logging.info(f"sweep_nss_servers: Attempting to delete nss server: Name='{nss.name}', ID='{nss.id}'")
+                _, _, error = self.client.zia.nss_servers.delete_nss_server(nss_id=nss.id)
+                if error:
+                    logging.error(f"Failed to delete nss server ID={nss.id} — {error}")
+                else:
+                    logging.info(f"Successfully deleted nss server ID={nss.id}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping nss servers: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_nat_control_policy(self):
+        logging.info("Starting to sweep nat control rule")
+        try:
+            rules, _, error = self.client.zia.nat_control_policy.list_rules()
+            if error:
+                raise Exception(f"Error listing nat control rules: {error}")
+
+            test_rules = [nat for nat in rules if hasattr(nat, "name") and nat.name.startswith("tests-")]
+            logging.info(f"Found {len(test_rules)} nat control  rule to delete.")
+
+            for rule in test_rules:
+                logging.info(
+                    f"sweep_nat_control_policy: Attempting to delete nat control  rule: Name='{rule.name}', ID='{rule.id}'"
+                )
+                _, _, error = self.client.zia.nat_control_policy.delete_rule(rule_id=rule["id"])
+                if error:
+                    logging.error(f"Failed to delete nat control rule ID={rule['id']} — {error}")
+                else:
+                    logging.info(f"Successfully deleted nat control rule ID={rule['id']}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping nat control rules: {str(e)}")
+            raise
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

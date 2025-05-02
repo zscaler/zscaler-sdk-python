@@ -17,10 +17,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
-from zscaler.zia.models.cloud_firewall_ips_rules import FirewallIPSrules
+from zscaler.zia.models.nat_control_policy import NatControlPolicy
 
 
-class FirewallIPSRulesAPI(APIClient):
+class NatControlPolicyAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
@@ -33,7 +33,7 @@ class FirewallIPSRulesAPI(APIClient):
         query_params=None,
     ) -> tuple:
         """
-        List firewall ips rules in your organization.
+        List nat control rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
 
         Args:
@@ -41,14 +41,14 @@ class FirewallIPSRulesAPI(APIClient):
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
-            tuple: A tuple containing (list of cloud firewall ips rules instances, Response, error).
+            tuple: A tuple containing (list of nat control rules instances, Response, error).
 
         Example:
-            List all cloud firewall ips rules:
+            List all nat control rules:
 
-            >>> rules_list, response, error = client.zia.cloud_firewall_ips.list_rules()
+            >>> rules_list, response, error = client.zia.nat_control_policy.list_rules()
             ... if error:
-            ...    print(f"Error listing cloud firewall ips: {error}")
+            ...    print(f"Error listing nat control rules: {error}")
             ...    return
             ... print(f"Total rules found: {len(rules_list)}")
             ... for rule in rules_list:
@@ -56,11 +56,11 @@ class FirewallIPSRulesAPI(APIClient):
 
             filtering rule results by rule name :
 
-            >>> rules_list, response, error = client.zia.cloud_firewall_ips.list_rules(
+            >>> rules_list, response, error = client.zia.nat_control_policy.list_rules(
                 query_params={"search": Rule01}
             )
             ... if error:
-            ...    print(f"Error listing cloud firewall ips: {error}")
+            ...    print(f"Error listing nat control rules: {error}")
             ...    return
             ... print(f"Total rules found: {len(rules_list)}")
             ... for rule in rules_list:
@@ -70,7 +70,7 @@ class FirewallIPSRulesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallIpsRules
+            /dnatRules
         """
         )
 
@@ -92,7 +92,7 @@ class FirewallIPSRulesAPI(APIClient):
         try:
             results = []
             for item in response.get_results():
-                results.append(FirewallIPSrules(self.form_response_body(item)))
+                results.append(NatControlPolicy(self.form_response_body(item)))
         except Exception as exc:
             return (None, response, exc)
 
@@ -107,18 +107,18 @@ class FirewallIPSRulesAPI(APIClient):
         rule_id: int,
     ) -> tuple:
         """
-        Returns information for the specified firewall ips rule.
+        Returns information for the specified nat control rule.
 
         Args:
-            rule_id (str): The unique identifier for the firewall ips rule.
+            rule_id (str): The unique identifier for the nat control rule.
 
         Returns:
-            tuple: A tuple containing (firewall ips rule instance, Response, error).
+            tuple: A tuple containing (nat control rule instance, Response, error).
 
         Example:
-            Retrieve a cloud firewall ips rule by its ID:
+            Retrieve a nat control rules rule by its ID:
 
-        >>> fetched_rule, response, error = client.zia.cloud_firewall_ips.get_rule('960061')
+        >>> fetched_rule, response, error = client.zia.nat_control_policy.get_rule('960061')
         ... if error:
         ...     print(f"Error fetching rule by ID: {error}")
         ...     return
@@ -128,7 +128,7 @@ class FirewallIPSRulesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallIpsRules/{rule_id}
+            /dnatRules/{rule_id}
             """
         )
 
@@ -141,13 +141,13 @@ class FirewallIPSRulesAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, NatControlPolicy)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(self.form_response_body(response.get_body()))
+            result = NatControlPolicy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -157,7 +157,7 @@ class FirewallIPSRulesAPI(APIClient):
         **kwargs,
     ) -> tuple:
         """
-        Adds a new cloud firewall ips rule.
+        Adds a new nat control rules rule.
 
         Args:
             name (str): Name of the rule, max 31 chars.
@@ -168,11 +168,8 @@ class FirewallIPSRulesAPI(APIClient):
             enabled (bool): The rule state.
             description (str): Additional information about the rule
             enable_full_logging (bool): If True, enables full logging.
-            capture_pcap (bool): Indicates whether packet capture (PCAP) is enabled or not.
             predefined (bool): Indicates that the rule is predefined by using a true value
             default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            action (str): Action that must take place if the traffic matches the rule criteria.
-                Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
@@ -186,8 +183,6 @@ class FirewallIPSRulesAPI(APIClient):
             groups (list): The IDs for the groups that this rule applies to.
             users (list): The IDs for the users that this rule applies to.
             res_categories (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            file_types (list): The file types to which the rule applies.
-            protocols (list): The protocol criteria for the rule.
             devices (list): IDs for devices managed by Zscaler Client Connector.
             device_groups (list): IDs for device groups managed by Zscaler Client Connector.
             labels (list): The IDs for the labels that this rule applies to.
@@ -196,16 +191,14 @@ class FirewallIPSRulesAPI(APIClient):
             time_windows (list): IDs for time windows the rule applies to.
             nw_services (list): The IDs for the network services that this rule applies to.
             nw_service_groups (list): The IDs for the network service groups that this rule applies to.
-            threat_categories (list): The IDs for the network service groups that this rule applies to.
-            zpa_app_segments (list): The IDs for the network service groups that this rule applies to.
 
         Returns:
-            :obj:`tuple`: New firewall ips rule resource record.
+            :obj:`tuple`: New nat control rule resource record.
 
         Example:
-            Add a firewall ips rule to block specific file types:
+            Add a nat control rule to block specific file types:
 
-            >>> zia.cloudfirewallipsrules.add_rule(
+            >>> zia.nat_control_policy.add_rule(
             ...    name='BLOCK_EXE_FILES',
             ...    ba_rule_action='BLOCK',
             ...    file_types=['FTCATEGORY_EXE', 'FTCATEGORY_DLL'],
@@ -217,7 +210,7 @@ class FirewallIPSRulesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallIpsRules
+            /dnatRules
         """
         )
 
@@ -237,19 +230,19 @@ class FirewallIPSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, NatControlPolicy)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(self.form_response_body(response.get_body()))
+            result = NatControlPolicy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     def update_rule(self, rule_id: int, **kwargs) -> tuple:
         """
-        Updates an existing firewall ips rule.
+        Updates an existing nat control rule.
 
         Args:
             rule_id (str): The unique ID for the rule that is being updated.
@@ -262,11 +255,8 @@ class FirewallIPSRulesAPI(APIClient):
             enabled (bool): The rule state.
             description (str): Additional information about the rule
             enable_full_logging (bool): If True, enables full logging.
-            capture_pcap (bool): Indicates whether packet capture (PCAP) is enabled or not.
             predefined (bool): Indicates that the rule is predefined by using a true value
             default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            action (str): Action that must take place if the traffic matches the rule criteria.
-                Supported Values: ALLOW, BLOCK_DROP, BLOCK_RESET, BYPASS_IPS
             dest_ip_groups (list): The IDs for the destination IP groups that this rule applies to.
             dest_ipv6_groups (list): The IDs for the destination IPV6 groups that this rule applies to.
             dest_countries (list): Destination countries for the rule.
@@ -280,8 +270,6 @@ class FirewallIPSRulesAPI(APIClient):
             groups (list): The IDs for the groups that this rule applies to.
             users (list): The IDs for the users that this rule applies to.
             res_categories (list): Source IPs for the rule. Accepts IP addresses or CIDR.
-            file_types (list): The file types to which the rule applies.
-            protocols (list): The protocol criteria for the rule.
             devices (list): IDs for devices managed by Zscaler Client Connector.
             device_groups (list): IDs for device groups managed by Zscaler Client Connector.
             labels (list): The IDs for the labels that this rule applies to.
@@ -290,16 +278,14 @@ class FirewallIPSRulesAPI(APIClient):
             time_windows (list): IDs for time windows the rule applies to.
             nw_services (list): The IDs for the network services that this rule applies to.
             nw_service_groups (list): The IDs for the network service groups that this rule applies to.
-            threat_categories (list): The IDs for the network service groups that this rule applies to.
-            zpa_app_segments (list): The IDs for the network service groups that this rule applies to.
 
         Returns:
-            tuple: Updated firewall ip filtering rule resource record.
+            tuple: Updated nat control rule resource record.
 
         Example:
             Update an existing rule to change its name and action:
 
-            >>> zia.cloudfirewallipsrules.update_rule(
+            >>> zia.nat_control_policy.update_rule(
             ...    rule_id=123456,
             ...    name='UPDATED_RULE',
             ...    ba_rule_action='ALLOW',
@@ -310,7 +296,7 @@ class FirewallIPSRulesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallIpsRules/{rule_id}
+            /dnatRules/{rule_id}
         """
         )
 
@@ -330,35 +316,35 @@ class FirewallIPSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, FirewallIPSrules)
+        response, error = self._request_executor.execute(request, NatControlPolicy)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallIPSrules(self.form_response_body(response.get_body()))
+            result = NatControlPolicy(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     def delete_rule(self, rule_id: int) -> tuple:
         """
-        Deletes the specified firewall ips rule.
+        Deletes the specified nat control rule.
 
         Args:
-            rule_id (str): The unique identifier for the firewall ips rule.
+            rule_id (str): The unique identifier for the nat control rule.
 
         Returns:
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.cloudfirewallipsrules.delete_rule('278454')
+            >>> zia.nat_control_policy.delete_rule('278454')
 
         """
         http_method = "delete".upper()
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallIpsRules/{rule_id}
+            /dnatRules/{rule_id}
         """
         )
 
