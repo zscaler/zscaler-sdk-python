@@ -6,6 +6,39 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.2.0 (May, 2 2025)
+-----------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+ZIA NAT Control Policy
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+(`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /dnatRules` Retrieves a list of all configured and predefined DNAT Control policies.
+    - Added `GET /dnatRules/{rule_id}` Retrieves the DNAT Control policy rule information based on the specified ID
+    - Added `POST /dnatRules` Adds a new DNAT Control policy rule. 
+    - Added `PUT /dnatRules/{rule_id}` Updates the DNAT Control policy rule information based on the specified ID
+    - Added `DELETE /dnatRules/{rule_id}` Deletes the DNAT Control policy rule information based on the specified ID
+
+ZIA NSS Servers
+^^^^^^^^^^^^^^^^^^
+
+(`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /nssServers` Retrieves a list of registered NSS servers.
+    - Added `GET /nssServers/{nss_id}` Retrieves the registered NSS server based on the specified ID
+    - Added `POST /nssServers` Adds a new NSS server.
+    - Added `PUT /nssServers/{nss_id}` Updates an NSS server based on the specified ID
+    - Added `DELETE /nssServers/{nss_id}` Deletes an NSS server based on the specified ID
+
+Enhancements
+^^^^^^^^^^^^^^
+(`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Enhanced exceptions handling for clarity during configuration or API errors.
+(`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Enhanced retry mechanism to include `408`, `409` status codes.
+
 1.1.0 (April, 28 2025)
 -----------------------------
 

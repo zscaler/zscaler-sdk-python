@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 class RequestExecutor:
     """
-    This class handles all of the requests sent by the Zscaler SDK Client (ZIA, ZPA, ZCC, ZDX, ZWA etc.).
+    This class handles all of the requests sent by the Zscaler SDK Client (ZIA, ZPA, ZCC, ZDX, ZWA, ZTW).
     """
 
     BASE_URL = "https://api.zsapi.net"  # Default base URL for API calls
@@ -486,10 +486,14 @@ class RequestExecutor:
         """
         Checks if HTTP status is retryable.
 
-        Retryable statuses: 429, 503, 504
+        Retryable statuses: 408, 409, 412, 429, 500, 502, 503, 504
         """
         return status is not None and status in (
+            HTTPStatus.REQUEST_TIMEOUT,
+            HTTPStatus.CONFLICT,
+            HTTPStatus.PRECONDITION_FAILED,
             HTTPStatus.TOO_MANY_REQUESTS,
+            HTTPStatus.INTERNAL_SERVER_ERROR,
             HTTPStatus.SERVICE_UNAVAILABLE,
             HTTPStatus.GATEWAY_TIMEOUT,
         )
