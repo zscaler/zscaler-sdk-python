@@ -581,6 +581,29 @@ You should now see logs in your console. Notice that API Credentials i.e `client
 
 What it being logged? `requests`, `responses`, `http errors`, `caching responses`.
 
+### Using Your Own Logger (Optional)
+If your script defines its own logging configuration (e.g., for file or custom formatting), the SDK will not interfere with it. You can continue using your own logger like this:
+
+```py
+import logging
+
+my_logger = logging.getLogger("my_app_logger")
+my_logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+my_logger.addHandler(handler)
+
+my_logger.info("This is your app-level log, independent from the SDK.")
+```
+
+To control SDK logging separately, use:
+
+```py
+logging.getLogger("zscaler-sdk-python").setLevel(logging.WARNING)  # or .ERROR to silence SDK logs
+```
+
+The SDK will never globally disable logging or interfere with your existing logging configuration.
+
 ## Configuration reference
 
 This library looks for configuration in the following sources:

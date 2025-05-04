@@ -6,7 +6,7 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.2.0 (May, 2 2025)
+1.2.0 (May, 5 2025)
 -----------------------------
 
 Notes
@@ -38,6 +38,7 @@ Enhancements
 ^^^^^^^^^^^^^^
 (`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Enhanced exceptions handling for clarity during configuration or API errors.
 (`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Enhanced retry mechanism to include `408`, `409` status codes.
+(`#270 <https://github.com/zscaler/zscaler-sdk-python/pull/270>`_) - Improved SDK logging behavior to prevent interference with user-defined loggers. Added example for custom logging setup.
 
 1.1.0 (April, 28 2025)
 -----------------------------
