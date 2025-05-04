@@ -10,7 +10,11 @@ class ZscalerAPIError(Error):
         self.stack = ""
         self.service_type = service_type.lower()
 
-        # Initialize all possible fields to None
+        # Ensure response_body is a dict
+        if not isinstance(response_body, dict):
+            response_body = {"message": str(response_body)}
+
+        # Initialize fields
         self.error_code = None
         self.error_message = None
         self.params = None
@@ -25,11 +29,10 @@ class ZscalerAPIError(Error):
             self.error_code = response_body.get("code") or response_body.get("id")
             self.error_message = response_body.get("message") or response_body.get("reason")
 
-        # Always fallback to raw keys if something's missing
         self.params = self.params or []
         self.path = response_body.get("path")
 
-        # Construct message string (for human-readable log line)
+        # Construct message string
         message_parts = [f"HTTP {self.status_code}"]
         if self.error_code:
             message_parts.append(self.error_code)
@@ -41,7 +44,6 @@ class ZscalerAPIError(Error):
         self.message = " ".join(message_parts)
 
     def __str__(self):
-        # Compact JSON-like output with only populated fields
         error_payload = {
             "status": self.status_code,
             "code": self.error_code,
