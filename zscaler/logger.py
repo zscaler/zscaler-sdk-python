@@ -63,6 +63,7 @@ LOG_FORMAT = "%(asctime)s - %(name)s - %(module)s - %(levelname)s - %(message)s"
 #     # Add the handler to the logger
 #     logger.addHandler(stream_handler)
 
+
 #     # Option: Add FileHandler if you want logs to be written to a file.
 #     if os.getenv("LOG_TO_FILE", "false").lower() == "true":
 #         file_handler = logging.FileHandler(os.getenv("LOG_FILE_PATH", "sdk.log"))
@@ -114,12 +115,11 @@ def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
 
         # Optional file logging
         if os.getenv("LOG_TO_FILE", "false").lower() == "true":
-            file_handler = logging.FileHandler(
-                os.getenv("LOG_FILE_PATH", "sdk.log")
-            )
+            file_handler = logging.FileHandler(os.getenv("LOG_FILE_PATH", "sdk.log"))
             file_handler.setLevel(log_level)
             file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
             logger.addHandler(file_handler)
+
 
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
     request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}

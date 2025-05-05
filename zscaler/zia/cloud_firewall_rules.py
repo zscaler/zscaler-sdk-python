@@ -96,8 +96,11 @@ class FirewallPolicyAPI(APIClient):
             :obj:`Tuple`: The resource record for the firewall filter rule.
 
         Examples:
-            >>> pprint(zia.firewall.get_rule('431233'))
-
+            >>> fetched_rule, _, error = client.zia.cloud_firewall_rules.get_rule('1456549')
+            >>> if error:
+            ...     print(f"Error fetching rule by ID: {error}")
+            ...     return
+            ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -114,7 +117,6 @@ class FirewallPolicyAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FirewallRule)
 
         if error:
@@ -176,14 +178,26 @@ class FirewallPolicyAPI(APIClient):
         Examples:
             Add a rule to allow all traffic to Google DNS:
 
-            >>> zia.firewall.add_rule(rank='7', dest_addresses=['8.8.8.8', '8.8.4.4'],
-            ...    name='ALLOW_ANY_TO_GOOG-DNS', action='ALLOW', description='TT#1965432122')
-
-            Block traffic to Quad9 DNS for Finance Group, send ICMP error:
-
-            >>> zia.firewall.add_rule(rank='7', dest_addresses=['9.9.9.9'],
-            ...    name='BLOCK_GROUP-FIN_TO_Q9-DNS', action='BLOCK_ICMP', groups=['95016183'],
-            ...    description='TT#1965432122')
+            >>> added_rule, _, error = client.zia.cloud_firewall_rules.add_rule(
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     rank=7,
+            ...     action='ALLOW',
+            ...     enable_full_logging=True,
+            ...     src_ips=['192.168.100.0/24', '192.168.200.1'],
+            ...     dest_addresses=['3.217.228.0-3.217.231.255', 'server1.acme.com', '*.acme.com'],
+            ...     exclude_src_countries=True,
+            ...     source_countries=['COUNTRY_AD', 'COUNTRY_AE', 'COUNTRY_AF'],
+            ...     dest_countries=['COUNTRY_BR', 'COUNTRY_CA', 'COUNTRY_US'],
+            ...     dest_ip_categories=['BOTNET', 'MALWARE_SITE', 'PHISHING', 'SUSPICIOUS_DESTINATION'],
+            ...     device_trust_levels=['UNKNOWN_DEVICETRUSTLEVEL', 'LOW_TRUST', 'MEDIUM_TRUST', 'HIGH_TRUST'],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -201,7 +215,6 @@ class FirewallPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -211,14 +224,12 @@ class FirewallPolicyAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FirewallRule)
 
         if error:
             return (None, response, error)
 
         try:
-            # Parse the response and return it as a FirewallRule object
             result = FirewallRule(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
@@ -268,16 +279,27 @@ class FirewallPolicyAPI(APIClient):
         Examples:
             Update the destination IP addresses for a rule:
 
-            >>> zia.firewall.update_rule('976598',
-            ...    dest_addresses=['1.1.1.1'],
-            ...    description="TT#1965232865")
-
-            Update a rule to enable full logging:
-
-            >>> zia.firewall.update_rule('976597',
-            ...    enable_full_logging=True,
-            ...    description="TT#1965232866")
-
+            >>>  added_rule, _, error = client.zia.cloud_firewall_rules.update_rule(
+            ...     rule_id='12455'
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     enabled=True,
+            ...     order=1,
+            ...     rank=7,
+            ...     action='ALLOW',
+            ...     enable_full_logging=True,
+            ...     src_ips=['192.168.100.0/24', '192.168.200.1'],
+            ...     dest_addresses=['3.217.228.0-3.217.231.255', 'server1.acme.com', '*.acme.com'],
+            ...     exclude_src_countries=True,
+            ...     source_countries=['COUNTRY_AD', 'COUNTRY_AE', 'COUNTRY_AF'],
+            ...     dest_countries=['COUNTRY_BR', 'COUNTRY_CA', 'COUNTRY_US'],
+            ...     dest_ip_categories=['BOTNET', 'MALWARE_SITE', 'PHISHING', 'SUSPICIOUS_DESTINATION'],
+            ...     device_trust_levels=['UNKNOWN_DEVICETRUSTLEVEL', 'LOW_TRUST', 'MEDIUM_TRUST', 'HIGH_TRUST'],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -295,7 +317,6 @@ class FirewallPolicyAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -323,8 +344,11 @@ class FirewallPolicyAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.firewall.delete_rule('278454')
-
+            >>> _, _, error = client.zia.cloud_firewall_rules.delete_rule('54528')
+            >>> if error:
+            ...     print(f"Error deleting rule: {error}")
+            ...     return
+            ... print(f"Rule with ID {updated_rule.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

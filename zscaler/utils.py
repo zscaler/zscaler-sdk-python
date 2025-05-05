@@ -675,6 +675,7 @@ def is_valid_ssh_key(private_key: str) -> bool:
     ]
     return any(re.search(pattern, private_key) for pattern in ssh_key_patterns)
 
+
 def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     """
     Validates and converts provided time strings to epoch.
@@ -730,6 +731,7 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
 
     return start_epoch, end_epoch
 
+
 def convert_dc_exclusion_times(start_time_str, end_time_str, time_zone_str):
     """
     Converts and validates DC exclusion times based on API rules:
@@ -751,6 +753,7 @@ def convert_dc_exclusion_times(start_time_str, end_time_str, time_zone_str):
         raise ValueError("End time must be within 15 days from start time.")
 
     return start_epoch, end_epoch
+
 
 def convert_date_time_to_seconds(date_time):
     """

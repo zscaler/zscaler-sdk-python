@@ -31,7 +31,7 @@ class BandwidthClassesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_bwd_classes(self, query_params=None) -> tuple:
+    def list_classes(self, query_params=None) -> tuple:
         """
         Retrieves a list of bandwidth classes for an organization.
 
@@ -46,7 +46,7 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             List Bandwidth Classes All:
 
-            >>> classes_list, _, error = client.zia.bandwidth_classes.list_bwd_classes(
+            >>> classes_list, _, error = client.zia.bandwidth_classes.list_classes(
                 query_params={'search': BWD_Classes01})
             >>> if error:
             ...     print(f"Error listing classes: {error}")
@@ -86,7 +86,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_bwd_class_lite(self) -> tuple:
+    def list_classes_lite(self) -> tuple:
         """
         Fetches a specific bandwidth class lite by ID.
 
@@ -99,7 +99,7 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             List Bandwidth Classes All:
 
-            >>> classes_list, _, error = client.zia.bandwidth_classes.list_bwd_class_lite(
+            >>> classes_list, _, error = client.zia.bandwidth_classes.list_classes_lite(
                 query_params={'search': BWD_Classes01})
             >>> if error:
             ...     print(f"Error listing classes: {error}")
@@ -136,12 +136,12 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_bwd_class(self, bwd_id: int) -> tuple:
+    def get_class(self, class_id: int) -> tuple:
         """
         Fetches a specific bandwidth class by ID.
 
         Args:
-            bwd_id (int): The unique identifier for the Bandwidth Class.
+            class_id (int): The unique identifier for the Bandwidth Class.
 
         Returns:
             tuple: A tuple containing (Bandwidth Class instance, Response, error).
@@ -149,7 +149,7 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             List Bandwidth Classes All:
 
-            >>> fetched_class, _, error = client.zia.bandwidth_classes.get_bwd_class(updated_class.id)
+            >>> fetched_class, _, error = client.zia.bandwidth_classes.get_class(updated_class.id)
             >>>     if error:
             ...         print(f"Error fetching class by ID: {error}")
             ...         return
@@ -159,7 +159,7 @@ class BandwidthClassesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /bandwidthClasses/{bwd_id}
+            /bandwidthClasses/{class_id}
         """
         )
 
@@ -181,7 +181,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_bwd_class(self, **kwargs) -> tuple:
+    def add_class(self, **kwargs) -> tuple:
         """
         Creates a new ZIA Bandwidth Class.
 
@@ -197,7 +197,7 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             Create Bandwidth Classes:
 
-            >>> added_class, _, error = client.zia.bandwidth_classes.add_bwd_class(
+            >>> added_class, _, error = client.zia.bandwidth_classes.add_class(
             ...     name=f"NewBDW_{random.randint(1000, 10000)}",
             ...     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
             ...     urls=["chatgpt.com"],
@@ -237,12 +237,12 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_bwd_class(self, bwd_id: int, **kwargs) -> tuple:
+    def update_class(self, class_id: int, **kwargs) -> tuple:
         """
         Updates information for the specified ZIA Bandwidth Class.
 
         Args:
-            bwd_id (int): The unique ID for the Bandwidth Class.
+            class_id (int): The unique ID for the Bandwidth Class.
 
         Returns:
             tuple: A tuple containing the updated Bandwidth Class, response, and error.
@@ -250,8 +250,8 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             Update Bandwidth Classes:
 
-            >>> updated_class, _, error = client.zia.bandwidth_classes.add_bwd_class(
-            ...     bwd_id='125245'
+            >>> updated_class, _, error = client.zia.bandwidth_classes.update_class(
+            ...     class_id='125245'
             ...     name=f"UpdateBDW_{random.randint(1000, 10000)}",
             ...     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
             ...     urls=["chatgpt.com"],
@@ -266,7 +266,7 @@ class BandwidthClassesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /bandwidthClasses/{bwd_id}
+            /bandwidthClasses/{class_id}
         """
         )
         body = {}
@@ -287,12 +287,12 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_bwd_class(self, bwd_id: int) -> tuple:
+    def delete_class(self, class_id: int) -> tuple:
         """
         Deletes the specified Bandwidth Class.
 
         Args:
-            bwd_id (int): The unique identifier of the Bandwidth Class.
+            class_id (int): The unique identifier of the Bandwidth Class.
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
@@ -300,7 +300,7 @@ class BandwidthClassesAPI(APIClient):
         Examples:
             Delete a Bandwidth Classes:
 
-            >>> _, _, error = client.zia.bandwidth_classes.delete_bwd_class('125454')
+            >>> _, _, error = client.zia.bandwidth_classes.delete_class('125454')
             >>>     if error:
             ...         print(f"Error deleting class: {error}")
             ...         return
@@ -310,7 +310,7 @@ class BandwidthClassesAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /bandwidthClasses/{bwd_id}
+            /bandwidthClasses/{class_id}
         """
         )
 

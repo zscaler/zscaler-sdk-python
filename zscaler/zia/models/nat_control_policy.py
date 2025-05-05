@@ -46,40 +46,24 @@ class NatControlPolicy(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.access_control = config["accessControl"] \
-                if "accessControl" in config else None
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.order = config["order"] \
-                if "order" in config else None
-            self.rank = config["rank"] \
-                if "rank" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.action = config["action"] \
-                if "action" in config else "ALLOW"
-            self.enable_full_logging = config["enableFullLogging"] \
-                if "enableFullLogging" in config else False
-            self.description = config["description"] \
-                if "description" in config else None
+            self.access_control = config["accessControl"] if "accessControl" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.order = config["order"] if "order" in config else None
+            self.rank = config["rank"] if "rank" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.action = config["action"] if "action" in config else "ALLOW"
+            self.enable_full_logging = config["enableFullLogging"] if "enableFullLogging" in config else False
+            self.description = config["description"] if "description" in config else None
 
-            self.redirect_ip = config["redirectIp"] \
-                if "redirectIp" in config else None
-            self.redirect_port = config["redirectPort"] \
-                if "redirectPort" in config else None
-            self.redirect_fqdn = config["redirectFqdn"] \
-                if "redirectFqdn" in config else None
-            self.trusted_resolver_rule = config["trustedResolverRule"] \
-                if "trustedResolverRule" in config else None
-            self.last_modified_time = config["lastModifiedTime"] \
-                if "lastModifiedTime" in config else None
+            self.redirect_ip = config["redirectIp"] if "redirectIp" in config else None
+            self.redirect_port = config["redirectPort"] if "redirectPort" in config else None
+            self.redirect_fqdn = config["redirectFqdn"] if "redirectFqdn" in config else None
+            self.trusted_resolver_rule = config["trustedResolverRule"] if "trustedResolverRule" in config else None
+            self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
-            self.predefined = config["predefined"] \
-                if "predefined" in config else None
-            self.default_rule = config["defaultRule"] \
-                if "defaultRule" in config else None
+            self.predefined = config["predefined"] if "predefined" in config else None
+            self.default_rule = config["defaultRule"] if "defaultRule" in config else None
 
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
@@ -87,9 +71,7 @@ class NatControlPolicy(ZscalerObject):
 
             self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
 
-            self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], rule_labels.RuleLabels
-            )
+            self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
 
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location_management.LocationManagement
@@ -130,9 +112,7 @@ class NatControlPolicy(ZscalerObject):
                 config["destIpv6Groups"] if "destIpv6Groups" in config else [], destination_groups.IPDestinationGroups
             )
 
-            self.src_ips = ZscalerCollection.form_list(
-                config["srcIps"] if "srcIps" in config else [], str
-            )
+            self.src_ips = ZscalerCollection.form_list(config["srcIps"] if "srcIps" in config else [], str)
             self.dest_addresses = ZscalerCollection.form_list(
                 config["destAddresses"] if "destAddresses" in config else [], str
             )
@@ -238,7 +218,7 @@ class NatControlPolicy(ZscalerObject):
             "deviceGroups": self.device_groups,
             "labels": self.labels,
             "predefined": self.predefined,
-            "defaultRule": self.default_rule
+            "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

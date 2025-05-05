@@ -297,7 +297,7 @@ class HTTPClient:
             if response is None:
                 logger.error("Request execution failed. Response is None.")
                 return (None, ValueError("No response received."))
-                
+
             dump_request(
                 logger,
                 params["url"],

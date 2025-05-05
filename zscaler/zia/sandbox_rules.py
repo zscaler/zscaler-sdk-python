@@ -48,9 +48,7 @@ class SandboxRulesAPI(APIClient):
         Example:
             List all sandbox rules with a specific page size:
 
-            >>> rules_list, response, error = zia.sandbox_rules.list_rules(
-            ...    query_params={"pagesize": 50}
-            ... )
+            >>> rules_list, response, error = zia.sandbox_rules.list_rules()
             >>> for rule in rules_list:
             ...    print(rule.as_dict())
         """
@@ -106,9 +104,11 @@ class SandboxRulesAPI(APIClient):
         Example:
             Retrieve a sandbox rule by its ID:
 
-            >>> rule, response, error = zia.sandbox_rules.get_rule(rule_id=123456)
-            >>> if not error:
-            ...    print(rule.as_dict())
+            >>> fetched_rule, _, error = client.zia.sandbox_rules.get_rule('5422385')
+            >>> if error:
+            ...     print(f"Error fetching rule by ID: {error}")
+            ...     return
+            ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -126,7 +126,6 @@ class SandboxRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, SandboxRules)
 
         if error:
@@ -172,13 +171,29 @@ class SandboxRulesAPI(APIClient):
         Example:
             Add a sandbox rule to block specific file types:
 
-            >>> zia.sandbox_rules.add_rule(
-            ...    name='BLOCK_EXE_FILES',
-            ...    ba_rule_action='BLOCK',
-            ...    file_types=['FTCATEGORY_EXE', 'FTCATEGORY_DLL'],
-            ...    protocols=['HTTP_RULE', 'HTTPS_RULE'],
-            ...    state='ENABLED'
+            >>> added_rule, _, error = client.zia.sandbox_rules.add_rule(
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     ba_rule_action='BLOCK',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     first_time_enable=True,
+            ...     ml_action_enabled=True,
+            ...     first_time_operation="ALLOW_SCAN",
+            ...     url_categories = ["OTHER_ADULT_MATERIAL"],
+            ...     protocols=["FOHTTP_RULE", "FTP_RULE", "HTTPS_RULE", "HTTP_RULE"],
+            ...     ba_policy_categories=["ADWARE_BLOCK", "BOTMAL_BLOCK", "ANONYP2P_BLOCK",
+            ...     "RANSOMWARE_BLOCK", "OFFSEC_TOOLS_BLOCK", "SUSPICIOUS_BLOCK"],
+            ...     file_types=["FTCATEGORY_BZIP2", "FTCATEGORY_P7Z"],
+            ...     by_threat_score=40,
+            ...     groups=['12006601'],
+            ...     departments=['15616629'],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -198,7 +213,6 @@ class SandboxRulesAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -208,7 +222,6 @@ class SandboxRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, SandboxRules)
         if error:
             return (None, response, error)
@@ -252,12 +265,29 @@ class SandboxRulesAPI(APIClient):
         Example:
             Update an existing rule to change its name and action:
 
-            >>> zia.sandbox_rules.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
+            >>> updated_rule, _, error = client.zia.sandbox_rules.update_rule(
+            ...     name=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     ba_rule_action='BLOCK',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     first_time_enable=True,
+            ...     ml_action_enabled=True,
+            ...     first_time_operation="ALLOW_SCAN",
+            ...     url_categories = ["OTHER_ADULT_MATERIAL"],
+            ...     protocols=["FOHTTP_RULE", "FTP_RULE", "HTTPS_RULE", "HTTP_RULE"],
+            ...     ba_policy_categories=["ADWARE_BLOCK", "BOTMAL_BLOCK", "ANONYP2P_BLOCK",
+            ...     "RANSOMWARE_BLOCK", "OFFSEC_TOOLS_BLOCK", "SUSPICIOUS_BLOCK"],
+            ...     file_types=["FTCATEGORY_BZIP2", "FTCATEGORY_P7Z"],
+            ...     by_threat_score=40,
+            ...     groups=['12006601'],
+            ...     departments=['15616629'],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -277,7 +307,6 @@ class SandboxRulesAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -287,7 +316,6 @@ class SandboxRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, SandboxRules)
         if error:
             return (None, response, error)
@@ -309,8 +337,11 @@ class SandboxRulesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.sandbox_rules.delete_rule('278454')
-
+            >>> _, _, error = client.zia.sandbox_rules.delete_rule('544852')
+            >>> if error:
+            ...     print(f"Error deleting rule: {error}")
+            ...     return
+            ... print(f"Rule with ID {'544852'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

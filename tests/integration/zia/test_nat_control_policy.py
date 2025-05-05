@@ -78,10 +78,16 @@ class TestNATControlRules:
                     rank=7,
                     src_ip_groups=[src_group_id],
                     dest_ip_groups=[dst_group_id],
-                    redirect_port='2000',
-                    redirect_ip='1.1.1.1',
-                    src_ips=['192.168.100.0/24', '192.168.200.1'],
-                    dest_addresses=['3.217.228.0-3.217.231.255', '3.235.112.0-3.235.119.255', '35.80.88.0-35.80.95.255', 'server1.acme.com', '*.acme.com'],
+                    redirect_port="2000",
+                    redirect_ip="1.1.1.1",
+                    src_ips=["192.168.100.0/24", "192.168.200.1"],
+                    dest_addresses=[
+                        "3.217.228.0-3.217.231.255",
+                        "3.235.112.0-3.235.119.255",
+                        "35.80.88.0-35.80.95.255",
+                        "server1.acme.com",
+                        "*.acme.com",
+                    ],
                 )
                 assert error is None, f"NAT Control Rule creation failed: {error}"
                 assert created_rule is not None, "NAT Control Rule creation returned None"
@@ -108,10 +114,10 @@ class TestNATControlRules:
                     enabled=True,
                     order=1,
                     rank=7,
-                    redirect_port='2000',
-                    redirect_ip='1.1.1.1',
-                    src_ips=['192.168.100.0/24', '192.168.200.1'],
-                    dest_addresses=['3.217.228.0-3.217.231.255', '3.235.112.0-3.235.119.255', '35.80.88.0-35.80.95.255'],
+                    redirect_port="2000",
+                    redirect_ip="1.1.1.1",
+                    src_ips=["192.168.100.0/24", "192.168.200.1"],
+                    dest_addresses=["3.217.228.0-3.217.231.255", "3.235.112.0-3.235.119.255", "35.80.88.0-35.80.95.255"],
                 )
                 assert error is None, f"Error updating NAT Control Rule: {error}"
                 assert updated_rule is not None, "Updated NAT Control Rule is None"

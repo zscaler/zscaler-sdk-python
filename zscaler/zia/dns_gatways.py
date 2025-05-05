@@ -161,17 +161,17 @@ class DNSGatewayAPI(APIClient):
             name (str): Name of the DNS Gateway
 
         Keyword Args:
-            primary_ip_or_fqdn (str): The IP address or the FQDN of the primary DNS service provided by the third-party DNS service provider
-            secondary_ip_or_fqdn (str): The IP address or the FQDN of the secondary DNS service provided by your third-party DNS service provider. 
-            primary_ports (list[int]): Lists the ports for the primary DNS server depending on the protocols selected for the gateway.
-            secondary_ports (list[int]): Lists the ports for the secondary DNS server depending on the protocols selected for the gateway.
-            failure_behavior (str): Selects an action that must be performed if the configured DNS service is unavailable or unhealthy.
+            primary_ip_or_fqdn (str): IP address or FQDN of the primary DNS service provided by your DNS service provider
+            secondary_ip_or_fqdn (str): IP address or FQDN of the secondary DNS service provided by your DNS service provider
+            primary_ports (list[int]): Lists the ports for the primary DNS server based on the protocols selected.
+            secondary_ports (list[int]): Lists the ports for the secondary DNS server based on the protocols selected.
+            failure_behavior (str): Action that must be performed if the configured DNS service is unavailable or unhealthy.
             protocols (list[str]): Protocols that must be used to connect to the DNS service
                 Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
 
         Returns:
             tuple: A tuple containing the newly added DNS Gateway, response, and error.
-            
+
         Examples:
             Add a new DNS Gateway:
 
@@ -183,7 +183,7 @@ class DNSGatewayAPI(APIClient):
             ...     protocols=['TCP', 'UDP', 'DOH'],
             ...     primary_ports=['53', '53', '443'],
             ...     secondary_ports=['53', '53', '443']
-            ... )  
+            ... )
             >>> if error:
             ...     print(f"Error adding dns gateway: {error}")
             ...     return
@@ -228,17 +228,17 @@ class DNSGatewayAPI(APIClient):
 
         Keyword Args:
             name (str): Name of the rule, max 31 chars.
-            primary_ip_or_fqdn (str): The IP address or the FQDN of the primary DNS service provided by the third-party DNS service provider.
-            secondary_ip_or_fqdn (str): The IP address or the FQDN of the secondary DNS service provided by your third-party DNS service provider. 
-            primary_ports (list[int]): Lists the ports for the primary DNS server depending on the protocols selected for the gateway.
-            secondary_ports (list[int]): Lists the ports for the secondary DNS server depending on the protocols selected for the gateway.
-            failure_behavior (str): Selects an action that must be performed if the configured DNS service is unavailable or unhealthy.
+            primary_ip_or_fqdn (str): IP address or FQDN of the primary DNS service provided by your DNS service provider
+            secondary_ip_or_fqdn (str): IP address or FQDN of the secondary DNS service provided by your DNS service provider
+            primary_ports (list[int]): Lists the ports for the primary DNS server based on the protocols selected.
+            secondary_ports (list[int]): Lists the ports for the secondary DNS server based on the protocols selected.
+            failure_behavior (str): Action that must be performed if the configured DNS service is unavailable or unhealthy.
             protocols (list[str]): Protocols that must be used to connect to the DNS service
                 Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
 
         Returns:
             tuple: A tuple containing the updated DNS Gateway, response, and error.
-            
+
         Examples:
             Updating an existing DNS Gateway:
 
@@ -251,7 +251,7 @@ class DNSGatewayAPI(APIClient):
             ...     protocols=['TCP', 'UDP', 'DOH'],
             ...     primary_ports=['53', '53', '443'],
             ...     secondary_ports=['53', '53', '443']
-            ... )  
+            ... )
             >>> if error:
             ...     print(f"Error updating dns gateway: {error}")
             ...     return
@@ -295,7 +295,7 @@ class DNSGatewayAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             Updating an existing DNS Gateway:
 
