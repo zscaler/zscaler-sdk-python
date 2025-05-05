@@ -101,7 +101,7 @@ class FTPControlPolicyAPI(APIClient):
 
             >>> ftp_settings, _, err = client.zia.ftp_control_policy.update_ftp_settings(
             ...     ftp_over_http_enabled = True,
-            ...     ftp_enabled = True, 
+            ...     ftp_enabled = True,
             ...     url_categories = ["ADULT_THEMES", "ADULT_SEX_EDUCATION"],
             ...     urls = ["zscaler.com", "zscaler.net"],
             ... )

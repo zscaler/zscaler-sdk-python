@@ -323,7 +323,9 @@ class RequestExecutor:
         """
         try:
             request, response, response_body, error = self.fire_request(request)
-            logger.debug(f"[DEBUG] Got response: {response} (status: {getattr(response, 'status_code', 'N/A')}) | error: {error}")
+            logger.debug(
+                f"[DEBUG] Got response: {response} (status: {getattr(response, 'status_code', 'N/A')}) | error: {error}"
+            )
         except Exception as ex:
             logger.error(f"Exception during HTTP request: {ex}")
             return None, ex

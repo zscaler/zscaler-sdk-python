@@ -27,24 +27,59 @@ class ZscalerAPIException(ZscalerBaseException):
 
 
 # Other exceptions (unchanged)
-class ZpaBaseException(Exception): pass
-class ZpaAPIException(ZpaBaseException): pass
-class RateLimitExceededError(Exception): pass
-class RetryLimitExceededError(Exception): pass
-class CacheError(Exception): pass
-class BadRequestError(Exception): pass
-class UnauthorizedError(Exception): pass
-class ForbiddenError(Exception): pass
-class NotFoundError(Exception): pass
-class APIClientError(Exception): pass
+class ZpaBaseException(Exception):
+    pass
+
+
+class ZpaAPIException(ZpaBaseException):
+    pass
+
+
+class RateLimitExceededError(Exception):
+    pass
+
+
+class RetryLimitExceededError(Exception):
+    pass
+
+
+class CacheError(Exception):
+    pass
+
+
+class BadRequestError(Exception):
+    pass
+
+
+class UnauthorizedError(Exception):
+    pass
+
+
+class ForbiddenError(Exception):
+    pass
+
+
+class NotFoundError(Exception):
+    pass
+
+
+class APIClientError(Exception):
+    pass
+
 
 class InvalidCloudEnvironmentError(Exception):
     def __init__(self, cloud: str):
         self.cloud = cloud
         super().__init__(f"Unrecognized cloud environment: {self.cloud}")
 
-class TokenExpirationError(Exception): pass
 
-class TokenRefreshError(Exception): pass
+class TokenExpirationError(Exception):
+    pass
 
-class HeaderUpdateError(Exception): pass
+
+class TokenRefreshError(Exception):
+    pass
+
+
+class HeaderUpdateError(Exception):
+    pass

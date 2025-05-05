@@ -298,7 +298,7 @@ class LegacyZIAClientHelper:
                         url=url,
                         response_details=resp,
                         response_body=response_body,
-                        service_type="zia"  # Or dynamically inferred
+                        service_type="zia",  # Or dynamically inferred
                     )
                     logger.error(f"{error}")
                     raise error

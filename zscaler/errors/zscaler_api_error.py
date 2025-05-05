@@ -44,12 +44,7 @@ class ZscalerAPIError(Error):
         self.message = " ".join(message_parts)
 
     def __str__(self):
-        error_payload = {
-            "status": self.status_code,
-            "code": self.error_code,
-            "message": self.error_message,
-            "url": self.url
-        }
+        error_payload = {"status": self.status_code, "code": self.error_code, "message": self.error_message, "url": self.url}
         if self.params:
             error_payload["params"] = self.params
         if self.path:

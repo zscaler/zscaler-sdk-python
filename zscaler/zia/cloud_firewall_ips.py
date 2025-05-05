@@ -119,7 +119,7 @@ class FirewallIPSRulesAPI(APIClient):
             Retrieve a cloud firewall ips rule by its ID:
 
         >>> fetched_rule, response, error = client.zia.cloud_firewall_ips.get_rule('960061')
-        ... if error:
+        >>> if error:
         ...     print(f"Error fetching rule by ID: {error}")
         ...     return
         ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
@@ -140,7 +140,6 @@ class FirewallIPSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FirewallIPSrules)
 
         if error:
@@ -205,13 +204,19 @@ class FirewallIPSRulesAPI(APIClient):
         Example:
             Add a firewall ips rule to block specific file types:
 
-            >>> zia.cloudfirewallipsrules.add_rule(
-            ...    name='BLOCK_EXE_FILES',
-            ...    ba_rule_action='BLOCK',
-            ...    file_types=['FTCATEGORY_EXE', 'FTCATEGORY_DLL'],
-            ...    protocols=['HTTP_RULE', 'HTTPS_RULE'],
-            ...    state='ENABLED'
+            >>> added_rule, response, error = client.zia.cloud_firewall_ips.add_rule(
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     action='ALLOW',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     dest_countries=["COUNTRY_CA", "COUNTRY_US", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -299,12 +304,21 @@ class FirewallIPSRulesAPI(APIClient):
         Example:
             Update an existing rule to change its name and action:
 
-            >>> zia.cloudfirewallipsrules.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
+            >>> updated_rule, response, error = client.zia.cloud_firewall_ips.update_rule(
+            ...     rule_id='12455'
+            ...     name=f"UpdateRule {random.randint(1000, 10000)}",
+            ...     description=f"UpdateRule {random.randint(1000, 10000)}",
+            ...     action='ALLOW',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     dest_countries=["COUNTRY_CA", "COUNTRY_US", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
+            ...     locations=['125466', '54587544'],
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -351,8 +365,11 @@ class FirewallIPSRulesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.cloudfirewallipsrules.delete_rule('278454')
-
+            >>> _, _, error = client.zia.cloud_firewall_ips.delete_rule(updated_rule.id)
+            >>> if error:
+            ...     print(f"Error deleting rule: {error}")
+            ...     return
+            ... print(f"Rule with ID {updated_rule.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

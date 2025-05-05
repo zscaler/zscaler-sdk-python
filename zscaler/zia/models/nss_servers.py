@@ -32,18 +32,12 @@ class Nssservers(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] \
-                if "id" in config else None
-            self.name = config["name"] \
-                if "name" in config else None
-            self.status = config["status"] \
-                if "status" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.icap_svr_id = config["icapSvrId"] \
-                if "icapSvrId" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.status = config["status"] if "status" in config else None
+            self.state = config["state"] if "state" in config else None
+            self.icap_svr_id = config["icapSvrId"] if "icapSvrId" in config else None
+            self.type = config["type"] if "type" in config else None
         else:
             self.id = None
             self.name = None
@@ -63,7 +57,7 @@ class Nssservers(ZscalerObject):
             "status": self.status,
             "state": self.state,
             "icapSvrId": self.icap_svr_id,
-            "type": self.type
+            "type": self.type,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

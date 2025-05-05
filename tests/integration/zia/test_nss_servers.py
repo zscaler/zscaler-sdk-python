@@ -41,8 +41,8 @@ class TestNSSServers:
             try:
                 create_server, _, error = client.zia.nss_servers.add_nss_server(
                     name=f"TestNSSServer_{random.randint(1000, 10000)}",
-                    status='ENABLED',
-                    type='NSS_FOR_FIREWALL',
+                    status="ENABLED",
+                    type="NSS_FOR_FIREWALL",
                 )
                 assert error is None, f"Add NSS Server Error: {error}"
                 assert create_server is not None, "NSS Server creation failed."
@@ -55,8 +55,8 @@ class TestNSSServers:
                     update_server, _, error = client.zia.nss_servers.update_nss_server(
                         nss_id=nss_id,
                         name=f"TestNSSServer_{random.randint(1000, 10000)}",
-                        status='DISABLED',
-                        type='NSS_FOR_FIREWALL',
+                        status="DISABLED",
+                        type="NSS_FOR_FIREWALL",
                     )
                     assert error is None, f"Update NSS Server Error: {error}"
                     assert update_server is not None, "NSS Server update returned None."
