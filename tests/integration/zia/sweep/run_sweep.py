@@ -74,7 +74,7 @@ class TestSweepUtility:
             self.sweep_dlp_engine,
             self.sweep_dlp_dictionary,
             self.sweep_dlp_template,
-            self.sweep_zpa_gateway,
+            # self.sweep_zpa_gateway,
             self.sweep_nss_servers,
             self.sweep_nat_control_policy,
         ]
@@ -544,28 +544,28 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping dlp notification templates: {str(e)}")
             raise
 
-    @suppress_warnings
-    def sweep_zpa_gateway(self):
-        logging.info("Starting to sweep zpa gateway")
-        try:
-            gateways, _, error = self.client.zia.zpa_gateway.list_gateways()
-            if error:
-                raise Exception(f"Error listing zpa gateways: {error}")
+    # @suppress_warnings
+    # def sweep_zpa_gateway(self):
+    #     logging.info("Starting to sweep zpa gateway")
+    #     try:
+    #         gateways, _, error = self.client.zia.zpa_gateway.list_gateways()
+    #         if error:
+    #             raise Exception(f"Error listing zpa gateways: {error}")
 
-            test_gateways = [gw for gw in gateways if hasattr(gw, "name") and gw.name.startswith("tests-")]
-            logging.info(f"Found {len(test_gateways)} zpa gateway to delete.")
+    #         test_gateways = [gw for gw in gateways if hasattr(gw, "name") and gw.name.startswith("tests-")]
+    #         logging.info(f"Found {len(test_gateways)} zpa gateway to delete.")
 
-            for gateway in test_gateways:
-                logging.info(f"sweep_zpa_gateway: Attempting to delete zpa gateway: Name='{gateway.name}', ID='{gateway.id}'")
-                _, _, error = self.client.zia.zpa_gateway.delete_gateway(gateway_id=gateway.id)
-                if error:
-                    logging.error(f"Failed to delete zpa gateway ID={gateway.id} — {error}")
-                else:
-                    logging.info(f"Successfully deleted zpa gateway ID={gateway.id}")
+    #         for gateway in test_gateways:
+    #             logging.info(f"sweep_zpa_gateway: Attempting to delete zpa gateway: Name='{gateway.name}', ID='{gateway.id}'")
+    #             _, _, error = self.client.zia.zpa_gateway.delete_gateway(gateway_id=gateway.id)
+    #             if error:
+    #                 logging.error(f"Failed to delete zpa gateway ID={gateway.id} — {error}")
+    #             else:
+    #                 logging.info(f"Successfully deleted zpa gateway ID={gateway.id}")
 
-        except Exception as e:
-            logging.error(f"An error occurred while sweeping zpa gateways: {str(e)}")
-            raise
+    #     except Exception as e:
+    #         logging.error(f"An error occurred while sweeping zpa gateways: {str(e)}")
+    #         raise
 
     @suppress_warnings
     def sweep_nss_servers(self):
