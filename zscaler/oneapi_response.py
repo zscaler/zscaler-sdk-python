@@ -181,6 +181,46 @@ class ZscalerAPIResponse:
         self._items_fetched += len(self._list)
         self._pages_fetched += 1
 
+    # def _build_json_response(self, response_body):
+    #     """
+    #     Converts JSON response text into Python dictionary.
+    #     Ensures consistent model conversion for all pages.
+    #     """
+    #     self._body = json.loads(response_body)
+
+    #     # Extract the list based on service type
+    #     if isinstance(self._body, list):
+    #         self._list = self._body
+    #     elif self._service_type == "ZDX":
+    #         self._list = self._body.get("items", [])
+    #         self._next_offset = self._body.get("next_offset")
+    #     else:
+    #         self._list = self._body.get("list", [])
+    #         if self._service_type == "ZPA":
+    #             self._total_pages = int(self._body.get("totalPages", 1))
+    #             self._total_count = int(self._body.get("totalCount", 0))
+
+    #     # Clean and convert items
+    #     cleaned_list = []
+    #     for item in self._list:
+    #         if not isinstance(item, dict):
+    #             logger.warning("Non-dict item found in response list, skipping: %s", item)
+    #             continue
+                
+    #         # Convert to model if type is specified
+    #         if self._type:
+    #             try:
+    #                 cleaned_list.append(self._type(**item))
+    #             except Exception as e:
+    #                 logger.error("Failed to convert item to model: %s", e)
+    #                 cleaned_list.append(item)
+    #         else:
+    #             cleaned_list.append(item)
+
+    #     self._list = cleaned_list
+    #     self._items_fetched += len(self._list)
+    #     self._pages_fetched += 1
+    
     def get_results(self):
         """
         Returns the current page of results.
