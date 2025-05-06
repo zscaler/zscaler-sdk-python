@@ -278,7 +278,7 @@ class ProxiesAPI(APIClient):
 
         Keyword Args:
             description (str): Additional notes or information
-            type (str): DGateway type. Supported Values: `PROXYCHAIN`, `ZIA`, `ECSELF`
+            type (str): Gateway type. Supported Values: `PROXYCHAIN`, `ZIA`, `ECSELF`
             address (list): The IP address or the FQDN of the third-party proxy service
             port (str): The port number on which the third-party proxy service listens to the requests forwarded from Zscaler
             cert (list): The root certificate used by the third-party proxy to perform SSL inspection.

@@ -84,39 +84,32 @@ class FTPControlPolicyAPI(APIClient):
                 An instance of `FTPControlPolicy` containing the updated configuration.
 
         Supported attributes:
-            - block_apps_with_malicious_activity (bool): Blocks malicious or hidden applications
-            - block_apps_with_known_vulnerabilities (bool): Block apps with known vulnerabilities or insecure modules
-            - block_apps_sending_unencrypted_user_credentials (bool): Block apps leaking user credentials unencrypted
-            - block_apps_sending_location_info (bool): Block apps leaking device location unencrypted or for unknown purposes
-            - block_apps_sending_personally_identifiable_info (bool): Block app leaking PII unencrypted or for unknown purposes
-            - block_apps_sending_device_identifier (bool): Block apps leaking device IDs unencrypted or for unknown purposes
-            - block_apps_communicating_with_ad_websites (bool): Block apps communicating with known ad websites
-            - block_apps_communicating_with_remote_unknown_servers (bool): Block apps talking to unknown remote servers
+            - ftp_over_http_enabled (bool): Indicates whether to enable FTP over HTTP.
+            - ftp_enabled (bool): Indicates whether to enable native FTP.
+                When enabled, users can connect to native FTP sites and download files.
+            - url_categories (list[str]): List of URL categories that allow FTP traffic
+            - urls (list[str]): Domains or URLs included for the FTP Control settings
 
         Returns:
             tuple:
-                - **MobileAdvancedThreatSettings**: The updated advanced settings object.
+                - **FTPControlPolicy**: The updated ftp control policy object.
                 - **Response**: The raw HTTP response returned by the API.
                 - **error**: An error message if the update failed; otherwise, `None`.
 
         Examples:
             Update mobile setting options:
 
-            >>> malware_settings, _, err = client.zia.mobile_threat_settings.update_mobile_advanced_settings(
-            ...     block_apps_with_malicious_activity = True,
-            ...     block_apps_with_known_vulnerabilities = True,
-            ...     block_apps_sending_unencrypted_user_credentials = True,
-            ...     block_apps_sending_location_info = True,
-            ...     block_apps_sending_personally_identifiable_info = True,
-            ...     block_apps_sending_device_identifier = True,
-            ...     block_apps_communicating_with_ad_websites = True,
-            ...     block_apps_communicating_with_remote_unknown_servers = True
+            >>> ftp_settings, _, err = client.zia.ftp_control_policy.update_ftp_settings(
+            ...     ftp_over_http_enabled = True,
+            ...     ftp_enabled = True,
+            ...     url_categories = ["ADULT_THEMES", "ADULT_SEX_EDUCATION"],
+            ...     urls = ["zscaler.com", "zscaler.net"],
             ... )
             >>> if err:
-            ...     print(f"Error fetching malware settings: {err}")
+            ...     print(f"Error fetching ftp settings: {err}")
             ...     return
-            ... print("Current malware settings fetched successfully.")
-            ... print(malware_settings)
+            ... print("Current ftp settings fetched successfully.")
+            ... print(ftp_settings)
         """
         http_method = "put".upper()
         api_url = format_url(

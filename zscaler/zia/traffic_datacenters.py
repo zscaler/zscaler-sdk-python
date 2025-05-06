@@ -72,8 +72,7 @@ class TrafficDatacentersAPI(APIClient):
         body = {}
         headers = {}
 
-        request, error = self._request_executor.\
-            create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
         if error:
             return (None, None, error)
 
@@ -174,11 +173,13 @@ class TrafficDatacentersAPI(APIClient):
         except Exception as e:
             return (None, None, e)
 
-        body = [{
-            "dcid": dcid,
-            "startTime": start_epoch,
-            "endTime": end_epoch,
-        }]
+        body = [
+            {
+                "dcid": dcid,
+                "startTime": start_epoch,
+                "endTime": end_epoch,
+            }
+        ]
 
         request, error = self._request_executor.create_request(
             method=http_method,
@@ -193,8 +194,7 @@ class TrafficDatacentersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [TrafficDcExclusions(
-                self.form_response_body(item)) for item in response.get_body()]
+            result = [TrafficDcExclusions(self.form_response_body(item)) for item in response.get_body()]
         except Exception as error:
             return (None, response, error)
 
@@ -242,11 +242,13 @@ class TrafficDatacentersAPI(APIClient):
         except Exception as e:
             return (None, None, e)
 
-        body = [{
-            "dcid": dcid,
-            "startTime": start_epoch,
-            "endTime": end_epoch,
-        }]
+        body = [
+            {
+                "dcid": dcid,
+                "startTime": start_epoch,
+                "endTime": end_epoch,
+            }
+        ]
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:

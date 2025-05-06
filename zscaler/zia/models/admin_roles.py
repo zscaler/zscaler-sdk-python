@@ -108,11 +108,11 @@ class PasswordExpiry(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.password_expiration_enabled = config["passwordExpirationEnabled"] \
-                if "passwordExpirationEnabled" in config else None
+            self.password_expiration_enabled = (
+                config["passwordExpirationEnabled"] if "passwordExpirationEnabled" in config else None
+            )
 
-            self.password_expiry_days = config["passwordExpiryDays"] \
-                if "passwordExpiryDays" in config else None
+            self.password_expiry_days = config["passwordExpiryDays"] if "passwordExpiryDays" in config else None
 
         else:
             self.password_expiration_enabled = None

@@ -16,8 +16,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zia.models import device_groups as device_groups
-from zscaler.zia.models import devices as devices
 from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import location_group as location_group
 from zscaler.zia.models import rule_labels as rule_labels
@@ -86,12 +84,6 @@ class BandwidthControlRules(ZscalerObject):
             else:
                 self.last_modified_by = None
 
-            self.device_groups = ZscalerCollection.form_list(
-                config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
-            )
-
-            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
-
             self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], rule_labels.RuleLabels)
 
             self.default_rule = config["defaultRule"] if "defaultRule" in config else None
@@ -113,8 +105,6 @@ class BandwidthControlRules(ZscalerObject):
             self.last_modified_by = None
             self.access_control = None
             self.labels = []
-            self.devices = []
-            self.device_groups = []
             self.default_rule = None
 
     def request_format(self):
@@ -127,6 +117,7 @@ class BandwidthControlRules(ZscalerObject):
             "name": self.name,
             "order": self.order,
             "state": self.state,
+            "rank": self.rank,
             "locations": self.locations,
             "timeWindows": self.time_windows,
             "description": self.description,
@@ -135,13 +126,10 @@ class BandwidthControlRules(ZscalerObject):
             "maxBandwidth": self.max_bandwidth,
             "minBandwidth": self.min_bandwidth,
             "bandwidthClasses": self.bandwidth_classes,
-            "rank": self.rank,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "accessControl": self.access_control,
             "labels": self.labels,
-            "devices": self.devices,
-            "deviceGroups": self.device_groups,
             "defaultRule": self.default_rule,
         }
         parent_req_format.update(current_obj_format)

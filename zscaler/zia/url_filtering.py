@@ -64,12 +64,13 @@ class URLFilteringAPI(APIClient):
             tuple: A tuple containing (list of url filtering rules instances, Response, error)
 
         Examples:
-        >>> rules, response, error = zia.url_filtering.list_rules()
-        ...    pprint(rule)
-
-        >>> rules, response, error = zia.url_filtering.list_rules(
-            query_params={"search": "Block malicious IPs and domains"})
-        ...    pprint(rule)
+        >>> rules_list, _, error = client.zia.url_filtering.list_rules()
+        >>> if error:
+        ...     print(f"Error listing url filtering rules: {error}")
+        ...     return
+        ... print(f"Total rules found: {len(rules_list)}")
+        ... for rule in rules_list:
+        ...     print(rule.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -121,8 +122,11 @@ class URLFilteringAPI(APIClient):
             :obj:`Tuple`: The URL Filtering Policy rule.
 
         Examples:
-            >>> pprint(zia.url_filtering.get_rule('977469'))
-
+            >>> fetched_rule, _, error = client.zia.url_filtering.get_rule('2524554')
+            >>> if error:
+            ...     print(f"Error fetching rule by ID: {error}")
+            ...     return
+            ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -140,7 +144,6 @@ class URLFilteringAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, URLFilteringRule)
 
         if error:
@@ -212,23 +215,25 @@ class URLFilteringAPI(APIClient):
             :obj:`Tuple`: The newly created URL Filtering Policy rule.
 
         Examples:
-            Add a rule with the minimum required parameters:
+            Add a url filtering rule:
 
-            >>> zia.url_filtering.add_rule(rank='7',
-            ...    name="Empty URL Filter",
-            ...    action="ALLOW",
-            ...    protocols=['ANY_RULE']
-
-            Add a rule to block HTTP POST to Social Media sites for the Finance department.
-
-            >>> zia.url_filtering.add_rule(rank='7',
-            ...    name="Block POST to Social Media",
-            ...    action="BLOCK",
-            ...    protocols=["HTTP_PROXY", "HTTP_RULE", "HTTPS_RULE"],
-            ...    request_methods=['POST'],
-            ...    departments=["95022175"],
-            ...    url_categories=["SOCIAL_NETWORKING"])
-
+            >>> added_rule, _, error = client.zia.url_filtering.add_rule(
+            ...     name=f"NewRule {random.randint(1000, 10000)}",
+            ...     description=f"NewRule {random.randint(1000, 10000)}",
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     action='ALLOW',
+            ...     url_categories = ["OTHER_ADULT_MATERIAL"],
+            ...     protocols = ["ANY_RULE"],
+            ...     device_trust_levels=["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"],
+            ...     user_agent_types = [	"OPERA", "FIREFOX", "MSIE", "MSEDGE", "CHROME", "SAFARI", "MSCHREDGE", "OTHER" ],
+            ...     request_methods = [ "CONNECT", "DELETE", "GET", "HEAD", "OPTIONS", "OTHER", "POST", "PUT", "TRACE"],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -329,17 +334,25 @@ class URLFilteringAPI(APIClient):
             :obj:`Tuple`: The updated URL Filtering Policy rule.
 
         Examples:
-            Update the name of a URL Filtering Policy rule:
+            Updating an exiisting url filtering rule:
 
-            >>> zia.url_filtering.update_rule('977467',
-            ...    name="Updated Name")
-
-            Add GET to request methods and change action to ALLOW:
-
-            >>> zia.url_filtering.update_rule('977468',
-            ...    request_methods=['POST', 'GET'],
-            ...    action="ALLOW")
-
+            >>> updated_rule, _, error = client.zia.url_filtering.add_rule(
+            ...     name=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     action='ALLOW',
+            ...     url_categories = ["OTHER_ADULT_MATERIAL"],
+            ...     protocols = ["ANY_RULE"],
+            ...     device_trust_levels=["UNKNOWN_DEVICETRUSTLEVEL", "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"],
+            ...     user_agent_types = [	"OPERA", "FIREFOX", "MSIE", "MSEDGE", "CHROME", "SAFARI", "MSCHREDGE", "OTHER" ],
+            ...     request_methods = [ "CONNECT", "DELETE", "GET", "HEAD", "OPTIONS", "OTHER", "POST", "PUT", "TRACE"],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -359,7 +372,6 @@ class URLFilteringAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -369,7 +381,6 @@ class URLFilteringAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, URLFilteringRule)
         if error:
             return (None, response, error)
@@ -391,8 +402,11 @@ class URLFilteringAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.url_filtering.delete_rule('278454')
-
+            >>> _, _, error = client.zia.url_filtering.delete_rule('524558')
+            >>> if error:
+            ...     print(f"Error deleting rule: {error}")
+            ...     return
+            ... print(f"Rule with ID {'524558'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

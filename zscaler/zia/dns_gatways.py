@@ -61,7 +61,7 @@ class DNSGatewayAPI(APIClient):
             List dns gateway that match the name 'DNS_GW01'
 
             >>> gw_list, _, error = zia.dns_gateways.list_dns_gateways(
-                query_params={"search": 'DNS_GW01'})
+            ... query_params={"search": 'DNS_GW01'})
             ... if error:
             ...     print(f"Error listing gateways: {error}")
             ...     return
@@ -120,10 +120,12 @@ class DNSGatewayAPI(APIClient):
                 N/A
 
         Examples:
-            >>> proxy, response, err = client.zia.forwarding_control.get_proxy_gateways()
-
+            >>> fetched_gw, _, error = client.zia.dns_gatways.get_dns_gateways('87787')
+            >>> if error:
+            ...     print(f"Error fetching dns gateway by ID: {error}")
+            ...     return
+            ... print(f"Fetched dns gateway  by ID: {fetched_gw.as_dict()}")
         """
-
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -156,19 +158,36 @@ class DNSGatewayAPI(APIClient):
         Creates a new ZIA DNS Gateway.
 
         Args:
-            name (str): Name of the rule, max 31 chars.
-            action (str): Action for the rule.
-            device_trust_levels (list): Device trust levels for the rule application.
-                Values: `ANY`, `UNKNOWN_DEVICETRUSTLEVEL`, `LOW_TRUST`, `MEDIUM_TRUST`,
-                `HIGH_TRUST`.
+            name (str): Name of the DNS Gateway
 
         Keyword Args:
-            order (str): Rule order, defaults to the bottom.
-            rank (str): Admin rank of the rule.
-            state (str): Rule state ('ENABLED' or 'DISABLED').
+            primary_ip_or_fqdn (str): IP address or FQDN of the primary DNS service provided by your DNS service provider
+            secondary_ip_or_fqdn (str): IP address or FQDN of the secondary DNS service provided by your DNS service provider
+            primary_ports (list[int]): Lists the ports for the primary DNS server based on the protocols selected.
+            secondary_ports (list[int]): Lists the ports for the secondary DNS server based on the protocols selected.
+            failure_behavior (str): Action that must be performed if the configured DNS service is unavailable or unhealthy.
+            protocols (list[str]): Protocols that must be used to connect to the DNS service
+                Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
 
         Returns:
             tuple: A tuple containing the newly added DNS Gateway, response, and error.
+
+        Examples:
+            Add a new DNS Gateway:
+
+            >>> added_gw, _, error = client.zia.dns_gatways.add_dns_gateway(
+            ...     name=f"DNS_GW01_{random.randint(1000, 10000)}",
+            ...     primary_ip_or_fqdn='8.8.8.8',
+            ...     secondary_ip_or_fqdn='4.4.4.4',
+            ...     failure_behavior='FAIL_RET_ERR',
+            ...     protocols=['TCP', 'UDP', 'DOH'],
+            ...     primary_ports=['53', '53', '443'],
+            ...     secondary_ports=['53', '53', '443']
+            ... )
+            >>> if error:
+            ...     print(f"Error adding dns gateway: {error}")
+            ...     return
+            ... print(f"DNS Gateway added successfully: {added_gw.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -207,8 +226,36 @@ class DNSGatewayAPI(APIClient):
         Args:
             gateway_id (int): The unique ID for the DNS Gateway.
 
+        Keyword Args:
+            name (str): Name of the rule, max 31 chars.
+            primary_ip_or_fqdn (str): IP address or FQDN of the primary DNS service provided by your DNS service provider
+            secondary_ip_or_fqdn (str): IP address or FQDN of the secondary DNS service provided by your DNS service provider
+            primary_ports (list[int]): Lists the ports for the primary DNS server based on the protocols selected.
+            secondary_ports (list[int]): Lists the ports for the secondary DNS server based on the protocols selected.
+            failure_behavior (str): Action that must be performed if the configured DNS service is unavailable or unhealthy.
+            protocols (list[str]): Protocols that must be used to connect to the DNS service
+                Supported Values: `ANY`, `TCP`, `UDP`, `DOH`
+
         Returns:
             tuple: A tuple containing the updated DNS Gateway, response, and error.
+
+        Examples:
+            Updating an existing DNS Gateway:
+
+            >>> updated_gw, _, error = client.zia.dns_gatways.add_dns_gateway(
+            ...     gateway_id='671763',
+            ...     name=f"UpdateDNS_GW01_{random.randint(1000, 10000)}",
+            ...     primary_ip_or_fqdn='8.8.8.8',
+            ...     secondary_ip_or_fqdn='4.4.4.4',
+            ...     failure_behavior='FAIL_RET_ERR',
+            ...     protocols=['TCP', 'UDP', 'DOH'],
+            ...     primary_ports=['53', '53', '443'],
+            ...     secondary_ports=['53', '53', '443']
+            ... )
+            >>> if error:
+            ...     print(f"Error updating dns gateway: {error}")
+            ...     return
+            ... print(f"DNS Gateway updated successfully: {updated_gw.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -248,6 +295,15 @@ class DNSGatewayAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Updating an existing DNS Gateway:
+
+            >>> _, _, error = client.zia.dns_gatways.delete_dns_gateway('778766')
+            >>> if error:
+            ...     print(f"Error deleting dns gateway: {error}")
+            ...     return
+            ... print(f"DNS Gateway with ID '778766' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

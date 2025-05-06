@@ -100,6 +100,7 @@ class FirewallRule(ZscalerObject):
                 config["departments"] if "departments" in config else [], user_management.Department
             )
             self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], user_management.Groups)
+
             self.users = ZscalerCollection.form_list(
                 config["users"] if "users" in config else [], user_management.UserManagement
             )

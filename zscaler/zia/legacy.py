@@ -25,10 +25,12 @@ from zscaler import __version__
 from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.logger import setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
+from zscaler.errors.zscaler_api_error import ZscalerAPIError
 from zscaler.utils import obfuscate_api_key
+from zscaler.logger import setup_logging
+
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -287,16 +289,19 @@ class LegacyZIAClientHelper:
                     continue
 
                 if resp.status_code >= 400:
-                    logger.error(f"Request failed: {resp.status_code}, {resp.text}")
-                    raise ValueError(f"Request failed with status {resp.status_code}")
+                    try:
+                        response_body = resp.json()
+                    except Exception:
+                        response_body = {"message": resp.text}
 
-                return resp, {
-                    "method": method,
-                    "url": url,
-                    "params": params or {},
-                    "headers": headers_with_user_agent,
-                    "json": json or {},
-                }
+                    error = ZscalerAPIError(
+                        url=url,
+                        response_details=resp,
+                        response_body=response_body,
+                        service_type="zia",  # Or dynamically inferred
+                    )
+                    logger.error(f"{error}")
+                    raise error
             except requests.RequestException as e:
                 logger.error(f"Request to {url} failed: {e}")
                 if attempts == 4:
@@ -908,6 +913,27 @@ class LegacyZIAClientHelper:
         from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 
         return TrafficDatacentersAPI(self.request_executor)
+
+    @property
+    def nss_servers(self):
+        """
+        The interface object for the :ref:`ZIA NSS Servers interface <zia-nss_servers>`.
+
+        """
+        from zscaler.zia.nss_servers import NssServersAPI
+
+        return NssServersAPI(self.request_executor)
+
+    @property
+    def nat_control_policy(self):
+        """
+        The interface object for the :ref:`ZIA NAT Control Policy interface <zia-nat_control_policy>`.
+
+        """
+
+        from zscaler.zia.nat_control_policy import NatControlPolicyAPI
+
+        return NatControlPolicyAPI(self.request_executor)
 
     """
     Misc

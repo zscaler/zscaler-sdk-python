@@ -8,60 +8,117 @@ from http.client import HTTPConnection
 LOG_FORMAT = "%(asctime)s - %(name)s - %(module)s - %(levelname)s - %(message)s"
 
 
+# def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
+#     """
+#     Set up logging with specified level and logger name.
+#     Log level is controlled via ZSCALER_SDK_VERBOSE environment variable.
+#     Logging can be enabled/disabled via ZSCALER_SDK_LOG environment variable.
+
+#     Parameters:
+#     - logger_name (str, optional): Logger name. Defaults to "zscaler-sdk-python".
+#     - enabled (bool, optional): Enable logging. Defaults to None, which uses the environment variable.
+#     - verbose (bool, optional): Set verbose logging. Defaults to None, which uses the environment variable.
+#     """
+#     if enabled is None:
+#         enabled = os.getenv("ZSCALER_SDK_LOG", "false").lower() == "true"
+
+#     # if not enabled:
+#     #     # If logging is not enabled, set up a null handler
+#     #     logging.disable(logging.INFO)
+#     #     return
+
+#     if not enabled:
+#         # Do not globally disable logging
+#         # Just keep the SDK logger silent
+#         sdk_logger = logging.getLogger(logger_name)
+#         sdk_logger.addHandler(logging.NullHandler())
+#         return
+
+#     if verbose is None:
+#         verbose = os.getenv("ZSCALER_SDK_VERBOSE", "false").lower() == "true"
+
+#     log_level = logging.DEBUG if verbose else logging.INFO
+#     HTTPConnection.debuglevel = 0
+#     # Create a logger with the specified name
+#     logger = logging.getLogger(logger_name)
+#     default_logger = logging.getLogger()
+
+#     # If the logger already has handlers, remove them to avoid duplicate logging
+#     for handler in logger.handlers[:]:
+#         logger.removeHandler(handler)
+
+#     for handler in default_logger.handlers[:]:
+#         default_logger.removeHandler(handler)
+
+#     # Set log level
+#     logger.setLevel(log_level)
+#     default_logger.setLevel(log_level)
+#     logging.basicConfig(level=log_level)
+#     # Create a stream handler with the specified level and formatter
+#     stream_handler = logging.StreamHandler()
+#     stream_handler.setLevel(log_level)
+#     log_formatter = logging.Formatter(LOG_FORMAT)
+#     stream_handler.setFormatter(log_formatter)
+
+#     # Add the handler to the logger
+#     logger.addHandler(stream_handler)
+
+
+#     # Option: Add FileHandler if you want logs to be written to a file.
+#     if os.getenv("LOG_TO_FILE", "false").lower() == "true":
+#         file_handler = logging.FileHandler(os.getenv("LOG_FILE_PATH", "sdk.log"))
+#         file_handler.setLevel(log_level)
+#         file_handler.setFormatter(log_formatter)
+#         logger.addHandler(file_handler)
 def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
     """
-    Set up logging with specified level and logger name.
-    Log level is controlled via ZSCALER_SDK_VERBOSE environment variable.
-    Logging can be enabled/disabled via ZSCALER_SDK_LOG environment variable.
+    Set up logging for the Zscaler SDK.
+
+    Logging behavior can be controlled via environment variables or config:
+
+    Environment Variables:
+        ZSCALER_SDK_LOG (true/false): Enable or disable SDK logging.
+        ZSCALER_SDK_VERBOSE (true/false): Enable verbose (DEBUG) logging.
+        LOG_TO_FILE (true/false): Enable file-based logging.
+        LOG_FILE_PATH: File path for logs (default: sdk.log)
 
     Parameters:
-    - logger_name (str, optional): Logger name. Defaults to "zscaler-sdk-python".
-    - enabled (bool, optional): Enable logging. Defaults to None, which uses the environment variable.
-    - verbose (bool, optional): Set verbose logging. Defaults to None, which uses the environment variable.
+        logger_name (str): Name of the logger. Defaults to "zscaler-sdk-python".
+        enabled (bool): Enable logging. If None, reads from env.
+        verbose (bool): Enable DEBUG-level logging. If None, reads from env.
     """
     if enabled is None:
         enabled = os.getenv("ZSCALER_SDK_LOG", "false").lower() == "true"
 
     if not enabled:
-        # If logging is not enabled, set up a null handler
-        logging.disable(logging.INFO)
+        # Do NOT disable global logging.
+        # Just suppress SDK logs quietly with a NullHandler.
+        logging.getLogger(logger_name).addHandler(logging.NullHandler())
         return
 
     if verbose is None:
         verbose = os.getenv("ZSCALER_SDK_VERBOSE", "false").lower() == "true"
 
     log_level = logging.DEBUG if verbose else logging.INFO
-    HTTPConnection.debuglevel = 0
-    # Create a logger with the specified name
+    HTTPConnection.debuglevel = 0  # Optional: Enable HTTP debug logging
+
+    # SDK logger (isolated)
     logger = logging.getLogger(logger_name)
-    default_logger = logging.getLogger()
-
-    # If the logger already has handlers, remove them to avoid duplicate logging
-    for handler in logger.handlers[:]:
-        logger.removeHandler(handler)
-
-    for handler in default_logger.handlers[:]:
-        default_logger.removeHandler(handler)
-
-    # Set log level
     logger.setLevel(log_level)
-    default_logger.setLevel(log_level)
-    logging.basicConfig(level=log_level)
-    # Create a stream handler with the specified level and formatter
-    stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(log_level)
-    log_formatter = logging.Formatter(LOG_FORMAT)
-    stream_handler.setFormatter(log_formatter)
 
-    # Add the handler to the logger
-    logger.addHandler(stream_handler)
+    # Clean up any duplicate handlers
+    if not logger.handlers:
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(log_level)
+        stream_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+        logger.addHandler(stream_handler)
 
-    # Option: Add FileHandler if you want logs to be written to a file.
-    if os.getenv("LOG_TO_FILE", "false").lower() == "true":
-        file_handler = logging.FileHandler(os.getenv("LOG_FILE_PATH", "sdk.log"))
-        file_handler.setLevel(log_level)
-        file_handler.setFormatter(log_formatter)
-        logger.addHandler(file_handler)
+        # Optional file logging
+        if os.getenv("LOG_TO_FILE", "false").lower() == "true":
+            file_handler = logging.FileHandler(os.getenv("LOG_FILE_PATH", "sdk.log"))
+            file_handler.setLevel(log_level)
+            file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+            logger.addHandler(file_handler)
 
 
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
