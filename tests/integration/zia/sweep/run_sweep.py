@@ -59,6 +59,7 @@ class TestSweepUtility:
     def run_sweep_functions(self):
         sweep_functions = [
             self.sweep_rule_labels,
+            self.sweep_bandwidth_rule,
             self.sweep_cloud_firewall_rule,
             self.sweep_cloud_firewall_ip_source_group,
             self.sweep_cloud_firewall_ip_destination_group,
@@ -104,6 +105,56 @@ class TestSweepUtility:
 
         except Exception as e:
             logging.error(f"An error occurred while sweeping rule labels: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_bandwidth_class(self):
+        logging.info("Starting to sweep bandwidth class")
+        try:
+            classes, _, error = self.client.zia.bandwidth_classes.list_classes()
+            if error:
+                raise Exception(f"Error listing bandwidth classes: {error}")
+
+            test_classes = [bw for bw in classes if hasattr(bw, "name") and bw.name.startswith("tests-")]
+            logging.info(f"Found {len(test_classes)} bandwidth class to delete.")
+
+            for rule in test_classes:
+                logging.info(
+                    f"sweep_bandwidth_class: Attempting to delete bandwidth class: Name='{rule.name}', ID='{rule.id}'"
+                )
+                _, _, error = self.client.zia.bandwidth_classes.delete_class(rule_id=rule["id"])
+                if error:
+                    logging.error(f"Failed to delete bandwidth class ID={rule['id']} — {error}")
+                else:
+                    logging.info(f"Successfully deleted bandwidth class ID={rule['id']}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping bandwidth classs: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_bandwidth_rule(self):
+        logging.info("Starting to sweep bandwidth control rule")
+        try:
+            rules, _, error = self.client.zia.bandwidth_control_rules.list_rules()
+            if error:
+                raise Exception(f"Error listing bandwidth control rules: {error}")
+
+            test_rules = [bw for bw in rules if hasattr(bw, "name") and bw.name.startswith("tests-")]
+            logging.info(f"Found {len(test_rules)} bandwidth control rule to delete.")
+
+            for rule in test_rules:
+                logging.info(
+                    f"sweep_cloud_firewall_rule: Attempting to delete bandwidth control rule: Name='{rule.name}', ID='{rule.id}'"
+                )
+                _, _, error = self.client.zia.bandwidth_control_rules.delete_rule(rule_id=rule["id"])
+                if error:
+                    logging.error(f"Failed to delete bandwidth control rule ID={rule['id']} — {error}")
+                else:
+                    logging.info(f"Successfully deleted bandwidth control rule ID={rule['id']}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping bandwidth control rules: {str(e)}")
             raise
 
     @suppress_warnings
