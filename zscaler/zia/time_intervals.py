@@ -144,7 +144,7 @@ class TimeIntervalsAPI(APIClient):
 
         Keyword Args:
             start_time (int): The time interval start time.
-            start_time (str): The time interval end time.
+            end_time (str): The time interval end time.
             days_of_week (list): Specifies which days of the week apply to the time interval.
                 If set to EVERYDAY, all the days of the week are chosen.
                 Values supported: `EVERYDAY`, `SUN`, `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`

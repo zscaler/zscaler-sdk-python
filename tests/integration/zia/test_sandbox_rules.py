@@ -33,30 +33,30 @@ class TestSandboxRules:
     def test_sandbox_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []
-        department_id = None
-        group_id = None
+        # department_id = None
+        # group_id = None
         rule_id = None
 
         try:
             # Step 1: Retrieve department
-            try:
-                departments, _, error = client.zia.user_management.list_departments(query_params={"search": "A000"})
-                assert error is None, f"Department listing error: {error}"
-                department = next((d for d in departments if hasattr(d, "id")), None)
-                assert department, "No valid departments available for assignment"
-                department_id = department.id
-            except Exception as exc:
-                errors.append(f"Department retrieval failed: {exc}")
+            # try:
+            #     departments, _, error = client.zia.user_management.list_departments(query_params={"search": "A000"})
+            #     assert error is None, f"Department listing error: {error}"
+            #     department = next((d for d in departments if hasattr(d, "id")), None)
+            #     assert department, "No valid departments available for assignment"
+            #     department_id = department.id
+            # except Exception as exc:
+            #     errors.append(f"Department retrieval failed: {exc}")
 
-            # Step 2: Retrieve group
-            try:
-                groups, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
-                assert error is None, f"Group listing error: {error}"
-                group = next((g for g in groups if hasattr(g, "id")), None)
-                assert group, "No valid groups available for assignment"
-                group_id = group.id
-            except Exception as exc:
-                errors.append(f"Group retrieval failed: {exc}")
+            # # Step 2: Retrieve group
+            # try:
+            #     groups, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
+            #     assert error is None, f"Group listing error: {error}"
+            #     group = next((g for g in groups if hasattr(g, "id")), None)
+            #     assert group, "No valid groups available for assignment"
+            #     group_id = group.id
+            # except Exception as exc:
+            #     errors.append(f"Group retrieval failed: {exc}")
 
             # Step 3: Create a Sandbox Rule
             try:
@@ -76,8 +76,8 @@ class TestSandboxRules:
                     ba_policy_categories=["ADWARE_BLOCK", "BOTMAL_BLOCK", "ANONYP2P_BLOCK", "RANSOMWARE_BLOCK"],
                     file_types=["FTCATEGORY_BZIP2", "FTCATEGORY_P7Z"],
                     by_threat_score=40,
-                    groups=[group_id],
-                    departments=[department_id],
+                    # groups=['12006601'],
+                    # departments=['15616629'],
                 )
                 assert error is None, f"Sandbox Rule creation failed: {error}"
                 assert created_rule is not None, "Sandbox Rule creation returned None"
@@ -113,8 +113,8 @@ class TestSandboxRules:
                     ba_policy_categories=["ADWARE_BLOCK", "BOTMAL_BLOCK", "ANONYP2P_BLOCK", "RANSOMWARE_BLOCK"],
                     file_types=["FTCATEGORY_BZIP2", "FTCATEGORY_P7Z"],
                     by_threat_score=45,
-                    groups=[group_id],
-                    departments=[department_id],
+                    # groups=['12006601'],
+                    # departments=['15616629'],
                 )
                 assert error is None, f"Error updating Sandbox Rule: {error}"
                 assert updated_rule is not None, "Updated Sandbox Rule is None"

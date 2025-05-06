@@ -203,9 +203,9 @@ class LegacyZPAClientHelper:
         The interface object for the :ref:`ZPA Auth Domains interface <zpa-authdomains>`.
 
         """
-        from zscaler.zpa.authdomains import AuthDomainsAPI
+        from zscaler.zpa.customer_controller import CustomerControllerAPI
 
-        return AuthDomainsAPI(self.request_executor, self.config)
+        return CustomerControllerAPI(self.request_executor, self.config)
 
     @property
     def servers(self):
@@ -606,6 +606,36 @@ class LegacyZPAClientHelper:
         from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 
         return TrustedNetworksAPI(self.request_executor, self.config)
+
+    # @property
+    # def administrator_controller(self):
+    #     """
+    #     The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
+
+    #     """
+    #     from zscaler.zpa.administrator_controller import AdministratorControllerAPI
+
+    #     return AdministratorControllerAPI(self.request_executor, self.config)
+
+    # @property
+    # def role_controller(self):
+    #     """
+    #     The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
+
+    #     """
+    #     from zscaler.zpa.role_controller import RoleControllerAPI
+
+    #     return RoleControllerAPI(self.request_executor, self.config)
+
+    # @property
+    # def client_settings(self):
+    #     """
+    #     The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
+
+    #     """
+    #     from zscaler.zpa.client_settings import ClientSettingsAPI
+
+    #     return ClientSettingsAPI(self.request_executor, self.config)
 
     """
     Misc

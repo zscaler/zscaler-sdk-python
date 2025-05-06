@@ -286,7 +286,7 @@ class HTTPClient:
                 )
 
             else:
-                # Use Standard Session
+                # Standard session
                 if self._session:
                     logger.debug("Request with re-usable session.")
                     response = self._session.request(**params)
@@ -294,11 +294,9 @@ class HTTPClient:
                     logger.debug("Request without re-usable session.")
                     response = requests.request(**params)
 
-            if response is None or not hasattr(response, "status_code"):
-                # If we truly got no response (should be rare unless network error)
-                error_msg = "Request execution failed. Response is None."
-                logger.error(error_msg)
-                return (None, ValueError(error_msg))
+            if response is None:
+                logger.error("Request execution failed. Response is None.")
+                return (None, ValueError("No response received."))
 
             dump_request(
                 logger,
@@ -324,7 +322,7 @@ class HTTPClient:
                 request["uuid"],
                 start_time,
             )
-            # Return (response, None) regardless of status code (including 429)
+            # Return response and None even for 4xx/5xx – let check_response_for_error() decide
             return (response, None)
 
         except (requests.RequestException, requests.Timeout) as error:
@@ -334,7 +332,7 @@ class HTTPClient:
 
         except Exception as error:
             # Unexpected errors
-            logger.error(f"Unexpected error during request execution: {error}")
+            # logger.error(f"Unexpected error during request execution: {error}")
             return (None, error)
 
     @staticmethod
@@ -345,47 +343,43 @@ class HTTPClient:
         Args:
             url (str): URL of the response
             response_details (requests.Response): Response object with details
-            response_body (str): Response body in JSON format
+            response_body (str): Response body in JSON or plain string
 
         Returns:
-            Tuple(dict repr of response (if no error), any error found)
+            Tuple(dict or None, error or None)
         """
-        # Check if response is JSON and parse it
-        if "application/json" in response_details.headers.get("Content-Type", ""):
-            try:
-                formatted_response = json.loads(response_body)
-                # logger.debug("Successfully parsed JSON response")
-            except json.JSONDecodeError as e:
-                logger.error(f"Failed to parse JSON response: {e}")
-                return None, e
-        else:
-            formatted_response = response_body
+        content_type = response_details.headers.get("Content-Type", "")
+        is_json = "application/json" in content_type
 
-        if 200 <= response_details.status_code < 300:
-            return formatted_response, None
-
-        logger.error(f"Error response from {url}: {response_details.status_code} - {formatted_response}")
+        # Attempt to parse JSON safely
+        try:
+            formatted_response = json.loads(response_body) if is_json else response_body
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse JSON response: {e}")
+            if HTTPClient.raise_exception:
+                raise HTTPException(f"Invalid JSON response from {url}: {response_body}")
+            return None, HTTPError(url, response_details, response_body)
 
         status_code = response_details.status_code
 
-        # check if call was succesful
-        if 200 <= status_code <= 299:
-            return (formatted_response, None)
-        else:
-            # create errors
-            try:
-                error = ZscalerAPIError(url, response_details, formatted_response)
-                if HTTPClient.raise_exception:
-                    raise ZscalerAPIException(formatted_response)
-            except ZscalerAPIException:
-                raise
-            except Exception:
-                error = HTTPError(url, response_details, formatted_response)
-                if HTTPClient.raise_exception:
-                    logger.exception(formatted_response)
-                    raise HTTPException(formatted_response)
-            logger.error(error)
-            return (None, error)
+        if 200 <= status_code < 300:
+            return formatted_response, None
+
+        # Defensive error handling block (minimal, correct)
+        try:
+            error = ZscalerAPIError(url, response_details, formatted_response)
+            # logger.debug(f"Raw API Error JSON: {json.dumps(formatted_response, indent=2)}")
+            if HTTPClient.raise_exception:
+                raise ZscalerAPIException(error)
+            return None, error
+
+        except Exception as e:
+            # Catch-all in case ZscalerAPIError constructor fails
+            logger.exception("Failed to construct ZscalerAPIError.")
+            generic_error = HTTPError(url, response_details, formatted_response)
+            if HTTPClient.raise_exception:
+                raise HTTPException(str(generic_error)) from e
+            return None, generic_error
 
     @staticmethod
     def format_binary_data(data):

@@ -213,7 +213,6 @@ class SSLInspectionAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -223,7 +222,6 @@ class SSLInspectionAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, SSLInspectionRules)
         if error:
             return (None, response, error)
@@ -280,6 +278,10 @@ class SSLInspectionAPI(APIClient):
             ...    groups=['95016183']
             ...    users=['95016194']
             ... )
+            >>> if error:
+            ...     print(f"Error updating rule: {error}")
+            ...     return
+            ... print(f"Rule updated successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -299,7 +301,6 @@ class SSLInspectionAPI(APIClient):
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
         transform_common_id_fields(local_reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -309,7 +310,6 @@ class SSLInspectionAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, SSLInspectionRules)
         if error:
             return (None, response, error)
@@ -331,8 +331,11 @@ class SSLInspectionAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.ssl_inspection_rules.delete_rule('278454')
-
+            >>> _, _, error = client.zia.ssl_inspection_rules.delete_rule('5458')
+            >>> if error:
+            ...     print(f"Error deleting rule: {error}")
+            ...     return
+            ... print(f"Rule with ID {'5458'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

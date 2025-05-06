@@ -119,7 +119,7 @@ class FirewallDNSRulesAPI(APIClient):
             Retrieve a cloud firewall dns rule by its ID:
 
         >>> fetched_rule, response, error = client.zia.cloud_firewall_dns.get_rule('960061')
-        ... if error:
+        >>> if error:
         ...     print(f"Error fetching rule by ID: {error}")
         ...     return
         ... print(f"Fetched rule by ID: {fetched_rule.as_dict()}")
@@ -141,7 +141,6 @@ class FirewallDNSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FirewallDNSRules)
 
         if error:
@@ -204,14 +203,24 @@ class FirewallDNSRulesAPI(APIClient):
             tuple: Updated firewall dns filtering rule resource record.
 
         Example:
-            Update an existing rule to change its name and action:
+            Add a new rule to change its name and action:
 
-            >>> zia.cloud_firewall_dns.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
+            >>> added_rule, _, error = client.zia.cloud_firewall_dns.add_rule(
+            ...     name=f"NewRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewRule_{random.randint(1000, 10000)}",
+            ...     action='REDIR_REQ',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     redirect_ip = "8.8.8.8"
+            ...     protocols = ["ANY_RULE"]
+            ...     dest_countries=["COUNTRY_CA", "COUNTRY_US", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
+            ...     locations=['54528', '5485857']
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {added_rule.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -229,7 +238,6 @@ class FirewallDNSRulesAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -239,7 +247,6 @@ class FirewallDNSRulesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FirewallDNSRules)
         if error:
             return (None, response, error)
@@ -303,12 +310,23 @@ class FirewallDNSRulesAPI(APIClient):
         Example:
             Update an existing rule to change its name and action:
 
-            >>> zia.cloud_firewall_dns.update_rule(
-            ...    rule_id=123456,
-            ...    name='UPDATED_RULE',
-            ...    ba_rule_action='ALLOW',
-            ...    description='Updated action for the rule'
+            >>> updated_rule, _, error = client.zia.cloud_firewall_dns.add_rule(
+            ...     rule_id='12455'
+            ...     name=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateRule_{random.randint(1000, 10000)}",
+            ...     action='REDIR_REQ',
+            ...     state="ENABLED",
+            ...     order=1,
+            ...     rank=7,
+            ...     redirect_ip = "8.8.8.8"
+            ...     protocols = ["ANY_RULE"]
+            ...     dest_countries=["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"],
+            ...     locations=['54528', '5485857']
             ... )
+            >>> if error:
+            ...     print(f"Error adding rule: {error}")
+            ...     return
+            ... print(f"Rule added successfully: {updated_rule.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(

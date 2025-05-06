@@ -117,17 +117,14 @@ class EnrollmentCertificateAPI(APIClient):
         """
         )
 
-        # Prepare request body, headers, and form (if needed)
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, EnrollmentCertificate)
 
         if error:
@@ -138,3 +135,186 @@ class EnrollmentCertificateAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
+
+    # def add_enrollment_cert(self, **kwargs) -> tuple:
+    #     """
+    #     Creates a new Enrollment Certificate.
+
+    #     Args:
+    #         name (str): The name of the Enrollment Certificate
+    #         description (str): The description of the segment group.
+    #         enabled (bool): Enable the segment group. Defaults to True.
+
+    #     Returns:
+    #         :obj:`Tuple`: EnrollmentCertificate: The created Enrollment Certificate object.
+
+    #     Example:
+    #         # Basic example: Add a new Enrollment Certificate
+    #         >>> added_cert, _, err = client.zpa.enrollment_certificates.add_enrollment_cert(
+    #         ...     name="Example Group",
+    #         ...     description="This is an example segment group.",
+    #         ...     enabled=True
+    #         ... )
+    #     """
+    #     http_method = "post".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /enrollmentCert
+    #     """
+    #     )
+
+    #     body = kwargs
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body=body)
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, EnrollmentCertificate)
+    #     if error:
+    #         return (None, response, error)
+
+    #     try:
+    #         result = EnrollmentCertificate(self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)
+
+    # def update_enrollment(self, cert_id: str, **kwargs) -> tuple:
+    #     """
+    #     Updates the specified enrollment certificate.
+
+    #     Args:
+    #         group_id (str): The unique identifier for the enrollment certificate being updated.
+
+    #     Returns:
+    #         :obj:`Tuple`: SegmentGroup: The updated enrollment certificate object.
+
+    #     Example:
+    #         # Basic example: Update an existing enrollment certificate
+    #         >>> group_id = "216196257331370181"
+    #         >>> updated_group, _, err = zpa.enrollment_certificates.update_enrollment(
+    #         ...     cert_id='2584554',
+    #         ...     name="Updated Group Name",
+    #         ...     description="Updated description for the enrollment certificate",
+    #         ...     enabled=False
+    #         ... )
+    #     """
+    #     http_method = "put".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /enrollmentCert/{cert_id}
+    #     """
+    #     )
+
+    #     body = {}
+
+    #     body.update(kwargs)
+
+    #     microtenant_id = body.get("microtenant_id", None)
+    #     params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, EnrollmentCertificate)
+    #     if error:
+    #         return (None, response, error)
+
+    #     if response is None:
+    #         return (EnrollmentCertificate({"id": cert_id}), None, None)
+
+    #     try:
+    #         result = EnrollmentCertificate(self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)
+
+    # def generate_csr(self, **kwargs) -> tuple:
+    #     """
+    #     Generates a new csr.
+
+    #     Args:
+    #         name (str): The name of the Enrollment CSR
+    #         description (str): The description of the Enrollment CSR
+
+    #     Returns:
+    #         :obj:`Tuple`: The created Enrollment CSR object.
+
+    #     Example:
+    #         # Basic example: Add a new Enrollment CSR
+    #         >>> added_cert, _, err = client.zpa.enrollment_certificates.generate_csr(
+    #         ...     name="NewEnrollmentCertificate",
+    #         ...     description="New enrollment certificate",
+    #         ... )
+    #     """
+    #     http_method = "post".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /enrollmentCert/csr/generate
+    #     """
+    #     )
+
+    #     body = kwargs
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body=body)
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, EnrollmentCertificate)
+    #     if error:
+    #         return (None, response, error)
+
+    #     try:
+    #         result = EnrollmentCertificate (self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)
+
+    # def generate_self_signed(self, **kwargs) -> tuple:
+    #     """
+    #     Generates a new csr.
+
+    #     Args:
+    #         name (str): The name of the self signed Enrollment certificate
+    #         description (str): The description of the signed Enrollment certificate
+    #         valid_from_in_epoch_sec (str): The start date of the enrollment certificate.
+    #         valid_to_in_epoch_sec (str): The expiration date of the enrollment certificate.
+    #         root_certificate_id (str): The unique identifier of the root certificate.
+
+    #     Returns:
+    #         :obj:`Tuple`: The created Self Signed certificate object.
+
+    #     Example:
+    #         # Basic example: Add a new Self Signed certificate
+    #         >>> added_cert, _, err = client.zpa.enrollment_certificates.generate_self_signed(
+    #         ...     name="NewEnrollmentCertificate",
+    #         ...     description="New enrollment certificate",
+    #         ... )
+    #     """
+    #     http_method = "post".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /enrollmentCert/selfsigned/generate
+    #     """
+    #     )
+
+    #     body = kwargs
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body=body)
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, EnrollmentCertificate)
+    #     if error:
+    #         return (None, response, error)
+
+    #     try:
+    #         result = EnrollmentCertificate (self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)

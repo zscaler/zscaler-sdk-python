@@ -171,9 +171,142 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
 
         try:
-            # Directly return the raw response data as a dictionary
             result = self.form_response_body(response.get_body())
         except Exception as error:
             return (None, response, error)
 
         return (result, response, None)
+
+    # def add_saml_attribute(self, **kwargs) -> tuple:
+    #     """
+    #     Add a new saml attribute for a given customer
+
+    #     Args:
+    #         name (str): The customer-defined name for a SAML attribute.
+    #         user_attribute (bool): Whether or not the user attribute is used.
+    #         idp_id (str): The unique identifier of the IdP.
+    #         idp_name (str): The name of the IdP.
+    #         saml_name (str): Whether to enable the cloud browser isolation banner.
+
+    #     Returns:
+    #         tuple: A tuple containing the `SAMLAttribute` instance, response object, and error if any.
+
+    #     Examples:
+    #         >>> added_saml_attribute, _, err = client.zpa.saml_attributes.add_saml_attribute(
+    #         ...     name='',
+    #         ...     idp_id='',
+    #         ...     user_attribute=True,
+    #         ... )
+    #         ... if err:
+    #         ...     print(f"Error configuring Saml Attribute: {err}")
+    #         ...     return
+    #         ... print(f"Saml Attribute added successfully: {added_saml_attribute.as_dict()}")
+    #     """
+    #     http_method = "post".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /samlAttribute
+    #     """
+    #     )
+
+    #     body = kwargs
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body=body)
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, SAMLAttribute)
+    #     if error:
+    #         return (None, response, error)
+
+    #     try:
+    #         result = SAMLAttribute(self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)
+
+    # def update_saml_attribute(self, attribute_id: str, **kwargs) -> tuple:
+    #     """
+    #     Updates the specified Saml Attribute.
+
+    #     Args:
+    #         attribute_id (str): The unique identifier of the SAML attribute.
+
+    #     Returns:
+    #         :obj:`Tuple`: SAMLAttribute: The updated Saml Attribute object.
+
+    #     Example:
+    #         Basic example: Update an existing Saml Attribute
+
+    #         >>> updated_attribute, _, err = zpa.saml_attributes.update_saml_attribute(
+    #         ...     attribute_id='5445851',
+    #         ...     name='',
+    #         ...     idp_id='',
+    #         ...     user_attribute=True,
+    #         ... )
+    #     """
+    #     http_method = "put".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /samlAttribute/{attribute_id}
+    #     """
+    #     )
+
+    #     body = {}
+
+    #     body.update(kwargs)
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+    #     if error:
+    #         return (None, None, error)
+
+    #     response, error = self._request_executor.execute(request, SAMLAttribute)
+    #     if error:
+    #         return (None, response, error)
+
+    #     if response is None:
+    #         return (SAMLAttribute({"id": attribute_id}), None, None)
+
+    #     try:
+    #         result = SAMLAttribute(self.form_response_body(response.get_body()))
+    #     except Exception as error:
+    #         return (None, response, error)
+    #     return (result, response, None)
+
+    # def delete_saml_attribute(self, attribute_id: str, microtenant_id: str = None) -> tuple:
+    #     """
+    #     Deletes the specified Saml Attribute.
+
+    #     Args:
+    #         attribute_id (str): The unique identifier for the Saml Attribute to be deleted.
+
+    #     Returns:
+    #         int: Status code of the delete operation.
+
+    #     Example:
+    #         # Delete a Saml Attribute by ID
+    #         >>> _, _, err = client.zpa.saml_attributes.delete_saml_attribute('5254584')
+    #         ... if err:
+    #         ...     print(f"Error deleting saml attribute: {err}")
+    #         ...     return
+    #         ... print(f"SAml Attribute with ID '5254584' deleted successfully.")
+    #     """
+    #     http_method = "delete".upper()
+    #     api_url = format_url(
+    #         f"""
+    #         {self._zpa_base_endpoint}
+    #         /samlAttribute/{attribute_id}
+    #     """
+    #     )
+
+    #     request, error = self._request_executor.create_request(http_method, api_url, {})
+    #     if error:
+    #         return (None, error)
+
+    #     response, error = self._request_executor.execute(request)
+
+    #     if error:
+    #         return (None, response, error)
+    #     return (None, response, error)
