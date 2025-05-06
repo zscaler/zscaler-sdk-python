@@ -289,19 +289,16 @@ class LegacyZIAClientHelper:
                     continue
 
                 if resp.status_code >= 400:
-                    try:
-                        response_body = resp.json()
-                    except Exception:
-                        response_body = {"message": resp.text}
+                    logger.error(f"Request failed: {resp.status_code}, {resp.text}")
+                    raise ValueError(f"Request failed with status {resp.status_code}")
 
-                    error = ZscalerAPIError(
-                        url=url,
-                        response_details=resp,
-                        response_body=response_body,
-                        service_type="zia",  # Or dynamically inferred
-                    )
-                    logger.error(f"{error}")
-                    raise error
+                return resp, {
+                    "method": method,
+                    "url": url,
+                    "params": params or {},
+                    "headers": headers_with_user_agent,
+                    "json": json or {},
+                }
             except requests.RequestException as e:
                 logger.error(f"Request to {url} failed: {e}")
                 if attempts == 4:

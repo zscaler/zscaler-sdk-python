@@ -65,26 +65,32 @@ class BandwidthClassesAPI(APIClient):
 
         query_params = query_params or {}
 
+        local_search = query_params.pop("search", None)
+
         body = {}
         headers = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
-
         if error:
             return (None, None, error)
 
         response, error = self._request_executor.execute(request)
-
         if error:
             return (None, response, error)
 
         try:
-            result = []
+            results = []
             for item in response.get_results():
-                result.append(BandwidthClasses(self.form_response_body(item)))
-        except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+                results.append(BandwidthClasses(self.form_response_body(item)))
+        except Exception as exc:
+            return (None, response, exc)
+
+        if local_search:
+            lower_search = local_search.lower()
+            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
+
+        return (results, response, None)
+
 
     def list_classes_lite(self) -> tuple:
         """
