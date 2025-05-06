@@ -32,8 +32,10 @@ class EnrollmentCertificate(ZscalerObject):
             self.creation_time = config["creationTime"] if config and "creationTime" in config else None
             self.modified_by = config["modifiedBy"] if config and "modifiedBy" in config else None
             self.get_cname = config["getcName"] if config and "getcName" in config else None
-            self.valid_from = config["validFromInEpochSec"] if config and "validFromInEpochSec" in config else None
-            self.valid_to = config["validToInEpochSec"] if config and "validToInEpochSec" in config else None
+            self.valid_from_in_epoch_sec = config["validFromInEpochSec"] \
+                if config and "validFromInEpochSec" in config else None
+            self.valid_to_in_epoch_sec = config["validToInEpochSec"] \
+                if config and "validToInEpochSec" in config else None
             self.certificate = config["certificate"] if config and "certificate" in config else None
             self.issued_to = config["issuedTo"] if config and "issuedTo" in config else None
             self.issued_by = config["issuedBy"] if config and "issuedBy" in config else None
@@ -53,6 +55,9 @@ class EnrollmentCertificate(ZscalerObject):
             )
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
 
+            self.root_certificate_id = (
+                config["rootCertificateId"] if config and "rootCertificateId" in config else None
+            )
         else:
             self.id = None
             self.modified_time = None
@@ -61,8 +66,8 @@ class EnrollmentCertificate(ZscalerObject):
             self.name = None
             self.description = None
             self.get_cname = None
-            self.valid_from = None
-            self.valid_to = None
+            self.valid_from_in_epoch_sec = None
+            self.valid_to_in_epoch_sec = None
             self.certificate = None
             self.issued_to = None
             self.issued_by = None
@@ -77,6 +82,7 @@ class EnrollmentCertificate(ZscalerObject):
             self.zrsa_encrypted_private_key = None
             self.zrsa_encrypted_session_key = None
             self.microtenant_id = None
+            self.root_certificate_id = None
 
     def request_format(self):
         """
@@ -89,8 +95,8 @@ class EnrollmentCertificate(ZscalerObject):
             "creationTime": self.creation_time,
             "modifiedBy": self.modified_by,
             "getcName": self.get_cname,
-            "validFromInEpochSec": self.valid_from,
-            "validToInEpochSec": self.valid_to,
+            "validFromInEpochSec": self.valid_from_in_epoch_sec,
+            "validToInEpochSec": self.valid_to_in_epoch_sec,
             "certificate": self.certificate,
             "issuedTo": self.issued_to,
             "issuedBy": self.issued_by,
@@ -104,6 +110,7 @@ class EnrollmentCertificate(ZscalerObject):
             "parentCertName": self.parent_cert_name,
             "zrsaencryptedprivatekey": self.zrsa_encrypted_private_key,
             "zrsaencryptedsessionkey": self.zrsa_encrypted_session_key,
+            "rootCertificateId": self.root_certificate_id,
             "microtenantId": self.microtenant_id,
         }
         parent_req_format.update(current_obj_format)
