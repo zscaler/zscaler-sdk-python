@@ -13,6 +13,14 @@ class ZscalerObject:
     def __repr__(self):
         return str(vars(self))
 
+    def __getitem__(self, key):
+        if hasattr(self, key):
+            return getattr(self, key)
+        raise KeyError(f"{key} not found in {self.__class__.__name__}")
+
+    def __contains__(self, key):
+        return hasattr(self, key)
+
     def as_dict(self):
         result = {}
         for key, val in self.request_format().items():
