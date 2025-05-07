@@ -35,7 +35,7 @@ class TestAuthDomains:
 
         try:
             # Retrieve authentication domains
-            auth_domains, _, err = client.zpa.authdomains.get_auth_domains()
+            auth_domains, _, err = client.zpa.customer_controller.get_auth_domains()
             assert err is None, f"Error retrieving auth domains: {err}"
             assert auth_domains is not None, "Auth domains response is None"
             assert isinstance(auth_domains, dict), "Auth domains should be a dictionary"
