@@ -57,7 +57,7 @@ class ServerGroupsAPI(APIClient):
             :obj:`Tuple`: A tuple containing (list of ServerGroups instances, Response, error)
 
         Examples:
-            >>> groups_list, _, err = client.zpa.server_groups.list_server_groups(
+            >>> groups_list, _, err = client.zpa.server_groups.list_groups(
             ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
             ... if err:
             ...     print(f"Error listing server groups: {err}")
@@ -82,7 +82,7 @@ class ServerGroupsAPI(APIClient):
         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, ServerGroup)
         if error:
             return (None, response, error)
 

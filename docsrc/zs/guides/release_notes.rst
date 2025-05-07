@@ -6,6 +6,22 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.2.2 (May, 7 2025)
+-----------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fix
+--------
+
+* (`#274 <https://github.com/zscaler/zscaler-sdk-python/pull/274>`_) - Fixed ZPA pagination across several resources.
+* (`#274 <https://github.com/zscaler/zscaler-sdk-python/pull/274>`_) - Fixed ZCC pagination function resources
+* (`#274 <https://github.com/zscaler/zscaler-sdk-python/pull/274>`_) - Fixed ZCC Device resource models
+* (`#274 <https://github.com/zscaler/zscaler-sdk-python/pull/274>`_) - Fixed debug logging activation
+
 1.2.1 (May, 6 2025)
 -----------------------------
 
