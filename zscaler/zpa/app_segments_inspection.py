@@ -53,7 +53,6 @@ class AppSegmentsInspectionAPI(APIClient):
             >>> app_segments = zpa.app_segments_inspection.list_segments_inspection()
 
         """
-        # Initialize URL and HTTP method
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -69,7 +68,7 @@ class AppSegmentsInspectionAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, ApplicationSegmentInspection)
         if error:
             return (None, response, error)
 

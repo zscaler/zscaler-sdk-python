@@ -16,10 +16,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_map
+from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
 from zscaler.zcc.models.devices import Device
 from zscaler.zcc.models.devices import ForceRemoveDevices
 from zscaler.zcc.models.devices import SetDeviceCleanupInfo
+from zscaler.zcc.models.devices import DeviceCleanup
+from zscaler.zcc.models.devices import DeviceDetails
 from datetime import datetime
 
 
@@ -87,25 +89,25 @@ class DevicesAPI(APIClient):
 
         return filename
 
+    @zcc_param_mapper
     def list_devices(self, query_params=None) -> tuple:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
 
-        Keyword Args:
-            os_type (str):
-                Filter by device operating system. Valid options are:
+        Args:
+            query_params {dict}: Map of query parameters for the request.
 
-                - ios
-                - android
-                - windows
-                - macos
-                - linux
-            page (int):
-                Return a specific page number.
-            page_size (int):
-                Specify the number of devices per page, defaults to ``30``.
-            user_name (str):
-                Filter by the enrolled user for the device.
+                ``[query_params.os_type]`` {str}: Filter by device operating system type. Valid options are:
+                    - ios
+                    - android
+                    - windows
+                    - macos
+                    - linux
+                ``[query_params.username]`` {str}: Filter by enrolled user name for the device.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_size]`` {str}: Specifies the page size. The default page size is 50.
+                    The max page size is 5000.
 
         Returns:
             :obj:`list`: A list containing devices using ZCC enrolled in the Client Connector Portal.
@@ -113,9 +115,14 @@ class DevicesAPI(APIClient):
         Examples:
             Prints all devices in the Client Connector Portal to the console:
 
-            >>> for device in zcc.devices.list_devices():
-            ...    print(device)
-
+            >>> device_list, _, err = client.zcc.devices.list_devices(
+            ... query_params = { "os_type": "3", 'page': 1, 'page_size': 1})
+            >>> if err:
+            ...     print(f"Error listing devices: {err}")
+            ...     return
+            ... print(f"Total devices found: {len(device_list)}")
+            ... for device in device_list:
+            ...     print(device.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -127,7 +134,6 @@ class DevicesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -136,17 +142,16 @@ class DevicesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, Device)
         if error:
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(Device(self.form_response_body(item)))
+            result = response.get_results() 
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return None, response, error
+
+        return result, response, None
 
     def get_device_cleanup_info(self) -> tuple:
         """
@@ -173,7 +178,6 @@ class DevicesAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -182,17 +186,16 @@ class DevicesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, DeviceCleanup)
         if error:
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
+            result = response.get_results() 
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return None, response, error
+
+        return result, response, None
 
     def update_device_cleanup_info(self, **kwargs) -> tuple:
         """
@@ -231,22 +234,36 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_device_details(self) -> tuple:
+    def get_device_details(self, query_params=None) -> tuple:
         """
-        Returns device detail information from the Client Connector Portal.
+       Lists device details of enrolled devices of your organization.
 
-        Args:
-            N/A
+        Keyword Args:
+                ``[query_params.username]`` {str, optional}: Filter by enrolled user name for the device.
+                ``[query_params.udid]`` {str, optional}: Filter by unique device identifier.
 
         Returns:
-            :obj:`list`: Returns device detail information  in the Client Connector Portal.
+            :obj:`list`: Returns device detail information in the Client Connector Portal.
 
         Examples:
             Prints all devices in the Client Connector Portal to the console:
 
-            >>> for device in zcc.devices.get_device_details():
-            ...    print(device)
+            >>> details, _, err = client.zcc.devices.get_device_details()
+            >>> if err:
+            ...     print(f"Error listing device details: {err}")
+            ...     return
+            ...  for device in details:
+            ...     print(device.as_dict())
+            
+            Prints all devices in the Client Connector Portal to the console:
 
+            >>> details, _, err = client.zcc.devices.get_device_details(
+            ... query_params:{'username': 'jdoe'})
+            >>> if err:
+            ...     print(f"Error listing device details: {err}")
+            ...     return
+            ...  for device in details:
+            ...     print(device.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -256,23 +273,22 @@ class DevicesAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, DeviceDetails)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append((self.form_response_body(item)))
+                result.append(DeviceDetails(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
