@@ -60,6 +60,7 @@ class TestSweepUtility:
         sweep_functions = [
             self.sweep_rule_labels,
             self.sweep_bandwidth_rule,
+            self.sweep_bandwidth_class,
             self.sweep_cloud_firewall_rule,
             self.sweep_cloud_firewall_ip_source_group,
             self.sweep_cloud_firewall_ip_destination_group,
@@ -118,15 +119,15 @@ class TestSweepUtility:
             test_classes = [bw for bw in classes if hasattr(bw, "name") and bw.name.startswith("tests-")]
             logging.info(f"Found {len(test_classes)} bandwidth class to delete.")
 
-            for rule in test_classes:
+            for bdw_class in test_classes:
                 logging.info(
-                    f"sweep_bandwidth_class: Attempting to delete bandwidth class: Name='{rule.name}', ID='{rule.id}'"
+                    f"sweep_bandwidth_class: Attempting to delete bandwidth class: Name='{bdw_class.name}', ID='{bdw_class.id}'"
                 )
-                _, _, error = self.client.zia.bandwidth_classes.delete_class(rule_id=rule["id"])
+                _, _, error = self.client.zia.bandwidth_classes.delete_class(class_id=bdw_class["id"])
                 if error:
-                    logging.error(f"Failed to delete bandwidth class ID={rule['id']} — {error}")
+                    logging.error(f"Failed to delete bandwidth class ID={bdw_class['id']} — {error}")
                 else:
-                    logging.info(f"Successfully deleted bandwidth class ID={rule['id']}")
+                    logging.info(f"Successfully deleted bandwidth class ID={bdw_class['id']}")
 
         except Exception as e:
             logging.error(f"An error occurred while sweeping bandwidth classs: {str(e)}")
