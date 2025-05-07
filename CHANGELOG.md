@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.2.1 (May, 6 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fix:
+
+* ([#273](https://github.com/zscaler/zscaler-sdk-python/pull/273)) - Fixed ZIA `bandwidth_classes` function names
+* ([#273](https://github.com/zscaler/zscaler-sdk-python/pull/273)) - Fixed ZIA `LegacyZIAClient` API client incorrect variable assignment.
+
 ## 1.2.0 (May, 5 2025)
 
 ### Notes
@@ -2882,8 +2893,6 @@ Refer to the [README](https://github.com/zscaler/zscaler-sdk-python/blob/master/
 ### Notes
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
-
-### Bug Fix:
 
 ### Bug Fix:
 

@@ -222,6 +222,7 @@ class TestAccessPrivilegedConsoleV2:
                 updated_rule_description = "Updated " + generate_random_string()
                 _, _, err = client.zpa.pra_console.update_console(
                     console_id=console_id,
+                    name="tests-" + generate_random_string(),
                     description=updated_rule_description,
                     enabled=True,
                     pra_application_id=pra_app_id,
