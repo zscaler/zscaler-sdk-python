@@ -198,9 +198,9 @@ class LegacyZPAClientHelper:
         self._session = session
 
     @property
-    def authdomains(self):
+    def customer_controller(self):
         """
-        The interface object for the :ref:`ZPA Auth Domains interface <zpa-authdomains>`.
+        The interface object for the :ref:`ZPA Auth Domains interface <zpa-customer_controller>`.
 
         """
         from zscaler.zpa.customer_controller import CustomerControllerAPI

@@ -40,7 +40,7 @@ class TestMicrotenants:
 
         # Retrieve available authentication domains
         try:
-            auth_domains, _, err = client.zpa.authdomains.get_auth_domains()
+            auth_domains, _, err = client.zpa.customer_controller.get_auth_domains()
             assert err is None, f"Error retrieving authentication domains: {err}"
             assert auth_domains is not None, "Auth domains response is None"
             assert isinstance(auth_domains, dict), "Auth domains should be a dictionary"
@@ -61,7 +61,7 @@ class TestMicrotenants:
                     enabled=True,
                     privileged_approvals_enabled=True,
                     criteria_attribute="AuthDomain",
-                    criteria_attribute_values=[domain],
+                    # criteria_attribute_values=[domain],
                 )
                 assert created_microtenant is not None
                 assert created_microtenant.name == microtenant_name
@@ -95,31 +95,27 @@ class TestMicrotenants:
             errors.append(f"Retrieving Microtenant failed: {exc}")
 
         try:
-            # Update the microtenant
-            updated_name = microtenant_name + " Updated"
-            _, _, err = client.zpa.microtenants.update_microtenant(
-                microtenant_id,
-                name=updated_name,
-                privileged_approvals_enabled=False,
-            )
-            # If we got an error but it’s "Response is None", treat it as success:
-            if err is not None:
-                if isinstance(err, ValueError) and str(err) == "Response is None":
-                    print(f"[INFO] Interpreting 'Response is None' as 204 success.")
-                else:
-                    raise AssertionError(f"Error updating Microtenant: {err}")
-            print(f"Microtenant with ID {microtenant_id} updated successfully (204 No Content).")
-        except Exception as exc:
-            errors.append(f"Updating Microtenant failed: {exc}")
+            if microtenant_id:
+                update_microtenant, _, error = client.zpa.microtenants.update_microtenant(
+                    microtenant_id=microtenant_id,
+                    name=microtenant_name,
+                    description=microtenant_name,
+                    enabled=True,
+                    privileged_approvals_enabled=True,
+                    criteria_attribute="AuthDomain",
+                )
+                assert error is None, f"Update Microtenant Error: {error}"
+                assert update_microtenant is not None, "Microtenant update returned None."
+        except Exception as e:
+            errors.append(f"Exception during update_microtenant: {str(e)}")
 
-        # try:
-        #     # Test listing Microtenants
-        #     all_microtenants, _, err = client.zpa.microtenants.list_microtenants()
-        #     assert err is None, f"Error listing Microtenants: {err}"
-        #     if not any(microtenant["id"] == microtenant_id for microtenant in all_microtenants):
-        #         raise AssertionError("Microtenants not found in list")
-        # except Exception as exc:
-        #     errors.append(f"Listing Microtenants failed: {exc}")
+        try:
+            if update_microtenant:
+                microtenants, _, error = client.zpa.microtenants.list_microtenants(query_params={"search": update_microtenant.name})
+                assert error is None, f"List Microtenants Error: {error}"
+                assert microtenants is not None and isinstance(microtenants, list), "No Microtenants found or invalid format."
+        except Exception as e:
+            errors.append(f"Exception during list_microtenants: {str(e)}")
 
         try:
             # Retrieve microtenant summary
