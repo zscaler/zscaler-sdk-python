@@ -126,7 +126,7 @@ class LSSConfigControllerAPI(APIClient):
             return (None, None, error)
 
         # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, LSSResourceModel)
         if error:
             return (None, response, error)
 
