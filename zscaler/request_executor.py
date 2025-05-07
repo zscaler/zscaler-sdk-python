@@ -14,8 +14,9 @@ from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+# from zscaler.logger import setup_logging  # ✅ Import here
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('zscaler-sdk-python')
 
 
 class RequestExecutor:
@@ -74,6 +75,13 @@ class RequestExecutor:
         # Set configuration and cache
         self._config = config
         self._cache = cache
+
+        # ✅ Setup logging based on config flags
+        # log_config = self._config["client"].get("logging", {})
+        # setup_logging(
+        #     enabled=log_config.get("enabled", False),
+        #     verbose=log_config.get("verbose", False),
+        # )
 
         # Retrieve cloud, service, and customer ID (optional)
         self.cloud = self._config["client"].get("cloud", "production").lower()
@@ -462,7 +470,7 @@ class RequestExecutor:
         req_timeout = self._request_timeout
 
         if req_timeout > 0 and (current_req_start_time - request_start_time) > req_timeout:
-            logger.error("Request Timeout exceeded.")
+            logger.warning("Request Timeout exceeded.")
             return None, None, None, Exception("Request Timeout exceeded.")
 
         response, error = self._http_client.send_request(request)

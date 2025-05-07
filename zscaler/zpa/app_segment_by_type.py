@@ -80,7 +80,7 @@ class ApplicationSegmentByTypeAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, AppSegmentByType)
         if error:
             return (None, response, error)
 
@@ -91,70 +91,3 @@ class ApplicationSegmentByTypeAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-
-    # def get_segments_by_type(
-    #     self,
-    #     application_type: str,
-    #     query_params=None
-    # ) -> tuple:
-    #     """
-    #     Retrieve all configured application segments of a specified type.
-
-    #     Args:
-    #         application_type (str): Type of application segment to retrieve.
-    #             Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
-
-    #     Keyword Args:
-    #         query_params (dict, optional): Map of query parameters:
-    #             - "expand_all" (bool): Whether to expand all related data
-    #             - "search" (str): Search string
-    #             - "page_size" (int): Page size
-    #             - "microtenant_id" (str): Microtenant scope
-
-    #     Returns:
-    #         tuple: (list of ApplicationSegments, response, error)
-    #     """
-    #     if not application_type:
-    #         raise ValueError("The 'application_type' parameter must be provided.")
-
-    #     query_params = query_params or {}
-
-    #     # Add application_type to query
-    #     query_params["applicationType"] = application_type
-
-    #     # Rename keys if necessary
-    #     if "microtenant_id" in query_params:
-    #         query_params["microtenantId"] = query_params.pop("microtenant_id")
-
-    #     if "expand_all" in query_params:
-    #         query_params["expandAll"] = str(query_params.pop("expand_all")).lower()
-
-    #     http_method = "get".upper()
-    #     api_url = format_url(
-    #         f"""
-    #         {self._zpa_base_endpoint}
-    #         /application/getAppsByType
-    #         """
-    #     )
-
-    #     request, error = self._request_executor\
-    #         .create_request(http_method, api_url, body={}, headers={}, params=query_params)
-
-    #     if error:
-    #         return (None, None, error)
-
-    #     response, error = self._request_executor\
-    #         .execute(request)
-
-    #     if error:
-    #         return (None, response, error)
-
-    # try:
-    #     result = []
-    #     for item in response.get_results():
-    #         result.append(AppSegmentByType(
-    #             self.form_response_body(item))
-    #         )
-    # except Exception as error:
-    #     return (None, response, error)
-    # return (result, response, None)

@@ -71,7 +71,7 @@ class SAMLAttributesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, SAMLAttribute)
         if error:
             return (None, response, error)
 

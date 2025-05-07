@@ -75,7 +75,6 @@ class AppSegmentsPRAAPI(APIClient):
         """
         )
 
-        # Handle optional query parameters
         query_params = query_params or {}
         query_params.update(kwargs)
 
@@ -87,7 +86,7 @@ class AppSegmentsPRAAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)
 
