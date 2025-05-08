@@ -70,7 +70,7 @@ class PolicySetControllerAPI(APIClient):
 
     reformat_params = [
         ("app_server_group_ids", "appServerGroups"),
-        ("app_connector_group_ids", "PolicySetControllers"),
+        ("app_connector_group_ids", "appConnectorGroups"),
         ("service_edge_group_ids", "serviceEdgeGroups"),
     ]
 
