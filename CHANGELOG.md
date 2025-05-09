@@ -8,9 +8,10 @@
 
 ### Bug Fixes:
 
-* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - Fixed ZCC `download_devices` method to support `octet-stream` header
-* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - Fixed missing link for resource `cloud_apps` in both `legacy` and `OneAPI` client
-* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - `cloud_apps` resource has been renamed to `shadow_it_report` for consistency.
+* ([#276](https://github.com/zscaler/zscaler-sdk-python/pull/276)) - Fixed ZCC `download_devices` method to support `octet-stream` header
+* ([#276](https://github.com/zscaler/zscaler-sdk-python/pull/276)) - Fixed ZCC `devices` model attributes and attribute edge cases.
+* ([#276](https://github.com/zscaler/zscaler-sdk-python/pull/276)) - Fixed missing link for resource `cloud_apps` in both `legacy` and `OneAPI` client
+* ([#276](https://github.com/zscaler/zscaler-sdk-python/pull/276)) - `cloud_apps` resource has been renamed to `shadow_it_report` for consistency.
 
 ## 1.2.2 (May, 7 2025)
 
