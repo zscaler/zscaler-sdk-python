@@ -20,7 +20,6 @@ from zscaler.zcc.devices import DevicesAPI
 from zscaler.zcc.entitlements import EntitlementAPI
 from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
 from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
-from zscaler.zcc.manage_pass import ManagePassAPI
 from zscaler.zcc.secrets import SecretsAPI
 from zscaler.zcc.trusted_networks import TrustedNetworksAPI
 from zscaler.zcc.web_policy import WebPolicyAPI
@@ -49,14 +48,6 @@ class ZCCService:
 
         """
         return SecretsAPI(self._request_executor)
-
-    @property
-    def manage_pass(self):
-        """
-        The interface object for the :ref:`ZCC manage pass interface <zcc-manage-pass>`.
-
-        """
-        return ManagePassAPI(self._request_executor)
 
     @property
     def admin_user(self):

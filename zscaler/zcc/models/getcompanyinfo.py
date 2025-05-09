@@ -108,7 +108,7 @@ class GetCompanyInfo(ZscalerObject):
                 if "enableDtlsForZpa" in config else None
             self.use_v8_js_engine = config["useV8JsEngine"] \
                 if "useV8JsEngine" in config else None
-            self.disable_parallel_ipv4_and_i_pv6 = config["disableParallelIpv4AndIPv6"] \
+            self.disable_parallel_ipv4_and_ipv6 = config["disableParallelIpv4AndIPv6"] \
                 if "disableParallelIpv4AndIPv6" in config else None
             self.send64_bit_build = config["send64BitBuild"] \
                 if "send64BitBuild" in config else None
@@ -303,13 +303,13 @@ class GetCompanyInfo(ZscalerObject):
             self.use_pollset_for_socket_reactor = None
             self.enable_dtls_for_zpa = None
             self.use_v8_js_engine = None
-            self.disable_parallel_ipv4_and_i_pv6 = None
+            self.disable_parallel_ipv4_and_ipv6 = None
             self.send64_bit_build = None
             self.use_add_ifscope_route = None
             self.use_clear_arp_cache = None
             self.use_dns_priority_ordering = None
             self.enable_browser_auth = None
-            self.enable_public_a_p_i = None
+            self.enable_public_api = None
             self.disable_reason_visibility = None
             self.follow_routing_table = None
             self.use_default_adapter_for_dns = None
@@ -419,13 +419,13 @@ class GetCompanyInfo(ZscalerObject):
             "usePollsetForSocketReactor": self.use_pollset_for_socket_reactor,
             "enableDtlsForZpa": self.enable_dtls_for_zpa,
             "useV8JsEngine": self.use_v8_js_engine,
-            "disableParallelIpv4AndIPv6": self.disable_parallel_ipv4_and_i_pv6,
+            "disableParallelIpv4AndIPv6": self.disable_parallel_ipv4_and_ipv6,
             "send64BitBuild": self.send64_bit_build,
             "useAddIfscopeRoute": self.use_add_ifscope_route,
             "useClearArpCache": self.use_clear_arp_cache,
             "useDnsPriorityOrdering": self.use_dns_priority_ordering,
             "enableBrowserAuth": self.enable_browser_auth,
-            "enablePublicAPI": self.enable_public_a_p_i,
+            "enablePublicAPI": self.enable_public_api,
             "disableReasonVisibility": self.disable_reason_visibility,
             "followRoutingTable": self.follow_routing_table,
             "useDefaultAdapterForDNS": self.use_default_adapter_for_dns,
@@ -479,7 +479,7 @@ class GetCompanyInfo(ZscalerObject):
             "enableOneIdUser": self.enable_one_id_user,
             "restrictAdminAccess": self.restrict_admin_access,
             "enableZiaUserDepartmentSync": self.enable_zia_user_department_sync,
-            "enableUDPTransportSelection": self.enable_u_d_p_transport_selection,
+            "enableUDPTransportSelection": self.enable_udp_transport_selection,
             "computeDeviceGroupsForZIA": self.compute_device_groups_for_zia,
             "computeDeviceGroupsForZPA": self.compute_device_groups_for_zpa,
             "computeDeviceGroupsForZDX": self.compute_device_groups_for_zdx,
@@ -494,7 +494,8 @@ class GetCompanyInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class WebAppConfig(ZscalerObject):
     """
     A class for WebAppConfig objects.
@@ -600,9 +601,11 @@ class WebAppConfig(ZscalerObject):
                 if "installWebView2FlagVisibility" in config else None
             self.allow_web_view2_to_follow_s_p_visibility = config["allowWebView2ToFollowSPVisibility"] \
                 if "allowWebView2ToFollowSPVisibility" in config else None
-            self.auth_server_allow_list_imprivata_visibility = config["authServerAllowListImprivataVisibility"] \
+            self.auth_server_allow_list_imprivata_visibility = config
+            ["authServerAllowListImprivataVisibility"] \
                 if "authServerAllowListImprivataVisibility" in config else None
-            self.enable_ipv6_resolution_for_zscaler_domains_visibility = config["enableIpv6ResolutionForZscalerDomainsVisibility"] \
+            self.enable_ipv6_resolution_for_zscaler_domains_visibility = config
+            ["enableIpv6ResolutionForZscalerDomainsVisibility"] \
                 if "enableIpv6ResolutionForZscalerDomainsVisibility" in config else None
             self.disable_reason_visibility = config["disableReasonVisibility"] \
                 if "disableReasonVisibility" in config else None
@@ -612,19 +615,24 @@ class WebAppConfig(ZscalerObject):
                 if "ziaDevicePostureVisibility" in config else None
             self.use_custom_dns = config["useCustomDNS"] \
                 if "useCustomDNS" in config else None
-            self.use_default_adapter_for_dns_visibility = config["useDefaultAdapterForDNSVisibility"] \
+            self.use_default_adapter_for_dns_visibility = config
+            ["useDefaultAdapterForDNSVisibility"] \
                 if "useDefaultAdapterForDNSVisibility" in config else None
-            self.t2_fallback_block_all_traffic_and_tls_fallback = config["t2FallbackBlockAllTrafficAndTlsFallback"] \
+            self.t2_fallback_block_all_traffic_and_tls_fallback = config
+            ["t2FallbackBlockAllTrafficAndTlsFallback"] \
                 if "t2FallbackBlockAllTrafficAndTlsFallback" in config else None
             self.override_t2_protocol_setting = config["overrideT2ProtocolSetting"] \
                 if "overrideT2ProtocolSetting" in config else None
-            self.grant_access_to_zscaler_log_folder_visibility = config["grantAccessToZscalerLogFolderVisibility"] \
+            self.grant_access_to_zscaler_log_folder_visibility = config
+            ["grantAccessToZscalerLogFolderVisibility"] \
                 if "grantAccessToZscalerLogFolderVisibility" in config else None
             self.admin_management_visibility = config["adminManagementVisibility"] \
                 if "adminManagementVisibility" in config else None
-            self.redirect_web_traffic_to_zcc_listening_proxy_visibility = config["redirectWebTrafficToZccListeningProxyVisibility"] \
+            self.redirect_web_traffic_to_zcc_listening_proxy_visibility = config
+            ["redirectWebTrafficToZccListeningProxyVisibility"] \
                 if "redirectWebTrafficToZccListeningProxyVisibility" in config else None
-            self.use_ztunnel2_0_for_proxied_web_traffic_visibility = config["useZtunnel2_0ForProxiedWebTrafficVisibility"] \
+            self.use_ztunnel2_0_for_proxied_web_traffic_visibility = config
+            ["useZtunnel2_0ForProxiedWebTrafficVisibility"] \
                 if "useZtunnel2_0ForProxiedWebTrafficVisibility" in config else None
             self.split_vpn_visibility = config["splitVpnVisibility"] \
                 if "splitVpnVisibility" in config else None
@@ -670,7 +678,8 @@ class WebAppConfig(ZscalerObject):
                 if "postureMsDefenderVisibilityForLinux" in config else None
             self.posture_os_version_visibility_for_linux = config["postureOsVersionVisibilityForLinux"] \
                 if "postureOsVersionVisibilityForLinux" in config else None
-            self.posture_crowd_strike_zta_score_visibility_for_linux = config["postureCrowdStrikeZTAScoreVisibilityForLinux"] \
+            self.posture_crowd_strike_zta_score_visibility_for_linux = config
+            ["postureCrowdStrikeZTAScoreVisibilityForLinux"] \
                 if "postureCrowdStrikeZTAScoreVisibilityForLinux" in config else None
             self.flow_logger_zcc_blocked_traffic_visibility = config["flowLoggerZCCBlockedTrafficVisibility"] \
                 if "flowLoggerZCCBlockedTrafficVisibility" in config else None
@@ -682,7 +691,8 @@ class WebAppConfig(ZscalerObject):
                 if "zpaAutoReauthTimeoutVisibility" in config else None
             self.force_zpa_auth_expire_visibility = config["forceZpaAuthExpireVisibility"] \
                 if "forceZpaAuthExpireVisibility" in config else None
-            self.enable_set_proxy_on_vpn_adapters_visibility = config["enableSetProxyOnVPNAdaptersVisibility"] \
+            self.enable_set_proxy_on_vpn_adapters_visibility = config
+            ["enableSetProxyOnVPNAdaptersVisibility"] \
                 if "enableSetProxyOnVPNAdaptersVisibility" in config else None
             self.dns_server_route_exclusion_visibility = config["dnsServerRouteExclusionVisibility"] \
                 if "dnsServerRouteExclusionVisibility" in config else None
@@ -694,11 +704,13 @@ class WebAppConfig(ZscalerObject):
                 if "zpaAdvanceReauthVisibility" in config else None
             self.latency_based_zen_enablement_visibility = config["latencyBasedZenEnablementVisibility"] \
                 if "latencyBasedZenEnablementVisibility" in config else None
-            self.dynamic_zpa_service_edge_assignmentt_visibility = config["dynamicZPAServiceEdgeAssignmenttVisibility"] \
+            self.dynamic_zpa_service_edge_assignmentt_visibility = config
+            ["dynamicZPAServiceEdgeAssignmenttVisibility"] \
                 if "dynamicZPAServiceEdgeAssignmenttVisibility" in config else None
             self.custom_proxy_ports_visibility = config["customProxyPortsVisibility"] \
                 if "customProxyPortsVisibility" in config else None
-            self.domain_inclusion_exclusion_for_dns_request_visibility = config["domainInclusionExclusionForDNSRequestVisibility"] \
+            self.domain_inclusion_exclusion_for_dns_request_visibility = config
+            ["domainInclusionExclusionForDNSRequestVisibility"] \
                 if "domainInclusionExclusionForDNSRequestVisibility" in config else None
             self.app_notification_config_visibility = config["appNotificationConfigVisibility"] \
                 if "appNotificationConfigVisibility" in config else None
@@ -750,7 +762,8 @@ class WebAppConfig(ZscalerObject):
                 if "supportMultiplePWLPostures" in config else None
             self.restrict_remote_packet_capture_visibility = config["restrictRemotePacketCaptureVisibility"] \
                 if "restrictRemotePacketCaptureVisibility" in config else None
-            self.enable_application_based_bypass_for_mac_visibility = config["enableApplicationBasedBypassForMacVisibility"] \
+            self.enable_application_based_bypass_for_mac_visibility = config
+            ["enableApplicationBasedBypassForMacVisibility"] \
                 if "enableApplicationBasedBypassForMacVisibility" in config else None
             self.remove_exempted_containers_visibility = config["removeExemptedContainersVisibility"] \
                 if "removeExemptedContainersVisibility" in config else None
@@ -760,7 +773,8 @@ class WebAppConfig(ZscalerObject):
                 if "deviceGroupInProfileVisibility" in config else None
             self.update_dns_search_order = config["updateDnsSearchOrder"] \
                 if "updateDnsSearchOrder" in config else None
-            self.install_activity_based_monitoring_driver_visibility = config["installActivityBasedMonitoringDriverVisibility"] \
+            self.install_activity_based_monitoring_driver_visibility = config
+            ["installActivityBasedMonitoringDriverVisibility"] \
                 if "installActivityBasedMonitoringDriverVisibility" in config else None
             self.slow_rollout_zcc = config["slowRolloutZCC"] \
                 if "slowRolloutZCC" in config else None
@@ -804,7 +818,8 @@ class WebAppConfig(ZscalerObject):
                 if "serverCertPostureVisibility" in config else None
             self.auto_fill_using_login_hint_visibility = config["autoFillUsingLoginHintVisibility"] \
                 if "autoFillUsingLoginHintVisibility" in config else None
-            self.send_default_policy_for_invalid_policy_token = config["sendDefaultPolicyForInvalidPolicyToken"] \
+            self.send_default_policy_for_invalid_policy_token = config
+            ["sendDefaultPolicyForInvalidPolicyToken"] \
                 if "sendDefaultPolicyForInvalidPolicyToken" in config else None
             self.enable_zcc_password_settings = config["enableZccPasswordSettings"] \
                 if "enableZccPasswordSettings" in config else None
@@ -1261,7 +1276,8 @@ class WebAppConfig(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DevicePostureFrequency(ZscalerObject):
     """
     A class for DevicePostureFrequency objects.

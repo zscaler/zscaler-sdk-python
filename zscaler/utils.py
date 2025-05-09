@@ -790,8 +790,8 @@ def zcc_param_mapper(func):
         mapped_params = {}
 
         # Normalize and map os_types
-        if "os_types" in query_params:
-            os_raw = query_params["os_types"]
+        if "os_type" in query_params:
+            os_raw = query_params["os_type"]
             if isinstance(os_raw, str):
                 os_raw = [os_raw]  # ✅ support single string value
 
@@ -801,8 +801,23 @@ def zcc_param_mapper(func):
                 if zcc_param_map["os"].get(os_type.lower())
             ]
             if not mapped:
-                raise ValueError("Invalid `os_types` provided.")
-            mapped_params["osTypes"] = ",".join(mapped)
+                raise ValueError("Invalid `os_type` provided.")
+            mapped_params["osType"] = ",".join(mapped)
+
+        # Normalize and map os_types
+        if "device_type" in query_params:
+            os_raw = query_params["device_type"]
+            if isinstance(os_raw, str):
+                os_raw = [os_raw]  # ✅ support single string value
+
+            mapped = [
+                str(zcc_param_map["os"].get(os_type.lower()))
+                for os_type in os_raw
+                if zcc_param_map["os"].get(os_type.lower())
+            ]
+            if not mapped:
+                raise ValueError("Invalid `device_type` provided.")
+            mapped_params["deviceType"] = ",".join(mapped)
 
         # Normalize and map registration_types
         if "registration_types" in query_params:
