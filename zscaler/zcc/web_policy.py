@@ -35,14 +35,14 @@ class WebPolicyAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
+
                 ``[query_params.device_type]`` {str}: Filter by device operating system type. Valid options are:
-                    - ios
-                    - android
-                    - windows
-                    - macos
-                    - linux
+                    ios, android, windows, macos, linux.
+
                 ``[query_params.search]`` {str}: The search string used to partially match.
+
                 ``[query_params.search_type]`` {str}: The search string used to partially match.
 
         Returns:
