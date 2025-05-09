@@ -1,5 +1,17 @@
 # Zscaler Python SDK Changelog
 
+## 1.2.3 (May, 9 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - Fixed ZCC `download_devices` method to support `octet-stream` header
+* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - Fixed missing link for resource `cloud_apps` in both `legacy` and `OneAPI` client
+* ([#275](https://github.com/zscaler/zscaler-sdk-python/pull/275)) - `cloud_apps` resource has been renamed to `shadow_it_report` for consistency.
+
 ## 1.2.2 (May, 7 2025)
 
 ### Notes

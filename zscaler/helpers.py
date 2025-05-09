@@ -73,6 +73,7 @@ def to_snake_case(string):
         "computeDeviceGroupsForZAD": "compute_device_groups_for_zad",
         "computeDeviceGroupsForZAD": "compute_device_groups_for_zad",
         "deleteDHCPOption121RoutesVisibility": "delete_dhcp_option121_routes_visibility",
+        "deleteDHCPOption121Routes": "delete_dhcp_option121_routes",
         "enableOneIDAdminMigrationChanges": "enable_one_id_admin_migration_changes",
         "purgeKerberosPreferredDCCacheVisibility": "purge_kerberos_preferred_dc_cache_visibility",
         "slowRolloutZCC": "slow_rollout_zcc",
@@ -105,6 +106,18 @@ def to_snake_case(string):
         "defaultProtocolForZPA": "default_protocol_for_zpa",
         "tunnelTwoForiOSDevices": "tunnel_two_fori_os_devices",
         "prioritizeIPv4OverIpv6": "prioritize_ipv4_over_ipv6",
+        "disableParallelIpv4AndIPv6": "disable_parallel_ipv4_and_ipv6",
+        "computeDeviceGroupsForZDX ": "compute_device_groups_for_zdx",
+        "logoutZCCForZDXService": "logout_zcc_for_zdx_service",
+        "enableZpaDR": "enable_zpa_dr",
+        "ziaRSAPubKeyName": "zia_rsa_pub_key_name",
+        "ziaRSAPubKey": "zia_rsa_pub_key",
+        "zpaRSAPubKeyName": "zpa_rsa_pub_key_name",
+        "zpaRSAPubKey": "zpa_rsa_pub_key",
+        "truncate_large_udpdns_response": "truncateLargeUDPDNSResponse",
+        "enableZCCRevert": "enable_zcc_revert",
+        "enableZiaDR": "enable_zia_dr",
+        "purge_kerberos_preferred_dc_cache": "purgeKerberosPreferredDCCache"
     }
 
     if string in FIELD_EXCEPTIONS:
@@ -217,7 +230,19 @@ def to_lower_camel_case(string):
         "default_protocol_for_zpa": "defaultProtocolForZPA",
         "tunnelTwoForiOSDevices": "tunnel_two_fori_os_devices",
         "prioritize_ipv4_over_ipv6": "prioritizeIPv4OverIpv6",
-        
+        "disable_parallel_ipv4_and_ipv6": "disableParallelIpv4AndIPv6",
+        "compute_device_groups_for_zdx": "computeDeviceGroupsForZDX",
+        "logout_zcc_for_zdx_service ": "logoutZCCForZDXService",
+        "enable_zpa_dr": "enableZpaDR",
+        "zia_rsa_pub_key_name": "ziaRSAPubKeyName",
+        "zia_rsa_pub_key": "ziaRSAPubKey",
+        "zpa_rsa_pub_key_name": "zpaRSAPubKeyName",
+        "zpa_rsa_pub_key": "zpaRSAPubKey",
+        "truncateLargeUDPDNSResponse": "truncate_large_udpdns_response",
+        "enable_zcc_revert": "enableZCCRevert",
+        "delete_dhcp_option121_routes": "deleteDHCPOption121Routes",
+        "enableZiaDR": "enable_zia_dr",
+        "purgeKerberosPreferredDCCache": "purge_kerberos_preferred_dc_cache"
     }
 
     if string in FIELD_EXCEPTIONS:
