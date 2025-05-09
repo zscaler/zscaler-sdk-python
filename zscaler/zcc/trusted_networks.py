@@ -39,6 +39,17 @@ class TrustedNetworksAPI(APIClient):
 
         Returns:
             :obj:`list`: A list containing Trusted Networks By Company ID in the Client Connector Portal.
+
+        Examples:
+            List all Trusted Networks:
+
+            >>> network_list, response, error = client.zcc.trusted_networks.list_by_company()
+            >>>     if error:
+            ...         print(f"Error listing trusted networks: {error}")
+            ...         return
+            ...     print(f"Total trusted networks found: {len(network_list)}")
+            ...     for network in network_list:
+            ...         print(network.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -50,7 +61,6 @@ class TrustedNetworksAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -64,11 +74,9 @@ class TrustedNetworksAPI(APIClient):
             return (None, response, error)
 
         try:
-            # Extract the list of trusted networks from the response
             response_body = response.get_body()
             trusted_networks = response_body.get("trustedNetworkContracts", [])
 
-            # Convert each network into a TrustedNetwork object
             result = [TrustedNetworks(network) for network in trusted_networks]
         except Exception as error:
             return (None, response, error)
@@ -100,6 +108,24 @@ class TrustedNetworksAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the newly added Trusted Network, response, and error.
+
+        Examples:
+            Add a new Trusted Network :
+
+            >>> updated_network, response, error = client.zcc.trusted_networks.add_trusted_network(
+            ...     active=True,
+            ...     network_name=network_name,
+            ...     dns_servers='10.11.12.13, 10.11.12.14',
+            ...     dns_search_domains='network1.acme.com, network2.acme.com, network3.acme.com',
+            ...     hostnames='',
+            ...     trusted_subnets='',
+            ...     trusted_gateways='',
+            ...     trusted_dhcp_servers='',
+            ... )
+            >>> if error:
+            ...     print(f"Error adding trusted network: {error}")
+            ...     return
+            ... print(f"Trusted network added successfully: {added_network.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -120,7 +146,6 @@ class TrustedNetworksAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrustedNetworks)
         if error:
             return (None, response, error)
@@ -140,6 +165,25 @@ class TrustedNetworksAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the Update Trusted Network, response, and error.
+
+        Examples:
+            Update an existing Trusted Network :
+
+            >>> updated_network, response, error = client.zcc.trusted_networks.update_trusted_network(
+            ...     id='545845',
+            ...     active=True,
+            ...     network_name=network_name,
+            ...     dns_servers="10.11.12.13",
+            ...     dns_search_domains='network1.acme.com, network2.acme.com, network3.acme.com',
+            ...     hostnames='',
+            ...     trusted_subnets='',
+            ...     trusted_gateways='',
+            ...     trusted_dhcp_servers='',
+            ... )
+            >>> if error:
+            ...     print(f"Error updating trusted network: {error}")
+            ...     return
+            ... print(f"Trusted network updated successfully: {updated_network.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -152,12 +196,10 @@ class TrustedNetworksAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, TrustedNetworks)
         if error:
             return (None, response, error)
@@ -177,6 +219,15 @@ class TrustedNetworksAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete an existing Trusted Network :
+
+            >>> _, _, error = client.zcc.trusted_networks.delete_trusted_network('541244')
+            >>> if error:
+            ...     print(f"Error deleting trusted network: {error}")
+            ...     return
+            ... print(f"Trusted network with ID '541244' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

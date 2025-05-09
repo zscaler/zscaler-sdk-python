@@ -41,11 +41,14 @@ class ForwardingProfileAPI(APIClient):
             :obj:`list`: A list containing Forwarding Profiles By Company ID in the Client Connector Portal.
 
         Examples:
-            Prints all Forwarding Profiles By Company ID in the Client Connector Portal to the console:
+            List all Forwarding Profile:
 
-            >>> for profile in zcc.forwarding_profile.list_by_company():
-            ...    print(profile)
-
+            >>> profile_list, response, error = client.zcc.forwarding_profile.list_by_company()
+            >>>     if error:
+            ...         print(f"Error listing forwarding profiles: {error}")
+            ...         return
+            ...     for profile in profile_list:
+            ...         print(profile.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -57,7 +60,6 @@ class ForwardingProfileAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -80,13 +82,26 @@ class ForwardingProfileAPI(APIClient):
 
     def update_forwarding_profile(self, **kwargs) -> tuple:
         """
-        Create Forwarding Profile
+       Updates a forwarding profile.
 
         Args:
             N/A
 
         Returns:
             tuple: A tuple containing the Create Forwarding Profile, response, and error.
+
+        Examples:
+           Updates a forwarding profile.
+
+            >>> updated_profile, response, error = client.zcc.forwarding_profile.update_forwarding_profile(
+            ...     name=ForwardingProfile01,
+            ...     hostname='server.acme.com',
+            ...     Resolved_ips_for_hostname='8.8.8.8',
+            ... )
+            >>> if error:
+            ...     print(f"Error adding forwwarding profile: {error}")
+            ...     return
+            ... print(f"Forwwarding profile added successfully: {updated_profile.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -99,12 +114,10 @@ class ForwardingProfileAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, ForwardingProfile)
         if error:
             return (None, response, error)
@@ -124,6 +137,15 @@ class ForwardingProfileAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete an existing Forwarding Profile:
+
+            >>> _, _, error = client.zcc.forwarding_profile.delete_forwarding_profile('541244')
+            >>> if error:
+            ...     print(f"Error deleting Forwarding Profile: {error}")
+            ...     return
+            ... print(f"Forwarding Profile with ID '541244' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

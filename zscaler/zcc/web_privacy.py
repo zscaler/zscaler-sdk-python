@@ -73,7 +73,7 @@ class WebPrivacyAPI(APIClient):
 
     def set_web_privacy_info(self, **kwargs) -> tuple:
         """
-        Web Privacy Information
+        Adds or updates the configuration information for end user and device-related PII.
 
         Args:
             id (str):
@@ -90,6 +90,27 @@ class WebPrivacyAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Web Privacy Information, response, and error.
+
+        Examples:
+            updates the configuration information for end user and device-related PII:
+
+            >>> private_info, _, error = client.zcc.web_privacy.set_web_privacy_info(
+            ...     active='1',
+            ...     collect_user_info='1',
+            ...     collect_machine_hostname='1',
+            ...     collect_zdx_location='1',
+            ...     enable_packet_capture='1',
+            ...     disable_crashlytics='1',
+            ...     override_t2_protocol_setting='1',
+            ...     restrict_remote_packet_capture='0',
+            ...     grant_access_to_zscaler_log_folder='0',
+            ...     export_logs_for_non_admin='1',
+            ...     enable_auto_log_snippet='0'
+            ... )
+            >>> if error:
+            ...     print(f"Error updating web privacy info: {error}")
+            ...     return
+            ... print(f"web Privacy Info updated successfully: {private_info.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -103,12 +124,10 @@ class WebPrivacyAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, WebPrivacy)
         if error:
             return (None, response, error)

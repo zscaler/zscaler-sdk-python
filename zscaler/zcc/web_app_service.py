@@ -41,14 +41,12 @@ class WebAppServiceAPI(APIClient):
             :obj:`list`: A list containing Fail Open Policy By Company in the Client Connector Portal.
 
         Examples:
-            >>> # Typical usage:
             >>> policies, resp, err = client.zcc.web_app_service.list_by_company({"search": "example"})
             >>> if err:
             ...     print(f"Error: {err}")
             ... else:
             ...     for policy in policies:
             ...         print(policy)
-
         """
         http_method = "get".upper()
         api_url = format_url(

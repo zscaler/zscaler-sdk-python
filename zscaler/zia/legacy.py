@@ -414,6 +414,16 @@ class LegacyZIAClientHelper:
         return CloudApplicationsAPI(self.request_executor)
 
     @property
+    def shadow_it_report(self):
+        """
+        The interface object for the :ref:`ZIA Shadow IT Report <zia-shadow_it_report>`.
+
+        """
+        from zscaler.zia.shadow_it_report import ShadowITAPI
+
+        return ShadowITAPI(self.request_executor)
+    
+    @property
     def cloud_browser_isolation(self):
         """
         The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-cloud_browser_isolation>`.
