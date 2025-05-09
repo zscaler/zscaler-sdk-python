@@ -412,6 +412,16 @@ class LegacyZIAClientHelper:
         from zscaler.zia.cloud_applications import CloudApplicationsAPI
 
         return CloudApplicationsAPI(self.request_executor)
+    
+    @property
+    def cloud_apps(self):
+        """
+        The interface object for the :ref:`ZIA Cloud App Control <zia-cloud_apps>`.
+
+        """
+        from zscaler.zia.cloud_apps import CloudAppsAPI
+
+        return CloudAppsAPI(self.request_executor)
 
     @property
     def cloud_browser_isolation(self):
