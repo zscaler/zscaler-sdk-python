@@ -38,20 +38,13 @@ class DevicesAPI(APIClient):
         Downloads the list of devices as a CSV file from the ZCC portal.
 
         Args:
-            query_params (dict, optional): A dictionary containing supported filters:
-                ``[query_params.os_types]`` {str}: Filter by device operating system type. Valid options are:
-                    - ios
-                    - android
-                    - windows
-                    - macos
-                    - linux
-                ``[query_params.registration_types]`` {str}: Filter by device operating system type. Valid options are:
-                    - all
-                    - registered
-                    - unregistered
-                    - removal_pending
-                    - removed
-                    - quarantined
+            query_params (dict, optional): A dictionary containing supported filters.
+
+                ``[query_params.os_types]`` {str}: Filter by OS type. Valid values:
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.registration_types]`` {str}: Filter by registration type. Valid values:
+                    all, registered, unregistered, removal_pending, removed, quarantined.
 
             filename (str, optional): Custom filename for the CSV file. Defaults to timestamped name.
 
@@ -73,7 +66,6 @@ class DevicesAPI(APIClient):
             ... except Exception as e:
             ...     print(f"Error during download: {e}")
         """
-
         query_params = query_params or {}
 
         if not filename:
@@ -131,22 +123,13 @@ class DevicesAPI(APIClient):
         Downloads service status for all devices from the ZCC portal.
 
         Args:
-            query_params (dict, optional): A dictionary containing supported filters:
-        Args:
-            query_params (dict, optional): A dictionary containing supported filters:
-                ``[query_params.os_types]`` {str}: Filter by device operating system type. Valid options are:
-                    - ios
-                    - android
-                    - windows
-                    - macos
-                    - linux
-                ``[query_params.registration_types]`` {str}: Filter by device operating system type. Valid options are:
-                    - all
-                    - registered
-                    - unregistered
-                    - removal_pending
-                    - removed
-                    - quarantined
+            query_params (dict, optional): A dictionary containing supported filters.
+
+                ``[query_params.os_types]`` {str}: Filter by OS type. Valid values:
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.registration_types]`` {str}: Filter by registration type. Valid values:
+                    all, registered, unregistered, removal_pending, removed, quarantined.
 
                 filename (str, optional): Custom filename for the CSV file. Defaults to timestamped name.
 
@@ -226,18 +209,17 @@ class DevicesAPI(APIClient):
         Returns the list of devices enrolled in the Client Connector Portal.
 
         Args:
-            query_params {dict}: Map of query parameters for the request.
+            query_params (dict, optional): A dictionary containing supported filters.
 
                 ``[query_params.os_type]`` {str}: Filter by device operating system type. Valid options are:
-                    - ios
-                    - android
-                    - windows
-                    - macos
-                    - linux
-                ``[query_params.username]`` {str}: Filter by enrolled user name for the device.
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.username]`` {str}:  Filter by enrolled username for the device.
 
                 ``[query_params.page]`` {str}: Specifies the page number.
-                ``[query_params.page_size]`` {str}: Specifies the page size. The default page size is 50.
+
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    The default page size is 50.
                     The max page size is 5000.
 
         Returns:
@@ -445,7 +427,9 @@ class DevicesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Specifies the page size.  If not provided, the default page size is 30.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 30.
                     The max page size is 5000.
 
         Returns:
@@ -506,7 +490,9 @@ class DevicesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.page_size]`` {int}: Specifies the page size. If not provided, the default page size is 30.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 30.
                     The max page size is 5000.
 
         Returns:

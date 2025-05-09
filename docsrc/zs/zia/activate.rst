@@ -4,7 +4,7 @@ activate
 The following methods allow for interaction with the ZIA
 Activation Management API endpoints.
 
-Methods are accessible via ``zia.activate``
+Methods are accessible via ``zscaler.zia.activate``
 
 .. _zia-activate:
 

@@ -86,10 +86,12 @@ class SecretsAPI(APIClient):
         Return passwords for the specified username and device OS type.
 
         Args:
-            query_params (dict): Optional parameters.
-                - username (str): The username associated with the device.
-                - os_type (str): Device OS. One of:
-                    - ios, android, windows, macos, linux
+            query_params (dict, optional): A dictionary containing supported filters.
+
+                ``[query_params.os_type]`` {str}: Filter by device operating system type. Valid options are:
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.username]`` {str}:  Filter by enrolled username for the device.
 
         Returns:
             tuple: (Passwords object, response, error)
