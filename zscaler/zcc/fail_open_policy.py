@@ -40,11 +40,14 @@ class FailOpenPolicyAPI(APIClient):
             :obj:`list`: A list containing Fail Open Policy By Company in the Client Connector Portal.
 
         Examples:
-            Prints all Fail Open Policy By Company in the Client Connector Portal to the console:
+            List all Fail Open Policies:
 
-            >>> for policy in zcc.failopen_policy.list_by_company():
-            ...    print(policy)
-
+            >>> policy_list, response, error = client.zcc.fail_open_policy.list_by_company()
+            >>>     if error:
+            ...         print(f"Error listing trusted networks: {error}")
+            ...         return
+            ...     for policy in policy_list:
+            ...         print(policy.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -56,7 +59,6 @@ class FailOpenPolicyAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -87,6 +89,27 @@ class FailOpenPolicyAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the Updated Fail Open Policy, response, and error.
+
+        Examples:
+           Updates a fail open policy.
+
+            >>> updated_policy, _, error = client.zcc.fail_open_policy.update_failopen_policy(
+            ...     id='4441',
+            ...     active='1',
+            ...     captive_portal_web_sec_disable_minutes='10',
+            ...     enable_captive_portal_detection='1',
+            ...     enable_fail_open='1',
+            ...     enable_strict_enforcement_prompt='0',
+            ...     enable_web_sec_on_proxy_unreachable='0',
+            ...     enable_web_sec_on_tunnel_failure='0',
+            ...     strict_enforcement_prompt_delay_minutes='2',
+            ...     strict_enforcement_prompt_message='',
+            ...     tunnel_failure_retry_count='25',
+            ... )
+            >>> if error:
+            ...         print(f"Error updating Fail Open Policy: {error}")
+            ...         return
+            ... print(f"Fail Open Policy updated successfully: {updated_policy.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -99,12 +122,10 @@ class FailOpenPolicyAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, FailOpenPolicy)
         if error:
             return (None, response, error)

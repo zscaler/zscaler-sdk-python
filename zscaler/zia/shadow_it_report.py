@@ -20,7 +20,7 @@ from zscaler.zia.models.shadow_it_report import CloudapplicationsAndTags
 from zscaler.utils import format_url, convert_keys
 
 
-class CloudAppsAPI(APIClient):
+class ShadowITAPI(APIClient):
     """
     A Client object for the predefined and custom Cloud Applications resource.
     """
@@ -45,18 +45,21 @@ class CloudAppsAPI(APIClient):
 
     def list_apps(self, query_params=None) -> tuple:
         """
-        List all predefined and custom cloud applications by name and id.
+        Gets the list of predefined and custom cloud applications
 
         Returns:
             obj:`Tuple`: A list of cloud applications.
 
         Examples:
-            List all cloud applications::
+            Get a list of 10 custom cloud applications:
 
-                apps = zia.cloud_apps.list_apps()
-                for app in apps:
-                    print(app.name)
-
+            >>> app_list, response, error = client.zia.shadow_it_report.list_apps(query_params={'limit': '10'})
+            ... if error:
+            ...     print(f"Error listing custom cloud applications: {error}")
+            ...     return
+            ... print(f"Total cloud applications found: {len(app_list)}")
+            ... for app in app_list:
+            ...     print(app.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -66,9 +69,12 @@ class CloudAppsAPI(APIClient):
         """
         )
 
+        query_params = query_params or {}
+
+        body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
@@ -87,7 +93,7 @@ class CloudAppsAPI(APIClient):
 
         return (result, response, None)
 
-    def list_custom_tags(self, query_params=None) -> tuple:
+    def list_custom_tags(self) -> tuple:
         """
         List all custom tags by name and id.
 
@@ -95,12 +101,15 @@ class CloudAppsAPI(APIClient):
             :obj:`Tuple`: A list of custom tags available to assign to cloud applications.
 
         Examples:
-            List all custom tags::
+            Get a list of 10 custom cloud applications:
 
-                tags = zia.cloud_apps.list_custom_tags()
-                for tag in tags:
-                    print(tag.name)
-
+            >>> app_list, response, error = client.zia.shadow_it_report.list_custom_tags(query_params={'limit': '10'})
+            ... if error:
+            ...     print(f"Error listing custom tags: {error}")
+            ...     return
+            ... print(f"Total cloud applications found: {len(app_list)}")
+            ... for app in app_list:
+            ...     print(app.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -110,9 +119,10 @@ class CloudAppsAPI(APIClient):
         """
         )
 
+        body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
@@ -507,20 +517,17 @@ class CloudAppsAPI(APIClient):
         convert_keys(payload)
 
         body = {}
-        headers = {"Accept": "text/csv"}  # Explicitly request a CSV response
+        headers = {"Accept": "text/csv"}
         params = {}
 
-        # Creating the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=params)
 
         if error:
             return (None, error)
 
-        # Executing the request
         response, error = self._request_executor.execute(request)
 
         if error:
             return (response.get_body(), error)
 
-        # Return the CSV content directly
         return (response.get_body(), None)

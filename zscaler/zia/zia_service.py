@@ -25,6 +25,7 @@ from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
 from zscaler.zia.bandwidth_classes import BandwidthClassesAPI
 from zscaler.zia.bandwidth_control_rules import BandwidthControlRulesAPI
+from zscaler.zia.shadow_it_report import ShadowITAPI
 from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 from zscaler.zia.cloud_applications import CloudApplicationsAPI
 from zscaler.zia.cloud_app_instances import CloudApplicationInstancesAPI
@@ -169,6 +170,14 @@ class ZIAService:
         """
         return CloudApplicationsAPI(self._request_executor)
 
+    @property
+    def shadow_it_report(self):
+        """
+        The interface object for the :ref:`ZIA Shadow IT Report <zia-shadow_it_report>`.
+
+        """
+        return ShadowITAPI(self._request_executor)
+    
     @property
     def cloud_nss(self):
         """

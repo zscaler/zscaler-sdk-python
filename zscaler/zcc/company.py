@@ -69,8 +69,9 @@ class CompanyInfoAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = response.get_results()
+            result = []
+            for item in response.get_results():
+                result.append(GetCompanyInfo(self.form_response_body(item)))
         except Exception as error:
-            return None, response, error
-
-        return result, response, None
+            return (None, response, error)
+        return (result, response, None)

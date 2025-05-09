@@ -139,9 +139,13 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admin roles in the Client Connector Portal to the console:
 
-            >>> for role in zcc.admin_user.list_admin_roles():
-            ...    print(role)
-
+            >>> role_list, _, err = client.zcc.admin_user.list_admin_roles()
+            >>>     if err:
+            ...         print(f"Error listing admin roles: {err}")
+            ...         return
+            ...     print(f"Total admin roles found: {len(role_list)}")
+            ...     for role in role_list:
+            ...         print(role.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
