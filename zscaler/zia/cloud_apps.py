@@ -66,9 +66,12 @@ class CloudAppsAPI(APIClient):
         """
         )
 
+        query_params = query_params or {}
+
+        body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, {}, headers, {}, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
