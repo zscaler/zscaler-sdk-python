@@ -29,7 +29,7 @@ __license__ = "MIT"
 __contributors__ = [
     "William Guilherme",
 ]
-__version__ = "1.2.3"
+__version__ = "1.2.4"
 
 
 from zscaler.oneapi_client import Client as ZscalerClient  # noqa
