@@ -17,7 +17,7 @@ Notes
 ZPA Administrator Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added the following new ZPA API Endpoints:
     - Added `GET /administrators` Retrieves a list of administrators in a tenant. A maximum of 200 administrators are returned per request.
     - Added `GET /administrators/{admin_id}` Retrieves administrator details for a specific `{admin_id}`
     - Added `POST /administrators` Create an local administrator account
@@ -27,7 +27,7 @@ ZPA Administrator Controller
 ZPA Role Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added the following new ZPA API Endpoints:
     - Added `GET /permissionGroups` Retrieves all the default permission groups.
     - Added `GET /roles` Retrieves a list of all configured roles in a tenant.
     - Added `GET /roles/{admin_id}` Retrieves a role details for a specific `{role_id}`
@@ -38,7 +38,7 @@ ZPA Role Controller
 ZPA Enrollment Certificate 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added the following new ZPA API Endpoints:
     - Added `POST /enrollmentCert/csr/generate` Creates a CSR for a new enrollment Certificate
     - Added `POST /enrollmentCert/selfsigned/generate` Creates a self signed Enrollment Certificate
     - Added `POST /enrollmentCert` Creates a enrollment Certificate
@@ -48,7 +48,7 @@ ZPA Enrollment Certificate
 ZPA SAML Attribute Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added the following new ZPA API Endpoints:
     - Added `POST /samlAttribute` Adds a new `SamlAttribute` for a given tenant
     - Added `PUT /samlAttribute/{attr_id}` Update an existing `SamlAttribute` for a given tenant
     - Added `DELETE /samlAttribute/{attr_id}` Delete an existing `SamlAttribute` for a given tenant
@@ -56,7 +56,7 @@ ZPA SAML Attribute Controller
 ZPA Client-Settings Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added the following new ZPA API Endpoints:
     - Added `GET /clientSetting` Retrieves `clientSetting` details. `ClientCertType` defaults to `CLIENT_CONNECTOR`
     - Added `POST /clientSetting` Create or update `clientSetting` for a customer. `ClientCertType` defaults to `CLIENT_CONNECTOR`
     - Added `DELETE /clientSetting` Delete an existing `clientSetting`. `ClientCertType` defaults to `CLIENT_CONNECTOR`
@@ -65,8 +65,8 @@ ZPA Client-Settings Controller
 Bug Fixes
 ----------
 
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Fixed `username` parameter in the ZCC `devices` model for the correct non-standard `snake_case` vs `cameCase` format.
-* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added missing `user_risk_score_levels` and `source_ip_groups` attributes to `dlp_web_rules`
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Fixed `username` parameter in the ZCC `devices` model for the correct non-standard `snake_case` vs `cameCase` format.
+* (`#280 <https://github.com/zscaler/zscaler-sdk-python/pull/280>`_) - Added missing `user_risk_score_levels` and `source_ip_groups` attributes to `dlp_web_rules`
 
 1.2.4 (May, 9 2025)
 -----------------------------
