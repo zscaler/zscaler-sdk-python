@@ -65,13 +65,15 @@ class DLPWebRules(ZscalerObject):
             self.zscaler_incident_receiver = config["zscalerIncidentReceiver"] if "zscalerIncidentReceiver" in config else None
             self.external_auditor_email = config["externalAuditorEmail"] if "externalAuditorEmail" in config else None
 
-            # Handling lists of simple values
             self.protocols = ZscalerCollection.form_list(config["protocols"] if "protocols" in config else [], str)
 
             self.file_types = ZscalerCollection.form_list(config["fileTypes"] if "fileTypes" in config else [], str)
 
             self.cloud_applications = ZscalerCollection.form_list(
                 config["cloudApplications"] if "cloudApplications" in config else [], str
+            )
+            self.user_risk_score_levels = ZscalerCollection.form_list(
+                config["userRiskScoreLevels"] if "userRiskScoreLevels" in config else [], str
             )
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
@@ -112,10 +114,10 @@ class DLPWebRules(ZscalerObject):
                 config["dlpEngines"] if "dlpEngines" in config else [], dlp_engine.DLPEngine
             )
             self.labels = ZscalerCollection.form_list(
-                config["labels"] if "labels" in config else [], labels.RuleLabels  # Missing Attribute
+                config["labels"] if "labels" in config else [], labels.RuleLabels
             )
             self.excluded_groups = ZscalerCollection.form_list(
-                config["excludedGroups"] if "excludedGroups" in config else [], user_management.Groups  # New Attribute
+                config["excludedGroups"] if "excludedGroups" in config else [], user_management.Groups
             )
             self.excluded_departments = ZscalerCollection.form_list(
                 config["excludedDepartments"] if "excludedDepartments" in config else [], user_management.Department
@@ -133,7 +135,6 @@ class DLPWebRules(ZscalerObject):
             self.icap_server = dlp_resources.DLPICAPServer(config["icapServer"]) if "icapServer" in config else None
 
         else:
-            # Defaults when config is None
             self.id = None
             self.name = None
             self.description = None
@@ -171,6 +172,7 @@ class DLPWebRules(ZscalerObject):
             self.excluded_groups = []
             self.excluded_departments = []
             self.excluded_users = []
+            self.user_risk_score_levels = []
             self.auditor = None
             self.notification_template = None
             self.icap_server = None
@@ -204,6 +206,7 @@ class DLPWebRules(ZscalerObject):
             "protocols": self.protocols,
             "fileTypes": self.file_types,
             "cloudApplications": self.cloud_applications,
+            "userRiskScoreLevels": self.user_risk_score_levels,
             "locations": [location.request_format() for location in (self.locations or [])],
             "locationGroups": [group.request_format() for group in (self.location_groups or [])],
             "groups": [group.request_format() for group in (self.groups or [])],

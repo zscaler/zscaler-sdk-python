@@ -40,9 +40,9 @@ from zscaler.zpa.saml_attributes import SAMLAttributesAPI
 from zscaler.zpa.scim_groups import SCIMGroupsAPI
 from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
-# from zscaler.zpa.role_controller import RoleControllerAPI
-# from zscaler.zpa.administrator_controller import AdministratorControllerAPI
-# from zscaler.zpa.client_settings import ClientSettingsAPI
+from zscaler.zpa.role_controller import RoleControllerAPI
+from zscaler.zpa.administrator_controller import AdministratorControllerAPI
+from zscaler.zpa.client_settings import ClientSettingsAPI
 
 
 class ZPAService:
@@ -380,29 +380,29 @@ class ZPAService:
         """
         return TrustedNetworksAPI(self._request_executor, self._config)
 
-    # @property
-    # def administrator_controller(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
+    @property
+    def administrator_controller(self):
+        """
+        The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
 
-    #     """
+        """
 
-    #     return AdministratorControllerAPI(self._request_executor, self._config)
+        return AdministratorControllerAPI(self._request_executor, self._config)
 
-    # @property
-    # def role_controller(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
+    @property
+    def role_controller(self):
+        """
+        The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
 
-    #     """
+        """
 
-    #     return RoleControllerAPI(self._request_executor, self._config)
+        return RoleControllerAPI(self._request_executor, self._config)
 
-    # @property
-    # def client_settings(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
+    @property
+    def client_settings(self):
+        """
+        The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
 
-    #     """
+        """
 
-    #     return ClientSettingsAPI(self._request_executor, self._config)
+        return ClientSettingsAPI(self._request_executor, self._config)

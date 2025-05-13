@@ -33,14 +33,23 @@ class PolicySetControllerV2(ZscalerObject):
         if config:
             self.id = config["id"] if "id" in config else None
             self.policy_set_id = config["policySetId"] if "policySetId" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
             self.name = config["name"] if "name" in config else None
             self.description = config["description"] if "description" in config else None
+            self.rule_order = config["ruleOrder"] if "ruleOrder" in config else None
+            self.priority = config["priority"] if "priority" in config else None
+            self.policy_type = config["policyType"] if "policyType" in config else None
+            self.post_actions = config["postActions"] if "postActions" in config else None
+            self.operator = config["operator"] if "operator" in config else None
             self.action = config["action"] if "action" in config else None
-            self.custom_msg = config["customMsg"] if "customMsg" in config else None
-            self.disabled = config["disabled"] if "disabled" in config else None
+            self.action_id = config["actionId"] if "actionId" in config else None
             self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
             self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
-            self.rule_order = config["ruleOrder"] if "ruleOrder" in config else None
+            self.custom_msg = config["customMsg"] if "customMsg" in config else None
+            self.disabled = config["disabled"] if "disabled" in config else None
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.zpn_isolation_profile_id = config["zpnIsolationProfileId"] if "zpnIsolationProfileId" in config else None
@@ -48,11 +57,12 @@ class PolicySetControllerV2(ZscalerObject):
             self.zpn_inspection_profile_name = (
                 config["zpnInspectionProfileName"] if "zpnInspectionProfileName" in config else None
             )
-            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
             self.version = config["version"] if "version" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
             self.default_rule = config["defaultRule"] if "defaultRule" in config else False
 
-            # Handle conditions using ZscalerCollection and isinstance check for reusability
             self.conditions = ZscalerCollection.form_list(config.get("conditions", []), Condition)
 
             self.app_connector_groups = ZscalerCollection.form_list(
@@ -120,57 +130,84 @@ class PolicySetControllerV2(ZscalerObject):
                 self.credential_pool = None
 
         else:
-            self.policy_set_id = None
+            self.id = None
+            self.modified_time = None
+            self.creation_time = None
+            self.modified_by = None
             self.name = None
             self.description = None
-            self.action = None
-            self.custom_msg = None
-            self.reauth_idle_timeout = None
-            self.reauth_timeout = None
             self.rule_order = None
+            self.priority = None
+            self.policy_type = None
+            self.post_actions = None
+            self.operator = None
+            self.action = None
+            self.action_id = None
+            self.custom_msg = None
+            self.disabled = None
+            self.extranet_dto = None
+            self.extranet_enabled = False
+            self.default_rule = False
             self.microtenant_id = None
             self.microtenant_name = None
+            self.version = None
+            self.credential = None
+            self.credential_pool = None
             self.zpn_isolation_profile_id = None
             self.zpn_inspection_profile_id = None
             self.zpn_inspection_profile_name = None
-            self.extranet_enabled = False
             self.conditions = []
             self.app_connector_groups = []
             self.app_server_groups = []
             self.service_edge_groups = []
-            self.extranet_dto = None
-            self.privileged_capabilities = []
-            self.privileged_portal_capabilities = []
-            self.credential = None
-            self.credential_pool = None
+            self.privileged_capabilities = None
+            self.privileged_portal_capabilities = None
+            self.reauth_idle_timeout = None
+            self.restriction_type = None
+            self.reauth_timeout = None
+            self.read_only = None
+            self.zscaler_managed = None
 
     def request_format(self):
         parent_req_format = super().request_format()
         current_obj_format = {
-            "policySetId": self.policy_set_id,
-            "conditions": [condition.request_format() for condition in self.conditions],
+            "id": self.id,
+            "modifiedTime": self.modified_time,
+            "creationTime": self.creation_time,
+            "modifiedBy": self.modified_by,
             "name": self.name,
             "description": self.description,
+            "ruleOrder": self.rule_order,
+            "priority": self.priority,
+            "policyType": self.policy_type,
+            "postActions": self.post_actions,
+            "operator": self.operator,
             "action": self.action,
-            "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
-            "appServerGroups": [group.request_format() for group in self.app_server_groups],
-            "extranetEnabled": self.extranet_enabled,
-            "extranetDTO": self.extranet_dto.request_format() if self.extranet_dto else None,
-            "privilegedCapabilities": self.privileged_capabilities,
-            "privilegedPortalCapabilities": self.privileged_portal_capabilities,
-            "credential": self.credential.request_format() if self.credential else None,
-            "credentialPool": self.credential_pool.request_format() if self.credential_pool else None,
-            "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups],
+            "actionId": self.action_id,
             "customMsg": self.custom_msg,
             "disabled": self.disabled,
-            "reauthIdleTimeout": self.reauth_idle_timeout,
-            "reauthTimeout": self.reauth_timeout,
-            "ruleOrder": self.rule_order,
+            "extranetEnabled": self.extranet_enabled,
+            "defaultRule": self.default_rule,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
             "zpnIsolationProfileId": self.zpn_isolation_profile_id,
             "zpnInspectionProfileId": self.zpn_inspection_profile_id,
             "zpnInspectionProfileName": self.zpn_inspection_profile_name,
+            "reauthIdleTimeout": self.reauth_idle_timeout,
+            "reauthTimeout": self.reauth_timeout,
+            "version": self.version,
+            "credential": self.credential,
+            "extranetDTO": self.extranet_dto,
+            "credentialPool": self.credential_pool,
+            "privilegedCapabilities": self.privileged_capabilities,
+            "privilegedPortalCapabilities": self.privileged_portal_capabilities,
+            "restrictionType": self.restriction_type,
+            "readOnly": self.read_only,
+            "zscalerManaged": self.zscaler_managed,
+            "conditions": [condition.request_format() for condition in self.conditions],
+            "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
+            "appServerGroups": [group.request_format() for group in self.app_server_groups],
+            "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
