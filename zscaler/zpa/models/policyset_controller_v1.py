@@ -32,7 +32,6 @@ class PolicySetControllerV1(ZscalerObject):
         super().__init__(config)
 
         if config:
-            # Handle fields
             self.id = config["id"] if "id" in config else None
             self.policy_set_id = config["policySetId"] if "policySetId" in config else None
             self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
@@ -43,8 +42,10 @@ class PolicySetControllerV1(ZscalerObject):
             self.rule_order = config["ruleOrder"] if "ruleOrder" in config else None
             self.priority = config["priority"] if "priority" in config else None
             self.policy_type = config["policyType"] if "policyType" in config else None
+            self.post_actions = config["postActions"] if "postActions" in config else None
             self.operator = config["operator"] if "operator" in config else None
             self.action = config["action"] if "action" in config else None
+            self.action_id = config["actionId"] if "actionId" in config else None
             self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
             self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
             self.custom_msg = config["customMsg"] if "customMsg" in config else None
@@ -58,9 +59,11 @@ class PolicySetControllerV1(ZscalerObject):
                 config["zpnInspectionProfileName"] if "zpnInspectionProfileName" in config else None
             )
             self.version = config["version"] if "version" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
             self.default_rule = config["defaultRule"] if "defaultRule" in config else False
 
-            # Handle conditions using ZscalerCollection
             self.conditions = ZscalerCollection.form_list(config.get("conditions", []), Condition)
 
             self.app_connector_groups = ZscalerCollection.form_list(
@@ -127,7 +130,6 @@ class PolicySetControllerV1(ZscalerObject):
             else:
                 self.credential_pool = None
         else:
-            # Defaults when config is None
             self.id = None
             self.modified_time = None
             self.creation_time = None
@@ -137,8 +139,10 @@ class PolicySetControllerV1(ZscalerObject):
             self.rule_order = None
             self.priority = None
             self.policy_type = None
+            self.post_actions = None
             self.operator = None
             self.action = None
+            self.action_id = None
             self.custom_msg = None
             self.disabled = None
             self.extranet_dto = None
@@ -159,7 +163,10 @@ class PolicySetControllerV1(ZscalerObject):
             self.privileged_capabilities = None
             self.privileged_portal_capabilities = None
             self.reauth_idle_timeout = None
+            self.restriction_type = None
             self.reauth_timeout = None
+            self.read_only = None
+            self.zscaler_managed = None
 
     def request_format(self):
         parent_req_format = super().request_format()
@@ -173,8 +180,10 @@ class PolicySetControllerV1(ZscalerObject):
             "ruleOrder": self.rule_order,
             "priority": self.priority,
             "policyType": self.policy_type,
+            "postActions": self.post_actions,
             "operator": self.operator,
             "action": self.action,
+            "actionId": self.action_id,
             "customMsg": self.custom_msg,
             "disabled": self.disabled,
             "extranetEnabled": self.extranet_enabled,
@@ -192,6 +201,9 @@ class PolicySetControllerV1(ZscalerObject):
             "credentialPool": self.credential_pool,
             "privilegedCapabilities": self.privileged_capabilities,
             "privilegedPortalCapabilities": self.privileged_portal_capabilities,
+            "restrictionType": self.restriction_type,
+            "readOnly": self.read_only,
+            "zscalerManaged": self.zscaler_managed,
             "conditions": [condition.request_format() for condition in self.conditions],
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
             "appServerGroups": [group.request_format() for group in self.app_server_groups],

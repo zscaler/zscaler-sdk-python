@@ -229,7 +229,7 @@ class DevicesAPI(APIClient):
             Prints all devices in the Client Connector Portal to the console:
 
             >>> device_list, _, err = client.zcc.devices.list_devices(
-            ... query_params = { "os_type": "3", 'page': 1, 'page_size': 1})
+            ... query_params = {'username': 'jdoe@acme.com', "os_type": "3", 'page': 1, 'page_size': 1})
             >>> if err:
             ...     print(f"Error listing devices: {err}")
             ...     return

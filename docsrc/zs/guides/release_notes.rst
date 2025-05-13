@@ -6,6 +6,68 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.3.0 (May, 12 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+ZPA Administrator Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+    - Added `GET /administrators` Retrieves a list of administrators in a tenant. A maximum of 200 administrators are returned per request.
+    - Added `GET /administrators/{admin_id}` Retrieves administrator details for a specific `{admin_id}`
+    - Added `POST /administrators` Create an local administrator account
+    - Added `PUT /administrators/{admin_id}` Update a local administrator account for a specific `{admin_id}`
+    - Added `DELETE /administrators/{admin_id}` Delete a local administrator account for a specific `{admin_id}`
+
+ZPA Role Controller
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+    - Added `GET /permissionGroups` Retrieves all the default permission groups.
+    - Added `GET /roles` Retrieves a list of all configured roles in a tenant.
+    - Added `GET /roles/{admin_id}` Retrieves a role details for a specific `{role_id}`
+    - Added `POST /roles` Adds a new role for a tenant.
+    - Added `PUT /roles/{admin_id}` Update a role for a specific `{role_id}`
+    - Added `DELETE /roles/{role_id}` Delete a role for a specific `{role_id}`
+
+ZPA Enrollment Certificate 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+    - Added `POST /enrollmentCert/csr/generate` Creates a CSR for a new enrollment Certificate
+    - Added `POST /enrollmentCert/selfsigned/generate` Creates a self signed Enrollment Certificate
+    - Added `POST /enrollmentCert` Creates a enrollment Certificate
+    - Added `PUT /enrollmentCert/{cert_id}` Update an existing enrollment Certificate
+    - Added `DELETE /enrollmentCert/{cert_id}` Delete an existing enrollment Certificate
+
+ZPA SAML Attribute Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+    - Added `POST /samlAttribute` Adds a new `SamlAttribute` for a given tenant
+    - Added `PUT /samlAttribute/{attr_id}` Update an existing `SamlAttribute` for a given tenant
+    - Added `DELETE /samlAttribute/{attr_id}` Delete an existing `SamlAttribute` for a given tenant
+
+ZPA Client-Settings Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added the following new ZPA API Endpoints:
+    - Added `GET /clientSetting` Retrieves `clientSetting` details. `ClientCertType` defaults to `CLIENT_CONNECTOR`
+    - Added `POST /clientSetting` Create or update `clientSetting` for a customer. `ClientCertType` defaults to `CLIENT_CONNECTOR`
+    - Added `DELETE /clientSetting` Delete an existing `clientSetting`. `ClientCertType` defaults to `CLIENT_CONNECTOR`
+    - Added `GET /clientSetting/all` Retrieves all `clientSetting` details.
+
+Bug Fixes
+----------
+
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Fixed `username` parameter in the ZCC `devices` model for the correct non-standard `snake_case` vs `cameCase` format.
+* (`#279 <https://github.com/zscaler/zscaler-sdk-python/pull/279>`_) - Added missing `user_risk_score_levels` and `source_ip_groups` attributes to `dlp_web_rules`
+
 1.2.4 (May, 9 2025)
 -----------------------------
 

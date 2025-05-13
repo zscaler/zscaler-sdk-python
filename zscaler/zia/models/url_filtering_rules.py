@@ -75,7 +75,9 @@ class URLFilteringRule(ZscalerObject):
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
             )
-
+            self.user_risk_score_levels = ZscalerCollection.form_list(
+                config["userRiskScoreLevels"] if "userRiskScoreLevels" in config else [], str
+            )
             # Handling nested objects and lists of objects
             self.locations = ZscalerCollection.form_list(
                 config["locations"] if "locations" in config else [], location.LocationManagement
@@ -101,6 +103,9 @@ class URLFilteringRule(ZscalerObject):
             )
             self.location_groups = ZscalerCollection.form_list(
                 config["locationGroups"] if "locationGroups" in config else [], location_group.LocationGroup
+            )
+            self.source_ip_groups = ZscalerCollection.form_list(
+                config["sourceIpGroups"] if "sourceIpGroups" in config else [], cloud_firewall_source_groups.IPSourceGroup
             )
             self.labels = ZscalerCollection.form_list(config["labels"] if "labels" in config else [], labels.RuleLabels)
             self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
@@ -149,6 +154,8 @@ class URLFilteringRule(ZscalerObject):
             self.labels = []
             self.devices = []
             self.device_groups = []
+            self.user_risk_score_levels = []
+            self.source_ip_groups = []
             self.cbi_profile = None
 
     def request_format(self):
@@ -181,6 +188,8 @@ class URLFilteringRule(ZscalerObject):
             "urlCategories2": self.url_categories2,
             "requestMethods": self.request_methods,
             "deviceTrustLevels": self.device_trust_levels,
+            "userRiskScoreLevels": self.user_risk_score_levels,
+            "sourceIpGroups": [group.request_format() for group in (self.source_ip_groups or [])],
             "locations": [location.request_format() for location in (self.locations or [])],
             "groups": [group.request_format() for group in self.groups],
             "departments": [department.request_format() for department in (self.departments or [])],
