@@ -66,7 +66,10 @@ jobs:
           max_attempts: 3
           timeout_minutes: 45
           command: |
+            poetry run make sweep:zia
             poetry run make coverage:zia
+            poetry run make sweep:zia
+
         env:
           ZSCALER_CLIENT_ID: ${{ secrets.ZSCALER_CLIENT_ID }}
           ZSCALER_CLIENT_SECRET: ${{ secrets.ZSCALER_CLIENT_SECRET }}
