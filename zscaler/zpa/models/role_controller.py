@@ -282,6 +282,7 @@ class ClassPermissionGroups(ZscalerObject):
                 if "internal" in config else None
             self.local_scope_permission_group = config["localScopePermissionGroup"] \
                 if "localScopePermissionGroup" in config else None
+
             self.class_permissions = ZscalerCollection.form_list(
                 config["classPermissions"] if "classPermissions" in config else [], ClassPermissions
             )
@@ -343,9 +344,9 @@ class ClassPermissions(ZscalerObject):
 
             if "permission" in config:
                 if isinstance(config["permission"], Permission):
-                    self.class_type = config["permission"]
+                    self.permission = config["permission"]
                 elif config["permission"] is not None:
-                    self.class_type = Permission(config["permission"])
+                    self.permission = Permission(config["permission"])
                 else:
                     self.permission = None
             else:

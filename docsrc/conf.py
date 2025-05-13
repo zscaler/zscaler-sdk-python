@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
 ]
+
 autodoc_typehints = "none"
 add_module_names = False
 autodoc_class_signature = "separated"

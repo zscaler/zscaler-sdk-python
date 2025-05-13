@@ -47,10 +47,10 @@ class EnrollmentCertificate(ZscalerObject):
             self.csr = config["csr"] if config and "csr" in config else None
             self.parent_cert_id = config["parentCertId"] if config and "parentCertId" in config else None
             self.parent_cert_name = config["parentCertName"] if config and "parentCertName" in config else None
-            self.zrsa_encrypted_private_key = (
+            self.zrsaencryptedprivatekey = (
                 config["zrsaencryptedprivatekey"] if config and "zrsaencryptedprivatekey" in config else None
             )
-            self.zrsa_encrypted_session_key = (
+            self.zrsaencryptedsessionkey = (
                 config["zrsaencryptedsessionkey"] if config and "zrsaencryptedsessionkey" in config else None
             )
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
@@ -79,8 +79,8 @@ class EnrollmentCertificate(ZscalerObject):
             self.csr = None
             self.parent_cert_id = None
             self.parent_cert_name = None
-            self.zrsa_encrypted_private_key = None
-            self.zrsa_encrypted_session_key = None
+            self.zrsaencryptedprivate_key = None
+            self.zrsaencryptedsessionkey = None
             self.microtenant_id = None
             self.root_certificate_id = None
 
@@ -108,8 +108,8 @@ class EnrollmentCertificate(ZscalerObject):
             "csr": self.csr,
             "parentCertId": self.parent_cert_id,
             "parentCertName": self.parent_cert_name,
-            "zrsaencryptedprivatekey": self.zrsa_encrypted_private_key,
-            "zrsaencryptedsessionkey": self.zrsa_encrypted_session_key,
+            "zrsaencryptedprivatekey": self.zrsaencryptedprivatekey,
+            "zrsaencryptedsessionkey": self.zrsaencryptedsessionkey,
             "rootCertificateId": self.root_certificate_id,
             "microtenantId": self.microtenant_id,
         }
