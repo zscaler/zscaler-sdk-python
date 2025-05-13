@@ -70,23 +70,11 @@ class TestSamlAttributes:
 
         if first_attribute_id:
             try:
-                # Step 3: Get a specific SAML attribute using the retrieved ID
                 saml_attribute, _, err = client.zpa.saml_attributes.get_saml_attribute(first_attribute_id)
                 assert err is None, f"Error getting SAML attribute: {err}"
-
-                # Debugging: Print the type and content of the response to understand the format
-                print(f"Response type: {type(saml_attribute)}")
-                print(f"Response content: {saml_attribute}")
-
-                # Check if the response is a dict, or handle it appropriately based on its actual format
-                assert isinstance(
-                    saml_attribute, dict
-                ), f"Response is not in the expected dict format, got {type(saml_attribute)}."
-                assert (
-                    saml_attribute["id"] == first_attribute_id
-                ), "Retrieved SAML attribute ID does not match the requested ID."
+                assert saml_attribute is not None, "No SAML attribute found for the specified ID."
+                assert saml_attribute.id == first_attribute_id, "Retrieved SAML attribute ID does not match the requested ID."
             except Exception as exc:
-                errors.append(f"Getting a specific SAML attribute failed: {str(exc)}")
+                errors.append(f"Getting a specific SAML attribute failed: {exc}")
 
-        # Assert that no errors occurred during the test
         assert len(errors) == 0, f"Errors occurred during SAML attributes operations test: {errors}"
