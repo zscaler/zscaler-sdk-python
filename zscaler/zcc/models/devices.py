@@ -135,14 +135,14 @@ class ForceRemoveDevices(ZscalerObject):
             )
             self.os_type = config["osType"] if "osType" in config else None
             self.udids = ZscalerCollection.form_list(config["udids"] if "udids" in config else [], str)
-            self.user_name = config["userName"] if "userName" in config else None
+            self.username = config["username"] if "username" in config else None
             self.devices_removed = config["devicesRemoved"] if "devicesRemoved" in config else None
             self.error_msg = config["errorMsg"] if "errorMsg" in config else None
         else:
             self.client_connector_version = ZscalerCollection.form_list([], str)
             self.os_type = None
             self.udids = ZscalerCollection.form_list([], str)
-            self.user_name = None
+            self.username = None
             self.devices_removed = None
             self.error_msg = None
 
@@ -155,7 +155,7 @@ class ForceRemoveDevices(ZscalerObject):
             "clientConnectorVersion": self.client_connector_version,
             "osType": self.os_type,
             "udids": self.udids,
-            "userName": self.user_name,
+            "username": self.username,
             "devicesRemoved": self.devices_removed,
             "errorMsg": self.error_msg,
         }

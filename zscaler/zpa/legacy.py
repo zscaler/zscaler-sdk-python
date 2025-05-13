@@ -607,35 +607,35 @@ class LegacyZPAClientHelper:
 
         return TrustedNetworksAPI(self.request_executor, self.config)
 
-    # @property
-    # def administrator_controller(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
+    @property
+    def administrator_controller(self):
+        """
+        The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
 
-    #     """
-    #     from zscaler.zpa.administrator_controller import AdministratorControllerAPI
+        """
+        from zscaler.zpa.administrator_controller import AdministratorControllerAPI
 
-    #     return AdministratorControllerAPI(self.request_executor, self.config)
+        return AdministratorControllerAPI(self.request_executor, self.config)
 
-    # @property
-    # def role_controller(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
+    @property
+    def role_controller(self):
+        """
+        The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
 
-    #     """
-    #     from zscaler.zpa.role_controller import RoleControllerAPI
+        """
+        from zscaler.zpa.role_controller import RoleControllerAPI
 
-    #     return RoleControllerAPI(self.request_executor, self.config)
+        return RoleControllerAPI(self.request_executor, self.config)
 
-    # @property
-    # def client_settings(self):
-    #     """
-    #     The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
+    @property
+    def client_settings(self):
+        """
+        The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
 
-    #     """
-    #     from zscaler.zpa.client_settings import ClientSettingsAPI
+        """
+        from zscaler.zpa.client_settings import ClientSettingsAPI
 
-    #     return ClientSettingsAPI(self.request_executor, self.config)
+        return ClientSettingsAPI(self.request_executor, self.config)
 
     """
     Misc

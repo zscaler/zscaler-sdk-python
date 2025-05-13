@@ -14,282 +14,291 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-# from zscaler.api_client import APIClient
-# from zscaler.request_executor import RequestExecutor
-# from zscaler.zpa.models.administrator_controller import AdministratorController
-# from zscaler.utils import format_url
+from zscaler.api_client import APIClient
+from zscaler.request_executor import RequestExecutor
+from zscaler.zpa.models.administrator_controller import AdministratorController
+from zscaler.utils import format_url
 
 
-# class AdministratorControllerAPI(APIClient):
-#     """
-#     A Client object for the administrator controller resource.
-#     """
+class AdministratorControllerAPI(APIClient):
+    """
+    A Client object for the administrator controller resource.
+    """
 
-#     def __init__(self, request_executor, config):
-#         super().__init__()
-#         self._request_executor: RequestExecutor = request_executor
-#         customer_id = config["client"].get("customerId")
-#         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
+    def __init__(self, request_executor, config):
+        super().__init__()
+        self._request_executor: RequestExecutor = request_executor
+        customer_id = config["client"].get("customerId")
+        self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-#     def list_administrators(self, query_params=None) -> tuple:
-#         """
-#         Get all administrators in a company/customer.
-#         A mmaximum of 200 administrators are returned per request.
+    def list_administrators(self, query_params=None) -> tuple:
+        """
+        Get all administrators in a company/customer.
+        A mmaximum of 200 administrators are returned per request.
 
-#         Args:
-#             query_params {dict}: Map of query parameters for the request.
+        Args:
+            query_params {dict}: Map of query parameters for the request.
 
-#                 ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page]`` {str}: Specifies the page number.
 
-#                 ``[query_params.page_size]`` {str}: Specifies the page size.
-#                     If not provided, the default page size is 20. The max page size is 200.
+                ``[query_params.page_size]`` {str}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 200.
 
-#                 ``[query_params.search]`` {str}: Search string for filtering results.
-#                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+                ``[query_params.search]`` {str}: Search string for filtering results.
 
-#         Returns:
-#             :obj:`Tuple`: A tuple containing (list of AdministratorController instances, Response, error)
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
-#         Examples:
-#             >>> admin_list, _, err = client.zpa.administrator_controller.list_administrators()
-#             ... if err:
-#             ...     print(f"Error listing administrors: {err}")
-#             ...     return
-#             ... print(f"Total administrators found: {len(admin_list)}")
-#             ... for admin in admins:
-#             ...     print(admin.as_dict())
-#         """
-#         http_method = "get".upper()
-#         api_url = format_url(
-#             f"""
-#             {self._zpa_base_endpoint}
-#             /administrators
-#         """
-#         )
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of AdministratorController instances, Response, error)
 
-#         query_params = query_params or {}
-#         microtenant_id = query_params.get("microtenant_id", None)
-#         if microtenant_id:
-#             query_params["microtenantId"] = microtenant_id
+        Examples:
+            >>> admin_list, _, err = client.zpa.administrator_controller.list_administrators()
+            ... if err:
+            ...     print(f"Error listing administrors: {err}")
+            ...     return
+            ... print(f"Total administrators found: {len(admin_list)}")
+            ... for admin in admins:
+            ...     print(admin.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /administrators
+        """
+        )
 
-#         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-#         if error:
-#             return (None, None, error)
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
 
-#         response, error = self._request_executor.execute(request)
-#         if error:
-#             return (None, response, error)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
 
-#         try:
-#             result = []
-#             for item in response.get_results():
-#                 result.append(AdministratorController(self.form_response_body(item)))
-#         except Exception as error:
-#             return (None, response, error)
-#         return (result, response, None)
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
 
-#     def get_administrator(self, admin_id: str, query_params=None) -> tuple:
-#         """
-#         Fetches a specific administrator details by ID.
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(AdministratorController(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-#         Args:
-#             admin_id (str): The unique identifier for the administrator.
-#             query_params (dict, optional): Map of query parameters for the request.
-#                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+    def get_administrator(self, admin_id: str, query_params=None) -> tuple:
+        """
+        Fetches a specific administrator details by ID.
 
-#         Returns:
-#             :obj:`Tuple`: A tuple containing (AdministratorController instance, Response, error).
+        Args:
+            admin_id (str): The unique identifier for the administrator.
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
-#         Examples:
-#             >>> fetched_admin, _, err = client.zpa.administrator_controller.get_administrator('999999')
-#             ... if err:
-#             ...     print(f"Error fetching admin by ID: {err}")
-#             ...     return
-#             ... print(f"Fetched admin by ID: {fetched_admin.as_dict()}")
-#         """
-#         http_method = "get".upper()
-#         api_url = format_url(
-#             f"""{
-#             self._zpa_base_endpoint}
-#             /administrators/{admin_id}
-#         """
-#         )
+        Returns:
+            :obj:`Tuple`: A tuple containing (AdministratorController instance, Response, error).
 
-#         query_params = query_params or {}
-#         microtenant_id = query_params.get("microtenant_id", None)
-#         if microtenant_id:
-#             query_params["microtenantId"] = microtenant_id
+        Examples:
+            >>> fetched_admin, _, err = client.zpa.administrator_controller.get_administrator('999999')
+            ... if err:
+            ...     print(f"Error fetching admin by ID: {err}")
+            ...     return
+            ... print(f"Fetched admin by ID: {fetched_admin.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""{
+            self._zpa_base_endpoint}
+            /administrators/{admin_id}
+        """
+        )
 
-#         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
-#         if error:
-#             return (None, None, error)
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
 
-#         response, error = self._request_executor.execute(request, AdministratorController)
-#         if error:
-#             return (None, response, error)
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
 
-#         try:
-#             result = AdministratorController(self.form_response_body(response.get_body()))
-#         except Exception as error:
-#             return (None, response, error)
-#         return (result, response, None)
+        response, error = self._request_executor.execute(request, AdministratorController)
+        if error:
+            return (None, response, error)
 
-#     def add_administrator(self, **kwargs) -> tuple:
-#         """
-#         Adds a new ZPA admministrator.
+        try:
+            result = AdministratorController(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-#         Args:
-#             name (str): The name of the Administrator.
+    def add_administrator(self, **kwargs) -> tuple:
+        """
+        Adds a new ZPA admministrator.
 
-#         Keyword Args:
+        Args:
+            name (str): The name of the Administrator.
 
-#         Returns:
-#             :obj:`Tuple`: A tuple containing (AdministratorController, Response, error)
+        Keyword Args:
 
-#         Examples:
-#             >>> added_admin, _, err = client.zpa.administrator_controller.add_administrator(
-#             ...     name=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
-#             ...     description=f"NewAppConnectorgroup_{random.randint(1000, 10000)}",
-#             ...     enabled= True,
-#             ...     city_country= "San Jose, US",
-#             ...     country_code= "US",
-#             ...     latitude= "37.3382082",
-#             ...     longitude= "-121.8863286",
-#             ...     location= "San Jose, CA, USA",
-#             ...     upgrade_day= "SUNDAY",
-#             ...     dns_query_type= "IPV4_IPV6",
-#             ... )
-#             ... if err:
-#             ...     print(f"Error creating admministrator: {err}")
-#             ...     return
-#             ... print(f"admministrator created successfully: {added_admin.as_dict()}")
-#         """
-#         http_method = "post".upper()
-#         api_url = format_url(
-#             f"""{
-#             self._zpa_base_endpoint}
-#             /administrators
-#         """
-#         )
+        Returns:
+            :obj:`Tuple`: A tuple containing (AdministratorController, Response, error)
 
-#         body = kwargs
+        Examples:
+            Adding a new local administrator account
 
-#         microtenant_id = body.get("microtenant_id", None)
-#         params = {"microtenantId": microtenant_id} if microtenant_id else {}
+            >>> added_admin, _, err = client.zpa.administrator_controller.add_administrator(
+            ...     username="jdoe@0000004767847.zpa-customer.com",
+            ...     email="jdoe@0000004767847.zpa-customer.com",
+            ...     display_name="John Doe",
+            ...     password="",
+            ...     confirm_password="",
+            ...     is_enabled=True,
+            ...     role_id="12",
+            ...     role={
+            ...         "id": "12",
+            ...     },
+            ...     eula="0"
+            ... )
+            >>> if err:
+            ...     print(f"Error adding administrator: {err}")
+            ...     return
+            ... print(f"Administrator added successfully: {added_admin.as_dict()}")
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""{
+            self._zpa_base_endpoint}
+            /administrators
+        """
+        )
 
-#         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
-#         if error:
-#             return (None, None, error)
+        body = kwargs
 
-#         response, error = self._request_executor.execute(request, AdministratorController)
-#         if error:
-#             return (None, response, error)
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-#         try:
-#             result = AdministratorController(self.form_response_body(response.get_body()))
-#         except Exception as error:
-#             return (None, response, error)
-#         return (result, response, None)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
 
-#     def update_administrator(self, admin_id: str, **kwargs) -> tuple:
-#         """
-#         Updates an existing ZPA c.
+        response, error = self._request_executor.execute(request, AdministratorController)
+        if error:
+            return (None, response, error)
 
-#         Args:
-#             admin_id (str): The unique id for the Administrator in ZPA.
+        try:
+            result = AdministratorController(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-#         Keyword Args:
+    def update_administrator(self, admin_id: str, **kwargs) -> tuple:
+        """
+        Updates an existing ZPA c.
 
-#         Returns:
-#             tuple: A tuple containing (AppConnectorGroup, Response, error)
+        Args:
+            admin_id (str): The unique id for the Administrator in ZPA.
 
-#             >>> update_admin, _, err = client.zpa.administrator_controller.update_administrator(
-#             ...     admin_id='124555545'
-#             ...     name=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
-#             ...     description=f"UpdateAppConnectorgroup_{random.randint(1000, 10000)}",
-#             ...     enabled= True,
-#             ...     city_country= "San Jose, US",
-#             ...     country_code= "US",
-#             ...     latitude= "37.3382082",
-#             ...     longitude= "-121.8863286",
-#             ...     location= "San Jose, CA, USA",
-#             ...     upgrade_day= "SUNDAY",
-#             ...     dns_query_type= "IPV4_IPV6",
-#             ... )
-#             ... if err:
-#             ...     print(f"Error creating administrator: {err}")
-#             ...     return
-#             ... print(f"administrator created successfully: {update_admin.as_dict()}")
-#         """
-#         http_method = "put".upper()
-#         api_url = format_url(
-#             f"""
-#             {self._zpa_base_endpoint}
-#             /administrators/{admin_id}
-#         """
-#         )
+        Keyword Args:
 
-#         body = {}
+        Returns:
+            tuple: A tuple containing (AppConnectorGroup, Response, error)
 
-#         body.update(kwargs)
+        Examples:
+            Updating a new local administrator account
 
-#         # Use get instead of pop to keep microtenant_id in the body
-#         microtenant_id = body.get("microtenant_id", None)
-#         params = {"microtenantId": microtenant_id} if microtenant_id else {}
+            >>> updated_admin, _, err = client.zpa.administrator_controller.add_administrator(
+            ...     admin_id='876678896',
+            ...     username="jdoe@0000004767847.zpa-customer.com",
+            ...     email="jdoe@0000004767847.zpa-customer.com",
+            ...     display_name="John Doe",
+            ...     password="",
+            ...     confirm_password="",
+            ...     is_enabled=True,
+            ...     role_id="12",
+            ...     phone_number="+1 408-9899",
+            ...     role={
+            ...         "id": "12",
+            ...     },
+            ...     eula="0"
+            ... )
+            >>> if err:
+            ...     print(f"Error updating administrator: {err}")
+            ...     return
+            ... print(f"Administrator updated successfully: {updated_admin.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /administrators/{admin_id}
+        """
+        )
 
-#         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
-#         if error:
-#             return (None, None, error)
+        body = {}
 
-#         response, error = self._request_executor.execute(request, AdministratorController)
-#         if error:
-#             return (None, response, error)
+        body.update(kwargs)
 
-#         if response is None:
-#             return (AdministratorController({"id": admin_id}), None, None)
+        # Use get instead of pop to keep microtenant_id in the body
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-#         try:
-#             result = AdministratorController(self.form_response_body(response.get_body()))
-#         except Exception as error:
-#             return (None, response, error)
-#         return (result, response, None)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
+        if error:
+            return (None, None, error)
 
-#     def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> tuple:
-#         """
-#         Deletes the specified Administrator from ZPA.
+        response, error = self._request_executor.execute(request, AdministratorController)
+        if error:
+            return (None, response, error)
 
-#         Args:
-#             admin_id (str): The unique identifier for the Administrator
-#             microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+        if response is None:
+            return (AdministratorController({"id": admin_id}), None, None)
 
-#         Returns:
-#             tuple: A tuple containing the response and error (if any).
+        try:
+            result = AdministratorController(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
 
-#         Examples:
-#             >>> _, _, err = client.zpa.administrator_controller.delete_administrator(
-#             ...     admin_id='999999'
-#             ... )
-#             ... if err:
-#             ...     print(f"Error deleting administrator: {err}")
-#             ...     return
-#             ... print(f"administrator with ID {'999999'} deleted successfully.")
-#         """
-#         http_method = "delete".upper()
-#         api_url = format_url(
-#             f"""
-#             {self._zpa_base_endpoint}
-#             /administrators/{admin_id}
-#         """
-#         )
+    def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> tuple:
+        """
+        Deletes the specified Administrator from ZPA.
 
-#         params = {"microtenantId": microtenant_id} if microtenant_id else {}
+        Args:
+            admin_id (str): The unique identifier for the Administrator
+            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
-#         request, error = self._request_executor.create_request(http_method, api_url, params=params)
-#         if error:
-#             return (None, None, error)
+        Returns:
+            tuple: A tuple containing the response and error (if any).
 
-#         response, error = self._request_executor.execute(request)
-#         if error:
-#             return (None, response, error)
+        Examples:
+            >>> _, _, err = client.zpa.administrator_controller.delete_administrator(
+            ...     admin_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting administrator: {err}")
+            ...     return
+            ... print(f"administrator with ID {'999999'} deleted successfully.")
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /administrators/{admin_id}
+        """
+        )
 
-#         return (None, response, None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)
