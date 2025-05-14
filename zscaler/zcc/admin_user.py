@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
-from zscaler.zcc.models.admin_user import AdminUser
+from zscaler.zcc.models.admin_user import AdminUser, AdminUserSyncInfo
 from zscaler.zcc.models.admin_roles import AdminRoles
 
 
@@ -92,9 +92,11 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admins in the Client Connector Portal to the console:
 
-            >>> for admin in zcc.admin_user.list_admin_users():
-            ...    print(admin)
-
+            >>> sync_info, _, error = client.zcc.admin_user.get_admin_user_sync_info()
+            >>> if error:
+            ...     print(f"Error: {error}")
+            ...     return
+            ... print(sync_info.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -108,20 +110,19 @@ class AdminUserAPI(APIClient):
         headers = {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
-
         if error:
-            return None
+            return None, None, error
 
         response, error = self._request_executor.execute(request)
         if error:
-            return None
+            return None, response, error
 
         try:
-            result = self.form_response_body(response.get_body())
+            result = AdminUserSyncInfo(self.form_response_body(response.get_body()))
         except Exception as error:
-            return None
+            return None, response, error
 
-        return result
+        return result, response, None
 
     def list_admin_roles(self, query_params=None) -> tuple:
         """
@@ -138,9 +139,13 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admin roles in the Client Connector Portal to the console:
 
-            >>> for role in zcc.admin_user.list_admin_roles():
-            ...    print(role)
-
+            >>> role_list, _, err = client.zcc.admin_user.list_admin_roles()
+            >>>     if err:
+            ...         print(f"Error listing admin roles: {err}")
+            ...         return
+            ...     print(f"Total admin roles found: {len(role_list)}")
+            ...     for role in role_list:
+            ...         print(role.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -152,7 +157,6 @@ class AdminUserAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -198,7 +202,6 @@ class AdminUserAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -244,7 +247,6 @@ class AdminUserAPI(APIClient):
         """
         )
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 

@@ -67,3 +67,79 @@ class AdminUser(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class AdminUserSyncInfo(ZscalerObject):
+    """
+    A class for AdminUserSyncInfo objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the AdminUserSyncInfo model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.company_id = config["companyId"] \
+                if "companyId" in config else None
+            self.zia_initial_sync_done = config["ziaInitialSyncDone"] \
+                if "ziaInitialSyncDone" in config else None
+            self.zpa_initial_sync_done = config["zpaInitialSyncDone"] \
+                if "zpaInitialSyncDone" in config else None
+            self.zia_sync_error_code = config["ziaSyncErrorCode"] \
+                if "ziaSyncErrorCode" in config else None
+            self.zpa_sync_error_code = config["zpaSyncErrorCode"] \
+                if "zpaSyncErrorCode" in config else None
+            self.zia_sync_status = config["ziaSyncStatus"] \
+                if "ziaSyncStatus" in config else None
+            self.zpa_sync_status = config["zpaSyncStatus"] \
+                if "zpaSyncStatus" in config else None
+            self.zia_last_sync_time = config["ziaLastSyncTime"] \
+                if "ziaLastSyncTime" in config else None
+            self.zpa_last_sync_time = config["zpaLastSyncTime"] \
+                if "zpaLastSyncTime" in config else None
+            self.zia_start_sync_time = config["ziaStartSyncTime"] \
+                if "ziaStartSyncTime" in config else None
+            self.zpa_start_sync_time = config["zpaStartSyncTime"] \
+                if "zpaStartSyncTime" in config else None
+        else:
+            self.id = None
+            self.company_id = None
+            self.zia_initial_sync_done = None
+            self.zpa_initial_sync_done = None
+            self.zia_sync_error_code = None
+            self.zpa_sync_error_code = None
+            self.zia_sync_status = None
+            self.zpa_sync_status = None
+            self.zia_last_sync_time = None
+            self.zpa_last_sync_time = None
+            self.zia_start_sync_time = None
+            self.zpa_start_sync_time = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "companyId": self.company_id,
+            "ziaInitialSyncDone": self.zia_initial_sync_done,
+            "zpaInitialSyncDone": self.zpa_initial_sync_done,
+            "ziaSyncErrorCode": self.zia_sync_error_code,
+            "zpaSyncErrorCode": self.zpa_sync_error_code,
+            "ziaSyncStatus": self.zia_sync_status,
+            "zpaSyncStatus": self.zpa_sync_status,
+            "ziaLastSyncTime": self.zia_last_sync_time,
+            "zpaLastSyncTime": self.zpa_last_sync_time,
+            "ziaStartSyncTime": self.zia_start_sync_time,
+            "zpaStartSyncTime": self.zpa_start_sync_time
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

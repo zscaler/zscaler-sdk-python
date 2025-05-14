@@ -15,7 +15,7 @@ from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('zscaler-sdk-python')
 
 
 class RequestExecutor:
@@ -74,6 +74,13 @@ class RequestExecutor:
         # Set configuration and cache
         self._config = config
         self._cache = cache
+
+        # ✅ Setup logging based on config flags
+        # log_config = self._config["client"].get("logging", {})
+        # setup_logging(
+        #     enabled=log_config.get("enabled", False),
+        #     verbose=log_config.get("verbose", False),
+        # )
 
         # Retrieve cloud, service, and customer ID (optional)
         self.cloud = self._config["client"].get("cloud", "production").lower()
@@ -455,34 +462,99 @@ class RequestExecutor:
             request_start_time (float): Original start time of request.
 
         Returns:
-            Tuple of request, response object, response body, and error.
+            Tuple of (request, response object, response body, error).
         """
         current_req_start_time = time.time()
         max_retries = self._max_retries
         req_timeout = self._request_timeout
 
+        # Check if total elapsed time exceeds the configured request timeout
         if req_timeout > 0 and (current_req_start_time - request_start_time) > req_timeout:
-            logger.error("Request Timeout exceeded.")
+            logger.warning("Request Timeout exceeded.")
             return None, None, None, Exception("Request Timeout exceeded.")
 
+        # Perform the actual HTTP request
         response, error = self._http_client.send_request(request)
 
+        # If a low-level error occurred (network, request construction, etc.)
         if error:
-            # logger.error(f"Error sending request: {error}")
             return request, response, response.text if response else None, error
 
-        headers = response.headers
+        # Check for 401 -> Trigger re-auth if we still have retries left
+        if response.status_code == 401:
+            # We only want to attempt refreshing the token if we haven't hit max_retries
+            if attempts < max_retries:
+                logger.info("Got 401 response; clearing token and re-authenticating.")
+                self._oauth.clear_access_token()
 
+                try:
+                    fresh_token = self._oauth._get_access_token()
+                except Exception as e:
+                    # If re-auth fails, return immediately
+                    logger.error(f"Token refresh failed after 401: {e}")
+                    return request, response, response.text, e
+
+                # Update the request with the new token
+                request["headers"]["Authorization"] = f"Bearer {fresh_token}"
+                attempts += 1
+                return self.fire_request_helper(request, attempts, request_start_time)
+            else:
+                logger.error("401 Unauthorized - token refresh attempts exhausted.")
+                return request, response, response.text, Exception("401 Unauthorized - token refresh attempts exhausted.")
+
+        # Handle “retryable” statuses such as 429, 503, etc.
         if attempts < max_retries and self.is_retryable_status(response.status_code):
-            backoff_seconds = self.get_retry_after(headers, logger)
+            backoff_seconds = self.get_retry_after(response.headers, logger)
             if backoff_seconds is None:
                 return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
-            logger.info(f"Hit rate limit. Retrying request in {backoff_seconds} seconds.")
+
+            logger.info(f"Hit rate limit or retryable status {response.status_code}. "
+                        f"Retrying request in {backoff_seconds} seconds.")
             time.sleep(backoff_seconds)
             attempts += 1
             return self.fire_request_helper(request, attempts, request_start_time)
 
+        # If we reach here, no further retries; return whatever we got
         return request, response, response.text, None
+
+    # def fire_request_helper(self, request, attempts, request_start_time):
+    #     """
+    #     Helper method to perform HTTP call with retries if needed.
+
+    #     Args:
+    #         request (dict): HTTP request representation.
+    #         attempts (int): Number of attempted HTTP calls so far.
+    #         request_start_time (float): Original start time of request.
+
+    #     Returns:
+    #         Tuple of request, response object, response body, and error.
+    #     """
+    #     current_req_start_time = time.time()
+    #     max_retries = self._max_retries
+    #     req_timeout = self._request_timeout
+
+    #     if req_timeout > 0 and (current_req_start_time - request_start_time) > req_timeout:
+    #         logger.warning("Request Timeout exceeded.")
+    #         return None, None, None, Exception("Request Timeout exceeded.")
+
+    #     response, error = self._http_client.send_request(request)
+
+    #     if error:
+    #         # logger.error(f"Error sending request: {error}")
+    #         return request, response, response.text if response else None, error
+
+    #     headers = response.headers
+
+    #     if attempts < max_retries and self.is_retryable_status(response.status_code):
+    #         backoff_seconds = self.get_retry_after(headers, logger)
+    #         if backoff_seconds is None:
+    #             return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
+    #         logger.info(f"Hit rate limit. Retrying request in {backoff_seconds} seconds.")
+    #         time.sleep(backoff_seconds)
+    #         attempts += 1
+    #         return self.fire_request_helper(request, attempts, request_start_time)
+
+    #     return request, response, response.text, None
 
     def is_retryable_status(self, status):
         """

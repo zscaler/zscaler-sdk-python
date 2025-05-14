@@ -72,7 +72,7 @@ class CloudConnectorGroupsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, CloudConnectorGroup)
         if error:
             return (None, response, error)
 

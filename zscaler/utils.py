@@ -26,7 +26,7 @@ import time
 from typing import Dict, Optional
 from urllib.parse import urlencode
 from datetime import datetime as dt
-
+from functools import wraps
 import pytz
 from box import Box, BoxList
 from dateutil import parser
@@ -207,33 +207,6 @@ def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
-
-#### Working function
-# def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
-#     """
-#     For each (key, payload_key) in 'id_groups':
-#       - If 'key' is found in source_dict,
-#       - pop that value,
-#       - insert it into target_dict with name 'payload_key',
-#       - converting each item in the list to { "id": int(item) } if it's a string or int.
-
-#     Additional domain logic can be placed here, e.g. for zpa_app_segments or cbi_profile, etc.
-#     """
-#     for (key, payload_key) in id_groups:
-#         if key in source_dict:
-#             value = source_dict.pop(key)
-#             # Example logic: if it's a list, do the ID transform
-#             if isinstance(value, list):
-#                 target_dict[payload_key] = [
-#                     {"id": int(item)} if isinstance(item, (str, int)) else item
-#                     for item in value
-#                 ]
-#             elif isinstance(value, dict) and "id" in value:
-#                 # single dict with ID
-#                 target_dict[payload_key] = {"id": int(value["id"])}
-#     return
-
-
 def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: dict):
     """
     For each (key, payload_key) in 'id_groups':
@@ -377,45 +350,6 @@ def pick_version_profile(kwargs: list, payload: list):
             payload["versionProfileId"] = 1
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
-
-
-# class Iterator(APIIterator):
-#     """Iterator class."""
-
-#     page_size = 100
-
-#     def __init__(self, api, path: str = "", **kw):
-#         """Initialize Iterator class."""
-#         super().__init__(api, **kw)
-
-#         self.path = path
-#         self.max_items = kw.pop("max_items", 0)
-#         self.max_pages = kw.pop("max_pages", 0)
-#         self.payload = {}
-#         if kw:
-#             self.payload = {snake_to_camel(key): value for key, value in kw.items()}
-
-#     def _get_page(self) -> None:
-#         """Iterator function to get the page."""
-#         resp = self._api.get(
-#             self.path,
-#             params={**self.payload, "page": self.num_pages + 1},
-#         )
-#         try:
-#             # If we are using ZPA then the API will return records under the
-#             # 'list' key.
-#             self.page = resp.get("list") or []
-#         except AttributeError:
-#             # If the list key doesn't exist then we're likely using ZIA so just
-#             # return the full response.
-#             self.page = resp
-#         finally:
-#             # If we use the default retry-after logic in Restfly then we are
-#             # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
-#             # standard 1 sec rate limit on the API endpoints with pagination so
-#             # we are going to include it here.
-#             time.sleep(1)
-
 
 def calculate_epoch(hours: int):
     current_time = int(time.time())
@@ -695,7 +629,7 @@ def validate_and_convert_times(start_time_str, end_time_str, time_zone_str):
     """
     # Validate time zone
     if time_zone_str not in pytz.all_timezones:
-        raise ValueError(f"Invalid time zone: {time_zone_str}")
+        raise ValueError(f"Invalid time zone. Please visit the following site for reference: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones:{time_zone_str}")
 
     # Convert times
     try:
@@ -783,6 +717,67 @@ def format_url(base_string):
     """
     return "".join([line.strip() for line in base_string.splitlines()])
 
+def zcc_param_mapper(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        query_params = kwargs.get("query_params", {}) or {}
+        mapped_params = {}
+
+        # Normalize and map os_types
+        if "os_type" in query_params:
+            os_raw = query_params["os_type"]
+            if isinstance(os_raw, str):
+                os_raw = [os_raw]  # ✅ support single string value
+
+            mapped = [
+                str(zcc_param_map["os"].get(os_type.lower()))
+                for os_type in os_raw
+                if zcc_param_map["os"].get(os_type.lower())
+            ]
+            if not mapped:
+                raise ValueError("Invalid `os_type` provided.")
+            mapped_params["osType"] = ",".join(mapped)
+
+        # Normalize and map os_types
+        if "device_type" in query_params:
+            os_raw = query_params["device_type"]
+            if isinstance(os_raw, str):
+                os_raw = [os_raw]  # ✅ support single string value
+
+            mapped = [
+                str(zcc_param_map["os"].get(os_type.lower()))
+                for os_type in os_raw
+                if zcc_param_map["os"].get(os_type.lower())
+            ]
+            if not mapped:
+                raise ValueError("Invalid `device_type` provided.")
+            mapped_params["deviceType"] = ",".join(mapped)
+
+        # Normalize and map registration_types
+        if "registration_types" in query_params:
+            reg_raw = query_params["registration_types"]
+            if isinstance(reg_raw, str):
+                reg_raw = [reg_raw]
+
+            mapped = [
+                str(zcc_param_map["reg_type"].get(rt.lower()))
+                for rt in reg_raw
+                if zcc_param_map["reg_type"].get(rt.lower())
+            ]
+            if not mapped:
+                raise ValueError("Invalid `registration_types` provided.")
+            mapped_params["registrationTypes"] = ",".join(mapped)
+
+        # Drop user-friendly keys
+        query_params.pop("os_types", None)
+        query_params.pop("registration_types", None)
+
+        # Merge in mapped numeric params
+        query_params.update(mapped_params)
+        kwargs["query_params"] = query_params
+
+        return func(self, *args, **kwargs)
+    return wrapper
 
 # Maps ZCC numeric os_type and registration_type arguments to a human-readable string
 zcc_param_map = {

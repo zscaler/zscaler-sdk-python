@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url
+from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.zcc.models.webpolicy import WebPolicy
 
 
@@ -27,6 +27,7 @@ class WebPolicyAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
+    @zcc_param_mapper
     def list_by_company(self, query_params=None) -> tuple:
         """
         Returns the list of Web Policy By Company ID in the Client Connector Portal.
@@ -34,20 +35,28 @@ class WebPolicyAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.page]`` {int}: Specifies the page offset.
+
                 ``[query_params.page_size]`` {int}: Specifies the page size.
-                ``[query_params.device_type]`` {str}: Filter by device type.
+
+                ``[query_params.device_type]`` {str}: Filter by device operating system type. Valid options are:
+                    ios, android, windows, macos, linux.
+
                 ``[query_params.search]`` {str}: The search string used to partially match.
+
                 ``[query_params.search_type]`` {str}: The search string used to partially match.
 
         Returns:
             :obj:`list`: A list containing Web Policy By Company ID in the Client Connector Portal.
 
         Examples:
-            Prints all Web Policy By Company ID in the Client Connector Portal to the console:
+            Prints Web Policy By Company ID in the Client Connector Portal to the console:
 
-            >>> for policy in zcc.web_policy.list_by_company():
-            ...    print(policy)
-
+            >>> policy_list, _, err = client.zcc.web_policy.list_by_company(query_params={'device_type': 'windows'})
+            >>> if err:
+            ...     print(f"Error listing company policies: {err}")
+            ...     return
+            ... for policy in policy_list:
+            ...     print(policy.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -59,7 +68,6 @@ class WebPolicyAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
@@ -68,21 +76,20 @@ class WebPolicyAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, WebPolicy)
         if error:
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append((self.form_response_body(item)))
+            result = response.get_results()
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return None, response, error
+
+        return result, response, None
 
     def activate_web_policy(self, **kwargs) -> tuple:
         """
-        Activate Web Policy
+        Enables or disables a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
         Args:
            device_type: (int):
@@ -90,6 +97,18 @@ class WebPolicyAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the updated Activation Web Policy, response, and error.
+
+        Examples:
+            Activate Web Policy in the Client Connector Portal to the console:
+
+            >>> web_policy, _, error = client.zcc.web_policy.activate_web_policy(
+            ...     device_type='3',
+            ...     policy_id='1',
+            ... )
+            >>> if error:
+            ...     print(f"Error activating web policy: {error}")
+            ...     return
+            ... print(f"web policy Info activated successfully: {web_policy.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -102,28 +121,29 @@ class WebPolicyAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, WebPolicy)
         if error:
             return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body())
+            if response and hasattr(response, "get_body") and response.get_body():
+                result = WebPolicy(self.form_response_body(response.get_body()))
+            else:
+                result = WebPolicy()
         except Exception as error:
             return (None, response, error)
+
         return (result, response, None)
 
     def web_policy_edit(self, **kwargs) -> tuple:
         """
-        Edit an existing ZCC Web Policy.
+        Adds or updates a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
         Args:
-            label_id (int): The unique ID for the Rule Label.
 
         Returns:
             tuple: A tuple containing the updated Web Policy, response, and error.
@@ -139,17 +159,14 @@ class WebPolicyAPI(APIClient):
 
         body.update(kwargs)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, WebPolicy)
         if error:
             return (None, response, error)
 
-        # Parse the response into a RuleLabels instance
         try:
             result = WebPolicy(self.form_response_body(response.get_body()))
         except Exception as error:

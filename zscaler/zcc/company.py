@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
+from zscaler.zcc.models.getcompanyinfo import GetCompanyInfo
 from zscaler.utils import format_url
 
 
@@ -28,7 +29,8 @@ class CompanyInfoAPI(APIClient):
 
     def get_company_info(self) -> tuple:
         """
-        Returns company information from the Client Connector Portal.
+        Gets information about your organization such as the name of the business, domains, etc.
+        Note: This API endpoint is allowed if called via OneAPI or if the token has admin or read-only admin privileges.
 
         Args:
             N/A
@@ -39,9 +41,12 @@ class CompanyInfoAPI(APIClient):
         Examples:
             Prints all devices in the Client Connector Portal to the console:
 
-            >>> for info in zcc.company.get_company_info():
-            ...    print(info)
-
+            >>> company_info, _, err = client.zcc.company.get_company_info()
+            >>> if err:
+            ...     print(f"Error listing company information: {err}")
+            ...     return
+            ... for company in company_info:
+            ...     print(company.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -57,15 +62,16 @@ class CompanyInfoAPI(APIClient):
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
-            return None
+            return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, GetCompanyInfo)
         if error:
-            return None
+            return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body())
+            result = []
+            for item in response.get_results():
+                result.append(GetCompanyInfo(self.form_response_body(item)))
         except Exception as error:
-            return None
-
-        return result
+            return (None, response, error)
+        return (result, response, None)

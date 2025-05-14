@@ -419,13 +419,11 @@ class PolicySetControllerAPI(APIClient):
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
-        # Prepare request
         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, PolicySetControllerV1)
         if error:
             return (None, response, error)
 
@@ -641,7 +639,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_timeout_rule(self, name: str, **kwargs) -> tuple:
+    def add_timeout_rule(self, **kwargs) -> tuple:
         """
         Add a new Timeout Policy rule.
 
@@ -698,15 +696,11 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        payload = {
-            "name": name,
-            "action": "RE_AUTH",
-            "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
-            "reauthTimeout": kwargs.get("reauth_timeout", 172800),
-            "reauthIdleTimeout": kwargs.get("reauth_idle_timeout", 600),
-        }
+        conditions = kwargs.pop("conditions", [])
+        if conditions:
+            body["conditions"] = self._create_conditions_v1(conditions)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
@@ -721,7 +715,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_timeout_rule(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+    def update_timeout_rule(self, rule_id: str, **kwargs) -> tuple:
         """
         Update an existing policy rule.
 
@@ -767,12 +761,10 @@ class PolicySetControllerAPI(APIClient):
 
             >>> zpa.policies.update_timeout_rule('888888', description='Updated Description')
         """
-        # Retrieve policy_set_id explicitly
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
             return (None, None, f"Error retrieving policy for 'timeout': {err}")
 
-        # Directly extract the policy_set_id from the response
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
             return (None, None, "No policy ID found for 'timeout' policy type")
@@ -785,22 +777,18 @@ class PolicySetControllerAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
-        body = kwargs
+        body = {}
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
+        body.update(kwargs)
+
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        payload = {
-            "name": name if name else kwargs.get("name"),
-            "action": "RE_AUTH",
-            "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
-            "reauthTimeout": kwargs.get("reauth_timeout", 172800),
-            "reauthIdleTimeout": kwargs.get("reauth_idle_timeout", 600),
-        }
+        conditions = kwargs.pop("conditions", [])
+        if conditions:
+            body["conditions"] = self._create_conditions_v1(conditions)
 
-        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
@@ -1112,6 +1100,7 @@ class PolicySetControllerAPI(APIClient):
         payload = {
             "name": name,
             "action": action.upper(),
+            "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
 
@@ -1224,6 +1213,7 @@ class PolicySetControllerAPI(APIClient):
         payload = {
             "name": name,
             "action": action.upper(),
+            "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
 
@@ -2294,8 +2284,8 @@ class PolicySetControllerAPI(APIClient):
         Args:
             name (str):
                 The name of the new rule.
-            credential_id (str):
-                The ID of the privileged credential for the rule.
+            rule_id (str):
+                The ID of the app protection rule for the rule.
             **kwargs:
                 Optional keyword args.
 
@@ -2414,6 +2404,7 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+
         if credential_pool_id is None:
             payload = {
                 "name": name,
@@ -2429,6 +2420,14 @@ class PolicySetControllerAPI(APIClient):
                 "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
             }
 
+
+
+        if credential_id:
+            payload["credential"] = {"id": credential_id}
+        elif "credential_pool_id" in kwargs and kwargs["credential_pool_id"]:
+            payload["credentialPool"] = {"id": kwargs["credential_pool_id"]}
+        else:
+            return (None, None, "Either credential_id or credential_pool_id must be provided.")
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2447,6 +2446,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_privileged_credential_rule_v2(self, rule_id: str, credential_id: str, credential_pool_id: str = None,
                                              cred_pool_name: str = None, name: str = None, **kwargs) -> tuple:
+
         """
         Update an existing privileged credential policy rule.
 
@@ -2510,6 +2510,7 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+
         if credential_pool_id is None:
             payload = {
                 "name": name,
@@ -2525,6 +2526,14 @@ class PolicySetControllerAPI(APIClient):
                 "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
             }
 
+
+
+        if credential_id:
+            payload["credential"] = {"id": credential_id}
+        elif "credential_pool_id" in kwargs and kwargs["credential_pool_id"]:
+            payload["credentialPool"] = {"id": kwargs["credential_pool_id"]}
+        else:
+            return (None, None, "Either credential_id or credential_pool_id must be provided.")
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -3312,16 +3321,13 @@ class PolicySetControllerAPI(APIClient):
         """
         )
 
-        # Extract microtenant_id if present in kwargs
         microtenant_id = kwargs.pop("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Call create_request without the need for custom headers
         request, error = self._request_executor.create_request(http_method, api_url, body=rules_orders, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)

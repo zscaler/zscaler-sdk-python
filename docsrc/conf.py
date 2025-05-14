@@ -28,9 +28,9 @@ author = "Zscaler Technology Alliances"
 html_title = ""
 
 # The short X.Y version
-version = "1.2.0"
+version = "1.2.4"
 # The full version, including alpha/beta/rc tags
-release = "1.2.0"
+release = "1.2.4"
 
 # -- General configuration ---------------------------------------------------
 
@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
 ]
+
 autodoc_typehints = "none"
 add_module_names = False
 autodoc_class_signature = "separated"

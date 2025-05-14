@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_map
+from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
 from zscaler.api_client import APIClient
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords
@@ -27,15 +27,25 @@ class SecretsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_otp(self, device_id: str):
+    def get_otp(self, query_params=None) -> tuple:
         """
         Returns the OTP code for the specified device id.
 
         Args:
-            device_id (str): The unique id for the enrolled device that the OTP will be obtained for.
+            query_params (dict): Query parameters for the request.
+                - device_id (str): Optional alias for `udid`. If provided, it will be mapped automatically.
+                - udid (str): The actual UDID expected by the API.
 
         Returns:
-            OtpResponse: An instance of OtpResponse containing the requested OTP code for the specified device id.
+            tuple: (list of OtpResponse, response, error)
+
+        Examples:
+            >>> otps, _, err = client.zcc.secrets.get_otp(query_params={'device_id': 'd-29-9b-7c-c5-3f-d2-90-3c-d5-'})
+            >>> if err:
+            ...     print(f"Error retrieving one-time password (OTP): {err}")
+            ...     return
+            ... print("OTP:", otps.otp)
+            ... print("Full response:", otps.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -45,49 +55,57 @@ class SecretsAPI(APIClient):
         """
         )
 
-        payload = {"udid": device_id}
+        query_params = query_params or {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=payload)
+        if "device_id" in query_params and "udid" not in query_params:
+            query_params["udid"] = query_params.pop("device_id")
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, headers, params=query_params
+        )
+
         if error:
             return None, None, error
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, OtpResponse)
         if error:
             return None, response, error
 
         try:
             result = OtpResponse(self.form_response_body(response.get_body()))
+            return result, response, None
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return None, response, error
 
-    def get_passwords(self, username: str, os_type: str = "windows") -> tuple:
+    @zcc_param_mapper
+    def get_passwords(self, query_params=None) -> tuple:
         """
         Return passwords for the specified username and device OS type.
 
         Args:
-            username (str): The username that the device belongs to.
-            os_type (str): The OS Type for the device, defaults to `windows`. Valid options are:
+            query_params (dict, optional): A dictionary containing supported filters.
 
-                - ios
-                - android
-                - windows
-                - macos
-                - linux
+                ``[query_params.os_type]`` {str}: Filter by device operating system type. Valid options are:
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.username]`` {str}:  Filter by enrolled username for the device.
 
         Returns:
-            Passwords: An instance of Passwords containing passwords for the specified username's device.
+            tuple: (Passwords object, response, error)
+
+        Example:
+            >>> passwords, _, err = client.zcc.secrets.get_passwords(query_params={
+            ...     "username": "jdoe@example.com",
+            ...     "os_type": "windows"
+            ... })
+            >>> if err:
+            ...     print("Error:", err)
+            >>> else:
+            ...     print(passwords.as_dict())
         """
-        # Simplify the os_type argument, raise an error if the user supplies the wrong one.
-        os_type = zcc_param_map["os"].get(os_type, None)
-        if not os_type:
-            raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
-
-        params = {
-            "username": username,
-            "osType": os_type,
-        }
-
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -96,7 +114,12 @@ class SecretsAPI(APIClient):
         """
         )
 
-        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        query_params = query_params or {}
+
+        request, error = self._request_executor.create_request(
+            http_method, api_url, params=query_params
+        )
+
         if error:
             return None, None, error
 
@@ -107,5 +130,6 @@ class SecretsAPI(APIClient):
         try:
             result = Passwords(self.form_response_body(response.get_body()))
         except Exception as error:
-            return (None, response, error)
-        return (result, response, None)
+            return None, response, error
+
+        return result, response, None
