@@ -222,8 +222,8 @@ class URLCategoriesAPI(APIClient):
 
         if not super_category:
             raise ValueError("`super_category` is required.")
-        if not urls:
-            raise ValueError("`urls` cannot be empty.")
+        if not urls and not kwargs.get("db_categorized_urls", []):
+            raise ValueError("`urls` and `db_categorized_urls` cannot be both empty.")
 
         custom_category = kwargs.pop("custom_category", False)
 
