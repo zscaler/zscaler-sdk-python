@@ -305,6 +305,8 @@ class LegacyZPAClient(Client):
         client_secret = config.get("clientSecret", os.getenv("ZPA_CLIENT_SECRET"))
         customer_id = config.get("customerId", os.getenv("ZPA_CUSTOMER_ID"))
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
+        # If you want to use BETA cloud.
+        #cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "BETA"))
         microtenant_id = config.get("microtenantId", os.getenv("ZPA_MICROTENANT_ID"))
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)

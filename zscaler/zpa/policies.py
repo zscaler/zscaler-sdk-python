@@ -2386,7 +2386,8 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_privileged_credential_rule_v2(self, name: str, credential_id: str, **kwargs) -> tuple:
+    def add_privileged_credential_rule_v2(self, name: str, credential_id: str, credential_pool_id: str = None,
+                                          cred_pool_name: str = None, **kwargs) -> tuple:
         """
         Add a new Privileged Remote Access Credential Policy rule.
         """
@@ -2413,12 +2414,21 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        payload = {
-            "name": name,
-            "action": "INJECT_CREDENTIALS",
-            "credential": {"id": credential_id},
-            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
-        }
+        if credential_pool_id is None:
+            payload = {
+                "name": name,
+                "action": "INJECT_CREDENTIALS",
+                "credential": {"id": credential_id},
+                "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+            }
+        elif credential_pool_id is not None and cred_pool_name is not None:
+            payload = {
+                "name": name,
+                "action": "INJECT_CREDENTIALS",
+                "credentialPool": {"id": credential_pool_id, "name": cred_pool_name},
+                "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+            }
+
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2435,7 +2445,8 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_privileged_credential_rule_v2(self, rule_id: str, credential_id: str, name: str = None, **kwargs) -> tuple:
+    def update_privileged_credential_rule_v2(self, rule_id: str, credential_id: str, credential_pool_id: str = None,
+                                             cred_pool_name: str = None, name: str = None, **kwargs) -> tuple:
         """
         Update an existing privileged credential policy rule.
 
@@ -2499,12 +2510,21 @@ class PolicySetControllerAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        payload = {
-            "name": name,
-            "action": "INJECT_CREDENTIALS",
-            "credential": {"id": credential_id},
-            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
-        }
+        if credential_pool_id is None:
+            payload = {
+                "name": name,
+                "action": "INJECT_CREDENTIALS",
+                "credential": {"id": credential_id},
+                "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+            }
+        elif credential_pool_id is not None and cred_pool_name is not None:
+            payload = {
+                "name": name,
+                "action": "INJECT_CREDENTIALS",
+                "credentialPool": {"id": credential_pool_id, "name": cred_pool_name},
+                "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+            }
+
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2611,7 +2631,7 @@ class PolicySetControllerAPI(APIClient):
         http_method = "post".upper()
         api_url = format_url(
             f"""
-            {self._zpa_base_endpoint_v1}
+            {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
         """
         )
