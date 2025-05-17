@@ -18,7 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment as application_segment
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
-
+from zscaler.zpa.models import common as common
 
 class ServerGroup(ZscalerObject):
     """
@@ -42,6 +42,9 @@ class ServerGroup(ZscalerObject):
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.dynamic_discovery = config["dynamicDiscovery"] if "dynamicDiscovery" in config else True
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             self.applications = ZscalerCollection.form_list(
                 config["applications"] if "applications" in config else [], application_segment.ApplicationSegment
@@ -50,7 +53,15 @@ class ServerGroup(ZscalerObject):
             self.app_connector_groups = ZscalerCollection.form_list(
                 config["appConnectorGroups"] if "appConnectorGroups" in config else [], app_connector_groups.AppConnectorGroup
             )
-
+            if "extranetDTO" in config:
+                if isinstance(config["extranetDTO"], common.ExtranetDTO):
+                    self.extranet_dto = config["extranetDTO"]
+                elif config["extranetDTO"] is not None:
+                    self.extranet_dto = common.ExtranetDTO(config["extranetDTO"])
+                else:
+                    self.extranet_dto = None
+            else:
+                self.extranet_dto = None
         else:
             self.id = None
             self.modified_time = None
@@ -67,6 +78,10 @@ class ServerGroup(ZscalerObject):
             self.dynamic_discovery = True
             self.applications = []
             self.app_connector_groups = []
+            self.extranet_dto = None
+            self.read_only = None
+            self.restriction_type = None
+            self.zscaler_managed = None
 
     def request_format(self):
         """
@@ -86,6 +101,10 @@ class ServerGroup(ZscalerObject):
             "weight": self.weight,
             "extranetEnabled": self.extranet_enabled,
             "microtenantName": self.microtenant_name,
+            "extranetDTO": self.extranet_dto,
+            "readOnly": self.read_only,
+            "restrictionType": self.restriction_type,
+            "zscalerManaged": self.zscaler_managed,
             "dynamicDiscovery": True if self.dynamic_discovery else False,
             "applications": [app.request_format() for app in self.applications],
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],

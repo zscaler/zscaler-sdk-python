@@ -64,6 +64,9 @@ class ApplicationSegmentInspection(ZscalerObject):
             self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else "Default"
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             # Handle serverGroups using defensive programming
             self.server_groups = []
@@ -102,29 +105,33 @@ class ApplicationSegmentInspection(ZscalerObject):
             self.tcp_port_range = []
             self.udp_port_range = []
             self.enabled = True
-            self.double_encrypt = False
-            self.config_space = "DEFAULT"
-            self.bypass_type = "NEVER"
-            self.health_check_type = "NONE"
-            self.icmp_access_type = "NONE"
-            self.is_cname_enabled = False
-            self.ip_anchored = False
-            self.bypass_on_reauth = False
-            self.inspect_traffic_with_zia = False
-            self.health_reporting = "NONE"
-            self.use_in_dr_mode = False
-            self.tcp_keep_alive = "0"
-            self.select_connector_close_to_app = False
-            self.match_style = "EXCLUSIVE"
-            self.is_incomplete_dr_config = False
-            self.adp_enabled = False
-            self.auto_app_protect_enabled = False
-            self.api_protection_enabled = False
-            self.fqdn_dns_check = False
-            self.weighted_load_balancing = False
-            self.extranet_enabled = False
-            self.microtenant_name = "Default"
+            self.double_encrypt = None
+            self.config_space = None
+            self.bypass_type = None
+            self.health_check_type = None
+            self.icmp_access_type = None
+            self.is_cname_enabled = None
+            self.ip_anchored = None
+            self.bypass_on_reauth = None
+            self.inspect_traffic_with_zia = None
+            self.health_reporting = None
+            self.use_in_dr_mode = None
+            self.tcp_keep_alive = None
+            self.select_connector_close_to_app = None
+            self.match_style = None
+            self.is_incomplete_dr_config = None
+            self.adp_enabled = None
+            self.auto_app_protect_enabled = None
+            self.api_protection_enabled = None
+            self.fqdn_dns_check = None
+            self.weighted_load_balancing = None
+            self.extranet_enabled = None
+            self.microtenant_name = None
             self.microtenant_id = None
+            self.read_only = None
+            self.restriction_type = None
+            self.zscaler_managed = None
+
 
     def request_format(self):
         """
@@ -168,6 +175,9 @@ class ApplicationSegmentInspection(ZscalerObject):
             "segmentGroupName": self.segment_group_name,
             "commonAppsDto": self.common_apps_dto,
             "inspectionApps": self.inspection_apps,
+            "readOnly": self.read_only,
+            "restrictionType": self.restriction_type,
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

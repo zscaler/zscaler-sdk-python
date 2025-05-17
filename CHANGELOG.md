@@ -1,5 +1,17 @@
 # Zscaler Python SDK Changelog
 
+## 1.3.1 (May, 16 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* ([#286](https://github.com/zscaler/zscaler-sdk-python/pull/286)) - Fixed ZPA resources `add_privileged_credential_rule_v2`, and `update_privileged_credential_rule_v2` 
+* ([#286](https://github.com/zscaler/zscaler-sdk-python/pull/286)) - Fixed ZCC functions `remove_devices` and `force_remove_devices` to use custom decorator `zcc_param_mapper` for `os_type` attribute
+* ([#286](https://github.com/zscaler/zscaler-sdk-python/pull/286)) - Added new ZPA attribute models to support `extranet` features across `server_groups` and `application_segments`
+
 ## 1.3.0 (May, 12 2025)
 
 ### Notes
