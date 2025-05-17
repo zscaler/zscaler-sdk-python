@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import os
 
 from zscaler import ZscalerClient
+from zscaler.oneapi_client import LegacyZIAClient
 
 PYTEST_MOCK_CLIENT = "pytest_mock_client"
 
@@ -50,6 +51,45 @@ class MockZIAClient(ZscalerClient):
             "clientSecret": clientSecret,
             "customerId": customerId,
             "vanityDomain": vanityDomain,
+            "cloud": cloud,
+            "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
+        }
+
+        # Check if we are running in a pytest mock environment
+        if PYTEST_MOCK_CLIENT in os.environ:
+            fs.pause()
+            super().__init__(client_config)
+            fs.resume()
+        else:
+            super().__init__(client_config)
+
+class MockLegacyZIAClient(LegacyZIAClient):
+    def __init__(self, fs, config=None):
+        """
+        Initialize the MockZIAClient with support for environment variables and
+        optional inline config.
+
+        Args:
+            fs: Fixture to pause/resume the filesystem mock for pyfakefs.
+            config: Optional dictionary containing client configuration (clientId, clientSecret, etc.).
+        """
+        # If config is not provided, initialize it as an empty dictionary
+        config = config or {}
+
+        # Fetch credentials from environment variables, allowing them to be overridden by the config dictionary
+        username = config.get("username", os.getenv("ZIA_USERNAME"))
+        password = config.get("password", os.getenv("ZIA_PASSWORD"))
+        api_key = config.get("api_key", os.getenv("ZIA_API_KEY"))
+        cloud = config.get("cloud", os.getenv("ZIA_CLOUD"))
+
+        # Extract logging configuration or use defaults
+        logging_config = config.get("logging", {"enabled": False, "verbose": False})
+
+        # Set up the client config dictionary
+        client_config = {
+            "username": username,
+            "password": password,
+            "api_key": api_key,
             "cloud": cloud,
             "logging": {"enabled": logging_config.get("enabled", True), "verbose": logging_config.get("verbose", True)},
         }

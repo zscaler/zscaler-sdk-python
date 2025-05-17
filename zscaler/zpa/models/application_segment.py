@@ -18,7 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group as server_group
 from zscaler.zpa.models import common as common
-
+from zscaler.zpa.models import segment_group as segment_group
 
 class ApplicationSegment(ZscalerObject):
     """
@@ -33,44 +33,52 @@ class ApplicationSegment(ZscalerObject):
             self.description = config["description"] if "description" in config else None
             self.domain_names = config["domainNames"] if "domainNames" in config else []
             self.enabled = config["enabled"] if "enabled" in config else True
-            self.passive_health_enabled = config["passiveHealthEnabled"] if "passiveHealthEnabled" in config else False
-            self.double_encrypt = config["doubleEncrypt"] if "doubleEncrypt" in config else False
+            self.passive_health_enabled = config["passiveHealthEnabled"] if "passiveHealthEnabled" in config else None
+            self.double_encrypt = config["doubleEncrypt"] if "doubleEncrypt" in config else None
             self.config_space = config["configSpace"] if "configSpace" in config else "DEFAULT"
             self.bypass_type = config["bypassType"] if "bypassType" in config else "NEVER"
-            self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else "NONE"
-            self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else "NONE"
-            self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else False
-            self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else False
-            self.bypass_on_reauth = config["bypassOnReauth"] if "bypassOnReauth" in config else False
-            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"] if "inspectTrafficWithZia" in config else False
-            self.health_reporting = config["healthReporting"] if "healthReporting" in config else "NONE"
-            self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else False
-            self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else "0"
+            self.health_check_type = config["healthCheckType"] if "healthCheckType" in config else None
+            self.icmp_access_type = config["icmpAccessType"] if "icmpAccessType" in config else None
+            self.is_cname_enabled = config["isCnameEnabled"] if "isCnameEnabled" in config else None
+            self.ip_anchored = config["ipAnchored"] if "ipAnchored" in config else None
+            self.bypass_on_reauth = config["bypassOnReauth"] if "bypassOnReauth" in config else None
+            self.inspect_traffic_with_zia = config["inspectTrafficWithZia"] if "inspectTrafficWithZia" in config else None
+            self.health_reporting = config["healthReporting"] if "healthReporting" in config else None
+            self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else None
+            self.tcp_keep_alive = config["tcpKeepAlive"] if "tcpKeepAlive" in config else None
             self.select_connector_close_to_app = (
-                config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else False
+                config["selectConnectorCloseToApp"] if "selectConnectorCloseToApp" in config else None
             )
             self.match_style = config["matchStyle"] if "matchStyle" in config else "EXCLUSIVE"
-            self.is_incomplete_dr_config = config["isIncompleteDRConfig"] if "isIncompleteDRConfig" in config else False
-            self.adp_enabled = config["adpEnabled"] if "adpEnabled" in config else False
-            self.auto_app_protect_enabled = config["autoAppProtectEnabled"] if "autoAppProtectEnabled" in config else False
-            self.api_protection_enabled = config["apiProtectionEnabled"] if "apiProtectionEnabled" in config else False
-            self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else False
-            self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else False
-            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
-            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else "Default"
+            self.is_incomplete_dr_config = config["isIncompleteDRConfig"] if "isIncompleteDRConfig" in config else None
+            self.adp_enabled = config["adpEnabled"] if "adpEnabled" in config else None
+            self.auto_app_protect_enabled = config["autoAppProtectEnabled"] if "autoAppProtectEnabled" in config else None
+            self.api_protection_enabled = config["apiProtectionEnabled"] if "apiProtectionEnabled" in config else None
+            self.fqdn_dns_check = config["fqdnDnsCheck"] if "fqdnDnsCheck" in config else None
+            self.weighted_load_balancing = config["weightedLoadBalancing"] if "weightedLoadBalancing" in config else None
+            self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
             self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
             self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
             self.creation_time = config["creationTime"] if "creationTime" in config else None
             self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             self.tcp_protocols = ZscalerCollection.form_list(config["tcpProtocols"] if "tcpProtocols" in config else [], str)
 
             self.udp_protocols = ZscalerCollection.form_list(config["udpProtocols"] if "udpProtocols" in config else [], str)
 
-            self.server_groups = ZscalerCollection.form_list(config.get("serverGroups", []), server_group.ServerGroup)
-
+            self.server_groups = ZscalerCollection.form_list(
+                config["serverGroups"] if "serverGroups" in config else [], server_group.ServerGroup
+            )
+            self.server_group_dtos = ZscalerCollection.form_list(
+                config["serverGroupDTOs"] if "serverGroupDTOs" in config else [], server_group.ServerGroup
+            )
+            
             self.tcp_port_ranges = ZscalerCollection.form_list(
                 config["tcpPortRanges"] if "tcpPortRanges" in config else [], str
             )
@@ -106,15 +114,25 @@ class ApplicationSegment(ZscalerObject):
             else:
                 self.shared_microtenant_details = None
 
-            if "zpnErId	" in config:
-                if isinstance(config["zpnErId	"], ZPNExtranetResource):
-                    self.zpn_er_id = config["zpnErId	"]
-                elif config["zpnErId	"] is not None:
-                    self.zpn_er_id = ZPNExtranetResource(config["zpnErId	"])
+            if "zpnErId" in config:
+                if isinstance(config["zpnErId"], ZPNExtranetResource):
+                    self.zpn_er_id = config["zpnErId"]
+                elif config["zpnErId"] is not None:
+                    self.zpn_er_id = ZPNExtranetResource(config["zpnErId"])
                 else:
                     self.zpn_er_id = None
             else:
                 self.zpn_er_id = None
+
+            if "applicationGroup" in config:
+                if isinstance(config["applicationGroup"], segment_group.SegmentGroup):
+                    self.application_group = config["applicationGroup"]
+                elif config["applicationGroup"] is not None:
+                    self.application_group = segment_group.SegmentGroup(config["applicationGroup"])
+                else:
+                    self.application_group = None
+            else:
+                self.application_group = None
 
         else:
             self.id = None
@@ -125,6 +143,7 @@ class ApplicationSegment(ZscalerObject):
             self.description = None
             self.domain_names = []
             self.server_groups = []
+            self.server_group_dtos = []
             self.clientless_apps = []
             self.enabled = True
             self.tcp_port_ranges = []
@@ -133,33 +152,37 @@ class ApplicationSegment(ZscalerObject):
             self.udp_port_range = []
             self.tcp_protocols = []
             self.udp_protocols = []
-            self.double_encrypt = False
+            self.application_group = None
+            self.double_encrypt = None
             self.config_space = None
             self.bypass_type = None
             self.health_check_type = None
             self.icmp_access_type = None
-            self.is_cname_enabled = False
-            self.ip_anchored = False
-            self.bypass_on_reauth = False
-            self.inspect_traffic_with_zia = False
+            self.is_cname_enabled = None
+            self.ip_anchored = None
+            self.bypass_on_reauth = None
+            self.inspect_traffic_with_zia = None
             self.health_reporting = None
-            self.use_in_dr_mode = False
-            self.passive_health_enabled = False
+            self.use_in_dr_mode = None
+            self.passive_health_enabled = None
             self.tcp_keep_alive = None
-            self.select_connector_close_to_app = False
+            self.select_connector_close_to_app = None
             self.match_style = None
-            self.is_incomplete_dr_config = False
-            self.adp_enabled = False
-            self.auto_app_protect_enabled = False
-            self.api_protection_enabled = False
-            self.fqdn_dns_check = False
-            self.weighted_load_balancing = False
-            self.extranet_enabled = False
+            self.is_incomplete_dr_config = None
+            self.adp_enabled = None
+            self.auto_app_protect_enabled = None
+            self.api_protection_enabled = None
+            self.fqdn_dns_check = None
+            self.weighted_load_balancing = None
+            self.extranet_enabled = None
             self.microtenant_name = None
             self.microtenant_id = None
             self.segment_group_id = None
             self.segment_group_name = None
             self.zpn_er_id = None
+            self.read_only = None
+            self.restriction_type = None
+            self.zscaler_managed = None
 
     def request_format(self):
         """
@@ -174,7 +197,9 @@ class ApplicationSegment(ZscalerObject):
             "name": self.name,
             "description": self.description,
             "domainNames": self.domain_names,
-            "serverGroups": [group.request_format() for group in self.server_groups],
+            "serverGroups": self.server_groups,
+            "serverGroupDTOs": self.server_group_dtos,
+            "applicationGroup": self.application_group,
             "clientlessApps": [clientless.request_format() for clientless in self.clientless_apps],
             "enabled": self.enabled,
             "tcpPortRanges": self.tcp_port_ranges,
@@ -209,7 +234,10 @@ class ApplicationSegment(ZscalerObject):
             "microtenantId": self.microtenant_id,
             "segmentGroupId": self.segment_group_id,
             "segmentGroupName": self.segment_group_name,
-            "zpnErId	": self.zpn_er_id,
+            "zpnErId": self.zpn_er_id,
+            "readOnly": self.read_only,
+            "restrictionType": self.restriction_type,
+            "zscalerManaged": self.zscaler_managed,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

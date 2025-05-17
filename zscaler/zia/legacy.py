@@ -30,7 +30,7 @@ from zscaler.user_agent import UserAgent
 from zscaler.errors.zscaler_api_error import ZscalerAPIError
 from zscaler.utils import obfuscate_api_key
 from zscaler.logger import setup_logging
-
+from zscaler.oneapi_http_client import check_response_for_error
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -157,23 +157,25 @@ class LegacyZIAClientHelper:
 
         return result.group(1)
 
-    def is_session_expired(self):
+    def is_session_expired(self) -> bool:
         """
         Checks whether the current session is expired.
 
         Returns:
             bool: True if the session is expired or if the session details are missing.
         """
-        if self.auth_details is None:
+        # no session yet → force login
+        if self.auth_details is None or self.session_refreshed is None:
             return True
 
-        now = datetime.datetime.now()
+        # ZIA returns expiry as epoch-milliseconds in `passwordExpiryTime`
+        expiry_ms = self.auth_details.get("passwordExpiryTime", 0)
+        if expiry_ms <= 0:
+            return False
 
-        password_expiry_time = self.auth_details.get("passwordExpiryTime", -1)
-        if password_expiry_time > 0 and (self.session_refreshed - self.session_timeout_offset < now):
-            return True
-
-        return False
+        expiry_time = datetime.datetime.fromtimestamp(expiry_ms / 1000)
+        safety_window = self.session_timeout_offset
+        return datetime.datetime.utcnow() >= (expiry_time - safety_window)
 
     def authenticate(self):
         """
@@ -235,37 +237,86 @@ class LegacyZIAClientHelper:
     def get_base_url(self, endpoint):
         return self.url
 
+    # def send(self, method, path, json=None, params=None, data=None, headers=None):
+    #     url = f"{self.url}/{path.lstrip('/')}"
+    #     attempts = 0
+
+    #     while attempts < 5:
+    #         try:
+    #             if self.is_session_expired():
+    #                 logger.warning("Session expired. Refreshing...")
+    #                 self.authenticate()
+
+    #             # Always refresh session cookie
+    #             headers_with_user_agent = self.headers.copy()
+    #             headers_with_user_agent.update(headers or {})
+    #             headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
+
+    #             resp = requests.request(
+    #                 method=method,
+    #                 url=url,
+    #                 json=json,
+    #                 data=data,
+    #                 params=params,
+    #                 headers=headers_with_user_agent,
+    #                 timeout=self.timeout,
+    #             )
+
+    #             if resp.status_code == 429:
+    #                 sleep_time = int(resp.headers.get("Retry-After", 2))
+    #                 logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
+    #                 sleep(sleep_time)
+    #                 attempts += 1
+    #                 continue
+
+    #             if resp.status_code in [401, 403]:
+    #                 # Detect OneAPI-only response
+    #                 if "This API endpoint can be accessed only through Zscaler OneAPI" in resp.text:
+    #                     logger.error("This endpoint requires OneAPI authentication. Aborting retry.")
+    #                     raise ValueError(resp.text.strip())
+    #                 logger.warning("Authentication failed. Re-authenticating and retrying...")
+    #                 self.authenticate()
+    #                 attempts += 1
+    #                 continue
+
+    #             if resp.status_code >= 400:
+    #                 logger.error(f"Request failed: {resp.status_code}, {resp.text}")
+    #                 raise ValueError(f"Request failed with status {resp.status_code}: {resp.text.strip()}")
+
+    #             return resp, {
+    #                 "method": method,
+    #                 "url": url,
+    #                 "params": params or {},
+    #                 "headers": headers_with_user_agent,
+    #                 "json": json or {},
+    #             }
+
+    #         except requests.RequestException as e:
+    #             logger.error(f"Request to {url} failed: {e}")
+    #             if attempts == 4:
+    #                 raise
+    #             logger.warning(f"Retrying... ({attempts + 1}/5)")
+    #             attempts += 1
+    #             sleep(5)
+
+    #     raise ValueError("Request execution failed after maximum retries.")
+
+
     def send(self, method, path, json=None, params=None, data=None, headers=None):
-        """
-        Send a request to the ZIA API using JSESSIONID-based authentication.
-
-        Args:
-            method (str): The HTTP method.
-            path (str): API endpoint path.
-            json (dict, optional): Request payload. Defaults to None.
-            params (dict, optional): URL query parameters. Defaults to None.
-            data (dict, optional): Raw request data. Defaults to None.
-            headers (dict, optional): Additional request headers. Defaults to None.
-
-        Returns:
-            requests.Response: Response object from the request.
-        """
         url = f"{self.url}/{path.lstrip('/')}"
-
-        # Prepare headers
-        headers_with_user_agent = self.headers.copy()
-        headers_with_user_agent.update(headers or {})
-        headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
-
         attempts = 0
+
         while attempts < 5:
             try:
-                # Refresh session if expired
                 if self.is_session_expired():
                     logger.warning("Session expired. Refreshing...")
                     self.authenticate()
 
-                # Execute the request
+                # Always refresh session cookie
+                headers_with_user_agent = self.headers.copy()
+                headers_with_user_agent.update(headers or {})
+                headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
+
                 resp = requests.request(
                     method=method,
                     url=url,
@@ -276,29 +327,33 @@ class LegacyZIAClientHelper:
                     timeout=self.timeout,
                 )
 
-                if resp.status_code == 429:  # Handle rate-limiting
+                if resp.status_code == 429:
                     sleep_time = int(resp.headers.get("Retry-After", 2))
                     logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
                     sleep(sleep_time)
                     attempts += 1
                     continue
 
-                if resp.status_code in [401, 403]:  # Authentication failure
-                    logger.error("Authentication failed, refreshing session.")
+                if resp.status_code in [401, 403]:
+                    logger.warning("Authentication failed. Re-authenticating and retrying...")
                     self.authenticate()
+                    attempts += 1
                     continue
 
-                if resp.status_code >= 400:
-                    logger.error(f"Request failed: {resp.status_code}, {resp.text}")
-                    raise ValueError(f"Request failed with status {resp.status_code}")
+                # Parse response using shared OneAPI logic
+                parsed_response, err = check_response_for_error(url, resp, resp.text)
+                if err:
+                    logger.error(f"API responded with error: {err}")
+                    raise err
 
-                return resp, {
+                return parsed_response, {
                     "method": method,
                     "url": url,
                     "params": params or {},
                     "headers": headers_with_user_agent,
                     "json": json or {},
                 }
+
             except requests.RequestException as e:
                 logger.error(f"Request to {url} failed: {e}")
                 if attempts == 4:

@@ -421,6 +421,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    @zcc_param_mapper
     def remove_devices(self, query_params=None, **kwargs) -> tuple:
         """
         Remove of the devices from the Client Connector Portal.
@@ -431,6 +432,11 @@ class DevicesAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     If not provided, the default page size is 30.
                     The max page size is 5000.
+                    
+                client_connector_version (list[str]):
+                os_type (int): Valid options are: ios, android, windows, macos, linux.
+                udids (list[str]): The list of udids for the devices to be removed
+                user_name (str): The username i.e jdoe@acme.com of the user to which the device is associated with.
 
         Returns:
             :obj:`list`: Remove devices from the Client Connector Portal.
@@ -484,6 +490,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
+    @zcc_param_mapper
     def force_remove_devices(self, query_params=None, **kwargs) -> tuple:
         """
         Force remove of the devices from the Client Connector Portal.
@@ -495,6 +502,11 @@ class DevicesAPI(APIClient):
                     If not provided, the default page size is 30.
                     The max page size is 5000.
 
+                client_connector_version (list[str]):
+                os_type (int): Valid options are: ios, android, windows, macos, linux.
+                udids (list[str]): The list of udids for the devices to be removed
+                user_name (str): The username i.e jdoe@acme.com of the user to which the device is associated with.
+
         Returns:
             :obj:`list`: Forces the removal of devices from the Client Connector Portal.
 
@@ -505,7 +517,7 @@ class DevicesAPI(APIClient):
             ...     client_connector_version=['3.0.0.57'],
             ...     os_type='3',
             ...     udids='VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D',
-            ...     username='jdoe@acme.com'
+            ...     user_name='jdoe@acme.com'
             ... )
             >>> if error:
             ...     print(f"Error removing device: {error}")

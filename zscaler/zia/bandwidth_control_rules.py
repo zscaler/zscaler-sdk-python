@@ -333,7 +333,8 @@ class BandwidthControlRulesAPI(APIClient):
         """
         )
 
-        body = kwargs
+        body = kwargs.copy()
+        body["id"] = rule_id
 
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"

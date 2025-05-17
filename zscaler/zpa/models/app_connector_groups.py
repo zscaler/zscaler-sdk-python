@@ -64,6 +64,10 @@ class AppConnectorGroup(ZscalerObject):
             self.site_id = config["siteId"] if "siteId" in config else None
             self.site_name = config["siteName"] if "siteName" in config else None
             self.lss_app_connector_group = config["lssAppConnectorGroup"] if "lssAppConnectorGroup" in config else False
+            self.read_only = config["readOnly"] if "readOnly" in config else None
+            self.restriction_type = config["restrictionType"] if "restrictionType" in config else None
+            self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
+            self.dc_hosting_info = config["dcHostingInfo"] if "dcHostingInfo" in config else None
 
             self.ip_acl = ZscalerCollection.form_list(config["ipAcl"] if "ipAcl" in config else [], str)
 
@@ -104,6 +108,10 @@ class AppConnectorGroup(ZscalerObject):
             self.site_id = None
             self.site_name = None
             self.lss_app_connector_group = None
+            self.read_only = None
+            self.restriction_type = None
+            self.zscaler_managed = None
+            self.dc_hosting_info = None
 
     def request_format(self):
         parent_req_format = super().request_format()
@@ -141,6 +149,10 @@ class AppConnectorGroup(ZscalerObject):
             "siteId": self.site_id,
             "siteName": self.site_name,
             "lssAppConnectorGroup": self.lss_app_connector_group,
+            "readOnly": self.read_only,
+            "restrictionType": self.restriction_type,
+            "zscalerManaged": self.zscaler_managed,
+            "dcHostingInfo": self.dc_hosting_info,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -158,6 +170,7 @@ class NPAssistantGroup(ZscalerObject):
             self.creation_time = config["creationTime"] if "creationTime" in config else None
             self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
             self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.mtu = config["mtu"] if "mtu" in config else None
             self.lan_subnets = [LanSubnet(subnet) for subnet in config["lanSubnets"]] if "lanSubnets" in config else []
         else:
             self.id = None
@@ -165,6 +178,7 @@ class NPAssistantGroup(ZscalerObject):
             self.creation_time = None
             self.modified_time = None
             self.modified_by = None
+            self.mtu = None
             self.lan_subnets = []
 
     def request_format(self):
@@ -175,6 +189,7 @@ class NPAssistantGroup(ZscalerObject):
             "creationTime": self.creation_time,
             "modifiedTime": self.modified_time,
             "modifiedBy": self.modified_by,
+            "mtu": self.mtu,
             "lanSubnets": [subnet.request_format() for subnet in self.lan_subnets],
         }
         parent_req_format.update(current_obj_format)

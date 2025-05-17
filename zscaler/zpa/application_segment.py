@@ -46,6 +46,11 @@ class ApplicationSegmentAPI(APIClient):
         A subset of application segments can be returned that match a supported
         filter expression or query.
 
+        See the
+        `Retrieving a list of Application Segments Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
+        for further detail on optional keyword parameter structures.
+
         Args:
             query_params {dict}: Map of query parameters for the request.
 
@@ -104,6 +109,11 @@ class ApplicationSegmentAPI(APIClient):
         """
         Retrieve an application segment by its ID.
 
+        See the
+        `Retrieving a Application Segment Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
+        for further detail on optional keyword parameter structures.
+
         Args:
             segment_id (str): The unique identifier of the application segment.
 
@@ -151,6 +161,11 @@ class ApplicationSegmentAPI(APIClient):
     def add_segment(self, **kwargs) -> tuple:
         """
         Create a new application segment.
+
+        See the
+        `Adding a Application Segment Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-post>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             name (str): **Required**. Name of the application segment (user-defined).
@@ -247,45 +262,33 @@ class ApplicationSegmentAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Process TCP and UDP port attributes
         if "tcp_port_ranges" in body:
-            # Use format 1 (tcpPortRanges)
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
         elif "tcp_port_range" in body:
-            # Use format 2 (tcpPortRange)
             body["tcpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("tcp_port_range")]
 
         if "udp_port_ranges" in body:
-            # Use format 1 (udpPortRanges)
             body["udpPortRanges"] = body.pop("udp_port_ranges")
         elif "udp_port_range" in body:
-            # Use format 2 (udpPortRange)
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
 
-        # Convert clientless_app_ids to clientlessApps if present
         if "clientless_app_ids" in body:
             body["clientlessApps"] = body.pop("clientless_app_ids")
 
-        # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, ApplicationSegment)
         if error:
             return (None, response, error)
@@ -299,6 +302,11 @@ class ApplicationSegmentAPI(APIClient):
     def update_segment(self, segment_id: str, **kwargs) -> tuple:
         """
         Update an existing application segment.
+
+        See the
+        `Updating Application Segments Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-put>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             segment_id (str): The unique identifier of the application segment.
@@ -373,47 +381,38 @@ class ApplicationSegmentAPI(APIClient):
         http_method = "put".upper()
         api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}")
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Step 1: Fetch BROWSER_ACCESS apps for `clientless_app_ids`
         if "clientless_app_ids" in body:
             clientless_apps = body.pop("clientless_app_ids")
 
-            # Instantiate ApplicationSegmentByTypeAPI to fetch data
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
-            # Fetch all `BROWSER_ACCESS` apps
             segments_list, _, err = app_segment_api.get_segments_by_type(application_type="BROWSER_ACCESS")
 
             if err:
                 return (None, None, f"Error fetching application segment data: {err}")
 
-            # Step 2: Find the correct entry where `appId == segment_id`
             matched_segment = next((app for app in segments_list if app.get("appId") == segment_id), None)
 
             if not matched_segment:
                 return (None, None, f"Error: No matching clientless App found with appId '{segment_id}' in existing segments.")
 
-            clientless_app_id = matched_segment["id"]  # Extract correct `id`
+            clientless_app_id = matched_segment["id"]
 
-            # Step 3: Assign `appId` and `id`
             body["clientlessApps"] = []
             for app in clientless_apps:
-                app["appId"] = segment_id  # Auto-assign appId (segment_id)
-                app["id"] = clientless_app_id  # Auto-assign id from API response
+                app["appId"] = segment_id
+                app["id"] = clientless_app_id
 
-                body["clientlessApps"].append(app)  # Append updated app config
+                body["clientlessApps"].append(app)
 
-        # Process TCP and UDP port attributes
         if "tcp_port_ranges" in body:
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
         elif "tcp_port_range" in body:
@@ -447,6 +446,11 @@ class ApplicationSegmentAPI(APIClient):
     def delete_segment(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> tuple:
         """
         Deletes the specified Application Segment from ZPA.
+
+        See the
+        `Deleting a Application Segment Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-delete>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             segment_id (str): The unique identifier for the Application Segment.
@@ -494,6 +498,11 @@ class ApplicationSegmentAPI(APIClient):
         Moves application segments from one microtenant to another
         Note: Application segments can only be moved from a Default Microtenant microtenant_id as 0 to a child tenant
 
+        See the
+        `Moving Application Segments between Microtenants Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}/move-post>`_
+        for further detail on optional keyword parameter structures.
+
         Args:
             application_id (str):
                 The unique identifier of the Application Segment.
@@ -505,7 +514,6 @@ class ApplicationSegmentAPI(APIClient):
                 The unique identifier of the Microtenant that the application segment is being moved to.
 
         Keyword Args:
-            ...
 
         Returns:
             :obj:`Tuple`: The resource record for the moved application segment.
@@ -519,7 +527,6 @@ class ApplicationSegmentAPI(APIClient):
             ...    target_server_group_id='216199618143373012',
             ...    target_microtenant_id='216199618143372994'
             ... )
-
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -563,8 +570,12 @@ class ApplicationSegmentAPI(APIClient):
 
     def app_segment_share(self, application_id: str, **kwargs) -> tuple:
         """
-        Moves application segments from one microtenant to another
-        Note: Application segments can only be shared between child tenants.
+        Shares the application segment to the Microtenant for the specified ID.
+
+        See the
+        `Sharing Application Segments between Microtenants Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}/share-put>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             application_id (str):
@@ -574,7 +585,6 @@ class ApplicationSegmentAPI(APIClient):
                 This field is required if you want to share an application segment.
                 To remove the share send the attribute as an empty list.
         Keyword Args:
-            ...
 
         Returns:
             :obj:`Tuple`: An empty Box object if the operation is successful.
@@ -586,7 +596,6 @@ class ApplicationSegmentAPI(APIClient):
             ...    application_id='216199618143373016',
             ...    share_to_microtenants=['216199618143373010']
             ... )
-
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -624,4 +633,144 @@ class ApplicationSegmentAPI(APIClient):
             logger.debug(f"Error retrieving response body: {error}")
             return (None, response, error)
 
+        return (result, response, None)
+
+    def add_segment_provision(self, **kwargs) -> tuple:
+        """
+        Provision a new application segment for a given customer, creating all related objects as needed.
+
+        This endpoint allows you to create and provision an application segment along with advanced options
+        such as server group DTOs, extranet settings, health reporting, ICMP control, and more.
+
+        Args:
+            name (str): **Required.** Name of the application segment.
+            domain_names (list of str): **Required.** List of domain names or FQDNs for the application.
+            segment_group_id (str): **Required.** ID of the segment group the application belongs to.
+            server_group_ids (list of str): **Required.** List of server group IDs assigned to the application.
+
+            tcp_port_ranges (list of str, optional): Legacy TCP port ranges (e.g., `['8081', '8081']`).
+            udp_port_ranges (list of str, optional): Legacy UDP port ranges.
+            tcp_port_range (list of dict, optional): Modern TCP port range object list (e.g., `[{'from': 80, 'to': 443}]`).
+            udp_port_range (list of dict, optional): Modern UDP port range object list.
+
+        Keyword Args:
+            description (str): Description of the application segment.
+            enabled (bool): Whether the application is enabled.
+            health_reporting (str): Health reporting mode. Valid values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
+            ip_anchored (bool): Whether IP Anchoring is enabled.
+            select_connector_close_to_app (bool): Prefer nearest connector routing.
+            icmp_access_type (str): ICMP access policy. Values: `PING`, `NONE`.
+            match_style (str): Segment matching style. Values: `EXCLUSIVE`, `INCLUSIVE`.
+            is_cname_enabled (bool): Whether CNAME support is enabled.
+            tcp_keep_alive (str): TCP keepalive option. Usually `"0"` or `"1"`.
+            fqdn_dns_check (bool): Whether FQDN DNS checking is enabled.
+            adp_enabled (bool): Enable App Discovery Protection.
+            domain (str): Domain alias for the application.
+            trust_untrusted_cert (bool): Trust untrusted server certificates.
+            bypass_on_reauth (bool): Bypass policy evaluation on reauthentication.
+            bypass_type (str): Bypass mode. Values: `NEVER`, `ALWAYS`, `ON_NET`.
+            hide_dependencies (bool): Whether to hide dependency discovery info.
+            extranet_enabled (bool): Whether Extranet Application Support is enabled
+            application_group (dict): Application group metadata. Example: `{"id": "72058304855114308"}`.
+            server_group_dtos (list of dict): Full definition of server groups, including nested Extranet DTO structure:
+
+                - id (str): Server group ID
+                - dynamic_discovery (bool)
+                - name (str)
+                - extranet_dto (dict): Extranet settings
+                    - zia_er_name (str)
+                    - zpn_er_id (str)
+                    - location_group_dto (list of dict): Each with:
+                        - id (str)
+                        - zia_locations (list of dict): Each with `id`
+                    - location_dto (list of dict): Each with `id`
+                - extranet_enabled (bool): Whether Extranet Application Support is enabled
+
+        Returns:
+            tuple: A tuple of (`ApplicationSegment` object, raw response, error).
+
+        Examples:
+            >>> added_segment, _, err = client.zpa.application_segment.add_segment_provision(
+            ...     name="app02",
+            ...     description="App with Extranet",
+            ...     domain_names=["app02.acme.com"],
+            ...     server_group_ids=["72058304855116228"],
+            ...     application_group={"id": "72058304855114308"},
+            ...     server_group_dtos=[
+            ...         {
+            ...             "id": "72058304855116228",
+            ...             "dynamic_discovery": True,
+            ...             "name": "SRV_Extranet01",
+            ...             "extranet_dto": {
+            ...                 "zia_er_name": "NewExtranet 1002",
+            ...                 "zpn_er_id": "72058304855111768",
+            ...                 "location_group_dto": [
+            ...                     {
+            ...                         "id": "72058304855111771",
+            ...                         "zia_locations": [{"id": "72058304855116226"}]
+            ...                     }
+            ...                 ],
+            ...                 "location_dto": [{"id": "72058304855116226"}]
+            ...             },
+            ...             "extranet_enabled": True
+            ...         }
+            ...     ],
+            ...     extranet_enabled=True,
+            ...     tcp_port_ranges=["8081", "8081"],
+            ...     icmp_access_type="PING",
+            ...     is_cname_enabled=True,
+            ...     trust_untrusted_cert=True,
+            ...     tcp_keep_alive="0",
+            ...     bypass_on_reauth=True,
+            ...     bypass_type="NEVER",
+            ...     enabled=True
+            ... )
+            >>> if err:
+            ...     print(f"Error adding segment: {err}")
+            ... else:
+            ...     print(f"Segment added successfully: {added_segment.as_dict()}")
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/provision
+        """
+        )
+
+        body = kwargs
+
+        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        if "server_group_ids" in body:
+            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+
+        if "tcp_port_ranges" in body:
+            body["tcpPortRanges"] = body.pop("tcp_port_ranges")
+        elif "tcp_port_range" in body:
+            body["tcpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("tcp_port_range")]
+
+        if "udp_port_ranges" in body:
+            body["udpPortRanges"] = body.pop("udp_port_ranges")
+        elif "udp_port_range" in body:
+            body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
+
+        if "clientless_app_ids" in body:
+            body["clientlessApps"] = body.pop("clientless_app_ids")
+
+        add_id_groups(self.reformat_params, kwargs, body)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, ApplicationSegment)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ApplicationSegment(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
         return (result, response, None)
