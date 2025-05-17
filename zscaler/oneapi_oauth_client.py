@@ -7,6 +7,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from zscaler.user_agent import UserAgent
 from zscaler.oneapi_http_client import HTTPClient
+from zscaler.errors.response_checker import check_response_for_error
 
 logger = logging.getLogger(__name__)
 
@@ -193,7 +194,7 @@ class OAuth:
                 response = self.authenticate()
 
                 # Check the response body for error messages using check_response_for_error
-                parsed_response, err = HTTPClient.check_response_for_error(response.url, response, response.text)
+                parsed_response, err = check_response_for_error(response.url, response, response.text)
 
                 if err:
                     logging.error(f"Error during authentication: {err}")
