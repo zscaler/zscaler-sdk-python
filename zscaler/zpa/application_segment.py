@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegment
+from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import format_url, add_id_groups
 import logging
@@ -270,6 +271,13 @@ class ApplicationSegmentAPI(APIClient):
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
+        # # --- Prevent mixed legacy + structured port range usage ---
+        # if "tcp_port_ranges" in body and "tcp_port_range" in body:
+        #     return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        # if "udp_port_ranges" in body and "udp_port_range" in body:
+        #     return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+
         if "tcp_port_ranges" in body:
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
         elif "tcp_port_range" in body:
@@ -321,7 +329,8 @@ class ApplicationSegmentAPI(APIClient):
 
             Update an application segment using **legacy TCP port format** (`tcp_port_ranges`):
 
-            >>> update_segment, _, err = client.zpa.application_segment.add_segment(
+            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
+            ...     segment_id='56687421',
             ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
             ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -337,7 +346,8 @@ class ApplicationSegmentAPI(APIClient):
 
             Update an application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> update_segment, _, err = client.zpa.application_segment.add_segment(
+            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
+            ...     segment_id='56687421',
             ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
             ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -353,7 +363,7 @@ class ApplicationSegmentAPI(APIClient):
 
             Update an Browser Access application segment
 
-            >>> update_segment, _, err = client.zpa.application_segment.add_segment(
+            >>> update_segment, _, err = client.zpa.application_segment.update_segment(
             ...     segment_id='99999',
             ...     name=f"UpdateAppSegment_{random.randint(1000, 10000)}",
             ...     description=f"UpdateAppSegment_{random.randint(1000, 10000)}",
@@ -382,6 +392,13 @@ class ApplicationSegmentAPI(APIClient):
         api_url = format_url(f"{self._zpa_base_endpoint}/application/{segment_id}")
 
         body = kwargs
+
+        # # --- Prevent mixed legacy + structured port range usage ---
+        # if "tcp_port_ranges" in body and "tcp_port_range" in body:
+        #     return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        # if "udp_port_ranges" in body and "udp_port_range" in body:
+        #     return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -587,7 +604,7 @@ class ApplicationSegmentAPI(APIClient):
         Keyword Args:
 
         Returns:
-            :obj:`Tuple`: An empty Box object if the operation is successful.
+            :obj:`Tuple`: An empty tuple object if the operation is successful.
 
         Examples:
             Moving an application segment to another microtenant:
@@ -625,7 +642,7 @@ class ApplicationSegmentAPI(APIClient):
 
         if response and response.status_code == 204:
             logger.debug("Sharing operation completed successfully with 204 No Content.")
-            return ({"message": "Shareing operation completed successfully."}, response, None)
+            return ({"message": "Sharing operation completed successfully."}, response, None)
 
         try:
             result = response.get_body() if response else {}
@@ -773,4 +790,150 @@ class ApplicationSegmentAPI(APIClient):
             result = ApplicationSegment(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
+        return (result, response, None)
+
+    def get_weighted_lb_config(self, segment_id: str, query_params=None) -> tuple:
+        """
+        Get Weighted Load Balancer Config for AppSegment
+
+        See the
+        `Retrieving Load Balancer Config for AppSegment Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application-get>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            segment_id (str): The unique identifier of the application segment.
+
+        Keyword Args:
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
+
+        Examples:
+            >>> fetched_lb_config, _, err = client.zpa.application_segment.get_weighted_lb_config('999999')
+            ... if err:
+            ...     print(f"Error fetching app segment LB config by ID: {err}")
+            ...     return
+            ... print(f"Fetched app segment LB by ID: {fetched_lb_config.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/{segment_id}/weightedLbConfig
+        """
+        )
+
+        query_params = query_params or {}
+
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, WeightedLBConfig)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = WeightedLBConfig(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def update_weighted_lb_config(self, segment_id: str, query_params=None, **kwargs) -> tuple:
+        """
+        Updates the Weighted Load Balancing configuration for the specified Application Segment.
+
+        This operation allows you to configure load balancing behavior for the application
+        segment by assigning server groups, weights, and passive mode settings.
+
+        See the
+        `Weighted Load Balancing API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{segmentId}/weightedLbConfig-put>`_
+        for further detail on payload structure.
+
+        Args:
+            segment_id (str):
+                The unique identifier of the Application Segment whose weighted load balancing
+                configuration is to be updated.
+
+        Keyword Args:
+            weighted_load_balancing (bool):
+                Flag to enable or disable weighted load balancing on the segment.
+            application_to_server_group_mappings (list of dict):
+                A list of mappings that define server groups and their associated weights and passive flags.
+                Each item must be a dictionary with the following keys:
+                
+                - `id` (str): The ID of the server group.
+                - `weight` (str): The weight assigned to this server group.
+                - `passive` (bool): Indicates whether the server group operates in passive mode.
+
+            microtenant_id (str, optional):
+                The ID of the microtenant, if applicable in a multi-tenant environment.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing the updated :obj:`WeightedLBConfig` object,
+            the raw response object, and an error object (if any).
+
+        Examples:
+            Updating an application segment with new weighted load balancing settings:
+
+            >>> update_lb, _, err = client.zpa.application_segment.update_weighted_lb_config(
+            ...     segment_id='72058304855090129',
+            ...     weighted_load_balancing=True,
+            ...     application_to_server_group_mappings=[
+            ...         {
+            ...             "id": "72058304855090128",
+            ...             "weight": "10",
+            ...             "passive": True
+            ...         },
+            ...         {
+            ...             "id": "72058304855047747",
+            ...             "weight": "20",
+            ...             "passive": False
+            ...         }
+            ...     ])
+            >>> if err:
+            ...     print(f"Error updating application segment lb: {err}")
+            ...     return
+            ... print(f"Application segment lb updated successfully: {update_lb.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/{segment_id}/weightedLbConfig
+        """
+        )
+
+        body = dict(kwargs)
+
+        query_params = query_params.copy() if query_params else {}
+        microtenant_id = query_params.pop("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(
+            http_method, api_url, body, {}, params=query_params
+        )
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, WeightedLBConfig)
+        if error:
+            return (None, response, error)
+
+        if response is None:
+            return (WeightedLBConfig({"id": segment_id}), None, None)
+
+        try:
+            result = WeightedLBConfig(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+
         return (result, response, None)

@@ -252,7 +252,6 @@ class HTTPClient:
                         "headers": legacy_request["headers"],
                     }
                 )
-                # return response, None
 
             elif self.use_ztw_legacy_client:
                 parsed_url = urlparse(request["url"])

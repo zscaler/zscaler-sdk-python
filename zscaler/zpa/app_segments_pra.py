@@ -231,6 +231,13 @@ class AppSegmentsPRAAPI(APIClient):
 
         body = kwargs
 
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+
         # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -332,18 +339,21 @@ class AppSegmentsPRAAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Ensure `app_types` is set in `commonAppsDto.apps_config`
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             for app_config in common_apps_dto["apps_config"]:
@@ -394,15 +404,12 @@ class AppSegmentsPRAAPI(APIClient):
             # Use format 2 (udpPortRange)
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
 
-        # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
         if error:
             return (None, response, error)

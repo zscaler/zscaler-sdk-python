@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
+from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.api_client import APIClient
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords

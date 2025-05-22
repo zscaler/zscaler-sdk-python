@@ -44,9 +44,13 @@ class AdminUserAPI(APIClient):
         Examples:
             Prints all admins in the Client Connector Portal to the console:
 
-            >>> for admin in zcc.admin_user.list_admin_users():
-            ...    print(admin)
-
+            >>> user_list, _, err = client.zcc.admin_user.list_admin_users()
+            >>> if err:
+            ...     print(f"Error listing admin users: {err}")
+            ...     return
+            ... print(f"Total admin users found: {len(user_list)}")
+            ... for user in user_list:
+            ...     print(user.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -58,7 +62,6 @@ class AdminUserAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 

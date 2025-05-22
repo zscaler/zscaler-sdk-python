@@ -435,11 +435,11 @@ class FirewallResourcesAPI(APIClient):
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            type (str): Destination IP group type. Allowed values are DSTN_IP and DSTN_FQDN.
-            addresses (list): Destination IP addresses or FQDNs within the group.
             description (str): Additional information about the destination IP group.
-            ip_categories (list): Destination IP address URL categories.
-            countries (list): Destination IP address counties.
+            type (str): Destination IP group type. Allowed values are DSTN_IP and DSTN_FQDN, DSTN_DOMAIN, DSTN_OTHER.
+            addresses (list): Destination IP addresses or FQDNs within the group.
+            ip_categories (list): Destination IP address URL categories. Note: Only Custom categories allowed.
+            countries (list): Destination IP address counties. i.e COUNTRY_CA, COUNTRY_US.
 
         Returns:
             :obj:`Tuple`: The newly created IP Destination Group resource record.
@@ -447,23 +447,42 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Add a Destination IP Group with IP addresses:
 
-            >>> zia.cloud_firewall.add_ip_destination_group(name='Destination Group - IP',
-            ...    addresses=['203.0.113.0/25', '203.0.113.131'],
-            ...    type='DSTN_IP')
+            >>> added_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+            ...     name=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     addresses=["192.168.1.1", "192.168.1.2"],
+            ...     type='DSTN_IP',
+            ... )
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
 
             Add a Destination IP Group with FQDN:
 
-            >>> zia.cloud_firewall.add_ip_destination_group(name='Destination Group - FQDN',
+            >>> added_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+            ...    name=f"AddNewGroup_{random.randint(1000, 10000)}",
             ...    description='Covers domains for Example Inc.',
             ...    addresses=['example.com', 'example.edu'],
-            ...    type='DSTN_FQDN')
+            ...    type='DSTN_FQDN',
+            ... )
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
 
-            Add a Destionation IP Group for the US:
+            Add a Destination IP Group with country and url category for the US:
 
-            >>> zia.cloud_firewall.add_ip_destination_group(name='Destination Group - US',
-            ...    description='Covers the US',
-            ...    countries=['COUNTRY_US'])
-
+            >>> added_group, _, error = client.zia.cloud_firewall.add_ip_destination_group(
+            ...    name=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...    description='Covers domains for Example Inc.',
+            ...    type='DSTN_OTHER',
+            ...    countries=['COUNTRY_US']),
+            ...    ip_categories=['CUSTOM_01']),
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -505,10 +524,11 @@ class FirewallResourcesAPI(APIClient):
 
         Keyword Args:
             name (str): The name of the IP Destination Group.
+            description (str): Additional information about the destination IP group.
+            type (str): Destination IP group type. Allowed values are DSTN_IP and DSTN_FQDN, DSTN_DOMAIN, DSTN_OTHER.
             addresses (list): Destination IP addresses or FQDNs within the group.
-            description (str): Additional information about the IP Destination Group.
-            ip_categories (list): Destination IP address URL categories.
-            countries (list): Destination IP address countries.
+            ip_categories (list): Destination IP address URL categories. Note: Only Custom URL categories allowed.
+            countries (list): Destination IP address counties. i.e COUNTRY_CA, COUNTRY_US.
 
         Returns:
             :obj:`Tuple`: The updated IP Destination Group resource record.
@@ -516,15 +536,45 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Update the name of an IP Destination Group:
 
-            >>> zia.cloud_firewall.update_ip_destination_group('9032667',
-            ...    name="Updated IP Destination Group")
+            >>> updated_group, _, error = client.zia.cloud_firewall.update_ip_destination_group(
+            ...     group_id='452125',
+            ...     name=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     description=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     addresses=["192.168.1.1", "192.168.1.2"],
+            ...     type="DSTN_IP"
+            ... )
+            >>> if error:
+            ...     print(f"Error updating group: {error}")
+            ...     return
+            ... print(f"Group updated successfully: {updated_group.as_dict()}")
 
             Update the description and FQDNs for an IP Destination Group:
 
-            >>> zia.cloud_firewall.update_ip_destination_group('9032668',
-            ...    description="Tech News",
-            ...    addresses=['arstechnica.com', 'slashdot.org'])
+            >>> updated_group, _, error = client.zia.cloud_firewall.update_ip_destination_group(
+            ...     group_id='452125',
+            ...     name=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateGroup {random.randint(1000, 10000)}",
+            ...     addresses=['arstechnica.com', 'slashdot.org'],
+            ...     type="DSTN_FQDN",
+            ... )
+            >>> if error:
+            ...     print(f"Error updating group: {error}")
+            ...     return
+            ... print(f"Group updated successfully: {updated_group.as_dict()}")
+            
+            Update a Destination IP Group with country and url category for the US:
 
+            >>> updated_group, _, error = client.zia.cloud_firewall.update_ip_destination_group(
+            ...    group_id='452125',
+            ...    name=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...    description=f"UpdateGroup_{random.randint(1000, 10000)}",
+            ...    type='DSTN_OTHER',
+            ...    countries=['COUNTRY_CA']),
+            ...    ip_categories=['CUSTOM_01']),
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -563,11 +613,11 @@ class FirewallResourcesAPI(APIClient):
             :obj:`int`: The status code of the operation.
 
         Examples:
-            >>> _, response, error = client.zia.cloud_firewall.delete_ip_destination_group(updated_group.id)
-            ... if error:
+            >>> _, _, error = client.zia.cloud_firewall.delete_ip_destination_group('18382907')
+            >>> if error:
             ...     print(f"Error deleting group: {error}")
-            ... return
-
+            ...     return
+            ... print(f"Group with ID {updated_group.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(

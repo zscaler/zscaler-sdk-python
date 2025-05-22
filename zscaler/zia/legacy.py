@@ -189,20 +189,18 @@ class LegacyZIAClientHelper:
             "timestamp": api_obf["timestamp"],
         }
 
-        url = f"{self.url}/api/v1/authenticatedSession"  # Correct path
+        url = f"{self.url}/api/v1/authenticatedSession"
         resp = requests.post(url, json=payload, headers=self.headers, timeout=self.timeout)
 
         parsed_response, err = check_response_for_error(url, resp, resp.text)
         if err:
             raise err
 
-        # Extract JSESSIONID
         self.session_id = self.extractJSessionIDFromHeaders(resp.headers)
         if not self.session_id:
             raise ValueError("Failed to extract JSESSIONID from authentication response")
 
         self.session_refreshed = datetime.datetime.now()
-        # self.auth_details = resp.json()
         self.auth_details = parsed_response
         logger.info("Authentication successful. JSESSIONID set.")
 
@@ -237,6 +235,20 @@ class LegacyZIAClientHelper:
         return self.url
 
     def send(self, method, path, json=None, params=None, data=None, headers=None):
+        """
+        Send a request to the ZIA API using JSESSIONID-based authentication.
+
+        Args:
+            method (str): The HTTP method.
+            path (str): API endpoint path.
+            json (dict, optional): Request payload. Defaults to None.
+            params (dict, optional): URL query parameters. Defaults to None.
+            data (dict, optional): Raw request data. Defaults to None.
+            headers (dict, optional): Additional request headers. Defaults to None.
+
+        Returns:
+            requests.Response: Response object from the request.
+        """
         url = f"{self.url}/{path.lstrip('/')}"
         attempts = 0
 
@@ -268,7 +280,7 @@ class LegacyZIAClientHelper:
                     attempts += 1
                     continue
 
-                parsed_response, err = check_response_for_error(url, resp, resp.text)
+                _, err = check_response_for_error(url, resp, resp.text)
                 if err:
                     raise err
 

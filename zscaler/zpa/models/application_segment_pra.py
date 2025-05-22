@@ -29,6 +29,7 @@ class ApplicationSegmentPRA(ZscalerObject):
         if config:
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
+            self.description = config["description"] if "description" in config else None
             self.domain_names = config["domainNames"] if "domainNames" in config else []
             self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
             self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
@@ -80,8 +81,17 @@ class ApplicationSegmentPRA(ZscalerObject):
 
             # Handle PRA applications (commonAppsDto)
             self.common_apps_dto = config.get("commonAppsDto", {})
-            if "appsConfig" in self.common_apps_dto:
-                self.common_apps_dto["appsConfig"] = ZscalerCollection.form_list(self.common_apps_dto["appsConfig"], AppConfig)
+            
+            if "commonAppsDto" in config:
+                if isinstance(config["commonAppsDto"], CommonAppsDto):
+                    self.common_apps_dto = config["commonAppsDto"]
+                elif config["commonAppsDto"] is not None:
+                    self.common_apps_dto = CommonAppsDto(config["commonAppsDto"])
+                else:
+                    self.common_apps_dto = None
+            else:
+                self.common_apps_dto = None
+
             self.pra_apps = config["praApps"] if "praApps" in config else []
 
             # Handle tcpPortRange using conditionals for defensive programming
@@ -99,10 +109,11 @@ class ApplicationSegmentPRA(ZscalerObject):
         else:
             self.id = None
             self.name = None
+            self.description = None
             self.domain_names = []
             self.server_groups = []
             self.pra_apps = []
-            self.common_apps_dto = {}
+            self.common_apps_dto = None
             self.tcp_port_ranges = []
             self.udp_port_ranges = []
             self.tcp_port_range = []
@@ -142,8 +153,9 @@ class ApplicationSegmentPRA(ZscalerObject):
         return {
             "id": self.id,
             "name": self.name,
+            "description": self.description,
             "domainNames": self.domain_names,
-            "serverGroups": [group.request_format() for group in self.server_groups],
+            "serverGroups": self.server_groups,
             "enabled": self.enabled,
             "tcpPortRanges": self.tcp_port_ranges,
             "udpPortRanges": self.udp_port_ranges,
@@ -181,18 +193,42 @@ class ApplicationSegmentPRA(ZscalerObject):
             "zscalerManaged": self.zscaler_managed,
         }
 
+class CommonAppsDto(ZscalerObject):
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.apps_config = ZscalerCollection.form_list(
+                config["appsConfig"] if "appsConfig" in config else [], AppConfig
+            )
+        else:
+            self.apps_config = []
+
+    def request_format(self):
+        """
+        Formats the AppConfig data into a dictionary suitable for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "appsConfig": self.apps_config,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
 
 class AppConfig(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
         if config:
-            self.app_types = config["appTypes"] if "appTypes" in config else []
             self.application_port = config["applicationPort"] if "applicationPort" in config else None
             self.application_protocol = config["applicationProtocol"] if "applicationProtocol" in config else None
             self.connection_security = config["connectionSecurity"] if "connectionSecurity" in config else None
             self.enabled = config["enabled"] if "enabled" in config else True
             self.domain = config["domain"] if "domain" in config else None
             self.name = config["name"] if "name" in config else None
+
+            self.app_types = ZscalerCollection.form_list(
+                config["appTypes"] if "appTypes" in config else [], str
+            )
         else:
             self.app_types = []
             self.application_port = None

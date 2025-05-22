@@ -63,6 +63,10 @@ class PolicySetControllerV2(ZscalerObject):
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
             self.default_rule = config["defaultRule"] if "defaultRule" in config else False
 
+            self.post_action_types = ZscalerCollection.form_list(
+                config["postActionTypes"] if "postActionTypes" in config else [], str
+            )
+
             self.conditions = ZscalerCollection.form_list(config.get("conditions", []), Condition)
 
             self.app_connector_groups = ZscalerCollection.form_list(
@@ -160,6 +164,7 @@ class PolicySetControllerV2(ZscalerObject):
             self.app_connector_groups = []
             self.app_server_groups = []
             self.service_edge_groups = []
+            self.post_action_types = []
             self.privileged_capabilities = None
             self.privileged_portal_capabilities = None
             self.reauth_idle_timeout = None
@@ -181,6 +186,7 @@ class PolicySetControllerV2(ZscalerObject):
             "priority": self.priority,
             "policyType": self.policy_type,
             "postActions": self.post_actions,
+            "postActionTypes": self.post_action_types,
             "operator": self.operator,
             "action": self.action,
             "actionId": self.action_id,

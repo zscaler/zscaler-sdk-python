@@ -33,6 +33,7 @@ class DevicesAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
+    @zcc_param_mapper
     def download_devices(self, query_params=None, filename: str = None):
         """
         Downloads the list of devices as a CSV file from the ZCC portal.
@@ -106,8 +107,10 @@ class DevicesAPI(APIClient):
             raise Exception("Error creating request for downloading devices.")
 
         response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error or response is None:
-            raise Exception("Error executing request for downloading devices.")
+        if error:
+            raise error
+        if response is None:
+            raise Exception("No response received when downloading devices.")
 
         content_type = response.headers.get("Content-Type", "").lower()
         if not content_type.startswith("application/octet-stream") and not response.text.startswith('"User","Device type"'):
@@ -118,6 +121,7 @@ class DevicesAPI(APIClient):
 
         return filename
 
+    @zcc_param_mapper
     def download_service_status(self, query_params=None, filename: str = None):
         """
         Downloads service status for all devices from the ZCC portal.
@@ -191,8 +195,10 @@ class DevicesAPI(APIClient):
             raise Exception("Error creating request for downloading service status.")
 
         response, error = self._request_executor.execute(request, return_raw_response=True)
-        if error or response is None:
-            raise Exception("Error executing request for downloading service status.")
+        if error:
+            raise error
+        if response is None:
+            raise Exception("No response received when downloading devices.")
 
         content_type = response.headers.get("Content-Type", "").lower()
         if not content_type.startswith("application/octet-stream") and not response.text.startswith('"User","Device type"'):
@@ -433,7 +439,7 @@ class DevicesAPI(APIClient):
                     If not provided, the default page size is 30.
                     The max page size is 5000.
                     
-                client_connector_version (list[str]):
+                client_connector_version (list[str]): List of the client connector agent versions
                 os_type (int): Valid options are: ios, android, windows, macos, linux.
                 udids (list[str]): The list of udids for the devices to be removed
                 user_name (str): The username i.e jdoe@acme.com of the user to which the device is associated with.
@@ -502,7 +508,7 @@ class DevicesAPI(APIClient):
                     If not provided, the default page size is 30.
                     The max page size is 5000.
 
-                client_connector_version (list[str]):
+                client_connector_version (list[str]): List of the client connector agent versions
                 os_type (int): Valid options are: ios, android, windows, macos, linux.
                 udids (list[str]): The list of udids for the devices to be removed
                 user_name (str): The username i.e jdoe@acme.com of the user to which the device is associated with.
@@ -515,7 +521,7 @@ class DevicesAPI(APIClient):
 
             >>> remove_devices, _, error = client.zcc.devices.force_remove_devices(
             ...     client_connector_version=['3.0.0.57'],
-            ...     os_type='3',
+            ...     os_type='windows',
             ...     udids='VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D',
             ...     user_name='jdoe@acme.com'
             ... )
