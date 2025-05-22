@@ -143,7 +143,13 @@ class URLCategoriesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_url_category(self, super_category: str, urls: list, configured_name: str = None, **kwargs) -> tuple:
+    def add_url_category(
+        self,
+        super_category: str,
+        urls: list,
+        configured_name: str = None,
+        **kwargs
+    ) -> tuple:
         """
         Adds a new custom URL category.
 
@@ -219,11 +225,6 @@ class URLCategoriesAPI(APIClient):
             /urlCategories
         """
         )
-
-        if not super_category:
-            raise ValueError("`super_category` is required.")
-        if not urls:
-            raise ValueError("`urls` cannot be empty.")
 
         custom_category = kwargs.pop("custom_category", False)
 
