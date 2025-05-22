@@ -346,10 +346,12 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
         """
         super().__init__(config)
         if config:
-            self.dest_addresses = ZscalerCollection.form_list(config["capabilities"] if "capabilities" in config else [], str)
+            self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
+            self.capabilities = ZscalerCollection.form_list(config["capabilities"] if "capabilities" in config else [], str)
 
         else:
             self.capabilities = None
+            self.microtenant_id = None
 
     def request_format(self):
         """
@@ -357,6 +359,7 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
         """
         parent_req_format = super().request_format()
         current_obj_format = {
+            "microtenantId": self.microtenant_id,
             "capabilities": self.capabilities,
         }
         parent_req_format.update(current_obj_format)

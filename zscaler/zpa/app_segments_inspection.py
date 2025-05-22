@@ -214,8 +214,14 @@ class AppSegmentsInspectionAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
+
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
         # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
@@ -367,10 +373,15 @@ class AppSegmentsInspectionAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 

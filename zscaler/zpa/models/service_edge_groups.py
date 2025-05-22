@@ -63,11 +63,11 @@ class ServiceEdgeGroup(ZscalerObject):
             self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else False
             self.use_in_dr_mode = config["useInDrMode"] if "useInDrMode" in config else False
 
-            self.app_service_groups = ZscalerCollection.form_list(
+            self.trusted_networks = ZscalerCollection.form_list(
                 config["trustedNetworks"] if "trustedNetworks" in config else [], trusted_networks.TrustedNetwork
             )
 
-            self.app_service_groups = ZscalerCollection.form_list(
+            self.service_edges = ZscalerCollection.form_list(
                 config["serviceEdges"] if "serviceEdges" in config else [], service_edges.ServiceEdge
             )
 

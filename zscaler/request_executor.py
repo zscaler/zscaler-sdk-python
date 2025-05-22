@@ -594,7 +594,13 @@ class RequestExecutor:
 
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
-            headers.get("x-ratelimit-reset") or headers.get("X-RateLimit-Reset") or headers.get("RateLimit-Reset")
+            headers.get("x-ratelimit-reset") or 
+            headers.get("X-RateLimit-Reset") or
+            headers.get("RateLimit-Reset") or
+            
+            # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
+            headers.get("X-Rate-Limit-Retry-After-Seconds") or # ZCC /downloadDevices Rate Limiting Header (LegacyZCCClientHelper)
+            headers.get("X-Rate-Limit-Remaining") # (LegacyZCCClientHelper)
         )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
