@@ -717,6 +717,71 @@ def format_url(base_string):
     """
     return "".join([line.strip() for line in base_string.splitlines()])
 
+# def zcc_param_mapper(func):
+#     @wraps(func)
+#     def wrapper(self, *args, **kwargs):
+#         query_params = kwargs.get("query_params", {}) or {}
+#         body = kwargs.copy()
+#         mapped_params = {}
+
+#         # -------------------------------
+#         # Detect source of raw inputs
+#         # -------------------------------
+#         raw_os = (
+#             query_params.get("os_type") or
+#             query_params.get("os_types") or
+#             body.get("os_type") or
+#             body.get("os_types")
+#         )
+
+#         if raw_os:
+#             raw_os = [raw_os] if isinstance(raw_os, str) else raw_os
+#             mapped = [
+#                 str(zcc_param_map["os"].get(os.lower()))
+#                 for os in raw_os
+#                 if zcc_param_map["os"].get(os.lower())
+#             ]
+#             if not mapped:
+#                 raise ValueError("Invalid `os_type` or `os_types` provided.")
+#             mapped_params["osTypes"] = ",".join(mapped)
+
+#         raw_reg = (
+#             query_params.get("registration_type") or
+#             query_params.get("registration_types") or
+#             body.get("registration_type") or
+#             body.get("registration_types")
+#         )
+
+#         if raw_reg:
+#             raw_reg = [raw_reg] if isinstance(raw_reg, str) else raw_reg
+#             mapped = [
+#                 str(zcc_param_map["reg_type"].get(rt.lower()))
+#                 for rt in raw_reg
+#                 if zcc_param_map["reg_type"].get(rt.lower())
+#             ]
+#             if not mapped:
+#                 raise ValueError("Invalid `registration_type(s)` provided.")
+#             mapped_params["registrationTypes"] = ",".join(mapped)
+
+#         # Clean aliases
+#         for key in [
+#             "os_type", "os_types",
+#             "registration_type", "registration_types",
+#         ]:
+#             query_params.pop(key, None)
+#             kwargs.pop(key, None)
+
+#         # Distribute to the appropriate location
+#         if "query_params" in kwargs:
+#             query_params.update(mapped_params)
+#             kwargs["query_params"] = query_params
+#         else:
+#             kwargs.update(mapped_params)
+
+#         return func(self, *args, **kwargs)
+
+#     return wrapper
+
 def zcc_param_mapper(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
@@ -743,7 +808,11 @@ def zcc_param_mapper(func):
             ]
             if not mapped:
                 raise ValueError("Invalid `os_type` or `os_types` provided.")
-            mapped_params["osTypes"] = ",".join(mapped)
+            # Use singular key if original was singular, plural if original was plural
+            if "os_type" in query_params or "os_type" in body:
+                mapped_params["osType"] = ",".join(mapped)
+            else:
+                mapped_params["osTypes"] = ",".join(mapped)
 
         raw_reg = (
             query_params.get("registration_type") or
@@ -761,7 +830,11 @@ def zcc_param_mapper(func):
             ]
             if not mapped:
                 raise ValueError("Invalid `registration_type(s)` provided.")
-            mapped_params["registrationTypes"] = ",".join(mapped)
+            # Use singular key if original was singular, plural if original was plural
+            if "registration_type" in query_params or "registration_type" in body:
+                mapped_params["registrationType"] = ",".join(mapped)
+            else:
+                mapped_params["registrationTypes"] = ",".join(mapped)
 
         # Clean aliases
         for key in [
