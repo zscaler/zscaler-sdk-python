@@ -124,6 +124,7 @@ def to_snake_case(string):
         "extranetDTO": "extranet_dto",
         "locationGroupDTO": "location_group_dto",
         "locationDTO": "location_dto",
+        "predefinedADPControls": "predefined_adp_controls"
     }
 
     if string in FIELD_EXCEPTIONS:
@@ -255,6 +256,7 @@ def to_lower_camel_case(string):
         "extranet_dto": "extranetDTO",
         "location_group_dto": "locationGroupDTO",
         "location_dto": "locationDTO",
+        "predefined_adp_controls": "predefinedADPControls"
     }
 
     if string in FIELD_EXCEPTIONS:

@@ -18,6 +18,10 @@
     - Added `GET /weightedLbConfig` Get Weighted Load Balancer Config for AppSegment
     - Added `PUT /weightedLbConfig` Update Weighted Load Balancer Config for AppSegment
 
+### ZPA Browser Access Application Segment
+[PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added dedicated resource `app_segments_ba` for ZPA Browser Access Application Segment provisioning.
+[PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added dedicated resource `app_segments_ba_v2` for ZPA Browser Access Application Segment provisioning using newly recommended format via block `common_apps_dto.apps_config`
+
 ### ZPA Policy-Set-Controller Condition - New Object Type
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added the following new `object_types` to function `_create_conditions_v2` in the `policies` package: `CHROME_ENTERPRISE` and `CHROME_POSTURE_PROFILE`
 
@@ -37,7 +41,10 @@
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added additional `CLIENT_TYPE` validation within the ZPA policy functions `add_redirection_rule_v2` and `update_redirection_rule_v2`
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added pre-check on all ZPA  `application_segment` resources to prevent port overlap configuration.
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Enhanced `_create_conditions_v2` function used on ZPA Policy v2 condition block.
+
+### Internal Enhancements
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Enhanced `check_response_for_error` function to parse and display API error messages more clearly.
+* [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Consolidated all application segment resource models into a single model shared across all Application Segment package resources.
 
 ## 1.3.0 (May, 12 2025)
 
