@@ -248,6 +248,26 @@ class LegacyZPAClientHelper:
         return ApplicationSegmentAPI(self.request_executor, self.config)
 
     @property
+    def app_segments_ba(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA interface <zpa-app_segments_ba>`.
+
+        """
+        from zscaler.zpa.app_segments_ba import ApplicationSegmentBAAPI
+
+        return ApplicationSegmentBAAPI(self.request_executor, self.config)
+
+    @property
+    def app_segments_ba_v2(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA V2 interface <zpa-app_segments_ba_v2>`.
+
+        """
+        from zscaler.zpa.app_segments_ba_v2 import AppSegmentsBAV2API
+
+        return AppSegmentsBAV2API(self.request_executor, self.config)
+
+    @property
     def app_segments_pra(self):
         """
         The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_pra>`.
