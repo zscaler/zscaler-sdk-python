@@ -67,13 +67,6 @@ class ApplicationSegments(ZscalerObject):
                 config["domainNames"] if "domainNames" in config else [], str
             )
 
-            self.tcp_port_ranges = ZscalerCollection.form_list(
-                config["tcpPortRanges"] if "tcpPortRanges" in config else [], str
-            )
-            self.udp_port_ranges = ZscalerCollection.form_list(
-                config["udpPortRanges"] if "udpPortRanges" in config else [], str
-            )
-
             self.server_groups = []
             if "serverGroups" in config:
                 for group in config["serverGroups"]:
@@ -90,6 +83,13 @@ class ApplicationSegments(ZscalerObject):
                 config["inspectionApps"] if "inspectionApps" in config else [], InspectionApps
             )
 
+            self.tcp_port_ranges = ZscalerCollection.form_list(
+                config["tcpPortRanges"] if "tcpPortRanges" in config else [], str
+            )
+            self.udp_port_ranges = ZscalerCollection.form_list(
+                config["udpPortRanges"] if "udpPortRanges" in config else [], str
+            )
+
             self.tcp_port_range = []
             if "tcpPortRange" in config:
                 for port_range in config["tcpPortRange"]:
@@ -100,7 +100,7 @@ class ApplicationSegments(ZscalerObject):
             if "udpPortRange" in config:
                 for port_range in config["udpPortRange"]:
                     if isinstance(port_range, dict):
-                        self.tcp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
+                        self.udp_port_range.append({"from": port_range.get("from"), "to": port_range.get("to")})
 
             self.inspection_apps = ZscalerCollection.form_list(
                 config["clientlessApps"] if "clientlessApps" in config else [], BAAppDto
