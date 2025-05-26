@@ -39,7 +39,7 @@ class SegmentGroup(ZscalerObject):
             self.skip_detailed_app_info = config["skipDetailedAppInfo"] if "skipDetailedAppInfo" in config else None
 
             self.applications = (
-                ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegment)
+                ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegments)
                 if "applications" in config
                 else []
             )
