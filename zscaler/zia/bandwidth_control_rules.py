@@ -36,6 +36,9 @@ class BandwidthControlRulesAPI(APIClient):
         List bandwidth control rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
+
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
@@ -106,6 +109,9 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Fetches a specific bandwidth control rule lite.
 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
+
         Args:
             bwd_id (int): The unique identifier for the Bandwidth control rule Lite.
 
@@ -158,6 +164,9 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Returns information for the specified bandwidth control rule.
 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
+
         Args:
             rule_id (str): The unique identifier for the bandwidth control rule.
 
@@ -206,6 +215,9 @@ class BandwidthControlRulesAPI(APIClient):
     ) -> tuple:
         """
         Adds a new cloud bandwidth control rule.
+
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
 
         Args:
             name (str): Name of the rule, max 31 chars.
@@ -284,6 +296,9 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Updates an existing bandwidth control rule.
 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
+
         Args:
             rule_id (str): The unique ID for the rule that is being updated.
             **kwargs: Optional keyword args.
@@ -333,7 +348,8 @@ class BandwidthControlRulesAPI(APIClient):
         """
         )
 
-        body = kwargs
+        body = kwargs.copy()
+        body["id"] = rule_id
 
         if "enabled" in kwargs:
             kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
@@ -362,6 +378,9 @@ class BandwidthControlRulesAPI(APIClient):
     def delete_rule(self, rule_id: int) -> tuple:
         """
         Deletes the specified bandwidth control rule.
+
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        token included in the request's Authorization header.
 
         Args:
             rule_id (str): The unique identifier for the bandwidth control rule.

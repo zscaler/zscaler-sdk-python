@@ -8,14 +8,14 @@ from zscaler.cache.cache import Cache
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.constants import ZPA_BASE_URLS, DEV_AUTH_URL
-from zscaler.logger import setup_logging
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
     is_token_expired,
 )
+from zscaler.logger import setup_logging
+from zscaler.errors.response_checker import check_response_for_error
 
-# Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
@@ -135,7 +135,15 @@ class LegacyZPAClientHelper:
             if self.cloud == "DEV":
                 url = DEV_AUTH_URL + "?grant_type=CLIENT_CREDENTIALS"
             data = urllib.parse.urlencode(params)
+
             resp = requests.post(url, data=data, headers=headers, timeout=self.timeout)
+
+            logger.info("Login attempt with status: %d", resp.status_code)
+            # centralized error parsing
+            _, err = check_response_for_error(url, resp, resp.text)
+            if err:
+                raise err
+
             logger.info("Login attempt with status: %d", resp.status_code)
             return resp
         except Exception as e:
@@ -159,17 +167,14 @@ class LegacyZPAClientHelper:
             Tuple[requests.Response, dict]: Response object and request details.
         """
         try:
-            # Construct the base URL
             base_url = f"{self.baseurl}{path}"
 
-            # Prepare request headers
             headers = self.headers.copy()
             headers.update(self.request_executor.get_custom_headers())
             if not headers.get("Authorization"):
-                self.refreshToken()  # Ensure token is refreshed
+                self.refreshToken()
                 headers["Authorization"] = f"Bearer {self.access_token}"
 
-            # Execute request using HTTP client directly (avoid recursion)
             response = requests.request(
                 method=method,
                 url=base_url,
@@ -179,8 +184,13 @@ class LegacyZPAClientHelper:
                 timeout=self.timeout,
             )
 
-            # Log and return results
-            logger.info(f"Legacy client request executed successfully. " f"Status: {response.status_code}, URL: {base_url}")
+            _, err = check_response_for_error(base_url, response, response.text)
+            if err:
+                raise err
+
+            logger.info("Legacy client request executed successfully. "
+                        "Status: %d, URL: %s", response.status_code, base_url)
+
             return response, {
                 "method": method,
                 "url": base_url,
@@ -236,6 +246,26 @@ class LegacyZPAClientHelper:
         from zscaler.zpa.application_segment import ApplicationSegmentAPI
 
         return ApplicationSegmentAPI(self.request_executor, self.config)
+
+    @property
+    def app_segments_ba(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA interface <zpa-app_segments_ba>`.
+
+        """
+        from zscaler.zpa.app_segments_ba import ApplicationSegmentBAAPI
+
+        return ApplicationSegmentBAAPI(self.request_executor, self.config)
+
+    @property
+    def app_segments_ba_v2(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA V2 interface <zpa-app_segments_ba_v2>`.
+
+        """
+        from zscaler.zpa.app_segments_ba_v2 import AppSegmentsBAV2API
+
+        return AppSegmentsBAV2API(self.request_executor, self.config)
 
     @property
     def app_segments_pra(self):

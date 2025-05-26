@@ -106,6 +106,7 @@ class PolicySetControllerAPI(APIClient):
             "COUNTRY_CODE": [],
             "RISK_FACTOR_TYPE": [],
             "CHROME_ENTERPRISE": [],
+            "CHROME_POSTURE_PROFILE": [],
         }
 
         operators_for_types = {}  # Dictionary to store specific operators for each object type
@@ -174,66 +175,118 @@ class PolicySetControllerAPI(APIClient):
         return template
 
     def _create_conditions_v2(self, conditions: list) -> list:
-        """
-        Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
-
-        Args:
-            conditions (list): List of condition tuples where each tuple represents a specific policy condition.
-
-        Returns:
-            :obj:`list`: List containing the conditions formatted for the ZPA Policies API.
-        """
-
-        grouped_conditions = {"app_and_app_group": []}  # Specific group for APP and APP_GROUP
-        template = []
-
+        # Groups for different condition types
+        app_and_app_group_conditions = []  # Only APP and APP_GROUP go here
+        chrome_conditions = []            # CHROME_ENTERPRISE, CHROME_POSTURE_PROFILE
+        individual_conditions = []        # CONSOLE, LOCATION, MACHINE_GRP, CLIENT_TYPE etc.
+        criteria_conditions = {}          # All other condition types
+        
         for condition in conditions:
-            object_type, values = condition[0], condition[1]
-
-            if object_type in ["app", "app_group"]:
-                # Group APP and APP_GROUP together in the same operands block
-                grouped_conditions["app_and_app_group"].append({"objectType": object_type.upper(), "values": values})
-            elif object_type in [
-                "console",
-                "machine_grp",
-                "location",
-                "branch_connector_group",
-                "edge_connector_group",
-                "client_type",
-            ]:
-                # Each of these object types must be under individual operands blocks
-                template.append({"operands": [{"objectType": object_type.upper(), "values": values}]})
-            elif object_type in ["saml", "scim", "scim_group"]:
-                # These types use "entryValues" with "lhs" and "rhs"
-                template.append(
-                    {
-                        "operands": [
-                            {"objectType": object_type.upper(), "entryValues": [{"lhs": v[0], "rhs": v[1]} for v in values]}
-                        ]
-                    }
-                )
-            elif object_type in [
-                "posture",
-                "trusted_network",
-                "country_code",
-                "platform",
-                "risk_factor_type",
-                "chrome_enterprise",
-            ]:
-                # These types use "entryValues" with "lhs" as unique ID and "rhs" as "true"/"false"
-                template.append(
-                    {"operands": [{"objectType": object_type.upper(), "entryValues": [{"lhs": values[0], "rhs": values[1]}]}]}
-                )
+            operator = "OR"  # Default operator
+            
+            # Handle optional operator prefix
+            if isinstance(condition, tuple) and condition[0].upper() in ["AND", "OR"]:
+                # Skip operator for chrome_enterprise conditions
+                if not (isinstance(condition[1], tuple) and condition[1][0].lower() == "chrome_enterprise"):
+                    operator = condition[0].upper()
+                condition = condition[1]
+            
+            # Process the actual condition
+            if isinstance(condition, tuple):
+                object_type = condition[0].lower()
+                values = condition[1:]
+                
+                # Handle chrome conditions specially
+                if object_type in ["chrome_enterprise", "chrome_posture_profile"]:
+                    if object_type == "chrome_enterprise":
+                        # Expected format: ("chrome_enterprise", attribute, value)
+                        chrome_conditions.append({
+                            "objectType": "CHROME_ENTERPRISE",
+                            "entryValues": [{"lhs": values[0], "rhs": values[1]}]
+                        })
+                    else:
+                        # Expected format: ("chrome_posture_profile", [id1, id2])
+                        chrome_conditions.append({
+                            "objectType": "CHROME_POSTURE_PROFILE",
+                            "values": values[0] if isinstance(values[0], list) else list(values)
+                        })
+                
+                # Handle app and app_group conditions (grouped together)
+                elif object_type in ["app", "app_group"]:
+                    app_and_app_group_conditions.append({
+                        "objectType": object_type.upper(),
+                        "values": values[0] if isinstance(values[0], list) else list(values)
+                    })
+                
+                # Handle individual conditions (each in their own block)
+                elif object_type in ["console", "location", "machine_grp", "client_type"]:
+                    individual_conditions.append({
+                        "operator": operator,
+                        "operands": [{
+                            "objectType": object_type.upper(),
+                            "values": values[0] if isinstance(values[0], list) else list(values)
+                        }]
+                    })
+                
+                # Handle all other condition types
+                else:
+                    key = (operator, object_type.upper())
+                    if object_type in ["posture", "trusted_network", "country_code", 
+                                    "platform", "risk_factor_type", "saml", "scim", "scim_group"]:
+                        # Special handling for conditions with list of tuples
+                        if object_type in ["scim_group", "saml", "scim", "posture", "trusted_network"] and len(values) == 1 and isinstance(values[0], list):
+                            for lhs, rhs in values[0]:
+                                criteria_conditions.setdefault(key, []).append({"lhs": lhs, "rhs": rhs})
+                        elif len(values) == 2 and not isinstance(values[0], list):
+                            entry = {"lhs": values[0], "rhs": values[1]}
+                            criteria_conditions.setdefault(key, []).append(entry)
+                        else:
+                            entry = values[0] if len(values) == 1 else values
+                            criteria_conditions.setdefault(key, []).append(entry)
+                    else:
+                        # For simple value conditions
+                        criteria_conditions.setdefault(key, []).extend(
+                            values[0] if isinstance(values[0], list) else values
+                        )
+        
+        # Build the final conditions list
+        result = []
+        
+        # 1. Add chrome conditions as a single operands block if any exist
+        if chrome_conditions:
+            result.append({"operands": chrome_conditions})
+        
+        # 2. Add app and app_group conditions as a single operands block if any exist
+        if app_and_app_group_conditions:
+            result.append({"operands": app_and_app_group_conditions})
+        
+        # 3. Add individual conditions (each in their own block)
+        result.extend(individual_conditions)
+        
+        # 4. Add all other conditions with their operators
+        for (operator, object_type), values in criteria_conditions.items():
+            # Determine if this condition uses entryValues or simple values
+            if object_type.lower() in ["posture", "trusted_network", "country_code", 
+                                    "platform", "risk_factor_type", "saml", "scim", "scim_group"]:
+                operand = {
+                    "objectType": object_type,
+                    "entryValues": [
+                        v if isinstance(v, dict) else {"lhs": v[0], "rhs": v[1]}
+                        for v in values
+                    ]
+                }
             else:
-                # Handle other possible object types if needed in the future
-                template.append({"operands": [{"objectType": object_type.upper(), "values": values}]})
-
-        # Add the grouped APP and APP_GROUP conditions if any were specified
-        if grouped_conditions["app_and_app_group"]:
-            template.append({"operands": grouped_conditions["app_and_app_group"]})
-
-        return template
-
+                operand = {
+                    "objectType": object_type,
+                    "values": values
+                }
+            
+            result.append({
+                "operator": operator,
+                "operands": [operand]
+            })
+        
+        return result
     def get_policy(self, policy_type: str, query_params=None) -> tuple:
         """
         Returns the policy and rule sets for the given policy type.
@@ -509,6 +562,9 @@ class PolicySetControllerAPI(APIClient):
         # Construct the payload with any additional attributes from kwargs
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
             "appServerGroups": [{"id": group_id} for group_id in app_server_group_ids],
@@ -603,6 +659,9 @@ class PolicySetControllerAPI(APIClient):
         payload = {
             "name": name,
             "action": action.upper() if action else None,
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
+            "rule_order": kwargs.get("rule_order"),
             "appConnectorGroups": [{"id": group_id} for group_id in (app_connector_group_ids or [])],
             "appServerGroups": [{"id": group_id} for group_id in (app_server_group_ids or [])],
         }
@@ -890,9 +949,15 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
+
+        conditions = kwargs.pop("conditions", [])
+        if conditions:
+            body["conditions"] = self._create_conditions_v1(conditions)
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -997,6 +1062,8 @@ class PolicySetControllerAPI(APIClient):
         # Construct the payload similar to add_client_forwarding_rule
         payload = {
             "name": name if name else kwargs.get("name"),
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper() if action else kwargs.get("action", "").upper(),
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
@@ -1099,6 +1166,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
@@ -1176,7 +1245,7 @@ class PolicySetControllerAPI(APIClient):
         Examples:
             Updates the name only for an Isolation Policy rule:
 
-            >>> zpa.policiesv2.update_isolation_rule(
+            >>> zpa.policies.update_isolation_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Isolation_Rule_v2',
             ...    description='Update_Isolation_Rule_v2',
@@ -1212,6 +1281,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
@@ -1274,6 +1345,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnInspectionProfileId": zpn_inspection_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
@@ -1343,7 +1416,7 @@ class PolicySetControllerAPI(APIClient):
         Examples:
             Updates the name only for an Inspection Policy rule:
 
-            >>> zpa.policiesv2.update_app_protection_rule(
+            >>> zpa.policies.update_app_protection_rule(
             ...    rule_id='216199618143320419',
             ...    name='Update_Inspection_Rule_v2',
             ...    description='Update_Inspection_Rule_v2',
@@ -1377,7 +1450,10 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
+            "zpnInspectionProfileId": zpn_inspection_profile_id,
             "conditions": self._create_conditions_v1(kwargs.pop("conditions", [])),
         }
 
@@ -1406,6 +1482,8 @@ class PolicySetControllerAPI(APIClient):
         self,
         name: str,
         action: str,
+        app_connector_group_ids: list = [],
+        app_server_group_ids: list = [],
         **kwargs,
     ) -> tuple:
         """
@@ -1437,21 +1515,75 @@ class PolicySetControllerAPI(APIClient):
 
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                `RHS value`.
                 E.g.
 
                 .. code-block:: python
 
-                    [('app', 'id', '99999'),
-                    ('app', 'id', '88888'),
-                    ('app_group', 'id', '77777),
-                    ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx', True)]
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
+                    "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
 
         Returns:
             :obj:`Tuple`: The resource record of the newly created access policy rule.
+            
+        Examples:
+            Add Access Policy with Scim Group using OR condition
 
+            >>> added_rule, _, err = client.zpa.policies.add_access_rule_v2(
+            ...     name=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     action="allow",
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),          
+            ...         ("OR", ("trusted_network", [
+            ...             ("30e749f1-57f5-4cbe-b5fa-5bab3c32c468", "true"),
+            ...             ("a6b94584-c988-4896-8f7f-637ae87f1f0c", "true"),
+            ...         ])),
+            ...         (("chrome_enterprise", "managed", True),
+            ...         ("chrome_posture_profile", ["72058304855116487"]))
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding access rule: {err}")
+            ...     return
+            ... print(f"Access Rule added successfully: {added_rule.as_dict()}")
+            
+            Add Access Policy with Scim Group using AND condition
+
+            >>> added_rule, _, err = client.zpa.policies.add_access_rule_v2(
+            ...     name=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     action="allow",
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("AND", ("posture", "cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true")),
+            ...         ("AND", ("posture", "72ddbe89-fa08-4071-94bd-964ce264db10", "true")),
+            ...         ("AND", ("scim_group", "72058304855015574", "490880")),
+            ...         ("AND", ("scim_group", "72058304855015574", "490877")),
+            ... )
+            >>> if err:
+            ...     print(f"Error adding access rule: {err}")
+            ...     return
+            ... print(f"Access Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy("access", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
@@ -1471,7 +1603,12 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
+            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
+            "appServerGroups": [{"id": group_id} for group_id in app_server_group_ids],
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
@@ -1497,7 +1634,15 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_access_rule_v2(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> tuple:
+    def update_access_rule_v2(
+        self,
+        rule_id: str,
+        name: str = None,
+        action: str = None,
+        app_connector_group_ids: list = None,
+        app_server_group_ids: list = None,
+        **kwargs
+    ) -> tuple:
         """
         Update an existing policy rule.
 
@@ -1525,22 +1670,93 @@ class PolicySetControllerAPI(APIClient):
                 A description for the rule.
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                `RHS value`.
+                E.g.
+
+                .. code-block:: python
+
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
+                    "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
 
         Returns:
+            :obj:`Tuple`: The resource record of the newly created access policy rule.
 
         Examples:
-            Updates the description for an Access Policy rule:
+            Update Access Policy with Scim Group using OR condition
 
-            >>> zpa.policiesv2.update_access_rule(
-            ...    rule_id='216199618143320419',
-            ...    description='Updated Description',
-            ...    action='ALLOW',
-            ...    conditions=[
-            ...         ("client_type", ['zpn_client_type_exporter', 'zpn_client_type_zapp']),
-            ...     ],
+            >>> update_rule, _, err = client.zpa.policies.update_access_rule_v2(
+            ...     rule_id='45857455526',
+            ...     name=f"UpdateAccessRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateAccessRule_{random.randint(1000, 10000)}",
+            ...     action="allow",
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),          
+            ...         ("OR", ("trusted_network", [
+            ...             ("30e749f1-57f5-4cbe-b5fa-5bab3c32c468", "true"),
+            ...             ("a6b94584-c988-4896-8f7f-637ae87f1f0c", "true"),
+            ...         ])),
+            ...         (("chrome_enterprise", "managed", True),
+            ...         ("chrome_posture_profile", ["72058304855116487"]))
+            ...         ("OR", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("OR", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error adding access rule: {err}")
+            ...     return
+            ... print(f"Access Rule added successfully: {added_rule.as_dict()}")
+            
+            Add Access Policy using AND condition
+
+            >>> added_rule, _, err = client.zpa.policies.update_access_rule_v2(
+            ...     name=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewAccessRule_{random.randint(1000, 10000)}",
+            ...     action="allow",
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("AND", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),          
+            ...         ("AND", ("trusted_network", [
+            ...             ("30e749f1-57f5-4cbe-b5fa-5bab3c32c468", "true"),
+            ...             ("a6b94584-c988-4896-8f7f-637ae87f1f0c", "true"),
+            ...         ])),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ... )
+            >>> if err:
+            ...     print(f"Error adding access rule: {err}")
+            ...     return
+            ... print(f"Access Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy("access", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
@@ -1565,6 +1781,11 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name if name else kwargs.get("name"),
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
+            "rule_order": kwargs.get("rule_order"),
+            "appConnectorGroups": [{"id": group_id} for group_id in (app_connector_group_ids or [])],
+            "appServerGroups": [{"id": group_id} for group_id in (app_server_group_ids or [])],
             "action": action.upper() if action else kwargs.get("action", "").upper(),
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
@@ -1599,43 +1820,76 @@ class PolicySetControllerAPI(APIClient):
         Ensure you are using the correct arguments for the policy type that you want to update.
 
         Args:
-            rule_id (str):
-                The unique identifier for the rule to be updated.
-            app_connector_group_ids (:obj:`list` of :obj:`str`, optional):
-                A list of application connector IDs that will be attached to the access policy rule. Defaults to an empty list.
-            app_server_group_ids (:obj:`list` of :obj:`str`, optional):
-                A list of server group IDs that will be attached to the access policy rule. Defaults to an empty list.
+            name (str):
+                The name of the new rule.
 
             **kwargs:
                 Optional keyword args.
 
         Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`.
+                E.g.
+
+                .. code-block:: python
+
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
+                    "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
+
             action (str):
                 The action for the policy. Accepted values are:
-                |  ``ALLOW``
-                |  ``DENY``
+                |  ``RE_AUTH``
             custom_msg (str):
                 A custom message.
             description (str):
                 A description for the rule.
-            conditions (list):
-                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+            re_auth_idle_timeout (str):
+                The re-authentication idle timeout value in seconds.
+            re_auth_timeout (str):
+                The re-authentication timeout value in seconds.
 
         Returns:
 
         Examples:
-            Updates the description for an Access Policy rule:
+            Updated an existing Timeout Policy rule:
 
-            >>> zpa.policiesv2.update_access_rule(
-            ...    rule_id='216199618143320419',
-            ...    description='Updated Description',
-            ...    action='ALLOW',
-            ...    conditions=[
-            ...         ("client_type", ['zpn_client_type_exporter', 'zpn_client_type_zapp']),
-            ...     ],
+            >>> added_rule, _, err = client.zpa.policies.add_timeout_rule_v2(
+            ...     name=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
+            ...     reauth_timeout="172800",
+            ...     reauth_idle_timeout="600",
+            ...     conditions=[
+            ...         ("client_type", ["zpn_client_type_exporter", 
+            ...                 "zpn_client_type_zapp", "zpn_client_type_browser_isolation", 
+            ...                 "zpn_client_type_zapp_partner",
+            ...             ]),
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error adding timeout rule: {err}")
+            ...     return
+            ... print(f"Timeout Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
@@ -1653,18 +1907,20 @@ class PolicySetControllerAPI(APIClient):
         """
         )
 
-        body = kwargs
-
-        microtenant_id = body.get("microtenant_id", None)
-        params = {"microtenantId": microtenant_id} if microtenant_id else {}
-
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
             "action": "RE_AUTH",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
             "reauthTimeout": kwargs.get("reauth_timeout", 172800),
             "reauthIdleTimeout": kwargs.get("reauth_idle_timeout", 600),
         }
+
+        body = kwargs
+
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -1696,36 +1952,69 @@ class PolicySetControllerAPI(APIClient):
         Keyword Args:
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                `RHS value`.
                 E.g.
 
                 .. code-block:: python
 
-                    [('app', 'id', '926196382959075416'),
-                    ('app', 'id', '926196382959075417'),
-                    ('app_group', 'id', '926196382959075332),
-                    ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'b15e4cad-fa6e-8182-9fc3-8125ee6a65e1', True)]
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
+                    "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
+
+            action (str):
+                The action for the policy. Accepted values are:
+                |  ``RE_AUTH``
             custom_msg (str):
                 A custom message.
             description (str):
                 A description for the rule.
-            re_auth_idle_timeout (int):
+            re_auth_idle_timeout (str):
                 The re-authentication idle timeout value in seconds.
-            re_auth_timeout (int):
+            re_auth_timeout (str):
                 The re-authentication timeout value in seconds.
 
         Returns:
+            :obj:`Tuple`: The resource record of the newly created access policy rule.
 
         Examples:
-            Updates the name only for a Timeout Policy rule:
+            Updated an existing Timeout Policy rule:
 
-            >>> zpa.policies.update_timeout_rule('99999', name='new_rule_name')
-
-            Updates the description for a Timeout Policy rule:
-
-            >>> zpa.policies.update_timeout_rule('888888', description='Updated Description')
+            >>> updated_rule, _, err = client.zpa.policies.add_timeout_rule_v2(
+            ...     rule_id='12365865',
+            ...     name=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
+            ...     reauth_timeout="172800",
+            ...     reauth_idle_timeout="600",
+            ...     conditions=[
+            ...         ("client_type", ["zpn_client_type_exporter", 
+            ...                 "zpn_client_type_zapp", "zpn_client_type_browser_isolation", 
+            ...                 "zpn_client_type_zapp_partner",
+            ...             ]),
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding timeout rule: {err}")
+            ...     return
+            ... print(f"Timeout Rule added successfully: {updated_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy("timeout", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
@@ -1750,6 +2039,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "custom_msg": kwargs.get("custom_msg"),
             "action": "RE_AUTH",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
             "reauthTimeout": kwargs.get("reauth_timeout", 172800),
@@ -1784,7 +2075,7 @@ class PolicySetControllerAPI(APIClient):
 
         Args:
             name (str):
-                The name of the new rule.
+                The name of the new forwarding rule.
             action (str):
                 The action for the policy. Accepted values are:
 
@@ -1797,21 +2088,57 @@ class PolicySetControllerAPI(APIClient):
         Keyword Args:
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                `RHS value`.
                 E.g.
 
                 .. code-block:: python
 
-                    [('app', 'id', '926196382959075416'),
-                    ('app', 'id', '926196382959075417'),
-                    ('app_group', 'id', '926196382959075332),
-                    ('client_type', 'zpn_client_type_exporter', 'zpn_client_type_zapp'),
-                    ('trusted_network', 'b15e4cad-fa6e-8182-9fc3-8125ee6a65e1', True)]
-            custom_msg (str):
-                A custom message.
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter", "zpn_client_type_zapp",
+                    "zpn_client_type_browser_isolation", "zpn_client_type_zapp_partner"]),
+
             description (str):
                 A description for the rule.
+                
+        Examples:
+            Add a new Access Policy Forwarding rule:
+
+            >>> added_rule, _, err = zpa.policies.add_client_forwarding_rule_v2(
+            ...    name=f"NewForwardingRule_{random.randint(1000, 10000)}",
+            ...    description=f"NewForwardingRule_{random.randint(1000, 10000)}",
+            ...    action='intercept',
+            ...    conditions=[
+            ...         ("client_type",
+            ...         ['zpn_client_type_edge_connector',
+            ...          'zpn_client_type_branch_connector',
+            ...          'zpn_client_type_machine_tunnel',
+            ...          'zpn_client_type_zapp',
+            ...          'zpn_client_type_zapp_partner']),
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ],
+            ... )
+            >>> if err:
+            ...     print(f"Error adding access forwarding rule: {err}")
+            ...     return
+            ... print(f"Access Forwarding Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
             "client_forwarding", query_params={"microtenantId": kwargs.get("microtenantId")}
@@ -1838,6 +2165,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
@@ -1879,15 +2208,10 @@ class PolicySetControllerAPI(APIClient):
                 |  ``intercept_accessible``
             description (str):
                 Additional information about the client forwarding policy rule.
-            enabled (bool):
-                Whether or not the client forwarding policy rule is enabled.
-            rule_order (str):
-                The rule evaluation order number of the rule.
 
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
-                `RHS value`. If you are adding multiple values for the same object type then you will need
-                a new entry for each value.
+                `RHS value`.
                 E.g.
 
                 .. code-block:: python
@@ -1900,13 +2224,13 @@ class PolicySetControllerAPI(APIClient):
                     ]),
 
         Examples:
-            Updates the name only for an Access Policy rule:
+            Updates the name only for an Access Policy Forwarding rule:
 
-            >>> zpa.policiesv2.update_client_forwarding_rule(
+            >>> updated_rule, _, err = zpa.policies.update_client_forwarding_rule(
             ...    rule_id='216199618143320419',
-            ...    name='Update_Redirection_Rule_v2',
-            ...    description='Update_Redirection_Rule_v2',
-            ...    action='redirect_default',
+            ...    name=f"UpdateAccessRule_{random.randint(1000, 10000)}",
+            ...    description=f"UpdateAccessRule_{random.randint(1000, 10000)}",
+            ...    action='intercept',
             ...    conditions=[
             ...         ("client_type",
             ...         ['zpn_client_type_edge_connector',
@@ -1916,6 +2240,10 @@ class PolicySetControllerAPI(APIClient):
             ...          'zpn_client_type_zapp_partner']),
             ...     ],
             ... )
+            >>> if err:
+            ...     print(f"Error updating access forwarding rule: {err}")
+            ...     return
+            ... print(f"Access Forwarding Rule updated successfully: {updated_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
             "client_forwarding", query_params={"microtenantId": kwargs.get("microtenantId")}
@@ -1942,6 +2270,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name if name else kwargs.get("name"),
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper() if action else kwargs.get("action", "").upper(),
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
@@ -2003,6 +2333,33 @@ class PolicySetControllerAPI(APIClient):
                 The isolation profile ID associated with the rule
             description (str):
                 A description for the rule.
+                
+        Returns:
+            :obj:`Tuple`: The resource record of the newly created access policy rule.
+            
+        Examples:
+            Add Access Isolation Policy with Scim Group using OR and other conditions
+
+            >>> added_rule, _, err = client.zpa.policies.add_isolation_rule_v2(
+            ...     name=f"NewIsolationRule{random.randint(1000, 10000)}",
+            ...     action="isolate",
+            ...     zpn_isolation_profile_id="72058304855039035",
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("OR", ("posture", "cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true")),
+            ...         ("OR", ("posture", "72ddbe89-fa08-4071-94bd-964ce264db10", "true")),
+            ...         (("chrome_enterprise", "managed", True),
+            ...         ("chrome_posture_profile", ["72058304855116487"]))
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding isolation rule: {err}")
+            ...     return
+            ... print(f"Isolation Rule added successfully: {added_rule.as_dict()}")
         """
         if action == "isolate" and not zpn_isolation_profile_id:
             return (None, None, "Error: zpn_isolation_profile_id is required when action is 'isolate'.")
@@ -2032,6 +2389,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
@@ -2040,7 +2399,13 @@ class PolicySetControllerAPI(APIClient):
         if action == "isolate":
             payload["zpnIsolationProfileId"] = zpn_isolation_profile_id
 
-        payload["conditions"].append({"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]})
+        client_type_present = any(
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
+        )
+        if not client_type_present:
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]}
+            )
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2099,19 +2464,30 @@ class PolicySetControllerAPI(APIClient):
                     ('client_type', 'zpn_client_type_exporter')]
 
         Examples:
-            Updates the name only for an Isolation Policy rule:
+            Updates an Isolation Policy rule:
 
-            >>> zpa.policiesv2.update_isolation_rule_v1(
+            >>> updated_rule, _, err = client.zpa.policies.update_isolation_rule_v2(
             ...    rule_id='216199618143320419',
-            ...    name='Update_Isolation_Rule_v2',
-            ...    description='Update_Isolation_Rule_v2',
+            ...    name=f"NewIsolationRule_{random.randint(1000, 10000)}",
+            ...    description=f"NewIsolationRule_{random.randint(1000, 10000)}",
             ...    action='isolate',
-            ...    conditions=[
-            ...         ("app", ["216199618143361683"]),
-            ...         ("app_group", ["216199618143360301"]),
-            ...         ("scim_group", [("216199618143191058", "2079468"), ("216199618143191058", "2079446")]),
-            ...     ],
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("OR", ("posture", "cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true")),
+            ...         ("OR", ("posture", "72ddbe89-fa08-4071-94bd-964ce264db10", "true")),
+            ...         (("chrome_enterprise", "managed", True),
+            ...         ("chrome_posture_profile", ["72058304855116487"]))
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error updating isolation rule: {err}")
+            ...     return
+            ... print(f"Isolation Rule updated successfully: {updated_rule.as_dict()}")
+            
         """
         if action == "isolate" and not zpn_isolation_profile_id:
             return (None, None, "Error: zpn_isolation_profile_id is required when action is 'isolate'.")
@@ -2136,6 +2512,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnIsolationProfileId": zpn_isolation_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
@@ -2144,9 +2522,13 @@ class PolicySetControllerAPI(APIClient):
         if action == "isolate":
             payload["zpnIsolationProfileId"] = zpn_isolation_profile_id
 
-        if "conditions" not in payload:
-            payload["conditions"] = []
-        payload["conditions"].append({"operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]})
+        client_type_present = any(
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
+        )
+        if not client_type_present:
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]}
+            )
 
         microtenant_id = kwargs.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -2210,20 +2592,38 @@ class PolicySetControllerAPI(APIClient):
                     ('client_type', 'zpn_client_type_exporter')]
 
         Examples:
-            Updates the name only for an Inspection Policy rule:
+            Add new for a App Protection Policy rule:
 
-            >>> zpa.policiesv2.update_app_protection_rule(
-            ...    rule_id='216199618143320419',
-            ...    name='Update_Inspection_Rule_v2',
-            ...    description='Update_Inspection_Rule_v2',
+            >>> added_rule, _, err = client.zpa.policies.add_app_protection_rule_v2(
+            ...    name=f"NewAppProtectionRule_{random.randint(1000, 10000)}",
+            ...    description=f"NewAppProtectionRule_{random.randint(1000, 10000)}",
             ...    action='inspect',
             ...    zpn_inspection_profile_id='216199618143363055'
-            ...    conditions=[
-            ...         ("app", ["216199618143361683"]),
-            ...         ("app_group", ["216199618143360301"]),
-            ...         ("scim_group", [("216199618143191058", "2079468"), ("216199618143191058", "2079446")]),
-            ...     ],
+            ...     conditions=[
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("OR", ("posture", [
+            ...             ("cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true"),
+            ...             ("72ddbe89-fa08-4071-94bd-964ce264db10", "true"),
+            ...         ])),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error adding app protection rule: {err}")
+            ...     return
+            ... print(f"App protection Rule added successfully: {added_rule.as_dict()}")
         """
         if action == "inspect" and not zpn_inspection_profile_id:
             return (None, None, "Error: zpn_inspection_profile_id is required when action is 'inspect'.")
@@ -2248,6 +2648,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
             "zpnInspectionProfileId": zpn_inspection_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
@@ -2311,7 +2713,7 @@ class PolicySetControllerAPI(APIClient):
 
                 .. code-block:: python
 
-                    zpa.policiesv2.add_privileged_credential_rule(
+                    zpa.policies.add_privileged_credential_rule(
                         name='new_pra_credential_rule',
                         description='new_pra_credential_rule',
                         credential_id='credential_id',
@@ -2320,6 +2722,30 @@ class PolicySetControllerAPI(APIClient):
                             ("console", ["console_id"]),
                         ],
                     )
+                    
+        Examples:
+            Update an existing App Protection Policy rule:
+
+            >>> updated_rule, _, err = client.zpa.policies.add_app_protection_rule_v2(
+            ...    rule_id='97697977' 
+            ...    name=f"NewAppProtectionRule_{random.randint(1000, 10000)}",
+            ...    description=f"NewAppProtectionRule_{random.randint(1000, 10000)}",
+            ...    action='inspect',
+            ...    zpn_inspection_profile_id='216199618143363055'
+            ...     conditions=[
+            ...         ("APP", ["72058304855090129"]),
+            ...         ("OR", ("posture", "cfab2ee9-9bf4-4482-9dcc-dadf7311c49b", "true")),
+            ...         ("OR", ("posture", "72ddbe89-fa08-4071-94bd-964ce264db10", "true")),
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error updating app protection rule: {err}")
+            ...     return
+            ... print(f"App protection Rule updated successfully: {updated_rule.as_dict()}")
         """
         if action == "inspect" and not zpn_inspection_profile_id:
             return (None, None, "Error: zpn_inspection_profile_id is required when action is 'inspect'.")
@@ -2344,7 +2770,10 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
+            "zpnInspectionProfileId": zpn_inspection_profile_id,
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
@@ -2376,15 +2805,96 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_privileged_credential_rule_v2(self, name: str, credential_id: str, **kwargs) -> tuple:
+    def add_privileged_credential_rule_v2(
+        self,
+        name: str,
+        credential_id: str = None,
+        **kwargs
+    ) -> tuple:
         """
         Add a new Privileged Remote Access Credential Policy rule.
+
+        Args:
+            name (str):
+                Name of the Privileged credential rule.
+            credential_id (str):
+                The ID of the privileged credential.
+            credential_pool_id (str):
+                The ID of the privileged credential pool.
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            description (str):
+                Additional information about the credential rule.
+            rule_order (str):
+                The rule evaluation order number of the rule.
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`. If you are adding multiple values for the same object type then you will need
+                a new entry for each value.
+
+                Examples:
+
+                .. code-block:: python
+
+                    conditions=[
+                        ("console", ["72058304855106742"]),
+                        ("OR", ("scim_group", [
+                            ("72058304855015574", "490880"),
+                            ("72058304855015574", "490877"),
+                        ])),
+                    ]
+
+        Examples:
+            Add a new Credential Policy rule using credential_id:
+
+            >>> added_rule, _, err = client.zpa.policies.add_privileged_credential_rule_v2(
+            ...     name=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     description=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     credential_id='6014',
+            ...     conditions=[
+            ...         ("console", ["72058304855106742"]),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding PRA Credential rule: {err}")
+            ...     return
+            ... print(f"PRA Credential Rule added successfully: {added_rule.as_dict()}")
+            
+            Add a new Credential Policy rule using credential_pool_id:
+
+            >>> added_rule, _, err = client.zpa.policies.add_privileged_credential_rule_v2(
+            ...     name=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     description=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     credential_pool_id='15',
+            ...     conditions=[
+            ...         ("console", ["72058304855106742"]),
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding PRA Credential rule: {err}")
+            ...     return
+            ... print(f"PRA Credential Rule added successfully: {added_rule.as_dict()}")
         """
-        policy_type_response, _, err = self.get_policy(
-            "credential", query_params={"microtenantId": kwargs.get("microtenantId")}
-        )
+        policy_type_response, _, err = self.get_policy("credential", query_params={"microtenantId": kwargs.get("microtenantId")})
         if err or not policy_type_response:
-            return (None, None, "Error retrieving policy for 'credential': {err}")
+            return (None, None, f"Error retrieving policy for 'credential': {err}")
 
         policy_set_id = policy_type_response.get("id")
         if not policy_set_id:
@@ -2399,22 +2909,30 @@ class PolicySetControllerAPI(APIClient):
         )
 
         body = kwargs
-
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+        # Extract optional credential pool ID
+        credential_pool_id = kwargs.get("credential_pool_id")
+
+        # ⚠️ Enforce mutual exclusivity
+        if credential_id and credential_pool_id:
+            return (None, None, "Only one of credential_id or credential_pool_id may be provided.")
+        elif not credential_id and not credential_pool_id:
+            return (None, None, "Either credential_id or credential_pool_id must be provided.")
+
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": "INJECT_CREDENTIALS",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
         if credential_id:
             payload["credential"] = {"id": credential_id}
-        elif "credential_pool_id" in kwargs and kwargs["credential_pool_id"]:
-            payload["credentialPool"] = {"id": kwargs["credential_pool_id"]}
         else:
-            return (None, None, "Either credential_id or credential_pool_id must be provided.")
+            payload["credentialPool"] = {"id": credential_pool_id}
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2432,8 +2950,9 @@ class PolicySetControllerAPI(APIClient):
 
     @synchronized(global_rule_lock)
     def update_privileged_credential_rule_v2(
-        self, rule_id: str,
-        credential_id: str,
+        self,
+        rule_id: str,
+        credential_id: str = None,
         name: str = None,
         **kwargs
     ) -> tuple:
@@ -2443,19 +2962,17 @@ class PolicySetControllerAPI(APIClient):
         Args:
             rule_id (str):
                 The unique identifier for the rule to be updated.
+            credential_id (str):
+                The ID of the privileged credential.
+            credential_pool_id (str):
+                The ID of the privileged credential pool.
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            action (str):
-                The action for the rule. Accepted value is: ``inject_credentials``
             description (str):
                 Additional information about the credential rule.
-            enabled (bool):
-                Whether or not the credential rule is enabled.
             rule_order (str):
                 The rule evaluation order number of the rule.
-            credential_id (str):
-                The ID of the privileged credential for the rule.
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
                 `RHS value`. If you are adding multiple values for the same object type then you will need
@@ -2465,17 +2982,62 @@ class PolicySetControllerAPI(APIClient):
 
                 .. code-block:: python
 
-                    [('saml', 'id', '926196382959075416'),
-                    ('scim', 'id', '926196382959075417'),
-                    ('scim_group', 'id', '926196382959075332),
-                    'credential_id', '926196382959075332, 'zpn_client_type_zapp'),
+                    conditions=[
+                        ("console", ["72058304855106742"]),
+                        ("OR", ("scim_group", [
+                            ("72058304855015574", "490880"),
+                            ("72058304855015574", "490877"),
+                        ])),
+                    ]
 
         Examples:
-            Updates the name only for an Credential Policy rule:
+            Update an existing Credential Policy rule using credential_id:
 
-            >>> zpa.policiesv2.update_privileged_credential_rule(
-            ...   rule_id='888888',
-            ...   name='credential_rule_new_name')
+            >>> updated_rule, _, err = client.zpa.policies.add_privileged_credential_rule_v2(
+            ...     rule_id='72058304855115989',
+            ...     name=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     description=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     credential_id='6014',
+            ...     conditions=[
+            ...         ("console", ["72058304855106742"]),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding PRA Credential rule: {err}")
+            ...     return
+            ... print(f"PRA Credential Rule added successfully: {updated_rule.as_dict()}")
+            
+            Update an existing Credential Policy rule using credential_pool_id:
+
+            >>> updated_rule, _, err = client.zpa.policies.add_privileged_credential_rule_v2(
+            ...     rule_id='72058304855115989',
+            ...     name=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     description=f"PrivilegedCredentialRule_{random.randint(1000, 10000)}",
+            ...     credential_pool_id='15',
+            ...     conditions=[
+            ...         ("console", ["72058304855106742"]),
+            ...         ("OR", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding PRA Credential rule: {err}")
+            ...     return
+            ... print(f"PRA Credential Rule added successfully: {updated_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
             "credential", query_params={"microtenantId": kwargs.get("microtenantId")}
@@ -2496,22 +3058,29 @@ class PolicySetControllerAPI(APIClient):
         )
 
         body = kwargs
-
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+        credential_pool_id = kwargs.get("credential_pool_id")
+
+        # ⚠️ Enforce mutual exclusivity
+        if credential_id and credential_pool_id:
+            return (None, None, "Only one of credential_id or credential_pool_id may be provided.")
+        elif not credential_id and not credential_pool_id:
+            return (None, None, "Either credential_id or credential_pool_id must be provided.")
+
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": "INJECT_CREDENTIALS",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
 
         if credential_id:
             payload["credential"] = {"id": credential_id}
-        elif "credential_pool_id" in kwargs and kwargs["credential_pool_id"]:
-            payload["credentialPool"] = {"id": kwargs["credential_pool_id"]}
         else:
-            return (None, None, "Either credential_id or credential_pool_id must be provided.")
+            payload["credentialPool"] = {"id": credential_pool_id}
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -2529,6 +3098,7 @@ class PolicySetControllerAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
+
 
     @synchronized(global_rule_lock)
     def add_capabilities_rule_v2(self, name: str, **kwargs) -> tuple:
@@ -2581,29 +3151,32 @@ class PolicySetControllerAPI(APIClient):
         Returns:
             :obj:`Tuple`: The resource record of the newly created Capabilities rule.
 
-        Example:
-            Add a new capability rule with various capabilities and conditions:
+        Examples:
+            Add Access Policy with Scim Group using OR condition
 
-            .. code-block:: python
-
-                zpa.policiesv2.add_capabilities_rule(
-                    name='New_Capability_Rule',
-                    description='New_Capability_Rule',
-                    conditions=[
-                        ("app", ["app_segment_id"]),
-                        ("app_group", ["segment_group_id"]),
-                        ("scim_group", [("idp_id", "scim_group_id"), ("idp_id", "scim_group_id")])
-                    ],
-                    privileged_capabilities={
-                        "clipboard_copy": True,
-                        "clipboard_paste": True,
-                        "file_download": True,
-                        "file_upload": True,  # This will add "FILE_UPLOAD" to the capabilities list
-                        "record_session": True,
-                        # To handle the edge case, set file_upload to None to disable it
-                        "file_upload": None
-                    }
-                )
+            >>> added_rule, _, err = client.zpa.policies.add_capabilities_rule_v2(
+            ...     name=f"NewCapabilityRule_{random.randint(1000, 10000)}",
+            ...     description=f"NewCapabilityRule_{random.randint(1000, 10000)}",
+            ...     privileged_capabilities={
+            ...         "clipboard_copy": True,
+            ...         "clipboard_paste": True,
+            ...         "file_download": True,
+            ...         "file_upload": None,
+            ...         "inspect_file_upload": True,
+            ...         "inspect_file_download": True,
+            ...         "record_session": True,
+            ...     },
+            ...     conditions=[
+            ...         ("OR", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...         ])),
+            ...         ("APP", ["72058304855116918"]),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding capability rule: {err}")
+            ...     return
+            ... print(f"Capability Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
             "capabilities", query_params={"microtenantId": kwargs.get("microtenantId")}
@@ -2618,7 +3191,7 @@ class PolicySetControllerAPI(APIClient):
         http_method = "post".upper()
         api_url = format_url(
             f"""
-            {self._zpa_base_endpoint_v1}
+            {self._zpa_base_endpoint_v2}
             /policySet/{policy_set_id}/rule
         """
         )
@@ -2630,6 +3203,8 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": "CHECK_CAPABILITIES",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
@@ -2728,21 +3303,30 @@ class PolicySetControllerAPI(APIClient):
         Examples:
             Updates the name and capabilities for an existing Capability Policy rule:
 
-            >>> zpa.policiesv2.update_capabilities_rule_v2(
-            ... rule_id='888888',
-            ... name='Updated_Capability_Rule',
-            ... conditions=[
-            ...     ("app", ["216199618143361683"]),
-            ...     ("app_group", ["216199618143360301"]),
-            ...     ("scim_group", [("216199618143191058", "2079468"), ("216199618143191058", "2079446")])
-            ... ],
-            ... privileged_capabilities={
-            ...     "clipboard_copy": True,
-            ...     "clipboard_paste": True,
-            ...     "file_download": True,
-            ...     "file_upload": None
-            ... }
+            >>> added_rule, _, err = client.zpa.policies.add_capabilities_rule_v2(
+            ...     rule_id='8766896',
+            ...     name=f"UpdateCapabilityRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateCapabilityRule_{random.randint(1000, 10000)}",
+            ...     privileged_capabilities={
+            ...         "clipboard_copy": True,
+            ...         "clipboard_paste": True,
+            ...         "file_download": True,
+            ...         "file_upload": None,
+            ...         "inspect_file_upload": True,
+            ...         "inspect_file_download": True,
+            ...         "record_session": True,
+            ...     },
+            ...     conditions=[
+            ...         ("OR", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...         ])),
+            ...         ("APP", ["72058304855116918"]),
+            ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error adding capability rule: {err}")
+            ...     return
+            ... print(f"Capability Rule added successfully: {added_rule.as_dict()}")
         """
         policy_type_response, _, err = self.get_policy(
             "capabilities", query_params={"microtenantId": kwargs.get("microtenantId")}
@@ -2769,12 +3353,11 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": "CHECK_CAPABILITIES",
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
-
-        if "conditions" in payload and "conditions" not in kwargs:
-            del payload["conditions"]
 
         for key, value in kwargs.items():
             if key == "conditions":
@@ -2871,21 +3454,24 @@ class PolicySetControllerAPI(APIClient):
         Example:
             Add a new redirection rule with various conditions and service edge group IDs:
 
-            .. code-block:: python
-
-                zpa.policiesv2.add_redirection_rule(
-                    name='New_Redirection_Rule',
-                    action='redirect_preferred',
-                    service_edge_group_ids=['12345', '67890'],
-                    conditions=[
-                        ("client_type",
-                            'zpn_client_type_edge_connector',
-                            'zpn_client_type_branch_connector',
-                            'zpn_client_type_machine_tunnel',
-                            'zpn_client_type_zapp',
-                            'zpn_client_type_zapp_partner'),
-                    ]
-                )
+            >>> added_rule, _, err = client.policies.add_redirection_rule(
+            ... name=f"NewRedirectionRule_{random.randint(1000, 10000)}",
+            ... description=f"NewRedirectionRule_{random.randint(1000, 10000)}",
+            ... action='redirect_preferred',
+            ... service_edge_group_ids=['12345', '67890'],
+            ... conditions=[
+            ...     ("client_type",
+            ...         'zpn_client_type_edge_connector',
+            ...         'zpn_client_type_branch_connector',
+            ...         'zpn_client_type_machine_tunnel',
+            ...         'zpn_client_type_zapp',
+            ...         'zpn_client_type_zapp_partner'),
+            ... ])
+            >>> if err:
+            ...     print(f"Error adding redirection rule: {err}")
+            ...     return
+            ... print(f"Redirection Rule added successfully: {added_rule.as_dict()}")
+            
         """
         # Validate action and service_edge_group_ids based on action type
         if action.lower() == "redirect_default" and service_edge_group_ids:
@@ -2918,12 +3504,12 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
+            "serviceEdgeGroups": [{"id": group_id} for group_id in service_edge_group_ids],
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
-
-        if service_edge_group_ids:
-            payload["serviceEdgeGroups"] = [{"id": group_id} for group_id in service_edge_group_ids]
 
         valid_client_types = [
             "zpn_client_type_edge_connector",
@@ -2937,6 +3523,17 @@ class PolicySetControllerAPI(APIClient):
             for operand in condition.get("operands", []):
                 if operand["objectType"] == "CLIENT_TYPE" and operand["values"][0] not in valid_client_types:
                     raise ValueError(f"Invalid client_type value: {operand['values'][0]}. Must be one of {valid_client_types}")
+
+        # NEW VALIDATION BLOCK
+        if action.lower() == "redirect_always":
+            for condition in payload["conditions"]:
+                for operand in condition.get("operands", []):
+                    if operand.get("objectType") == "CLIENT_TYPE":
+                        for val in operand.get("values", []):
+                            if val in ("zpn_client_type_branch_connector", "zpn_client_type_edge_connector"):
+                                raise ValueError(
+                                    "CLIENT_TYPE cannot include 'zpn_client_type_branch_connector' or 'zpn_client_type_edge_connector' when action is 'REDIRECT_ALWAYS'."
+                                )
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -3002,20 +3599,24 @@ class PolicySetControllerAPI(APIClient):
         Examples:
             Updates the name only for an Access Policy rule:
 
-            >>> zpa.policiesv2.update_redirection_rule(
-            ...    rule_id='216199618143320419',
-            ...    name='Update_Redirection_Rule_v2',
-            ...    description='Update_Redirection_Rule_v2',
-            ...    action='redirect_default',
-            ...    conditions=[
-            ...         ("client_type", [
-            ...          'zpn_client_type_edge_connector',
-            ...          'zpn_client_type_branch_connector',
-            ...          'zpn_client_type_machine_tunnel',
-            ...          'zpn_client_type_zapp',
-            ...          'zpn_client_type_zapp_partner']),
-            ...     ],
-            ... )
+            >>> updated_rule, _, err = client.policies.add_redirection_rule(
+            ... rule_id='97689668'
+            ... name=f"UpdateRedirectionRule_{random.randint(1000, 10000)}",
+            ... description=f"UpdateRedirectionRule_{random.randint(1000, 10000)}",
+            ... action='redirect_preferred',
+            ... service_edge_group_ids=['12345', '67890'],
+            ... conditions=[
+            ...     ("client_type",
+            ...         'zpn_client_type_edge_connector',
+            ...         'zpn_client_type_branch_connector',
+            ...         'zpn_client_type_machine_tunnel',
+            ...         'zpn_client_type_zapp',
+            ...         'zpn_client_type_zapp_partner'),
+            ... ])
+            >>> if err:
+            ...     print(f"Error adding redirection rule: {err}")
+            ...     return
+            ... print(f"Redirection Rule added successfully: {updated_rule.as_dict()}")
         """
         # Validate action and service_edge_group_ids based on action type
         if action.lower() == "redirect_default" and service_edge_group_ids:
@@ -3048,12 +3649,12 @@ class PolicySetControllerAPI(APIClient):
 
         payload = {
             "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
             "action": action.upper(),
+            "serviceEdgeGroups": [{"id": group_id} for group_id in service_edge_group_ids],
             "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
         }
-
-        if service_edge_group_ids:
-            payload["serviceEdgeGroups"] = [{"id": group_id} for group_id in service_edge_group_ids]
 
         valid_client_types = [
             "zpn_client_type_edge_connector",
@@ -3067,6 +3668,17 @@ class PolicySetControllerAPI(APIClient):
             for operand in condition.get("operands", []):
                 if operand["objectType"] == "CLIENT_TYPE" and operand["values"][0] not in valid_client_types:
                     raise ValueError(f"Invalid client_type value: {operand['values'][0]}. Must be one of {valid_client_types}")
+
+        # NEW VALIDATION BLOCK
+        if action.lower() == "redirect_always":
+            for condition in payload["conditions"]:
+                for operand in condition.get("operands", []):
+                    if operand.get("objectType") == "CLIENT_TYPE":
+                        for val in operand.get("values", []):
+                            if val in ("zpn_client_type_branch_connector", "zpn_client_type_edge_connector"):
+                                raise ValueError(
+                                    "CLIENT_TYPE cannot include 'zpn_client_type_branch_connector' or 'zpn_client_type_edge_connector' when action is 'REDIRECT_ALWAYS'."
+                                )
 
         request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
         if error:
@@ -3111,8 +3723,13 @@ class PolicySetControllerAPI(APIClient):
                 The unique identifier for the policy rule.
 
         Examples:
-            >>> zpa.policies.delete_rule(policy_type='access',
-            ...    rule_id='88888')
+            >>> _, _, err = client.zpa.policies.delete_rule(
+            ...     policy_type=policy_type_name, rule_id='97668990877'
+            ... )
+            >>> if err:
+            ...     print(f"Error deleting rule: {err}")
+            ...     return
+            ... print(f"Rule with ID {added_rule.id} deleted successfully.")
         """
         # Retrieve policy_set_id explicitly
         policy_type_response, _, err = self.get_policy(policy_type, query_params={"microtenantId": microtenant_id})
@@ -3268,6 +3885,10 @@ class PolicySetControllerAPI(APIClient):
             ...         '216199618143374201',
             ...     ]
             ... )
+            >>> if err:
+            ...     print(f"Error reordering rules: {err}")
+            ...     return
+            ... print(f"Rules reordered successfully: {zscaler_resp}")
 
             Reordering timeout policy rules for a specific microtenant:
 

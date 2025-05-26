@@ -117,7 +117,14 @@ def to_snake_case(string):
         "truncate_large_udpdns_response": "truncateLargeUDPDNSResponse",
         "enableZCCRevert": "enable_zcc_revert",
         "enableZiaDR": "enable_zia_dr",
-        "purge_kerberos_preferred_dc_cache": "purgeKerberosPreferredDCCache"
+        "purgeKerberosPreferredDCCache": "purge_kerberos_preferred_dc_cache",
+        
+        # ZPA Edge Cases
+        "serverGroupDTOs": "server_group_dtos",
+        "extranetDTO": "extranet_dto",
+        "locationGroupDTO": "location_group_dto",
+        "locationDTO": "location_dto",
+        "predefinedADPControls": "predefined_adp_controls"
     }
 
     if string in FIELD_EXCEPTIONS:
@@ -242,7 +249,14 @@ def to_lower_camel_case(string):
         "enable_zcc_revert": "enableZCCRevert",
         "delete_dhcp_option121_routes": "deleteDHCPOption121Routes",
         "enableZiaDR": "enable_zia_dr",
-        "purgeKerberosPreferredDCCache": "purge_kerberos_preferred_dc_cache"
+        "purgeKerberosPreferredDCCache": "purge_kerberos_preferred_dc_cache",
+        
+        # ZPA Edge Cases
+        "server_group_dtos": "serverGroupDTOs",
+        "extranet_dto": "extranetDTO",
+        "location_group_dto": "locationGroupDTO",
+        "location_dto": "locationDTO",
+        "predefined_adp_controls": "predefinedADPControls"
     }
 
     if string in FIELD_EXCEPTIONS:

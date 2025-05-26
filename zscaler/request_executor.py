@@ -8,6 +8,8 @@ from zscaler.user_agent import UserAgent
 from zscaler.error_messages import ERROR_MESSAGE_429_MISSING_DATE_X_RESET
 from http import HTTPStatus
 from zscaler.helpers import convert_keys_to_snake_case, convert_keys_to_camel_case
+from zscaler.errors.response_checker import check_response_for_error
+from zscaler.exceptions import exceptions
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.ztw.legacy import LegacyZTWClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
@@ -117,7 +119,7 @@ class RequestExecutor:
             zwa_legacy_client=self.zwa_legacy_client,
         )
 
-        HTTPClient.raise_exception = self._config["client"].get("raiseException", False)
+        exceptions.raise_exception = self._config["client"].get("raiseException", False)
         self._custom_headers = {}
 
     def get_base_url(self, endpoint: str) -> str:
@@ -330,9 +332,6 @@ class RequestExecutor:
         """
         try:
             request, response, response_body, error = self.fire_request(request)
-            logger.debug(
-                f"[DEBUG] Got response: {response} (status: {getattr(response, 'status_code', 'N/A')}) | error: {error}"
-            )
         except Exception as ex:
             logger.error(f"Exception during HTTP request: {ex}")
             return None, ex
@@ -353,7 +352,7 @@ class RequestExecutor:
             return response, None
 
         try:
-            response_data, error = self._http_client.check_response_for_error(request["url"], response, response_body)
+            response_data, error = check_response_for_error(request["url"], response, response_body)
         except Exception as ex:
             logger.error(f"Exception while checking response for errors: {ex}")
             return None, ex
@@ -517,45 +516,6 @@ class RequestExecutor:
         # If we reach here, no further retries; return whatever we got
         return request, response, response.text, None
 
-    # def fire_request_helper(self, request, attempts, request_start_time):
-    #     """
-    #     Helper method to perform HTTP call with retries if needed.
-
-    #     Args:
-    #         request (dict): HTTP request representation.
-    #         attempts (int): Number of attempted HTTP calls so far.
-    #         request_start_time (float): Original start time of request.
-
-    #     Returns:
-    #         Tuple of request, response object, response body, and error.
-    #     """
-    #     current_req_start_time = time.time()
-    #     max_retries = self._max_retries
-    #     req_timeout = self._request_timeout
-
-    #     if req_timeout > 0 and (current_req_start_time - request_start_time) > req_timeout:
-    #         logger.warning("Request Timeout exceeded.")
-    #         return None, None, None, Exception("Request Timeout exceeded.")
-
-    #     response, error = self._http_client.send_request(request)
-
-    #     if error:
-    #         # logger.error(f"Error sending request: {error}")
-    #         return request, response, response.text if response else None, error
-
-    #     headers = response.headers
-
-    #     if attempts < max_retries and self.is_retryable_status(response.status_code):
-    #         backoff_seconds = self.get_retry_after(headers, logger)
-    #         if backoff_seconds is None:
-    #             return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
-    #         logger.info(f"Hit rate limit. Retrying request in {backoff_seconds} seconds.")
-    #         time.sleep(backoff_seconds)
-    #         attempts += 1
-    #         return self.fire_request_helper(request, attempts, request_start_time)
-
-    #     return request, response, response.text, None
-
     def is_retryable_status(self, status):
         """
         Checks if HTTP status is retryable.
@@ -634,7 +594,13 @@ class RequestExecutor:
 
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
-            headers.get("x-ratelimit-reset") or headers.get("X-RateLimit-Reset") or headers.get("RateLimit-Reset")
+            headers.get("x-ratelimit-reset") or 
+            headers.get("X-RateLimit-Reset") or
+            headers.get("RateLimit-Reset") or
+            
+            # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
+            headers.get("X-Rate-Limit-Retry-After-Seconds") or # ZCC /downloadDevices Rate Limiting Header (LegacyZCCClientHelper)
+            headers.get("X-Rate-Limit-Remaining") # (LegacyZCCClientHelper)
         )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 

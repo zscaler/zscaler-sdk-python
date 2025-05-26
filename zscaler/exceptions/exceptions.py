@@ -1,5 +1,6 @@
 import json
 
+raise_exception = False
 
 # Zscaler Base Exceptions
 class ZscalerBaseException(Exception):
