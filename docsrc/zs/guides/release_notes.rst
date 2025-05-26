@@ -45,18 +45,24 @@ Zscaler Client Connector (Legacy) New Rate Limiting Headers
   - The endpoint handler `/downloadDevices` and `downloadServiceStatus` has a rate limit of 3 calls per day.
   - `X-Rate-Limit-Remaining` - This header is returned for all other endpoints. ZCC endpoints called from a specific IP address are subjected to a rate limit of 100 calls per hour. See (`Zscaler Client Connector API <https://help.zscaler.com/oneapi/understanding-rate-limiting>`_)
 
-Bug Fixes
-----------
+Bug Fixes:
+---------------
 
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Fixed ZCC functions `remove_devices` and `force_remove_devices` to use custom decorator `zcc_param_mapper` for `os_type` attribute
-* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Removed incorrect validation from ZIA `url_categories` function `add_url_category` - (`#Issue 288 <https://github.com/zscaler/zscaler-sdk-python/issues/284>`_)
+* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Removed incorrect validation from ZIA `url_categories` function `add_url_category` - [Issue #284](https://github.com/zscaler/zscaler-sdk-python/issues/284)
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Fixed ZPA `application_segment_pra` model attribute  `common_apps_dto`.
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Fixed ZPA resources `add_privileged_credential_rule_v2`, and `update_privileged_credential_rule_v2` 
+* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Fixed ZPA Application segment v2 Port formatting issue: [Issue #288](https://github.com/zscaler/zscaler-sdk-python/issues/288)
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Added new ZPA attribute models to support `extranet` features across `server_groups` and `application_segments`
-* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Added additional `CLIENT_TYPE` validation within the ZPA policy functions `add_redirection_rule_v2` and `update_redirection_rule_v2`
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Added pre-check on all ZPA  `application_segment` resources to prevent port overlap configuration.
+* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Added additional `CLIENT_TYPE` validation within the ZPA policy functions `add_redirection_rule_v2` and `update_redirection_rule_v2`
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Enhanced `_create_conditions_v2` function used on ZPA Policy v2 condition block.
+
+Internal Enhancements
+-----------------------
+
 * (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Enhanced `check_response_for_error` function to parse and display API error messages more clearly.
+* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_) - Consolidated all application segment resource models into a single model shared across all Application Segment package resources.
 
 1.3.0 (May, 12 2025)
 -------------------------

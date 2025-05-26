@@ -1,6 +1,6 @@
 # Zscaler Python SDK Changelog
 
-## 1.4.0 (May, 22 2025)
+## 1.4.0 (May, 26 2025)
 
 ### Notes
 
@@ -37,9 +37,10 @@
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Removed incorrect validation from ZIA `url_categories` function `add_url_category` - [Issue #284](https://github.com/zscaler/zscaler-sdk-python/issues/284)
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Fixed ZPA `application_segment_pra` model attribute  `common_apps_dto`.
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Fixed ZPA resources `add_privileged_credential_rule_v2`, and `update_privileged_credential_rule_v2` 
+* [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Fixed ZPA Application segment v2 Port formatting issue: [Issue #288](https://github.com/zscaler/zscaler-sdk-python/issues/288)
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added new ZPA attribute models to support `extranet` features across `server_groups` and `application_segments`
-* [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added additional `CLIENT_TYPE` validation within the ZPA policy functions `add_redirection_rule_v2` and `update_redirection_rule_v2`
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added pre-check on all ZPA  `application_segment` resources to prevent port overlap configuration.
+* [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Added additional `CLIENT_TYPE` validation within the ZPA policy functions `add_redirection_rule_v2` and `update_redirection_rule_v2`
 * [PR #287](https://github.com/zscaler/zscaler-sdk-python/pull/287) - Enhanced `_create_conditions_v2` function used on ZPA Policy v2 condition block.
 
 ### Internal Enhancements
