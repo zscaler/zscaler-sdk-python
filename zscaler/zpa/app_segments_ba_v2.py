@@ -21,9 +21,9 @@ from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
 
 
-class AppSegmentsInspectionAPI(APIClient):
+class AppSegmentsBAV2API(APIClient):
     """
-    A client object for the Application Segment Inspection resource.
+    A client object for Broser Access Application Segments.
     """
 
     reformat_params = [
@@ -37,9 +37,11 @@ class AppSegmentsInspectionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segment_inspection(self, query_params=None, **kwargs) -> tuple:
+    def list_segments_ba(self, query_params=None, **kwargs) -> tuple:
         """
-        Returns all configured application segment inspection with pagination support.
+        Enumerates application segment browser access in your organization with pagination.
+        A subset of application segment browser access can be returned that match a supported
+        filter expression or query.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
@@ -56,12 +58,12 @@ class AppSegmentsInspectionAPI(APIClient):
             tuple: A tuple containing (list of ApplicationSegments instances, Response, error)
 
         Examples:
-            >>> segment_list, _, err = client.zpa.app_segments_inspection.list_segment_inspection(
-            ... query_params={'search': 'AppSegment01', 'page': '1', 'page_size': '100'})
+            >>> segment_list, _, err = client.zpa.app_segments_ba_v2.list_segments_ba(
+            ... query_params={'search': 'AppSegmentBA01', 'page': '1', 'page_size': '100'})
             ... if err:
-            ...     print(f"Error listing inspection application segment: {err}")
+            ...     print(f"Error listing application segment browser access: {err}")
             ...     return
-            ... print(f"Total application segment inspectiion found: {len(segment_list)}")
+            ... print(f"Total application segment browser access found: {len(segment_list)}")
             ... for app in segments:
             ...     print(app.as_dict())
         """
@@ -75,6 +77,10 @@ class AppSegmentsInspectionAPI(APIClient):
 
         query_params = query_params or {}
         query_params.update(kwargs)
+
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
 
         request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params=query_params)
         if error:
@@ -92,19 +98,18 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_segment_inspection(self, segment_id: str, query_params: dict = None) -> tuple:
+    def get_segment_ba(self, segment_id: str, query_params=None) -> tuple:
         """
-        Get information for an AppProtection application segment.
+        Get details of an application segment by its ID.
 
         Args:
-            segment_id (str):
-                The unique identifier for the AppProtection application segment.
+            segment_id (str): The unique ID for the application segment.
 
         Returns:
             :obj:`Tuple`: A tuple containing (ApplicationSegment, Response, error)
 
         Examples:
-            >>> fetched_segment, _, err = client.zpa.app_segments_inspection.get_segment_inspection('999999')
+            >>> fetched_segment, _, err = client.zpa.app_segments_ba_v2.get_segment_ba('999999')
             ... if err:
             ...     print(f"Error fetching segment by ID: {err}")
             ...     return
@@ -120,6 +125,10 @@ class AppSegmentsInspectionAPI(APIClient):
 
         query_params = query_params or {}
 
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
         request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
         if error:
             return (None, None, error)
@@ -134,44 +143,33 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_segment_inspection(self, **kwargs) -> tuple:
+    def add_segment_ba(self, **kwargs) -> tuple:
         """
-        Create an AppProtection application segment.
+        Create a new Browser Access application segment.
 
         Args:
             name (str): **Required**. Name of the application segment (user-defined).
-            domain_names (list of str): **Required**. Domain names or IP addresses for the segment.
+            domain_names (list[str]): **Required**. Domain names or IP addresses for the segment.
             segment_group_id (str): **Required**. Unique identifier for the segment group.
-            server_group_ids (list of str): **Required**. List of server group IDs this segment belongs to.
-            tcp_port_ranges (list of str, optional): **Legacy format**. TCP port range pairs (e.g., `['22', '22']`).
-            udp_port_ranges (list of str, optional): **Legacy format**. UDP port range pairs (e.g., `['35000', '35000']`).
-            tcp_port_range (list of dict, optional): **New format**. TCP port range pairs `[{"from": "8081", "to": "8081"}]`.
-            udp_port_range (list of dict, optional): **New format**. UDP port range pairs `[{"from": "8081", "to": "8081"}]`.
-            **kwargs:
-                Optional keyword args.
+            server_group_ids (list[str]): **Required**. List of server group IDs this segment belongs to.
+            tcp_port_ranges (list[str], optional): **Legacy format**. TCP port range pairs (e.g., `['22', '22']`).
+            udp_port_ranges (list[str], optional): **Legacy format**. UDP port range pairs (e.g., `['35000', '35000']`).
+            tcp_port_range (list[dict], optional): **New format**. TCP port range pairs `[{"from": "8081", "to": "8081"}]`.
+            udp_port_range (list[dict], optional): **New format**. UDP port range pairs `[{"from": "8081", "to": "8081"}]`.
 
         Keyword Args:
-            bypass_type (str):
-                The type of bypass for the Application Segment. Accepted values are `ALWAYS`, `NEVER` and `ON_NET`.
-            config_space (str):
-                The config space for this Application Segment. Accepted values are `DEFAULT` and `SIEM`.
-            description (str):
-                Additional information about this Application Segment.
-            double_encrypt (bool):
-                Double Encrypt the Application Segment micro-tunnel.
-            enabled (bool):
-                Enable the Application Segment.
-            health_check_type (str):
-                Set the Health Check Type. Accepted values are `DEFAULT` and `NONE`.
-            health_reporting (str):
-                Set the Health Reporting. Accepted values are `NONE`, `ON_ACCESS` and `CONTINUOUS`.
-            ip_anchored (bool):
-                Enable IP Anchoring for this Application Segment.
-            is_cname_enabled (bool):
-                Enable CNAMEs for this Application Segment.
-            passive_health_enabled (bool):
-                Enable Passive Health Checks for this Application Segment.
+            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
+            config_space (str): Config space for the segment. Values: `DEFAULT`, `SIEM`.
+            description (str): Additional information about the segment.
+            double_encrypt (bool): If true, enables double encryption.
+            enabled (bool): If true, enables the application segment.
+            health_check_type (str): Health Check Type. Values: `DEFAULT`, `NONE`.
+            health_reporting (str): Health Reporting mode. Values: `NONE`, `ON_ACCESS`, `CONTINUOUS`.
+            ip_anchored (bool): If true, enables IP Anchoring.
+            is_cname_enabled (bool): If true, enables CNAMEs for the segment.
+            passive_health_enabled (bool): If true, enables Passive Health Checks.
             icmp_access_type (str): Sets ICMP access type for ZPA clients.
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
 
             common_apps_dto (dict, optional): Dictionary containing application-specific configurations.
 
@@ -180,43 +178,54 @@ class AppSegmentsInspectionAPI(APIClient):
                 - **application_port** (str): The port used by the application.
                 - **application_protocol** (str): The protocol used (e.g., `HTTP`, `HTTPS`).
                 - **enabled** (bool): Whether the application is enabled.
+                - **certificate_id** (bool): Whether the application is enabled.
                 - **domain** (str): The domain name of the application.
                 - **name** (str): The name of the application.
-                - **app_types** (list[str]): The types of applications is optional (i.e., INSPECT)
+                - **app_types** (list[str]): The types of applications is optional (i.e., BROWSER_ACCESS).
 
         Returns:
-            :obj:`tuple`: The newly created application segment resource record.
+            tuple: A tuple containing:
+
+                - **ApplicationSegment**: The newly created application segment instance.
+                - **Response**: The raw API response object.
+                - **Error**: An error message, if applicable.
 
         Examples:
 
-           Create an application segment using **new TCP port format** (`tcp_port_range`):
+            Create a new browser access application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> added_segment, _, err = client.zpa.app_segments_inspection.add_segment_inspection(
-            ...     name=f"NewInspectionSegment_{random.randint(1000, 10000)}",
-            ...     description=f"NewInspectionSegment_{random.randint(1000, 10000)}",
+            >>> added_segment, _, err = client.zpa.app_segments_ba_v2.add_segment_ba(
+            ...     name=f"NewBASegment{random.randint(1000, 10000)}",
+            ...     description=f"NewBASegment{random.randint(1000, 10000)}",
             ...     enabled=True,
-            ...     domain_names=["server.acme.com"],
-            ...     segment_group_id="72058304855089379",
+            ...     domain_names=["ba_access01.securitygeek.io", "ba_access02.securitygeek.io"],
+            ...     segment_group_id="72058304855114308",
             ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "443", "to": "443"}],
-            ...     udp_port_range=[{"from": "443", "to": "443"}],
+            ...     tcp_port_range=[{"from": "443", "to": "443"}, {"from": "4443", "to": "4443"}],
+            ...     udp_port_range=[{"from": "443", "to": "443"}, {"from": "4443", "to": "4443"}],
             ...     common_apps_dto={
             ...         "apps_config": [
             ...             {
+            ...                 "app_types": ["BROWSER_ACCESS"],
+            ...                 "certificate_id": "72058304855021564",
             ...                 "application_port": "443",
             ...                 "application_protocol": "HTTPS",
+            ...                 "domain": "ba_access01.securitygeek.io",
+            ...             },
+            ...             {
+            ...                 "app_types": ["BROWSER_ACCESS"],
             ...                 "certificate_id": "72058304855021564",
-            ...                 "enabled": True,
-            ...                 "domain": "server.acme.com",
-            ...                 "name": "server.acme.com",
-            ...             }
+            ...                 "application_port": "4443",
+            ...                 "application_protocol": "HTTPS",
+            ...                 "domain": "ba_access02.securitygeek.io",
+            ...             },
             ...         ]
             ...     },
             ... )
-            ... if err:
-            ...     print(f"Error creating segment: {err}")
+            >>> if err:
+            ...     print(f"Error adding BA Application segment: {err}")
             ...     return
-            ... print(f"segment created successfully: {added_segment.as_dict()}")
+            ... print(f"BA Application Segment added successfully: {added_segment.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -235,19 +244,22 @@ class AppSegmentsInspectionAPI(APIClient):
         if "udp_port_ranges" in body and "udp_port_range" in body:
             return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
 
+        # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
+        microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
 
-        # Auto-add `"app_types": ["INSPECT"]` if missing
+        # Auto-add `"app_types": ["BROWSER_ACCESS"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             for app_config in common_apps_dto["apps_config"]:
                 if "app_types" not in app_config:  # Only add if missing
-                    app_config["app_types"] = ["INSPECT"]
+                    app_config["app_types"] = ["BROWSER_ACCESS"]
 
         body["commonAppsDto"] = common_apps_dto  # Update the request payload
-
         # Process TCP and UDP port attributes
         if "tcp_port_ranges" in body:
             # Use format 1 (tcpPortRanges)
@@ -266,12 +278,10 @@ class AppSegmentsInspectionAPI(APIClient):
         # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body=body)
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, ApplicationSegments)
         if error:
             return (None, response, error)
@@ -282,97 +292,49 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_segment_inspection(self, segment_id: str, **kwargs) -> tuple:
+    def update_segment_ba(self, segment_id: str, **kwargs) -> tuple:
         """
-        Update an AppProtection application segment.
+        Update an existing browser access application segment.
 
         Args:
-            segment_id (str):
-                The unique identifier for the AppProtection application segment.
-            **kwargs:
-                Optional params.
+            segment_id (str): The unique identifier of the application segment.
 
         Keyword Args:
-            bypass_type (str): Bypass type for the segment. Values: `ALWAYS`, `NEVER`, `ON_NET`.
-            config_space (str): Config space for the segment. Values: `DEFAULT`, `SIEM`.
-            description (str):
-                Additional information about this AppProtection Application Segment.
-            domain_names (:obj:`list` of :obj:`str`):
-                List of domain names or IP addresses for the AppProtection application segment.
-            double_encrypt (bool):
-                Double Encrypt the AppProtection Application Segment micro-tunnel.
-            enabled (bool):
-                Enable the AppProtection Application Segment.
-            health_check_type (str):
-                Set the Health Check Type. Accepted values are `DEFAULT` and `NONE`.
-            health_reporting (str):
-                Set the Health Reporting. Accepted values are `NONE`, `ON_ACCESS` and `CONTINUOUS`.
-            ip_anchored (bool):
-                Enable IP Anchoring for this AppProtection Application Segment.
-            is_cname_enabled (bool):
-                Enable CNAMEs for this AppProtection Application Segment.
-            name (str):
-                The name of the AppProtection Application Segment.
-            passive_health_enabled (bool):
-                Enable Passive Health Checks for this AppProtection Application Segment.
-            segment_group_id (str):
-                The unique identifer for the segment group this AppProtection application segment belongs to.
-            server_group_ids (:obj:`list` of :obj:`str`):
-                The list of server group IDs that belong to this AppProtection application segment.
-            tcp_ports (:obj:`list` of :obj:`tuple`):
-                List of TCP port ranges specified as a tuple pair, e.g. for ports 21-23, 8080-8085 and 443:
-                     [(21, 23), (8080, 8085), (443, 443)]
-            udp_ports (:obj:`list` of :obj:`tuple`):
-                List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
-                     [(34000, 35000), (36000, 36000)]
-            icmp_access_type (str): Sets ICMP access type for ZPA clients.
-
-            common_apps_dto (dict, optional): Dictionary containing application-specific configurations.
-
-                - **apps_config** (list[dict], optional): List of application configuration blocks.
-
-                - **application_port** (str): The port used by the application.
-                - **application_protocol** (str): The protocol used (e.g., `HTTP`, `HTTPS`).
-                - **enabled** (bool): Whether the application is enabled.
-                - **domain** (str): The domain name of the application.
-                - **name** (str): The name of the application.
-                - **app_types** (list[str]): The types of applications is optional (i.e., INSPECT).
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
 
         Returns:
-            :obj:`tuple`: The updated AppProtection application segment resource record.
+            tuple: A tuple containing (ApplicationSegment, Response, error)
 
         Examples:
 
-           Update an app protection segment using **new TCP port format** (`tcp_port_range`):
+           Create an application segment using **new TCP port format** (`tcp_port_range`):
 
-            >>> updated_segment, _, err = client.zpa.app_segments_inspection.update_segment_inspection(
-            ...     segment_id='9999999'
-            ...     name=f"UpdatedAppSegmentInspection_{random.randint(1000, 10000)}",
-            ...     description=f"UpdatedAppSegmentInspection_{random.randint(1000, 10000)}",
+            >>> updated_segment, _, err = client.zpa.app_segments_ba_v2.add_segment_ba(
+            ...     segment_id='1455863112',                
+            ...     name=f"UpdatedBASegment_{random.randint(1000, 10000)}",
+            ...     description=f"UpdatedBASegment_{random.randint(1000, 10000)}",
             ...     enabled=True,
-            ...     domain_names=["server.acme.com"],
-            ...     segment_group_id="72058304855089379",
+            ...     domain_names=["ba_access01.acme.com", "ba_access02.acme.com"],
+            ...     segment_group_id="72058304855114308",
             ...     server_group_ids=["72058304855090128"],
-            ...     tcp_port_range=[{"from": "443", "to": "443"}],
-            ...     udp_port_range=[{"from": "443", "to": "443"}],
+            ...     tcp_port_range=[{"from": "443", "to": "443"}, {"from": "4443", "to": "4443"}],
+            ...     udp_port_range=[{"from": "443", "to": "443"}, {"from": "4443", "to": "4443"}],
             ...     common_apps_dto={
             ...         "apps_config": [
             ...             {
+            ...                 "app_types": ["BROWSER_ACCESS"],
+            ...                 "certificate_id": "72058304855021564",
             ...                 "application_port": "443",
             ...                 "application_protocol": "HTTPS",
-            ...                 "certificate_id": "72058304855021564",
-            ...                 "enabled": True,
-            ...                 "domain": "server.acme.com",
-            ...                 "name": "server.acme.com",
+            ...                 "domain": "ba_access01.acme.com",
             ...             }
             ...         ]
             ...     },
             ... )
-            ... if err:
-            ...     print(f"Error updating segment: {err}")
+            >>> if err:
+            ...     print(f"Error updating BA Application segment: {err}")
             ...     return
-            ... print(f"segment updated successfully: {updated_segment.as_dict()}")
-
+            ... print(f"BA Application Segment updated successfully: {updated_segment.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -384,6 +346,7 @@ class AppSegmentsInspectionAPI(APIClient):
 
         body = kwargs
 
+        # --- Prevent mixed legacy + structured port range usage ---
         if "tcp_port_ranges" in body and "tcp_port_range" in body:
             return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range'.")
         if "udp_port_ranges" in body and "udp_port_range" in body:
@@ -395,42 +358,43 @@ class AppSegmentsInspectionAPI(APIClient):
         if "server_group_ids" in body:
             body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
-        # Auto-add `"app_types": ["INSPECT"]` if missing
+        # Auto-add `"app_types": ["BROWSER_ACCESS"]` if missing
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             for app_config in common_apps_dto["apps_config"]:
                 if "app_types" not in app_config:  # Only add if missing
-                    app_config["app_types"] = ["INSPECT"]
+                    app_config["app_types"] = ["BROWSER_ACCESS"]
 
+        # --- Handle apps_config ---
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
             segments_list, _, err = app_segment_api.get_segments_by_type(
-                application_type="INSPECT",
+                application_type="BROWSER_ACCESS",
                 query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
             )
 
             if err:
-                return None, None, f"Error fetching INSPECT segments: {err}"
+                return None, None, f"Error fetching BROWSER_ACCESS segments: {err}"
 
             # Map: domain -> segment
             existing_apps = {s.domain: s for s in segments_list if s.app_id == segment_id}
 
-            # Assign inspect_app_id and inspect_app_id
+            # Assign app_id and ba_app_id
             for app in common_apps_dto["apps_config"]:
                 domain = app.get("domain")
-                app["inspect_app_id"] = segment_id
+                app["app_id"] = segment_id
                 if domain in existing_apps:
-                    app["inspect_app_id"] = existing_apps[domain].id
+                    app["ba_app_id"] = existing_apps[domain].id
                 else:
-                    app["inspect_app_id"] = ""  # fallback to empty
+                    app["ba_app_id"] = ""  # fallback to empty
 
-            # Compute deleted Inspection apps
+            # Compute deleted Browser Access apps
             desired_domains = {a["domain"] for a in common_apps_dto["apps_config"]}
             deleted_ids = [app.id for domain, app in existing_apps.items() if domain not in desired_domains]
             if deleted_ids:
-                common_apps_dto["deleted_inspect_apps"] = deleted_ids
+                common_apps_dto["deleted_ba_apps"] = deleted_ids
 
             body["commonAppsDto"] = common_apps_dto
 
@@ -465,27 +429,28 @@ class AppSegmentsInspectionAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_segment_inspection(self, segment_id: str, force_delete: bool = False) -> int:
+    def delete_segment_ba(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> tuple:
         """
-        Delete an AppProtection application segment.
+        Delete an Browser Access application segment.
 
         Args:
-            force_delete (bool):
-                Setting this field to true deletes the mapping between AppProtection Application Segment and Segment Group.
             segment_id (str):
-                The unique identifier for the AppProtection application segment.
+                The unique identifier for the Browser Access application segment.
+            force_delete (bool):
+                Setting this field to true deletes the mapping between Browser Access Application Segment and Segment Group.
+            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
 
         Returns:
             :obj:`int`: The operation response code.
 
         Examples:
-            >>> _, _, err = client.zpa.app_segments_inspection.delete_segment_inspection(
-            ...     segment_id='999999'
-            ... )
-            ... if err:
-            ...     print(f"Error deleting application segment: {err}")
+            Delete an Browser Access Application Segment with an id of 99999.
+
+            >>> _, _, err = client.zpa.app_segments_ba_v2.delete_segment_ba('99999')
+            >>> if err:
+            ...     print(f"Error deleting BA Application Segment: {err}")
             ...     return
-            ... print(f"application segment with ID {'999999'} deleted successfully.")
+            ... print(f"BA Application Segment with ID '99999' deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -495,14 +460,18 @@ class AppSegmentsInspectionAPI(APIClient):
         """
         )
 
-        params = {}
+        # Handle microtenant_id in URL params if provided
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
         if force_delete:
             params["forceDelete"] = "true"
 
+        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, params=params)
         if error:
             return (None, None, error)
 
+        # Execute the request
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)

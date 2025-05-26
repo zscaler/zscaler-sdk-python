@@ -4,17 +4,31 @@ import urllib.parse
 import time
 import requests
 from datetime import datetime, timedelta
-
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.user_agent import UserAgent
 from zscaler.utils import (
     is_token_expired,
+    RateLimitExceededError
 )
 from zscaler.logger import setup_logging
+from zscaler.errors.response_checker import check_response_for_error
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
+logger = logging.getLogger("zscaler-sdk-python")
+
+import os, time, urllib.parse, logging, requests
+from datetime import datetime, timedelta
+from zscaler import __version__
+from zscaler.user_agent import UserAgent
+from zscaler.cache.no_op_cache import NoOpCache
+from zscaler.cache.cache import Cache
+from zscaler.cache.zscaler_cache import ZscalerCache
+from zscaler.errors.response_checker import check_response_for_error
+from zscaler.ratelimiter.ratelimiter import RateLimiter
+from zscaler.utils import is_token_expired
+
 logger = logging.getLogger("zscaler-sdk-python")
 
 
@@ -131,49 +145,79 @@ class LegacyZCCClientHelper:
         try:
             url = self.login_url
             resp = requests.post(url, json=data, headers=headers)
+            _, err = check_response_for_error(url, resp, resp.text)
+            if err:
+                raise err
+            
             logger.info("Login attempt with status: %d", resp.status_code)
             return resp
         except Exception as e:
             logger.error("Login failed due to an exception: %s", str(e))
             return None
 
+    # ---------------------------------------------------------------
+    # Helper – calculate pause-time from server hints
+    # ---------------------------------------------------------------
+    @staticmethod
+    def _get_backoff_seconds(response, default=60):
+        """
+        Return how many seconds to wait before the next retry.
+
+        • /downloadDevices → X-Rate-Limit-Retry-After-Seconds
+        • everything else → fixed default
+        """
+        retry_after_sec = response.headers.get("X-Rate-Limit-Retry-After-Seconds")
+        if retry_after_sec and retry_after_sec.isdigit():
+            return int(retry_after_sec) + 1        # 1-second pad
+        return default
+
+    # ------------------------------------------------------------------
+    # 1.  Local counter / pre-check
+    # ------------------------------------------------------------------
+
     def check_rate_limit(self, path):
         """
-        Checks the rate limit and adjusts the request timing accordingly.
+        Local rolling counters:
+        • 100 calls/hour for any endpoint
+        • 3 calls/day for /downloadDevices
+        Raise RateLimitExceededError immediately if exhausted.
         """
-        current_time = datetime.utcnow()
-        time_since_last_request = current_time - self.last_request_time
+        now = datetime.utcnow()
 
-        # Reset the rate limit counter if the reset time has passed
-        if time_since_last_request >= self.RATE_LIMIT_RESET_TIME:
+        # ----- hourly generic limit ---------------------------------
+        if now - self.last_request_time >= self.RATE_LIMIT_RESET_TIME:
             self.request_count = 0
-            self.last_request_time = current_time
+            self.last_request_time = now
 
+        if self.request_count >= self.RATE_LIMIT:
+            raise RateLimitExceededError("IP address exceeded 100 calls per hour")
+
+        # ----- /downloadDevices daily limit ------------------------
         if "/downloadDevices" in path:
-            time_since_last_reset = current_time - self.download_devices_last_reset
-            if time_since_last_reset >= self.DOWNLOAD_DEVICES_RESET_TIME:
+            if now - self.download_devices_last_reset >= self.DOWNLOAD_DEVICES_RESET_TIME:
                 self.download_devices_count = 0
-                self.download_devices_last_reset = current_time
+                self.download_devices_last_reset = now
+
             if self.download_devices_count >= self.DOWNLOAD_DEVICES_LIMIT:
-                logger.warning("Rate limit exceeded for /downloadDevices endpoint. Backing off...")
-                time.sleep(24 * 60 * 60)  # Back off for a day
-                self.download_devices_count = 0
-                self.download_devices_last_reset = datetime.utcnow()
+                raise RateLimitExceededError("/downloadDevices exceeded 3 calls per day")
+
             self.download_devices_count += 1
-        else:
-            if self.request_count >= self.RATE_LIMIT:
-                logger.warning("Rate limit exceeded. Backing off...")
-                time.sleep(3600)  # Back off for an hour
-                self.request_count = 0
-                self.last_request_time = datetime.utcnow()
-            self.request_count += 1
+
+        # ----- increment generic counter ---------------------------
+        self.request_count += 1
 
     def get_base_url(self, endpoint):
         return self.url
 
+    # ------------------------------------------------------------------
+    # 2.  The sending logic  (three tries on 429, then fail neatly)
+    # ------------------------------------------------------------------
+
     def send(self, method, path, json=None, params=None, stream=False):
         """
-        Sends a request using the legacy client.
+        Sends a request using the legacy ZCC client.
+        Retries up to three times on HTTP-429 for general endpoints,
+        but raises immediately for /downloadDevices and /downloadServiceStatus.
         """
         api = self.url
         params = params or {}
@@ -184,45 +228,86 @@ class LegacyZCCClientHelper:
         headers_with_user_agent = self.headers.copy()
         headers_with_user_agent["User-Agent"] = self.user_agent
         headers_with_user_agent.update(self.request_executor.get_custom_headers())
-        # Check rate limits
-        self.check_rate_limit(path)
 
+        # ---------- pre-flight local quota -------------------------
+        try:
+            self.check_rate_limit(path)
+        except RateLimitExceededError as err:
+            raise ValueError(
+                "This endpoint has a rate limit of 3 calls per day, try again in 24 hours."
+                if "/downloadDevices" in path or "/downloadServiceStatus" in path
+                else "Specific IP addresses are subjected to a rate limit of 100 calls per hour."
+            ) from err
+
+        max_attempts = 3
         attempts = 0
-        while attempts < 5:
+
+        while True:
             try:
-                # Refresh token before each attempt
                 self.refreshToken()
 
-                # Execute the request
                 response = requests.request(
-                    method,
-                    url,
+                    method=method,
+                    url=url,
                     json=json,
                     headers=headers_with_user_agent,
                     stream=stream,
                     timeout=self.timeout,
                 )
 
+                # ---------- 429 handling -----------------------------
                 if response.status_code == 429:
-                    retry_after = response.headers.get("Retry-After")
-                    sleep_time = int(retry_after) if retry_after and retry_after.isdigit() else 60
-                    logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
-                    time.sleep(sleep_time)
+                    if "/downloadDevices" in path or "/downloadServiceStatus" in path:
+                        retry_after = self._get_backoff_seconds(response, default=86400)
+                        raise ValueError(
+                            f"This endpoint has a rate limit of 3 calls per day. Try again in {retry_after} seconds."
+                        )
+
+                    # for all other paths, allow limited retry
                     attempts += 1
+                    if attempts == max_attempts:
+                        raise ValueError(
+                            "Specific IP addresses are subjected to a rate limit of 100 calls per hour."
+                        )
+
+                    backoff = self._get_backoff_seconds(response, default=60)
+                    logger.warning("Rate limit (429). Retrying in %s seconds …", backoff)
+                    time.sleep(backoff)
                     continue
-                elif response.status_code >= 400:
-                    logger.error(f"Request failed: {response.status_code}, {response.text}")
-                    raise ValueError(f"Request failed with status {response.status_code}")
-                else:
-                    break
-            except requests.RequestException as e:
-                if attempts == 4:
-                    logger.error(f"Failed to send {method} request to {url} after 5 attempts. Error: {str(e)}")
-                    raise e
-                else:
-                    logger.warning(f"Failed to send {method} request to {url}. Retrying... Error: {str(e)}")
+
+                # ---------- proactive check of Remaining header ------
+                remaining = response.headers.get("X-Rate-Limit-Remaining")
+                if remaining is not None and remaining.isdigit() and int(remaining) == 0:
+                    # treat as a soft-429
                     attempts += 1
-                    time.sleep(5)
+                    if attempts == max_attempts:
+                        raise ValueError(
+                            "Specific IP addresses are subjected to a rate limit of 100 calls per hour."
+                        )
+                    logger.warning("Server reports 0 remaining calls. Retrying in 60 seconds …")
+                    time.sleep(60)
+                    continue
+
+                # ---------- API-level errors -------------------------
+                _, err = check_response_for_error(url, response, response.text)
+                if err:
+                    raise err
+
+                break  # success
+
+            except ValueError as ve:
+                # Allow custom raised ValueErrors to bubble up immediately (e.g. downloadDevices rate limit)
+                raise ve
+
+            except requests.RequestException as e:
+                attempts += 1
+                if attempts == max_attempts:
+                    raise
+                logger.warning(
+                    "Network error talking to %s. Retrying … (%d/%d) %s",
+                    url, attempts, max_attempts, str(e)
+                )
+                time.sleep(5)
 
         return response, {
             "method": method,
@@ -231,6 +316,7 @@ class LegacyZCCClientHelper:
             "headers": headers_with_user_agent,
             "json": json or {},
         }
+
 
     def set_session(self, session):
         """Dummy method for compatibility with the request executor."""

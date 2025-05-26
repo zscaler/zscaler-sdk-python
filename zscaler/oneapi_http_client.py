@@ -1,12 +1,7 @@
-import json
 import requests
 import logging
 import os
 import time
-from zscaler.errors.http_error import HTTPError
-from zscaler.errors.zscaler_api_error import ZscalerAPIError
-from zscaler.exceptions import HTTPException, ZscalerAPIException
-from http import HTTPStatus
 from zscaler.logger import dump_request, dump_response
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.ztw.legacy import LegacyZTWClientHelper
@@ -25,7 +20,7 @@ class HTTPClient:
     Custom HTTP clients should inherit from this class.
     """
 
-    raise_exception = False
+    # raise_exception = False
 
     def __init__(
         self,
@@ -334,52 +329,6 @@ class HTTPClient:
             # Unexpected errors
             # logger.error(f"Unexpected error during request execution: {error}")
             return (None, error)
-
-    @staticmethod
-    def check_response_for_error(url, response_details, response_body):
-        """
-        Checks HTTP response for errors in the response body.
-
-        Args:
-            url (str): URL of the response
-            response_details (requests.Response): Response object with details
-            response_body (str): Response body in JSON or plain string
-
-        Returns:
-            Tuple(dict or None, error or None)
-        """
-        content_type = response_details.headers.get("Content-Type", "")
-        is_json = "application/json" in content_type
-
-        # Attempt to parse JSON safely
-        try:
-            formatted_response = json.loads(response_body) if is_json else response_body
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse JSON response: {e}")
-            if HTTPClient.raise_exception:
-                raise HTTPException(f"Invalid JSON response from {url}: {response_body}")
-            return None, HTTPError(url, response_details, response_body)
-
-        status_code = response_details.status_code
-
-        if 200 <= status_code < 300:
-            return formatted_response, None
-
-        # Defensive error handling block (minimal, correct)
-        try:
-            error = ZscalerAPIError(url, response_details, formatted_response)
-            # logger.debug(f"Raw API Error JSON: {json.dumps(formatted_response, indent=2)}")
-            if HTTPClient.raise_exception:
-                raise ZscalerAPIException(error)
-            return None, error
-
-        except Exception as e:
-            # Catch-all in case ZscalerAPIError constructor fails
-            logger.exception("Failed to construct ZscalerAPIError.")
-            generic_error = HTTPError(url, response_details, formatted_response)
-            if HTTPClient.raise_exception:
-                raise HTTPException(str(generic_error)) from e
-            return None, generic_error
 
     @staticmethod
     def format_binary_data(data):

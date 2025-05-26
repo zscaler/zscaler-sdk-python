@@ -27,12 +27,10 @@ from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
-from zscaler.errors.zscaler_api_error import ZscalerAPIError
 from zscaler.utils import obfuscate_api_key
 from zscaler.logger import setup_logging
+from zscaler.errors.response_checker import check_response_for_error
 
-
-# Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
 
@@ -157,23 +155,25 @@ class LegacyZIAClientHelper:
 
         return result.group(1)
 
-    def is_session_expired(self):
+    def is_session_expired(self) -> bool:
         """
         Checks whether the current session is expired.
 
         Returns:
             bool: True if the session is expired or if the session details are missing.
         """
-        if self.auth_details is None:
+        # no session yet → force login
+        if self.auth_details is None or self.session_refreshed is None:
             return True
 
-        now = datetime.datetime.now()
+        # ZIA returns expiry as epoch-milliseconds in `passwordExpiryTime`
+        expiry_ms = self.auth_details.get("passwordExpiryTime", 0)
+        if expiry_ms <= 0:
+            return False
 
-        password_expiry_time = self.auth_details.get("passwordExpiryTime", -1)
-        if password_expiry_time > 0 and (self.session_refreshed - self.session_timeout_offset < now):
-            return True
-
-        return False
+        expiry_time = datetime.datetime.fromtimestamp(expiry_ms / 1000)
+        safety_window = self.session_timeout_offset
+        return datetime.datetime.utcnow() >= (expiry_time - safety_window)
 
     def authenticate(self):
         """
@@ -189,20 +189,19 @@ class LegacyZIAClientHelper:
             "timestamp": api_obf["timestamp"],
         }
 
-        url = f"{self.url}/api/v1/authenticatedSession"  # Correct path
+        url = f"{self.url}/api/v1/authenticatedSession"
         resp = requests.post(url, json=payload, headers=self.headers, timeout=self.timeout)
 
-        if resp.status_code != 200:
-            logger.error(f"Authentication failed: {resp.status_code}, {resp.text}")
-            raise ValueError("Failed to authenticate with ZIA API")
+        parsed_response, err = check_response_for_error(url, resp, resp.text)
+        if err:
+            raise err
 
-        # Extract JSESSIONID
         self.session_id = self.extractJSessionIDFromHeaders(resp.headers)
         if not self.session_id:
             raise ValueError("Failed to extract JSESSIONID from authentication response")
 
         self.session_refreshed = datetime.datetime.now()
-        self.auth_details = resp.json()
+        self.auth_details = parsed_response
         logger.info("Authentication successful. JSESSIONID set.")
 
     def __enter__(self):
@@ -251,21 +250,19 @@ class LegacyZIAClientHelper:
             requests.Response: Response object from the request.
         """
         url = f"{self.url}/{path.lstrip('/')}"
-
-        # Prepare headers
-        headers_with_user_agent = self.headers.copy()
-        headers_with_user_agent.update(headers or {})
-        headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
-
         attempts = 0
+
         while attempts < 5:
             try:
-                # Refresh session if expired
                 if self.is_session_expired():
                     logger.warning("Session expired. Refreshing...")
                     self.authenticate()
 
-                # Execute the request
+                # Always refresh session cookie
+                headers_with_user_agent = self.headers.copy()
+                headers_with_user_agent.update(headers or {})
+                headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
+
                 resp = requests.request(
                     method=method,
                     url=url,
@@ -276,22 +273,18 @@ class LegacyZIAClientHelper:
                     timeout=self.timeout,
                 )
 
-                if resp.status_code == 429:  # Handle rate-limiting
+                if resp.status_code == 429:
                     sleep_time = int(resp.headers.get("Retry-After", 2))
                     logger.warning(f"Rate limit exceeded. Retrying in {sleep_time} seconds.")
                     sleep(sleep_time)
                     attempts += 1
                     continue
 
-                if resp.status_code in [401, 403]:  # Authentication failure
-                    logger.error("Authentication failed, refreshing session.")
-                    self.authenticate()
-                    continue
+                _, err = check_response_for_error(url, resp, resp.text)
+                if err:
+                    raise err
 
-                if resp.status_code >= 400:
-                    logger.error(f"Request failed: {resp.status_code}, {resp.text}")
-                    raise ValueError(f"Request failed with status {resp.status_code}")
-
+                # return parsed_response, {
                 return resp, {
                     "method": method,
                     "url": url,
@@ -299,6 +292,7 @@ class LegacyZIAClientHelper:
                     "headers": headers_with_user_agent,
                     "json": json or {},
                 }
+
             except requests.RequestException as e:
                 logger.error(f"Request to {url} failed: {e}")
                 if attempts == 4:
@@ -312,6 +306,7 @@ class LegacyZIAClientHelper:
     def set_session(self, session):
         """Dummy method for compatibility with the request executor."""
         self._session = session
+
 
     @property
     def activate(self):

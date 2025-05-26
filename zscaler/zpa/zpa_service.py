@@ -2,6 +2,8 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.customer_controller import CustomerControllerAPI
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.application_segment import ApplicationSegmentAPI
+from zscaler.zpa.app_segments_ba import ApplicationSegmentBAAPI
+from zscaler.zpa.app_segments_ba_v2 import AppSegmentsBAV2API
 from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
 from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
 from zscaler.zpa.app_connector_groups import AppConnectorGroupAPI
@@ -75,6 +77,24 @@ class ZPAService:
 
         """
         return ApplicationSegmentAPI(self._request_executor, self._config)
+
+    @property
+    def app_segments_ba(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA interface <zpa-app_segments_ba>`.
+
+        """
+
+        return ApplicationSegmentBAAPI(self._request_executor, self._config)
+
+    @property
+    def app_segments_ba_v2(self):
+        """
+        The interface object for the :ref:`ZPA Application Segments BA V2 interface <zpa-app_segments_ba_v2>`.
+
+        """
+
+        return AppSegmentsBAV2API(self._request_executor, self._config)
 
     @property
     def app_segments_pra(self):

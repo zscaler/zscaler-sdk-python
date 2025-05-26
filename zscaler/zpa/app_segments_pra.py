@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zpa.models.application_segment_pra import ApplicationSegmentPRA
+from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
 
@@ -86,14 +86,14 @@ class AppSegmentsPRAAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegments)
         if error:
             return (None, response, error)
 
         try:
             result = []
             for item in response.get_results():
-                result.append(ApplicationSegmentPRA(self.form_response_body(item)))
+                result.append(ApplicationSegments(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -133,12 +133,12 @@ class AppSegmentsPRAAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegments)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
+            result = ApplicationSegments(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -182,6 +182,7 @@ class AppSegmentsPRAAPI(APIClient):
                 - **enabled** (bool): Whether the application is enabled.
                 - **domain** (str): The domain name of the application.
                 - **name** (str): The name of the application.
+                - **app_types** (list[str]): The types of applications is optional (i.e., SECURE_REMOTE_ACCESS).
 
         Returns:
             tuple: A tuple containing:
@@ -231,6 +232,13 @@ class AppSegmentsPRAAPI(APIClient):
 
         body = kwargs
 
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range' in the same request.")
+
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range' in the same request.")
+
         # Check if microtenant_id is set in kwargs or the body, and use it to set query parameter
         microtenant_id = kwargs.get("microtenant_id") or body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -269,12 +277,12 @@ class AppSegmentsPRAAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegments)
         if error:
             return (None, response, error)
 
         try:
-            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
+            result = ApplicationSegments(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -332,88 +340,88 @@ class AppSegmentsPRAAPI(APIClient):
         """
         )
 
-        # Construct the body from kwargs (as a dictionary)
         body = kwargs
 
-        # Check if microtenant_id is set in the body, and use it to set query parameter
+        # --- Prevent mixed legacy + structured port range usage ---
+        if "tcp_port_ranges" in body and "tcp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'tcp_port_ranges' and 'tcp_port_range'.")
+        if "udp_port_ranges" in body and "udp_port_range" in body:
+            return None, None, ValueError("Cannot use both 'udp_port_ranges' and 'udp_port_range'.")
+
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Reformat server_group_ids to match the expected API format (serverGroups)
         if "server_group_ids" in body:
-            body["serverGroups"] = [{"id": group_id} for group_id in body.pop("server_group_ids")]
+            body["serverGroups"] = [{"id": gid} for gid in body.pop("server_group_ids")]
 
-        # Ensure `app_types` is set in `commonAppsDto.apps_config`
         common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             for app_config in common_apps_dto["apps_config"]:
-                if "app_types" not in app_config:  # Only set if missing
+                if "app_types" not in app_config:  # Only add if missing
                     app_config["app_types"] = ["SECURE_REMOTE_ACCESS"]
 
-            body["commonAppsDto"] = common_apps_dto  # Update the request payload
-
-        # Fetch Secure Remote Access apps (same logic as before)
+        # --- Handle apps_config ---
+        common_apps_dto = kwargs.get("common_apps_dto")
         if common_apps_dto and "apps_config" in common_apps_dto:
             app_segment_api = ApplicationSegmentByTypeAPI(self._request_executor, self.config)
 
-            # Fetch all SECURE_REMOTE_ACCESS apps (no filtering, so we get everything)
             segments_list, _, err = app_segment_api.get_segments_by_type(
-                application_type="SECURE_REMOTE_ACCESS", query_params={}
+                application_type="SECURE_REMOTE_ACCESS",
+                query_params={"microtenant_id": microtenant_id} if microtenant_id else {}
             )
 
             if err:
-                return (None, None, f"Error fetching application segment data: {err}")
+                return None, None, f"Error fetching SECURE_REMOTE_ACCESS segments: {err}"
 
-            # Step 2: Find the correct entry where `appId == segment_id`
-            matched_segment = next((app for app in segments_list if app.app_id == segment_id), None)
+            # Map: domain -> segment
+            existing_apps = {s.domain: s for s in segments_list if s.app_id == segment_id}
 
-            if not matched_segment:
-                return (None, None, f"Error: No matching PRA App found with appId '{segment_id}' in existing segments.")
+            # Assign app_id and pra_app_id
+            for app in common_apps_dto["apps_config"]:
+                domain = app.get("domain")
+                app["app_id"] = segment_id
+                if domain in existing_apps:
+                    app["pra_app_id"] = existing_apps[domain].id
+                else:
+                    app["pra_app_id"] = ""  # fallback to empty
 
-            pra_app_id = matched_segment.id
+            # Compute deleted PRA apps
+            desired_domains = {a["domain"] for a in common_apps_dto["apps_config"]}
+            deleted_ids = [app.id for domain, app in existing_apps.items() if domain not in desired_domains]
+            if deleted_ids:
+                common_apps_dto["deleted_pra_apps"] = deleted_ids
 
-            # Step 3: Assign `appId` and `praAppId`
-            for app_config in common_apps_dto["apps_config"]:
-                app_config["app_id"] = segment_id  # Auto-assign appId (segment_id)
-                app_config["pra_app_id"] = pra_app_id  # Auto-assign praAppId
+            body["commonAppsDto"] = common_apps_dto
 
-            body["commonAppsDto"] = common_apps_dto  # Update the request payload
-
-        # Process TCP and UDP port attributes
+        # --- Normalize port ranges ---
         if "tcp_port_ranges" in body:
-            # Use format 1 (tcpPortRanges)
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
         elif "tcp_port_range" in body:
-            # Use format 2 (tcpPortRange)
             body["tcpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("tcp_port_range")]
 
         if "udp_port_ranges" in body:
-            # Use format 1 (udpPortRanges)
             body["udpPortRanges"] = body.pop("udp_port_ranges")
         elif "udp_port_range" in body:
-            # Use format 2 (udpPortRange)
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
 
-        # Apply add_id_groups to reformat params based on self.reformat_params
         add_id_groups(self.reformat_params, kwargs, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
 
-        # Execute the request
-        response, error = self._request_executor.execute(request, ApplicationSegmentPRA)
+        response, error = self._request_executor.execute(request, ApplicationSegments)
         if error:
             return (None, response, error)
 
         if response is None:
-            return (ApplicationSegmentPRA({"id": segment_id}), None, None)
+            return (ApplicationSegments({"id": segment_id}), None, None)
 
         try:
-            result = ApplicationSegmentPRA(self.form_response_body(response.get_body()))
+            result = ApplicationSegments(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
+
         return (result, response, None)
 
     def delete_segment_pra(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> tuple:

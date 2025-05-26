@@ -36,9 +36,10 @@ class SegmentGroup(ZscalerObject):
             self.tcp_keep_alive_enabled = config["tcpKeepAliveEnabled"] if "tcpKeepAliveEnabled" in config else None
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
             self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+            self.skip_detailed_app_info = config["skipDetailedAppInfo"] if "skipDetailedAppInfo" in config else None
 
             self.applications = (
-                ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegment)
+                ZscalerCollection.form_list(config["applications"], application_segment.ApplicationSegments)
                 if "applications" in config
                 else []
             )
@@ -52,6 +53,7 @@ class SegmentGroup(ZscalerObject):
             self.tcp_keep_alive_enabled = None
             self.microtenant_id = None
             self.microtenant_name = None
+            self.skip_detailed_app_info = None
             self.applications = []
 
     def request_format(self):
@@ -69,6 +71,7 @@ class SegmentGroup(ZscalerObject):
             "tcpKeepAliveEnabled": self.tcp_keep_alive_enabled,
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
+            "skipDetailedAppInfo": self.skip_detailed_app_info,
             "applications": [app.as_dict() for app in self.applications],
         }
         parent_req_format.update(current_obj_format)
