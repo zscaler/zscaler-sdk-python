@@ -19,7 +19,6 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_protection_predefined_controls as app_protection_predefined_controls
 from zscaler.zpa.models import common as common
 
-
 class PredefinedInspectionControlResource(ZscalerObject):
     """
     A class for PredefinedInspectionControlResource objects.
@@ -33,21 +32,59 @@ class PredefinedInspectionControlResource(ZscalerObject):
             config (dict): A dictionary representing the configuration.
         """
         super().__init__(config)
-
+        
+        # Initialize as empty list to ensure it's always iterable
+        self._items = []
+        
         if config:
-            self.control_group = config["controlGroup"] if "controlGroup" in config else None
-
-            self.default_group = config["defaultGroup"] if "defaultGroup" in config else None
-
+            self.control_group = config.get("controlGroup")
+            self.default_group = config.get("defaultGroup")
+            
+            # Store the raw config for iteration purposes
+            if isinstance(config, list):
+                self._items = config
+            elif isinstance(config, dict):
+                self._items = [config]
+            
             self.predefined_inspection_controls = ZscalerCollection.form_list(
-                config["predefinedInspectionControls"] if "predefinedInspectionControls" in config else [],
+                config.get("predefinedInspectionControls", []),
                 PredefinedInspectionControls,
             )
-
         else:
             self.control_group = None
             self.default_group = None
             self.predefined_inspection_controls = []
+
+    def __iter__(self):
+        """
+        Make the object iterable, yielding either the raw items or the processed objects.
+        """
+        for item in self._items:
+            if isinstance(item, dict):
+                yield PredefinedInspectionControlResource(item)
+            else:
+                yield item
+
+    def __len__(self):
+        """Return the length of the underlying items."""
+        return len(self._items)
+
+    def __getitem__(self, index):
+        """Support index-based access."""
+        if isinstance(index, int):
+            if 0 <= index < len(self._items):
+                item = self._items[index]
+                if isinstance(item, dict):
+                    return PredefinedInspectionControlResource(item)
+                return item
+            raise IndexError("Index out of range")
+        elif isinstance(index, str):
+            # Maintain backward compatibility with string attribute access
+            if hasattr(self, index):
+                return getattr(self, index)
+            raise KeyError(f"'{index}' not found in {self.__class__.__name__}")
+        else:
+            raise TypeError(f"Invalid index type: {type(index)}")
 
     def request_format(self):
         """

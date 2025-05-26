@@ -47,7 +47,7 @@ class ServerGroup(ZscalerObject):
             self.zscaler_managed = config["zscalerManaged"] if "zscalerManaged" in config else None
 
             self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], application_segment.ApplicationSegment
+                config["applications"] if "applications" in config else [], application_segment.ApplicationSegments
             )
 
             self.app_connector_groups = ZscalerCollection.form_list(
