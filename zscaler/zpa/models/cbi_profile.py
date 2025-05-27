@@ -20,7 +20,8 @@ from zscaler.oneapi_collection import ZscalerCollection
 
 class CBIProfile(ZscalerObject):
     """
-    A class representing a Cloud Browser Isolation Profile object.
+    A class for CBIProfile objects.
+    Handles common block attributes shared across multiple resources
     """
 
     def __init__(self, config=None):
@@ -28,189 +29,739 @@ class CBIProfile(ZscalerObject):
         Initialize the CBIProfile model based on API response.
 
         Args:
-            config (dict): A dictionary representing the cloud browser isolation profile.
+            config (dict): A dictionary representing the response.
         """
         super().__init__(config)
-        self.id = config["id"] if config and "id" in config else None
-        self.name = config["name"] if config and "name" in config else None
-        self.description = config["description"] if config and "description" in config else None
-        self.is_default = config["isDefault"] if config and "isDefault" in config else False
-        self.banner_id = config["bannerId"] if config and "bannerId" in config else None
+        # print("🚨 Raw config passed into CBIProfile:")
+        # import pprint
+        # pprint.pprint(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.banner_id = config["bannerId"] \
+                if "bannerId" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.description = config["description"] \
+                if "description" in config else None
+                
+            # print("💥 description Debug:",
+            #     config.get("description"),
+            #     config.get("description"),
+            #     config.get("description"))
+            
+            self.cbi_url = config["cbiUrl"] \
+                if "cbiUrl" in config else None
+            self.is_default = config["isDefault"] \
+                if "isDefault" in config else None
 
-        # Lists for certificates and region IDs
-        self.certificate_ids = ZscalerCollection.form_list(
-            config["certificateIds"] if config and "certificateIds" in config else [], str
-        )
-        self.region_ids = ZscalerCollection.form_list(config["regionIds"] if config and "regionIds" in config else [], str)
+            self.region_ids = ZscalerCollection.form_list(config["regionIds"] \
+                if "regionIds" in config else [], str)
 
-        # Handling the banner as an object (for PUT requests)
-        self.banner = {
-            "id": config["banner"]["id"] if config and "banner" in config and "id" in config["banner"] else None,
-            "name": config["banner"]["name"] if config and "banner" in config and "name" in config["banner"] else None,
-        }
+            self.certificate_ids = ZscalerCollection.form_list(config["certificateIds"] \
+                if "certificateIds" in config else [], str)
 
-        # Certificates as objects
-        self.certificates = []
-        if config and "certificates" in config:
-            for cert in config["certificates"]:
-                if "id" in cert and "name" in cert:
-                    self.certificates.append({"id": cert["id"], "name": cert["name"]})
+            self.certificates = ZscalerCollection.form_list(config["certificates"] \
+                if "certificates" in config else [], Certificates)
 
-        # Regions as objects
-        self.regions = []
-        if config and "regions" in config:
-            for region in config["regions"]:
-                if "id" in region and "name" in region:
-                    self.regions.append({"id": region["id"], "name": region["name"]})
+            self.regions = ZscalerCollection.form_list(config["regions"] \
+                if "regions" in config else [], Regions)
 
-        # Security controls
-        security_controls = config["securityControls"] if config and "securityControls" in config else {}
-        self.security_controls = {
-            "documentViewer": security_controls["documentViewer"] if "documentViewer" in security_controls else False,
-            "allowPrinting": security_controls["allowPrinting"] if "allowPrinting" in security_controls else True,
-            "watermark": {
-                "enabled": (
-                    security_controls["watermark"]["enabled"]
-                    if "watermark" in security_controls and "enabled" in security_controls["watermark"]
-                    else False
-                ),
-                "showUserId": (
-                    security_controls["watermark"]["showUserId"]
-                    if "watermark" in security_controls and "showUserId" in security_controls["watermark"]
-                    else False
-                ),
-                "showTimestamp": (
-                    security_controls["watermark"]["showTimestamp"]
-                    if "watermark" in security_controls and "showTimestamp" in security_controls["watermark"]
-                    else False
-                ),
-                "showMessage": (
-                    security_controls["watermark"]["showMessage"]
-                    if "watermark" in security_controls and "showMessage" in security_controls["watermark"]
-                    else False
-                ),
-                "message": (
-                    security_controls["watermark"]["message"]
-                    if "watermark" in security_controls and "message" in security_controls["watermark"]
-                    else None
-                ),
-            },
-            "flattenedPdf": security_controls["flattenedPdf"] if "flattenedPdf" in security_controls else False,
-            "uploadDownload": security_controls["uploadDownload"] if "uploadDownload" in security_controls else "all",
-            "restrictKeystrokes": (
-                security_controls["restrictKeystrokes"] if "restrictKeystrokes" in security_controls else False
-            ),
-            "copyPaste": security_controls["copyPaste"] if "copyPaste" in security_controls else "all",
-            "localRender": security_controls["localRender"] if "localRender" in security_controls else True,
-            "deepLink": {
-                "enabled": (
-                    security_controls["deepLink"]["enabled"]
-                    if "deepLink" in security_controls and "enabled" in security_controls["deepLink"]
-                    else False
-                ),
-                "applications": ZscalerCollection.form_list(
-                    (
-                        security_controls["deepLink"]["applications"]
-                        if "deepLink" in security_controls and "applications" in security_controls["deepLink"]
-                        else []
-                    ),
-                    str,
-                ),
-            },
-        }
-
-        # User experience attributes
-        user_experience = config["userExperience"] if config and "userExperience" in config else {}
-        self.user_experience = {
-            "sessionPersistence": user_experience["sessionPersistence"] if "sessionPersistence" in user_experience else False,
-            "browserInBrowser": user_experience["browserInBrowser"] if "browserInBrowser" in user_experience else True,
-            "persistIsolationBar": (
-                user_experience["persistIsolationBar"] if "persistIsolationBar" in user_experience else False
-            ),
-            "translate": user_experience["translate"] if "translate" in user_experience else False,
-            "forwardToZia": {
-                "enabled": (
-                    user_experience["forwardToZia"]["enabled"]
-                    if "forwardToZia" in user_experience and "enabled" in user_experience["forwardToZia"]
-                    else False
-                ),
-                "organizationId": (
-                    user_experience["forwardToZia"]["organizationId"]
-                    if "forwardToZia" in user_experience and "organizationId" in user_experience["forwardToZia"]
-                    else None
-                ),
-                "cloudName": (
-                    user_experience["forwardToZia"]["cloudName"]
-                    if "forwardToZia" in user_experience and "cloudName" in user_experience["forwardToZia"]
-                    else None
-                ),
-                "pacFileUrl": (
-                    user_experience["forwardToZia"]["pacFileUrl"]
-                    if "forwardToZia" in user_experience and "pacFileUrl" in user_experience["forwardToZia"]
-                    else None
-                ),
-            },
-        }
-
-        # Debug mode
-        debug_mode = config["debugMode"] if config and "debugMode" in config else {}
-        self.debug_mode = {
-            "allowed": debug_mode["allowed"] if "allowed" in debug_mode else False,
-            "filePassword": debug_mode["filePassword"] if "filePassword" in debug_mode else None,
-        }
+            if "banner" in config:
+                if isinstance(config["banner"], Banner):
+                    self.banner = config["banner"]
+                elif config["banner"] is not None:
+                    self.banner = Banner(config["banner"])
+                else:
+                    self.banner = None
+            else:
+                self.banner = None
+                
+            if "debugMode" in config:
+                if isinstance(config["debugMode"], DebugMode):
+                    self.debug_mode = config["debugMode"]
+                elif config["debugMode"] is not None:
+                    self.debug_mode = DebugMode(config["debugMode"])
+                else:
+                    self.debug_mode = None
+            else:
+                self.debug_mode = None
+                
+            if "userExperience" in config:
+                if isinstance(config["userExperience"], UserExperience):
+                    self.user_experience = config["userExperience"]
+                elif config["userExperience"] is not None:
+                    self.user_experience = UserExperience(config["userExperience"])
+                else:
+                    self.user_experience = None
+            else:
+                self.user_experience = None
+                
+            if "securityControls" in config:
+                if isinstance(config["securityControls"], SecurityControls):
+                    self.security_controls = config["securityControls"]
+                elif config["securityControls"] is not None:
+                    self.security_controls = SecurityControls(config["securityControls"])
+                else:
+                    self.security_controls = None
+            else:
+                self.security_controls = None
+        else:
+            self.id = None
+            self.banner_id = None
+            self.banner = None
+            self.name = None
+            self.description = None
+            self.certificates = None
+            self.regions = None
+            self.debug_mode = None
+            self.user_experience = None
+            self.security_controls = None
+            self.cbi_url = None
+            self.is_default = None
+            self.region_ids = []
+            self.certificate_ids = []
 
     def request_format(self):
         """
-        Prepare the object in a format suitable for sending as a request payload.
-
-        Returns:
-            dict: A dictionary representing the CBI profile for API requests.
+        Returns the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "isDefault": self.is_default,
             "bannerId": self.banner_id,
+            "banner": self.banner,
+            "cbiUrl": self.cbi_url,
+            "certificates": self.certificates,
+            "regions": self.regions,
+            "isDefault": self.is_default,
             "certificateIds": self.certificate_ids,
             "regionIds": self.region_ids,
-            "banner": self.banner,  # Use banner as an object
-            "certificates": self.certificates,  # List of certificate objects
-            "regions": self.regions,  # List of region objects
-            "securityControls": {
-                "documentViewer": self.security_controls["documentViewer"],
-                "allowPrinting": self.security_controls["allowPrinting"],
-                "watermark": {
-                    "enabled": self.security_controls["watermark"]["enabled"],
-                    "showUserId": self.security_controls["watermark"]["showUserId"],
-                    "showTimestamp": self.security_controls["watermark"]["showTimestamp"],
-                    "showMessage": self.security_controls["watermark"]["showMessage"],
-                    "message": self.security_controls["watermark"]["message"],
-                },
-                "deepLink": {
-                    "enabled": self.security_controls["deepLink"]["enabled"],
-                    "applications": self.security_controls["deepLink"]["applications"],
-                },
-                "flattenedPdf": self.security_controls["flattenedPdf"],
-                "uploadDownload": self.security_controls["uploadDownload"],
-                "restrictKeystrokes": self.security_controls["restrictKeystrokes"],
-                "copyPaste": self.security_controls["copyPaste"],
-                "localRender": self.security_controls["localRender"],
-            },
-            "userExperience": {
-                "sessionPersistence": self.user_experience["sessionPersistence"],
-                "browserInBrowser": self.user_experience["browserInBrowser"],
-                "persistIsolationBar": self.user_experience["persistIsolationBar"],
-                "translate": self.user_experience["translate"],
-                "forwardToZia": {
-                    "enabled": self.user_experience["forwardToZia"]["enabled"],
-                    "organizationId": self.user_experience["forwardToZia"]["organizationId"],
-                    "cloudName": self.user_experience["forwardToZia"]["cloudName"],
-                    "pacFileUrl": self.user_experience["forwardToZia"]["pacFileUrl"],
-                },
-            },
-            "debugMode": {"allowed": self.debug_mode["allowed"], "filePassword": self.debug_mode["filePassword"]},
+            "debugMode": self.debug_mode,
+            "userExperience": self.user_experience,
+            "securityControls": self.security_controls,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+    
+class DebugMode(ZscalerObject):
+    """
+    A class for DebugMode objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the DebugMode model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.allowed = config["allowed"] \
+                if "allowed" in config else None
+            self.file_password = config["filePassword"] \
+                if "filePassword" in config else None
+
+        else:
+            self.allowed = None
+            self.file_password = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "allowed": self.allowed,
+            "filePassword": self.file_password,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+
+class UserExperience(ZscalerObject):
+    """
+    A class for UserExperience objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the UserExperience model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.browser_in_browser = config["browserInBrowser"] \
+                if "browserInBrowser" in config else None
+            self.session_persistence = config["sessionPersistence"] \
+                if "sessionPersistence" in config else None
+            self.persist_isolation_bar = config["persistIsolationBar"] \
+                if "persistIsolationBar" in config else None
+            self.translate = config["translate"] \
+                if "translate" in config else None
+            self.zgpu = config["zgpu"] \
+                if "zgpu" in config else None
+
+            if "forwardToZia" in config:
+                if isinstance(config["forwardToZia"], ForwardToZia):
+                    self.forward_to_zia = config["forwardToZia"]
+                elif config["forwardToZia"] is not None:
+                    self.forward_to_zia = ForwardToZia(config["forwardToZia"])
+                else:
+                    self.forward_to_zia = None
+            else:
+                self.forward_to_zia = None
+        else:
+            self.browser_in_browser = None
+            self.session_persistence = None
+            self.persist_isolation_bar = None
+            self.translate = None
+            self.forward_to_zia = None
+            self.zgpu = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "browserInBrowser": self.browser_in_browser,
+            "sessionPersistence": self.session_persistence,
+            "persistIsolationBar": self.persist_isolation_bar,
+            "translate": self.translate,
+            "zgpu": self.zgpu,
+            "forwardToZia": self.forward_to_zia,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class ForwardToZia(ZscalerObject):
+    """
+    A class for ForwardToZia objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the ForwardToZia model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.cloud_name = config["cloudName"] \
+                if "cloudName" in config else None
+            self.pac_file_url = config["pacFileUrl"] \
+                if "pacFileUrl" in config else None
+            self.organization_id = config["organizationId"] \
+                if "organizationId" in config else None
+
+        else:
+            self.enabled = None
+            self.cloud_name = None
+            self.pac_file_url = None
+            self.organization_id = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "enabled": self.enabled,
+            "cloudName": self.cloud_name,
+            "pacFileUrl": self.pac_file_url,
+            "organizationId": self.organization_id,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class SecurityControls(ZscalerObject):
+    """
+    A class for SecurityControls objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SecurityControls model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.copy_paste = config["copyPaste"] \
+                if "copyPaste" in config else None
+            self.upload_download = config["uploadDownload"] \
+                if "uploadDownload" in config else None
+            self.document_viewer = config["documentViewer"] \
+                if "documentViewer" in config else None
+            self.local_render = config["localRender"] \
+                if "localRender" in config else None
+            self.allow_printing = config["allowPrinting"] \
+                if "allowPrinting" in config else None
+            self.restrict_keystrokes = config["restrictKeystrokes"] \
+                if "restrictKeystrokes" in config else None
+            self.camera_and_mic = config["cameraAndMic"] \
+                if "cameraAndMic" in config else None
+            self.flattened_pdf = config["flattenedPdf"] \
+                if "flattenedPdf" in config else None
+                
+            if "deepLink" in config:
+                if isinstance(config["deepLink"], DeepLink):
+                    self.deep_link = config["deepLink"]
+                elif config["deepLink"] is not None:
+                    self.deep_link = DeepLink(config["deepLink"])
+                else:
+                    self.deep_link = None
+            else:
+                self.deep_link = None
+                
+            if "watermark" in config:
+                if isinstance(config["watermark"], Watermark):
+                    self.watermark = config["watermark"]
+                elif config["watermark"] is not None:
+                    self.watermark = Watermark(config["watermark"])
+                else:
+                    self.watermark = None
+            else:
+                self.watermark = None
+                
+
+        else:
+            self.copy_paste = None
+            self.upload_download = None
+            self.document_viewer = None
+            self.local_render = None
+            self.allow_printing = None
+            self.restrict_keystrokes = None
+            self.camera_and_mic = None
+            self.deep_link = None
+            self.watermark = None
+            self.flattened_pdf = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "copyPaste": self.copy_paste,
+            "uploadDownload": self.upload_download,
+            "documentViewer": self.document_viewer,
+            "localRender": self.local_render,
+            "allowPrinting": self.allow_printing,
+            "restrictKeystrokes": self.restrict_keystrokes,
+            "cameraAndMic": self.camera_and_mic,
+            "flattenedPdf": self.flattened_pdf,
+            "deepLink": self.deep_link,
+            "watermark": self.watermark,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class DeepLink(ZscalerObject):
+    """
+    A class for DeepLink objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the DeepLink model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.applications = ZscalerCollection.form_list(config["applications"] \
+                if "applications" in config else [], str)
+
+        else:
+            self.enabled = None
+            self.applications = []
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "enabled": self.enabled,
+            "applications": self.applications,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class Watermark(ZscalerObject):
+    """
+    A class for Watermark objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Watermark model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.show_user_id = config["showUserId"] \
+                if "showUserId" in config else None
+            self.show_timestamp = config["showTimestamp"] \
+                if "showTimestamp" in config else None
+            self.show_message = config["showMessage"] \
+                if "showMessage" in config else None
+            self.message = config["message"] \
+                if "message" in config else None
+
+        else:
+            self.enabled = None
+            self.show_user_id = None
+            self.show_timestamp = None
+            self.show_message = None
+            self.message = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "enabled": self.enabled,
+            "showUserId": self.show_user_id,
+            "showTimestamp": self.show_timestamp,
+            "showMessage": self.show_message,
+            "message": self.message,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Certificates(ZscalerObject):
+    """
+    A class for Certificates objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Certificates model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.enabled = config["enabled"] \
+                if "enabled" in config else None
+            self.is_default = config["isDefault"] \
+                if "isDefault" in config else None
+
+        else:
+            self.id = None
+            self.name = None
+            self.enabled = None
+            self.is_default = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "enabled": self.enabled,
+            "isDefault": self.is_default,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class Regions(ZscalerObject):
+    """
+    A class for Regions objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Regions model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+
+        else:
+            self.id = None
+            self.name = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class Banner(ZscalerObject):
+    """
+    A class for Banner objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Banner model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+
+        else:
+            self.id = None
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+# class CBIProfile(ZscalerObject):
+#     """
+#     A class representing a Cloud Browser Isolation Profile object.
+#     """
+
+#     def __init__(self, config=None):
+#         """
+#         Initialize the CBIProfile model based on API response.
+
+#         Args:
+#             config (dict): A dictionary representing the cloud browser isolation profile.
+#         """
+#         super().__init__(config)
+#         self.id = config["id"] if config and "id" in config else None
+#         self.name = config["name"] if config and "name" in config else None
+#         self.description = config["description"] if config and "description" in config else None
+#         self.is_default = config["isDefault"] if config and "isDefault" in config else False
+#         self.banner_id = config["bannerId"] if config and "bannerId" in config else None
+
+#         # Lists for certificates and region IDs
+#         self.certificate_ids = ZscalerCollection.form_list(
+#             config["certificateIds"] if config and "certificateIds" in config else [], str
+#         )
+#         self.region_ids = ZscalerCollection.form_list(config["regionIds"] if config and "regionIds" in config else [], str)
+
+#         # Handling the banner as an object (for PUT requests)
+#         self.banner = {
+#             "id": config["banner"]["id"] if config and "banner" in config and "id" in config["banner"] else None,
+#             "name": config["banner"]["name"] if config and "banner" in config and "name" in config["banner"] else None,
+#         }
+
+#         # Certificates as objects
+#         self.certificates = []
+#         if config and "certificates" in config:
+#             for cert in config["certificates"]:
+#                 if "id" in cert and "name" in cert:
+#                     self.certificates.append({"id": cert["id"], "name": cert["name"]})
+
+#         # Regions as objects
+#         self.regions = []
+#         if config and "regions" in config:
+#             for region in config["regions"]:
+#                 if "id" in region and "name" in region:
+#                     self.regions.append({"id": region["id"], "name": region["name"]})
+
+#         # Security controls
+#         security_controls = config["securityControls"] if config and "securityControls" in config else {}
+#         self.security_controls = {
+#             "documentViewer": security_controls["documentViewer"] if "documentViewer" in security_controls else False,
+#             "allowPrinting": security_controls["allowPrinting"] if "allowPrinting" in security_controls else True,
+#             "watermark": {
+#                 "enabled": (
+#                     security_controls["watermark"]["enabled"]
+#                     if "watermark" in security_controls and "enabled" in security_controls["watermark"]
+#                     else False
+#                 ),
+#                 "showUserId": (
+#                     security_controls["watermark"]["showUserId"]
+#                     if "watermark" in security_controls and "showUserId" in security_controls["watermark"]
+#                     else False
+#                 ),
+#                 "showTimestamp": (
+#                     security_controls["watermark"]["showTimestamp"]
+#                     if "watermark" in security_controls and "showTimestamp" in security_controls["watermark"]
+#                     else False
+#                 ),
+#                 "showMessage": (
+#                     security_controls["watermark"]["showMessage"]
+#                     if "watermark" in security_controls and "showMessage" in security_controls["watermark"]
+#                     else False
+#                 ),
+#                 "message": (
+#                     security_controls["watermark"]["message"]
+#                     if "watermark" in security_controls and "message" in security_controls["watermark"]
+#                     else None
+#                 ),
+#             },
+#             "flattenedPdf": security_controls["flattenedPdf"] if "flattenedPdf" in security_controls else False,
+#             "uploadDownload": security_controls["uploadDownload"] if "uploadDownload" in security_controls else "all",
+#             "restrictKeystrokes": (
+#                 security_controls["restrictKeystrokes"] if "restrictKeystrokes" in security_controls else False
+#             ),
+#             "copyPaste": security_controls["copyPaste"] if "copyPaste" in security_controls else "all",
+#             "localRender": security_controls["localRender"] if "localRender" in security_controls else True,
+#             "deepLink": {
+#                 "enabled": (
+#                     security_controls["deepLink"]["enabled"]
+#                     if "deepLink" in security_controls and "enabled" in security_controls["deepLink"]
+#                     else False
+#                 ),
+#                 "applications": ZscalerCollection.form_list(
+#                     (
+#                         security_controls["deepLink"]["applications"]
+#                         if "deepLink" in security_controls and "applications" in security_controls["deepLink"]
+#                         else []
+#                     ),
+#                     str,
+#                 ),
+#             },
+#         }
+
+#         # User experience attributes
+#         user_experience = config["userExperience"] if config and "userExperience" in config else {}
+#         self.user_experience = {
+#             "sessionPersistence": user_experience["sessionPersistence"] if "sessionPersistence" in user_experience else False,
+#             "browserInBrowser": user_experience["browserInBrowser"] if "browserInBrowser" in user_experience else True,
+#             "persistIsolationBar": (
+#                 user_experience["persistIsolationBar"] if "persistIsolationBar" in user_experience else False
+#             ),
+#             "translate": user_experience["translate"] if "translate" in user_experience else False,
+#             "forwardToZia": {
+#                 "enabled": (
+#                     user_experience["forwardToZia"]["enabled"]
+#                     if "forwardToZia" in user_experience and "enabled" in user_experience["forwardToZia"]
+#                     else False
+#                 ),
+#                 "organizationId": (
+#                     user_experience["forwardToZia"]["organizationId"]
+#                     if "forwardToZia" in user_experience and "organizationId" in user_experience["forwardToZia"]
+#                     else None
+#                 ),
+#                 "cloudName": (
+#                     user_experience["forwardToZia"]["cloudName"]
+#                     if "forwardToZia" in user_experience and "cloudName" in user_experience["forwardToZia"]
+#                     else None
+#                 ),
+#                 "pacFileUrl": (
+#                     user_experience["forwardToZia"]["pacFileUrl"]
+#                     if "forwardToZia" in user_experience and "pacFileUrl" in user_experience["forwardToZia"]
+#                     else None
+#                 ),
+#             },
+#         }
+
+#         # Debug mode
+#         debug_mode = config["debugMode"] if config and "debugMode" in config else {}
+#         self.debug_mode = {
+#             "allowed": debug_mode["allowed"] if "allowed" in debug_mode else False,
+#             "filePassword": debug_mode["filePassword"] if "filePassword" in debug_mode else None,
+#         }
+
+#     def request_format(self):
+#         """
+#         Prepare the object in a format suitable for sending as a request payload.
+
+#         Returns:
+#             dict: A dictionary representing the CBI profile for API requests.
+#         """
+#         parent_req_format = super().request_format()
+#         current_obj_format = {
+#             "id": self.id,
+#             "name": self.name,
+#             "description": self.description,
+#             "isDefault": self.is_default,
+#             "bannerId": self.banner_id,
+#             "certificateIds": self.certificate_ids,
+#             "regionIds": self.region_ids,
+#             "banner": self.banner,  # Use banner as an object
+#             "certificates": self.certificates,  # List of certificate objects
+#             "regions": self.regions,  # List of region objects
+#             "securityControls": {
+#                 "documentViewer": self.security_controls["documentViewer"],
+#                 "allowPrinting": self.security_controls["allowPrinting"],
+#                 "watermark": {
+#                     "enabled": self.security_controls["watermark"]["enabled"],
+#                     "showUserId": self.security_controls["watermark"]["showUserId"],
+#                     "showTimestamp": self.security_controls["watermark"]["showTimestamp"],
+#                     "showMessage": self.security_controls["watermark"]["showMessage"],
+#                     "message": self.security_controls["watermark"]["message"],
+#                 },
+#                 "deepLink": {
+#                     "enabled": self.security_controls["deepLink"]["enabled"],
+#                     "applications": self.security_controls["deepLink"]["applications"],
+#                 },
+#                 "flattenedPdf": self.security_controls["flattenedPdf"],
+#                 "uploadDownload": self.security_controls["uploadDownload"],
+#                 "restrictKeystrokes": self.security_controls["restrictKeystrokes"],
+#                 "copyPaste": self.security_controls["copyPaste"],
+#                 "localRender": self.security_controls["localRender"],
+#             },
+#             "userExperience": {
+#                 "sessionPersistence": self.user_experience["sessionPersistence"],
+#                 "browserInBrowser": self.user_experience["browserInBrowser"],
+#                 "persistIsolationBar": self.user_experience["persistIsolationBar"],
+#                 "translate": self.user_experience["translate"],
+#                 "forwardToZia": {
+#                     "enabled": self.user_experience["forwardToZia"]["enabled"],
+#                     "organizationId": self.user_experience["forwardToZia"]["organizationId"],
+#                     "cloudName": self.user_experience["forwardToZia"]["cloudName"],
+#                     "pacFileUrl": self.user_experience["forwardToZia"]["pacFileUrl"],
+#                 },
+#             },
+#             "debugMode": {"allowed": self.debug_mode["allowed"], "filePassword": self.debug_mode["filePassword"]},
+#         }
+#         parent_req_format.update(current_obj_format)
+#         return parent_req_format

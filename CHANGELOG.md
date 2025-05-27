@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.4.1 (May, 27 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #292](https://github.com/zscaler/zscaler-sdk-python/pull/292) - Fixed ZPA `application_segment` model missing attribute `passive_health_enabled`
+* [PR #292](https://github.com/zscaler/zscaler-sdk-python/pull/292) - Added missing ZIA attribute `nw_services` to `reformat_params` list
+
 ## 1.4.0 (May, 26 2025)
 
 ### Notes
