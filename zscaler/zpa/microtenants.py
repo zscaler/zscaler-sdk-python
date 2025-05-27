@@ -21,7 +21,6 @@ from zscaler.zpa.models.microtenants import MicrotenantSearch
 from zscaler.utils import format_url
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
