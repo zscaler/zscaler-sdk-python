@@ -307,7 +307,6 @@ class LegacyZIAClientHelper:
         """Dummy method for compatibility with the request executor."""
         self._session = session
 
-
     @property
     def activate(self):
         """
@@ -417,7 +416,7 @@ class LegacyZIAClientHelper:
         from zscaler.zia.shadow_it_report import ShadowITAPI
 
         return ShadowITAPI(self.request_executor)
-    
+
     @property
     def cloud_browser_isolation(self):
         """

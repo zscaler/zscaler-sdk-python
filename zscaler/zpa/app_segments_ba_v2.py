@@ -310,7 +310,7 @@ class AppSegmentsBAV2API(APIClient):
            Create an application segment using **new TCP port format** (`tcp_port_range`):
 
             >>> updated_segment, _, err = client.zpa.app_segments_ba_v2.add_segment_ba(
-            ...     segment_id='1455863112',                
+            ...     segment_id='1455863112',
             ...     name=f"UpdatedBASegment_{random.randint(1000, 10000)}",
             ...     description=f"UpdatedBASegment_{random.randint(1000, 10000)}",
             ...     enabled=True,

@@ -224,7 +224,7 @@ class RoleControllerAPI(APIClient):
     def update_role(self, role_id: str, **kwargs) -> tuple:
         """
         Updates the specified role.
-            
+
         Args:
             role_id (str): The unique identifier for the role being updated.
             name (str): The name of the role.

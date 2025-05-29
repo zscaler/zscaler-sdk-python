@@ -83,7 +83,7 @@ class AppProtectionProfile(ZscalerObject):
             self.predefined_api_controls = ZscalerCollection.form_list(
                 config["predefinedApiControls"] if "predefinedApiControls" in config else [], PredefinedAPIControls
             )
-            
+
             self.threatlabz_controls = ZscalerCollection.form_list(
                 config["threatlabzControls"] if "threatlabzControls" in config else [], ThreatLabzControls
             )
@@ -146,6 +146,7 @@ class AppProtectionProfile(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class ControlsInfo(ZscalerObject):
     """
     A class for ControlsInfo objects.
@@ -180,7 +181,8 @@ class ControlsInfo(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class CustomControls(ZscalerObject):
     """
     A class for CustomControls objects.
@@ -249,7 +251,7 @@ class CustomControls(ZscalerObject):
             self.rules = ZscalerCollection.form_list(
                 config["rules"] if "rules" in config else [], InspectionRule
             )
-            
+
         else:
             self.action = None
             self.action_value = None
@@ -303,7 +305,7 @@ class CustomControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class PredefinedControls(ZscalerObject):
     """
@@ -537,7 +539,8 @@ class PredefinedADPControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class PredefinedAPIControls(ZscalerObject):
     """
     A class for PredefinedAPIControls objects.
@@ -589,7 +592,7 @@ class PredefinedAPIControls(ZscalerObject):
                 if "severity" in config else None
             self.version = config["version"] \
                 if "version" in config else None
-                
+
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
@@ -654,7 +657,7 @@ class PredefinedAPIControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class ThreatLabzControls(ZscalerObject):
     """
@@ -758,7 +761,8 @@ class ThreatLabzControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class WebSocketControls(ZscalerObject):
     """
     A class for WebSocketControls objects.
@@ -804,7 +808,7 @@ class WebSocketControls(ZscalerObject):
                 if "severity" in config else None
             self.version = config["version"] \
                 if "version" in config else None
-                
+
             self.associated_inspection_profile_names = ZscalerCollection.form_list(
                 config["associatedInspectionProfileNames"] if "associatedInspectionProfileNames" in config else [],
                 common.CommonIDName,
@@ -863,7 +867,8 @@ class WebSocketControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class InspectionRule(ZscalerObject):
     """
     A class for InspectionRule objects.
