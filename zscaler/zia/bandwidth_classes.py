@@ -91,7 +91,6 @@ class BandwidthClassesAPI(APIClient):
 
         return (results, response, None)
 
-
     def list_classes_lite(self) -> tuple:
         """
         Fetches a specific bandwidth class lite by ID.

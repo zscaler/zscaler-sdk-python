@@ -561,7 +561,7 @@ class FirewallResourcesAPI(APIClient):
             ...     print(f"Error updating group: {error}")
             ...     return
             ... print(f"Group updated successfully: {updated_group.as_dict()}")
-            
+
             Update a Destination IP Group with country and url category for the US:
 
             >>> updated_group, _, error = client.zia.cloud_firewall.update_ip_destination_group(

@@ -177,7 +177,7 @@ class ZIAService:
 
         """
         return ShadowITAPI(self._request_executor)
-    
+
     @property
     def cloud_nss(self):
         """

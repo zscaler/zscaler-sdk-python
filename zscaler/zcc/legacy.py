@@ -11,24 +11,11 @@ from zscaler.utils import (
     is_token_expired,
     RateLimitExceededError
 )
-from zscaler.logger import setup_logging
 from zscaler.errors.response_checker import check_response_for_error
+from zscaler.logger import setup_logging
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
-logger = logging.getLogger("zscaler-sdk-python")
-
-import os, time, urllib.parse, logging, requests
-from datetime import datetime, timedelta
-from zscaler import __version__
-from zscaler.user_agent import UserAgent
-from zscaler.cache.no_op_cache import NoOpCache
-from zscaler.cache.cache import Cache
-from zscaler.cache.zscaler_cache import ZscalerCache
-from zscaler.errors.response_checker import check_response_for_error
-from zscaler.ratelimiter.ratelimiter import RateLimiter
-from zscaler.utils import is_token_expired
-
 logger = logging.getLogger("zscaler-sdk-python")
 
 
@@ -148,7 +135,7 @@ class LegacyZCCClientHelper:
             _, err = check_response_for_error(url, resp, resp.text)
             if err:
                 raise err
-            
+
             logger.info("Login attempt with status: %d", resp.status_code)
             return resp
         except Exception as e:
@@ -316,7 +303,6 @@ class LegacyZCCClientHelper:
             "headers": headers_with_user_agent,
             "json": json or {},
         }
-
 
     def set_session(self, session):
         """Dummy method for compatibility with the request executor."""

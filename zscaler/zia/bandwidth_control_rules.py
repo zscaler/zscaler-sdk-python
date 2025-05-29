@@ -36,7 +36,7 @@ class BandwidthControlRulesAPI(APIClient):
         List bandwidth control rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
@@ -109,7 +109,7 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Fetches a specific bandwidth control rule lite.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
@@ -164,7 +164,7 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Returns information for the specified bandwidth control rule.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
@@ -216,7 +216,7 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Adds a new cloud bandwidth control rule.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
@@ -296,7 +296,7 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Updates an existing bandwidth control rule.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
@@ -379,7 +379,7 @@ class BandwidthControlRulesAPI(APIClient):
         """
         Deletes the specified bandwidth control rule.
 
-        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access 
+        Note: This API endpoint can be accessed only through Zscaler OneAPI with the correct access
         token included in the request's Authorization header.
 
         Args:
