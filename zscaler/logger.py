@@ -24,7 +24,8 @@ def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
 
     if not enabled:
         # If logging is not enabled, set up a null handler
-        logging.disable(logging.INFO)
+        # logging.disable(logging.INFO)
+        logging.getLogger(logger_name).addHandler(logging.NullHandler())
         return
 
     if verbose is None:

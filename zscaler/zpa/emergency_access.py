@@ -40,12 +40,12 @@ class EmergencyAccessAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
 
-                ``[query_params.page]`` {str}: Specifies the page number.
+                ``[query_params.page_id]`` {str}: Specifies the page number.
 
                 ``[query_params.page_size]`` {str}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
 
-                ``[query_params.search]`` {str}: Search string for filtering results.
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
                 ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
@@ -53,7 +53,7 @@ class EmergencyAccessAPI(APIClient):
 
         Examples:
             >>> access_list, _, err = client.zpa.emergency_access.list_users(
-            ... query_params={'search': 'portal01', 'page': '1', 'page_size': '100'})
+            ... query_params={'search': 'first_name+EQ+Emily', 'page_id': '1', 'page_size': '100'})
             ... if err:
             ...     print(f"Error listing emergency access users: {err}")
             ...     return
@@ -70,9 +70,7 @@ class EmergencyAccessAPI(APIClient):
         )
 
         query_params = query_params or {}
-        query_params.update(kwargs)
-
-        microtenant_id = query_params.pop("microtenant_id", None)
+        microtenant_id = query_params.get("microtenant_id", None)
         if microtenant_id:
             query_params["microtenantId"] = microtenant_id
 
@@ -146,6 +144,7 @@ class EmergencyAccessAPI(APIClient):
             first_name (str): The first name of the emergency access user.
             last_name (str): The last name of the emergency access user.
             user_id (str): The unique identifier of the emergency access user.
+            update_enabled (bool): Indicates if the emergency access user can be updated (true) or not (false).
             activate_now (bool, optional): Indicates if the emergency access user is activated upon creation. Defaults to True.
 
         Returns:
