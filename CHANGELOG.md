@@ -1,5 +1,17 @@
 # Zscaler Python SDK Changelog
 
+## 1.4.2 (May, 29 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #294](https://github.com/zscaler/zscaler-sdk-python/pull/294) - Fixed ZIA `cloud_firewall_rules` model `nw_services` attribute
+* [PR #294](https://github.com/zscaler/zscaler-sdk-python/pull/294) - Fixed ZPA `cbi_certficate` pem model attribute
+* [PR #294](https://github.com/zscaler/zscaler-sdk-python/pull/294) - Fixed an issue where SDK logging configuration interfered with user-defined loggers. The SDK no longer overrides global logging behavior or disables logs for external modules.
+
 ## 1.4.1 (May, 27 2025)
 
 ### Notes

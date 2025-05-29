@@ -223,7 +223,7 @@ class InspectionControllerAPI(APIClient):
         """
         )
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
-        
+
         groups, _, err = self.list_predef_controls(query_params={"version": version})
         if err or not groups:
             return None, None, f"Failed to retrieve predefined control groups: {err}"
@@ -268,7 +268,7 @@ class InspectionControllerAPI(APIClient):
 
         try:
             created_profile = AppProtectionProfile(self.form_response_body(response.get_body()))
-            
+
             # Fetch the full created profile explicitly
             profile_id = created_profile.id
             full_profile, _, fetch_error = self.get_profile(profile_id)
@@ -297,7 +297,7 @@ class InspectionControllerAPI(APIClient):
         """
         )
         version = kwargs.pop("predefined_controls_version", "OWASP_CRS/3.3.0")
-        
+
         # Get default predefined controls
         groups, _, err = self.list_predef_controls(query_params={"version": version})
         if err or not groups:
@@ -483,8 +483,14 @@ class InspectionControllerAPI(APIClient):
         if kwargs.get("predefined_controls"):
             predefined_controls_extra = kwargs.pop("predefined_controls")
             payload["predefinedControls"].extend(
-                [{"id": control["id"], "action": control["action"], "default_action": control["action"]}
-                for control in predefined_controls_extra]
+                [
+                    {
+                        "id": control["id"],
+                        "action": control["action"],
+                        "default_action": control["action"]
+                    }
+                    for control in predefined_controls_extra
+                ]
             )
 
         # Add custom controls if provided
@@ -582,7 +588,7 @@ class InspectionControllerAPI(APIClient):
 
         Returns:
             PredefinedInspectionControlResource: The corresponding predefined control object.
-            
+
         Examples:
             >>> predef_controls, _, err = client.zpa.app_protection.get_all_predef_control(
             ... query_params={'version': 'OWASP_CRS/4.8.0'})
@@ -628,7 +634,7 @@ class InspectionControllerAPI(APIClient):
 
         Returns:
             AppProtectionCustomControl: The corresponding predefined control object.
-            
+
         Examples:
             >>> fetched_predf_control, _, err = client.zpa.app_protection.get_predef_control(control_id='72057594037928524')
             >>> if err:
@@ -837,53 +843,24 @@ class InspectionControllerAPI(APIClient):
                 print(f"Fetched predefined control adp: {fetched_predf_control.as_dict()}")
 
         """
-        # SUPPORTED = {"OWASP_CRS/4.8.0", "OWASP_CRS/3.3.5", "OWASP_CRS/3.3.0"}
-        # qp = dict(query_params or {})
-
-        # version = qp.get("version")
-        # if version is None:
-        #     return (None, None,
-        #             ValueError("'version' is required in query_params"))
-        # if version not in SUPPORTED:
-        #     return (None, None,
-        #             ValueError(f"Unsupported version '{version}'. "
-        #                     f"Supported values: {', '.join(sorted(SUPPORTED))}"))
-
-        # search_field = qp.pop("search_field", None)
-        # if "search" in qp and search_field:
-        #     qp["search"] = f"{qp['search']}+EQ+{search_field}"
-
-        # base_url = f"{self._zpa_base_endpoint}/inspectionControls/predefined"
-        # query_str = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in qp.items())
-        # api_url = f"{base_url}?{query_str}"
-
-        # request, err = self._request_executor.create_request("GET", api_url)
-        # if err:
-        #     return (None, None, err)
-
-        # response, err = self._request_executor.execute(request)
-        # if err:
-        #     return (None, response, err)
-
-        # try:
-        #     body = self.form_response_body(response.get_body())
-        #     result = PredefinedInspectionControlResource(body)
-        # except Exception as exc:
-        #     return (None, response, exc)
-
-        # return (result, response, None)
-
         SUPPORTED = {"OWASP_CRS/4.8.0", "OWASP_CRS/3.3.5", "OWASP_CRS/3.3.0"}
         qp = dict(query_params or {})
 
         version = qp.get("version")
         if version is None:
-            return (None, None,
-                    ValueError("'version' is required in query_params"))
+            return (
+                None,
+                None,
+                ValueError("'version' is required in query_params")
+            )
         if version not in SUPPORTED:
-            return (None, None,
-                    ValueError(f"Unsupported version '{version}'. "
-                            f"Supported values: {', '.join(sorted(SUPPORTED))}"))
+            return (
+                None,
+                None,
+                ValueError(
+                    f"Unsupported version '{version}'. Supported values: {', '.join(sorted(SUPPORTED))}"
+                )
+            )
 
         search_field = qp.pop("search_field", None)
         if "search" in qp and search_field:

@@ -438,7 +438,7 @@ class DevicesAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     If not provided, the default page size is 30.
                     The max page size is 5000.
-                    
+
                 client_connector_version (list[str]): List of the client connector agent versions
                 os_type (int): Valid options are: ios, android, windows, macos, linux.
                 udids (list[str]): The list of udids for the devices to be removed

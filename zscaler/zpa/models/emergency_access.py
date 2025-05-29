@@ -18,24 +18,37 @@ from zscaler.oneapi_object import ZscalerObject
 
 
 class EmergencyAccessUser(ZscalerObject):
-    def __init__(self, config=None):
-        """
-        Initialize the EmergencyAccessUser model based on API response.
+    """
+    Initialize the EmergencyAccessUser model based on API response.
 
-        Args:
-            config (dict): A dictionary representing the emergency access user configuration.
-        """
+    Args:
+        config (dict): A dictionary representing the emergency access user configuration.
+    """
+    def __init__(self, config=None):
         super().__init__(config)
-        self.user_id = config["userId"] if config and "userId" in config else None
-        self.first_name = config["firstName"] if config and "firstName" in config else None
-        self.last_name = config["lastName"] if config and "lastName" in config else None
-        self.email_id = config["emailId"] if config and "emailId" in config else None
-        self.user_status = config["userStatus"] if config and "userStatus" in config else None
-        self.activated_on = config["activatedOn"] if config and "activatedOn" in config else None
-        self.last_login_time = config["lastLoginTime"] if config and "lastLoginTime" in config else None
-        self.allowed_activate = config["allowedActivate"] if config and "allowedActivate" in config else None
-        self.allowed_deactivate = config["allowedDeactivate"] if config and "allowedDeactivate" in config else None
-        self.update_enabled = config["updateEnabled"] if config and "updateEnabled" in config else None
+        if config:
+            self.user_id = config["userId"] if config and "userId" in config else None
+            self.first_name = config["firstName"] if config and "firstName" in config else None
+            self.last_name = config["lastName"] if config and "lastName" in config else None
+            self.email_id = config["emailId"] if config and "emailId" in config else None
+            self.user_status = config["userStatus"] if config and "userStatus" in config else None
+            self.activated_on = config["activatedOn"] if config and "activatedOn" in config else None
+            self.last_login_time = config["lastLoginTime"] if config and "lastLoginTime" in config else None
+            self.allowed_activate = config["allowedActivate"] if config and "allowedActivate" in config else None
+            self.allowed_deactivate = config["allowedDeactivate"] if config and "allowedDeactivate" in config else None
+            self.update_enabled = config["updateEnabled"] if config and "updateEnabled" in config else None
+
+        else:
+            self.user_id = None
+            self.first_name = None
+            self.last_name = None
+            self.email_id = None
+            self.user_status = None
+            self.activated_on = None
+            self.last_login_time = None
+            self.allowed_activate = None
+            self.allowed_deactivate = None
+            self.update_enabled = None
 
     def request_format(self):
         """

@@ -844,7 +844,7 @@ class ApplicationSegmentAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def update_weighted_lb_config(self, segment_id: str, query_params=None, **kwargs) -> tuple:
         """
         Updates the Weighted Load Balancing configuration for the specified Application Segment.
@@ -868,7 +868,7 @@ class ApplicationSegmentAPI(APIClient):
             application_to_server_group_mappings (list of dict):
                 A list of mappings that define server groups and their associated weights and passive flags.
                 Each item must be a dictionary with the following keys:
-                
+
                 - `id` (str): The ID of the server group.
                 - `weight` (str): The weight assigned to this server group.
                 - `passive` (bool): Indicates whether the server group operates in passive mode.

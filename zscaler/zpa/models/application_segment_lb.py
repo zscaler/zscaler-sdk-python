@@ -38,9 +38,10 @@ class WeightedLBConfig(ZscalerObject):
 
             self.weighted_load_balancing = config["weightedLoadBalancing"] \
                 if "weightedLoadBalancing" in config else None
-                
+
             self.application_to_server_group_mappings = ZscalerCollection.form_list(
-                config["applicationToServerGroupMappings"] if "applicationToServerGroupMappings" in config else [], ApplicationToServerGroupMappings
+                config["applicationToServerGroupMappings"] if
+                "applicationToServerGroupMappings" in config else [], ApplicationToServerGroupMappings
             )
         else:
             self.application_id = None
@@ -59,6 +60,7 @@ class WeightedLBConfig(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class ApplicationToServerGroupMappings(ZscalerObject):
     """

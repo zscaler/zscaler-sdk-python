@@ -19,10 +19,6 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.microtenants import Microtenant
 from zscaler.zpa.models.microtenants import MicrotenantSearch
 from zscaler.utils import format_url
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class MicrotenantsAPI(APIClient):

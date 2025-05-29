@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_protection_predefined_controls as app_protection_predefined_controls
 from zscaler.zpa.models import common as common
 
+
 class PredefinedInspectionControlResource(ZscalerObject):
     """
     A class for PredefinedInspectionControlResource objects.
@@ -32,20 +33,20 @@ class PredefinedInspectionControlResource(ZscalerObject):
             config (dict): A dictionary representing the configuration.
         """
         super().__init__(config)
-        
+
         # Initialize as empty list to ensure it's always iterable
         self._items = []
-        
+
         if config:
             self.control_group = config.get("controlGroup")
             self.default_group = config.get("defaultGroup")
-            
+
             # Store the raw config for iteration purposes
             if isinstance(config, list):
                 self._items = config
             elif isinstance(config, dict):
                 self._items = [config]
-            
+
             self.predefined_inspection_controls = ZscalerCollection.form_list(
                 config.get("predefinedInspectionControls", []),
                 PredefinedInspectionControls,
