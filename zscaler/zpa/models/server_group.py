@@ -20,6 +20,7 @@ from zscaler.zpa.models import application_segment as application_segment
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
 from zscaler.zpa.models import common as common
 
+
 class ServerGroup(ZscalerObject):
     """
     A class for ServerGroup objects.

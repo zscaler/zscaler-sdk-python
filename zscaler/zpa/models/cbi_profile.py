@@ -46,17 +46,19 @@ class CBIProfile(ZscalerObject):
             self.is_default = config["isDefault"] \
                 if "isDefault" in config else None
 
-            self.region_ids = ZscalerCollection.form_list(config["regionIds"] \
-                if "regionIds" in config else [], str)
+            self.region_ids = ZscalerCollection.form_list(config["regionIds"] if "regionIds" in config else [], str)
 
-            self.certificate_ids = ZscalerCollection.form_list(config["certificateIds"] \
-                if "certificateIds" in config else [], str)
+            self.certificate_ids = ZscalerCollection.form_list(
+                config["certificateIds"] if "certificateIds" in config else [],
+                str
+            )
 
-            self.certificates = ZscalerCollection.form_list(config["certificates"] \
-                if "certificates" in config else [], Certificates)
+            self.certificates = ZscalerCollection.form_list(
+                config["certificates"] if "certificates" in config else [],
+                Certificates
+            )
 
-            self.regions = ZscalerCollection.form_list(config["regions"] \
-                if "regions" in config else [], Regions)
+            self.regions = ZscalerCollection.form_list(config["regions"] if "regions" in config else [], Regions)
 
             if "banner" in config:
                 if isinstance(config["banner"], Banner):
@@ -67,7 +69,7 @@ class CBIProfile(ZscalerObject):
                     self.banner = None
             else:
                 self.banner = None
-                
+
             if "debugMode" in config:
                 if isinstance(config["debugMode"], DebugMode):
                     self.debug_mode = config["debugMode"]
@@ -77,7 +79,7 @@ class CBIProfile(ZscalerObject):
                     self.debug_mode = None
             else:
                 self.debug_mode = None
-                
+
             if "userExperience" in config:
                 if isinstance(config["userExperience"], UserExperience):
                     self.user_experience = config["userExperience"]
@@ -87,7 +89,7 @@ class CBIProfile(ZscalerObject):
                     self.user_experience = None
             else:
                 self.user_experience = None
-                
+
             if "securityControls" in config:
                 if isinstance(config["securityControls"], SecurityControls):
                     self.security_controls = config["securityControls"]
@@ -136,7 +138,8 @@ class CBIProfile(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DebugMode(ZscalerObject):
     """
     A class for DebugMode objects.
@@ -172,7 +175,7 @@ class DebugMode(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class UserExperience(ZscalerObject):
     """
@@ -232,7 +235,8 @@ class UserExperience(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class ForwardToZia(ZscalerObject):
     """
     A class for ForwardToZia objects.
@@ -277,6 +281,7 @@ class ForwardToZia(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class SecurityControls(ZscalerObject):
     """
     A class for SecurityControls objects.
@@ -308,7 +313,7 @@ class SecurityControls(ZscalerObject):
                 if "cameraAndMic" in config else None
             self.flattened_pdf = config["flattenedPdf"] \
                 if "flattenedPdf" in config else None
-                
+
             if "deepLink" in config:
                 if isinstance(config["deepLink"], DeepLink):
                     self.deep_link = config["deepLink"]
@@ -318,7 +323,7 @@ class SecurityControls(ZscalerObject):
                     self.deep_link = None
             else:
                 self.deep_link = None
-                
+
             if "watermark" in config:
                 if isinstance(config["watermark"], Watermark):
                     self.watermark = config["watermark"]
@@ -328,7 +333,6 @@ class SecurityControls(ZscalerObject):
                     self.watermark = None
             else:
                 self.watermark = None
-                
 
         else:
             self.copy_paste = None
@@ -361,7 +365,8 @@ class SecurityControls(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class DeepLink(ZscalerObject):
     """
     A class for DeepLink objects.
@@ -379,8 +384,10 @@ class DeepLink(ZscalerObject):
         if config:
             self.enabled = config["enabled"] \
                 if "enabled" in config else None
-            self.applications = ZscalerCollection.form_list(config["applications"] \
-                if "applications" in config else [], str)
+            self.applications = ZscalerCollection.form_list(
+                config["applications"] if "applications" in config else [],
+                str
+            )
 
         else:
             self.enabled = None
@@ -397,7 +404,8 @@ class DeepLink(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Watermark(ZscalerObject):
     """
     A class for Watermark objects.
@@ -490,7 +498,8 @@ class Certificates(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class Regions(ZscalerObject):
     """
     A class for Regions objects.
@@ -526,6 +535,7 @@ class Regions(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class Banner(ZscalerObject):
     """

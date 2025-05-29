@@ -19,9 +19,10 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group as server_group
 from zscaler.zpa.models import segment_group as segment_group
 
+
 class ApplicationSegments(ZscalerObject):
     """
-    A class representing the Browser Access Application Segment.
+    A class representing the Application Segment.
     """
 
     def __init__(self, config=None):
@@ -242,6 +243,7 @@ class ApplicationSegments(ZscalerObject):
             "zpnErId": self.zpn_er_id
         }
 
+
 class CommonAppsDto(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
@@ -412,6 +414,7 @@ class AppsConfig(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class InspectionApps(ZscalerObject):
     def __init__(self, config=None):
         super().__init__(config)
@@ -470,6 +473,7 @@ class InspectionApps(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class PRAApps(ZscalerObject):
     def __init__(self, config=None):
@@ -530,6 +534,7 @@ class PRAApps(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class SharedMicrotenantDetails(ZscalerObject):
     """
@@ -707,8 +712,9 @@ class ZPNExtranetResource(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
-class 	BAAppDto(ZscalerObject):
+
+
+class BAAppDto(ZscalerObject):
     """
     A class for Clientless Application Segment Entity objects.
     """
@@ -802,7 +808,8 @@ class 	BAAppDto(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class AppResource(ZscalerObject):
     """
     A class for AppResource objects.
@@ -849,8 +856,6 @@ class AppResource(ZscalerObject):
                 if "healthReporting" in config else None
             self.icmp_access_type = config["icmpAccessType"] \
                 if "icmpAccessType" in config else None
-            # self.inconsistent_config_details = config["inconsistentConfigDetails"] \
-            #     if "inconsistentConfigDetails" in config else None
             self.ip_anchored = config["ipAnchored"] \
                 if "ipAnchored" in config else None
             self.is_cname_enabled = config["isCnameEnabled"] \
@@ -879,7 +884,7 @@ class AppResource(ZscalerObject):
                         self.server_groups.append(group)
                     else:
                         self.server_groups.append(server_group.ServerGroup(group))
-                
+
             self.tcp_keep_alive = config["tcpKeepAlive"] \
                 if "tcpKeepAlive" in config else None
 
@@ -901,7 +906,7 @@ class AppResource(ZscalerObject):
             self.udp_port_ranges = ZscalerCollection.form_list(
                 config["udpPortRanges"] if "udpPortRanges" in config else [], str
             )
-                
+
             if "sharedMicrotenantDetails" in config:
                 if isinstance(config["sharedMicrotenantDetails"], SharedMicrotenantDetails):
                     self.shared_microtenant_details = config["sharedMicrotenantDetails"]
@@ -988,7 +993,8 @@ class AppResource(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class AppSegmentByType(ZscalerObject):
     """
     A class for AppSegmentByType objects.
