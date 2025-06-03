@@ -42,10 +42,7 @@ jobs:
 
       - name: Get poetry cache directory
         id: poetry-cache
-        run: |
-          cache_dir=$(poetry config cache-dir)
-          echo "dir=$cache_dir" >> "$GITHUB_OUTPUT"
-          echo "Poetry cache dir: $cache_dir"
+        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache poetry dependencies
         uses: actions/cache@v4
@@ -53,7 +50,7 @@ jobs:
           path: ${{ steps.poetry-cache.outputs.dir }}
           key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+            ${{ runner.os }}-poetry-${{ matrix.python_version }}-
 
       - name: Install dependencies
         run: poetry install
