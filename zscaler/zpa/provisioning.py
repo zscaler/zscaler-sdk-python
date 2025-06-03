@@ -229,7 +229,7 @@ class ProvisioningKeyAPI(APIClient):
         """
         )
 
-        body = kwargs.copy()
+        body = kwargs
 
         microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
@@ -304,7 +304,7 @@ class ProvisioningKeyAPI(APIClient):
             """
         )
 
-        body = kwargs.copy()
+        body = kwargs
         microtenant_id = body.get("microtenant_id")
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 

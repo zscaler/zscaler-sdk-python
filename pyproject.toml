@@ -83,3 +83,13 @@ max-line-length = 127
 
 [tool.isort]
 profile = "black"
+
+[tool.coverage.run]
+omit = [
+    "zscaler/zcc/models/*"
+    "zscaler/zdx/models/*"
+    "zscaler/zia/models/*"
+    "zscaler/zpa/models/*"
+    "zscaler/ztw/models/*"
+    "zscaler/zwa/models/*"
+]

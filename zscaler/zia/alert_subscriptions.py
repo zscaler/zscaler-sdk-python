@@ -237,7 +237,7 @@ class AlertSubscriptionsAPI(APIClient):
             """
         )
 
-        body = kwargs.copy()
+        body = kwargs
         body["id"] = subscription_id
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
