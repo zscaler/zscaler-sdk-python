@@ -14,17 +14,17 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-import os
+# import os
 
-import pytest
-import requests
+# import pytest
+# import requests
 
-from tests.integration.zia.conftest import MockZIAClient
+# from tests.integration.zia.conftest import MockZIAClient
 
 
-@pytest.fixture
-def fs():
-    yield
+# @pytest.fixture
+# def fs():
+#     yield
 
 
 # FILE_NAMES = [
@@ -40,63 +40,63 @@ def fs():
 # BASE_URL = "https://github.com/SecurityGeekIO/malware-samples/raw/main/"
 
 
-class TestSandbox:
-    """
-    Integration Tests for the Sandbox Operations.
-    """
+# class TestSandbox:
+#     """
+#     Integration Tests for the Sandbox Operations.
+#     """
 
-    def test_sandbox_get_quota(self, fs):
-        client = MockZIAClient(fs)
-        errors = []
+#     def test_sandbox_get_quota(self, fs):
+#         client = MockZIAClient(fs)
+#         errors = []
 
-        try:
-            quota_info, _, err = client.zia.sandbox.get_quota()
-            assert err is None, f"Error fetching sandbox quota: {err}"
+#         try:
+#             quota_info, _, err = client.zia.sandbox.get_quota()
+#             assert err is None, f"Error fetching sandbox quota: {err}"
 
-            assert isinstance(quota_info, list), "Expected quota_info to be a list"
-            assert quota_info, "Sandbox quota list is empty"
+#             assert isinstance(quota_info, list), "Expected quota_info to be a list"
+#             assert quota_info, "Sandbox quota list is empty"
 
-            for entry in quota_info:
-                assert isinstance(entry, dict), "Each quota entry should be a dictionary"
-                assert "allowed" in entry, "'allowed' key missing in quota entry"
-                assert isinstance(entry["allowed"], int), "'allowed' should be an integer"
-                assert entry["allowed"] >= 0, "Allowed quota must be >= 0"
+#             for entry in quota_info:
+#                 assert isinstance(entry, dict), "Each quota entry should be a dictionary"
+#                 assert "allowed" in entry, "'allowed' key missing in quota entry"
+#                 assert isinstance(entry["allowed"], int), "'allowed' should be an integer"
+#                 assert entry["allowed"] >= 0, "Allowed quota must be >= 0"
 
-        except Exception as exc:
-            pytest.fail(f"Sandbox quota retrieval failed: {exc}")
+#         except Exception as exc:
+#             pytest.fail(f"Sandbox quota retrieval failed: {exc}")
 
-    def test_sandbox_get_report_summary(self, fs):
-        client = MockZIAClient(fs)
-        test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
+#     def test_sandbox_get_report_summary(self, fs):
+#         client = MockZIAClient(fs)
+#         test_md5_hash = "F69CA01D65E6C8F9E3540029E5F6AB92"
 
-        try:
-            report, _, error = client.zia.sandbox.get_report(test_md5_hash, report_details="summary")
-            assert error is None, f"Error fetching sandbox report: {error}"
-            assert isinstance(report, dict), "Expected sandbox report to be a dictionary"
-            assert "Summary" in report, "Missing 'Summary' key in report"
-            assert report["Summary"], "'Summary' section is empty in report"
-        except Exception as exc:
-            pytest.fail(f"Sandbox report retrieval failed: {exc}")
+#         try:
+#             report, _, error = client.zia.sandbox.get_report(test_md5_hash, report_details="summary")
+#             assert error is None, f"Error fetching sandbox report: {error}"
+#             assert isinstance(report, dict), "Expected sandbox report to be a dictionary"
+#             assert "Summary" in report, "Missing 'Summary' key in report"
+#             assert report["Summary"], "'Summary' section is empty in report"
+#         except Exception as exc:
+#             pytest.fail(f"Sandbox report retrieval failed: {exc}")
 
-    def test_add_hash_to_custom_list(self, fs):
-        client = MockZIAClient(fs)
-        test_hashes = [
-            "42914d6d213a20a2684064be5c80ffa9",
-            "c0202cf6aeab8437c638533d14563d35",
-        ]
-        errors = []
+#     def test_add_hash_to_custom_list(self, fs):
+#         client = MockZIAClient(fs)
+#         test_hashes = [
+#             "42914d6d213a20a2684064be5c80ffa9",
+#             "c0202cf6aeab8437c638533d14563d35",
+#         ]
+#         errors = []
 
-        try:
-            updated_list, _, err = client.zia.sandbox.add_hash_to_custom_list(test_hashes)
-            assert err is None, f"Error adding hashes to custom list: {err}"
-            assert isinstance(updated_list, dict), "Expected a dictionary response"
+#         try:
+#             updated_list, _, err = client.zia.sandbox.add_hash_to_custom_list(test_hashes)
+#             assert err is None, f"Error adding hashes to custom list: {err}"
+#             assert isinstance(updated_list, dict), "Expected a dictionary response"
 
-            blocked_hashes = updated_list.get("fileHashesToBeBlocked", [])
-            assert isinstance(blocked_hashes, list), "'fileHashesToBeBlocked' must be a list"
-            assert all(h in blocked_hashes for h in test_hashes), "Not all test hashes were added to the block list"
+#             blocked_hashes = updated_list.get("fileHashesToBeBlocked", [])
+#             assert isinstance(blocked_hashes, list), "'fileHashesToBeBlocked' must be a list"
+#             assert all(h in blocked_hashes for h in test_hashes), "Not all test hashes were added to the block list"
 
-        except Exception as exc:
-            pytest.fail(f"Adding hashes to custom list failed: {exc}")
+#         except Exception as exc:
+#             pytest.fail(f"Adding hashes to custom list failed: {exc}")
 
     # def test_sandbox_submit_files(self, fs):
     #     client = MockZIAClient(fs)

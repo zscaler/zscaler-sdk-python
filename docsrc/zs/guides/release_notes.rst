@@ -6,6 +6,21 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.4.3 (June, 3 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+-------------
+
+* (`#296 <https://github.com/zscaler/zscaler-sdk-python/pull/296>`_) - Added the following new functions in the ZPA `policies` package: `add_browser_protection_rule_v2` and `update_browser_protection_rule_v2` to support `CLIENTLESS_SESSION_PROTECTION_POLICY` policy type for Browser Protection Rule configuration.
+* (`#296 <https://github.com/zscaler/zscaler-sdk-python/pull/296>`_) - Added the following new `object_type` `USER_PORTAL` in the ZPA conditions template `_create_conditions_v2` to support `CLIENTLESS_SESSION_PROTECTION_POLICY` policy type for Browser Protection Rule configuration.
+* (`#296 <https://github.com/zscaler/zscaler-sdk-python/pull/296>`_) - Fixed `update_segment()` behavior in all ZPA Application Segment client to ensure that port fields (`tcpPortRange`, `udpPortRange`, `tcpPortRanges`, `udpPortRanges`) are properly cleared when omitted. Previously, omitting these fields during update would leave existing port configurations intact instead of removing them.
+
 1.4.2 (May, 29 2025)
 -------------------------
 

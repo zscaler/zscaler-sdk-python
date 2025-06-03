@@ -250,7 +250,8 @@ class TrafficExtranetAPI(APIClient):
             /extranet/{extranet_id}
         """
         )
-        body = kwargs.copy()
+
+        body = kwargs
         body["id"] = extranet_id
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
