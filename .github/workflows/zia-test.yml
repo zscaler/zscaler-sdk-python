@@ -43,7 +43,10 @@ jobs:
 
       - name: Get poetry cache directory
         id: poetry-cache
-        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+        run: |
+          cache_dir=$(poetry config cache-dir)
+          echo "dir=$cache_dir" >> "$GITHUB_OUTPUT"
+          echo "Poetry cache dir: $cache_dir"
 
       - name: Cache poetry dependencies
         uses: actions/cache@v4
