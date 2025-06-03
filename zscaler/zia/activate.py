@@ -76,7 +76,7 @@ class ActivationAPI(APIClient):
             :obj:`Activation`, response object, and error if any.
 
         Examples:
-            >>> config_activate, response, error = zia.config.activate()
+            >>> config_activate, response, error = zia.activate.activate()
         """
         http_method = "post".upper()
         api_url = format_url(

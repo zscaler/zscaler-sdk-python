@@ -41,13 +41,7 @@ class AuthenticationSettingsAPI(APIClient):
                 - list[str]: List of domains or URLs which are exempted from SSL Inspection
                 - Response: The raw HTTP response from the API.
                 - error: Error details if the request fails.
-
-        Examples:
-            >>> urls, response, err = client.zia.authentication_settings.get_exempted_urls()
-            >>> if not err:
-            ...     print("Listed URLs:", urls)
         """
-
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -60,7 +54,7 @@ class AuthenticationSettingsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, dict)
         if error:
             return (None, response, error)
 

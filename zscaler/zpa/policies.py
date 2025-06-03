@@ -66,6 +66,7 @@ class PolicySetControllerAPI(APIClient):
         "redirection": "REDIRECTION_POLICY",
         "siem": "SIEM_POLICY",
         "timeout": "TIMEOUT_POLICY",
+        "user_portal": "USER_PORTAL"
     }
 
     reformat_params = [
@@ -107,6 +108,7 @@ class PolicySetControllerAPI(APIClient):
             "RISK_FACTOR_TYPE": [],
             "CHROME_ENTERPRISE": [],
             "CHROME_POSTURE_PROFILE": [],
+            "USER_PORTAL":[]
         }
 
         operators_for_types = {}  # Dictionary to store specific operators for each object type
@@ -219,7 +221,7 @@ class PolicySetControllerAPI(APIClient):
                     })
 
                 # Handle individual conditions (each in their own block)
-                elif object_type in ["console", "location", "machine_grp", "client_type"]:
+                elif object_type in ["console", "location", "machine_grp", "client_type", "user_portal"]:
                     individual_conditions.append({
                         "operator": operator,
                         "operands": [{
@@ -237,7 +239,7 @@ class PolicySetControllerAPI(APIClient):
                     ]:
                         # Special handling for conditions with list of tuples
                         if (
-                            object_type in ["scim_group", "saml", "scim", "posture", "trusted_network"]
+                            object_type in ["scim_group", "saml", "scim", "posture", "platform", "trusted_network", "risk_factor_type", "country_code"]
                             and len(values) == 1
                             and isinstance(values[0], list)
                         ):
@@ -1824,7 +1826,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def add_timeout_rule_v2(self, name: str, **kwargs) -> tuple:
         """
-        Update an existing policy rule.
+        Add a new timeout policy rule.
 
         Ensure you are using the correct arguments for the policy type that you want to update.
 
@@ -2306,7 +2308,13 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_isolation_rule_v2(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> tuple:
+    def add_isolation_rule_v2(
+        self,
+        name: str,
+        action: str,
+        zpn_isolation_profile_id: str = None,
+        **kwargs
+    ) -> tuple:
         """
         Add a new Isolation Policy rule.
 
@@ -2577,8 +2585,8 @@ class PolicySetControllerAPI(APIClient):
             action (str):
                 The action for the policy. Accepted values are:
 
-                |  ``isolate``
-                |  ``bypass_isolate``
+                |  ``inspect``
+                |  ``bypass_inspect``
             description (str):
                 Additional information about the app protection policy rule.
             enabled (bool):
@@ -2683,7 +2691,12 @@ class PolicySetControllerAPI(APIClient):
 
     @synchronized(global_rule_lock)
     def update_app_protection_rule_v2(
-        self, rule_id: str, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
+        self,
+        rule_id: str,
+        name: str,
+        action: str,
+        zpn_inspection_profile_id: str = None,
+        **kwargs
     ) -> tuple:
         """
         Add a new App Protection Policy rule.
@@ -2702,7 +2715,10 @@ class PolicySetControllerAPI(APIClient):
 
         Keyword Args:
             action (str):
-                The action for the rule. Accepted value is: ``inject_credentials``
+                The action for the policy. Accepted values are:
+
+                |  ``inspect``
+                |  ``bypass_inspect``
             description (str):
                 Additional information about the credential rule.
             enabled (bool):
@@ -2722,10 +2738,10 @@ class PolicySetControllerAPI(APIClient):
 
                 .. code-block:: python
 
-                    zpa.policies.add_privileged_credential_rule(
-                        name='new_pra_credential_rule',
-                        description='new_pra_credential_rule',
-                        credential_id='credential_id',
+                    zpa.policies.update_app_protection_rule_v2(
+                        name='new_app_protection_rule',
+                        description='new_app_protection_rule',
+                        zpn_inspection_profile_id='216199618143363055'
                         conditions=[
                             ("scim_group", [("idp_id", "scim_group_id"), ("idp_id", "scim_group_id")])
                             ("console", ["console_id"]),
@@ -3712,6 +3728,251 @@ class PolicySetControllerAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
+        return (result, response, None)
+
+    @synchronized(global_rule_lock)
+    def add_browser_protection_rule_v2(
+        self,
+        name: str,
+        action: str,
+        **kwargs
+    ) -> tuple:
+        """
+        Add browser protection rule.
+
+        Ensure you are using the correct arguments for the policy type that you want to update.
+
+        Args:
+            name (str):
+                The name of the new rule.
+
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`.
+                E.g.
+
+                .. code-block:: python
+
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter"]),
+
+            action (str):
+                The action for the policy. Accepted values are:
+                |  ``MONITOR``
+                |  ``DO_NOT_MONITOR``
+            description (str):
+                A description for the rule.
+
+        Returns:
+
+        Examples:
+            Updated an existing Browser Protection Policy rule:
+
+            >>> added_rule, _, err = client.zpa.policies.add_browser_protection_rule_v2(
+            ...     name=f"AddBrowserProtectionRule_{random.randint(1000, 10000)}",
+            ...     description=f"AddBrowserProtectionRule_{random.randint(1000, 10000)}",
+            ...     action="MONITOR",
+            ...     conditions=[
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding browser protection rule: {err}")
+            ...     return
+            ... print(f"Browser Protection Rule added successfully: {added_rule.as_dict()}")
+        """
+        policy_type_response, _, err = self.get_policy("clientless", query_params={"microtenantId": kwargs.get("microtenantId")})
+        if err or not policy_type_response:
+            return (None, None, "Error retrieving policy for 'browser protection': {err}")
+
+        policy_set_id = policy_type_response.get("id")
+        if not policy_set_id:
+            return (None, None, "No policy ID found for 'browser protection' policy type")
+
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v2}
+            /policySet/{policy_set_id}/rule
+        """
+        )
+
+        payload = {
+            "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
+            "action": action.upper(),
+            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+        }
+
+        body = kwargs
+
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        client_type_present = any(
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
+        )
+        if not client_type_present:
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]}
+            )
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PolicySetControllerV2)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = PolicySetControllerV2(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    @synchronized(global_rule_lock)
+    def update_browser_protection_rule_v2(
+        self,
+        rule_id: str,
+        name: str,
+        action: str,
+        **kwargs
+    ) -> tuple:
+        """
+        Update an existing policy rule.
+
+        Ensure you are using the correct arguments for the policy type that you want to update.
+
+        Args:
+            rule_id (str):
+                The unique identifier for the rule to be updated.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`.
+                E.g.
+
+                .. code-block:: python
+
+                    [("app", ["72058304855116918"]),
+                    ("app_group", ["72058304855114308"])
+                    ("client_type", ["zpn_client_type_exporter"]),
+
+            action (str):
+                The action for the policy. Accepted values are:
+                |  ``MONITOR``
+                |  ``DO_NOT_MONITOR``
+            description (str):
+                A description for the rule.
+
+        Returns:
+            :obj:`Tuple`: The resource record of the newly created access policy rule.
+
+        Examples:
+            Updated an existing Browser Protection Policy rule:
+
+            >>> updated_rule, _, err = client.zpa.policies.update_browser_protection_rule_v2(
+            ...     rule_id='12365865',
+            ...     name=f"UpdateBrowserProtectionRule_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateBrowserProtectionRule_{random.randint(1000, 10000)}",
+            ...     action="DO_NOT_MONITOR",
+            ...     conditions=[
+            ...         ("app", ["72058304855116918"]),
+            ...         ("app_group", ["72058304855114308"]),
+            ...         ("AND", ("saml", [
+            ...             ("72058304855021553", "jdoe1@acme.com"),
+            ...             ("72058304855021553", "jdoe@acme.com"),
+            ...         ])),
+            ...         ("AND", ("scim_group", [
+            ...             ("72058304855015574", "490880"),
+            ...             ("72058304855015574", "490877"),
+            ...         ])),
+            ...         ("AND", ("scim", [
+            ...             ("72058304855015576", "Smith"),
+            ...             ("72058304855015577", "artxngwpbq"),
+            ...         ])),
+            ...     ]
+            ... )
+            >>> if err:
+            ...     print(f"Error adding Browser Protection rule: {err}")
+            ...     return
+            ... print(f"Browser Protection Rule added successfully: {updated_rule.as_dict()}")
+        """
+        policy_type_response, _, err = self.get_policy("clientless", query_params={"microtenantId": kwargs.get("microtenantId")})
+        if err or not policy_type_response:
+            return (None, None, "Error retrieving policy for 'Browser Protection': {err}")
+
+        policy_set_id = policy_type_response.get("id")
+        if not policy_set_id:
+            return (None, None, "No policy ID found for 'Browser Protection' policy type")
+
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v2}
+            /policySet/{policy_set_id}/rule/{rule_id}
+        """
+        )
+
+        body = kwargs
+
+        microtenant_id = body.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        payload = {
+            "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
+            "action": action.upper(),
+            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+        }
+
+        client_type_present = any(
+            cond.get("operands", [{}])[0].get("objectType", "") == "CLIENT_TYPE" for cond in payload["conditions"]
+        )
+        if not client_type_present:
+            payload["conditions"].append(
+                {"operator": "OR", "operands": [{"objectType": "CLIENT_TYPE", "values": ["zpn_client_type_exporter"]}]}
+            )
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PolicySetControllerV2)
+        if error:
+            return (None, response, error)
+
+        if response is None:
+            return (PolicySetControllerV2({"id": rule_id}), None, None)
+
+        try:
+            result = PolicySetControllerV2(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
         return (result, response, None)
 
     @synchronized(global_rule_lock)
