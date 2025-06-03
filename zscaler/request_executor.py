@@ -77,13 +77,6 @@ class RequestExecutor:
         self._config = config
         self._cache = cache
 
-        # ✅ Setup logging based on config flags
-        # log_config = self._config["client"].get("logging", {})
-        # setup_logging(
-        #     enabled=log_config.get("enabled", False),
-        #     verbose=log_config.get("verbose", False),
-        # )
-
         # Retrieve cloud, service, and customer ID (optional)
         self.cloud = self._config["client"].get("cloud", "production").lower()
         self.sandbox_cloud = self._config["client"].get("sandboxCloud", "").lower()

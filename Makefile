@@ -34,7 +34,7 @@ help:
 	@echo "$(COLOR_OK)  format                        Reformat code with black$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint                          Check style with flake8 for all packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zcc                      Check style with flake8 for zcc packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:zcon                     Check style with flake8 for zcon packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:ztw                     Check style with flake8 for ztw packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zdx                      Check style with flake8 for zdx packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
@@ -42,7 +42,7 @@ help:
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zcc          Run only zcc integration tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:zcon         Run only zcon integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:ztw         Run only ztw integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zdx          Run only zdx integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
@@ -89,9 +89,9 @@ lint\:zcc:
 	flake8 zscaler/zcc --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	flake8 zscaler/zcc --count --select=E9,F63,F7,F82 --show-source --statistics
 
-lint\:zcon:
-	flake8 zscaler/zcon --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zcon --count --select=E9,F63,F7,F82 --show-source --statistics
+lint\:ztw:
+	flake8 zscaler/ztw --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 zscaler/ztw --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zdx:
 	flake8 zscaler/zdx --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
@@ -115,9 +115,9 @@ test\:integration\:zcc:
 	@echo "$(COLOR_ZSCALER)Running zcc integration tests...$(COLOR_NONE)"
 	pytest tests/integration/zcc --disable-warnings
 
-test\:integration\:zcon:
-	@echo "$(COLOR_ZSCALER)Running zcon integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zcon --disable-warnings
+test\:integration\:ztw:
+	@echo "$(COLOR_ZSCALER)Running ztw integration tests...$(COLOR_NONE)"
+	pytest tests/integration/ztw --disable-warnings
 
 test\:integration\:zdx:
 	@echo "$(COLOR_ZSCALER)Running zdx integration tests...$(COLOR_NONE)"
@@ -140,14 +140,14 @@ coverage:
 coverage\:zcc:
 	pytest tests/integration/zcc -v --cov=zscaler/zcc --cov-report xml --cov-report term
 
-coverage\:zcon:
-	pytest tests/integration/zcon -v --cov=zscaler/zcon --cov-report xml --cov-report term
+coverage\:ztw:
+	pytest tests/integration/ztw -v --cov=zscaler/ztw --cov-report xml --cov-report term
 
 coverage\:zdx:
 	pytest tests/integration/zdx -v --cov=zscaler/zdx --cov-report xml --cov-report term
 
 coverage\:zia:
-	pytest tests/integration/zia --cov=zscaler/zia --cov-report xml --cov-report term
+	pytest tests/integration/zia --cov=zscaler/zia --cov-report xml --cov-report term 
 
 coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term

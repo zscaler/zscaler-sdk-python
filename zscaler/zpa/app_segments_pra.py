@@ -393,16 +393,25 @@ class AppSegmentsPRAAPI(APIClient):
 
             body["commonAppsDto"] = common_apps_dto
 
-        # --- Normalize port ranges ---
         if "tcp_port_ranges" in body:
             body["tcpPortRanges"] = body.pop("tcp_port_ranges")
-        elif "tcp_port_range" in body:
+        else:
+            body["tcpPortRanges"] = []
+
+        if "tcp_port_range" in body:
             body["tcpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("tcp_port_range")]
+        else:
+            body["tcpPortRange"] = []
 
         if "udp_port_ranges" in body:
             body["udpPortRanges"] = body.pop("udp_port_ranges")
-        elif "udp_port_range" in body:
+        else:
+            body["udpPortRanges"] = []  # Explicitly clear if not provided
+
+        if "udp_port_range" in body:
             body["udpPortRange"] = [{"from": pr["from"], "to": pr["to"]} for pr in body.pop("udp_port_range")]
+        else:
+            body["udpPortRange"] = []  # Explicitly clear if not provided
 
         add_id_groups(self.reformat_params, kwargs, body)
 
