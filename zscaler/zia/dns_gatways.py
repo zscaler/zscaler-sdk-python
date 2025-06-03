@@ -264,7 +264,7 @@ class DNSGatewayAPI(APIClient):
             /dnsGateways/{gateway_id}
         """
         )
-        body = kwargs.copy()
+        body = kwargs
         body["id"] = gateway_id
 
         request, error = self._request_executor.create_request(

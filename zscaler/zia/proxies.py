@@ -348,7 +348,8 @@ class ProxiesAPI(APIClient):
             /proxies/{proxy_id}
         """
         )
-        body = kwargs.copy()
+
+        body = kwargs
         body["id"] = proxy_id
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
