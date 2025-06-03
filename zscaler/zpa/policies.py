@@ -108,10 +108,10 @@ class PolicySetControllerAPI(APIClient):
             "RISK_FACTOR_TYPE": [],
             "CHROME_ENTERPRISE": [],
             "CHROME_POSTURE_PROFILE": [],
-            "USER_PORTAL":[]
+            "USER_PORTAL": []
         }
 
-        operators_for_types = {}  # Dictionary to store specific operators for each object type
+        operators_for_types = {}
 
         for condition in conditions:
             # Check if the first item in a tuple is an operator, like "AND" or "OR"
@@ -239,7 +239,8 @@ class PolicySetControllerAPI(APIClient):
                     ]:
                         # Special handling for conditions with list of tuples
                         if (
-                            object_type in ["scim_group", "saml", "scim", "posture", "platform", "trusted_network", "risk_factor_type", "country_code"]
+                            object_type in ["scim_group", "saml", "scim", "posture", "platform",
+                                            "trusted_network", "risk_factor_type", "country_code"]
                             and len(values) == 1
                             and isinstance(values[0], list)
                         ):
@@ -3799,7 +3800,11 @@ class PolicySetControllerAPI(APIClient):
             ...     return
             ... print(f"Browser Protection Rule added successfully: {added_rule.as_dict()}")
         """
-        policy_type_response, _, err = self.get_policy("clientless", query_params={"microtenantId": kwargs.get("microtenantId")})
+        policy_type_response, _, err = self.get_policy(
+            "clientless", query_params={
+                "microtenantId": kwargs.get("microtenantId")
+            }
+        )
         if err or not policy_type_response:
             return (None, None, "Error retrieving policy for 'browser protection': {err}")
 
@@ -3921,7 +3926,11 @@ class PolicySetControllerAPI(APIClient):
             ...     return
             ... print(f"Browser Protection Rule added successfully: {updated_rule.as_dict()}")
         """
-        policy_type_response, _, err = self.get_policy("clientless", query_params={"microtenantId": kwargs.get("microtenantId")})
+        policy_type_response, _, err = self.get_policy(
+            "clientless", query_params={
+                "microtenantId": kwargs.get("microtenantId")
+            }
+        )
         if err or not policy_type_response:
             return (None, None, "Error retrieving policy for 'Browser Protection': {err}")
 
