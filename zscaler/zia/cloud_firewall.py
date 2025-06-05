@@ -978,7 +978,7 @@ class FirewallResourcesAPI(APIClient):
 
         Args:
             name (str): The name of the IP Source Group.
-            ip_addresses (str): The list of IP addresses for the IP Source Group.
+            ip_addresses (list): The list of IP addresses for the IP Source Group.
             description (str): Additional information for the IP Source Group.
 
         Returns:
