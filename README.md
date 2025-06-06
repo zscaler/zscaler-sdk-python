@@ -941,6 +941,7 @@ You can provide credentials via the `ZDX_CLIENT_ID`, `ZDX_CLIENT_SECRET` environ
 |--------------|-------------|-------------------|
 | `key_id`       | _(String)_ A string that contains the key_id for the ZDX Portal.| `ZDX_CLIENT_ID` |
 | `key_secret`       | _(String)_ A string that contains the key_secret key for the ZDX Portal.| `ZDX_CLIENT_SECRET` |
+| `cloud`            | _(String)_ The cloud name prefix that identifies the correct API endpoint.| `ZDX_CLOUD` |
 
 ### ZDX Legacy Client Initialization
 

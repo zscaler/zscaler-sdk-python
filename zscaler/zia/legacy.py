@@ -936,6 +936,17 @@ class LegacyZIAClientHelper:
 
         return NatControlPolicyAPI(self.request_executor)
 
+    @property
+    def vzen_clusters(self):
+        """
+        The interface object for the :ref:`Virtual ZEN Clusters interface <zia-vzen_clusters>`.
+
+        """
+
+        from zscaler.zia.vzen_clusters import VZENClustersAPI
+
+        return VZENClustersAPI(self.request_executor)
+
     """
     Misc
     """

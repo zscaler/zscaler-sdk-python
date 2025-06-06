@@ -257,3 +257,41 @@ class AlertSubscriptionsAPI(APIClient):
             return (None, response, error)
 
         return (result, response, None)
+
+    def delete_alert_subscription(self, subscription_id: int) -> tuple:
+        """
+        Deletes the specified Alert Subscription
+
+        Args:
+            subscription_id (str): The unique identifier of the Alert Subscription.
+
+        Returns:
+            tuple: A tuple containing the response object and error (if any).
+
+        Examples:
+            Delete a Alert Subscription:
+
+            >>> _, _, error = client.zia.alert_subscriptions.delete_alert_subscription('73459')
+            >>> if error:
+            ...     print(f"Error deleting Alert Subscription: {error}")
+            ...     return
+            ... print(f"Alert Subscription with ID {'73459' deleted successfully.")
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /alertSubscriptions/{subscription_id}
+        """
+        )
+
+        params = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+        return (None, response, None)

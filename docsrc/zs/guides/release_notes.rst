@@ -6,6 +6,35 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.4.4 (June, 5 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+New ZIA Endpoint - Virtual ZEN Clusters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#299 <https://github.com/zscaler/zscaler-sdk-python/pull/299>`_) - Added the following new ZIA API Endpoints:
+    - Added `GET /virtualZenClusters` Retrieves a list of ZIA Virtual Service Edge clusters.
+    - Added `GET /virtualZenClusters/{cluster_id}` Retrieves the Virtual Service Edge cluster based on the specified ID
+    - Added `POST /virtualZenClusters` Adds a new Virtual Service Edge cluster. 
+    - Added `PUT /virtualZenClusters/{cluster_id}` Updates the Virtual Service Edge cluster based on the specified ID
+    - Added `DELETE /virtualZenClusters/{cluster_id}` Deletes the Virtual Service Edge cluster based on the specified ID
+
+New ZIA Endpoint - Alert Subscription
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#299 <https://github.com/zscaler/zscaler-sdk-python/pull/299>`_) - Added the following new ZIA API Endpoints:
+    - Added `DELETE /alertSubscriptions/{subscription_id}` Deletes the Alert Subscription based on the specified ID
+
+Documentation
+^^^^^^^^^^^^^^
+
+* (`#299 <https://github.com/zscaler/zscaler-sdk-python/pull/299>`_) - Fixed and added several documentations and included examples.
+
 1.4.3 (June, 3 2025)
 -------------------------
 
@@ -61,7 +90,7 @@ Notes
 Zscaler OneAPI Support for Cloud & Branch Connector API
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_): Cloud & Branch Connector API are now supported via (`OneAPI<https://help.zscaler.com/oneapi/understanding-oneapi>`_) with Oauth2 authentication support through (`Zidentity<https://help.zscaler.com/zidentity/what-zidentity>`_)
+* (`#287 <https://github.com/zscaler/zscaler-sdk-python/pull/287>`_): Cloud & Branch Connector API are now supported via (`OneAPI <https://help.zscaler.com/zidentity/what-zidentity>`_) Oauth2 authentication support through (`Zidentity <https://help.zscaler.com/zidentity/what-zidentity>`_)
 
 ZPA Application Segment Provision
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

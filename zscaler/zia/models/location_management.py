@@ -304,3 +304,71 @@ class VPNCredentials(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class RegionInfo(ZscalerObject):
+    """
+    A class for RegionInfo objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the RegionInfo model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.city_geo_id = config["cityGeoId"] \
+                if "cityGeoId" in config else None
+            self.state_geo_id = config["stateGeoId"] \
+                if "stateGeoId" in config else None
+            self.latitude = config["latitude"] \
+                if "latitude" in config else None
+            self.longitude = config["longitude"] \
+                if "longitude" in config else None
+            self.city_name = config["cityName"] \
+                if "cityName" in config else None
+            self.state_name = config["stateName"] \
+                if "stateName" in config else None
+            self.country_name = config["countryName"] \
+                if "countryName" in config else None
+            self.country_code = config["countryCode"] \
+                if "countryCode" in config else None
+            self.postal_code = config["postalCode"] \
+                if "postalCode" in config else None
+            self.continent_code = config["continentCode"] \
+                if "continentCode" in config else None
+        else:
+            self.city_geo_id = None
+            self.state_geo_id = None
+            self.latitude = None
+            self.longitude = None
+            self.city_name = None
+            self.state_name = None
+            self.country_name = None
+            self.country_code = None
+            self.postal_code = None
+            self.continent_code = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cityGeoId": self.city_geo_id,
+            "stateGeoId": self.state_geo_id,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "cityName": self.city_name,
+            "stateName": self.state_name,
+            "countryName": self.country_name,
+            "countryCode": self.country_code,
+            "postalCode": self.postal_code,
+            "continentCode": self.continent_code
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
