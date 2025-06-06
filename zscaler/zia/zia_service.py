@@ -81,6 +81,7 @@ from zscaler.zia.dedicated_ip_gateways import DedicatedIPGatewaysAPI
 from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.nat_control_policy import NatControlPolicyAPI
+from zscaler.zia.vzen_clusters import VZENClustersAPI
 
 
 class ZIAService:
@@ -636,3 +637,12 @@ class ZIAService:
         """
 
         return NatControlPolicyAPI(self._request_executor)
+
+    @property
+    def vzen_clusters(self):
+        """
+        The interface object for the :ref:`Virtual ZEN Clusters interface <zia-vzen_clusters>`.
+
+        """
+
+        return VZENClustersAPI(self._request_executor)

@@ -165,8 +165,8 @@ class InspectionControllerAPI(APIClient):
                 Indicates the user's choice for the ThreatLabZ Controls.
 
                 Supported values:
-                - ``ALL``: Zscaler handles the ThreatLabZ Controls for the AppProtection profile.
-                - ``SPECIFIC``: User handles the ThreatLabZ Controls for the AppProtection profile.
+                - `ALL`: Zscaler handles the ThreatLabZ Controls for the AppProtection profile.
+                - `SPECIFIC`: User handles the ThreatLabZ Controls for the AppProtection profile.
 
             custom_controls (list):
                 The set of AppProtection controls used to define how inspections are managed.
@@ -583,6 +583,7 @@ class InspectionControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results.
+
                 ``[query_params.version]`` {str}: The predefined control version is required.
                     Supported values: `OWASP_CRS/3.3.0`, `OWASP_CRS/3.3.5`, `OWASP_CRS/4.8.0`
 
@@ -823,6 +824,7 @@ class InspectionControllerAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results.
                 ``search_field`` (str): The value to search for within the field.
+
                 ``[query_params.version]`` {str}: The predefined control version.
                     Supported values: `OWASP_CRS/3.3.0`, `OWASP_CRS/3.3.5`, `OWASP_CRS/4.8.0`
 
@@ -1099,6 +1101,7 @@ class InspectionControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results.
+
                 ``[query_params.version]`` {str}: The predefined control version.
                     Supported values: `OWASP_CRS/3.3.0`, `OWASP_CRS/3.3.5`, `OWASP_CRS/4.8.0`
 
@@ -1140,6 +1143,7 @@ class InspectionControllerAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results.
+
                 ``[query_params.version]`` {str}: The predefined control version.
                     Supported values: `OWASP_CRS/3.3.0`, `OWASP_CRS/3.3.5`, `OWASP_CRS/4.8.0`
 

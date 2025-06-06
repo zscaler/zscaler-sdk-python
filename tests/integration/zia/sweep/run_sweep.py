@@ -771,6 +771,28 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping nat control rules: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_vzen_clusters(self):
+        logging.info("Starting to sweep vzen clusters")
+        try:
+            vzen_clusters, _, error = self.client.zia.vzen_clusters.list_vzen_clusters()
+            if error:
+                raise Exception(f"Error listing vzen clusters: {error}")
+
+            test_vzen = [vzen for vzen in vzen_clusters if hasattr(vzen, "name") and vzen.name.startswith("tests")]
+            logging.info(f"Found {len(test_vzen)} vzen cluster to delete.")
+
+            for vzen in test_vzen:
+                logging.info(f"sweep_nss_servers: Attempting to delete vzen cluster: Name='{vzen.name}', ID='{vzen.id}'")
+                _, _, error = self.client.zia.vzen_clusters.delete_vzen_cluster(nss_id=vzen.id)
+                if error:
+                    logging.error(f"Failed to delete vzen cluster ID={vzen.id} — {error}")
+                else:
+                    logging.info(f"Successfully deleted vzen cluster ID={vzen.id}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping vzen clusters: {str(e)}")
+            raise
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
