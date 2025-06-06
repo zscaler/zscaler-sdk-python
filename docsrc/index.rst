@@ -1354,6 +1354,13 @@ You can provide credentials via the ``ZDX_CLIENT_ID``,
 |                    | for the ZDX       |                            |
 |                    | Portal.           |                            |
 +--------------------+-------------------+----------------------------+
+| ``cloud``          | *(String)* The    | ``ZDX_CLOUD``              |
+|                    | cloud name        |                            |
+|                    | prefix that       |                            |
+|                    | identifies the    |                            |
+|                    | correct API       |                            |
+|                    | endpoint.         |                            |
++--------------------+-------------------+----------------------------+
 
 ZDX Legacy Client Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

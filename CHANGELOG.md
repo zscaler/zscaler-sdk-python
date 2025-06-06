@@ -1,5 +1,29 @@
 # Zscaler Python SDK Changelog
 
+## 1.4.4 (June 6, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### New ZIA Endpoint - Virtual ZEN Clusters:
+
+* [PR #299](https://github.com/zscaler/zscaler-sdk-python/pull/299) - Added the following new ZIA API Endpoints:
+    - Added `GET /virtualZenClusters` Retrieves a list of ZIA Virtual Service Edge clusters.
+    - Added `GET /virtualZenClusters/{cluster_id}` Retrieves the Virtual Service Edge cluster based on the specified ID
+    - Added `POST /virtualZenClusters` Adds a new Virtual Service Edge cluster. 
+    - Added `PUT /virtualZenClusters/{cluster_id}` Updates the Virtual Service Edge cluster based on the specified ID
+    - Added `DELETE /virtualZenClusters/{cluster_id}` Deletes the Virtual Service Edge cluster based on the specified ID
+
+### New ZIA Endpoint - Alert Subscription
+
+* [PR #299](https://github.com/zscaler/zscaler-sdk-python/pull/299) - Added the following new ZIA API Endpoints:
+    - Added `DELETE /alertSubscriptions/{subscription_id}` Deletes the Alert Subscription based on the specified ID
+
+### Documentation
+
+* [PR #299](https://github.com/zscaler/zscaler-sdk-python/pull/299) - Fixed and added several documentations and included examples.
+
 ## 1.4.3 (June 3, 2025)
 
 ### Notes

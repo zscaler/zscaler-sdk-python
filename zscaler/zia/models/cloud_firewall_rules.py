@@ -83,7 +83,6 @@ class FirewallRule(ZscalerObject):
                 config["destAddresses"] if "destAddresses" in config else [], str
             )
 
-            # Handling nested lists of objects
             self.app_service_groups = ZscalerCollection.form_list(
                 config["appServiceGroups"] if "appServiceGroups" in config else [], app_services.AppServices
             )

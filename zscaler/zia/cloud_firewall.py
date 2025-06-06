@@ -978,7 +978,7 @@ class FirewallResourcesAPI(APIClient):
 
         Args:
             name (str): The name of the IP Source Group.
-            ip_addresses (str): The list of IP addresses for the IP Source Group.
+            ip_addresses (list): The list of IP addresses for the IP Source Group.
             description (str): Additional information for the IP Source Group.
 
         Returns:
@@ -987,10 +987,15 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Add a new IP Source Group:
 
-            >>> zia.cloud_firewall.add_ip_source_group(name='My IP Source Group',
-            ...    ip_addresses=['198.51.100.0/24', '192.0.2.1'],
-            ...    description='Contains the IP addresses for the local network.')
-
+            >>> added_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
+            ...     name=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     ip_addresses=["192.168.1.1", "192.168.1.2"],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -1040,16 +1045,18 @@ class FirewallResourcesAPI(APIClient):
             :obj:`Tuple`: The updated IP Source Group resource record.
 
         Examples:
-            Update the name of an IP Source Group:
 
-            >>> zia.cloud_firewall.update_ip_source_group('9032674',
-            ...    name='Updated Name')
+            Update ip_addresses list of the IP Source Group:
 
-            Update the description and IP addresses of an IP Source Group:
-
-            >>> zia.cloud_firewall.update_ip_source_group('9032674',
-            ...    description='Local subnets, updated on 3 JUL 21'
-            ...    ip_addresses=['192.0.2.0/29', '192.0.2.8/29', '192.0.2.128/25'])
+            >>> update_group, _, error = client.zia.cloud_firewall.add_ip_source_group(
+            ...     name=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...     ip_addresses=["192.168.1.1", "192.168.1.2", "192.168.1.4"],
+            ... )
+            >>> if error:
+            ...     print(f"Error updating group: {error}")
+            ...     return
+            ... print(f"Group updated successfully: {update_group.as_dict()}")
 
         """
         http_method = "put".upper()
@@ -1093,11 +1100,11 @@ class FirewallResourcesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, response, error = client.zia.cloud_firewall.delete_ip_source_group(updated_group.id)
-            ... if error:
+            >>> _, _, error = client.zia.cloud_firewall.delete_ip_source_group('18382907')
+            >>> if error:
             ...     print(f"Error deleting group: {error}")
-            ... return
-
+            ...     return
+            ... print(f"Group with ID 18382907 deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -1154,7 +1161,6 @@ class FirewallResourcesAPI(APIClient):
             ... print(f"Total groups found: {len(group_list)}")
             ... for group in group_list:
             ...     print(group.as_dict())
-
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -1250,10 +1256,15 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Add a new Network Application Group:
 
-            >>> zia.cloud_firewall.add_network_app_group(name='New Network Application Group',
-            ...    network_applications=['SALESFORCE', 'GOOGLEANALYTICS', 'OFFICE365'],
-            ...    description='Additional information about the Network Application Group.')
-
+            >>> added_group, _, error = client.zia.cloud_firewall.add_network_app_group(
+            ...     name=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...     network_applications=['SALESFORCE', 'GOOGLEANALYTICS', 'OFFICE365'],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -1305,14 +1316,15 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Update the name of an Network Application Group:
 
-            >>> zia.cloud_firewall.update_network_app_group('9032674',
-            ...    name='Updated Network Application Group Name')
-
-            Update the description and applications for a Network Application Group:
-
-            >>> zia.cloud_firewall.update_network_app_group('9032674',
-            ...    description='Network Application Group, updated on May 27, 2023'
-            ...    network_applications=['SALESFORCE', 'GOOGLEANALYTICS', 'OFFICE365'])
+            >>> update_group, _, error = client.zia.cloud_firewall.add_network_app_group(
+            ...     name=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...     network_applications=['SALESFORCE', 'GOOGLEANALYTICS'],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {update_group.as_dict()}")
 
         """
         http_method = "put".upper()
@@ -1355,11 +1367,11 @@ class FirewallResourcesAPI(APIClient):
             :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> _, response, error = client.zia.cloud_firewall.delete_network_app_group('18382907')
-            ... if error:
+            >>> _, _, error = client.zia.cloud_firewall.delete_network_app_group('18382907')
+            >>> if error:
             ...     print(f"Error deleting group: {error}")
             ...     return
-
+            ... print(f"Group with ID {updated_group.id} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -1700,10 +1712,14 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Add a new Network Service Group:
 
-            >>> zia.cloud_firewall.add_network_svc_group(name='New Network Service Group',
+            >>> added_group, _, error = client.zia.cloud_firewall.add_network_svc_group(
+            ...    name=f"AddNewGroup_{random.randint(1000, 10000)}",
+            ...    description=f"AddNewGroup_{random.randint(1000, 10000)}",
             ...    service_ids=['159143', '159144', '159145'],
-            ...    description='Group for the new Network Service.')
-
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {added_group.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -1726,7 +1742,6 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, NetworkServiceGroups)
 
         if error:
@@ -1757,10 +1772,14 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Update the name Network Service Group:
 
-            >>> zia.cloud_firewall.update_network_svc_group(name='Update Network Service Group',
-            ...    service_ids=['159143', '159144', '159145'],
-            ...    description='Group for the new Network Service.')
-
+            >>> update_group, _, error = client.zia.cloud_firewall.update_network_svc_group(
+            ...    name=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...    description=f"UpdateNewGroup_{random.randint(1000, 10000)}",
+            ...    service_ids=['159143', '159144'],
+            >>> if error:
+            ...     print(f"Error adding group: {error}")
+            ...     return
+            ... print(f"Group added successfully: {update_group.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -1774,7 +1793,6 @@ class FirewallResourcesAPI(APIClient):
 
         transform_common_id_fields(reformat_params, body, body)
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -1805,10 +1823,11 @@ class FirewallResourcesAPI(APIClient):
             :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> _, response, error = client.zia.cloud_firewall.delete_network_svc_group(updated_group.id)
-            ... if error:
+            >>> _, _, error = client.zia.cloud_firewall.delete_network_svc_group('18382907')
+            >>> if error:
             ...     print(f"Error deleting group: {error}")
-            ... return
+            ...     return
+            ... print(f"Group with ID {updated_group.id} deleted successfully.")
 
         """
         http_method = "delete".upper()
@@ -2027,7 +2046,7 @@ class FirewallResourcesAPI(APIClient):
 
     def add_network_service(self, ports: list = None, **kwargs) -> tuple:
         """
-        Adds a new Network Service.
+        Adds a new Network Service
 
         Args:
             name: The name of the Network Service
@@ -2052,24 +2071,21 @@ class FirewallResourcesAPI(APIClient):
             :obj:`Tuple`: The newly created Network Service resource record.
 
         Examples:
-            Add Network Service for Microsoft Exchange:
 
-            >>> zia.cloud_firewall.add_network_service('MS LDAP',
-            ...    description='Covers all ports used by MS LDAP',
-            ...    ports=[
-            ...        ('dest', 'tcp', '389'),
-            ...        ('dest', 'udp', '389'),
-            ...        ('dest', 'tcp', '636'),
-            ...        ('dest', 'tcp', '3268', '3269')])
+            Add Network Services:
 
-            Add Network Service designed to match inbound SSH traffic:
-
-            >>> zia.cloud_firewall.add_network_service('Inbound SSH',
-            ...    description='Inbound SSH',
-            ...    ports=[
-            ...        ('src', 'tcp', '22'),
-            ...        ('dest', 'tcp', '1024', '65535')])
-
+            >>> added_service, _, error = client.zia.cloud_firewall.add_network_service(
+            ...     name=f"NewService {random.randint(1000, 10000)}",
+            ...     description=f"NewService {random.randint(1000, 10000)}",
+            ...     ports=[
+            ...         ('dest', 'tcp', '389'),
+            ...         ('dest', 'udp', '389'),
+            ...         ('dest', 'tcp', '636'),
+            ...         ('dest', 'tcp', '3268', '3269')])
+            >>> if error:
+            ...     print(f"Error adding network services: {error}")
+            ...     return
+            ... print(f"Service added successfully: {added_service.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -2097,7 +2113,6 @@ class FirewallResourcesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, NetworkServices)
 
         if error:
@@ -2140,15 +2155,18 @@ class FirewallResourcesAPI(APIClient):
         Examples:
             Update the name and description for a Network Service:
 
-            >>> zia.cloud_firewall.update_network_service('959093',
-            ...    name='MS Exchange',
-            ...    description='All ports related to the MS Exchange service.')
-
-            Updates the ports for a Network Service, leaving other fields intact:
-
-            >>> zia.cloud_firewall.update_network_service('959093',
-            ...    ports=[
-            ...        ('dest', 'tcp', '500', '510')])
+            >>> update_service, _, error = client.zia.cloud_firewall.update_network_service(
+            ...     name=f"UpdateNewService_{random.randint(1000, 10000)}",
+            ...     description=f"UpdateNewService_{random.randint(1000, 10000)}",
+            ...     ports=[
+            ...         ('dest', 'tcp', '389'),
+            ...         ('dest', 'udp', '389'),
+            ...         ('dest', 'tcp', '636'),
+            ...         ('dest', 'tcp', '3268', '3269')])
+            >>> if error:
+            ...     print(f"Error updating network services: {error}")
+            ...     return
+            ... print(f"Service updated successfully: {added_service.as_dict()}")
 
         """
         http_method = "put".upper()
@@ -2197,10 +2215,11 @@ class FirewallResourcesAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, response, error = client.zia.cloud_firewall.delete_network_service(updated_group.id)
-            ... if error:
-            ...     print(f"Error deleting group: {error}")
-            ... return
+            >>> _, _, error = client.zia.cloud_firewall.delete_network_service('18382907')
+            >>> if error:
+            ...     print(f"Error deleting network service: {error}")
+            ...     return
+            ... print(f"Network service with ID 18382907 deleted successfully.")
 
         """
         http_method = "delete".upper()

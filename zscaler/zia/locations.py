@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.location_management import LocationManagement
+from zscaler.zia.models.location_management import RegionInfo
 from zscaler.zia.models.location_group import LocationGroup
 from zscaler.utils import format_url
 
@@ -70,20 +71,26 @@ class LocationsAPI(APIClient):
                 List of configured locations as (LocationManagement, Response, error).
 
         Examples:
-            List locations using default settings:
+            List all locations:
 
-            >>> for location in zia.locations.list_locations():
-            ...     print(location)
+            >>> locations_list, _, err = client.zia.locations.list_locations()
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
+            Filter locations:
 
-            List locations, limiting to a maximum of 10 items:
-
-            >>> for location in zia.locations.list_locations(max_items=10):
-            ...     print(location)
-
-            List locations, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for location in zia.locations.list_locations(page_size=200, max_pages=2):
-            ...     print(location)
+            >>> locations_list, _, err = client.zia.locations.list_locations(
+            ... query_params={'page': 1, 'page_size': 10, 'search': 'HQ_SanJose'}
+            )
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -127,9 +134,11 @@ class LocationsAPI(APIClient):
            tuple: A tuple containing (Location instance, Response, error).
 
         Examples:
-            >>> location = zia.locations.get_location('97456691')
-
-            >>> location = zia.locations.get_location_name(name='stockholm_office')
+            >>> fetched_location, _, err = client.zia.locations.get_location(updated_location.id)
+            >>> if err:
+            ...     print(f"Error fetching location by ID: {err}")
+            ...     return
+            ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -257,16 +266,28 @@ class LocationsAPI(APIClient):
             :obj:`tuple`: The newly created location resource record
 
         Examples:
-            Add a new location with an IP address.
+            Add a new location with a VPN Credential and Static IP Address.
 
-            >>> zia.locations.add_location(name='new_location',
-            ...    ip_addresses=['203.0.113.10'])
-
-            Add a location with VPN credentials.
-
-            >>> zia.locations.add_location(name='new_location',
-            ...    vpn_credentials=[{'id': '99999', 'type': 'UFQDN'}])
-
+            >>> added_location, _, err = client.zia.locations.add_location(
+            ...     name=f"NewLocation_{random.randint(1000, 10000)}",
+            ...     description=f"NewLocation_{random.randint(1000, 10000)}",
+            ...     country='UNITED_STATES',
+            ...     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
+            ...     xff_forward_enabled=True,
+            ...     ofw_enabled=True,
+            ...     ips_control=True,
+            ...     profile="SERVER",
+            ...     vpn_credentials=[
+            ...         {
+            ...             "id": 22223992,
+            ...             "type": "UFQDN"
+            ...         }
+            ...     ],
+            ... )
+            >>> if err:
+            ...     print(f"Error adding location: {err}")
+            ...     return
+            ... print(f"location added successfully: {added_location.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -401,21 +422,33 @@ class LocationsAPI(APIClient):
             :obj:`tuple`: The updated resource record.
 
         Examples:
-            Update the name of a location:
+            Update location Enable Surrogate IP:
 
-            >>> zia.locations.update_location('99999',
-            ...    name='updated_location_name')
-
-            Update the IP address of a location:
-
-            >>> zia.locations.update_location('99999',
-            ...    ip_addresses=['203.0.113.20'])
-
-            Update the VPN credentials of a location:
-
-            >>> zia.locations.update_location('99999',
-            ...    vpn_credentials=[{'id': '88888', 'type': 'UFQDN'}])
-
+            >>> update_location, _, err = client.zia.locations.update_location(
+            ...     location_id='546874',
+            ...     name=f"UpdateLocation_{random.randint(1000, 10000)}",
+            ...     description=f"NewLocation_{random.randint(1000, 10000)}",
+            ...     country='UNITED_STATES',
+            ...     tz="UNITED_STATES_AMERICA_LOS_ANGELES",
+            ...     auth_required=True,
+            ...     idle_time_in_minutes='720',
+            ...     display_time_unit="MINUTE",
+            ...     surrogate_ip=True,
+            ...     xff_forward_enabled=True,
+            ...     ofw_enabled=True,
+            ...     ips_control=True,
+            ...     profile="SERVER",
+            ...     vpn_credentials=[
+            ...         {
+            ...             "id": 22223992,
+            ...             "type": "UFQDN"
+            ...         }
+            ...     ],
+            ... )
+            >>> if err:
+            ...     print(f"Error updating location: {err}")
+            ...     return
+            ... print(f"location updated successfully: {update_location.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -455,8 +488,11 @@ class LocationsAPI(APIClient):
             :obj:`int`: Response code for the operation.
 
         Examples:
-            >>> zia.locations.delete_location('97456691')
-
+            >>> _, _, err = client.zia.locations.delete_location('123454')
+            >>> if err:
+            ...     print(f"Error deleting location: {err}")
+            ...     return
+            ... print(f"location with ID {'123454'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -488,8 +524,12 @@ class LocationsAPI(APIClient):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zia.locations.bulk_delete_locations(['111111', '222222', '333333'])
-
+            >>> location_ids_to_delete = ['8665786', '8766865']
+            ... bulk_delete_response, _, err = client.zia.locations.bulk_delete_locations(location_ids_to_delete)
+            >>> if err:
+            ...     print(f"Error in bulk deleting locations: {err}")
+            ...     return
+            ...  print(f"Bulk delete operation successful. Response: {bulk_delete_response}")
         """
         # Validate input before making the request
         if not location_ids:
@@ -560,9 +600,13 @@ class LocationsAPI(APIClient):
             :obj:`Tuple`: A list of sub-locations configured for the parent location.
 
         Examples:
-            >>> for sub_location in zia.locations.list_sub_locations('97456691'):
-            ...    pprint(sub_location)
-
+            >>> locations_list, _, err = client.zia.locations.list_sub_locations()
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -630,19 +674,13 @@ class LocationsAPI(APIClient):
         Examples:
             List locations with default settings:
 
-            >>> for location in zia.locations.list_locations_lite():
-            ...    print(location)
-
-            List locations, limiting to a maximum of 10 items:
-
-            >>> for location in zia.locations.list_locations_lite(max_items=10):
-            ...    print(location)
-
-            List locations, returning 200 items per page for a maximum of 2 pages:
-
-            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
-            ...    print(location)
-
+            >>> locations_list, _, err = client.zia.locations.list_locations_lite()
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -702,7 +740,14 @@ class LocationsAPI(APIClient):
 
         Examples:
             Get a list of all configured location groups:
-            >>> location, _, error = zia.locations.list_location_groups()
+
+            >>> locations_list, _, err = client.zia.locations.list_location_groups()
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -744,6 +789,15 @@ class LocationsAPI(APIClient):
 
         Returns:
             tuple: A tuple containing (Rule Label instance, Response, error).
+
+        Examples:
+            Get a list of all configured location groups:
+
+            >>> fetched_location, _, err = client.zia.locations.get_location_group('87687')
+            >>> if err:
+            ...     print(f"Error fetching location by ID: {err}")
+            ...     return
+            ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -791,7 +845,14 @@ class LocationsAPI(APIClient):
 
         Examples:
             Get a list of all configured location groups:
-            >>> location, _, error = zia.locations.list_location_groups_lite()
+
+            >>> locations_list, _, err = client.zia.locations.list_location_groups_lite()
+            >>> if err:
+            ...     print(f"Error listing locations: {err}")
+            ...     return
+            ... print(f"Total locations found: {len(locations_list)}")
+            ... for location in locations_list:
+            ...     print(location.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -843,7 +904,12 @@ class LocationsAPI(APIClient):
 
         Examples:
             Gets the list of location groups for your organization:
-            >>> location = zia.locations.list_location_groups_count(group_type='Static', name='Corporate')
+
+            >>> count, _, error = client.zia.locations.list_location_groups_count()
+            >>> if error:
+            ...     print(f"Error fetching location group count: {error}")
+            ...     return
+            ... print(f"Total location groups found: {count}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -893,16 +959,18 @@ class LocationsAPI(APIClient):
             :obj:`tuple`: The geographical data of the region or city that is located in the specified coordinates.
 
         Examples:
-            Get the geographical data of the region or city that is located in the specified coordinates::
+            Get the geographical data of the region or city that is located in the specified coordinates:
 
-                print(zia.locations.get_geo_by_coordinates(37.3860517, -122.0838511))
-
+            >>> fetched_ip, _, error = client.zia.locations.list_region_geo_coordinates(
+            ...     latitude = "37.3860517", longitude = "-122.0838511")
+            >>> if error:
+            ...     print(f"Error fetching coordinates by latitude and longitude: {error}")
+            ...     return
+            ... print(f"Fetched coordinates by latitude and longitude: {fetched_ip.as_dict()}")
         """
-        # Validate that both latitude and longitude are provided
         if latitude is None or longitude is None:
             return (None, None, ValueError("Both latitude and longitude must be provided"))
 
-        # Define the HTTP method and API endpoint
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -911,7 +979,6 @@ class LocationsAPI(APIClient):
         """
         )
 
-        # Build query parameters with latitude and longitude
         query_params = {"latitude": latitude, "longitude": longitude}
 
         body = {}
@@ -924,13 +991,13 @@ class LocationsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, RegionInfo)
 
         if error:
             return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body())
+            result = RegionInfo(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -948,15 +1015,17 @@ class LocationsAPI(APIClient):
             :obj:`tuple`: The geographical data of the region or city that is located in the specified IP address.
 
         Examples:
-            Get the geographical data of the region or city that is located in the specified IP address::
+            Get the geographical data of the region or city that is located in the specified IP address:
 
-                print(zia.locations.get_geo_by_ip("8.8.8.8"))
+            >>> fetched_ip, _, error = client.zia.locations.get_geo_by_ip("8.8.8.8")
+            >>> if error:
+            ...     print(f"Error fetching geo by IP: {error}")
+            ...     return
+            ... print(f"Fetched geo by IP: {fetched_ip.as_dict()}")
         """
-        # Validate that IP is provided
         if not ip:
             return (None, None, ValueError("IP address must be provided"))
 
-        # Define the HTTP method and API endpoint
         http_method = "get".upper()
         api_url = format_url(
             f"""
@@ -975,13 +1044,13 @@ class LocationsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, RegionInfo)
 
         if error:
             return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body())
+            result = RegionInfo(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
@@ -1007,13 +1076,15 @@ class LocationsAPI(APIClient):
             :obj:`tuple`: A list of dictionaries containing the cities' geographical data and the raw response.
 
         Examples:
-            Get the list of cities (along with their geographical data) that match the prefix search::
+            Get the list of cities (along with their geographical data) that match the prefix search:
 
-                result, response, error = zia.locations.list_cities_by_name(
-                    query_params={"prefix": "San Jose"})
-                if not error:
-                    for city in result:
-                        print(city)
+            >>> city_list, _, error = client.zia.locations.list_cities_by_name(query_params={"prefix": "San Jose"})
+            >>> if error:
+            ...     print(f"Error listing cities: {error}")
+            ...     return
+            ... print(f"Total cities found: {len(city_list)}")
+            ... for city in city_list:
+            ...     print(city.as_dict())
 
         Notes:
             Very broad or generic search terms may return a large number of results which can take a long time to be
@@ -1048,7 +1119,53 @@ class LocationsAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(self.form_response_body(item))
+                result.append(RegionInfo(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_supported_countries(self) -> tuple:
+        """
+        Retrieves the list of countries supported in location configuration
+        Note: The response shows the current list of supported values in an Enum list.
+        However, this list might vary if new entries are added or existing values are
+        modified and the request always returns the latest information available about the countries.
+
+        Args:
+
+        Returns:
+           tuple: A tuple containing (Location instance, Response, error).
+
+        Examples:
+            >>> fetched_location, _, err = client.zia.locations.get_location(updated_location.id)
+            >>> if err:
+            ...     print(f"Error fetching location by ID: {err}")
+            ...     return
+            ... print(f"Fetched location by ID: {fetched_location.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /locations/supportedCountries
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = (self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

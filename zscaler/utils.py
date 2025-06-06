@@ -78,6 +78,7 @@ reformat_params = [
     ("workload_groups", "workloadGroups"),
     ("service_ids", "services"),
     ("bandwidth_class_ids", "bandwidthClasses"),
+    ("virtual_zen_node_ids", "virtualZenNodes"),
 ]
 
 

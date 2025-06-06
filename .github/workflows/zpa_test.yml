@@ -11,6 +11,10 @@ on:
     - cron: '0 14 * * 1-5' # UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   zpa-beta-tenants:
     runs-on: ubuntu-latest
