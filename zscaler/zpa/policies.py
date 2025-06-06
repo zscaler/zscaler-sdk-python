@@ -1866,7 +1866,7 @@ class PolicySetControllerAPI(APIClient):
         Returns:
 
         Examples:
-            Updated an existing Timeout Policy rule:
+            Add a new Timeout Policy rule:
 
             >>> added_rule, _, err = client.zpa.policies.add_timeout_rule_v2(
             ...     name=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
@@ -1992,7 +1992,7 @@ class PolicySetControllerAPI(APIClient):
         Examples:
             Updated an existing Timeout Policy rule:
 
-            >>> updated_rule, _, err = client.zpa.policies.add_timeout_rule_v2(
+            >>> updated_rule, _, err = client.zpa.policies.update_timeout_rule_v2(
             ...     rule_id='12365865',
             ...     name=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",
             ...     description=f"UpdateTimeoutRule_{random.randint(1000, 10000)}",

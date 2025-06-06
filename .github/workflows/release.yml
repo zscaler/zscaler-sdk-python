@@ -7,6 +7,10 @@ on:
       - master
       - develop
   pull_request:
+
+permissions:
+  contents: write
+
 jobs:
   format:
     name: Check Code Format

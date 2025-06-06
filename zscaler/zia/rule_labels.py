@@ -155,13 +155,13 @@ class RuleLabelsAPI(APIClient):
             Add a new Rule Label :
 
             >>> added_label, _, error = client.zia.rule_labels.add_label(
-            ... name=f"RuleLabel_{random.randint(1000, 10000)}",
-            ... description=f"RuleLabel_{random.randint(1000, 10000)}",
+            ...     name=f"NewLabel_{random.randint(1000, 10000)}",
+            ...     description=f"NewLabel_{random.randint(1000, 10000)}",
             ... )
             >>> if error:
-            ...     print(f"Error adding Rule Label: {error}")
+            ...     print(f"Error adding label: {error}")
             ...     return
-            ... print(f"Rule Label added successfully: {added_profile.as_dict()}")
+            ... print(f"Label added successfully: {added_label.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -203,7 +203,7 @@ class RuleLabelsAPI(APIClient):
             tuple: A tuple containing the updated Rule Label, response, and error.
 
         Examples:
-            Add a new Rule Label :
+            Update an existing Rule Label :
 
             >>> updated_label, _, error = client.zia.rule_labels.add_label(
                 label_id='1524566'
@@ -251,7 +251,7 @@ class RuleLabelsAPI(APIClient):
             tuple: A tuple containing the response object and error (if any).
 
         Examples:
-            List Rule Label:
+            Delete a Rule Label:
 
             >>> _, _, error = client.zia.rule_labels.delete_label('73459')
             >>> if error:

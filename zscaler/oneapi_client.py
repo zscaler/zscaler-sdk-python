@@ -431,7 +431,7 @@ class LegacyZWAClient(Client):
     ):
         key_id = config.get("key_id", os.getenv("ZWA_CLIENT_ID"))
         key_secret = config.get("key_secret", os.getenv("ZWA_CLIENT_SECRET"))
-        cloud = config.get("cloud", os.getenv("ZWACLOUD", "us1"))
+        cloud = config.get("cloud", os.getenv("ZWA_CLOUD", "us1"))
         timeout = config.get("timeout", 240)
         request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZWAClientHelper with the extracted parameters
