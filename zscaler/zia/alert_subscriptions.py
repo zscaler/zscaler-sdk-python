@@ -72,8 +72,8 @@ class AlertSubscriptionsAPI(APIClient):
             return (None, response, error)
 
         try:
-            advanced_settings = AlertSubscriptions(response.get_body())
-            return (advanced_settings, response, None)
+            results = [AlertSubscriptions(item) for item in response.get_body()]
+            return (results, response, None)
         except Exception as ex:
             return (None, response, ex)
 
