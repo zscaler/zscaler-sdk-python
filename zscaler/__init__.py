@@ -33,3 +33,4 @@ __version__ = "1.4.4"
 
 
 from zscaler.oneapi_client import Client as ZscalerClient  # noqa
+from zscaler.exceptions.exceptions import RetryTooLong  # noqa

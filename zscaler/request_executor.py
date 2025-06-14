@@ -73,6 +73,11 @@ class RequestExecutor:
         if self._max_retries < 0:
             raise ValueError(f"Invalid max retries: {self._max_retries}. Must be 0 or greater.")
 
+        # Validate and set max retry seconds for rate limiting
+        self._max_retry_seconds = config["client"]["rateLimit"].get("maxRetrySeconds", 0)
+        if self._max_retry_seconds < 0:
+            raise ValueError(f"Invalid max retry seconds: {self._max_retry_seconds}. Must be 0 or greater.")
+
         # Set configuration and cache
         self._config = config
         self._cache = cache
@@ -499,6 +504,12 @@ class RequestExecutor:
             backoff_seconds = self.get_retry_after(response.headers, logger)
             if backoff_seconds is None:
                 return None, response, response.text, Exception(ERROR_MESSAGE_429_MISSING_DATE_X_RESET)
+
+            # Check if backoff time exceeds maximum retry seconds limit
+            if self._max_retry_seconds > 0 and backoff_seconds > self._max_retry_seconds:
+                logger.warning(f"Retry time of {backoff_seconds} seconds exceeds maximum allowed retry time of {self._max_retry_seconds} seconds.")
+                from zscaler.exceptions.exceptions import RetryTooLong
+                return request, response, response.text, RetryTooLong(backoff_seconds, self._max_retry_seconds)
 
             logger.info(f"Hit rate limit or retryable status {response.status_code}. "
                         f"Retrying request in {backoff_seconds} seconds.")

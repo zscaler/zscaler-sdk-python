@@ -84,3 +84,10 @@ class TokenRefreshError(Exception):
 
 class HeaderUpdateError(Exception):
     pass
+
+
+class RetryTooLong(Exception):
+    def __init__(self, retry_seconds, max_seconds):
+        self.retry_seconds = retry_seconds
+        self.max_seconds = max_seconds
+        super().__init__(f"Retry time of {retry_seconds} seconds exceeds maximum allowed retry time of {max_seconds} seconds")
