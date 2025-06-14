@@ -39,6 +39,7 @@ class ConfigSetter:
             "proxy": {"port": "", "host": "", "username": "", "password": ""},
             "rateLimit": {
                 "maxRetries": 2,
+                "maxRetrySeconds": 0,
             },
             "testing": {"disableHttpsCheck": ""},
         }
@@ -136,7 +137,7 @@ class ConfigSetter:
 
         self._config["client"]["userAgent"] = ""
         self._config["client"]["requestTimeout"] = 0
-        self._config["client"]["rateLimit"] = {"maxRetries": 2}
+        self._config["client"]["rateLimit"] = {"maxRetries": 2, "maxRetrySeconds": 0}
 
         # Add a check for the 'testing' key before accessing it
         if "testing" not in self._config:
