@@ -91,7 +91,7 @@ class RiskProfilesAPI(APIClient):
         Retrieves the cloud application risk profile lite
 
         Args:
-            bwd_id (int): The unique identifier for the risk profile lite.
+            N/A
 
         Returns:
             tuple: A tuple containing (risk profile lite instance, Response, error).

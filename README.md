@@ -1040,6 +1040,11 @@ When a 429 error is received, the `retry-after` header will tell you the time at
 
 This SDK uses the built-in retry strategy to automatically retry on 429 errors based on the response headers returned by each respective API service.
 
+| Configuration Option        | Description                                                                                                                                          |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| client.rateLimit.maxRetries | The number of times to retry (on retryable errors)
+| client.rateLimit.maxRetrySeconds | Max wait duration allowed for a retry backoff
+
 ## Contributing
 
 At this moment we are not accepting contributions, but we welcome suggestions on how to improve this SDK or feature requests, which can then be added in  future releases.

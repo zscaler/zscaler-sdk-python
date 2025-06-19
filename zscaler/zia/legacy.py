@@ -390,12 +390,33 @@ class LegacyZIAClientHelper:
     @property
     def cloudappcontrol(self):
         """
-        The interface object for the :ref:`ZIA Cloud App Control <zia-cloudappcontrol>`.
+        The interface object for the :ref:`ZIA Cloud App Control interface <zia-cloudappcontrol>`.
 
         """
         from zscaler.zia.cloudappcontrol import CloudAppControlAPI
 
         return CloudAppControlAPI(self.request_executor)
+
+    @property
+    def casb_dlp_rules(self):
+        """
+        The interface object for the :ref:`ZIA Casb DLP Rules interface <zia-casb_dlp_rules>`.
+
+        """
+        from zscaler.zia.casb_dlp_rules import CasbdDlpRulesAPI
+
+        return CasbdDlpRulesAPI(self.request_executor)
+
+    @property
+    def casb_malware_rules(self):
+        """
+        The interface object for the :ref:`ZIA Casb Malware Rules interface <zia-casb_malware_rules>`.
+
+        """
+
+        from zscaler.zia.casb_malware_rules import CasbMalwareRulesAPI
+
+        return CasbMalwareRulesAPI(self.request_executor)
 
     @property
     def cloud_applications(self):
@@ -946,6 +967,28 @@ class LegacyZIAClientHelper:
         from zscaler.zia.vzen_clusters import VZENClustersAPI
 
         return VZENClustersAPI(self.request_executor)
+
+    @property
+    def browser_control_settings(self):
+        """
+        The interface object for the :ref:`Browser Control Settings interface <zia-browser_control_settings>`.
+
+        """
+
+        from zscaler.zia.browser_control_settings import BrowserControlSettingsPI
+
+        return BrowserControlSettingsPI(self.request_executor)
+
+    @property
+    def saas_security_api(self):
+        """
+        The interface object for the :ref:`ZIA SaaS Security API interface <zia-saas_security_api>`.
+
+        """
+
+        from zscaler.zia.saas_security_api import SaaSSecurityAPI
+
+        return SaaSSecurityAPI(self.request_executor)
 
     """
     Misc

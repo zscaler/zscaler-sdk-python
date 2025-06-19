@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
-
+from zscaler.zia.models import common as common
 
 class PacFiles(ZscalerObject):
     """
@@ -47,9 +47,17 @@ class PacFiles(ZscalerObject):
             self.pac_commit_message = config["pacCommitMessage"] if "pacCommitMessage" in config else None
             self.total_hits = config["totalHits"] if "totalHits" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.create_time = config["createTime"] if "createTime" in config else None
 
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             # Initialize with default None or 0 values
             self.id = None

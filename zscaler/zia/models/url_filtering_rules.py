@@ -29,6 +29,7 @@ from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import urlcategory as urlcategory
 from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import workload_groups as workload_groups
+from zscaler.zia.models import common as common
 
 
 class URLFilteringRule(ZscalerObject):
@@ -53,7 +54,6 @@ class URLFilteringRule(ZscalerObject):
             self.validity_end_time = config["validityEndTime"] if "validityEndTime" in config else None
             self.validity_time_zone_id = config["validityTimeZoneId"] if "validityTimeZoneId" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.enforce_time_validity = config["enforceTimeValidity"] if "enforceTimeValidity" in config else False
             self.action = config["action"] if "action" in config else None
             self.ciparule = config["ciparule"] if "ciparule" in config else False
@@ -116,6 +116,15 @@ class URLFilteringRule(ZscalerObject):
             # Handling nested single object for CBIProfile
             self.cbi_profile = isolation.CBIProfile(config["cbiProfile"]) if "cbiProfile" in config else None
 
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             # Defaults if config is None
             self.id = None

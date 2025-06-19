@@ -28,7 +28,7 @@ from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
 from zscaler.zia.models import zpa_gateway as zpa_gateway
 from zscaler.zia.models import common as common_reference
-
+from zscaler.zia.models import common as common
 
 class ForwardingControlRule(ZscalerObject):
     """
@@ -47,7 +47,6 @@ class ForwardingControlRule(ZscalerObject):
             self.forward_method = config["forwardMethod"] if "forwardMethod" in config else None
             self.description = config["description"] if "description" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.zpa_broker_rule = config["zpaBrokerRule"] if "zpaBrokerRule" in config else None
 
             # Handling lists of simple values
@@ -149,6 +148,15 @@ class ForwardingControlRule(ZscalerObject):
             else:
                 self.zpa_gateway = None
 
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             # Defaults when config is None
             self.id = None

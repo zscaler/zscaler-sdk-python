@@ -32,23 +32,29 @@ class Devices(ZscalerObject):
             config (dict): A dictionary representing the configuration.
         """
         super().__init__(config)
-        print(f"DEBUG: Raw config received in devices: {config}")  # Debugging input
 
         if config:
-            self.users = ZscalerCollection.form_list(config.get("devices", []), common_reference.Common)
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.userid = config["userid"] if "userid" in config else None
             self.next_offset = config["next_offset"] if "next_offset" in config else None
         else:
-            self.devices = ZscalerCollection.form_list([], str)
+            self.id = None
+            self.name = None
             self.next_offset = None
-
-        print(f"DEBUG: Parsed Devices object - {len(self.devices)} devices found")
+            self.userid = None
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"devices": [device.as_dict() for device in self.devices], "next_offset": self.next_offset}
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "next_offset": self.next_offset,
+            "userid": self.userid,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -70,14 +76,35 @@ class DeviceModelInfo(ZscalerObject):
         if config:
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
-            self.hardware = config["hardware"] if "hardware" in config else None
-            self.network = ZscalerCollection.form_list(config["network"] if "network" in config else [], str)
-            self.software = config["software"] if "software" in config else None
+            
+            self.network = ZscalerCollection.form_list(
+                config["network"] if "network" in config else [], Network
+            )
+
+            if "hardware" in config:
+                if isinstance(config["hardware"], Hardware):
+                    self.hardware = config["hardware"]
+                elif config["hardware"] is not None:
+                    self.hardware = Hardware(config["hardware"])
+                else:
+                    self.hardware = None
+            else:
+                self.hardware = None
+
+            if "software" in config:
+                if isinstance(config["software"], Software):
+                    self.software = config["software"]
+                elif config["software"] is not None:
+                    self.software = Software(config["software"])
+                else:
+                    self.software = None
+            else:
+                self.software = None
         else:
             self.id = None
             self.name = None
             self.hardware = None
-            self.network = ZscalerCollection.form_list([], str)
+            self.network = []
             self.software = None
 
     def request_format(self):
@@ -95,6 +122,212 @@ class DeviceModelInfo(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
+class Hardware(ZscalerObject):
+    """
+    A class for Hardware objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Hardware model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.hw_model = config["hw_model"] \
+                if "hw_model" in config else None
+            self.hw_mfg = config["hw_mfg"] \
+                if "hw_mfg" in config else None
+            self.hw_type = config["hw_type"] \
+                if "hw_type" in config else None
+            self.hw_serial = config["hw_serial"] \
+                if "hw_serial" in config else None
+            self.tot_mem = config["tot_mem"] \
+                if "tot_mem" in config else None
+            self.gpu = config["gpu"] \
+                if "gpu" in config else None
+            self.disk_size = config["disk_size"] \
+                if "disk_size" in config else None
+            self.disk_model = config["disk_model"] \
+                if "disk_model" in config else None
+            self.disk_type = config["disk_type"] \
+                if "disk_type" in config else None
+            self.cpu_mfg = config["cpu_mfg"] \
+                if "cpu_mfg" in config else None
+            self.cpu_model = config["cpu_model"] \
+                if "cpu_model" in config else None
+            self.speed_ghz = config["speed_ghz"] \
+                if "speed_ghz" in config else None
+            self.logical_proc = config["logical_proc"] \
+                if "logical_proc" in config else None
+            self.num_cores = config["num_cores"] \
+                if "num_cores" in config else None
+        else:
+            self.hw_model = None
+            self.hw_mfg = None
+            self.hw_type = None
+            self.hw_serial = None
+            self.tot_mem = None
+            self.gpu = None
+            self.disk_size = None
+            self.disk_model = None
+            self.disk_type = None
+            self.cpu_mfg = None
+            self.cpu_model = None
+            self.speed_ghz = None
+            self.logical_proc = None
+            self.num_cores = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "hw_model": self.hw_model,
+            "hw_mfg": self.hw_mfg,
+            "hw_type": self.hw_type,
+            "hw_serial": self.hw_serial,
+            "tot_mem": self.tot_mem,
+            "gpu": self.gpu,
+            "disk_size": self.disk_size,
+            "disk_model": self.disk_model,
+            "disk_type": self.disk_type,
+            "cpu_mfg": self.cpu_mfg,
+            "cpu_model": self.cpu_model,
+            "speed_ghz": self.speed_ghz,
+            "logical_proc": self.logical_proc,
+            "num_cores": self.num_cores
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Network(ZscalerObject):
+    """
+    A class for Network objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Network model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.net_type = config["net_type"] \
+                if "net_type" in config else None
+            self.status = config["status"] \
+                if "status" in config else None
+            self.ipv4 = config["ipv4"] \
+                if "ipv4" in config else None
+            self.ipv6 = config["ipv6"] \
+                if "ipv6" in config else None
+            self.dns_srvs = config["dns_srvs"] \
+                if "dns_srvs" in config else None
+            self.dns_suffix = config["dns_suffix"] \
+                if "dns_suffix" in config else None
+            self.gateway = config["gateway"] \
+                if "gateway" in config else None
+            self.mac = config["mac"] \
+                if "mac" in config else None
+            self.guid = config["guid"] \
+                if "guid" in config else None
+        else:
+            self.net_type = None
+            self.status = None
+            self.ipv4 = None
+            self.ipv6 = None
+            self.dns_srvs = None
+            self.dns_suffix = None
+            self.gateway = None
+            self.mac = None
+            self.guid = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "net_type": self.net_type,
+            "status": self.status,
+            "ipv4": self.ipv4,
+            "ipv6": self.ipv6,
+            "dns_srvs": self.dns_srvs,
+            "dns_suffix": self.dns_suffix,
+            "gateway": self.gateway,
+            "mac": self.mac,
+            "guid": self.guid
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+class Software(ZscalerObject):
+    """
+    A class for Software objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Software model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.os_name = config["os_name"] \
+                if "os_name" in config else None
+            self.os_ver = config["os_ver"] \
+                if "os_ver" in config else None
+            self.os_build = config["os_build"] \
+                if "os_build" in config else None
+            self.hostname = config["hostname"] \
+                if "hostname" in config else None
+            self.netbios = config["netbios"] \
+                if "netbios" in config else None
+            self.user = config["user"] \
+                if "user" in config else None
+            self.client_conn_ver = config["client_conn_ver"] \
+                if "client_conn_ver" in config else None
+            self.zdx_ver = config["zdx_ver"] \
+                if "zdx_ver" in config else None
+        else:
+            self.os_name = None
+            self.os_ver = None
+            self.os_build = None
+            self.hostname = None
+            self.netbios = None
+            self.user = None
+            self.client_conn_ver = None
+            self.zdx_ver = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "os_name": self.os_name,
+            "os_ver": self.os_ver,
+            "os_build": self.os_build,
+            "hostname": self.hostname,
+            "netbios": self.netbios,
+            "user": self.user,
+            "client_conn_ver": self.client_conn_ver,
+            "zdx_ver": self.zdx_ver
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
 
 class DeviceActiveApplications(ZscalerObject):
     """
