@@ -127,7 +127,7 @@ class TestPRAApproval:
                 time.sleep(2)
                 # Create a new privileged approval
                 new_approval_data = {
-                    "email_ids": ["carol.kirk@bd-hashicorp.com"],
+                    "email_ids": ["carol.kirk@securitygeek.io"],
                     "application_ids": [app_segment_id],
                     "start_time": start_time,
                     "end_time": end_time,
