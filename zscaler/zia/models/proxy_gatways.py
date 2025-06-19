@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
-
+from zscaler.zia.models import common as common
 
 class ProxyGatways(ZscalerObject):
     """
@@ -38,9 +38,17 @@ class ProxyGatways(ZscalerObject):
             self.primary_proxy = config["primaryProxy"] if "primaryProxy" in config else None
             self.secondary_proxy = config["secondaryProxy"] if "secondaryProxy" in config else None
             self.description = config["description"] if "description" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
             self.fail_closed = config["failClosed"] if "failClosed" in config else None
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             self.id = None
             self.name = None

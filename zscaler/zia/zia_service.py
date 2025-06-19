@@ -25,8 +25,11 @@ from zscaler.zia.audit_logs import AuditLogsAPI
 from zscaler.zia.authentication_settings import AuthenticationSettingsAPI
 from zscaler.zia.bandwidth_classes import BandwidthClassesAPI
 from zscaler.zia.bandwidth_control_rules import BandwidthControlRulesAPI
+from zscaler.zia.browser_control_settings import BrowserControlSettingsPI
 from zscaler.zia.shadow_it_report import ShadowITAPI
 from zscaler.zia.cloudappcontrol import CloudAppControlAPI
+from zscaler.zia.casb_dlp_rules import CasbdDlpRulesAPI
+from zscaler.zia.casb_malware_rules import CasbMalwareRulesAPI
 from zscaler.zia.cloud_applications import CloudApplicationsAPI
 from zscaler.zia.cloud_app_instances import CloudApplicationInstancesAPI
 from zscaler.zia.cloud_nss import CloudNSSAPI
@@ -82,6 +85,7 @@ from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 from zscaler.zia.vzen_clusters import VZENClustersAPI
+from zscaler.zia.saas_security_api import SaaSSecurityAPI
 
 
 class ZIAService:
@@ -162,6 +166,24 @@ class ZIAService:
 
         """
         return CloudAppControlAPI(self._request_executor)
+
+    @property
+    def casb_dlp_rules(self):
+        """
+        The interface object for the :ref:`ZIA Casb DLP Rules interface <zia-casb_dlp_rules>`.
+
+        """
+
+        return CasbdDlpRulesAPI(self._request_executor)
+
+    @property
+    def casb_malware_rules(self):
+        """
+        The interface object for the :ref:`ZIA Casb Malware Rules interface <zia-casb_malware_rules>`.
+
+        """
+
+        return CasbMalwareRulesAPI(self._request_executor)
 
     @property
     def cloud_applications(self):
@@ -646,3 +668,21 @@ class ZIAService:
         """
 
         return VZENClustersAPI(self._request_executor)
+
+    @property
+    def browser_control_settings(self):
+        """
+        The interface object for the :ref:`Browser Control Settings interface <zia-browser_control_settings>`.
+
+        """
+
+        return BrowserControlSettingsPI(self._request_executor)
+    
+    @property
+    def saas_security_api(self):
+        """
+        The interface object for the :ref:`ZIA SaaS Security API interface <zia-saas_security_api>`.
+
+        """
+
+        return SaaSSecurityAPI(self._request_executor)

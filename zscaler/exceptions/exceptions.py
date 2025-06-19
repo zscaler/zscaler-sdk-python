@@ -84,3 +84,7 @@ class TokenRefreshError(Exception):
 
 class HeaderUpdateError(Exception):
     pass
+
+class RetryTooLong(Exception):
+    """Raised when backoff time exceeds maxRetrySeconds configuration."""
+    pass

@@ -1,5 +1,57 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.0 (June 18, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### New ZIA Endpoint - Browser Control Policy
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) Added the following new ZIA API Endpoints:
+    - Added `GET /browserControlSettings` Retrieves the Browser Control status and the list of configured browsers in the Browser Control policy
+    - Added `PUT /browserControlSettings` Updates the Browser Control settings.
+
+### New ZIA Endpoint - SaaS Security API (Casb DLP Rules)
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) Added the following new ZIA API Endpoints:
+    - Added `GET /casbDlpRules` Retrieves the SaaS Security Data at Rest Scanning Data Loss Prevention (DLP) rules based on the specified rule type.
+    - Added `GET /casbDlpRules/{ruleId}` Retrieves the SaaS Security Data at Rest Scanning DLP rule based on the specified ID
+    - Added `GET /casbDlpRules/all` Retrieves all the SaaS Security Data at Rest Scanning DLP rules
+    - Added `POST /casbDlpRules` Adds a new SaaS Security Data at Rest Scanning DLP rule
+    - Added `PUT /casbDlpRules/{ruleId}` Updates the SaaS Security Data at Rest Scanning DLP rule based on the specified ID
+    - Added `DELETE /casbDlpRules/{ruleId}` Deletes the SaaS Security Data at Rest Scanning DLP rule based on the specified ID
+
+### New ZIA Endpoint - SaaS Security API (Casb Malware Rules)
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) Added the following new ZIA API Endpoints:
+    - Added `GET /casbMalwareRules` Retrieves the SaaS Security Data at Rest Scanning Malware Detection rules based on the specified rule type.
+    - Added `GET /casbMalwareRules/{ruleId}` Retrieves the SaaS Security Data at Rest Scanning Malware Detection rule based on the specified ID
+    - Added `GET /casbMalwareRules/all` Retrieves all the SaaS Security Data at Rest Scanning Malware Detection rules
+    - Added `POST /casbMalwareRules` Adds a new SaaS Security Data at Rest Scanning Malware Detection rule.
+    - Added `PUT /casbMalwareRules/{ruleId}` Updates the SaaS Security Data at Rest Scanning Malware Detection rule based on the specified ID
+    - Added `DELETE /casbMalwareRules/{ruleId}` Deletes the SaaS Security Data at Rest Scanning Malware Detection rule based on the specified ID
+
+### New ZIA Endpoint - SaaS Security API
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) Added the following new ZIA API Endpoints:
+    - Added `GET /domainProfiles/lite` Retrieves the domain profile summary.
+    - Added `GET /quarantineTombstoneTemplate/lite` Retrieves the templates for the tombstone file created when a file is quarantined
+    - Added `GET /casbEmailLabel/lite` Retrieves the email labels generated for the SaaS Security API policies in a user's email account
+    - Added `GET /casbTenant/{tenantId}/tags/policy` Retrieves the tags used in the policy rules associated with a tenant, based on the tenant ID.
+    - Added `GET /casbTenant/lite` Retrieves information about the SaaS application tenant
+
+### Enhancements:
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) - Added support for rateLimit.`maxRetrySeconds` in OneAPI client config to cap retry wait duration when encountering rate-limiting (HTTP 429). Raises zscaler.RetryTooLong if exceeded [Issue #303](https://github.com/zscaler/zscaler-sdk-python/issues/303). This enhancement addresses API limitations with the ZCC endpoints below due to daily hard limits:
+  - `/downloadDevices`
+  - `/downloadServiceStatus`
+
+### Bug Fixes:
+
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) - Fixed JSON serialization for the method `lookup` in the ZIA package to ensure consistency on payload processing between Legacy client path and OneAPI.
+[PR #309](https://github.com/zscaler/zscaler-sdk-python/pull/309) - Fixed ZDX `devices` model to address dictionary processing.
+
 ## 1.4.4 (June 6, 2025)
 
 ### Notes

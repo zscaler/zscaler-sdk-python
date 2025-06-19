@@ -65,7 +65,7 @@ class ZPAService:
     @property
     def app_segment_by_type(self):
         """
-        The interface object for the :ref:`ZPA Application Segments interface <zpa-app_segment_by_type>`.
+        The interface object for the :ref:`ZPA Application Segments By Type interface <zpa-app_segment_by_type>`.
 
         """
         return ApplicationSegmentByTypeAPI(self._request_executor, self._config)
