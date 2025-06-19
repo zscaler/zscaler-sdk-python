@@ -27,7 +27,6 @@ from zscaler.zia.models import cloud_firewall_time_windows as time_windows
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import cloud_firewall_destination_groups as destination_groups
 from zscaler.zia.models import cloud_firewall_source_groups as source_groups
-from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
 from zscaler.zia.models import common as common
 
 
@@ -116,7 +115,6 @@ class FirewallDNSRules(ZscalerObject):
             )
 
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], devices.Devices)
             self.device_groups = ZscalerCollection.form_list(
                 config["deviceGroups"] if "deviceGroups" in config else [], device_groups.DeviceGroups
@@ -156,6 +154,15 @@ class FirewallDNSRules(ZscalerObject):
             else:
                 self.edns_ecs_object = None
 
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             self.action = None
             self.capture_pcap = None

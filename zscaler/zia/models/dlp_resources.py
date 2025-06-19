@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-
+from zscaler.zia.models import common as common
 
 class DLPICAPServer(ZscalerObject):
     """
@@ -73,7 +73,15 @@ class DLPIDMProfile(ZscalerObject):
             self.volume_of_documents = config["volumeOfDocuments"] if "volumeOfDocuments" in config else None
             self.num_documents = config["numDocuments"] if "numDocuments" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             self.profile_id = None
             self.profile_name = None

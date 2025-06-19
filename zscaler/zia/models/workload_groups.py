@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zia.models import common as common
 
 
 class WorkloadGroups(ZscalerObject):
@@ -38,7 +39,15 @@ class WorkloadGroups(ZscalerObject):
             )
 
             # Handling lastModifiedBy as a simple dictionary value
-            self.last_modified_by = config["lastModifiedBy"]["name"] if "lastModifiedBy" in config else None
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             self.id = None
             self.name = None

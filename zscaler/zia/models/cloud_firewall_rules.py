@@ -31,7 +31,7 @@ from zscaler.zia.models import cloud_firewall_nw_service_groups as nw_service_gr
 from zscaler.zia.models import cloud_firewall_nw_service as nw_service
 from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_application_groups
 from zscaler.zia.models import common as common_reference
-
+from zscaler.zia.models import common as common
 
 class FirewallRule(ZscalerObject):
     """
@@ -53,7 +53,6 @@ class FirewallRule(ZscalerObject):
             self.state = config["state"] if "state" in config else None
             self.description = config["description"] if "description" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.exclude_src_countries = config["excludeSrcCountries"] if "excludeSrcCountries" in config else False
             # Handling lists of simple values
             self.dest_ip_categories = ZscalerCollection.form_list(
@@ -150,6 +149,15 @@ class FirewallRule(ZscalerObject):
 
             self.predefined = config["predefined"] if "predefined" in config else False
 
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             # Defaults if config is None
             self.access_control = None

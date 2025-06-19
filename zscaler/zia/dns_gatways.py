@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zia.models.dns_gatways import DNSGateways
+from zscaler.zia.models.dns_gateways import DNSGateways
 from zscaler.utils import format_url
 import logging
 

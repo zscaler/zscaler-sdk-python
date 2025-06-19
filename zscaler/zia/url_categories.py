@@ -562,8 +562,13 @@ class URLCategoriesAPI(APIClient):
             :obj:`Tuple`: A list of URL category reports.
 
         Examples:
-            >>> results = client.zia.url_categories.lookup(urls=["google.com"])
-            ... print(results)
+            >>> results, error = client.zia.url_categories.lookup(urls=["google.com, acme.com])
+            >>> if error:
+            ...     print(f"Error during URL lookup: {error}")
+            ...     return
+            ... print("URL Lookup Results:")
+            ... for entry in results:
+            ...     print(entry)
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -575,19 +580,19 @@ class URLCategoriesAPI(APIClient):
 
         results = []
         for chunk in chunker(urls, 100):
-            request, error = self._request_executor.create_request(http_method, api_url, chunk, {}, {})
+            request, error = self._request_executor.create_request(http_method, api_url, chunk)
             if error:
-                continue
+                return None, error
 
             response, error = self._request_executor.execute(request)
             if error:
-                continue
+                return None, error
 
             results.extend(response.get_results())
             time.sleep(1)
 
-        return results
-
+        return results, None
+    
     def review_domains_post(self, urls: list) -> list:
         """
         For the specified list of URLs, finds matching entries present in existing custom URL categories.

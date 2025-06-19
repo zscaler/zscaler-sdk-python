@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.zia.models import common as common
 
 
 class RuleLabels(ZscalerObject):
@@ -36,13 +37,21 @@ class RuleLabels(ZscalerObject):
             self.name = config["name"] if "name" in config else None
             self.description = config["description"] if "description" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.created_by = config["createdBy"] if "createdBy" in config else None
 
             if "referencedRuleCount" in config:
                 self.referenced_rule_count = config["referencedRuleCount"]
             else:
                 self.referenced_rule_count = 0
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             # Initialize with default None or 0 values
             self.id = None

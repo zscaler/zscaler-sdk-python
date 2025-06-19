@@ -28,6 +28,7 @@ from zscaler.zia.models import rule_labels as rule_labels
 from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common_reference
+from zscaler.zia.models import common as common
 
 
 class SSLInspectionRules(ZscalerObject):
@@ -87,7 +88,6 @@ class SSLInspectionRules(ZscalerObject):
             self.state = config["state"] if "state" in config else None
             self.description = config["description"] if "description" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
-            self.last_modified_by = config["lastModifiedBy"] if "lastModifiedBy" in config else None
             self.dest_ip_groups = ZscalerCollection.form_list(
                 config["destIpGroups"] if "destIpGroups" in config else [], destination_groups.IPDestinationGroups
             )
@@ -122,6 +122,15 @@ class SSLInspectionRules(ZscalerObject):
             self.default_rule = config["defaultRule"] if "defaultRule" in config else False
 
             self.predefined = config["predefined"] if "predefined" in config else False
+            if "lastModifiedBy" in config:
+                if isinstance(config["lastModifiedBy"], common.CommonBlocks):
+                    self.last_modified_by = config["lastModifiedBy"]
+                elif config["lastModifiedBy"] is not None:
+                    self.last_modified_by = common.CommonBlocks(config["lastModifiedBy"])
+                else:
+                    self.last_modified_by = None
+            else:
+                self.last_modified_by = None
         else:
             self.id = None
             self.access_control = None
