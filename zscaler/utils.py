@@ -79,6 +79,16 @@ reformat_params = [
     ("service_ids", "services"),
     ("bandwidth_class_ids", "bandwidthClasses"),
     ("virtual_zen_node_ids", "virtualZenNodes"),
+    ("smart_isolation_user_ids", "smartIsolationUsers"),
+    ("smart_isolation_group_ids", "smartIsolationGroups"),
+    ("cloud_app_tenant_ids", "cloudAppTenants"),
+    ("object_type_ids", "objectTypes"),
+    ("bucket_ids", "buckets"),
+    ("included_domain_profile_ids", "includedDomainProfiles"),
+    ("excluded_domain_profile_ids", "excludedDomainProfiles"),
+    ("criteria_domain_profile_ids", "criteriaDomainProfiles"),
+    ("email_recipient_profile_ids", "emailRecipientProfiles"),
+    ("entity_group_ids", "entityGroups"),
 ]
 
 

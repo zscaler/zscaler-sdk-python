@@ -39,6 +39,7 @@ class ConfigSetter:
             "proxy": {"port": "", "host": "", "username": "", "password": ""},
             "rateLimit": {
                 "maxRetries": 2,
+                "maxRetrySeconds": "",
             },
             "testing": {"disableHttpsCheck": ""},
         }

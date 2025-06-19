@@ -520,7 +520,6 @@ class RequestExecutor:
             HTTPStatus.CONFLICT,
             HTTPStatus.PRECONDITION_FAILED,
             HTTPStatus.TOO_MANY_REQUESTS,
-            HTTPStatus.INTERNAL_SERVER_ERROR,
             HTTPStatus.SERVICE_UNAVAILABLE,
             HTTPStatus.GATEWAY_TIMEOUT,
         )
@@ -585,6 +584,36 @@ class RequestExecutor:
         logger.debug("Getting custom headers.")
         return self._custom_headers
 
+    # def get_retry_after(self, headers, logger):
+    #     retry_limit_reset_header = (
+    #         headers.get("x-ratelimit-reset") or 
+    #         headers.get("X-RateLimit-Reset") or
+    #         headers.get("RateLimit-Reset") or
+            
+    #         # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
+    #         headers.get("X-Rate-Limit-Retry-After-Seconds") or # ZCC /downloadDevices Rate Limiting Header (LegacyZCCClientHelper)
+    #         headers.get("X-Rate-Limit-Remaining") # (LegacyZCCClientHelper)
+    #     )
+    #     retry_after = headers.get("Retry-After") or headers.get("retry-after")
+
+    #     if retry_after:
+    #         try:
+    #             return int(retry_after.strip("s")) + 1  # Add 1 second padding
+    #         except ValueError:
+    #             logger.error(f"Error parsing Retry-After header: {retry_after}")
+    #             return None
+
+    #     if retry_limit_reset_header is not None:
+    #         try:
+    #             reset_seconds = float(retry_limit_reset_header)
+    #             return reset_seconds + 1  # Add 1 second padding
+    #         except ValueError:
+    #             logger.error(f"Error parsing x-ratelimit-reset header: {retry_limit_reset_header}")
+    #             return None
+
+    #     logger.error("Missing Retry-After and X-Rate-Limit-Reset headers.")
+    #     return None
+
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
             headers.get("x-ratelimit-reset") or 
@@ -592,25 +621,45 @@ class RequestExecutor:
             headers.get("RateLimit-Reset") or
             
             # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
-            headers.get("X-Rate-Limit-Retry-After-Seconds") or # ZCC /downloadDevices Rate Limiting Header (LegacyZCCClientHelper)
-            headers.get("X-Rate-Limit-Remaining") # (LegacyZCCClientHelper)
+            headers.get("X-Rate-Limit-Retry-After-Seconds") or
+            headers.get("X-Rate-Limit-Remaining")
         )
         retry_after = headers.get("Retry-After") or headers.get("retry-after")
 
+        backoff = None
+
         if retry_after:
             try:
-                return int(retry_after.strip("s")) + 1  # Add 1 second padding
+                backoff = int(retry_after.strip("s")) + 1  # Add 1s padding
             except ValueError:
                 logger.error(f"Error parsing Retry-After header: {retry_after}")
                 return None
 
-        if retry_limit_reset_header is not None:
+        elif retry_limit_reset_header is not None:
             try:
-                reset_seconds = float(retry_limit_reset_header)
-                return reset_seconds + 1  # Add 1 second padding
+                backoff = float(retry_limit_reset_header) + 1
             except ValueError:
                 logger.error(f"Error parsing x-ratelimit-reset header: {retry_limit_reset_header}")
                 return None
+        else:
+            logger.error("Missing Retry-After and X-Rate-Limit-Reset headers.")
+            return None
 
-        logger.error("Missing Retry-After and X-Rate-Limit-Reset headers.")
-        return None
+        # ✅ INSERT THIS BLOCK — check against maxRetrySeconds from config
+        max_retry_seconds = (
+            self._config.get("client", {})
+            .get("rateLimit", {})
+            .get("maxRetrySeconds", None)
+        )
+        if max_retry_seconds is not None:
+            try:
+                max_retry_seconds = int(max_retry_seconds)
+                if backoff > max_retry_seconds:
+                    from zscaler.exceptions.exceptions import RetryTooLong
+                    raise RetryTooLong(
+                        f"Retry wait time {backoff} seconds exceeds configured maxRetrySeconds {max_retry_seconds}."
+                    )
+            except ValueError:
+                logger.warning(f"Ignoring invalid maxRetrySeconds config value: {max_retry_seconds}")
+
+        return backoff
