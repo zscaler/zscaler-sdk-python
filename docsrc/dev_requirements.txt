@@ -1,7 +1,7 @@
 furo==2024.1.29
 flatdict>=4.0.0
 pre-commit==4.2.0
-pytest==8.3.5
+pytest==8.4.1
 requests==2.32.3
 responses==0.25.7
 sphinx==7.3.5
