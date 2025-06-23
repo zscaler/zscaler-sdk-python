@@ -518,7 +518,7 @@ class RequestExecutor:
         return status is not None and status in (
             HTTPStatus.REQUEST_TIMEOUT,
             HTTPStatus.CONFLICT,
-            HTTPStatus.PRECONDITION_FAILED,
+            # HTTPStatus.PRECONDITION_FAILED,
             HTTPStatus.TOO_MANY_REQUESTS,
             HTTPStatus.SERVICE_UNAVAILABLE,
             HTTPStatus.GATEWAY_TIMEOUT,
