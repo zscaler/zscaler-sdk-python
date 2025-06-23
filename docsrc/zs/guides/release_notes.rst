@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.5.2 (June 23, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+* (`#312 <https://github.com/zscaler/zscaler-sdk-python/pull/312>`_) - Refactored ZIA Cloud Firewall Rules client to assign `state` from `enabled` directly on request body for improved clarity and maintainability.
+
 1.5.1 (June 23, 2025)
 -------------------------
 

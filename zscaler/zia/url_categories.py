@@ -146,7 +146,7 @@ class URLCategoriesAPI(APIClient):
     def add_url_category(
         self,
         super_category: str,
-        # urls: list,
+        urls: list = None,
         configured_name: str = None,
         **kwargs
     ) -> tuple:
@@ -231,8 +231,9 @@ class URLCategoriesAPI(APIClient):
         payload = {
             "type": "URL_CATEGORY",
             "super_category": super_category,
-            # "urls": urls,
+            "urls": urls,
             "custom_category": custom_category,
+            "configured_name": configured_name,
         }
 
         if custom_category:
