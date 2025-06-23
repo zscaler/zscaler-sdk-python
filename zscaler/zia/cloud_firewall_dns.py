@@ -233,8 +233,8 @@ class FirewallDNSRulesAPI(APIClient):
         body = kwargs
 
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        if "enabled" in body:
+            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
 
         transform_common_id_fields(reformat_params, body, body)
 
@@ -339,8 +339,8 @@ class FirewallDNSRulesAPI(APIClient):
         body = kwargs
 
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        if "enabled" in body:
+            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
 
         transform_common_id_fields(reformat_params, body, body)
 
