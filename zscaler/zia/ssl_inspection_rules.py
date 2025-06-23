@@ -206,8 +206,8 @@ class SSLInspectionAPI(APIClient):
         body = kwargs
 
         # Convert 'enabled' to 'state' (ENABLED/DISABLED) if it's present in the payload
-        if "enabled" in kwargs:
-            kwargs["state"] = "ENABLED" if kwargs.pop("enabled") else "DISABLED"
+        if "enabled" in body:
+            body["state"] = "ENABLED" if body.pop("enabled") else "DISABLED"
 
         # Filter out the url_categories mapping so it doesn't get processed
         local_reformat_params = [param for param in reformat_params if param[0] != "url_categories"]
