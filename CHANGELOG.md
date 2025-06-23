@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.2 (June 23, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #312](https://github.com/zscaler/zscaler-sdk-python/pull/312) - Removed `url` positional argument from `add_url_category`
+
 ## 1.5.1 (June 23, 2025)
 
 ### Notes
