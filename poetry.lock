@@ -860,14 +860,14 @@ dev = ["build", "coverage", "furo", "invoke", "mypy", "pytest", "pytest-cov", "p
 
 [[package]]
 name = "pyfakefs"
-version = "5.9.0"
+version = "5.9.1"
 description = "Implements a fake file system that mocks the Python file system modules."
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "pyfakefs-5.9.0-py3-none-any.whl", hash = "sha256:e7a4b9cb4498205c057c3ecdc478a3d14f4f4e5e6287a1889c4e5ded684f2116"},
-    {file = "pyfakefs-5.9.0.tar.gz", hash = "sha256:a734fb70a55acdda41469d5ea8e169b0a37bf28618326722adc09faeb65b0f1d"},
+    {file = "pyfakefs-5.9.1-py3-none-any.whl", hash = "sha256:b3c1f391f1990112ff6b0642182e75f07a6d7fcd81cf1357277680bf6c9b8a84"},
+    {file = "pyfakefs-5.9.1.tar.gz", hash = "sha256:ca02a1441dc77d7512bebfe4224b32f2127e83c45672f5fe2c02c33d4284bc70"},
 ]
 
 [[package]]
