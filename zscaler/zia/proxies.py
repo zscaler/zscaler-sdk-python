@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
-from zscaler.zia.models.proxy_gatways import ProxyGatways
+from zscaler.zia.models.proxy_gateways import ProxyGatways
 from zscaler.utils import format_url
 
 

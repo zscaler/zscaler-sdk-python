@@ -23,7 +23,7 @@ from zscaler.zia.models import device_groups as device_groups
 from zscaler.zia.models import devices as devices
 from zscaler.zia.models import location_management as location_management
 from zscaler.zia.models import location_group as location_group
-from zscaler.zia.models import proxy_gatways as proxy_gatways
+from zscaler.zia.models import proxy_gateways as proxy_gateways
 from zscaler.zia.models import rule_labels as rule_labels
 from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import workload_groups as workload_groups
@@ -96,7 +96,7 @@ class SSLInspectionRules(ZscalerObject):
             )
 
             self.proxy_gateways = ZscalerCollection.form_list(
-                config["proxyGateways"] if "proxyGateways" in config else [], proxy_gatways.ProxyGatways
+                config["proxyGateways"] if "proxyGateways" in config else [], proxy_gateways.ProxyGatways
             )
             self.user_agent_types = ZscalerCollection.form_list(
                 config["userAgentTypes"] if "userAgentTypes" in config else [], str

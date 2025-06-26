@@ -22,6 +22,7 @@ from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import user_management as user_management
 from zscaler.zia.models import saas_security_api as saas_security_api
 
+
 class CasbdDlpRules(ZscalerObject):
     """
     A class for CasbdDlpRules objects.
@@ -100,7 +101,7 @@ class CasbdDlpRules(ZscalerObject):
             self.cloud_app_tenants = ZscalerCollection.form_list(
                 config["cloudAppTenants"] if "cloudAppTenants" in config else [], saas_security_api.CasbTenant
             )
-            
+
             self.entity_groups = ZscalerCollection.form_list(
                 config["entityGroups"] if "entityGroups" in config else [], common.ResourceReference
             )
@@ -115,13 +116,13 @@ class CasbdDlpRules(ZscalerObject):
             )
             self.email_recipient_profiles = ZscalerCollection.form_list(
                 config["emailRecipientProfiles"] if "emailRecipientProfiles" in config else [], common.ResourceReference
-            )                        
+            )
             self.buckets = ZscalerCollection.form_list(
                 config["buckets"] if "buckets" in config else [], common.ResourceReference
             )
             self.object_types = ZscalerCollection.form_list(
                 config["objectTypes"] if "objectTypes" in config else [], common.ResourceReference
-            )                  
+            )
             self.departments = ZscalerCollection.form_list(
                 config["departments"] if "departments" in config else [], user_management.Department
             )
@@ -221,7 +222,8 @@ class CasbdDlpRules(ZscalerObject):
                 if isinstance(config["casbTombstoneTemplate"], saas_security_api.QuarantineTombstoneTemplate):
                     self.casb_tombstone_template = config["casbTombstoneTemplate"]
                 elif config["casbTombstoneTemplate"] is not None:
-                    self.casb_tombstone_template = saas_security_api.QuarantineTombstoneTemplate(config["casbTombstoneTemplate"])
+                    self.casb_tombstone_template = saas_security_api.QuarantineTombstoneTemplate
+                    (config["casbTombstoneTemplate"])
                 else:
                     self.casb_tombstone_template = None
             else:

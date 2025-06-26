@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.3 (June 25, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #314](https://github.com/zscaler/zscaler-sdk-python/pull/314) - Enhanced ZIA URL Categories `update_url_category` function to support incremental updates via optional `action` parameter. Users can now perform full updates (replace all URLs) or incremental updates (add/remove specific URLs) using a single method while maintaining backward compatibility with existing specialized functions.
+
 ## 1.5.2 (June 23, 2025)
 
 ### Notes

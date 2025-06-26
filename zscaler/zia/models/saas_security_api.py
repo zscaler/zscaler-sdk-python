@@ -76,7 +76,8 @@ class DomainProfiles(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class QuarantineTombstoneTemplate(ZscalerObject):
     """
     A class for QuarantineTombstoneTemplate objects.
@@ -116,6 +117,7 @@ class QuarantineTombstoneTemplate(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class CasbEmailLabel(ZscalerObject):
     """
@@ -163,7 +165,8 @@ class CasbEmailLabel(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
+
 class CasbTenant(ZscalerObject):
     """
     A class for CasbTenant objects.

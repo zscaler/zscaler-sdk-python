@@ -33,6 +33,7 @@ from zscaler.zia.models import cloud_firewall_nw_application_groups as nw_applic
 from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import common as common
 
+
 class FirewallRule(ZscalerObject):
     """
     A class representing a Firewall Rule object.

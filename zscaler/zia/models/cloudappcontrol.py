@@ -30,6 +30,7 @@ from zscaler.zia.models import rule_labels as labels
 from zscaler.zia.models import workload_groups as workload_groups
 from zscaler.zia.models import common as common
 
+
 class CloudApplicationControl(ZscalerObject):
     """
     A class representing a Cloud Application Control Policy object.
