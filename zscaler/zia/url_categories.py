@@ -336,29 +336,55 @@ class URLCategoriesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_url_category(self, category_id: str, **kwargs) -> tuple:
+    def update_url_category(self, category_id: str, action: str = None, **kwargs) -> tuple:
         """
         Updates a URL category.
+
+        This method supports two update modes with different behaviors:
+
+        1. **Full Update** (action=None): Replaces all URLs with the provided list
+
+           - Any URLs not included in the request will be removed from the category
+           - This is equivalent to completely replacing the URL list
+           - Use this when you want to set the exact list of URLs for the category
+
+        2. **Incremental Update** (action specified): Adds or removes specific URLs while preserving existing ones
+
+           - `ADD_TO_LIST`: Adds new URLs to the existing list (preserves all current URLs)
+           - `REMOVE_FROM_LIST`: Removes specified URLs from the existing list (preserves other URLs)
+           - Use this when you want to modify the existing URL list without affecting other URLs
+
+        **Note**: For incremental URL operations, you may also use the specialized functions:
+
+        - :meth:`add_urls_to_category` - Convenience method for adding URLs (equivalent to action="ADD_TO_LIST")
+        - :meth:`delete_urls_from_category` - Convenience method for removing URLs (equivalent to action="REMOVE_FROM_LIST")
 
         Args:
             category_id (str):
                 The unique identifier of the URL category.
+            action (str, optional):
+                The action to perform for incremental updates.
+                - `ADD_TO_LIST`: Add URLs to the category (preserves existing URLs)
+                - `REMOVE_FROM_LIST`: Remove URLs from the category (preserves existing URLs)
+                - None: Perform full update (replaces all URLs with provided list)
             **kwargs:
                 Optional keyword args.
 
         Keyword Args:
-            name (str):
+            configured_name (str):
                 The name of the URL category.
             urls (list):
-                Custom URLs to add to a URL category.
+                Custom URLs to add/remove/replace in the URL category.
+                - For full updates: This list replaces all existing URLs
+                - For incremental updates: This list is added to or removed from existing URLs
             db_categorized_urls (list):
                 URLs entered will be covered by policies that reference the parent category, in addition to this one.
             description (str):
                 Description of the category.
             ip_ranges (list):
-                Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+                Custom IP address ranges associated to a URL category. This feature must be enabled on your tenancy.
             ip_ranges_retaining_parent_category (list):
-                The retaining parent custom IP addess ranges associated to a URL category.
+                The retaining parent custom IP address ranges associated to a URL category.
             keywords (list):
                 Custom keywords associated to a URL category.
             keywords_retaining_parent_category (list):
@@ -368,27 +394,69 @@ class URLCategoriesAPI(APIClient):
             :obj:`Tuple`: The updated url category resource record.
 
         Examples:
-            Update the name of a category:
+            Full update - replace all URLs:
 
             >>> update_category, _, error = client.zia.url_categories.update_url_category(
             ...     category_id="EDUCATION",
-            ...     configured_name=f"UpdateCategory_{random.randint(1000, 10000)}",
-            ...     description="University",
-            ...     type="TLD_CATEGORY",
-            ...     urls=['.co.uk'],
+            ...     configured_name="Updated Education Category",
+            ...     description="University websites",
+            ...     urls=['.edu', 'harvard.edu', 'mit.edu'],
             ... )
-            ... if error:
+            >>> if error:
             ...     print(f"Error updating url category: {error}")
             ...     return
             ... print(f"url category updated successfully: {update_category.as_dict()}")
+
+            Incremental update - add URLs to existing list:
+
+            >>> update_category, _, error = client.zia.url_categories.update_url_category(
+            ...     category_id="CUSTOM_01",
+            ...     action="ADD_TO_LIST",
+            ...     urls=['new-site1.com', 'new-site2.com'],
+            ... )
+            >>> if error:
+            ...     print(f"Error adding URLs to category: {error}")
+            ...     return
+            ... print(f"URLs added successfully: {update_category.as_dict()}")
+
+            Incremental update - remove URLs from existing list:
+
+            >>> update_category, _, error = client.zia.url_categories.update_url_category(
+            ...     category_id="CUSTOM_01",
+            ...     action="REMOVE_FROM_LIST",
+            ...     urls=['old-site1.com', 'old-site2.com'],
+            ... )
+            >>> if error:
+            ...     print(f"Error removing URLs from category: {error}")
+            ...     return
+            ... print(f"URLs removed successfully: {update_category.as_dict()}")
+
+            Alternative using specialized functions:
+
+            Equivalent to action="ADD_TO_LIST"
+
+            >>> update_category, _, error = client.zia.url_categories.add_urls_to_category(
+            ...     category_id="CUSTOM_01",
+            ...     urls=['new-site.com'],
+            ... )
+
+            Equivalent to action="REMOVE_FROM_LIST"
+
+            >>> update_category, _, error = client.zia.url_categories.delete_urls_from_category(
+            ...     category_id="CUSTOM_01",
+            ...     urls=['old-site.com'],
+            ... )
         """
         http_method = "put".upper()
-        api_url = format_url(
-            f"""
-            {self._zia_base_endpoint}
-            /urlCategories/{category_id}
-        """
-        )
+        
+        # Build the API URL with optional action parameter
+        base_url = f"{self._zia_base_endpoint}/urlCategories/{category_id}"
+        if action:
+            if action not in ["ADD_TO_LIST", "REMOVE_FROM_LIST"]:
+                raise ValueError("action must be either 'ADD_TO_LIST' or 'REMOVE_FROM_LIST'")
+            api_url = format_url(f"{base_url}?action={action}")
+        else:
+            api_url = format_url(base_url)
 
         body = kwargs
 
