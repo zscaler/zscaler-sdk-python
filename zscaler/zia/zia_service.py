@@ -677,7 +677,7 @@ class ZIAService:
         """
 
         return BrowserControlSettingsPI(self._request_executor)
-    
+
     @property
     def saas_security_api(self):
         """

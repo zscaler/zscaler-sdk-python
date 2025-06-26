@@ -30,6 +30,7 @@ from zscaler.zia.models import zpa_gateway as zpa_gateway
 from zscaler.zia.models import common as common_reference
 from zscaler.zia.models import common as common
 
+
 class ForwardingControlRule(ZscalerObject):
     """
     A class representing a Forwarding Control Rule object.

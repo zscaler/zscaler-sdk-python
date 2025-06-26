@@ -42,7 +42,7 @@ class CasbdDlpRulesAPI(APIClient):
 
                 ``[query_params.rule_type]`` {str}: The type of rules to retrieve (e.g., "OFLCASB_DLP_ITSM").
 
-                    Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`, 
+                    Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
                         `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
                         `OFLCASB_DLP_GENAI`
 
@@ -106,7 +106,7 @@ class CasbdDlpRulesAPI(APIClient):
 
             rule_type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
 
-                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`, 
+                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
                     `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
                     `OFLCASB_DLP_GENAI`
 
@@ -206,7 +206,7 @@ class CasbdDlpRulesAPI(APIClient):
             return (None, response, error)
 
         return (result, response, None)
-    
+
     def add_rule(self, **kwargs) -> tuple:
         """
         Adds a new cloud app control rule.
@@ -219,19 +219,19 @@ class CasbdDlpRulesAPI(APIClient):
             rank (str): The admin rank of the rule
             enabled (bool): The rule state
             description (str): Additional information about the rule
-            bucket_owner (str): A user who inspect their buckets for sensitive data. When you choose a user, their buckets are available in the Buckets field.
+            bucket_owner (str): A user who inspect their buckets for sensitive data.
             external_auditor_email (str): Email address of the external auditor to whom the DLP email alerts are sent
-            quarantine_location (str): Location where all the quarantined files are moved and necessary actions are taken by either deleting or restoring the data
-            include_entity_groups (bool): entity_groups is included as part of the criteria, else are excluded from the criteria.
+            quarantine_location (str): Location where all the quarantined files are moved and necessary actions are taken
+            include_entity_groups (bool): entity_groups included as part of the criteria, else are excluded from the criteria
             without_content_inspection (bool): If true, Content Matching is set to None
-            include_criteria_domain_profile (bool): If true, criteria_domain_profiles is included as part of the criteria, else they are excluded from the criteria.
+            include_criteria_domain_profile (bool): If true, criteria_domain_profiles is included as part of the criteria.
             watermark_delete_old_version (bool): Specifies whether to delete an old version of the watermarked file
 
             type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
 
-                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`, 
-                    `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
-                    `OFLCASB_DLP_GENAI`
+                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`,
+                `OFLCASB_DLP_CRM`, `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`,
+                `OFLCASB_DLP_STORAGE`, `OFLCASB_DLP_GENAI`
 
             recipient (str): Specifies if the email recipient is internal or external
 
@@ -247,7 +247,7 @@ class CasbdDlpRulesAPI(APIClient):
                     - `CASB_FILE_TYPE_COLLAB_COUNT_RANGE_11_TO_100`
                     - `CASB_FILE_TYPE_COLLAB_COUNT_RANGE_101_TO_1000`
                     - `CASB_FILE_TYPE_COLLAB_RANGE_1001_PLUS`
-                    
+
             number_of_external_collaborators (str): Selects the number of external collaborators for
                 files that are shared with specific collaborators or are discoverable within an organization
 
@@ -295,10 +295,9 @@ class CasbdDlpRulesAPI(APIClient):
                 in the 'content_location' field
 
             file_types (list[str]): List of file types to which the rule must be applied.
-                See the
-                `Casb DLP Rule API reference:
+                See the `Casb DLP Rule API reference:
                 <https://https://help.zscaler.com/zia/saas-security-api#/casbDlpRules-post>`_
-                for the supported values.   
+                for the supported values.
 
             collaboration_scope (list[str]): List of file types to which the rule must be applied.
 
@@ -422,19 +421,19 @@ class CasbdDlpRulesAPI(APIClient):
             rank (str): The admin rank of the rule
             enabled (bool): The rule state
             description (str): Additional information about the rule
-            bucket_owner (str): A user who inspect their buckets for sensitive data. When you choose a user, their buckets are available in the Buckets field.
+            bucket_owner (str): A user who inspect their buckets for sensitive data.
             external_auditor_email (str): Email address of the external auditor to whom the DLP email alerts are sent
-            quarantine_location (str): Location where all the quarantined files are moved and necessary actions are taken by either deleting or restoring the data
-            include_entity_groups (bool): entity_groups is included as part of the criteria, else are excluded from the criteria.
+            quarantine_location (str): Location where all the quarantined files are moved and necessary actions are taken.
+            include_entity_groups (bool): entity_groups included as part of the criteria, else are excluded from the criteria.
             without_content_inspection (bool): If true, Content Matching is set to None
-            include_criteria_domain_profile (bool): If true, criteria_domain_profiles is included as part of the criteria, else they are excluded from the criteria.
+            include_criteria_domain_profile (bool): If true, criteria_domain_profiles is included as part of the criteria.
             watermark_delete_old_version (bool): Specifies whether to delete an old version of the watermarked file
 
             type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
 
-                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`, 
-                    `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
-                    `OFLCASB_DLP_GENAI`
+                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`,
+                `OFLCASB_DLP_CRM`, `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`,
+                `OFLCASB_DLP_STORAGE`, `OFLCASB_DLP_GENAI`
 
             recipient (str): Specifies if the email recipient is internal or external
 
@@ -498,10 +497,9 @@ class CasbdDlpRulesAPI(APIClient):
                 in the 'content_location' field
 
             file_types (list[str]): List of file types to which the rule must be applied.
-                See the
-                `Casb DLP Rule API reference:
+                See the `Casb DLP Rule API reference:
                 <https://https://help.zscaler.com/zia/saas-security-api#/casbDlpRules-post>`_
-                for the supported values.   
+                for the supported values.
 
             collaboration_scope (list[str]): List of file types to which the rule must be applied.
 
@@ -623,7 +621,7 @@ class CasbdDlpRulesAPI(APIClient):
 
             rule_type (str): The type of the rule (e.g., "OFLCASB_DLP_ITSM").
 
-                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`, 
+                Supported Values: `ANY`, `NONE`, `OFLCASB_DLP_FILE`, `OFLCASB_DLP_EMAIL`, `OFLCASB_DLP_CRM`,
                     `OFLCASB_DLP_ITSM`, `OFLCASB_DLP_COLLAB`, `OFLCASB_DLP_REPO`, `OFLCASB_DLP_STORAGE`,
                     `OFLCASB_DLP_GENAI`
 

@@ -6,6 +6,24 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.5.3 (June 25, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+------------
+
+* (`#314 <https://github.com/zscaler/zscaler-sdk-python/pull/314>`_) - Enhanced ZIA URL Categories ``update_url_category`` function to support incremental updates via optional ``action`` parameter. Users can now perform full updates (replace all URLs) or incremental updates (add/remove specific URLs) using a single method while maintaining backward compatibility with existing specialized functions.
+
+Bug Fixes
+---------
+
+* (`#314 <https://github.com/zscaler/zscaler-sdk-python/pull/314>`_) -
+
 1.5.2 (June 23, 2025)
 -------------------------
 
@@ -18,6 +36,7 @@ Bug Fixes
 -----------
 
 * (`#312 <https://github.com/zscaler/zscaler-sdk-python/pull/312>`_) - Refactored ZIA Cloud Firewall Rules client to assign `state` from `enabled` directly on request body for improved clarity and maintainability.
+
 
 1.5.1 (June 23, 2025)
 -------------------------
@@ -492,7 +511,7 @@ ZIA Proxies
     - Added `DELETE /dedicatedIPGateways/lite` Retrieves a list of dedicated IP gateways
 
 ZIA FTP Settings
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 (`#267 <https://github.com/zscaler/zscaler-sdk-python/pull/267>`_) - Added the following new ZIA API Endpoints:
     - Added `GET /ftpSettings` Retrieves the FTP Control status and the list of URL categories for which FTP is allowed.
@@ -736,7 +755,7 @@ ZIA Remote Assistance Support
 
 (`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1067,7 +1086,7 @@ ZIA Remote Assistance Support
 
 (`#261 <https://github.com/zscaler/zscaler-sdk-python/pull/261>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1398,7 +1417,7 @@ ZIA Remote Assistance Support
 
 (`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1477,7 +1496,7 @@ ZPA Credential Pool (New)
 ZWA - Zscaler Workflow Automation (NEW)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-(`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added new ZWA endpoint:
+(`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Added new ZWA endpoint:
   - Added `GET /dlp/v1/incidents/transactions/{transactionId}` Gets the list of all DLP incidents associated with the transaction ID
   - Added `GET /dlp/v1/incidents/{dlpIncidentId}` Gets the DLP incident details based on the incident ID.
   - Added `DELETE /dlp/v1/incidents/{dlpIncidentId}` Deletes the DLP incident for the specified incident ID.
@@ -1493,13 +1512,13 @@ ZWA - Zscaler Workflow Automation (NEW)
 
 Cloud & Branch Connector - OneAPI Support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Cloud & Branch Connector package is now compatible with OneAPI and Legacy API framework. Please refer to README for details.
-(`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Cloud & Branch Connector package has been renamed from `zcon` to `ztw`
+(`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Cloud & Branch Connector package is now compatible with OneAPI and Legacy API framework. Please refer to README for details.
+(`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Cloud & Branch Connector package has been renamed from `zcon` to `ztw`
 
 ZTW Policy Management
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-(`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZTW API Endpoints:
+(`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Added the following new ZTW API Endpoints:
     - Added `GET /ecRules/ecRdr` Retrieves the list of traffic forwarding rules.
     - Added `PUT /ecRules/ecRdr/{ruleId}` Updates a traffic forwarding rule configuration based on the specified ID.
     - Added `POST /ecRules/ecRdr` Creates a new traffic forwarding rule.
@@ -1508,7 +1527,7 @@ ZTW Policy Management
 ZTW Policy Resources
 ^^^^^^^^^^^^^^^^^^^^^
 
-(`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZTW API Endpoints:
+(`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Added the following new ZTW API Endpoints:
     - Added `GET /ipSourceGroups` Retrieves the list of source IP groups.
     - Added `GET /ipSourceGroups/lite` Retrieves the list of source IP groups. This request retrieves basic information about the source IP groups, such as name and ID. For extensive details, use the GET /ipSourceGroups request.
     - Added `POST /ipSourceGroups` Adds a new custom source IP group.
@@ -1729,7 +1748,7 @@ ZIA Remote Assistance Support
 
 (`#260 <https://github.com/zscaler/zscaler-sdk-python/pull/260>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2060,7 +2079,7 @@ ZIA Remote Assistance Support
 
 (`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2391,7 +2410,7 @@ ZIA Remote Assistance Support
 
 (`#259 <https://github.com/zscaler/zscaler-sdk-python/pull/259>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2722,7 +2741,7 @@ ZIA Remote Assistance Support
 
 (`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3053,7 +3072,7 @@ ZIA Remote Assistance Support
 
 (`#258 <https://github.com/zscaler/zscaler-sdk-python/pull/258>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3384,7 +3403,7 @@ ZIA Remote Assistance Support
 
 (`#257 <https://github.com/zscaler/zscaler-sdk-python/pull/257>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3715,7 +3734,7 @@ ZIA Remote Assistance Support
 
 (`#256 <https://github.com/zscaler/zscaler-sdk-python/pull/256>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4046,7 +4065,7 @@ ZIA Remote Assistance Support
 
 (`#255 <https://github.com/zscaler/zscaler-sdk-python/pull/255>`_) - Added the following new ZIA API Endpoints:
   - Added `GET /remoteAssistance` to retrieve information about the Remote Assistance option.
-  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization’s ZIA Admin Portal for a specified time period to troubleshoot issues.
+  - Added `PUT /remoteAssistance` to update information about the Remote Assistance option. Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal for a specified time period to troubleshoot issues.
 
 ZIA Organization Details
 ^^^^^^^^^^^^^^^^^^^^^^^^^

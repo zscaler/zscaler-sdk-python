@@ -19,6 +19,7 @@ from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
 from zscaler.zia.models import common as common_reference
 
+
 class BrowserControlSettings(ZscalerObject):
     """
     A class for BrowserControlSettings objects.
@@ -79,7 +80,7 @@ class BrowserControlSettings(ZscalerObject):
             self.smart_isolation_users = ZscalerCollection.form_list(
                 config["smartIsolationUsers"] if "smartIsolationUsers" in config else [], common_reference.ResourceReference
             )
-       
+
             self.smart_isolation_groups = ZscalerCollection.form_list(
                 config["smartIsolationGroups"] if "smartIsolationGroups" in config else [], common_reference.ResourceReference
             )

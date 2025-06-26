@@ -18,6 +18,7 @@ from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
 
+
 class DLPICAPServer(ZscalerObject):
     """
     A class representing DLP ICAP Server objects.
