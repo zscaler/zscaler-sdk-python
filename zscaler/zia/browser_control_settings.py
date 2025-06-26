@@ -88,52 +88,54 @@ class BrowserControlSettingsPI(APIClient):
                 Specifies how frequently the service checks browsers and relevant applications to warn
                 users regarding outdated or vulnerable browsers, plugins, and applications. If not set,
                 the warnings are disabled
-                
-                Supported Values: `DAILY`, `WEEKLY`, `MONTHLY`, `EVERY_2_HOURS`, `EVERY_4_HOURS`, `EVERY_6_HOURS`, `EVERY_8_HOURS`, `EVERY_12_HOURS`
+
+                Supported Values: `DAILY`, `WEEKLY`, `MONTHLY`, `EVERY_2_HOURS`, `EVERY_4_HOURS`,
+                `EVERY_6_HOURS`, `EVERY_8_HOURS`, `EVERY_12_HOURS`
 
             - bypass_plugins (list[str]): List of plugins that need to be bypassed for warnings.
-            
-                Supported Values: `ANY`, `NONE`, `ACROBAT`, `FLASH`, `SHOCKWAVE`, `QUICKTIME`, `DIVX`,
-                    `GOOGLEGEARS`, `DOTNET`, `SILVERLIGHT`, `REALPLAYER`, `JAVA`, `TOTEM`, `WMP`
 
-            - bypass_applications (list[str]): LiList of applications that need to be bypassed for warnings.
+                Supported Values: `ANY`, `NONE`, `ACROBAT`, `FLASH`, `SHOCKWAVE`, `QUICKTIME`,
+                `DIVX`, `GOOGLEGEARS`, `DOTNET`, `SILVERLIGHT`, `REALPLAYER`, `JAVA`, `TOTEM`, `WMP`
+
+            - bypass_applications (list[str]): List of applications that need to be bypassed for warnings.
                 Supported Values: `ANY`, `NONE`, `OUTLOOKEXP`, `MSOFFICE`
 
             - bypass_all_browsers (bool): If set to true, all the browsers are bypassed for warnings.
 
-            - blocked_internet_explorer_versions (list[str]): Versions of Microsoft browser that need to be blocked. If not set, all Microsoft browser versions are allowed.
+            - blocked_internet_explorer_versions (list[str]): Versions of Microsoft browser that need to be
+                blocked. If not set, all Microsoft browser versions are allowed.
 
-                See the
-                `Browser Control API reference:
-                <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
-                for the supported values.
-                    
-            - blocked_chrome_versions (list[str]): Versions of Google Chrome browser that need to be blocked. If not set, all Google Chrome versions are allowed.
-                See the
-                `Browser Control API reference:
+                See the `Browser Control API reference:
                 <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
                 for the supported values.
 
-            - blocked_firefox_versions (list[str]): Versions of Mozilla Firefox browser that need to be blocked. If not set, all Mozilla Firefox versions are allowed.
-                See the
-                `Browser Control API reference:
+            - blocked_chrome_versions (list[str]): Versions of Google Chrome browser that need to be blocked.
+                If not set, all Google Chrome versions are allowed.
+                See the `Browser Control API reference:
                 <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
-                for the supported values.               
+                for the supported values.
 
-            - blocked_safari_versions (list[str]): Versions of Apple Safari browser that need to be blocked. If not set, all Apple Safari versions are allowed.
-                See the
-                `Browser Control API reference:
+            - blocked_firefox_versions (list[str]): Versions of Mozilla Firefox browser that need to be blocked.
+                If not set, all Mozilla Firefox versions are allowed.
+                See the `Browser Control API reference:
                 <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
-                for the supported values.      
+                for the supported values.
 
-            - blocked_opera_versions (list[str]): Versions of Opera browser that need to be blocked. If not set, all Opera versions are allowed.
-                See the
-                `Browser Control API reference:
+            - blocked_safari_versions (list[str]): Versions of Apple Safari browser that need to be blocked.
+                If not set, all Apple Safari versions are allowed.
+                See the `Browser Control API reference:
                 <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
-                for the supported values.     
+                for the supported values.
 
-            - allow_all_browsers (bool): Specifies whether or not to allow all the browsers and their respective versions access to the internet  
-            - enable_warnings (bool): A Boolean value that specifies if the warnings are enabled 
+            - blocked_opera_versions (list[str]): Versions of Opera browser that need to be blocked. If not set,
+                all Opera versions are allowed.
+                See the `Browser Control API reference:
+                <https://help.zscaler.com/zia/browser-control-policy#/browserControlSettings-get>`_
+                for the supported values.
+
+            - allow_all_browsers (bool): Specifies whether or not to allow all the browsers and their respective
+                versions access to the internet
+            - enable_warnings (bool): A Boolean value that specifies if the warnings are enabled
             - enable_smart_browser_isolation (bool): A Boolean value that specifies if Smart Browser Isolation is enabled
             - smart_isolation_users (list[int]): List of users for which the rule is applied
             - smart_isolation_groups (list[int]): List of groups for which the rule is applied
@@ -166,7 +168,7 @@ class BrowserControlSettingsPI(APIClient):
             ...     return
             ... print("Current browser settings fetched successfully.")
             ... print(browser_settings)
-            
+
             Enable Smart Browser Isolation:
 
             >>> browser_settings, _, err = client.zia.browser_control_settings.update_browser_control_settings(

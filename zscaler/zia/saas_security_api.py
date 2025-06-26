@@ -195,7 +195,7 @@ class SaaSSecurityAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def list_casb_tenant_lite(self, query_params=None) -> tuple:
         """
         Retrieves the email labels generated for the SaaS Security API policies in a user's email account
@@ -208,9 +208,9 @@ class SaaSSecurityAPI(APIClient):
         Args:
             query_params {dict}: Map of query parameters for the request.
 
-                ``[query_params.active_only]`` {bool}: Indicates that the tenant is in use. Policies are enforced for this SaaS application.
+                ``[query_params.active_only]`` {bool}: Indicates that the tenant is in use.
                 ``[query_params.include_deleted]`` {bool}: Indicates that the tenant is deleted
-                ``[query_params.scan_config_tenants_only]`` {bool}: Specifies the tenant for which the scan is already configured
+                ``[query_params.scan_config_tenants_only]`` {bool}: Specifies the tenant which the scan is already configured
                 ``[query_params.include_bucket_ready_s3_tenants]`` {bool}: For the AWS S3 SaaS application
 
                 ``[query_params.filter_by_feature]`` {list[str]}: Filters the SaaS application tenant by feature
@@ -229,7 +229,7 @@ class SaaSSecurityAPI(APIClient):
 
                 ``[query_params.app_type]`` {str}: Specifies the SaaS application type
 
-                Supported Values: `ANY`, `FILE`, `EMAIL`, `CRM`, `ITSM`, 
+                Supported Values: `ANY`, `FILE`, `EMAIL`, `CRM`, `ITSM`,
                     `COLLAB`, `REPO`, `STORAGE`, `TP_APP`, `GENAI`, `MISC`
 
         Returns:

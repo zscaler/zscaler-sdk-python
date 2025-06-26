@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 
+
 class ProxyGatways(ZscalerObject):
     """
     A class for ProxyGatways objects.
