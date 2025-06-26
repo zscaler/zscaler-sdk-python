@@ -448,8 +448,7 @@ class URLCategoriesAPI(APIClient):
             ... )
         """
         http_method = "put".upper()
-        
-        # Build the API URL with optional action parameter
+
         base_url = f"{self._zia_base_endpoint}/urlCategories/{category_id}"
         if action:
             if action not in ["ADD_TO_LIST", "REMOVE_FROM_LIST"]:
@@ -661,7 +660,7 @@ class URLCategoriesAPI(APIClient):
             time.sleep(1)
 
         return results, None
-    
+
     def review_domains_post(self, urls: list) -> list:
         """
         For the specified list of URLs, finds matching entries present in existing custom URL categories.
