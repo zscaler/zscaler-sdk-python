@@ -34,9 +34,10 @@ class BandwidthClasses(ZscalerObject):
 
         if config:
             self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
             self.is_name_l10n_tag = config["isNameL10nTag"] if "isNameL10nTag" in config else None
             self.type = config["type"] if "type" in config else None
-            self.name = config["name"] if "name" in config else None
+            self.file_size = config["fileSize"] if "fileSize" in config else None
             self.applications = ZscalerCollection.form_list(config["applications"] if "applications" in config else [], str)
             self.web_applications = ZscalerCollection.form_list(
                 config["webApplications"] if "webApplications" in config else [], str
@@ -47,13 +48,14 @@ class BandwidthClasses(ZscalerObject):
             )
         else:
             self.id = None
-            self.is_name_l10n_tag = None
-            self.type = None
             self.name = None
+            self.file_size = None
+            self.type = None
             self.applications = []
             self.web_applications = []
             self.urls = []
             self.url_categories = []
+            self.is_name_l10n_tag = None
 
     def request_format(self):
         """
@@ -62,13 +64,14 @@ class BandwidthClasses(ZscalerObject):
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
-            "isNameL10nTag": self.is_name_l10n_tag,
-            "type": self.type,
             "name": self.name,
+            "type": self.type,
+            "fileSize": self.file_size,
             "applications": self.applications,
             "webApplications": self.web_applications,
             "urls": self.urls,
             "urlCategories": self.url_categories,
+            "isNameL10nTag": self.is_name_l10n_tag,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
