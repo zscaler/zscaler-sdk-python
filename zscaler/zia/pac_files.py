@@ -109,15 +109,15 @@ class PacFilesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.filter]`` {str}: Excludes specific information about the PAC file
-                    from the response such as the PAC file content
-                    Available values: pac_content
-        
+                    from the response such as the PAC file content. Available values: `pac_content`
+
             pac_id (int): The unique identifier for the Pac File.
 
         Returns:
             tuple: A tuple containing (Pac File instance, Response, error).
-            
+
         Examples:
             Gets a list of all pac files including the pac content.
 
@@ -173,10 +173,11 @@ class PacFilesAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.filter]`` {str, optional}: Excludes specific information about the PAC file
                                     the response such as the PAC file content.
                                     Accepts only the value 'pac_content'
-                                    
+
             pac_id (str): The unique identifier for the PAC file.
             pac_version (str): The specific version of the PAC file.
 
@@ -541,7 +542,7 @@ class PacFilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Example:
             >>> _, _, error = client.zia.pac_files.delete_pac_file('18805')
             >>> if error:
