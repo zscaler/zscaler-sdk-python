@@ -8,7 +8,7 @@
 
 ### Bug Fixes:
 
-* [PR #316](https://github.com/zscaler/zscaler-sdk-python/pull/316) - Fixed `get_pac_file` response parsing and examples in the ZIA `pac_files` package.
+* [PR #317](https://github.com/zscaler/zscaler-sdk-python/pull/317) - Fixed `get_pac_file` response parsing and examples in the ZIA `pac_files` package.
 
 ## 1.5.3 (June 25, 2025)
 
