@@ -1872,7 +1872,7 @@ class FirewallResourcesAPI(APIClient):
             Gets a list of all network services.
 
             >>> service_list, response, error = zia.cloud_firewall.list_network_services():
-            ... if error:
+            >>> if error:
             ...     print(f"Error listing network services: {error}")
             ...     return
             ... print(f"Total network services found: {len(service_list)}")

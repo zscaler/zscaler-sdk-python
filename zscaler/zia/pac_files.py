@@ -41,12 +41,35 @@ class PacFilesAPI(APIClient):
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.search]`` {str}: Search string for filtering results.
 
+                ``[query_params.filter]`` {str}: Excludes specific information about the PAC file
+                    from the response such as the PAC file content
+                    Available values: pac_content
+
+                ``[query_params.page]`` {str}: Specifies the page offset
+
+                ``[query_params.page_size]`` {str}: Specifies the page size. The default size is 100.
+
         Returns:
             tuple: A tuple containing (list of Pac Files instances, Response, error)
 
         Examples:
-            List all Pac Files using default settings:
-            >>> pac_files, response, err = zia.pac_files.list_pac_files()
+            Retrieves the list of all PAC files in deployed state
+
+            >>> pac_file_list, _, error = client.zia.pac_files.list_pac_files()
+            >>> if error:
+            ...     print(f"Error listing all pac files: {error}")
+            ...     return
+            ... print(f"Total pac files found: {len(pac_file_list)}")
+
+        Examples:
+            Retrieves the list of all PAC files in deployed state excluding pac_content
+
+            >>> pac_file_list, _, error = client.zia.pac_files.list_pac_files(query_params={
+            ... 'search': 'kerberos.pac', 'filter':'pac_content'})
+            >>> if error:
+            ...     print(f"Error listing all pac files: {error}")
+            ...     return
+            ... print(f"Total pac files found: {len(pac_file_list)}")
 
         """
         http_method = "get".upper()
@@ -59,17 +82,14 @@ class PacFilesAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
@@ -83,15 +103,42 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_pac_file(self, pac_id: int, query_params=None) -> tuple:
+    def get_pac_file(self, pac_id: int, query_params=None,) -> tuple:
         """
         Retrieves all versions of a PAC file based on the specified ID
 
         Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.filter]`` {str}: Excludes specific information about the PAC file
+                    from the response such as the PAC file content. Available values: `pac_content`
+
             pac_id (int): The unique identifier for the Pac File.
 
         Returns:
             tuple: A tuple containing (Pac File instance, Response, error).
+
+        Examples:
+            Gets a list of all pac files including the pac content.
+
+            >>> pac_files, _, error = client.zia.pac_files.get_pac_file('18805')
+            >>> if error:
+            ...     print(f"Error fetching PAC files by ID: {error}")
+            ...     return
+            ... print(f"Total PAC file versions fetched: {len(pac_files)}")
+            ... for version in pac_files:
+            ...     print(version.as_dict())
+
+            Gets a list of all pac files excluding the pac content.
+
+            >>> pac_files, _, error = client.zia.pac_files.get_pac_file('18805', query_params={'filter': 'pac_content'})
+            >>> if error:
+            ...     print(f"Error fetching PAC files by ID: {error}")
+            ...     return
+            ... print(f"Total PAC file versions fetched: {len(pac_files)}")
+            ... for version in pac_files:
+            ...     print(version.as_dict())
+
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -113,10 +160,11 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = PacFiles(self.form_response_body(response.get_body()))
+            result = []
+            for item in response.get_results():
+                result.append(PacFiles(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
     def get_pac_file_version(self, pac_id: int, pac_version: int, query_params=None) -> tuple:
@@ -124,23 +172,32 @@ class PacFilesAPI(APIClient):
         Returns the PAC file version details for a given PAC ID and version.
 
         Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.filter]`` {str, optional}: Excludes specific information about the PAC file
+                                    the response such as the PAC file content.
+                                    Accepts only the value 'pac_content'
+
             pac_id (str): The unique identifier for the PAC file.
             pac_version (str): The specific version of the PAC file.
-            filter (str, optional): Excludes specific information about the PAC file from
-                                    the response such as the PAC file content.
-                                    Accepts only the value 'pac_content'.
 
         Returns:
             :obj:`Tuple`: The PAC file version resource record.
 
-        Example:
-            >>> pac_file_version = zia.get_pac_file_version('12345', '1', filter='pac_content')
+            Gets a list of all pac files excluding the pac content.
+
+            >>> pac_files, _, error = client.zia.pac_files.get_pac_file_version(pac_id='18805', pac_version='1',
+            ... query_params={'filter': 'pac_content'})
+            >>> if error:
+            ...     print(f"Error fetching pac_file by ID: {error}")
+            ...     return
+            ... print(f"Fetched pac_file by ID: {pac_file.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /pacFiles/{pac_id}/version
+            /pacFiles/{pac_id}/version/{pac_version}
         """
         )
 
@@ -185,14 +242,13 @@ class PacFilesAPI(APIClient):
 
         Example:
             >>> pac_file = zia.add_pac_file(
-                    name="Test_Pac_File_01",
-                    description="Test_Pac_File_01",
-                    domain="bd-hashicorp.com",
-                    pac_commit_message="Test_Pac_File_01",
-                    pac_verification_status="VERIFY_NOERR",
-                    pac_version_status="DEPLOYED",
-                    pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }"
-                )
+            ...     name="Test_Pac_File_01",
+            ...     description="Test_Pac_File_01",
+            ...     domain="bd-hashicorp.com",
+            ...     pac_commit_message="Test_Pac_File_01",
+            ...     pac_verification_status="VERIFY_NOERR",
+            ...     pac_version_status="DEPLOYED",
+            ...     pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }")
         """
         # Validate the PAC file content before proceeding
         pac_content = kwargs.get("pac_content")
@@ -262,17 +318,17 @@ class PacFilesAPI(APIClient):
 
         Example:
             >>> pac_file = zia.clone_pac_file(
-                    pac_id=12345,
-                    pac_version="1",
-                    name="Cloned_Pac_File_01",
-                    description="Cloned_Pac_File_01",
-                    domain="bd-hashicorp.com",
-                    pac_commit_message="Clone of Test_Pac_File_01",
-                    pac_verification_status="VERIFY_NOERR",
-                    pac_version_status="DEPLOYED",
-                    pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }",
-                    delete_version=5
-                )
+            ...     pac_id=12345,
+            ...     pac_version="1",
+            ...     name="Cloned_Pac_File_01",
+            ...     description="Cloned_Pac_File_01",
+            ...     domain="bd-hashicorp.com",
+            ...     pac_commit_message="Clone of Test_Pac_File_01",
+            ...     pac_verification_status="VERIFY_NOERR",
+            ...     pac_version_status="DEPLOYED",
+            ...     pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }",
+            ...     delete_version=5
+            ... )
         """
         # Step 1: Validate the PAC content
         pac_content = kwargs.get("pac_content")
@@ -354,11 +410,11 @@ class PacFilesAPI(APIClient):
             >>> '''
             >>> validation_result, response, error = client.zia.validate_pac_file(pac_file_content)
             >>> if error:
-            >>>     print(f"Validation failed: {error}")
-            >>> elif validation_result.get("success", False):
-            >>>     print("PAC file is valid.")
-            >>> else:
-            >>>     print("PAC file validation failed.")
+            ...     print(f"Validation failed: {error}")
+            ... elif validation_result.get("success", False):
+            ...     print("PAC file is valid.")
+            ... else:
+            ...     print("PAC file validation failed.")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -426,18 +482,18 @@ class PacFilesAPI(APIClient):
 
         Example:
             >>> pac_file = zia.update_pac_file(
-                    pac_id=12345,
-                    pac_version=1,
-                    pac_version_action="DEPLOY",
-                    name="Update_Pac_File_01",
-                    description="Update_Pac_File_01",
-                    domain="bd-hashicorp.com",
-                    pac_commit_message="Update_Pac_File_01",
-                    pac_verification_status="VERIFY_NOERR",
-                    pac_version_status="DEPLOYED",
-                    pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }",
-                    new_lkg_ver=5
-                )
+            ...     pac_id=12345,
+            ...     pac_version=1,
+            ...     pac_version_action="DEPLOY",
+            ...     name="Update_Pac_File_01",
+            ...     description="Update_Pac_File_01",
+            ...     domain="bd-hashicorp.com",
+            ...     pac_commit_message="Update_Pac_File_01",
+            ...     pac_verification_status="VERIFY_NOERR",
+            ...     pac_version_status="DEPLOYED",
+            ...     pac_content="function FindProxyForURL(url, host) { return 'PROXY gateway.example.com:80'; }",
+            ...     new_lkg_ver=5
+            ... )
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -486,6 +542,13 @@ class PacFilesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
+
+        Example:
+            >>> _, _, error = client.zia.pac_files.delete_pac_file('18805')
+            >>> if error:
+            ...     print(f"Error deleting pac file: {error}")
+            ...     return
+            ... print(f"Pac File with ID '18805'} deleted successfully.")
         """
         http_method = "delete".upper()
         api_url = format_url(
