@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.5 (July 9, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #321](https://github.com/zscaler/zscaler-sdk-python/pull/321) - Added ZIA `shadow_it_report` specific pagination parameters `page_number` and `limit`. These parameters are specific to the Shadow IT endpoints.
+
+
 ## 1.5.4 (July 3, 2025)
 
 ### Notes

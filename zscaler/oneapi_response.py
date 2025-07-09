@@ -211,6 +211,35 @@ class ZscalerAPIResponse:
         return results, self, None
 
 
+    # def _fetch_next_page(self):
+    #     if not self._has_next():
+    #         logger.debug("No more pages to fetch")
+    #         return [], None
+
+    #     if self._service_type == "ZDX":
+    #         self._params["offset"] = self._next_offset
+    #     else:
+    #         self._page += 1
+    #         self._params["page"] = self._page
+
+    #     logger.debug(f"Requesting next page with params: {self._params}")
+
+    #     req = {
+    #         "method": "GET",
+    #         "url": self._url,
+    #         "headers": self._headers,
+    #         "params": self._params,
+    #         "uuid": uuid.uuid4(),
+    #     }
+    #     _, _, response_body, error = self._request_executor.fire_request(req)
+
+    #     if error:
+    #         logger.error(f"Error fetching the next page: {error}")
+    #         return None, error
+
+    #     self._build_json_response(response_body)
+    #     return self._list, None
+
     def _fetch_next_page(self):
         if not self._has_next():
             logger.debug("No more pages to fetch")
@@ -220,7 +249,13 @@ class ZscalerAPIResponse:
             self._params["offset"] = self._next_offset
         else:
             self._page += 1
-            self._params["page"] = self._page
+
+            # ✅ Patch: support alternate pagination keys (e.g., Shadow IT)
+            if "pageNumber" in self._params:
+                self._params["pageNumber"] = str(self._page)
+                self._params.pop("page", None)  # Ensure no conflict
+            else:
+                self._params["page"] = self._page
 
         logger.debug(f"Requesting next page with params: {self._params}")
 
@@ -263,3 +298,9 @@ class ZscalerAPIResponse:
             # If the API doesn't give a clear signal that there's another page, we may need a heuristic.
             logger.debug("Has next page for ZIA/ZCC: %s", has_next)
             return has_next
+
+    def __str__(self):
+        try:
+            return json.dumps(self.get_results(), indent=2)
+        except Exception as e:
+            return f"<ZscalerAPIResponse error displaying results: {e}>"
