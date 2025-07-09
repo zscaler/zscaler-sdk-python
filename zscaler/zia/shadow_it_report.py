@@ -47,13 +47,21 @@ class ShadowITAPI(APIClient):
         """
         Gets the list of predefined and custom cloud applications
 
+        Args:
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.page_number]`` (int): Specifies the page number. The numbering starts at 0.
+
+                ``[query_params.limit]`` (int): Specifies the maximum number of cloud applications that must be retrieved in a page
+
         Returns:
             obj:`Tuple`: A list of cloud applications.
 
         Examples:
             Get a list of 10 custom cloud applications:
 
-            >>> app_list, response, error = client.zia.shadow_it_report.list_apps(query_params={'limit': '10'})
+            >>> app_list, response, error = client.zia.shadow_it_report.list_apps(query_params={'page_number': 1, 'limit': '10'})
             ... if error:
             ...     print(f"Error listing custom cloud applications: {error}")
             ...     return
@@ -83,7 +91,7 @@ class ShadowITAPI(APIClient):
 
         if error:
             return (None, response, error)
-
+    
         try:
             result = []
             for item in response.get_results():

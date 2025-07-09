@@ -251,15 +251,34 @@ class ShadowITReport(ZscalerObject):
 
 class CloudapplicationsAndTags(ZscalerObject):
     def __init__(self, config=None):
+        """
+        Initialize the Cloud Applications and Tags model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the Cloud Applications and Tags configuration.
+        """
         super().__init__(config)
-        self.id = config["id"] if "id" in config else None
-        self.name = config["name"] if "name" in config else None
+    
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+        else:
+            # Initialize with default None or 0 values
+            self.id = None
+            self.name = None
 
     def request_format(self):
-        return {
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
             "id": self.id,
             "name": self.name,
         }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
 
 
 class CloudApplicationBulkUpdate(ZscalerObject):
