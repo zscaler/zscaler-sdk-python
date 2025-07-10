@@ -6,36 +6,55 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-1.5.6 (July 9, 2025)
+1.5.7 (July 10, 2025)
 -------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
-### Bug Fixes:
+Bug Fixes
+-----------
+
+* (`#325 <https://github.com/zscaler/zscaler-sdk-python/pull/325>`_) - Fixed `oneapi_response` pagination engine to support `shadow_it_report` custom pagination parameters and prevent backwards pagination retrieval when invoking `resp.next()`.
+
+1.5.6 (July 9, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
 
 * (`#323 <https://github.com/zscaler/zscaler-sdk-python/pull/323>`_) - Fixed `shadow_it_report` `bulk_update` function and added examples.
 
 1.5.5 (July 9, 2025)
 -------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
-### Bug Fixes:
+Bug Fixes
+-----------
 
 * (`#321 <https://github.com/zscaler/zscaler-sdk-python/pull/321>`_) - Added ZIA `shadow_it_report` specific pagination parameters `page_number` and `limit`. These parameters are specific to the Shadow IT endpoints.
 
 1.5.4 (July 3, 2025)
 -------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
-### Bug Fixes:
+Bug Fixes
+-----------
 
 * (`#317 <https://github.com/zscaler/zscaler-sdk-python/pull/317>`_) - Fixed `get_pac_file` response parsing and examples in the ZIA `pac_files` package.
 
