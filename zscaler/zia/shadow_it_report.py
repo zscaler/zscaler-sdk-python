@@ -53,7 +53,7 @@ class ShadowITAPI(APIClient):
 
                 ``[query_params.page_number]`` (int): Specifies the page number. The numbering starts at 0.
 
-                ``[query_params.limit]`` (int): Specifies the maximum number of cloud applications that must be retrieved in a page
+                ``[query_params.limit]`` (int): Specifies the max number of cloud applications that must be retrieved in a page
 
         Returns:
             obj:`Tuple`: A list of cloud applications.
@@ -61,7 +61,8 @@ class ShadowITAPI(APIClient):
         Examples:
             Get a list of 10 custom cloud applications:
 
-            >>> app_list, response, error = client.zia.shadow_it_report.list_apps(query_params={'page_number': 1, 'limit': '10'})
+            >>> app_list, response, error = client.zia.shadow_it_report.list_apps(
+            ... query_params={'page_number': 1, 'limit': '10'})
             ... if error:
             ...     print(f"Error listing custom cloud applications: {error}")
             ...     return
@@ -91,7 +92,7 @@ class ShadowITAPI(APIClient):
 
         if error:
             return (None, response, error)
-    
+
         try:
             result = []
             for item in response.get_results():
@@ -111,7 +112,7 @@ class ShadowITAPI(APIClient):
         Examples:
             Get a list of 10 custom cloud applications:
 
-            >>> app_list, response, error = client.zia.shadow_it_report.list_custom_tags(query_params={'limit': '10'})
+            >>> app_list, response, error = client.zia.shadow_it_report.list_custom_tags()
             ... if error:
             ...     print(f"Error listing custom tags: {error}")
             ...     return
@@ -174,14 +175,27 @@ class ShadowITAPI(APIClient):
             :obj:`dict`: The response from the ZIA API.
 
         Examples:
-            Update the sanction state of a cloud application::
+            Update the sanction state to sanctioned of a cloud application:
 
-                zia.cloud_apps.bulk_update("sanctioned", application_ids=["12345"])
+            >>> updated_application, _, error = client.zia.shadow_it_report.bulk_update("sanctioned",
+            ...     application_ids=["2228401"],
+            ...     custom_tag_ids=["1"]
+            ... )
+            >>> if error:
+            ...     print(f"Error updating applications: {error}")
+            ...     return
+            ... print(f"Applications updated successfully: {updated_application.as_dict()}")
 
-            Update the sanction state and custom tags of a cloud application::
+            Update the sanction state and custom tags of a cloud application:
 
-                zia.cloud_apps.bulk_update("sanctioned", application_ids=["12345"], custom_tag_ids=["67890"])
-
+            >>> updated_application, _, error = client.zia.shadow_it_report.bulk_update("unsanctioned",
+            ...     application_ids=["2228401"],
+            ...     custom_tag_ids=["1"]
+            ... )
+            >>> if error:
+            ...     print(f"Error updating applications: {error}")
+            ...     return
+            ... print(f"Applications updated successfully: {updated_application.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -222,10 +236,12 @@ class ShadowITAPI(APIClient):
 
         response, error = self._request_executor.execute(request)
 
-        if error:
+        try:
+            body = response.get_body()
+            result = self.form_response_body(body) if body else {}
+        except Exception as error:
             return (None, response, error)
-
-        return (response.get_body(), response, None)
+        return (result, response, None)
 
     def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> tuple:
         """
