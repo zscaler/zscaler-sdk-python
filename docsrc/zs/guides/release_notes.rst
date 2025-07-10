@@ -15,7 +15,7 @@ Zscaler Python SDK Changelog
 
 ### Bug Fixes:
 
-* (`#322 <https://github.com/zscaler/zscaler-sdk-python/pull/322>`_) - Fixed `shadow_it_report` `bulk_update` function and added examples.
+* (`#323 <https://github.com/zscaler/zscaler-sdk-python/pull/323>`_) - Fixed `shadow_it_report` `bulk_update` function and added examples.
 
 1.5.5 (July 9, 2025)
 -------------------------
