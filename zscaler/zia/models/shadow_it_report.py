@@ -258,7 +258,7 @@ class CloudapplicationsAndTags(ZscalerObject):
             config (dict): A dictionary representing the Cloud Applications and Tags configuration.
         """
         super().__init__(config)
-    
+
         if config:
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
@@ -278,7 +278,6 @@ class CloudapplicationsAndTags(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-
 
 
 class CloudApplicationBulkUpdate(ZscalerObject):
