@@ -6,6 +6,17 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.5.6 (July 9, 2025)
+-------------------------
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* (`#322 <https://github.com/zscaler/zscaler-sdk-python/pull/322>`_) - Fixed `shadow_it_report` `bulk_update` function and added examples.
+
 1.5.5 (July 9, 2025)
 -------------------------
 
