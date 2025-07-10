@@ -8,7 +8,7 @@
 
 ### Bug Fixes:
 
-* [PR #322](https://github.com/zscaler/zscaler-sdk-python/pull/322) - Fixed `shadow_it_report` `bulk_update` function and added examples.
+* [PR #323](https://github.com/zscaler/zscaler-sdk-python/pull/323) - Fixed `shadow_it_report` `bulk_update` function and added examples.
 
 ## 1.5.5 (July 9, 2025)
 
