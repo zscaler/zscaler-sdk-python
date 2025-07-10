@@ -68,13 +68,24 @@ class ZscalerAPIResponse:
             self._params["endTime"] = end_time
 
         # If service is ZPA and user did not specify a pagesize, set it to max=500 by default
-        if self._service_type == "ZPA" and "pagesize" not in self._params:
+        if self._service_type.upper() == "ZPA" and "pagesize" not in self._params:
             self._params["pagesize"] = self.SERVICE_PAGE_LIMITS["ZPA"]["max"]
 
         # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
-        if self._service_type == "ZIA":
+        if self._service_type.upper() == "ZIA":
             if "page_size" in self._params:
                 self._params["pageSize"] = self._params.pop("page_size")
+
+        if self._service_type.upper() == "ZIA":
+            # If user supplied pageNumber, initialize self._page accordingly
+            if "pageNumber" in self._params:
+                try:
+                    self._page = int(self._params["pageNumber"])
+                except Exception:
+                    self._page = 1
+            # Always remove 'page' if present for ZIA
+            self._params.pop("page", None)
+            # logger.debug(f"[DEBUG] __init__ params after ZIA normalization: {self._params}")
 
         if res_details:
             content_type = res_details.headers.get("Content-Type", "").lower()
@@ -241,21 +252,25 @@ class ZscalerAPIResponse:
     #     return self._list, None
 
     def _fetch_next_page(self):
+        logger.debug(f"[DEBUG] _fetch_next_page called. service_type={self._service_type}, params={self._params}")
         if not self._has_next():
             logger.debug("No more pages to fetch")
             return [], None
 
-        if self._service_type == "ZDX":
+        if self._service_type.upper() == "ZDX":
+            logger.debug("[DEBUG] Taking ZDX pagination branch.")
             self._params["offset"] = self._next_offset
-        else:
+        elif self._service_type.upper() == "ZIA":
+            logger.debug("[DEBUG] Taking ZIA pagination branch.")
             self._page += 1
-
-            # ✅ Patch: support alternate pagination keys (e.g., Shadow IT)
-            if "pageNumber" in self._params:
-                self._params["pageNumber"] = str(self._page)
-                self._params.pop("page", None)  # Ensure no conflict
-            else:
-                self._params["page"] = self._page
+            self._params["pageNumber"] = str(self._page)
+            # Ensure page parameter is never set for ZIA
+            self._params.pop("page", None)
+            logger.debug(f"[DEBUG] _fetch_next_page params for ZIA: {self._params}")
+        else:
+            logger.debug("[DEBUG] Taking ZPA/other pagination branch.")
+            self._page += 1
+            self._params["page"] = self._page
 
         logger.debug(f"Requesting next page with params: {self._params}")
 
