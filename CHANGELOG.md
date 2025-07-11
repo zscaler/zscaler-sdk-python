@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.8 (July 11, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #327](https://github.com/zscaler/zscaler-sdk-python/pull/327) - Fixed `bulk_update` function in `shadow_it_report` package to gracefully handle `204 No Content` responses returned by the ZIA API. The function now returns an empty dictionary `{}` instead of raising an error when no response body is present, ensuring consistency with other update methods across the SDK.
+
 ## 1.5.7 (July 10, 2025)
 
 ### Notes

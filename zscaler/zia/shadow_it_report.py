@@ -184,7 +184,8 @@ class ShadowITAPI(APIClient):
             >>> if error:
             ...     print(f"Error updating applications: {error}")
             ...     return
-            ... print(f"Applications updated successfully: {updated_application.as_dict()}")
+            >>> if isinstance(updated_application, dict) and not updated_application:
+            ...     print("Applications updated successfully")
 
             Update the sanction state and custom tags of a cloud application:
 
@@ -195,7 +196,8 @@ class ShadowITAPI(APIClient):
             >>> if error:
             ...     print(f"Error updating applications: {error}")
             ...     return
-            ... print(f"Applications updated successfully: {updated_application.as_dict()}")
+            >>> if isinstance(updated_application, dict) and not updated_application:
+            ...     print("Applications updated successfully")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -236,11 +238,11 @@ class ShadowITAPI(APIClient):
 
         response, error = self._request_executor.execute(request)
 
-        try:
-            body = response.get_body()
-            result = self.form_response_body(body) if body else {}
-        except Exception as error:
+        if error:
             return (None, response, error)
+
+        body = response.get_body() if response else None
+        result = self.form_response_body(body) if body else {}
         return (result, response, None)
 
     def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> tuple:
