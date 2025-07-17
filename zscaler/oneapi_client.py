@@ -268,6 +268,13 @@ class Client:
         if hasattr(self, "_session"):
             self._session.close()
             self.logger.debug("Session closed.")
+        
+        # Clean up Zscaler authentication session for legacy clients
+        if self.use_legacy_client and hasattr(self, '_request_executor'):
+            if hasattr(self._request_executor, 'deauthenticate'):
+                self.logger.debug("Deauthenticating Zscaler session.")
+                self._request_executor.deauthenticate()
+                self.logger.debug("Zscaler session deauthenticated.")
 
     """
     Getters
