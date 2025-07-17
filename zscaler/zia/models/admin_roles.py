@@ -88,6 +88,8 @@ class AdminRoles(ZscalerObject):
             "isAuditor": self.is_auditor,
             "roleType": self.role_type,
             "reportTimeDuration": self.report_time_duration,
+            "permissions": self.permissions,
+            "featurePermissions": self.feature_permissions,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -691,7 +691,7 @@ Each one of the configuration values above can be turned into an environment var
 
 ## Zscaler Legacy API Framework
 
-The legacy Zscaler API is still utilized by several customers, and will remain in place for the foreable future with no specific annouced deprecation date.
+The legacy Zscaler API is still utilized by several customers, and will remain in place for the foreseeable future with no specific announced deprecation date.
 
 ### ZIA Legacy Authentication
 

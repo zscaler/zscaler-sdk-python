@@ -296,7 +296,14 @@ def convert_keys_to_camel_case(data):
     Handles nested lists and dictionaries.
     """
     if isinstance(data, dict):
-        return {to_lower_camel_case(k): convert_keys_to_camel_case(v) for k, v in data.items()}
+        result = {}
+        for k, v in data.items():
+            # Special handling for featurePermissions - preserve keys as-is
+            if k == "featurePermissions" and isinstance(v, dict):
+                result[k] = v  # Don't convert the keys inside featurePermissions
+            else:
+                result[to_lower_camel_case(k)] = convert_keys_to_camel_case(v)
+        return result
     elif isinstance(data, list):
         return [convert_keys_to_camel_case(item) for item in data]
     else:

@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import admin_roles as admin_roles
+from zscaler.zia.models import common as common
 
 
 class AdminUser(ZscalerObject):
@@ -95,7 +96,10 @@ class AdminUser(ZscalerObject):
                 config["adminScopescopeGroupMemberEntities"] if "adminScopescopeGroupMemberEntities" in config else []
             )
             self.admin_scope_type = config["adminScopeType"] if "adminScopeType" in config else None
-            self.admin_scope_scope_entities = config["adminScopeScopeEntities"] if "adminScopeScopeEntities" in config else []
+
+            self.admin_scope_scope_entities = ZscalerCollection.form_list(
+                config["adminScopeScopeEntities"] if "adminScopeScopeEntities" in config else [], common.ResourceReference
+            )
         else:
             self.id = None
             self.login_name = None
