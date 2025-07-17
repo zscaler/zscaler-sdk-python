@@ -158,7 +158,7 @@ class AdminRolesAPI(APIClient):
         """
         )
 
-        body = kwargs
+        body = kwargs["adminroles"]
 
         request, error = self._request_executor.create_request(
             method=http_method,
