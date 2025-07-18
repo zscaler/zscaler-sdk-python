@@ -399,6 +399,81 @@ def main():
 Note, that custom headers will be overwritten with default headers with the same name.
 This doesn't allow breaking the client. Get default headers:
 
+### ZIA and ZTW Context Manager
+
+The Zscaler SDK provides a context manager pattern that automatically handles authentication and session cleanup for both ZIA and ZTW services. This pattern ensures that all configuration changes are properly activated when the context manager exits.
+
+#### How Context Manager Works
+
+When you use the `with` statement with a Zscaler client, the following happens automatically:
+
+1. **Authentication**: The client authenticates when entering the context
+2. **Session Management**: A session is established and maintained throughout the context
+3. **Automatic Deauthentication**: When exiting the context, the client automatically deauthenticates, which activates all staged configuration changes
+
+#### Implicit Activation Process
+
+The context manager implements an "implicit activation" approach where:
+
+- **All changes are final**: Configuration changes are automatically activated when the context exits
+- **No manual activation required**: You don't need to remember to call activation endpoints
+- **Deterministic behavior**: You always know that exiting the context will activate changes
+- **Automation-friendly**: Perfect for scripts and automation scenarios
+
+#### Example Usage
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+    "customerId": "", # Optional parameter. Required only when using ZPA
+    "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        # Make ZIA configuration changes
+        added_role, response, error = client.zia.admin_roles.add_role(
+            name="New API Role",
+            description="Role created via API",
+            feature_permissions={"ZIA_ADMIN_ROLE": "READ"}
+        )
+        if error:
+            print(f"Error adding role: {error}")
+            return
+        
+        # Make ZTW configuration changes
+        added_group, response, error = client.ztw.ip_destination_groups.add_group(
+            name="New IP Group",
+            description="IP group created via API"
+        )
+        if error:
+            print(f"Error adding IP group: {error}")
+            return
+        
+        print("All changes made successfully")
+    
+    # Context manager automatically deauthenticates here
+    # All staged changes are activated automatically for both ZIA and ZTW
+    print("Context exited - all changes have been activated")
+
+if __name__ == "__main__":
+    main()
+```
+
+#### Benefits
+
+- **Automatic cleanup**: No need to manually deauthenticate
+- **Error handling**: Even if an exception occurs, the context manager ensures proper cleanup
+- **Staged configuration activation**: All changes are activated when the context exits
+- **Simplified code**: No need to remember activation steps
+- **Multi-service support**: Works seamlessly with both ZIA and ZTW services
+
 ## Zscaler OneAPI Rate Limiting
 
 Zscaler OneAPI provides unique rate limiting numbers for each individual product. Regardless of the product, a 429 response will be returned if too many requests are made within a given time.
@@ -753,6 +828,78 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+### ZIA and ZTW Context Manager
+
+The Zscaler SDK provides a context manager pattern that automatically handles authentication and session cleanup for both ZIA and ZTW services. This pattern ensures that all configuration changes are properly activated when the context manager exits.
+
+#### How Context Manager Works
+
+When you use the `with` statement with a Zscaler client, the following happens automatically:
+
+1. **Authentication**: The client authenticates when entering the context
+2. **Session Management**: A session is established and maintained throughout the context
+3. **Automatic Deauthentication**: When exiting the context, the client automatically deauthenticates, which activates all staged configuration changes
+
+#### Implicit Activation Process
+
+The context manager implements an "implicit activation" approach where:
+
+- **All changes are final**: Configuration changes are automatically activated when the context exits
+- **No manual activation required**: You don't need to remember to call activation endpoints
+- **Deterministic behavior**: You always know that exiting the context will activate changes
+- **Automation-friendly**: Perfect for scripts and automation scenarios
+
+#### Example Usage
+
+```py
+import random
+from zscaler.oneapi_client import LegacyZIAClient
+
+config = {
+    "username": '{yourUsername}',
+    "password": '{yourPassword}',
+    "api_key": '{yourApiKey}',
+    "cloud": '{yourCloud}',
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with LegacyZIAClient(config) as client:
+        # Make configuration changes
+        added_label, response, error = client.zia.rule_labels.add_label(
+            name=f"NewLabel_{random.randint(1000, 10000)}",
+            description=f"NewLabel_{random.randint(1000, 10000)}",
+        )
+        if error:
+            print(f"Error adding label: {error}")
+            return
+        
+        # Make more changes
+        updated_role, response, error = client.zia.admin_roles.update_role(
+            role_id="12345",
+            name="Updated Role Name"
+        )
+        if error:
+            print(f"Error updating role: {error}")
+            return
+        
+        print("All changes made successfully")
+    
+    # Context manager automatically deauthenticates here
+    # All staged changes are activated automatically
+    print("Context exited - all changes have been activated")
+
+if __name__ == "__main__":
+    main()
+```
+
+#### Benefits
+
+- **Automatic cleanup**: No need to manually deauthenticate
+- **Error handling**: Even if an exception occurs, the context manager ensures proper cleanup
+- **Staged configuration activation**: All changes are activated when the context exits
+- **Simplified code**: No need to remember activation steps
 
 ### ZTW Legacy Authentication
 
