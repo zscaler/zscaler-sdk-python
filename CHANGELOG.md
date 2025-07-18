@@ -1,5 +1,18 @@
 # Zscaler Python SDK Changelog
 
+## 1.5.9 (July 17, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #335](https://github.com/zscaler/zscaler-sdk-python/pull/335) - Fixed ZIA functions `add_role` and `update_role` in the `admin_roles` package to preserve uppercase keys in `feature_permissions` attribute as required by the API.
+* [PR #335](https://github.com/zscaler/zscaler-sdk-python/pull/335) - Fixed ZIA function `add_admin_user` and `update_admin_user` in the `admin_users` package to properly parse the attributes `scope_entity_ids`
+* [PR #335](https://github.com/zscaler/zscaler-sdk-python/pull/335) - Fixed OneAPI client context manager to properly deauthenticate Zscaler sessions when using legacy clients, ensuring staged configurations are activated upon exit.
+* [PR #335](https://github.com/zscaler/zscaler-sdk-python/pull/335) - Enhanced OneAPI client context manager to properly deauthenticate Zscaler sessions for both `ZIA` and `ZTW` services. The deauthentication now includes bearer tokens and uses the correct service-specific endpoints (`/zia/api/v1/authenticatedSession` for `ZIA` and `/ztw/api/v1/auth` for `ZTW`), ensuring staged configurations are activated upon context manager exit.
+
 ## 1.5.8 (July 11, 2025)
 
 ### Notes
