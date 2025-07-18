@@ -269,12 +269,25 @@ class Client:
             self._session.close()
             self.logger.debug("Session closed.")
         
-        # Clean up Zscaler authentication session for legacy clients
-        if self.use_legacy_client and hasattr(self, '_request_executor'):
-            if hasattr(self._request_executor, 'deauthenticate'):
-                self.logger.debug("Deauthenticating Zscaler session.")
+        # Clean up Zscaler authentication session
+        if hasattr(self, '_request_executor'):
+            # For legacy clients, use their deauthenticate method
+            if self.use_legacy_client and hasattr(self._request_executor, 'deauthenticate'):
+                self.logger.debug("Deauthenticating Zscaler session via legacy client.")
                 self._request_executor.deauthenticate()
                 self.logger.debug("Zscaler session deauthenticated.")
+            # For OneAPI clients, use the request executor's deauthenticate method for ZIA/ZTW
+            elif not self.use_legacy_client and hasattr(self._request_executor, 'deauthenticate'):
+                # Get the service type from the request executor's last known service type
+                # or fall back to config if no requests were made
+                service_type = getattr(self._request_executor, '_last_service_type', None)
+                if not service_type:
+                    service_type = self._config.get("client", {}).get("service", "zia")
+                
+                if service_type.lower() in ["zia", "ztw"]:
+                    self.logger.debug(f"Deauthenticating Zscaler session for {service_type} service.")
+                    self._request_executor.deauthenticate(service_type)
+                    self.logger.debug(f"Zscaler session deauthenticated for {service_type}.")
 
     """
     Getters

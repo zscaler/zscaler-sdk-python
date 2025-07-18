@@ -225,6 +225,9 @@ class RequestExecutor:
                 raise ValueError("Missing required sandboxToken in config.")
             params["api_token"] = sandbox_token
 
+        # Track the service type for deauthentication
+        self._last_service_type = service_type
+        
         request = {
             "method": method,
             "url": final_url,
@@ -584,35 +587,80 @@ class RequestExecutor:
         logger.debug("Getting custom headers.")
         return self._custom_headers
 
-    # def get_retry_after(self, headers, logger):
-    #     retry_limit_reset_header = (
-    #         headers.get("x-ratelimit-reset") or 
-    #         headers.get("X-RateLimit-Reset") or
-    #         headers.get("RateLimit-Reset") or
+    def deauthenticate(self, service_type=None):
+        """
+        Deauthenticate from Zscaler services that support session-based authentication.
+        Currently supports ZIA and ZTW services.
+        
+        Args:
+            service_type (str, optional): The service type to deauthenticate from.
+                If None, will attempt to determine from the current configuration.
+        """
+        if not service_type:
+            service_type = self.service
+        
+        if service_type.lower() not in ["zia", "ztw"]:
+            logger.debug(f"Deauthentication not supported for service: {service_type}")
+            return False
+        
+        try:
+            # Determine the base URL and endpoint based on service type
+            if service_type.lower() == "zia":
+                if self.cloud and self.cloud != "production":
+                    base_url = f"https://api.{self.cloud}.zsapi.net"
+                else:
+                    base_url = "https://api.{self.cloud}.zsapi.net"
+                endpoint = "/zia/api/v1/authenticatedSession"
+            elif service_type.lower() == "ztw":
+                if self.cloud and self.cloud != "production":
+                    base_url = f"https://api.{self.cloud}.zsapi.net"
+                else:
+                    base_url = "https://api.{self.cloud}.zsapi.net"
+                endpoint = "/ztw/api/v1/auth"
             
-    #         # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
-    #         headers.get("X-Rate-Limit-Retry-After-Seconds") or # ZCC /downloadDevices Rate Limiting Header (LegacyZCCClientHelper)
-    #         headers.get("X-Rate-Limit-Remaining") # (LegacyZCCClientHelper)
-    #     )
-    #     retry_after = headers.get("Retry-After") or headers.get("retry-after")
+            url = f"{base_url}{endpoint}"
+            
+            # Prepare headers using the standard method to include bearer token
+            # For DELETE requests, we'll exclude Content-Type to avoid issues with empty body
+            headers = self._prepare_headers({}, endpoint)
+            # Remove Content-Type for DELETE requests to avoid issues with empty body
+            headers.pop("Content-Type", None)
+            
+            # Both ZIA and ZTW require explicit deauthentication to activate staged configurations
+            # regardless of authentication method (OAuth or session-based)
+            if service_type.lower() in ["zia", "ztw"]:
+                logger.debug(f"{service_type.upper()} service requires explicit deauthentication to activate staged configurations")
+            
+            # Send DELETE request to deauthenticate
+            logger.debug(f"Deauthenticating from {service_type} at {url}")
+            
+            # Use the HTTP client to send the request
+            request = {
+                "method": "DELETE",
+                "url": url,
+                "headers": headers,
+                "params": {},
+                "uuid": uuid.uuid4(),
+                "service_type": service_type,
+            }
+            
+            response, error = self._http_client.send_request(request)
+            
+            if error:
+                logger.warning(f"Failed to deauthenticate from {service_type}: {error}")
+                return False
+            
+            if response and response.status_code == 200:
+                logger.debug(f"Successfully deauthenticated from {service_type}")
+                return True
+            else:
+                logger.warning(f"Unexpected response during deauthentication: {response.status_code if response else 'No response'}")
+                return False
+                
+        except Exception as e:
+            logger.warning(f"Exception during deauthentication for {service_type}: {e}")
+            return False
 
-    #     if retry_after:
-    #         try:
-    #             return int(retry_after.strip("s")) + 1  # Add 1 second padding
-    #         except ValueError:
-    #             logger.error(f"Error parsing Retry-After header: {retry_after}")
-    #             return None
-
-    #     if retry_limit_reset_header is not None:
-    #         try:
-    #             reset_seconds = float(retry_limit_reset_header)
-    #             return reset_seconds + 1  # Add 1 second padding
-    #         except ValueError:
-    #             logger.error(f"Error parsing x-ratelimit-reset header: {retry_limit_reset_header}")
-    #             return None
-
-    #     logger.error("Missing Retry-After and X-Rate-Limit-Reset headers.")
-    #     return None
 
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
