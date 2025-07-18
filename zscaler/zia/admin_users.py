@@ -59,8 +59,26 @@ class AdminUsersAPI(APIClient):
             tuple: A tuple containing (list of AdminUser instances, Response, error)
 
         Examples:
-            >>> users = zia.admin_and_role_management.list_admin_users(
-            ...    query_params={'include_auditor_users': True, 'page': 2, 'pagesize': 100})
+
+        List All Admin users
+            >>> list_users, _, error = client.zia.admin_users.list_admin_users()
+            >>>     if error:
+            ...         print(f"Error listing admin users: {error}")
+            ...         return
+            ...     print(f"Total admin users found: {len(list_users)}")
+            ...     for users in list_users:
+            ...         print(users.as_dict())
+
+        List All Admin users Including auditor users
+            >>> list_users, _, error = client.zia.admin_users.list_admin_users(
+                query_params={'include_auditor_users': True}
+            )
+            >>>     if error:
+            ...         print(f"Error listing admin users: {error}")
+            ...         return
+            ...     print(f"Total admin users found: {len(list_users)}")
+            ...     for users in list_users:
+            ...         print(users.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(f"{self._zia_base_endpoint}/adminUsers")
@@ -69,13 +87,11 @@ class AdminUsersAPI(APIClient):
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
@@ -102,7 +118,11 @@ class AdminUsersAPI(APIClient):
             tuple: A tuple containing (AdminUser instance, Response, error)
 
         Examples:
-            >>> admin_user, response, error = zia.admin_and_role_management.get_admin_user('987321202')
+            >>> fetched_user, _, error = client.zia.admin_users.get_admin_user(143783113)
+            >>> if error:
+            ...     print(f"Error fetching admin user by ID: {error}")
+            ...     return
+            ... print(f"Fetched Admin user by ID: {fetched_user.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -114,7 +134,6 @@ class AdminUsersAPI(APIClient):
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
@@ -132,7 +151,14 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def add_admin_user(self, name: str, login_name: str, email: str, password: str, query_params=None, **kwargs) -> tuple:
+    def add_admin_user(
+        self,
+        name: str,
+        login_name: str,
+        email: str,
+        password: str,
+        **kwargs
+    ) -> tuple:
         """
         Adds a new admin user to ZIA.
 
@@ -145,8 +171,8 @@ class AdminUsersAPI(APIClient):
             associate_with_existing_admin (bool): This field is set to true to update an admin user that already exists.
 
         Keyword Args:
-            admin_scope (str): The scope of the admin's permissions, accepted values are:
-                ``organization``, ``department``, ``location``, ``location_group``
+            admin_scope_type (str): The scope of the admin's permissions, accepted values are:
+                ``ORGANIZATION``, ``DEPARTMENT``, ``LOCATION``, ``LOCATION_GROUP``
             comments (str): Additional information about the admin user.
             disabled (bool): Set to ``True`` if you want the account disabled upon creation.
             is_password_login_allowed (bool): Set to ``True`` to allow password login.
@@ -160,12 +186,12 @@ class AdminUsersAPI(APIClient):
                 Set to ``True`` to expire the admin user's password upon creation.
             is_exec_mobile_app_enabled (bool):
                 Set to ``True`` to enable to executive insights mobile application for the admin user.
-            role_id (str): The unique id for the admin role being assigned to the admin user.
-            scope_ids (list):
+            role_id (int): The unique id for the admin role being assigned to the admin user.
+            scope_entity_ids (list):
                 A list of entity ids for the admin user's scope. e.g. if the admin user has admin_scope set to
                 ``department`` then you will need to provide a list of department ids.
                 **NOTE**: This param doesn't need to
-                be provided if the admin user's scope is set to ``organization``.
+                be provided if the admin user's scope is set to ``ORGANIZATION``.
 
         Returns:
             :obj:`Tuple`: The newly created admin user resource record.
@@ -173,29 +199,44 @@ class AdminUsersAPI(APIClient):
         Examples:
 
             Add an admin user with the minimum required params:
-                >>> admin_user = zia.admin_and_role_management.add_user(
+                >>> add_admin_user, _, error = client.zia.admin_users.add_admin_user(
                 ...    name="Jim Bob",
                 ...    login_name="jim@example.com",
                 ...    password="*********",
                 ...    email="jim@example.com")
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
 
-            Add an admin user with a department admin scope:
-                >>> admin_user = zia.admin_and_role_management.add_user(
+            Add an admin user with a department admin scope type:
+                >>> add_admin_user, _, error = client.zia.admin_users.add_admin_user(
                 ...    name="Jane Bob",
                 ...    login_name="jane@example.com",
                 ...    password="*********",
                 ...    email="jane@example.com,
-                ...    admin_scope="department",
-                ...    scope_ids = ['376542', '245688'])
+                ...    role_id=84546,
+                ...    admin_scope_type="DEPARTMENT",
+                ...    scope_entity_ids = ['376542', '245688']
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
 
             Add an auditor user:
-                >>> auditor_user = zia.admin_and_role_management.add_user(
+                >>> add_admin_user = zia.admin_users.add_admin_user(
                 ...    name="Head Bob",
                 ...    login_name="head@example.com",
                 ...    password="*********",
                 ...    email="head@example.com,
-                ...    is_auditor=True)
-
+                ...    is_auditor=True,
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
         """
         http_method = "post".upper()
         api_url = format_url(
@@ -205,8 +246,6 @@ class AdminUsersAPI(APIClient):
         """
         )
 
-        query_params = query_params or {}
-
         payload = {
             "userName": name,
             "loginName": login_name,
@@ -214,9 +253,18 @@ class AdminUsersAPI(APIClient):
             "password": password,
         }
 
-        body = kwargs
+        body = {**payload, **kwargs}
 
-        request, error = self._request_executor.create_request(http_method, api_url, payload, body=body, params=query_params)
+        if "role_id" in body:
+            body["role"] = {"id": body.pop("role_id")}
+
+        transform_common_id_fields(reformat_params, body, body)
+
+        request, error = self._request_executor.create_request(
+            method=http_method,
+            endpoint=api_url,
+            body=body,
+            )
 
         if error:
             return (None, None, error)
@@ -242,8 +290,8 @@ class AdminUsersAPI(APIClient):
             **kwargs: Optional keyword args.
 
         Keyword Args:
-            admin_scope (str): The scope of the admin's permissions, accepted values are:
-                ``organization``, ``department``, ``location``, ``location_group``
+            admin_scope_type (str): The scope of the admin's permissions, accepted values are:
+                ``ORGANIZATION``, ``DEPARTMENT``, ``LOCATION``, ``LOCATION_GROUP``
             comments (str): Additional information about the admin user.
             disabled (bool): Set to ``True`` if you want the account disabled upon creation.
             email (str): The email address for the admin user.
@@ -260,27 +308,60 @@ class AdminUsersAPI(APIClient):
                 Set to ``True`` to enable to executive insights mobile application for the admin user.
             name (str): The user's full name.
             password (str): The password for the admin user.
-            role_id (str): The unique id for the admin role being assigned to the admin user.
-            scope_ids (list):
-                A list of entity ids for the admin user's scope. e.g. if the admin user has ``admin_scope`` set to
+            role_id (int): The unique id for the admin role being assigned to the admin user.
+            scope_entity_ids (list):
+                A list of entity ids for the admin user's scope. e.g. if the admin user has admin_scope set to
                 ``department`` then you will need to provide a list of department ids.
-                **NOTE:** This param doesn't need to
-                be provided if the admin user's scope is set to `organization`.
+                **NOTE**: This param doesn't need to
+                be provided if the admin user's scope is set to ``ORGANIZATION``.
 
         Returns:
             :obj:`dict`: The updated admin user resource record.
 
         Examples:
 
-            Update the email address for an admin user:
-                >>> user = zia.admin_and_role_management.update_user('99695301',
-                ...    email='jimbob@example.com')
+            Update an admin user with the minimum required params:
+                >>> update_admin_user, _, error = client.zia.admin_users.update_admin_user(
+                ...    user_id=143783113,
+                ...    name="Jim Bob",
+                ...    login_name="jim@example.com",
+                ...    password="*********",
+                ...    email="jim@example.com")
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {update_admin_user.as_dict()}")
 
-            Update the admin scope for an admin user to department:
-                >>> user = zia.admin_and_role_management.update_user('99695301',
-                ...    admin_scope='department',
-                ...    scope_ids=['3846532', '3846541'])
+            Update an admin user with a department admin scope type:
+                >>> update_admin_user, _, error = client.zia.admin_users.update_admin_user(
+                ...    user_id=143783113,
+                ...    name="Jane Bob",
+                ...    login_name="jane@example.com",
+                ...    password="*********",
+                ...    email="jane@example.com,
+                ...    role_id=84546,
+                ...    admin_scope_type="DEPARTMENT",
+                ...    scope_entity_ids = ['376542', '245688']
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
 
+            Update an auditor user:
+                >>> update_admin_user = zia.admin_users.add_admin_user(
+                ...    user_id=143783113,
+                ...    name="Head Bob",
+                ...    login_name="head@example.com",
+                ...    password="*********",
+                ...    email="head@example.com,
+                ...    is_auditor=True,
+                ...     )
+                >>>     if error:
+                ...         print(f"Error adding admin user: {error}")
+                ...         return
+                ...     print(f"Admin User added successfully: {add_admin_user.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
@@ -292,6 +373,11 @@ class AdminUsersAPI(APIClient):
 
         body = kwargs
 
+        if "role_id" in body:
+            body["role"] = {"id": body.pop("role_id")}
+
+        transform_common_id_fields(reformat_params, body, body)
+
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -301,7 +387,6 @@ class AdminUsersAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, AdminUser)
         if error:
             return (None, response, error)
@@ -323,8 +408,11 @@ class AdminUsersAPI(APIClient):
             :obj:`int`: The response code for the request.
 
         Examples:
-            >>> zia.admin_role_management.delete_admin_user('99272455')
-
+            >>> _, _, error = client.zia.admin_users.delete_admin_user(143783113)
+            >>> if error:
+            ...     print(f"Error deleting admin user: {error}")
+            ...     return
+            ... print(f"Admin User with ID {143783113} deleted successfully")
         """
         http_method = "delete".upper()
         api_url = format_url(
@@ -380,7 +468,7 @@ class AdminUsersAPI(APIClient):
         Examples:
             Add a user with the minimum required params:
 
-            >>> user, zscaler_resp, err = zia.users.add_user(name='Jane Doe',
+            >>> user, zscaler_resp, err = zia.users.convert_to_user(name='Jane Doe',
             ...    user_id=99999
             ...    email='jane.doe@example.com',
             ...    groups=[{
