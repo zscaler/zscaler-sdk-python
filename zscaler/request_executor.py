@@ -188,7 +188,9 @@ class RequestExecutor:
             logger.error(f"Service detection failed: {e}")
             raise
 
-        body = body or {}
+        # Preserve empty lists, only convert None to empty dict
+        if body is None:
+            body = {}
         headers = headers or {}
         params = params or {}
 

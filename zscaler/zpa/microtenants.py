@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.microtenants import Microtenant
-from zscaler.zpa.models.microtenants import MicrotenantSearch
+from zscaler.zpa.models.common import CommonFilterSearch
 from zscaler.utils import format_url
 
 
@@ -240,12 +240,12 @@ class MicrotenantsAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, MicrotenantSearch)
+        response, error = self._request_executor.execute(request, CommonFilterSearch)
         if error:
             return (None, response, error)
 
         try:
-            result = MicrotenantSearch(self.form_response_body(response.get_body()))
+            result = CommonFilterSearch(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

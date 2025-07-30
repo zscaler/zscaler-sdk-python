@@ -88,7 +88,6 @@ class AppConnectorGroup(ZscalerObject):
             self.upgrade_priority = None
             self.version_profile_visibility_scope = None
             self.upgrade_time_in_secs = None
-            self.upgrade_priority = None
             self.upgrade_day = None
             self.location = None
             self.latitude = None

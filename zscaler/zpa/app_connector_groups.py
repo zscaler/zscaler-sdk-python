@@ -300,11 +300,9 @@ class AppConnectorGroupAPI(APIClient):
 
         body.update(kwargs)
 
-        # Use get instead of pop to keep microtenant_id in the body
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
