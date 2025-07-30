@@ -1,3 +1,5 @@
 {
-    "ansible.python.interpreterPath": "/opt/homebrew/bin/python3"
+    "ansible.python.interpreterPath": "/opt/homebrew/bin/python3",
+    "python-envs.defaultEnvManager": "ms-python.python:pyenv",
+    "python-envs.pythonProjects": []
 }

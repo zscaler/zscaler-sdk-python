@@ -44,7 +44,17 @@ from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
 from zscaler.zpa.trusted_networks import TrustedNetworksAPI
 from zscaler.zpa.role_controller import RoleControllerAPI
 from zscaler.zpa.administrator_controller import AdministratorControllerAPI
+from zscaler.zpa.admin_sso_controller import AdminSSOControllerAPI
 from zscaler.zpa.client_settings import ClientSettingsAPI
+from zscaler.zpa.c2c_ip_ranges import IPRangesAPI
+from zscaler.zpa.api_keys import ApiKeysAPI
+from zscaler.zpa.customer_domain import CustomerDomainControllerAPI
+from zscaler.zpa.private_cloud_group import PrivateCloudGroupAPI
+from zscaler.zpa.private_cloud_controller import PrivateCloudControllerAPI
+from zscaler.zpa.user_portal_controller import UserPortalControllerAPI
+from zscaler.zpa.user_portal_link import UserPortalLinkAPI
+from zscaler.zpa.npn_client_controller import NPNClientControllerAPI
+from zscaler.zpa.config_override_controller import ConfigOverrideControllerAPI
 
 
 class ZPAService:
@@ -410,6 +420,15 @@ class ZPAService:
         return AdministratorControllerAPI(self._request_executor, self._config)
 
     @property
+    def admin_sso_controller(self):
+        """
+        The interface object for the :ref:`ZPA Admin SSL Login Controller interface <zpa-admin_sso_controller>`.
+
+        """
+
+        return AdminSSOControllerAPI(self._request_executor, self._config)
+
+    @property
     def role_controller(self):
         """
         The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
@@ -426,3 +445,84 @@ class ZPAService:
         """
 
         return ClientSettingsAPI(self._request_executor, self._config)
+
+    @property
+    def c2c_ip_ranges(self):
+        """
+        The interface object for the :ref:`ZPA C2C IP Range Controller interface <zpa-c2c_ip_ranges>`.
+
+        """
+
+        return IPRangesAPI(self._request_executor, self._config)
+
+    @property
+    def api_keys(self):
+        """
+        The interface object for the :ref:`ZPA API Key Controller interface <zpa-api_keys>`.
+
+        """
+
+        return ApiKeysAPI(self._request_executor, self._config)
+
+    @property
+    def customer_domain(self):
+        """
+        The interface object for the :ref:`ZPA Customer Domain Controller interface <zpa-customer_domain>`.
+
+        """
+
+        return CustomerDomainControllerAPI(self._request_executor, self._config)
+
+    @property
+    def private_cloud_group(self):
+        """
+        The interface object for the :ref:`ZPA Private Cloud Controller Group interface <zpa-private_cloud_group>`.
+
+        """
+
+        return PrivateCloudGroupAPI(self._request_executor, self._config)
+
+    @property
+    def private_cloud_controller(self):
+        """
+        The interface object for the :ref:`ZPA Private Cloud Controller interface <zpa-private_cloud_controller>`.
+
+        """
+
+        return PrivateCloudControllerAPI(self._request_executor, self._config)
+
+    @property
+    def user_portal_controller(self):
+        """
+        The interface object for the :ref:`ZPA User Portal Controller interface <zpa-user_portal_controller>`.
+
+        """
+
+        return UserPortalControllerAPI(self._request_executor, self._config)
+
+    @property
+    def user_portal_link(self):
+        """
+        The interface object for the :ref:`ZPA User Portal Link interface <zpa-user_portal_link>`.
+
+        """
+
+        return UserPortalLinkAPI(self._request_executor, self._config)
+
+    @property
+    def npn_client_controller(self):
+        """
+        The interface object for the :ref:`ZPA VPN Connected Users interface <zpa-npn_client_controller>`.
+
+        """
+
+        return NPNClientControllerAPI(self._request_executor, self._config)
+
+    @property
+    def config_override_controller(self):
+        """
+        The interface object for the :ref:`ZPA Config Override interface <zpa-config_override_controller>`.
+
+        """
+
+        return ConfigOverrideControllerAPI(self._request_executor, self._config)

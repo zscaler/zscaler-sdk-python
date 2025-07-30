@@ -407,6 +407,8 @@ class DevicesAPI(APIClient):
         """
         )
 
+        query_params = query_params or {}
+
         body = {}
         headers = {}
 

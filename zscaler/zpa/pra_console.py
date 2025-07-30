@@ -135,7 +135,7 @@ class PRAConsoleAPI(APIClient):
         Returns information on a Privileged Remote Consoles for Specified Portal.
 
         Args:
-            console_id (str): The unique identifier for the PRA console.
+            portal_id (str): The unique identifier for the PRA console.
 
         Returns:
             PrivilegedRemoteAccessConsole: The corresponding console object.
