@@ -6,6 +6,105 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+## 1.6.0 (July 30, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+New ZPA Endpoint - Admin SSO Configuration Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /v2/ssoLoginOptions` Get SSO Login Details
+    - Added `POST /v2/ssoLoginOptions` Updates SSO Options for customer
+
+New ZPA Endpoint - C2C IP Ranges
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `POST /v2/ipRanges/search` Get the IP Range by `page` and `pageSize`
+    - Added `GET /v2/ipRanges` Get All the IP Range
+    - Added `POST /v2/ipRanges` Add new IP Range
+    - Added `GET /v2/ipRanges/{ipRangeId}` Get the IP Range Details
+    - Added `PUT /v2/ipRanges/{ipRangeId}` Update the IP Range Details
+    - Added `DELETE /v2/ipRanges/{ipRangeId}` Delete IP Range
+
+New ZPA Endpoint - API Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /apiKeys` Get all apiKeys details
+    - Added `POST /apiKeys` Create api keys for customer
+    - Added `GET /apiKeys/{id}` Get apiKeys details by ID
+    - Added `PUT /apiKeys/{id}` Update apiKeys by ID
+    - Added `DELETE /apiKeys/{id}` Delete apiKeys
+
+New ZPA Endpoint - Customer Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /v2/associationtype/{type}/domains` Get domains for a customer
+    - Added `POST /v2/associationtype/{type}/domains` Add or update domains for a customer.
+
+New ZPA Endpoint - NPClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /vpnConnectedUsers` Get all applications configuired for a given customer
+
+New ZPA Endpoint - Private Cloud Controller Group
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /privateCloudControllerGroup` Get details of all configured Private Cloud Controller Groups
+    - Added `POST /privateCloudControllerGroup` Add a new Private Cloud Controller Groups
+    - Added `GET /privateCloudControllerGroup/{privateCloudControllerGroupId}` Get the Private Cloud Controller Group details for the specified ID
+    - Added `PUT /privateCloudControllerGroup/{privateCloudControllerGroupId}` Update the Private Cloud Controller Group details for the specified ID
+    - Added `DELETE /privateCloudControllerGroup/{privateCloudControllerGroupId}` Delete the Private Cloud Controller Group for the specified ID
+    - Added `DELETE /privateCloudControllerGroup/summary` Get all the configured Private Cloud Controller Group ID and Name
+
+New ZPA Endpoint - Private Cloud Controller Group
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /privateCloudController` Get all the configured Private Cloud Controller details
+    - Added `PUT /privateCloudController/{privateCloudControllerGroupId}/restart` Trigger restart of the Private Cloud Controller
+    - Added `GET /privateCloudController/{privateCloudControllerId}` Gets the Private Cloud Controller details for the specified ID.
+    - Added `PUT /privateCloudController/{privateCloudControllerId}` Updates the Private Cloud Controller for the specified ID
+    - Added `DELETE /privateCloudController/{privateCloudControllerId}` Delete the Private Cloud Controller for the specified ID
+
+New ZPA Endpoint - User Portal Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /userPortal` Get all configured User Portals
+    - Added `GET /userPortal/{id}` Get User Portal for the specified ID
+    - Added `PUT /userPortal/{Id}` Update User Portal for the specified ID
+    - Added `POST /userPortal` Add a new User Portal
+    - Added `DELETE /userPortal/{Id}` Delete a User Portal
+
+New ZPA Endpoint - User Portal Link Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /userPortalLink` Get all configured User Portal Links
+    - Added `GET /userPortalLink/{id}` Get User Portal Link for the specified ID
+    - Added `GET /userPortalLink/userPortal/{portalId}` Get User Portal Link for a given portal
+    - Added `PUT /userPortalLink/{Id}` Update User Portal Link for the specified ID
+    - Added `POST /userPortalLink` Add a new User Portal Link
+    - Added `POST /userPortalLink/bulk` Add list of User Portal Link
+    - Added `DELETE /userPortalLink/{Id}` Delete a User Portal Link for the specified ID
+
+New ZPA Endpoint - Z-Path Config Override Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#338 <https://github.com/zscaler/zscaler-sdk-python/pull/338>`_) Added the following new ZPA API Endpoints:
+    - Added `GET /configOverrides/{id}` Get config-override details by configId
+    - Added `GET /configOverrides` Get all config-override details
+    - Added `PUT /configOverrides/{id}` Update config-override for the specified ID
+    - Added `POST /configOverrides` Create config-override
+
 1.5.9 (July 17, 2025)
 -------------------------
 
