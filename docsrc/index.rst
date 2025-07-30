@@ -560,7 +560,7 @@ The context manager implements an "implicit activation" approach where:
 - **Automation-friendly**: Perfect for scripts and automation scenarios
 
 Example Usage
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 .. code:: py
 
@@ -1133,7 +1133,7 @@ The context manager implements an "implicit activation" approach where:
 - **Automation-friendly**: Perfect for scripts and automation scenarios
 
 Example Usage
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 .. code:: py
 

@@ -1038,7 +1038,7 @@ The ZCC Cloud is identified by several cloud name prefixes, which determines whi
 
 ### Environment variables
 
-You can provide credentials via the `ZCC_CLIENT_ID`, `ZCC_CLIENT_ID`, `ZCC_CLOUD` environment variables, representing your ZIA `api_key`, `secret_key`, and `cloud` respectively.
+You can provide credentials via the `ZCC_CLIENT_ID`, `ZCC_CLIENT_SECRET`, `ZCC_CLOUD` environment variables, representing your ZIA `api_key`, `secret_key`, and `cloud` respectively.
 
 ~> **NOTE** `ZCC_CLOUD` environment variable is required, and is used to identify the correct API gateway where the API requests should be forwarded to.
 

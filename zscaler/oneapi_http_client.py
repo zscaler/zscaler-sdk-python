@@ -104,11 +104,11 @@ class HTTPClient:
             }
 
             # Handle payload
-            if request.get("json"):
+            if "json" in request:
                 params["json"] = request["json"]
-            elif request.get("data"):
+            elif "data" in request:
                 params["data"] = request["data"]
-            elif request.get("form"):
+            elif "form" in request:
                 params["data"] = request["form"]
             if request["params"]:
                 params["params"] = request["params"]
