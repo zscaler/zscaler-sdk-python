@@ -8,12 +8,15 @@ CLI tool to interact with ZDX Devices API to fetch web probes.
 
 **Usage**::
 
-    zdx_web_probes_cli.py
+    zdx_web_probes_cli.py [--use-legacy-client]
 
 **Examples**:
 
 List all active web probes for a device and application:
     $ python3 zdx_web_probes_cli.py
+
+Using Legacy Client:
+    $ python3 zdx_web_probes_cli.py --use-legacy-client
 
 """
 
@@ -21,8 +24,8 @@ import os
 import logging
 import argparse
 from prettytable import PrettyTable
-from zscaler.zdx import ZDXClientHelper
-from zscaler.zdx.devices import DevicesAPI
+from zscaler import ZscalerClient
+from zscaler.oneapi_client import LegacyZDXClient
 
 
 def prompt_for_input(prompt_message, required=True):
@@ -72,40 +75,76 @@ def extract_web_probes_data(probes):
 
 def main():
     parser = argparse.ArgumentParser(description="Interact with ZDX Devices API to fetch web probes")
+    parser.add_argument("--use-legacy-client", action="store_true", help="Use legacy ZDX client instead of OneAPI client")
     args = parser.parse_args()
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
-    # Initialize ZDXClientHelper
-    ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
-    ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+    # Initialize client based on the flag
+    if args.use_legacy_client:
+        # Legacy client configuration
+        ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
+        ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+        
+        if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
+            print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
+            return
 
-    client = ZDXClientHelper(
-        client_id=ZDX_CLIENT_ID,
-        client_secret=ZDX_CLIENT_SECRET,
-    )
+        config = {
+            "key_id": ZDX_CLIENT_ID,
+            "key_secret": ZDX_CLIENT_SECRET,
+        }
+        
+        client = LegacyZDXClient(config)
+    else:
+        # OneAPI client configuration
+        ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
+        ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
+        ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
+        
+        if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
+            print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
+            return
 
-    devices_api = DevicesAPI(client)
+        config = {
+            'clientId': ZSCALER_CLIENT_ID,
+            'clientSecret': ZSCALER_CLIENT_SECRET,
+        }
+        
+        # Add vanity domain if provided
+        if ZSCALER_VANITY_DOMAIN:
+            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
+        
+        client = ZscalerClient(config)
 
     # Prompt the user for device ID and app ID
     device_id = prompt_for_input("Enter the device ID: ")
     app_id = prompt_for_input("Enter the app ID: ")
     since = prompt_for_since()
 
-    # Prepare keyword arguments
-    kwargs = {
-        "since": since,
-    }
-
-    # Remove None values from kwargs
-    kwargs = {k: v for k, v in kwargs.items() if v is not None}
+    # Prepare query parameters
+    query_params = {}
+    if since:
+        query_params["since"] = since
 
     # Call the API to get web probes
     try:
-        web_probes = devices_api.get_web_probes(device_id, app_id, **kwargs)
+        web_probes, _, err = client.zdx.devices.get_web_probes(device_id, app_id, query_params=query_params)
+        if err:
+            print(f"Error retrieving web probes: {err}")
+            return
+        
+        # Convert to list of dictionaries for display
+        probes_data = []
+        for probe in web_probes:
+            if hasattr(probe, 'as_dict'):
+                probes_data.append(probe.as_dict())
+            else:
+                probes_data.append(probe)
+        
         headers = ["ID", "Name", "Avg PFT", "Num Probes", "Avg Score"]
-        data = extract_web_probes_data(web_probes)
+        data = extract_web_probes_data(probes_data)
         display_table(data, headers)
     except Exception as e:
         print(f"An error occurred while fetching web probes: {e}")
