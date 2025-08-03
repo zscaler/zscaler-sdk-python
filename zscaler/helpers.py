@@ -125,7 +125,10 @@ def to_snake_case(string):
         "locationGroupDTO": "location_group_dto",
         "locationDTO": "location_dto",
         "predefinedADPControls": "predefined_adp_controls",
-        "runtimeOS": "runtime_os"
+        "runtimeOS": "runtime_os",
+        
+        # ZIdentity Edge Cases
+        # "clientJWKsUrl": "clientJWKsUrl",
     }
 
     if string in FIELD_EXCEPTIONS:
