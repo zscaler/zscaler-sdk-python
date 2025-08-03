@@ -158,7 +158,7 @@ class UserPortalLinkAPI(APIClient):
             :obj:`Tuple`: UserPortalController: The created user portal link object.
 
         Example:
-            # Basic example: Add a new user portal link
+            Basic example: Add a new user portal link
 
             >>> added_portal_link, _, err = client.zpa.user_portal_link.add_portal_link(
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",

@@ -45,7 +45,6 @@ class URLCategoriesAPI(APIClient):
             query_params (dict):
                 Map of query parameters for the request.
 
-                ``[query_params.search]`` {str}: Search string for filtering results by rule name.
                 ``[query_params.custom_only]`` {bool}: If set to true, gets information on custom URL categories only.
                 ``[query_params.include_only_url_keyword_counts]`` {bool}: By default this parameter is set to false.
 
@@ -53,14 +52,17 @@ class URLCategoriesAPI(APIClient):
             tuple: A tuple containing (list of url categories instances, Response, error)
 
         Examples:
-            >>> category_list, _, err = client.zia.url_categories.list_categories(
-            ... query_params={'search': 'CategoryExample01')
+            >>> category_list, _, err = client.zia.url_categories.list_categories()
             ... if err:
             ...     print(f"Error listing url categories: {err}")
             ...     return
             ... print(f"Total url categories found: {len(category_list)}")
             ... for url in category_list:
             ...     print(url.as_dict())
+            
+        Examples:
+            >>> for categories in client.zia.url_categories.list_categories(query_params={'custom_only': True, }):
+            ...     print(categories)
         """
         http_method = "get".upper()
         api_url = format_url(

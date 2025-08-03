@@ -236,17 +236,39 @@ def transform_common_id_fields(id_groups: list, source_dict: dict, target_dict: 
                 final_list = []
                 for item in value:
                     if isinstance(item, (str, int)):
-                        final_list.append({"id": int(item)})
+                        # Try to convert to int, but keep as string if it's not a valid integer
+                        if isinstance(item, str):
+                            try:
+                                final_list.append({"id": int(item)})
+                            except ValueError:
+                                # Keep as string if it's not a valid integer (e.g., 'ihln05ktj07ds')
+                                final_list.append({"id": item})
+                        else:
+                            final_list.append({"id": int(item)})
                     elif isinstance(item, dict) and "id" in item:
                         # Possibly user gave { "id": 123, ... }
-                        item["id"] = int(item["id"])
+                        if isinstance(item["id"], str):
+                            try:
+                                item["id"] = int(item["id"])
+                            except ValueError:
+                                # Keep as string if it's not a valid integer
+                                pass
+                        else:
+                            item["id"] = int(item["id"])
                         final_list.append(item)
                     else:
                         final_list.append(item)
                 target_dict[payload_key] = final_list
             elif isinstance(value, dict) and "id" in value:
                 # single dict with ID
-                value["id"] = int(value["id"])
+                if isinstance(value["id"], str):
+                    try:
+                        value["id"] = int(value["id"])
+                    except ValueError:
+                        # Keep as string if it's not a valid integer
+                        pass
+                else:
+                    value["id"] = int(value["id"])
                 target_dict[payload_key] = value
     return
 
