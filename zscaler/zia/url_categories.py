@@ -59,7 +59,7 @@ class URLCategoriesAPI(APIClient):
             ... print(f"Total url categories found: {len(category_list)}")
             ... for url in category_list:
             ...     print(url.as_dict())
-            
+
         Examples:
             >>> for categories in client.zia.url_categories.list_categories(query_params={'custom_only': True, }):
             ...     print(categories)

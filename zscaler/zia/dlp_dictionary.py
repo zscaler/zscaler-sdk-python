@@ -178,8 +178,11 @@ class DLPDictionaryAPI(APIClient):
             :obj:`Tuple`: The ZIA DLP Dictionary resource record.
 
         Examples:
-            >>> pprint(zia.dlp_dictionary.get_dict('3'))
-
+            >>> fetched_dict, _, error = client.zia.dlp_dictionary.get_dict('5865456')
+            >>> if error:
+            ...     print(f"Error fetching dictionary by ID: {error}")
+            ...     return
+            ... print(f"Fetched dictionary by ID: {fetched_dict.as_dict()}")
         """
         http_method = "get".upper()
         api_url = format_url(

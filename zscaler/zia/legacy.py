@@ -990,6 +990,17 @@ class LegacyZIAClientHelper:
 
         return SaaSSecurityAPI(self.request_executor)
 
+    @property
+    def cloud_to_cloud_ir(self):
+        """
+        The interface object for the :ref:`ZIA Cloud-to-Cloud DLP Incident Receiver API interface <zia-cloud_to_cloud_ir>`.
+
+        """
+
+        from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
+
+        return CloudToCloudIRAPI(self.request_executor)
+
     """
     Misc
     """
