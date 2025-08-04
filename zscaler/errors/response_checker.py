@@ -7,7 +7,7 @@ from zscaler.exceptions import exceptions
 
 logger = logging.getLogger(__name__)
 
-@staticmethod
+# @staticmethod
 def check_response_for_error(url, response_details, response_body):
     """
     Checks HTTP response for errors in the response body.

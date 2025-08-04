@@ -46,7 +46,7 @@ class AdminAPI(APIClient):
         Examples:
             Prints all configured departments.
 
-            >>> dept_list, _, err = client.zdx.admin.list_departments(ss)
+            >>> dept_list, _, err = client.zdx.admin.list_departments()
             ... if err:
             ...     print(f"Error listing department: {err}")
             ...     return

@@ -8,7 +8,7 @@ Manage Alerts for Zscaler Digital Experience (ZDX).
 
 **Usage**::
 
-    zdx_alerts_management.py
+    zdx_alerts_management.py [--use-legacy-client]
 
 **Examples**:
 
@@ -24,6 +24,9 @@ Retrieve Alert details including the impacted department, Zscaler locations, geo
 Retrieve Alert details for affected Devices for specific AlertID:
     $ python3 zdx_alerts_management.py
 
+Using Legacy Client:
+    $ python3 zdx_alerts_management.py --use-legacy-client
+
 """
 
 import os
@@ -31,8 +34,8 @@ import time
 import logging
 import argparse
 from prettytable import PrettyTable
-from zscaler.zdx import ZDXClientHelper
-from zscaler.zdx.alerts import AlertsAPI
+from zscaler import ZscalerClient
+from zscaler.oneapi_client import LegacyZDXClient
 
 
 def prompt_for_since():
@@ -93,21 +96,48 @@ def display_alerts(alerts):
 
 def main():
     parser = argparse.ArgumentParser(description="Manage Alerts for Zscaler Digital Experience (ZDX)")
+    parser.add_argument("--use-legacy-client", action="store_true", help="Use legacy ZDX client instead of OneAPI client")
     args = parser.parse_args()
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
-    # Initialize ZDXClientHelper
-    ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
-    ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+    # Initialize client based on the flag
+    if args.use_legacy_client:
+        # Legacy client configuration
+        ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
+        ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+        
+        if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
+            print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
+            return
 
-    client = ZDXClientHelper(
-        client_id=ZDX_CLIENT_ID,
-        client_secret=ZDX_CLIENT_SECRET,
-    )
+        config = {
+            "key_id": ZDX_CLIENT_ID,
+            "key_secret": ZDX_CLIENT_SECRET,
+        }
+        
+        client = LegacyZDXClient(config)
+    else:
+        # OneAPI client configuration
+        ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
+        ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
+        ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
+        
+        if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
+            print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
+            return
 
-    alerts_api = AlertsAPI(client)
+        config = {
+            'clientId': ZSCALER_CLIENT_ID,
+            'clientSecret': ZSCALER_CLIENT_SECRET,
+        }
+        
+        # Add vanity domain if provided
+        if ZSCALER_VANITY_DOMAIN:
+            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
+        
+        client = ZscalerClient(config)
 
     # Prompt the user to choose an alert type
     print("Choose the Alert Type:")
@@ -123,34 +153,88 @@ def main():
         since = None
 
     if choice == "a":
-        ongoing_alerts = alerts_api.list_ongoing(since=since)
-        data = [alert for alert in ongoing_alerts]
+        query_params = {}
+        if since:
+            query_params["since"] = since
+        
+        ongoing_alerts, _, err = client.zdx.alerts.list_ongoing(query_params=query_params)
+        if err:
+            print(f"Error listing ongoing alerts: {err}")
+            return
+        
+        # Convert to list of dictionaries for display
+        data = []
+        for alert in ongoing_alerts:
+            if hasattr(alert, 'as_dict'):
+                data.append(alert.as_dict())
+            else:
+                data.append(alert)
+        
         print(f"Data collected from API (ongoing alerts): {data}")  # Debugging print statement
         display_alerts(data)
 
     elif choice == "b":
-        historical_alerts = alerts_api.list_historical(since=since)
-        data = [alert for alert in historical_alerts]
+        query_params = {}
+        if since:
+            query_params["since"] = since
+        
+        historical_alerts, _, err = client.zdx.alerts.list_historical(query_params=query_params)
+        if err:
+            print(f"Error listing historical alerts: {err}")
+            return
+        
+        # Convert to list of dictionaries for display
+        data = []
+        for alert in historical_alerts:
+            if hasattr(alert, 'as_dict'):
+                data.append(alert.as_dict())
+            else:
+                data.append(alert)
+        
         print(f"Data collected from API (historical alerts): {data}")  # Debugging print statement
         display_alerts(data)
 
     elif choice == "c":
         alert_id = input("Enter alert ID: ").strip()
-        alert_details = alerts_api.get_alert(alert_id).to_dict()
-        print(f"Alert details: {alert_details}")  # Debugging print statement
-        display_alerts([alert_details])
+        alert_details, _, err = client.zdx.alerts.get_alert(alert_id)
+        if err:
+            print(f"Error getting alert details: {err}")
+            return
+        
+        if hasattr(alert_details, 'as_dict'):
+            alert_details_dict = alert_details.as_dict()
+        else:
+            alert_details_dict = alert_details
+        
+        print(f"Alert details: {alert_details_dict}")  # Debugging print statement
+        display_alerts([alert_details_dict])
         # Display impacted departments, locations, and geolocations
         print("\nImpacted Departments:")
-        display_table(["Name", "Num Devices"], alert_details.get("departments", []))
+        display_table(["Name", "Num Devices"], alert_details_dict.get("departments", []))
         print("\nImpacted Locations:")
-        display_table(["Name", "Num Devices"], alert_details.get("locations", []))
+        display_table(["Name", "Num Devices"], alert_details_dict.get("locations", []))
         print("\nGeolocations:")
-        display_table(["Geolocation ID", "Num Devices"], alert_details.get("geolocations", []))
+        display_table(["Geolocation ID", "Num Devices"], alert_details_dict.get("geolocations", []))
 
     elif choice == "d":
         alert_id = input("Enter alert ID: ").strip()
-        affected_devices = alerts_api.list_affected_devices(alert_id, since=since)
-        data = [device.to_dict() for device in affected_devices]
+        query_params = {}
+        if since:
+            query_params["since"] = since
+        
+        affected_devices, _, err = client.zdx.alerts.list_affected_devices(alert_id, query_params=query_params)
+        if err:
+            print(f"Error listing affected devices: {err}")
+            return
+        
+        # Convert to list of dictionaries for display
+        data = []
+        for device in affected_devices:
+            if hasattr(device, 'as_dict'):
+                data.append(device.as_dict())
+            else:
+                data.append(device)
+        
         headers = ["Device ID", "Device Name", "User ID", "User Name", "User Email"]
         print(f"Data collected from API (affected devices): {data}")  # Debugging print statement
         display_table(headers, data)

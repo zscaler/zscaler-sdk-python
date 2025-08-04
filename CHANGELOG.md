@@ -1,5 +1,80 @@
 # Zscaler Python SDK Changelog
 
+## 1.7.0 (August 2, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+#### NEW Enhancement - ZIdentity API Support
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341): Zscaler [Zidentity](https://help.zscaler.com/zidentity/what-zidentity) API is now available and is supported by this SDK. See [Documentation](https://zscaler-sdk-python.readthedocs.io/en/latest/?badge=latest) for authentication instructions.
+
+### ZIdentity API Client
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) - Added the following new ZIdentity API Endpoints:
+    - Added `GET /api-clients` Retrieves a paginated list of API clients.
+    - Added `GET /api-clients/{id}` Retrieves detailed information about a specific API client using its ID.
+    - Added `POST /api-clients` Creates a new API client with authentication settings and assigned roles.
+    - Added `PUT /api-clients/{id}` Updates the existing API client details based on the provided ID.
+    - Added `DELETE /api-clients/{id}` Removes an existing API client from the system.
+    - Added `GET /api-clients/{id}/secrets` Retrieves a list of secrets associated with a specific API client using its ID.
+    - Added `POST /api-clients/{id}/secrets` Creates and associates a new secret with a specified API client ID
+    - Added `DELETE /api-clients/{id}/secrets/{secretId}` Removes a specific secret associated with an API client using the Client ID and secret ID
+
+### ZIdentity Groups
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) - Added the following new ZIdentity API Endpoints:
+    - Added `GET /groups` Retrieves a paginated list of groups with optional query parameters for pagination and filtering by group name or dynamic group status
+    - Added `GET /groups/{id}` Retrieves detailed information about a specific group using its unique identifier ID
+    - Added `POST /groups` Creates a new group with the specified name and description.
+    - Added `PUT /groups/{id}` Update an existing group based on the provided group ID.
+    - Added `DELETE /groups/{id}` Deletes an existing group based on the provided group ID.
+    - Added `GET /groups/{id}/users` Retrieves the list of users details for a specific group using the group ID.
+    - Added `POST /groups/{id}/users` Adds users to an existing group using the unique identifier ID of the group.
+    - Added `PUT /groups/{id}/users` Replaces the list of users in a specific group using the group ID.
+    - Added `POST /groups/{id}/users/{userId}` Adds a specific user to an existing group using the group ID and the user ID.
+    - Added `DELETE /groups/{id}/users/{userId}` Removes a specific user from an existing group using the group ID and the user ID.
+
+### ZIdentity Users
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) - Added the following new ZIdentity API Endpoints:
+    - Added `GET /users` Retrieves a list of users with optional query parameters for pagination and filtering.
+    - Added `POST /users` Creates a new user using the provided details.
+    - Added `GET /users/{id}` Retrieves detailed information about a specific user using the provided user ID.
+    - Added `PUT /users/{id}` Updates the details of an existing user based on the provided user ID.
+    - Added `DELETE /users/{id}` Deletes an existing user from the system by the provided user ID.
+    - Added `GET /users/{id}/groups` Retrieves a paginated list of groups associated with a specific user ID.
+
+### ZIdentity Entitlements
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) - Added the following new ZIdentity API Endpoints:
+    - Added `GET /users/{id}/admin-entitlements` Retrieves the administrative entitlements for a specific user by their user ID.
+    - Added `GET /users/{id}/service-entitlements` Retrieves service entitlements for a specified user ID.
+
+### ZIdentity Resource Servers
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) - Added the following new ZIdentity API Endpoints:
+    - Added `GET /resource-servers` Retrieves a paginated list of resource servers with an optional query parameters for pagination.
+    - Added `GET /resource-servers/{id}` Retrieves details about a specific resource server using the server ID
+
+### New ZIA Endpoint - Cloud-to-Cloud DLP Incident Receiver
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) Added the following new ZIA API Endpoints:
+    - Added `GET cloudToCloudIR` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/{id}` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/lite` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud DLP Incident Forwarding with a subset of information for each Incident Receiver
+    - Added `GET cloudToCloudIR/count` Retrieves the number of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/config/{id}/validateDelete` Validates the specified cloud storage configuration (e.g., Amazon S3 bucket configuration) of a Cloud-to-Cloud DLP Incident Receiver
+
+### Bug Fixes
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) Removed `@staticmethod` from `check_response_for_error` function.
+
+### Documentation
+
+[PR #341](https://github.com/zscaler/zscaler-sdk-python/pull/341) Updated README and other documention. Include Sandbox client instantition examples.
+
 ## 1.6.0 (July 30, 2025)
 
 ### Notes

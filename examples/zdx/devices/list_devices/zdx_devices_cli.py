@@ -8,7 +8,7 @@ CLI tool to interact with ZDX Devices API.
 
 **Usage**::
 
-    zdx_devices_cli.py
+    zdx_devices_cli.py [--use-legacy-client]
 
 **Examples**:
 
@@ -21,14 +21,17 @@ List devices for the past 24 hours:
 List devices for a specific location:
     $ python3 zdx_devices_cli.py --location_id 12345
 
+Using Legacy Client:
+    $ python3 zdx_devices_cli.py --use-legacy-client
+
 """
 
 import os
 import logging
 import argparse
 from prettytable import PrettyTable
-from zscaler.zdx import ZDXClientHelper
-from zscaler.zdx.devices import DevicesAPI
+from zscaler import ZscalerClient
+from zscaler.oneapi_client import LegacyZDXClient
 from box import BoxList
 
 
@@ -77,44 +80,86 @@ def main():
     parser.add_argument("--emails", type=str, nargs="+", help="List of email addresses")
     parser.add_argument("--mac_address", type=str, help="MAC address of the device")
     parser.add_argument("--private_ipv4", type=str, help="Private IPv4 address of the device")
+    parser.add_argument("--use-legacy-client", action="store_true", help="Use legacy ZDX client instead of OneAPI client")
 
     args = parser.parse_args()
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
-    # Initialize ZDXClientHelper
-    ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
-    ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+    # Initialize client based on the flag
+    if args.use_legacy_client:
+        # Legacy client configuration
+        ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
+        ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+        
+        if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
+            print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
+            return
 
-    client = ZDXClientHelper(
-        client_id=ZDX_CLIENT_ID,
-        client_secret=ZDX_CLIENT_SECRET,
-    )
+        config = {
+            "key_id": ZDX_CLIENT_ID,
+            "key_secret": ZDX_CLIENT_SECRET,
+        }
+        
+        client = LegacyZDXClient(config)
+    else:
+        # OneAPI client configuration
+        ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
+        ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
+        ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
+        
+        if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
+            print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
+            return
 
-    devices_api = DevicesAPI(client)
+        config = {
+            'clientId': ZSCALER_CLIENT_ID,
+            'clientSecret': ZSCALER_CLIENT_SECRET,
+        }
+        
+        # Add vanity domain if provided
+        if ZSCALER_VANITY_DOMAIN:
+            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
+        
+        client = ZscalerClient(config)
 
-    # Prepare keyword arguments
-    kwargs = {
-        "since": args.since,
-        "location_id": args.location_id,
-        "department_id": args.department_id,
-        "geo_id": args.geo_id,
-        "user_ids": args.user_ids,
-        "emails": args.emails,
-        "mac_address": args.mac_address,
-        "private_ipv4": args.private_ipv4,
-    }
-
-    # Remove None values from kwargs
-    kwargs = {k: v for k, v in kwargs.items() if v is not None}
+    # Prepare query parameters
+    query_params = {}
+    if args.since:
+        query_params["since"] = args.since
+    if args.location_id:
+        query_params["location_id"] = args.location_id
+    if args.department_id:
+        query_params["department_id"] = args.department_id
+    if args.geo_id:
+        query_params["geo_id"] = args.geo_id
+    if args.user_ids:
+        query_params["user_ids"] = args.user_ids
+    if args.emails:
+        query_params["emails"] = args.emails
+    if args.mac_address:
+        query_params["mac_address"] = args.mac_address
+    if args.private_ipv4:
+        query_params["private_ipv4"] = args.private_ipv4
 
     # Call the API to list devices
     try:
-        devices_iterator = devices_api.list_devices(**kwargs)
-        devices = list(devices_iterator)
+        devices, _, err = client.zdx.devices.list_devices(query_params=query_params)
+        if err:
+            print(f"Error listing devices: {err}")
+            return
+        
+        # Convert to list of dictionaries for display
+        devices_data = []
+        for device in devices:
+            if hasattr(device, 'as_dict'):
+                devices_data.append(device.as_dict())
+            else:
+                devices_data.append(device)
+        
         headers = ["ID", "Name", "User ID"]
-        data = extract_devices_data(devices)
+        data = extract_devices_data(devices_data)
         display_table(data, headers)
     except Exception as e:
         print(f"An error occurred while fetching devices: {e}")

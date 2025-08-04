@@ -43,11 +43,17 @@ class CloudNSSAPI(APIClient):
         Returns:
             tuple: A tuple containing (Retries the cloud nss feed instances, Response, error)
 
-
         Examples:
-            Get the cloud nss feed:
-            >>> nss = zia.cloud_nss.list_nss_feed()
+            List the cloud nss feed:
 
+            >>> feeds, _, err = client.zia.cloud_nss.list_nss_feed(query_params={"feed_type": "JSON"})
+            >>> if err:
+            ...     print(f"[Error] Listing Cloud NSS Feeds: {err}")
+            ...     return
+            ... print("[Success] Retrieved Cloud NSS Feeds Successfully.")
+            ... print("Feed Output Payload:")
+            ... for feed in feeds:
+            ...     print(feed)
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -307,7 +313,6 @@ class CloudNSSAPI(APIClient):
 
         body = kwargs
 
-        # Create the request
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
@@ -317,7 +322,6 @@ class CloudNSSAPI(APIClient):
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request, NssFeeds)
         if error:
             return (None, response, error)

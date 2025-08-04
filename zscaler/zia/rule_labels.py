@@ -142,7 +142,7 @@ class RuleLabelsAPI(APIClient):
         Creates a new ZIA Rule Label.
 
         Args:
-            name (str): The name of the Proxy.
+            name (str): The name of the label.
             **kwargs: Optional keyword args.
 
         Keyword Args:

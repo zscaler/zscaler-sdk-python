@@ -34,6 +34,7 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
 * [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
 * [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
+* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
 * [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
 
@@ -174,6 +175,7 @@ In most cases, you won't need to build the SDK from source. If you want to build
 * [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi)
 * [ZPA API](https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide)
 * [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
+* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
 * [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
 * [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
 * [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
@@ -197,11 +199,14 @@ If your Zscaler tenant has not been migrated to the new Zscaler [Zidentity platf
 
 ## Zscaler OneAPI New Framework
 
-As of the publication of SDK version => 0.20.x, OneAPI is available for programmatic interaction with the following products:
+As of the publication of SDK version => 1.7.x, OneAPI is available for programmatic interaction with the following products:
 
-* [ZIA API](https://help.zscaler.com/oneapi/understanding-oneapi#:~:text=managed%20using%20OneAPI.-,ZIA%20API,-Zscaler%20Internet%20Access)
-* [ZPA API](https://help.zscaler.com/oneapi/understanding-oneapi#:~:text=Workload%20Groups-,ZPA%20API,-Zscaler%20Private%20Access)
-* [Zscaler Client Connector API](https://help.zscaler.com/oneapi/understanding-oneapi#:~:text=Version%20Profiles-,Zscaler%20Client%20Connector%20API,-Zscaler%20Client%20Connector)
+* [ZPA API](https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide)
+* [ZIA API](https://help.zscaler.com/zia/getting-started-zia-api)
+* [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
+* [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
+* [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
+* [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and Zscaler Digital Experience (ZDX) are supported only via the legacy authentication method described in this README.
 
@@ -763,6 +768,162 @@ Each one of the configuration values above can be turned into an environment var
 | `disableHttpsCheck`       | _(String)_ Disable SSL checks  | `ZSCALER_TESTING_TESTINGDISABLEHTTPSCHECK` |
 | `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
 | `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
+
+### Zscaler ZIdentity API
+
+This SDK supports programmatic integration with the Zscaler ZIdentity API service.
+
+The authentication to Zscaler ZIdentity service via the OneAPI framework, requires uses the API client `ZscalerClient`
+
+| Argument     | Description | Environment variable |
+|--------------|-------------|-------------------|
+| `clientId`       | _(String)_ Zscaler API Client ID, used with `clientSecret` or `PrivateKey` OAuth auth mode.| `ZSCALER_CLIENT_ID` |
+| `clientSecret`       | _(String)_ A string that contains the password for the API admin.| `ZSCALER_CLIENT_SECRET` |
+| `privateKey`       | _(String)_ A string Private key value.| `ZSCALER_PRIVATE_KEY` |
+| `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
+| `cloud`
+
+### Initialize OneAPI OAuth 2.0 Client
+
+#### Zidentity OneAPI Client ID and Client Secret Authentication
+
+Construct a client instance by passing your Zidentity `clientId`, `clientSecret` and `vanityDomain`:
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        users, _, error = client.zidentity.groups.list_groups()
+        if error:
+            print(f"Error listing users: {error}")
+            return
+
+        print(f"Total users found: {len(users)}")
+
+if __name__ == "__main__":
+    main()
+```
+
+#### Zidentity OneAPI Client ID and Private Key Authentication
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "privateKey": '{yourPrivateKey}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta", # Optional when authenticating to an alternative cloud environment
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        users, _, error = client.zidentity.groups.list_groups()
+        if error:
+            print(f"Error listing users: {error}")
+            return
+
+        print(f"Total users found: {len(users)}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Zscaler Sandbox Authentication
+
+To authenticate to the Zscaler Sandbox service you must authenticate by instantiating the `ZscalerClient`.
+
+Authentication to Zscaler Sandbox requires the attribute/parameter `sandboxCloud`. The following cloud environments are supported:
+
+* `zscaler`
+* `zscalerone`
+* `zscalertwo`
+* `zscalerthree`
+* `zscloud`
+* `zscalerbeta`
+* `zscalergov`
+* `zscalerten`
+* `zspreview`
+
+### Environment variables
+
+You can provide credentials via the `ZSCALER_SANDBOX_TOKEN`, `ZSCALER_SANDBOX_CLOUD` environment variables, representing your Zscaler Sandbox authentication paraemters respectively `sandboxToken`, `sandboxCloud`
+
+| Argument     | Description | Environment variable |
+|--------------|-------------|-------------------|
+| `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
+| `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
+
+### Zscaler Sandbox Client Initialization
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "sandboxToken": '{yourSandboxToken}',
+    "sandboxCloud": '{yourSandboxCloud}',
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "test-pe-file.exe")
+    force_analysis = True
+
+    with ZscalerClient(config) as client:
+        submit, _, err = client.zia.sandbox.submit_file(file_path=file_path, force=force_analysis)
+
+        if err:
+            print(f"Error submitting file: {err}")
+        else:
+            print("File submitted successfully!")
+            print(f"Response: {submit}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### ZIA Legacy Client Initialization
+
+```py
+import random
+from zscaler import ZscalerClient
+
+config = {
+    "sandboxToken": '{yourSandboxToken}',
+    "sandboxCloud": '{yourSandboxCloud}',
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "test-pe-file.exe")
+    force_analysis = True
+
+    with ZscalerClient(config) as client:
+        submit, _, err = client.zia.sandbox.submit_file(file_path=file_path, force=force_analysis)
+
+        if err:
+            print(f"Error submitting file: {err}")
+        else:
+            print("File submitted successfully!")
+            print(f"Response: {submit}")
+
+if __name__ == "__main__":
+    main()
+```
 
 ## Zscaler Legacy API Framework
 

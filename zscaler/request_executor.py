@@ -83,6 +83,7 @@ class RequestExecutor:
         self.service = self._config["client"].get("service", "zia")  # Default to ZIA
         self.customer_id = self._config["client"].get("customerId")  # Optional for ZIA/ZCC
         self.microtenant_id = self._config["client"].get("microtenantId")  # Optional for ZIA/ZCC
+        self.vanity_domain = self._config["client"].get("vanityDomain")  # Required for zidentity service
 
         # OAuth2 setup
         self._oauth = OAuth(self, self._config)
@@ -127,6 +128,18 @@ class RequestExecutor:
         # logger.debug(f"Determining base URL for cloud: {self.cloud}")
         if "/zscsb" in endpoint:
             return f"https://csbapi.{self.sandbox_cloud}.net"
+        
+        # Special handling for zidentity service
+        if "/zidentity" in endpoint or "/admin/api/v1" in endpoint:
+            if not self.vanity_domain:
+                raise ValueError("vanityDomain is required for zidentity service")
+            
+            # For zidentity, the URL pattern is: https://{{vanity_domain}}-admin.zslogin{{cloud}}.net/admin/api/v1
+            if self.cloud and self.cloud != "production":
+                return f"https://{self.vanity_domain}-admin.zslogin{self.cloud}.net/admin/api/v1"
+            else:
+                return f"https://{self.vanity_domain}-admin.zslogin.net/admin/api/v1"
+        
         if self.cloud and self.cloud != "production":
             return f"https://api.{self.cloud}.zsapi.net"
         return self.BASE_URL
@@ -147,7 +160,10 @@ class RequestExecutor:
             return "zwa"
         elif "/zpa" in url or "/mgmtconfig" in url:
             return "zpa"
-
+        elif "/admin/api/v1" in url:
+            return "zidentity"
+        elif "/admin" in url:
+            return "admin"
         if self.use_legacy_client:
             url = self.remove_oneapi_endpoint_prefix(url)
             # Recheck for service type after removing the prefix
@@ -163,11 +179,13 @@ class RequestExecutor:
                 return "zwa"
             elif "/zpa" in url or "/mgmtconfig" in url:
                 return "zpa"
+            elif "/admin/api/v1" in url:
+                return "zidentity"
 
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
-        prefixes = ["/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa"]
+        prefixes = ["admin", "/zia", "/zpa", "/zcc", "/ztw", "/zdx", "/zwa"]
         for prefix in prefixes:
             if endpoint.startswith(prefix):
                 return endpoint[len(prefix) :]
@@ -213,6 +231,11 @@ class RequestExecutor:
                 base_url = self.get_base_url(endpoint)
         else:
             base_url = self.get_base_url(endpoint)
+
+        # Special handling for zidentity to avoid endpoint duplication
+        if service_type == "zidentity" and endpoint.startswith("/admin/api/v1/"):
+            # Remove the /admin/api/v1 prefix since it's already in the base URL
+            endpoint = endpoint[len("/admin/api/v1/"):]
 
         final_url = f"{base_url}/{endpoint.lstrip('/')}"
 
