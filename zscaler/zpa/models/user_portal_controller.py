@@ -72,6 +72,8 @@ class UserPortalController(ZscalerObject):
                 if "userNotification" in config else None
             self.user_notification_enabled = config["userNotificationEnabled"] \
                 if "userNotificationEnabled" in config else None
+            self.managed_by_zs = config["managedByZs"] \
+                if "managedByZs" in config else None
         else:
             self.certificate_id = None
             self.certificate_name = None
@@ -93,6 +95,7 @@ class UserPortalController(ZscalerObject):
             self.microtenant_name = None
             self.user_notification = None
             self.user_notification_enabled = None
+            self.managed_by_zs = None
 
     def request_format(self):
         """
@@ -119,7 +122,8 @@ class UserPortalController(ZscalerObject):
             "microtenantId": self.microtenant_id,
             "microtenantName": self.microtenant_name,
             "userNotification": self.user_notification,
-            "userNotificationEnabled": self.user_notification_enabled
+            "userNotificationEnabled": self.user_notification_enabled,
+            "managedByZs": self.managed_by_zs
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
