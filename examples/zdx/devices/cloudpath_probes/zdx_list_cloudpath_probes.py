@@ -8,7 +8,7 @@ CLI tool to interact with ZDX Cloudpath APIs.
 
 **Usage**::
 
-    zdx_cloudpath_cli.py
+    zdx_cloudpath_cli.py [--use-legacy-client]
 
 **Examples**:
 
@@ -21,14 +21,17 @@ Get details of a specific cloudpath probe:
 Get cloudpath data for a specific cloudpath probe:
     $ python3 zdx_cloudpath_cli.py
 
+Using Legacy Client:
+    $ python3 zdx_cloudpath_cli.py --use-legacy-client
+
 """
 
 import os
 import logging
 import argparse
 from prettytable import PrettyTable
-from zscaler.zdx import ZDXClientHelper
-from zscaler.zdx.devices import DevicesAPI
+from zscaler import ZscalerClient
+from zscaler.oneapi_client import LegacyZDXClient
 from box import BoxList
 
 
@@ -170,21 +173,48 @@ def extract_cloudpath_data(cloudpath_data):
 
 def main():
     parser = argparse.ArgumentParser(description="Interact with ZDX Cloudpath APIs")
+    parser.add_argument("--use-legacy-client", action="store_true", help="Use legacy ZDX client instead of OneAPI client")
     args = parser.parse_args()
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
-    # Initialize ZDXClientHelper
-    ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
-    ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+    # Initialize client based on the flag
+    if args.use_legacy_client:
+        # Legacy client configuration
+        ZDX_CLIENT_ID = os.getenv("ZDX_CLIENT_ID")
+        ZDX_CLIENT_SECRET = os.getenv("ZDX_CLIENT_SECRET")
+        
+        if not ZDX_CLIENT_ID or not ZDX_CLIENT_SECRET:
+            print("Error: ZDX_CLIENT_ID and ZDX_CLIENT_SECRET environment variables are required for legacy client.")
+            return
 
-    client = ZDXClientHelper(
-        client_id=ZDX_CLIENT_ID,
-        client_secret=ZDX_CLIENT_SECRET,
-    )
+        config = {
+            "key_id": ZDX_CLIENT_ID,
+            "key_secret": ZDX_CLIENT_SECRET,
+        }
+        
+        client = LegacyZDXClient(config)
+    else:
+        # OneAPI client configuration
+        ZSCALER_CLIENT_ID = os.getenv("ZSCALER_CLIENT_ID")
+        ZSCALER_CLIENT_SECRET = os.getenv("ZSCALER_CLIENT_SECRET")
+        ZSCALER_VANITY_DOMAIN = os.getenv("ZSCALER_VANITY_DOMAIN")
+        
+        if not ZSCALER_CLIENT_ID or not ZSCALER_CLIENT_SECRET:
+            print("Error: ZSCALER_CLIENT_ID and ZSCALER_CLIENT_SECRET environment variables are required for OneAPI client.")
+            return
 
-    devices_api = DevicesAPI(client)
+        config = {
+            'clientId': ZSCALER_CLIENT_ID,
+            'clientSecret': ZSCALER_CLIENT_SECRET,
+        }
+        
+        # Add vanity domain if provided
+        if ZSCALER_VANITY_DOMAIN:
+            config['vanityDomain'] = ZSCALER_VANITY_DOMAIN
+        
+        client = ZscalerClient(config)
 
     # Prompt the user for action choice
     print("Choose an action:")
@@ -198,21 +228,29 @@ def main():
     app_id = prompt_for_input("Enter the app ID: ")
     since = prompt_for_since()
 
-    # Prepare keyword arguments
-    kwargs = {
-        "since": since,
-    }
-
-    # Remove None values from kwargs
-    kwargs = {k: v for k, v in kwargs.items() if v is not None}
+    # Prepare query parameters
+    query_params = {}
+    if since:
+        query_params["since"] = since
 
     if action_choice == "a":
         # Call the API to list cloudpath probes
         try:
-            cloudpath_probes_iterator = devices_api.list_cloudpath_probes(device_id, app_id, **kwargs)
-            cloudpath_probes = list(cloudpath_probes_iterator)
+            cloudpath_probes, _, err = client.zdx.devices.list_cloudpath_probes(device_id, app_id, query_params=query_params)
+            if err:
+                print(f"Error listing cloudpath probes: {err}")
+                return
+            
+            # Convert to list of dictionaries for display
+            probes_data = []
+            for probe in cloudpath_probes:
+                if hasattr(probe, 'as_dict'):
+                    probes_data.append(probe.as_dict())
+                else:
+                    probes_data.append(probe)
+            
             headers = ["ID", "Name", "Num Probes", "Leg SRC", "Leg DST", "Latency"]
-            data = extract_probes_data(cloudpath_probes)
+            data = extract_probes_data(probes_data)
             display_table(data, headers)
         except Exception as e:
             print(f"An error occurred while fetching cloudpath probes: {e}")
@@ -222,12 +260,21 @@ def main():
 
         # Call the API to get cloudpath probe details
         try:
-            cloudpath_probe = devices_api.get_cloudpath_probe(device_id, app_id, probe_id, **kwargs)
-            headers = ["Leg SRC", "Leg DST", "Metric", "Unit", "Timestamp", "Value"]
-            if isinstance(cloudpath_probe, BoxList):
-                data = extract_probe_details(cloudpath_probe)
+            cloudpath_probe, _, err = client.zdx.devices.get_cloudpath_probe(device_id, app_id, probe_id, query_params=query_params)
+            if err:
+                print(f"Error retrieving cloudpath probe details: {err}")
+                return
+            
+            if hasattr(cloudpath_probe, 'as_dict'):
+                probe_data = cloudpath_probe.as_dict()
             else:
-                data = extract_probe_details([cloudpath_probe])
+                probe_data = cloudpath_probe
+            
+            headers = ["Leg SRC", "Leg DST", "Metric", "Unit", "Timestamp", "Value"]
+            if isinstance(probe_data, BoxList):
+                data = extract_probe_details(probe_data)
+            else:
+                data = extract_probe_details([probe_data])
             display_table(data, headers)
         except Exception as e:
             print(f"An error occurred while fetching cloudpath probe details: {e}")
@@ -237,7 +284,16 @@ def main():
 
         # Call the API to get cloudpath data
         try:
-            cloudpath_data = devices_api.get_cloudpath(device_id, app_id, probe_id, **kwargs)
+            cloudpath_data, _, err = client.zdx.devices.get_cloudpath(device_id, app_id, probe_id, query_params=query_params)
+            if err:
+                print(f"Error retrieving cloudpath data: {err}")
+                return
+            
+            if hasattr(cloudpath_data, 'as_dict'):
+                data_dict = cloudpath_data.as_dict()
+            else:
+                data_dict = cloudpath_data
+            
             headers = [
                 "Timestamp",
                 "Leg SRC",
@@ -257,10 +313,10 @@ def main():
                 "Latency Avg",
                 "Latency Diff",
             ]
-            if isinstance(cloudpath_data, BoxList):
-                data = extract_cloudpath_data(cloudpath_data)
+            if isinstance(data_dict, BoxList):
+                data = extract_cloudpath_data(data_dict)
             else:
-                data = extract_cloudpath_data([cloudpath_data])
+                data = extract_cloudpath_data([data_dict])
             display_table(data, headers)
         except Exception as e:
             print(f"An error occurred while fetching cloudpath data: {e}")

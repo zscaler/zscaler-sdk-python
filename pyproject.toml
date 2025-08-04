@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler-sdk-python"
-version = "1.6.0"
+version = "1.7.0"
 description = "Official Python SDK for the Zscaler Products"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/zscaler/zscaler-sdk-python"
 repository = "https://github.com/zscaler/zscaler-sdk-python"
 documentation = "https://zscaler-sdk-python.readthedocs.io"
-keywords = ["zscaler", "sdk", "zpa", "zia", "zdx", "zcc", "ztw", "zwa"]
+keywords = ["zscaler", "sdk", "zpa", "zia", "zdx", "zcc", "ztw", "zwa", "zidentity"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",

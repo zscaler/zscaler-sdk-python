@@ -42,7 +42,7 @@ class TestAppConnectorGroup:
             created_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                 name=group_name,
                 description=group_description,
-                group_enabled=group_enabled,
+                enabled=group_enabled,
                 latitude=latitude,
                 longitude=longitude,
                 location=location,

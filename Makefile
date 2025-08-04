@@ -34,15 +34,16 @@ help:
 	@echo "$(COLOR_OK)  format                        Reformat code with black$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint                          Check style with flake8 for all packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zcc                      Check style with flake8 for zcc packages$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  lint:ztw                     Check style with flake8 for ztw packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:ztw                      Check style with flake8 for ztw packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zdx                      Check style with flake8 for zdx packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zcc          Run only zcc integration tests$(COLOR_NONE)"
-	@echo "$(COLOR_OK)  test:integration:ztw         Run only ztw integration tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:integration:ztw          Run only ztw integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zdx          Run only zdx integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zia          Run only zia integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zpa          Run only zpa integration tests$(COLOR_NONE)"
@@ -105,6 +106,10 @@ lint\:zia:
 	flake8 zscaler/zia --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	flake8 zscaler/zia --count --select=E9,F63,F7,F82 --show-source --statistics
 
+lint\:zidentity:
+	flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
+
 format:
 	black .
 
@@ -131,6 +136,11 @@ test\:integration\:zia:
 	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
 	pytest tests/integration/zia --disable-warnings
 
+test\:integration\:zidentity:
+	@echo "$(COLOR_ZSCALER)Running zidentity integration tests...$(COLOR_NONE)"
+	pytest tests/integration/zidentity --disable-warnings
+
+
 test-simple:
 	pytest --disable-warnings
 
@@ -152,6 +162,9 @@ coverage\:zia:
 coverage\:zpa:
 	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
 
+coverage\:zidentity:
+	pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
+
 sweep\:zia:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZIA_SDK_TEST_SWEEP=true python tests/integration/zia/sweep/run_sweep.py --sweep
@@ -159,6 +172,10 @@ sweep\:zia:
 sweep\:zpa:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZPA_SDK_TEST_SWEEP=true python tests/integration/zpa/sweep/run_sweep.py --sweep
+
+sweep\:zidentity:
+	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
+	ZIDENTITY_SDK_TEST_SWEEP=true python tests/integration/zidentity/sweep/run_sweep.py --sweep
 
 
 build\:dist:

@@ -75,6 +75,7 @@ class TestSweepUtility:
             self.sweep_isolation_certificate,
             self.sweep_isolation_profile,
             self.sweep_service_edge_group,
+            self.sweep_user_portal,
         ]
 
         for func in sweep_functions:
@@ -519,6 +520,80 @@ class TestSweepUtility:
             logging.error(f"An error occurred while sweeping service edge groups: {str(e)}")
             raise
 
+    @suppress_warnings
+    def sweep_user_portal(self):
+        logging.info("Starting to sweep service user portal")
+        try:
+            user_portals, _, error = self.client.zpa.user_portal_controller.list_user_portals()
+            if error:
+                raise Exception(f"Error listing user portal: {error}")
+
+            test_portals = [portal for portal in user_portals if hasattr(portal, "name") and portal.name.startswith("tests-")]
+            logging.info(f"Found {len(test_portals)} user portals to delete.")
+
+            for portal in test_portals:
+                logging.info(
+                    f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'"
+                )
+                _, _, error = self.client.zpa.user_portal_controller.delete_user_portal(portal_id=portal.id)
+                if error:
+                    logging.error(f"Failed to delete user portal ID={portal.id} — {error}")
+                else:
+                    logging.info(f"Successfully deleted portal ID={portal.id}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping user portals: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_user_portal(self):
+        logging.info("Starting to sweep service user portal")
+        try:
+            user_portals, _, error = self.client.zpa.user_portal_link.list_portal_link()
+            if error:
+                raise Exception(f"Error listing user portal: {error}")
+
+            test_portals = [portal for portal in user_portals if hasattr(portal, "name") and portal.name.startswith("tests-")]
+            logging.info(f"Found {len(test_portals)} user portals to delete.")
+
+            for portal in test_portals:
+                logging.info(
+                    f"sweep_user_portal: Attempting to delete user portal: Name='{portal.name}', ID='{portal.id}'"
+                )
+                _, _, error = self.client.zpa.user_portal_link.delete_portal_link(portal_link_id=portal.id)
+                if error:
+                    logging.error(f"Failed to delete user portal ID={portal.id} — {error}")
+                else:
+                    logging.info(f"Successfully deleted portal ID={portal.id}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping user portals: {str(e)}")
+            raise
+
+    @suppress_warnings
+    def sweep_private_cloud_group(self):
+        logging.info("Starting to sweep private cloud group")
+        try:
+            groups, _, error = self.client.zpa.private_cloud_group.list_cloud_groups()
+            if error:
+                raise Exception(f"Error listing private cloud group: {error}")
+
+            test_groups = [group for group in groups if hasattr(group, "name") and group.name.startswith("tests-")]
+            logging.info(f"Found {len(test_groups)} private cloud groups to delete.")
+
+            for group in test_groups:
+                logging.info(
+                    f"sweep_private_cloud_group: Attempting to delete private cloud group: Name='{group.name}', ID='{group.id}'"
+                )
+                _, _, error = self.client.zpa.private_cloud_group.delete_cloud_group(group_id=group.id)
+                if error:
+                    logging.error(f"Failed to delete private cloud group ID={group.id} — {error}")
+                else:
+                    logging.info(f"Successfully deleted private cloud group ID={group.id}")
+
+        except Exception as e:
+            logging.error(f"An error occurred while sweeping private cloud groups: {str(e)}")
+            raise
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

@@ -515,7 +515,7 @@ class AdminRolesAPI(APIClient):
 
         Returns:
             tuple: A tuple containing the response object and error (if any).
-            
+
         Examples:
             >>> _, _, error = client.zia.admin_roles.delete_role(143783113)
             >>> if error:
