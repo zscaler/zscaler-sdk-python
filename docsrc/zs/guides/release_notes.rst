@@ -70,6 +70,16 @@ ZIdentity Resource Servers
     - Added `GET /resource-servers` Retrieves a paginated list of resource servers with an optional query parameters for pagination.
     - Added `GET /resource-servers/{id}` Retrieves details about a specific resource server using the server ID
 
+New ZIA Endpoint - Cloud-to-Cloud DLP Incident Receiver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#341 <https://github.com/zscaler/zscaler-sdk-python/pull/341>`_) Added the following new ZIA API Endpoints:
+    - Added `GET cloudToCloudIR` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/{id}` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/lite` Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud DLP Incident Forwarding with a subset of information for each Incident Receiver
+    - Added `GET cloudToCloudIR/count` Retrieves the number of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
+    - Added `GET cloudToCloudIR/config/{id}/validateDelete` Validates the specified cloud storage configuration (e.g., Amazon S3 bucket configuration) of a Cloud-to-Cloud DLP Incident Receiver
+
 Bug Fixes
 -----------
 

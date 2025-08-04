@@ -86,6 +86,7 @@ from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.saas_security_api import SaaSSecurityAPI
+from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
 
 
 class ZIAService:
@@ -686,3 +687,12 @@ class ZIAService:
         """
 
         return SaaSSecurityAPI(self._request_executor)
+
+    @property
+    def cloud_to_cloud_ir(self):
+        """
+        The interface object for the :ref:`ZIA Cloud-to-Cloud DLP Incident Receiver API interface <zia-cloud_to_cloud_ir>`.
+
+        """
+
+        return CloudToCloudIRAPI(self._request_executor)
