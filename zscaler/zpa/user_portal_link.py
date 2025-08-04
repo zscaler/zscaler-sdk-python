@@ -18,13 +18,17 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_link import UserPortalLink
 from zscaler.zpa.models.user_portal_link import UserPortalLinks
-from zscaler.utils import format_url
+from zscaler.utils import format_url, add_id_groups
 
 
 class UserPortalLinkAPI(APIClient):
     """
     A client object for the user portal link Link resource.
     """
+
+    reformat_params = [
+        ("user_portal_ids", "userPortals"),
+    ]
 
     def __init__(self, request_executor, config):
         super().__init__()
@@ -97,12 +101,12 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_portal_link(self, portal_id: str, query_params=None) -> tuple:
+    def get_portal_link(self, portal_link_id: str, query_params=None) -> tuple:
         """
         Gets information on the specified user portal link.
 
         Args:
-            portal_id (str): The unique identifier of the user portal link.
+            portal_link_id (str): The unique identifier of the user portal link.
             query_params (dict, optional): Map of query parameters for the request.
                 ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
 
@@ -122,7 +126,7 @@ class UserPortalLinkAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zpa_base_endpoint}
-            /userPortalLink/{portal_id}
+            /userPortalLink/{portal_link_id}
         """
         )
 
@@ -164,11 +168,11 @@ class UserPortalLinkAPI(APIClient):
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     enabled=True,
-            ...     user_notification=f"Portal01_Dev_{random.randint(1000, 10000)}",
+            ...     link="server1.example.com",
             ...     user_notification_enabled=True,
-            ...     managed_by_zs=True,
-            ...     ext_label='portal01',
-            ...     ext_domain='acme.com'
+            ...     icon_text='',
+            ...     protocol='https://',
+            ...     user_portal_link_ids=['72058304855142822']
             ... )
             >>> if err:
             ...     print(f"Error adding user portal link: {err}")
@@ -188,6 +192,11 @@ class UserPortalLinkAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+        if "user_portal_link_ids" in body:
+            body["userPortals"] = [{"id": portal_link_id} for portal_link_id in body.pop("user_portal_link_ids")]
+
+        add_id_groups(self.reformat_params, kwargs, body)
+
         request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
         if error:
             return (None, None, error)
@@ -202,12 +211,12 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_portal_link(self, portal_id: str, **kwargs) -> tuple:
+    def update_portal_link(self, portal_link_id: str, **kwargs) -> tuple:
         """
         Updates the specified user portal link.
 
         Args:
-            portal_id (str): The unique identifier for the user portal link being updated.
+            portal_link_id (str): The unique identifier for the user portal link being updated.
 
         Returns:
             :obj:`Tuple`: UserPortalController: The updated user portal link object.
@@ -216,26 +225,26 @@ class UserPortalLinkAPI(APIClient):
             Updating a user portal link for a specific microtenant
 
             >>> updated_portal_link, _, err = client.zpa.user_portal_link.update_portal_link(
-            ...     portal_id='25456654',
+            ...     portal_link_id='25456654',
             ...     name=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     description=f"Portal01_Dev_{random.randint(1000, 10000)}",
             ...     enabled=True,
-            ...     user_notification=f"Portal01_Dev_{random.randint(1000, 10000)}",
+            ...     link="server1.example.com",
             ...     user_notification_enabled=True,
-            ...     managed_by_zs=True,
-            ...     ext_label='portal01',
-            ...     ext_domain='acme.com'
+            ...     icon_text='',
+            ...     protocol='https://',
+            ...     user_portal_link_ids=['72058304855142822']
             ... )
             >>> if err:
-            ...     print(f"Error updating user portal link: {err}")
+            ...     print(f"Error adding user portal link: {err}")
             ...     return
-            ... print(f"user portal link updated successfully: {updated_portal_link.as_dict()}")
+            ... print(f"user portal link added successfully: {added_portal_link.as_dict()}")
         """
         http_method = "put".upper()
         api_url = format_url(
             f"""
             {self._zpa_base_endpoint}
-            /userPortalLink/{portal_id}
+            /userPortalLink/{portal_link_id}
         """
         )
 
@@ -246,6 +255,11 @@ class UserPortalLinkAPI(APIClient):
         microtenant_id = body.get("microtenant_id", None)
         params = {"microtenantId": microtenant_id} if microtenant_id else {}
 
+        if "user_portal_link_ids" in body:
+            body["userPortals"] = [{"id": portal_link_id} for portal_link_id in body.pop("user_portal_link_ids")]
+
+        add_id_groups(self.reformat_params, kwargs, body)
+
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, params)
         if error:
             return (None, None, error)
@@ -255,7 +269,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
 
         if response is None:
-            return (UserPortalLink({"id": portal_id}), None, None)
+            return (UserPortalLink({"id": portal_link_id}), None, None)
 
         try:
             result = UserPortalLink(self.form_response_body(response.get_body()))
@@ -265,14 +279,14 @@ class UserPortalLinkAPI(APIClient):
 
     def delete_portal_link(
         self,
-        portal_id: str,
+        portal_link_id: str,
         microtenant_id: str = None
     ) -> tuple:
         """
         Deletes the specified user portal link.
 
         Args:
-            portal_id (str): The unique identifier for the user portal link to be deleted.
+            portal_link_id (str): The unique identifier for the user portal link to be deleted.
 
         Returns:
             int: Status code of the delete operation.
@@ -289,7 +303,7 @@ class UserPortalLinkAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zpa_base_endpoint}
-            /userPortalLink/{portal_id}
+            /userPortalLink/{portal_link_id}
         """
         )
 
@@ -308,7 +322,7 @@ class UserPortalLinkAPI(APIClient):
     def add_bulk_portal_links(
         self,
         portal_links: list,
-        user_portal_ids: list = None,
+        user_portal_link_ids: list = None,
         **kwargs
     ) -> tuple:
         """
@@ -324,7 +338,7 @@ class UserPortalLinkAPI(APIClient):
                 - **link_path** (str): The path component of the portal link URL.
                 - **name** (str): The name of the portal link.
                 - **enabled** (bool): Whether the portal link is enabled or not.
-            user_portal_ids (list[str], optional): A list of user portal IDs to associate with the portal links.
+            user_portal_link_ids (list[str], optional): A list of user portal IDs to associate with the portal links.
             **kwargs: Additional keyword arguments that may be passed to the function.
 
         Returns:
@@ -355,7 +369,7 @@ class UserPortalLinkAPI(APIClient):
             ...             enabled=True,
             ...         )
             ...     ],
-            ...     user_portal_ids=["72058304855142803"]
+            ...     user_portal_link_ids=["72058304855142803"]
             ... )
             >>> if err:
             ...     print(f"Error adding bulk consoles: {err}")
@@ -391,7 +405,7 @@ class UserPortalLinkAPI(APIClient):
                 }
             )
 
-        user_portals = [{"id": pid} for pid in user_portal_ids] if user_portal_ids else []
+        user_portals = [{"id": pid} for pid in user_portal_link_ids] if user_portal_link_ids else []
 
         body = {
             "userPortalLinks": user_portal_links,
@@ -424,12 +438,12 @@ class UserPortalLinkAPI(APIClient):
 
         return (result, response, None)
 
-    def get_user_portal_link(self, portal_id: str, query_params=None) -> tuple:
+    def get_user_portal_link(self, portal_link_id: str, query_params=None) -> tuple:
         """
         Returns information on a User Portal Links for Specified Portal.
 
         Args:
-            portal_id (str): The unique identifier for the User Portal Link.
+            portal_link_id (str): The unique identifier for the User Portal Link.
 
         Returns:
             UserPortalLink: The corresponding portal link object.
@@ -445,7 +459,7 @@ class UserPortalLinkAPI(APIClient):
         api_url = format_url(
             f"""{
             self._zpa_base_endpoint}
-            /userPortalLink/userPortal/{portal_id}
+            /userPortalLink/userPortal/{portal_link_id}
         """
         )
 

@@ -173,6 +173,10 @@ sweep\:zpa:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZPA_SDK_TEST_SWEEP=true python tests/integration/zpa/sweep/run_sweep.py --sweep
 
+sweep\:zidentity:
+	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
+	ZIDENTITY_SDK_TEST_SWEEP=true python tests/integration/zidentity/sweep/run_sweep.py --sweep
+
 
 build\:dist:
 	python3 setup.py sdist bdist_wheel
