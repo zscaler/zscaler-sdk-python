@@ -16,7 +16,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
-from zscaler.zidentity.models import groups as groups
 from zscaler.zidentity.models import common
 
 
@@ -45,7 +44,7 @@ class Users(ZscalerObject):
                 if "next_link" in config else None
             self.prev_link = config["prev_link"] \
                 if "prev_link" in config else None
-            self.entity_groups = ZscalerCollection.form_list(
+            self.records = ZscalerCollection.form_list(
                 config["records"] if "records" in config else [], UserRecord
             )
         else:

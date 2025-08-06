@@ -60,7 +60,7 @@ class GroupsAPI(APIClient):
             ... if error:
             ...     print(f"Error listing groups: {error}")
             ...     return
-            ... for group in group_list:
+            ... for resource in group_list.records:
             ...     print(group.as_dict())
 
             List groups, limiting to a maximum of 10 items:
@@ -69,7 +69,7 @@ class GroupsAPI(APIClient):
             ... if error:
             ...     print(f"Error listing groups: {error}")
             ...     return
-            ... for group in department_list:
+            ... for resource in group_list.records:
             ...     print(group.as_dict())
 
         """
@@ -96,9 +96,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(Groups(self.form_response_body(item)))
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

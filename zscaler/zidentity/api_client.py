@@ -60,7 +60,7 @@ class APIClientAPI(APIClient):
             ... if error:
             ...     print(f"Error listing clients: {error}")
             ...     return
-            ... for client in client_list:
+            ... for client in client_list.records:
             ...     print(client.as_dict())
 
             List clients, limiting to a maximum of 10 items:
@@ -69,7 +69,7 @@ class APIClientAPI(APIClient):
             ... if error:
             ...     print(f"Error listing clients: {error}")
             ...     return
-            ... for client in client_list:
+            ... for client in client_list.records:
             ...     print(client.as_dict())
 
         """
@@ -96,9 +96,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(APIClients(self.form_response_body(item)))
+            result = APIClients(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

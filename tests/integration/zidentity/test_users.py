@@ -82,12 +82,13 @@ class TestUsers:
             except Exception as e:
                 errors.append(f"Exception during get_user: {str(e)}")
 
-            # Test: List Groups
+            # Test: List Users
             try:
                 if update_user:
-                    users, _, error = client.zidentity.users.list_users()
+                    users_response, _, error = client.zidentity.users.list_users()
                     assert error is None, f"List Users Error: {error}"
-                    assert users is not None and isinstance(users, list), "No groups found or invalid format."
+                    assert users_response is not None, "Expected a users response object"
+                    assert hasattr(users_response, 'records'), "Expected users_response to have records field"
             except Exception as e:
                 errors.append(f"Exception during list_users: {str(e)}")
 
