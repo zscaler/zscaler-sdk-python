@@ -69,7 +69,7 @@ class UsersAPI(APIClient):
             ... if error:
             ...     print(f"Error listing users: {error}")
             ...     return
-            ... for user in user_list:
+            ... for user in user_list.records:
             ...     print(user.as_dict())
 
             List users, limiting to a maximum of 10 items:
@@ -78,7 +78,7 @@ class UsersAPI(APIClient):
             ... if error:
             ...     print(f"Error listing users: {error}")
             ...     return
-            ... for user in user_list:
+            ... for user in user_list.records:
             ...     print(user.as_dict())
 
         """
@@ -105,9 +105,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(Users(self.form_response_body(item)))
+            result = Users(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 

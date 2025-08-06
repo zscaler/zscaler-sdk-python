@@ -62,7 +62,7 @@ class ResourceServersAPI(APIClient):
             ... if error:
             ...     print(f"Error listing resource servers: {error}")
             ...     return
-            ... for resource in resource_list:
+            ... for resource in resource_list.records:
             ...     print(resource.as_dict())
 
             List resource servers, limiting to a maximum of 10 items:
@@ -71,7 +71,7 @@ class ResourceServersAPI(APIClient):
             ... if error:
             ...     print(f"Error listing resource servers: {error}")
             ...     return
-            ... for resource in resource_list:
+            ... for resource in resource_list.records:
             ...     print(resource.as_dict())
 
         """
@@ -98,9 +98,7 @@ class ResourceServersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(ResourceServers(self.form_response_body(item)))
+            result = ResourceServers(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
