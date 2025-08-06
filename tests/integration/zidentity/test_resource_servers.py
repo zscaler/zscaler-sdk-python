@@ -38,9 +38,10 @@ class TestResourceServers:
         try:
             resource_response, _, err = client.zidentity.resource_servers.list_resource_servers()  # Correctly unpack the tuple
             assert err is None, f"Error listing resource servers: {err}"
-            assert isinstance(resource_response, list), "Expected a list of resource servers"
-            if resource_response:  # If there are any resource servers, proceed with further operations
-                first_resource = resource_response[0]
+            assert resource_response is not None, "Expected a resource servers response object"
+            assert hasattr(resource_response, 'records'), "Expected resource_response to have records field"
+            if resource_response.records:  # If there are any resource servers, proceed with further operations
+                first_resource = resource_response.records[0]
                 resource_id = first_resource.id  # Access the 'id' attribute using dot notation
                 assert resource_id is not None, "Resource Server ID should not be None"
         except Exception as exc:
