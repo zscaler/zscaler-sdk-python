@@ -83,9 +83,10 @@ class TestGroups:
             # Test: List Groups
             try:
                 if update_group:
-                    groups, _, error = client.zidentity.groups.list_groups(query_params={"search": update_group.name})
+                    groups_response, _, error = client.zidentity.groups.list_groups(query_params={"search": update_group.name})
                     assert error is None, f"List Groups Error: {error}"
-                    assert groups is not None and isinstance(groups, list), "No groups found or invalid format."
+                    assert groups_response is not None, "Expected a groups response object"
+                    assert hasattr(groups_response, 'records'), "Expected groups_response to have records field"
             except Exception as e:
                 errors.append(f"Exception during list_groups: {str(e)}")
 
