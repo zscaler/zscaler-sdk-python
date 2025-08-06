@@ -341,7 +341,7 @@ class GroupsAPI(APIClient):
             ... if error:
             ...     print(f"Error listing users: {error}")
             ...     return
-            ... for user in users_list:
+            ... for user in users_list.records:
             ...     print(user.as_dict())
 
             List users, limiting to a maximum of 10 items:
@@ -369,9 +369,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(Groups(self.form_response_body(item)))
+            result = Groups(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
 
