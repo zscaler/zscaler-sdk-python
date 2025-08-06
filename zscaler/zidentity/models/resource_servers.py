@@ -44,7 +44,7 @@ class ResourceServers(ZscalerObject):
                 if "next_link" in config else None
             self.prev_link = config["prev_link"] \
                 if "prev_link" in config else None
-            self.entity_groups = ZscalerCollection.form_list(
+            self.records = ZscalerCollection.form_list(
                 config["records"] if "records" in config else [], ResourceServersRecord
             )
         else:

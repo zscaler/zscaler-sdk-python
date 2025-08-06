@@ -775,6 +775,69 @@ This SDK supports programmatic integration with the Zscaler ZIdentity API servic
 
 The authentication to Zscaler ZIdentity service via the OneAPI framework, requires uses the API client `ZscalerClient`
 
+#### Zidentity Pagination
+
+Zidentity API supports pagination with a maximum page size of 100 records per request. The SDK automatically handles pagination for Zidentity endpoints.
+
+**Key Features:**
+- **Maximum Page Size**: 100 records per page (enforced by API)
+- **Automatic Pagination**: SDK handles pagination transparently
+- **Response Format**: Returns data in `records` field with pagination metadata
+
+**Example Usage:**
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "cloud": "beta",
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        # Request 300 groups (will automatically fetch 3 pages)
+        groups_response, response, error = client.zidentity.groups.list_groups(
+            query_params={'page_size': 300}
+        )
+        
+        if error:
+            print(f"Error listing groups: {error}")
+            return
+        
+        print(f"Total groups in response: {len(groups_response.records)}")
+        print(f"Total available: {groups_response.results_total}")
+        print(f"Page offset: {groups_response.page_offset}")
+        print(f"Page size: {groups_response.page_size}")
+        
+        # Access individual groups
+        for group in groups_response.records:
+            print(f"Group: {group.name} (ID: {group.id})")
+        
+        # Manual pagination using response object
+        while response.has_next():
+            next_results, error = response.next()
+            if error:
+                print(f"Error fetching next page: {error}")
+                break
+            
+            print(f"Next page: {len(next_results)} groups")
+            for group in next_results:
+                print(f"Group: {group['name']} (ID: {group['id']})")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Pagination Metadata:**
+- `results_total`: Total number of records available
+- `page_offset`: Current page offset
+- `page_size`: Number of records per page (max 100)
+- `next_link`: URL for next page (if available)
+- `prev_link`: URL for previous page (if available)
+
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
 | `clientId`       | _(String)_ Zscaler API Client ID, used with `clientSecret` or `PrivateKey` OAuth auth mode.| `ZSCALER_CLIENT_ID` |

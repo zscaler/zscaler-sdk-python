@@ -72,11 +72,11 @@ class ZscalerAPIResponse:
             self._params["pagesize"] = self.SERVICE_PAGE_LIMITS["ZPA"]["max"]
 
         # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
-        if self._service_type.upper() == "ZIA":
+        if self._service_type == "zia":
             if "page_size" in self._params:
                 self._params["pageSize"] = self._params.pop("page_size")
 
-        if self._service_type.upper() == "ZIA":
+        if self._service_type == "zia":
             # If user supplied pageNumber, initialize self._page accordingly
             if "pageNumber" in self._params:
                 try:
@@ -160,6 +160,14 @@ class ZscalerAPIResponse:
         elif self._service_type == "ZDX":
             self._list = self._body.get("items", [])
             self._next_offset = self._body.get("next_offset")
+        elif self._service_type == "zidentity":
+            # Zidentity uses "records" field for paginated responses
+            self._list = self._body.get("records", [])
+            self._next_link = self._body.get("next_link")
+            self._prev_link = self._body.get("prev_link")
+            self._results_total = self._body.get("results_total")
+            self._page_offset = self._body.get("pageOffset")
+            self._page_size = self._body.get("pageSize")
         else:
             # ZPA and possibly other services use a dict with "list" field
             self._list = self._body.get("list", [])
@@ -267,6 +275,20 @@ class ZscalerAPIResponse:
             # Ensure page parameter is never set for ZIA
             self._params.pop("page", None)
             logger.debug(f"[DEBUG] _fetch_next_page params for ZIA: {self._params}")
+        elif self._service_type == "zidentity":
+            logger.debug("[DEBUG] Taking ZIDENTITY pagination branch.")
+            # For Zidentity, use the next_link URL directly
+            if self._next_link:
+                # Parse the next_link URL to extract parameters
+                from urllib.parse import urlparse, parse_qs
+                parsed_url = urlparse(self._next_link)
+                query_params = parse_qs(parsed_url.query)
+                # Update params with the next page parameters
+                for key, value in query_params.items():
+                    self._params[key] = value[0] if len(value) == 1 else value
+                # Update the URL to the base URL (remove the full next_link)
+                self._url = f"{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}"
+            logger.debug(f"[DEBUG] _fetch_next_page params for ZIDENTITY: {self._params}")
         else:
             logger.debug("[DEBUG] Taking ZPA/other pagination branch.")
             self._page += 1
@@ -301,6 +323,11 @@ class ZscalerAPIResponse:
             # More pages if next_offset is not None
             has_next = self._next_offset is not None
             logger.debug("Has next page for ZDX: %s", has_next)
+            return has_next
+        elif self._service_type == "zidentity":
+            # More pages if next_link is not None
+            has_next = self._next_link is not None
+            logger.debug("Has next page for ZIDENTITY: %s", has_next)
             return has_next
         else:
             # For ZIA/ZCC, if we got results last time, assume we can try next page
