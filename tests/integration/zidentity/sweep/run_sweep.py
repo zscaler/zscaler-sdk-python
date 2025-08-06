@@ -68,10 +68,12 @@ class TestSweepUtility:
     def sweep_groups(self):
         logging.info("Starting to sweep groups")
         try:
-            groups, _, error = self.client.zidentity.groups.list_groups()
+            groups_response, _, error = self.client.zidentity.groups.list_groups()
             if error:
                 raise Exception(f"Error listing groups: {error}")
 
+            # Access the records field from the response object
+            groups = groups_response.records if hasattr(groups_response, 'records') else []
             test_groups = [pra for pra in groups if hasattr(pra, "name") and pra.name.startswith("tests-")]
             logging.info(f"Found {len(test_groups)} group named starting with 'tests-' to delete.")
 
