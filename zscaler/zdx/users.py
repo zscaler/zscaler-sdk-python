@@ -16,8 +16,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.zdx.models.users import Users
-from zscaler.zdx.models.users import UserDetails
+from zscaler.zdx.models.users import ActiveUsers
+from zscaler.zdx.models.users import UserDeviceDetails
 from zscaler.utils import format_url, zdx_params
 
 
@@ -101,10 +101,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
 
         try:
-            parsed_response = self.form_response_body(response.get_body())
-            users_list = parsed_response.get("users", [])
-            result = [UserDetails(user) for user in users_list]
-
+            result = [ActiveUsers(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 
@@ -160,7 +157,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [UserDetails(self.form_response_body(response.get_body()))]
+            result = [UserDeviceDetails(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

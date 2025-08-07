@@ -18,6 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.alerts import Alerts
 from zscaler.zdx.models.alerts import AlertDetails
+from zscaler.zdx.models.alerts import AffectedDevices
 from zscaler.utils import format_url, zdx_params
 
 
@@ -102,20 +103,11 @@ class AlertsAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # try:
-        #     parsed_response = self.form_response_body(response.get_body())
-        #     alerts_list = parsed_response.get("alerts", [])
-        #     result = [Alerts(alert) for alert in alerts_list]
-        # except Exception as error:
-        #     return (None, response, error)
-        # return (result, response, None)
-
         try:
-            result = []
-            for item in response.get_results():
-                result.append(Alerts(self.form_response_body(item)))
+            result = [Alerts(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
+
         return (result, response, None)
 
     def get_alert(self, alert_id: str) -> tuple:
@@ -316,7 +308,7 @@ class AlertsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [AlertDetails(self.form_response_body(response.get_body()))]
+            result = [AffectedDevices(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

@@ -1,4 +1,3 @@
-# flake8: noqa
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,20 +14,19 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-# AUTO-GENERATED! DO NOT EDIT FILE DIRECTLY
-# SEE CONTRIBUTOR DOCUMENTATION
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zia.models import common
 
 
-class Activeapplications(ZscalerObject):
+class Snapshot(ZscalerObject):
     """
-    A class for Activeapplications objects.
+    A class for Snapshot objects.
     """
 
     def __init__(self, config=None):
         """
-        Initialize the Activeapplications model based on API response.
+        Initialize the Snapshot model based on API response.
 
         Args:
             config (dict): A dictionary representing the configuration.
@@ -36,15 +34,29 @@ class Activeapplications(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.id = config["id"] if "id" in config else None
-            self.name = config["name"] if "name" in config else None
-            self.score = config["score"] if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
+            self.name = config["name"] \
+                if "name" in config else None
+            self.alert_id = config["alert_id"] \
+                if "alert_id" in config else None
+            self.expiry = config["expiry"] \
+                if "expiry" in config else None
+            self.obfuscation = ZscalerCollection.form_list(
+                config["obfuscation"] if "obfuscation" in config else [], str
+            )
+            self.id = config["id"] \
+                if "id" in config else None
+            self.url = config["url"] \
+                if "url" in config else None
+            self.status = config["status"] \
+                if "status" in config else None
         else:
-            self.id = None
             self.name = None
-            self.score = None
-            self.most_impacted_geo = None
+            self.alert_id = None
+            self.expiry = None
+            self.obfuscation = ZscalerCollection.form_list([], str)
+            self.id = None
+            self.url = None
+            self.status = None
 
     def request_format(self):
         """
@@ -52,10 +64,13 @@ class Activeapplications(ZscalerObject):
         """
         parent_req_format = super().request_format()
         current_obj_format = {
-            "id": self.id,
             "name": self.name,
-            "score": self.score,
-            "most_impacted_geo": self.most_impacted_geo,
+            "alert_id": self.alert_id,
+            "expiry": self.expiry,
+            "obfuscation": self.obfuscation,
+            "id": self.id,
+            "url": self.url,
+            "status": self.status
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

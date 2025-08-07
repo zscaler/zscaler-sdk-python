@@ -21,6 +21,7 @@ from zscaler.zdx.devices import DevicesAPI
 from zscaler.zdx.inventory import InventoryAPI
 from zscaler.zdx.troubleshooting import TroubleshootingAPI
 from zscaler.zdx.users import UsersAPI
+from zscaler.zdx.snapshot import SnapshotAPI
 
 
 class ZDXService:
@@ -84,3 +85,11 @@ class ZDXService:
 
         """
         return UsersAPI(self._request_executor)
+
+    @property
+    def snapshot(self):
+        """
+        The interface object for the :ref:`ZDX Snapshot Alert interface <zdx-snapshot>`.
+
+        """
+        return SnapshotAPI(self._request_executor)

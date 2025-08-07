@@ -91,12 +91,9 @@ class InventoryAPI(APIClient):
             return (None, response, error)
 
         try:
-            # Convert the response body into a dictionary
-            data = self.form_response_body(response.get_body())
-            # Extract the list of software items (each as a dict)
-            software_items = data.get("software", [])
-            # Instantiate a SoftwareList object for each item using the defensive model
-            result = [SoftwareList(item) for item in software_items]
+            result = []
+            for item in response.get_results():
+                result.append(SoftwareList(item))
         except Exception as error:
             return (None, response, error)
 
@@ -168,8 +165,9 @@ class InventoryAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceSoftwareInventory(self.form_response_body(response.get_body()))]
+            # Parse the wrapper response and extract the individual software items
+            software_list_wrapper = SoftwareList(self.form_response_body(response.get_body()))
+            result = software_list_wrapper.software  # This is the list of DeviceSoftwareInventory objects
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
