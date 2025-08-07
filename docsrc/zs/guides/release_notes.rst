@@ -6,6 +6,22 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.7.3 (August 6, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+-------------
+
+* (`#345 <https://github.com/zscaler/zscaler-sdk-python/pull/345>`_) - Fixed ZDX models and on demand pagination via `next_offset` parameter
+* (`#345 <https://github.com/zscaler/zscaler-sdk-python/pull/345>`_) - Added new ZDX Endpoint `/snapshot/alert`
+
+
+
 1.7.2 (August 5, 2025)
 -------------------------
 

@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.troubleshooting import DeviceDeepTraces
-from zscaler.zdx.models.troubleshooting import StartDeepTrace
+from zscaler.zdx.models.troubleshooting import TraceDetails
 from zscaler.zdx.models.troubleshooting import DeviceTopProcesses
 from zscaler.zdx.models.troubleshooting import DeepTraceWebProbeMetrics
 from zscaler.zdx.models.troubleshooting import DeepTraceCloudPathMetric
@@ -34,8 +34,7 @@ class TroubleshootingAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"
 
-    @zdx_params
-    def list_deeptraces(self, device_id: str, query_params=None) -> tuple:
+    def list_deeptraces(self, device_id: str) -> tuple:
         """
         Returns a list of all deep traces for a specific device.
 
@@ -63,19 +62,15 @@ class TroubleshootingAPI(APIClient):
         """
         )
 
-        query_params = query_params or {}
-
-        local_search = query_params.pop("search", None)
-
         body = {}
         headers = {}
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
 
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request)
+        response, error = self._request_executor.execute(request, DeviceDeepTraces)
         if error:
             return (None, response, error)
 
@@ -85,10 +80,6 @@ class TroubleshootingAPI(APIClient):
                 results.append(DeviceDeepTraces(item))
         except Exception as exc:
             return (None, response, exc)
-
-        if local_search:
-            lower_search = local_search.lower()
-            results = [r for r in results if lower_search in (r.name.lower() if r.name else "")]
 
         return (results, response, None)
 
@@ -192,12 +183,12 @@ class TroubleshootingAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, StartDeepTrace)
+        response, error = self._request_executor.execute(request, TraceDetails)
         if error:
             return (None, response, error)
 
         try:
-            result = StartDeepTrace(self.form_response_body(response.get_body()))
+            result = TraceDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

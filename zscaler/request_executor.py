@@ -282,6 +282,10 @@ class RequestExecutor:
         if self.use_legacy_client and self.zdx_legacy_client:
             return body  # Do not convert anything, just return as-is
 
+        # Special handling for ZDX endpoints - keep snake_case format
+        if "/zdx/" in endpoint:
+            return body  # Do not convert ZDX requests to camelCase
+
         # Preserve existing logic for other services
         if body:
             body = convert_keys_to_camel_case(body)

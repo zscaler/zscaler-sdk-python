@@ -373,7 +373,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceAppWebProbes(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceAppWebProbes(item))
         except Exception as error:
             return (None, response, error)
 
@@ -440,7 +442,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceWebProbePageFetch(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceWebProbePageFetch(item))
         except Exception as error:
             return (None, response, error)
 
@@ -497,7 +501,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceAppCloudPathProbes(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceAppCloudPathProbes(item))
         except Exception as error:
             return (None, response, error)
 
@@ -554,7 +560,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceCloudPathProbesMetric(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceCloudPathProbesMetric(item))
         except Exception as error:
             return (None, response, error)
 
@@ -613,7 +621,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceCloudPathProbesHopData(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceCloudPathProbesHopData(item))
         except Exception as error:
             return (None, response, error)
 
@@ -666,7 +676,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [CallQualityMetrics(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(CallQualityMetrics(item))
         except Exception as error:
             return (None, response, error)
 
@@ -721,7 +733,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceHealthMetrics(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceHealthMetrics(item))
         except Exception as error:
             return (None, response, error)
 
@@ -776,7 +790,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceEvents(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceEvents(item))
         except Exception as error:
             return (None, response, error)
 
@@ -834,7 +850,9 @@ class DevicesAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [DeviceActiveGeo(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(DeviceActiveGeo(item))
         except Exception as error:
             return (None, response, error)
 
