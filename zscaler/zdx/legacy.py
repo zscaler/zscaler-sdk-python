@@ -417,6 +417,16 @@ class LegacyZDXClientHelper:
 
         return UsersAPI(self.request_executor)
 
+    @property
+    def snapshot(self):
+        """
+        The interface object for the :ref:`ZDX Snapshot Alert interface <zdx-snapshot>`.
+
+        """
+        from zscaler.zdx.snapshot import SnapshotAPI
+
+        return SnapshotAPI(self.request_executor)
+
     """
     Misc
     """

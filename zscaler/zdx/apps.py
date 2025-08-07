@@ -20,8 +20,8 @@ from zscaler.zdx.models.applications import ActiveApplications
 from zscaler.zdx.models.applications import ApplicationScore
 from zscaler.zdx.models.applications import ApplicationScoreTrend
 from zscaler.zdx.models.applications import ApplicationMetrics
-from zscaler.zdx.models.users import UserDetails
 from zscaler.zdx.models.application_users import ApplicationUserDetails
+from zscaler.zdx.models.application_users import ApplicationActiveUsers
 from zscaler.utils import format_url, zdx_params
 
 
@@ -305,7 +305,9 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ApplicationMetrics(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(ApplicationMetrics(item))
         except Exception as error:
             return (None, response, error)
 
@@ -381,18 +383,8 @@ class AppsAPI(APIClient):
         if error:
             return (None, response, error)
 
-        # try:
-        #     result = [ApplicationUsers(
-        #         self.form_response_body(response.get_body()))]
-        # except Exception as error:
-        #     return (None, response, error)
-
-        # return (result, response, None)
         try:
-            parsed_response = self.form_response_body(response.get_body())
-            users_list = parsed_response.get("users", [])
-            result = [UserDetails(user) for user in users_list]
-
+            result = [ApplicationActiveUsers(self.form_response_body(response.get_body()))]
         except Exception as error:
             return (None, response, error)
 

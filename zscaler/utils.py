@@ -426,6 +426,7 @@ def zdx_params(func):
             ("score_bucket", "score_bucket"),  # New: str (poor, okay, good)
             ("limit", "limit"),  # New: int
             ("offset", "offset"),  # New: str (API-defined pagination)
+            ("expiry", "expiry"),  # New: int
         ]:
             if key in kwargs:
                 value = kwargs.pop(key)

@@ -16,16 +16,17 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zdx.models import common
 
 
-class ApplicationUsers(ZscalerObject):
+class ApplicationActiveUsers(ZscalerObject):
     """
-    A class for Applicationusers objects.
+    A class for active users, their devices, active geolocations objects.
     """
 
     def __init__(self, config=None):
         """
-        Initialize the Applicationusers model based on API response.
+        Initialize the active users, their devices, active geolocations model based on API response.
 
         Args:
             config (dict): A dictionary representing the configuration.
@@ -33,18 +34,24 @@ class ApplicationUsers(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.users = ZscalerCollection.form_list(config["users"] if "users" in config else [], str)
             self.next_offset = config["next_offset"] if "next_offset" in config else None
+
+            self.users = ZscalerCollection.form_list(
+                config["users"] if "users" in config else [], common.CommonIDName
+            )
         else:
-            self.users = ZscalerCollection.form_list([], str)
             self.next_offset = None
+            self.users = []
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"users": self.users, "next_offset": self.next_offset}
+        current_obj_format = {
+            "next_offset": self.next_offset,
+            "users": self.users,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -68,13 +75,15 @@ class ApplicationUserDetails(ZscalerObject):
             self.name = config["name"] if "name" in config else None
             self.email = config["email"] if "email" in config else None
             self.score = config["score"] if "score" in config else None
-            self.devices = ZscalerCollection.form_list(config["devices"] if "devices" in config else [], str)
+            self.devices = ZscalerCollection.form_list(
+                config["devices"] if "devices" in config else [], common.Devices
+            )
         else:
             self.id = None
             self.name = None
             self.email = None
             self.score = None
-            self.devices = ZscalerCollection.form_list([], str)
+            self.devices = []
 
     def request_format(self):
         """
