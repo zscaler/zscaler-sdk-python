@@ -305,7 +305,9 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         try:
-            result = [ApplicationMetrics(self.form_response_body(response.get_body()))]
+            result = []
+            for item in response.get_results():
+                result.append(ApplicationMetrics(item))
         except Exception as error:
             return (None, response, error)
 
@@ -387,15 +389,6 @@ class AppsAPI(APIClient):
             return (None, response, error)
 
         return (result, response, None)
-        # try:
-        #     parsed_response = self.form_response_body(response.get_body())
-        #     users_list = parsed_response.get("users", [])
-        #     result = [UserDetails(user) for user in users_list]
-
-        # except Exception as error:
-        #     return (None, response, error)
-
-        # return (result, response, None)
 
     @zdx_params
     def get_app_user(self, app_id: str, user_id: str, query_params=None) -> tuple:
