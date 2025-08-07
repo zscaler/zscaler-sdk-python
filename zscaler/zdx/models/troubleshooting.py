@@ -16,16 +16,17 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zdx.models import devices as devices
 
 
 class DeviceDeepTraces(ZscalerObject):
     """
-    A class for DeviceDeepTraces objects.
+    A class for DeepTrace objects.
     """
 
     def __init__(self, config=None):
         """
-        Initialize the DeviceDeepTraces model based on API response.
+        Initialize the DeepTrace model based on API response.
 
         Args:
             config (dict): A dictionary representing the configuration.
@@ -33,21 +34,111 @@ class DeviceDeepTraces(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.trace_id = config.get("trace_id")
-            self.trace_details = config.get("trace_details")
-            self.status = config.get("status")
-            self.created_at = config.get("created_at")
-            self.started_at = config.get("started_at")
-            self.ended_at = config.get("ended_at")
-            self.expected_time_minutes = config.get("expected_time_minutes")
+            self.trace_id = config["trace_id"] \
+                if "trace_id" in config else None
+            self.trace_details = config["trace_details"] \
+                if "trace_details" in config else None
+            self.status = config["status"] \
+                if "status" in config else None
+            self.expected_time_minutes = config["expected_time_minutes"] \
+                if "expected_time_minutes" in config else None
+            self.created_at = config["created_at"] \
+                if "created_at" in config else None
+            self.started_at = config["started_at"] \
+                if "started_at" in config else None
+            self.ended_at = config["ended_at"] \
+                if "ended_at" in config else None
+
+            if "trace_details" in config:
+                if isinstance(config["trace_details"], TraceDetails):
+                    self.trace_details = config["trace_details"]
+                elif config["trace_details"] is not None:
+                    self.trace_details = TraceDetails(config["trace_details"])
+                else:
+                    self.trace_details = None
+            else:
+                self.trace_details = None
         else:
             self.trace_id = None
             self.trace_details = None
             self.status = None
+            self.expected_time_minutes = None
             self.created_at = None
             self.started_at = None
             self.ended_at = None
-            self.expected_time_minutes = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "trace_id": self.trace_id,
+            "trace_details": self.trace_details,
+            "status": self.status,
+            "expected_time_minutes": self.expected_time_minutes,
+            "created_at": self.created_at,
+            "started_at": self.started_at,
+            "ended_at": self.ended_at
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class TraceDetails(ZscalerObject):
+    """
+    A class for Tracedetails objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Tracedetails model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.session_name = config["session_name"] \
+                if "session_name" in config else None
+            self.user_id = config["user_id"] \
+                if "user_id" in config else None
+            self.username = config["username"] \
+                if "username" in config else None
+            self.device_id = config["device_id"] \
+                if "device_id" in config else None
+            self.device_name = config["device_name"] \
+                if "device_name" in config else None
+            self.session_length_minutes = config["session_length_minutes"] \
+                if "session_length_minutes" in config else None
+            self.probe_device = config["probe_device"] \
+                if "probe_device" in config else None
+        else:
+            self.session_name = None
+            self.user_id = None
+            self.username = None
+            self.device_id = None
+            self.device_name = None
+            self.session_length_minutes = None
+            self.probe_device = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "name": self.session_name,
+            "user_id": self.user_id,
+            "username": self.username,
+            "device_id": self.device_id,
+            "device_name": self.device_name,
+            "session_length_minutes": self.session_length_minutes,
+            "probe_device": self.probe_device
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
 
 
 class StartDeepTrace(ZscalerObject):
@@ -320,17 +411,22 @@ class DeepTraceEvents(ZscalerObject):
 
         if config:
             self.timestamp = config["timestamp"] if "timestamp" in config else None
-            self.events = ZscalerCollection.form_list(config["events"] if "events" in config else [], str)
+            self.events = ZscalerCollection.form_list(
+                    config["events"] if "events" in config else [], devices.Events
+                )
         else:
             self.timestamp = None
-            self.events = ZscalerCollection.form_list([], str)
+            self.events = []
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"timestamp": self.timestamp, "events": self.events}
+        current_obj_format = {
+            "timestamp": self.timestamp,
+            "events": self.events
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -365,6 +461,11 @@ class DeviceApplicationAnalysis(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"device_id": self.device_id, "app_id": self.app_id, "t0": self.t0, "t1": self.t1}
+        current_obj_format = {
+            "device_id": self.device_id,
+            "app_id": self.app_id,
+            "t0": self.t0,
+            "t1": self.t1
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format

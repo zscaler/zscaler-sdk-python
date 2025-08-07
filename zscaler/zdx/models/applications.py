@@ -16,16 +16,17 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zdx.models import common
 
 
 class ActiveApplications(ZscalerObject):
     """
-    A class for ActiveApplications objects.
+    A class for Active Applications objects.
     """
 
     def __init__(self, config=None):
         """
-        Initialize the ActiveApplications model based on API response.
+        Initialize the Active Applications model based on API response.
 
         Args:
             config (dict): A dictionary representing the configuration.
@@ -36,12 +37,24 @@ class ActiveApplications(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.score = config["score"] if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
+            self.total_users = config["total_users"] if "total_users" in config else None
+
+            if "most_impacted_region" in config:
+                if isinstance(config["most_impacted_region"], common.MostImpactedRegion):
+                    self.most_impacted_region = config["most_impacted_region"]
+                elif config["most_impacted_region"] is not None:
+                    self.most_impacted_region = common.MostImpactedRegion(config["most_impacted_region"])
+                else:
+                    self.most_impacted_region = None
+            else:
+                self.most_impacted_region = None
+
         else:
             self.id = None
             self.name = None
             self.score = None
-            self.most_impacted_geo = None
+            self.total_users = None
+            self.most_impacted_region = None
 
     def request_format(self):
         """
@@ -52,7 +65,8 @@ class ActiveApplications(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "score": self.score,
-            "most_impacted_geo": self.most_impacted_geo,
+            "total_users": self.total_users,
+            "most_impacted_region": self.most_impacted_region,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -60,7 +74,7 @@ class ActiveApplications(ZscalerObject):
 
 class ApplicationScore(ZscalerObject):
     """
-    A class for ApplicationScore objects.
+    A class for Application Score objects.
     """
 
     def __init__(self, config=None):
@@ -76,13 +90,31 @@ class ApplicationScore(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.score = config["score"] if "score" in config else None
-            self.most_impacted_geo = config["most_impacted_geo"] if "most_impacted_geo" in config else None
-            self.stats = config["stats"] if "stats" in config else None
+
+            if "most_impacted_region" in config:
+                if isinstance(config["most_impacted_region"], common.MostImpactedRegion):
+                    self.most_impacted_region = config["most_impacted_region"]
+                elif config["most_impacted_region"] is not None:
+                    self.most_impacted_region = common.MostImpactedRegion(config["most_impacted_region"])
+                else:
+                    self.most_impacted_region = None
+            else:
+                self.most_impacted_region = None
+
+            if "stats" in config:
+                if isinstance(config["stats"], Stats):
+                    self.stats = config["stats"]
+                elif config["stats"] is not None:
+                    self.stats = Stats(config["stats"])
+                else:
+                    self.stats = None
+            else:
+                self.stats = None
         else:
             self.id = None
             self.name = None
             self.score = None
-            self.most_impacted_geo = None
+            self.most_impacted_region = None
             self.stats = None
 
     def request_format(self):
@@ -94,8 +126,51 @@ class ApplicationScore(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "score": self.score,
-            "most_impacted_geo": self.most_impacted_geo,
+            "most_impacted_region": self.most_impacted_region,
             "stats": self.stats,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Stats(ZscalerObject):
+    """
+    A class for Stats objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Stats model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.active_users = config["active_users"] if "active_users" in config else None
+            self.active_devices = config["active_devices"] if "active_devices" in config else None
+            self.num_poor = config["num_poor"] if "num_poor" in config else None
+            self.num_okay = config["num_okay"] if "num_okay" in config else None
+            self.num_good = config["num_good"] if "num_good" in config else None
+        else:
+            self.active_users = None
+            self.active_devices = None
+            self.num_poor = None
+            self.num_okay = None
+            self.num_good = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "active_users": self.active_users,
+            "active_devices": self.active_devices,
+            "num_poor": self.num_poor,
+            "num_okay": self.num_okay,
+            "num_good": self.num_good,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -117,17 +192,26 @@ class ApplicationScoreTrend(ZscalerObject):
 
         if config:
             self.metric = config["metric"] if "metric" in config else None
-            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
+            self.unit = config["unit"] if "unit" in config else None
+
+            self.datapoints = ZscalerCollection.form_list(
+                config["datapoints"] if "datapoints" in config else [], common.DataPoints
+            )
         else:
             self.metric = None
-            self.datapoints = ZscalerCollection.form_list([], str)
+            self.unit = None
+            self.datapoints = []
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"metric": self.metric, "datapoints": self.datapoints}
+        current_obj_format = {
+            "metric": self.metric,
+            "unit": self.unit,
+            "datapoints": self.datapoints,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
@@ -149,17 +233,24 @@ class ApplicationMetrics(ZscalerObject):
         if config:
             self.metric = config["metric"] if "metric" in config else None
             self.unit = config["unit"] if "unit" in config else None
-            self.datapoints = ZscalerCollection.form_list(config["datapoints"] if "datapoints" in config else [], str)
+
+            self.datapoints = ZscalerCollection.form_list(
+                config["datapoints"] if "datapoints" in config else [], common.DataPoints
+            )
         else:
             self.metric = None
             self.unit = None
-            self.datapoints = ZscalerCollection.form_list([], str)
+            self.datapoints = []
 
     def request_format(self):
         """
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"metric": self.metric, "unit": self.unit, "datapoints": self.datapoints}
+        current_obj_format = {
+            "metric": self.metric,
+            "unit": self.unit,
+            "datapoints": self.datapoints,
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format
