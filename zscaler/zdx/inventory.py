@@ -89,14 +89,14 @@ class InventoryAPI(APIClient):
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
-
+    
         try:
-            result = []
-            for item in response.get_results():
-                result.append(SoftwareList(item))
+            # Parse the wrapper response and extract the individual software items
+            # Use response.get_body() directly to avoid camelCase conversion for ZDX
+            software_list_wrapper = SoftwareList(response.get_body())
+            result = software_list_wrapper.software  # This is the list of DeviceSoftwareInventory objects
         except Exception as error:
             return (None, response, error)
-
         return (result, response, None)
 
     @zdx_params

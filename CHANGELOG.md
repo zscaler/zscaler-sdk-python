@@ -6,9 +6,10 @@
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
-### Bug Fixes:
+### Enhancements:
 
 * [PR #345](https://github.com/zscaler/zscaler-sdk-python/pull/345) - Fixed ZDX models and on demand pagination via `next_offset` parameter
+* [PR #345](https://github.com/zscaler/zscaler-sdk-python/pull/345) - Added new ZDX Endpoint `/snapshot/alert`
 
 ## 1.7.2 (August 5, 2025)
 

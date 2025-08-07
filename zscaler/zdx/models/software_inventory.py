@@ -74,7 +74,7 @@ class DeviceSoftwareInventory(ZscalerObject):
             self.software_name = config["software_name"] if "software_name" in config else None
             self.vendor = config["vendor"] if "vendor" in config else None
             self.software_group = config["software_group"] if "software_group" in config else None
-            self.sw_install_type = config["sw_install_type"] if "sw_install_type" in config else None
+            self.sw_install_type = config["software_install_type"] if "software_install_type" in config else None
             self.user_total = config["user_total"] if "user_total" in config else None
             self.device_total = config["device_total"] if "device_total" in config else None
         else:
