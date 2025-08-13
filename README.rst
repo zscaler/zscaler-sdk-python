@@ -29,7 +29,7 @@ The Zscaler SDK for Python includes functionality to accelerate development with
 * `Zscaler Private Access (ZPA) <https://help.zscaler.com/zpa/getting-started-zpa-api>`_
 * `Documentation <http://zscaler-sdk-python.readthedocs.io>`
 
-Each package is supportedd by an individual and robust HTTP client designed to handle failures on different levels by performing intelligent retries.
+Each package is supported by an individual and robust HTTP client designed to handle failures on different levels by performing intelligent retries.
 
 **Beta:** This SDK is supported for production use cases, but we do expect future releases to have some interface changes; see `Interface stability`_.
 We are keen to hear feedback from you on these SDKs. Please `file issues <https://github.com/zscaler/zscaler-sdk-python/issues>`_, and we will address them.
