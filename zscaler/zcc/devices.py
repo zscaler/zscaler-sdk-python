@@ -377,27 +377,25 @@ class DevicesAPI(APIClient):
                 ``[query_params.udid]`` {str, optional}: Filter by unique device identifier.
 
         Returns:
-            :obj:`list`: Returns device detail information in the Client Connector Portal.
+            :obj:`DeviceDetails`: Returns device detail information in the Client Connector Portal.
 
         Examples:
-            Prints all devices in the Client Connector Portal to the console:
+            Prints device details in the Client Connector Portal to the console:
 
             >>> details, _, err = client.zcc.devices.get_device_details()
             >>> if err:
             ...     print(f"Error listing device details: {err}")
             ...     return
-            ...  for device in details:
-            ...     print(device.as_dict())
+            ... print(details.as_dict())
 
-            Prints all devices in the Client Connector Portal to the console:
+            Prints device details in the Client Connector Portal to the console:
 
             >>> details, _, err = client.zcc.devices.get_device_details(
             ... query_params:{'username': 'jdoe'})
             >>> if err:
             ...     print(f"Error listing device details: {err}")
             ...     return
-            ...  for device in details:
-            ...     print(device.as_dict())
+            ... print(details.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -417,14 +415,13 @@ class DevicesAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, DeviceDetails)
+        response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = []
-            for item in response.get_results():
-                result.append(DeviceDetails(self.form_response_body(item)))
+            # Handle single object response directly since getDeviceDetails returns a single object
+            result = DeviceDetails(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
