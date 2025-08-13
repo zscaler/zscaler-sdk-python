@@ -331,7 +331,7 @@ class DeviceDetails(ZscalerObject):
             self.user_name = config.get("user_name") or config.get("userName")
             self.zad_version = config.get("zad_version") or config.get("zadVersion")
             self.zapp_arch = config.get("zapp_arch") or config.get("zappArch")
-            
+
             # Additional fields from the API response
             self.id = config["id"] \
                 if "id" in config else None
@@ -391,11 +391,11 @@ class DeviceDetails(ZscalerObject):
                 if "expectedZCCVersionTimestamp" in config else None
             self.zcc_upgrade_status = config["zccUpgradeStatus"] \
                 if "zccUpgradeStatus" in config else None
-                
+
             self.device_otp_array = ZscalerCollection.form_list(
                 config["deviceOtpArray"] if "deviceOtpArray" in config else [], str
             )
-            
+
             if "logFetchInfo" in config:
                 if isinstance(config["logFetchInfo"], LogFetchInfo):
                     self.log_fetch_info = config["logFetchInfo"]
@@ -435,7 +435,7 @@ class DeviceDetails(ZscalerObject):
             self.zapp_arch = None
             self.log_fetch_info = None
             self.device_otp_array = None
-            
+
             # Additional fields from the API response
             self.id = None
             self.internal_model = None

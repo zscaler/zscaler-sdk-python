@@ -6,6 +6,12 @@
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
+### New ZIA Endpoint - Activation
+
+[PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Added the following new ZIA API Endpoints:
+    - Added `GET /eusaStatus/latest` Retrieves the End User Subscription Agreement (EUSA) acceptance status
+    - Added `PUT /eusaStatus/{eusaStatusId}` Updates the EUSA status based on the specified status ID
+
 ### Bug Fixes:
 
 * [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Fixed deauthentication URL construction for production cloud to use `https://api.zsapi.net`, and non-production to use `https://api.<cloud>.zsapi.net`. This resolves DNS errors like `api.%7bself.cloud%7d.zsapi.net` during context exit.
@@ -16,8 +22,9 @@
 
 ### Enhancements:
 
-* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) -  ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
-
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new `passwordProtected` attribute in the File Type Rules model used in `/fileTypeRules` endpoints  
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new new query parameter `fetchLocations` is available for the `GET /locations/groups` endpoint
 
 ## 1.7.3 (August 6, 2025)
 
