@@ -1,4 +1,3 @@
-# flake8: noqa
 """
 Copyright (c) 2023, Zscaler Inc.
 

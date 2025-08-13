@@ -261,7 +261,12 @@ class RequestExecutor:
             "uuid": uuid.uuid4(),
             "service_type": service_type,
         }
-        if use_raw_data_for_body:
+        
+        # Special handling for PAC file validation endpoint
+        if "/pacFiles/validate" in endpoint and service_type == "zia":
+            # For PAC file validation, send as raw data without any modification
+            request["data"] = body
+        elif use_raw_data_for_body:
             request["data"] = body
         else:
             json_payload = self._prepare_body(endpoint, body)
@@ -269,7 +274,14 @@ class RequestExecutor:
         return request, None
 
     def _prepare_headers(self, headers, endpoint=""):
-        headers = {**self._default_headers, **(self._custom_headers or {}), **headers}
+        # Special handling for PAC file validation - preserve custom Content-Type
+        if "/pacFiles/validate" in endpoint:
+            # For PAC validation, don't override Content-Type from default headers
+            default_headers = {k: v for k, v in self._default_headers.items() if k != "Content-Type"}
+            headers = {**default_headers, **(self._custom_headers or {}), **headers}
+        else:
+            headers = {**self._default_headers, **(self._custom_headers or {}), **headers}
+        
         if "/zscsb" not in endpoint and not self.use_legacy_client:
             headers["Authorization"] = f"Bearer {self._oauth._get_access_token()}"
         return headers

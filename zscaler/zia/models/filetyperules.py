@@ -62,6 +62,7 @@ class FileTypeControlRules(ZscalerObject):
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
             self.access_control = config["accessControl"] if "accessControl" in config else None
             self.name = config["name"] if "name" in config else None
+            self.password_protected = config["passwordProtected"] if "passwordProtected" in config else None
 
             self.device_trust_levels = ZscalerCollection.form_list(
                 config["deviceTrustLevels"] if "deviceTrustLevels" in config else [], str
@@ -144,6 +145,7 @@ class FileTypeControlRules(ZscalerObject):
             self.labels = []
             self.zpa_app_segments = []
             self.cloud_applications = []
+            self.password_protected = None
 
     def request_format(self):
         """
@@ -184,6 +186,7 @@ class FileTypeControlRules(ZscalerObject):
             "accessControl": self.access_control,
             "name": self.name,
             "cloudApplications": self.cloud_applications,
+            "passwordProtected": self.password_protected,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

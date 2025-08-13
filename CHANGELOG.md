@@ -1,5 +1,31 @@
 # Zscaler Python SDK Changelog
 
+## 1.7.4 (August 12, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### New ZIA Endpoint - Activation
+
+[PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Added the following new ZIA API Endpoints:
+    - Added `GET /eusaStatus/latest` Retrieves the End User Subscription Agreement (EUSA) acceptance status
+    - Added `PUT /eusaStatus/{eusaStatusId}` Updates the EUSA status based on the specified status ID
+
+### Bug Fixes:
+
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Fixed deauthentication URL construction for production cloud to use `https://api.zsapi.net`, and non-production to use `https://api.<cloud>.zsapi.net`. This resolves DNS errors like `api.%7bself.cloud%7d.zsapi.net` during context exit.
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Deauthentication is now only triggered after mutating requests (POST/PUT/DELETE). GET-only flows will skip deauth to avoid unnecessary calls.
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Treat HTTP 204 as a successful deauthentication response in addition to 200.
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Fixed PAC file validation endpoint to send raw data without encoding or escaping, ensuring proper transmission of PAC file content for validation.
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
+
+### Enhancements:
+
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new `passwordProtected` attribute in the File Type Rules model used in `/fileTypeRules` endpoints  
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Include a new new query parameter `fetchLocations` is available for the `GET /locations/groups` endpoint
+
 ## 1.7.3 (August 6, 2025)
 
 ### Notes

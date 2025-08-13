@@ -237,6 +237,7 @@ class DLPWebRuleAPI(APIClient):
             time_windows (:obj:`list` of :obj:`int`): IDs for time windows this rule applies to.
             users (:obj:`list` of :obj:`int`): IDs for users this rule applies to.
             url_categories (list): IDs for URL categories the rule applies to.
+            dlp_content_locations_scopes (list): Specifies one or more content locations
             external_auditor_email (str): Email of an external auditor for DLP notifications.
             dlp_download_scan_enabled (bool): True enables DLP scan for file downloads.
             min_size (str): Minimum file size (in KB) for DLP policy rule evaluation.
