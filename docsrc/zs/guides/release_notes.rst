@@ -23,6 +23,11 @@ Bug Fixes
 * (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed PAC file validation endpoint to send raw data without encoding or escaping, ensuring proper transmission of PAC file content for validation.
 * (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
 
+Enhancements
+--------------
+
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_)  ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
+
 1.7.3 (August 6, 2025)
 -------------------------
 

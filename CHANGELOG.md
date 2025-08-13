@@ -12,7 +12,12 @@
 * [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Deauthentication is now only triggered after mutating requests (POST/PUT/DELETE). GET-only flows will skip deauth to avoid unnecessary calls.
 * [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) ZIA: Treat HTTP 204 as a successful deauthentication response in addition to 200.
 * [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Fixed PAC file validation endpoint to send raw data without encoding or escaping, ensuring proper transmission of PAC file content for validation.
-* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) - Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
+
+### Enhancements:
+
+* [PR #354](https://github.com/zscaler/zscaler-sdk-python/pull/354) -  ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
+
 
 ## 1.7.3 (August 6, 2025)
 
