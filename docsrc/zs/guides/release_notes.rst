@@ -6,6 +6,23 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.7.4 (August 12, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Fixed deauthentication URL construction for production cloud to use `https://api.zsapi.net`, and non-production to use `https://api.<cloud>.zsapi.net`. This resolves DNS errors like `api.%7bself.cloud%7d.zsapi.net` during context exit.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Deauthentication is now only triggered after mutating requests (POST/PUT/DELETE). GET-only flows will skip deauth to avoid unnecessary calls.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Treat HTTP 204 as a successful deauthentication response in addition to 200.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed PAC file validation endpoint to send raw data without encoding or escaping, ensuring proper transmission of PAC file content for validation.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
+
 1.7.3 (August 6, 2025)
 -------------------------
 

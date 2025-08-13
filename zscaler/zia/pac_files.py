@@ -17,8 +17,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.pac_files import PacFiles
+from zscaler.zia.models.pac_files import PacFileValidationResponse
 from zscaler.utils import format_url
-
+import textwrap
 
 class PacFilesAPI(APIClient):
     """
@@ -424,26 +425,24 @@ class PacFilesAPI(APIClient):
         """
         )
 
-        # Use the PAC file content as the raw body for the request
-        body = pac_file_content
+        # Normalize so validator sees the function at line 1
+        pac = textwrap.dedent(pac_file_content).lstrip("\r\n")
 
-        # Create the request
+        # Send the PAC content as raw data
         request, error = self._request_executor.create_request(
             method=http_method,
             endpoint=api_url,
-            body=body,
-            headers={"Content-Type": "text/plain"},  # Content-Type should match the API requirements
+            body=pac,
         )
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
         if error:
             return (None, response, error)
 
         try:
-            result = self.form_response_body(response.get_body())
+            result = PacFileValidationResponse(self.form_response_body(response.get_body()))
         except Exception as parse_error:
             return (None, response, parse_error)
 

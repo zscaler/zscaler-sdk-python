@@ -291,12 +291,12 @@ class DeviceCleanup(ZscalerObject):
 
 class DeviceDetails(ZscalerObject):
     """
-    A class for DevicedDeviceDetailsetails objects.
+    A class for Device Details objects.
     """
 
     def __init__(self, config=None):
         """
-        Initialize the DeviceDetails model based on API response.
+        Initialize the Device Details model based on API response.
 
         Args:
             config (dict): A dictionary representing the configuration.
@@ -304,58 +304,108 @@ class DeviceDetails(ZscalerObject):
         super().__init__(config)
 
         if config:
-            self.agent_version = config["agent_version"] \
-                if "agent_version" in config else None
-            self.carrier = config["carrier"] \
-                if "carrier" in config else None
-            self.config_download_time = config["config_download_time"] \
-                if "config_download_time" in config else None
-            self.deregistration_time = config["deregistration_time"] \
-                if "deregistration_time" in config else None
-            self.device_policy_name = config["devicePolicyName"] \
-                if "devicePolicyName" in config else None
-            self.device_locale = config["device_locale"] \
-                if "device_locale" in config else None
-            self.download_count = config["download_count"] \
-                if "download_count" in config else None
-            self.external_model = config["external_model"] \
-                if "external_model" in config else None
-            self.hardware_fingerprint = config["hardwareFingerprint"] \
-                if "hardwareFingerprint" in config else None
-            self.keep_alive_time = config["keep_alive_time"] \
-                if "keep_alive_time" in config else None
-            self.last_seen_time = config["last_seen_time"] \
-                if "last_seen_time" in config else None
-            self.mac_address = config["mac_address"] \
-                if "mac_address" in config else None
-            self.machine_hostname = config["machineHostname"] \
-                if "machineHostname" in config else None
-            self.manufacturer = config["manufacturer"] \
-                if "manufacturer" in config else None
-            self.os_version = config["os_version"] \
-                if "os_version" in config else None
-            self.owner = config["owner"] \
-                if "owner" in config else None
-            self.registration_time = config["registration_time"] \
-                if "registration_time" in config else None
-            self.rooted = config["rooted"] \
-                if "rooted" in config else None
-            self.state = config["state"] \
-                if "state" in config else None
-            self.tunnel_version = config["tunnelVersion"] \
-                if "tunnelVersion" in config else None
-            self.type = config["type"] \
-                if "type" in config else None
-            self.unique_id = config["unique_id"] \
-                if "unique_id" in config else None
-            self.upm_version = config["upmVersion"] \
-                if "upmVersion" in config else None
-            self.user_name = config["user_name"] \
-                if "user_name" in config else None
-            self.zad_version = config["zadVersion"] \
-                if "zadVersion" in config else None
-            self.zapp_arch = config["zappArch"] \
-                if "zappArch" in config else None
+            # Handle attributes that might be in snake_case or camelCase
+            self.agent_version = config.get("agent_version") or config.get("agentVersion")
+            self.carrier = config.get("carrier")
+            self.config_download_time = config.get("config_download_time") or config.get("configDownloadTime")
+            self.deregistration_time = config.get("deregistration_time") or config.get("deregistrationTime")
+            self.device_policy_name = config.get("device_policy_name") or config.get("devicePolicyName")
+            self.device_locale = config.get("device_locale") or config.get("deviceLocale")
+            self.download_count = config.get("download_count") or config.get("downloadCount")
+            self.external_model = config.get("external_model") or config.get("externalModel")
+            self.hardware_fingerprint = config.get("hardware_fingerprint") or config.get("hardwareFingerprint")
+            self.keep_alive_time = config.get("keep_alive_time") or config.get("keepAliveTime")
+            self.last_seen_time = config.get("last_seen_time") or config.get("lastSeenTime")
+            self.mac_address = config.get("mac_address") or config.get("macAddress")
+            self.machine_hostname = config.get("machine_hostname") or config.get("machineHostname")
+            self.manufacturer = config.get("manufacturer")
+            self.os_version = config.get("os_version") or config.get("osVersion")
+            self.owner = config.get("owner")
+            self.registration_time = config.get("registration_time") or config.get("registrationTime")
+            self.rooted = config.get("rooted")
+            self.state = config.get("state")
+            self.tunnel_version = config.get("tunnel_version") or config.get("tunnelVersion")
+            self.type = config.get("type")
+            self.unique_id = config.get("unique_id") or config.get("uniqueId")
+            self.upm_version = config.get("upm_version") or config.get("upmVersion")
+            self.user_name = config.get("user_name") or config.get("userName")
+            self.zad_version = config.get("zad_version") or config.get("zadVersion")
+            self.zapp_arch = config.get("zapp_arch") or config.get("zappArch")
+            
+            # Additional fields from the API response
+            self.id = config["id"] \
+                if "id" in config else None
+            self.internal_model = config["internal_model"] \
+                if "internal_model" in config else None
+            self.zdp_version = config["zdpVersion"] \
+                if "zdpVersion" in config else None
+            self.serial_number = config["serialNumber"] \
+                if "serialNumber" in config else None
+            self.zia_enabled = config["ziaEnabled"] \
+                if "ziaEnabled" in config else None
+            self.zpa_enabled = config["zpaEnabled"] \
+                if "zpaEnabled" in config else None
+            self.zdx_enabled = config["zdxEnabled"] \
+                if "zdxEnabled" in config else None
+            self.zd_enabled = config["zdEnabled"] \
+                if "zdEnabled" in config else None
+            self.zdp_enabled = config["zdpEnabled"] \
+                if "zdpEnabled" in config else None
+            self.zia_health = config["ziaHealth"] \
+                if "ziaHealth" in config else None
+            self.zpa_health = config["zpaHealth"] \
+                if "zpaHealth" in config else None
+            self.zdx_health = config["zdxHealth"] \
+                if "zdxHealth" in config else None
+            self.zd_health = config["zdHealth"] \
+                if "zdHealth" in config else None
+            self.zdp_health = config["zdpHealth"] \
+                if "zdpHealth" in config else None
+            self.zpa_last_seen_time = config["zpaLastSeenTime"] \
+                if "zpaLastSeenTime" in config else None
+            self.zdx_last_seen_time = config["zdxLastSeenTime"] \
+                if "zdxLastSeenTime" in config else None
+            self.zd_last_seen_time = config["zdLastSeenTime"] \
+                if "zdLastSeenTime" in config else None
+            self.zdp_last_seen_time = config["zdpLastSeenTime"] \
+                if "zdpLastSeenTime" in config else None
+            self.zcc_logged_in_user_type = config["zccLoggedInUserType"] \
+                if "zccLoggedInUserType" in config else None
+            self.external_device_id = config["externalDeviceId"] \
+                if "externalDeviceId" in config else None
+            self.zcc_force_revert = config["zccForceRevert"] \
+                if "zccForceRevert" in config else None
+            self.anti_tampering_status = config["antiTamperingStatus"] \
+                if "antiTamperingStatus" in config else None
+            self.device_trust = config["deviceTrust"] \
+                if "deviceTrust" in config else None
+            self.zcc_tunnel_version = config["zccTunnelVersion"] \
+                if "zccTunnelVersion" in config else None
+            self.vdi = config["vdi"] \
+                if "vdi" in config else None
+            self.strict_enforcement = config["strictEnforcement"] \
+                if "strictEnforcement" in config else None
+            self.expected_zcc_version = config["expectedZCCVersion"] \
+                if "expectedZCCVersion" in config else None
+            self.expected_zcc_version_timestamp = config["expectedZCCVersionTimestamp"] \
+                if "expectedZCCVersionTimestamp" in config else None
+            self.zcc_upgrade_status = config["zccUpgradeStatus"] \
+                if "zccUpgradeStatus" in config else None
+                
+            self.device_otp_array = ZscalerCollection.form_list(
+                config["deviceOtpArray"] if "deviceOtpArray" in config else [], str
+            )
+            
+            if "logFetchInfo" in config:
+                if isinstance(config["logFetchInfo"], LogFetchInfo):
+                    self.log_fetch_info = config["logFetchInfo"]
+                elif config["logFetchInfo"] is not None:
+                    self.log_fetch_info = LogFetchInfo(config["logFetchInfo"])
+                else:
+                    self.log_fetch_info = None
+            else:
+                self.log_fetch_info = None
+
         else:
             self.agent_version = None
             self.carrier = None
@@ -383,6 +433,39 @@ class DeviceDetails(ZscalerObject):
             self.user_name = None
             self.zad_version = None
             self.zapp_arch = None
+            self.log_fetch_info = None
+            self.device_otp_array = None
+            
+            # Additional fields from the API response
+            self.id = None
+            self.internal_model = None
+            self.zdp_version = None
+            self.serial_number = None
+            self.zia_enabled = None
+            self.zpa_enabled = None
+            self.zdx_enabled = None
+            self.zd_enabled = None
+            self.zdp_enabled = None
+            self.zia_health = None
+            self.zpa_health = None
+            self.zdx_health = None
+            self.zd_health = None
+            self.zdp_health = None
+            self.zpa_last_seen_time = None
+            self.zdx_last_seen_time = None
+            self.zd_last_seen_time = None
+            self.zdp_last_seen_time = None
+            self.zcc_logged_in_user_type = None
+            self.external_device_id = None
+            self.zcc_force_revert = None
+            self.anti_tampering_status = None
+            self.device_trust = None
+            self.zcc_tunnel_version = None
+            self.vdi = None
+            self.strict_enforcement = None
+            self.expected_zcc_version = None
+            self.expected_zcc_version_timestamp = None
+            self.zcc_upgrade_status = None
 
     def request_format(self):
         """
@@ -415,7 +498,90 @@ class DeviceDetails(ZscalerObject):
             "upmVersion": self.upm_version,
             "user_name": self.user_name,
             "zadVersion": self.zad_version,
-            "zappArch": self.zapp_arch
+            "zappArch": self.zapp_arch,
+            "deviceOtpArray": self.device_otp_array,
+            "logFetchInfo": self.log_fetch_info,
+            "id": self.id,
+            "internal_model": self.internal_model,
+            "zdpVersion": self.zdp_version,
+            "serialNumber": self.serial_number,
+            "ziaEnabled": self.zia_enabled,
+            "zpaEnabled": self.zpa_enabled,
+            "zdxEnabled": self.zdx_enabled,
+            "zdEnabled": self.zd_enabled,
+            "zdpEnabled": self.zdp_enabled,
+            "ziaHealth": self.zia_health,
+            "zpaHealth": self.zpa_health,
+            "zdxHealth": self.zdx_health,
+            "zdHealth": self.zd_health,
+            "zdpHealth": self.zdp_health,
+            "zpaLastSeenTime": self.zpa_last_seen_time,
+            "zdxLastSeenTime": self.zdx_last_seen_time,
+            "zdLastSeenTime": self.zd_last_seen_time,
+            "zdpLastSeenTime": self.zdp_last_seen_time,
+            "zccLoggedInUserType": self.zcc_logged_in_user_type,
+            "externalDeviceId": self.external_device_id,
+            "zccForceRevert": self.zcc_force_revert,
+            "antiTamperingStatus": self.anti_tampering_status,
+            "deviceTrust": self.device_trust,
+            "zccTunnelVersion": self.zcc_tunnel_version,
+            "vdi": self.vdi,
+            "strictEnforcement": self.strict_enforcement,
+            "expectedZCCVersion": self.expected_zcc_version,
+            "expectedZCCVersionTimestamp": self.expected_zcc_version_timestamp,
+            "zccUpgradeStatus": self.zcc_upgrade_status
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class LogFetchInfo(ZscalerObject):
+    """
+    A class for LogFetchInfo objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the LogFetchInfo model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.log_ts = config["logTs"] \
+                if "logTs" in config else None
+            self.log_ack_ts = config["logAckTs"] \
+                if "logAckTs" in config else None
+            self.error = config["error"] \
+                if "error" in config else None
+            self.log_fetch_pcap_enabled = config["logFetchPCAPEnabled"] \
+                if "logFetchPCAPEnabled" in config else None
+            self.log_fetch_db_enabled = config["logFetchDBEnabled"] \
+                if "logFetchDBEnabled" in config else None
+            self.log_fetch_from_no_of_days = config["logFetchFromNoOfDays"] \
+                if "logFetchFromNoOfDays" in config else None
+        else:
+            self.log_ts = None
+            self.log_ack_ts = None
+            self.error = None
+            self.log_fetch_pcap_enabled = None
+            self.log_fetch_db_enabled = None
+            self.log_fetch_from_no_of_days = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "logTs": self.log_ts,
+            "logAckTs": self.log_ack_ts,
+            "error": self.error,
+            "logFetchPCAPEnabled": self.log_fetch_pcap_enabled,
+            "logFetchDBEnabled": self.log_fetch_db_enabled,
+            "logFetchFromNoOfDays": self.log_fetch_from_no_of_days
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

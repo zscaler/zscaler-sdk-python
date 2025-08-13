@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.activation import Activation
+from zscaler.zia.models.activation import EusaStatus
 from zscaler.utils import format_url
 
 
@@ -103,4 +104,98 @@ class ActivationAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
+        return (result, response, None)
+
+    def get_eusa_status(self) -> tuple:
+        """
+        Retrieves the End User Subscription Agreement (EUSA) acceptance status.
+        If the status does not exist, it returns a status object with no ID.
+
+        Args:
+            N/A
+
+        Returns:
+            tuple: A tuple containing (Eusa status instance, Response, error).
+
+        Examples:
+            Print latest Eusa status
+
+            >>> fetched_eusa, _, error = client.zia.activate.get_eusa_status()
+            >>> if error:
+            ...     print(f"Error fetching Eusa status: {error}")
+            ...     return
+            ... print(f"Fetched Eusa status by ID: {fetched_eusa.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /eusaStatus/latest
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, EusaStatus)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = EusaStatus(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+    
+    def update_eusa_status(self, status_id: int, **kwargs) -> tuple:
+        """
+        Updates the EUSA status based on the specified status ID
+
+        Args:
+            status_id (int): The unique ID for the EUSA status.
+
+        Returns:
+            tuple: A tuple containing the updated EUSA status, response, and error.
+
+        Examples:
+            Update an existing EUSA status :
+
+            >>> updated_eusa_status, _, error = client.zia.activate.update_eusa_status(
+            ... status_id='1524566'
+            ... name=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
+            ... description=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
+            ... )
+            >>> if error:
+            ...     print(f"Error updating EUSA status: {error}")
+            ...     return
+            ... print(f"EUSA status updated successfully: {updated_eusa_status.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /eusaStatus/{status_id}
+        """
+        )
+        body = {}
+
+        body.update(kwargs)
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, EusaStatus)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = EusaStatus(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
         return (result, response, None)

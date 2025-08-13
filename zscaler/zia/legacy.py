@@ -263,15 +263,27 @@ class LegacyZIAClientHelper:
                 headers_with_user_agent.update(headers or {})
                 headers_with_user_agent["Cookie"] = f"JSESSIONID={self.session_id}"
 
-                resp = requests.request(
-                    method=method,
-                    url=url,
-                    json=json,
-                    data=data,
-                    params=params,
-                    headers=headers_with_user_agent,
-                    timeout=self.timeout,
-                )
+                # Special handling for PAC file validation endpoint
+                if "/pacFiles/validate" in path:
+                    # For PAC validation, send as raw data without any modification
+                    resp = requests.request(
+                        method=method,
+                        url=url,
+                        data=data,  # Send as raw data, not JSON
+                        params=params,
+                        headers=headers_with_user_agent,
+                        timeout=self.timeout,
+                    )
+                else:
+                    resp = requests.request(
+                        method=method,
+                        url=url,
+                        json=json,
+                        data=data,
+                        params=params,
+                        headers=headers_with_user_agent,
+                        timeout=self.timeout,
+                    )
 
                 if resp.status_code == 429:
                     sleep_time = int(resp.headers.get("Retry-After", 2))
