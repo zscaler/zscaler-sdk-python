@@ -3,7 +3,7 @@ flatdict>=4.0.0
 pre-commit==4.2.0
 pytest==8.4.1
 requests==2.32.3
-responses==0.25.7
+responses==0.25.8
 sphinx==7.3.5
 toml==0.10.2
 urllib3<2
