@@ -133,7 +133,7 @@ class PacFileValidationResponse(ZscalerObject):
                 if "warningCount" in config else None
             self.error_count = config["errorCount"] \
                 if "errorCount" in config else None
-                
+
             self.messages = ZscalerCollection.form_list(
                 config["messages"] if "messages" in config else [], Messages
             )

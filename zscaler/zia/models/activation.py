@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common
 
+
 class Activation(ZscalerObject):
     """
     A class for Activation objects.

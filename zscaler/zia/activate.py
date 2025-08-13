@@ -151,13 +151,20 @@ class ActivationAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
-    
+
     def update_eusa_status(self, status_id: int, **kwargs) -> tuple:
         """
         Updates the EUSA status based on the specified status ID
 
         Args:
             status_id (int): The unique ID for the EUSA status.
+
+            version (dict): Specifies the EUSA info ID version.
+                This field is for Zscaler internal use only.
+
+            acceptedStatus (bool): A Boolean value that specifies the EUSA status.
+                If set to true, the EUSA is accepted.
+                If set to false, the EUSA is in an 'agreement pending' state.
 
         Returns:
             tuple: A tuple containing the updated EUSA status, response, and error.
@@ -167,8 +174,6 @@ class ActivationAPI(APIClient):
 
             >>> updated_eusa_status, _, error = client.zia.activate.update_eusa_status(
             ... status_id='1524566'
-            ... name=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
-            ... description=f"UpdatedRuleLabel_{random.randint(1000, 10000)}",
             ... )
             >>> if error:
             ...     print(f"Error updating EUSA status: {error}")

@@ -725,13 +725,14 @@ class LocationsAPI(APIClient):
                 ``[query_params.page_size]`` {int}: Specifies the page size.
                     The default size is 100, but the maximum size is 1000.
 
-                ``[query_params.search]`` {str}: Search string for filtering results.
-                ``[query_params.group_type]`` {str}: The location group's type (i.e., Static or Dynamic).
-                ``[query_params.name]`` {str}: The location group's name.
-                ``[query_params.last_mod_user]`` {str}: The location group's name.
-                ``[query_params.version]`` {int}: The version parameter is for Zscaler internal use only.
-                ``[query_params.comments]`` {str}:  Additional comments or information about the location group.
-                ``[query_params.location_id]`` {int}:  The unique identifier for a location within a location group.
+                ``[query_params.search]`` {str}: Search string for filtering results
+                ``[query_params.group_type]`` {str}: The location group's type (i.e., Static or Dynamic)
+                ``[query_params.name]`` {str}: The location group's name
+                ``[query_params.last_mod_user]`` {str}: The location group's name
+                ``[query_params.version]`` {int}: The version parameter is for Zscaler internal use only
+                ``[query_params.comments]`` {str}:  Additional comments or information about the location group
+                ``[query_params.location_id]`` {int}:  The unique identifier for a location within a location group
+                ``[query_params.fetch_locations]`` {bool}:  Fetches locations associated with the group.
 
         Keyword Args:
 
