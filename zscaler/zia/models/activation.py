@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.zia.models import common
 
 
 class Activation(ZscalerObject):
@@ -41,6 +42,57 @@ class Activation(ZscalerObject):
         Return the object as a dictionary in the format expected for API requests.
         """
         parent_req_format = super().request_format()
-        current_obj_format = {"status": self.status}
+        current_obj_format = {
+            "status": self.status,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class EusaStatus(ZscalerObject):
+    """
+    A class for Eusa Status objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Eusa Status model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+
+            if "version" in config:
+                if isinstance(config["version"], common.CommonBlocks):
+                    self.version = config["version"]
+                elif config["version"] is not None:
+                    self.version = common.CommonBlocks(config["version"])
+                else:
+                    self.version = None
+            else:
+                self.version = None
+
+            self.accepted_status = config["acceptedStatus"] \
+                if "acceptedStatus" in config else None
+        else:
+            self.id = None
+            self.version = None
+            self.accepted_status = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "version": self.version,
+            "acceptedStatus": self.accepted_status
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format

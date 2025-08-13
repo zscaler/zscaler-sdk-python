@@ -75,6 +75,9 @@ class DLPWebRules(ZscalerObject):
             self.user_risk_score_levels = ZscalerCollection.form_list(
                 config["userRiskScoreLevels"] if "userRiskScoreLevels" in config else [], str
             )
+            self.dlp_content_locations_scopes = ZscalerCollection.form_list(
+                config["dlpContentLocationsScopes"] if "dlpContentLocationsScopes" in config else [], str
+            )
             self.url_categories = ZscalerCollection.form_list(
                 config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
             )
@@ -176,7 +179,8 @@ class DLPWebRules(ZscalerObject):
             self.auditor = None
             self.notification_template = None
             self.icap_server = None
-            self.external_auditor_email = None  # New attribute
+            self.external_auditor_email = None
+            self.dlp_content_locations_scopes = []
 
     def request_format(self):
         """
@@ -229,7 +233,8 @@ class DLPWebRules(ZscalerObject):
             "auditor": self.auditor.request_format() if self.auditor else None,
             "notificationTemplate": self.notification_template.request_format() if self.notification_template else None,
             "icapServer": self.icap_server.request_format() if self.icap_server else None,
-            "externalAuditorEmail": self.external_auditor_email,  # New Attribute
+            "externalAuditorEmail": self.external_auditor_email,
+            "dlpContentLocationsScopes": self.dlp_content_locations_scopes,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

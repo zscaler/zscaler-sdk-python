@@ -293,6 +293,7 @@ class Client:
                     service_type = self._config.get("client", {}).get("service", "zia")
                 
                 if service_type.lower() in ["zia", "ztw"]:
+                    # For ZIA, deauthenticate only if mutations occurred; executor will decide.
                     self.logger.debug(f"Deauthenticating Zscaler session for {service_type} service.")
                     self._request_executor.deauthenticate(service_type)
                     self.logger.debug(f"Zscaler session deauthenticated for {service_type}.")

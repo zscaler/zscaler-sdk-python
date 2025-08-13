@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.oneapi_object import ZscalerObject
+from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
 
 
@@ -102,6 +103,116 @@ class PacFiles(ZscalerObject):
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
             "createTime": self.create_time,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class PacFileValidationResponse(ZscalerObject):
+    """
+    A class for Pac File Validation Response objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Pac File Validation Response model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.success = config["success"] \
+                if "success" in config else None
+            self.message = config["message"] \
+                if "message" in config else None
+            self.severity = config["severity"] \
+                if "severity" in config else None
+            self.warning_count = config["warningCount"] \
+                if "warningCount" in config else None
+            self.error_count = config["errorCount"] \
+                if "errorCount" in config else None
+
+            self.messages = ZscalerCollection.form_list(
+                config["messages"] if "messages" in config else [], Messages
+            )
+        else:
+            self.success = None
+            self.message = None
+            self.severity = None
+            self.messages = []
+            self.warning_count = None
+            self.error_count = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "success": self.success,
+            "message": self.message,
+            "severity": self.severity,
+            "messages": self.messages,
+            "warningCount": self.warning_count,
+            "errorCount": self.error_count
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Messages(ZscalerObject):
+    """
+    A class for Messages objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Messages model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.severity = config["severity"] \
+                if "severity" in config else None
+            self.end_line = config["endLine"] \
+                if "endLine" in config else None
+            self.end_column = config["endColumn"] \
+                if "endColumn" in config else None
+            self.line = config["line"] \
+                if "line" in config else None
+            self.column = config["column"] \
+                if "column" in config else None
+            self.message = config["message"] \
+                if "message" in config else None
+            self.fatal = config["fatal"] \
+                if "fatal" in config else None
+        else:
+            self.severity = None
+            self.end_line = None
+            self.end_column = None
+            self.line = None
+            self.column = None
+            self.message = None
+            self.fatal = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "severity": self.severity,
+            "endLine": self.end_line,
+            "endColumn": self.end_column,
+            "line": self.line,
+            "column": self.column,
+            "message": self.message,
+            "fatal": self.fatal
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

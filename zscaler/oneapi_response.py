@@ -168,6 +168,14 @@ class ZscalerAPIResponse:
             self._results_total = self._body.get("results_total")
             self._page_offset = self._body.get("pageOffset")
             self._page_size = self._body.get("pageSize")
+        elif self._service_type == "ZCC":
+            # ZCC can return either a single object or a list of objects
+            if isinstance(self._body, dict):
+                # If it's a single object, wrap it in a list
+                self._list = [self._body]
+            else:
+                # If it's already a list, use it as is
+                self._list = self._body if isinstance(self._body, list) else []
         else:
             # ZPA and possibly other services use a dict with "list" field
             self._list = self._body.get("list", [])
