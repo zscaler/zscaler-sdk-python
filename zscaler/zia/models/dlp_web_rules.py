@@ -79,7 +79,7 @@ class DLPWebRules(ZscalerObject):
                 config["dlpContentLocationsScopes"] if "dlpContentLocationsScopes" in config else [], str
             )
             self.url_categories = ZscalerCollection.form_list(
-                config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
+                config["urlCategories"] if "urlCategories" in config else [], urlcategory.URLCategory
             )
 
             self.locations = ZscalerCollection.form_list(
