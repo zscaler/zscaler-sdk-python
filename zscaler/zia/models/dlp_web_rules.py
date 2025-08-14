@@ -79,7 +79,7 @@ class DLPWebRules(ZscalerObject):
                 config["dlpContentLocationsScopes"] if "dlpContentLocationsScopes" in config else [], str
             )
             self.url_categories = ZscalerCollection.form_list(
-                config["urlCategories"] if "urlCategories" in config else [], common_reference.ResourceReference
+                config["urlCategories"] if "urlCategories" in config else [], urlcategory.URLCategory
             )
 
             self.locations = ZscalerCollection.form_list(
@@ -181,6 +181,7 @@ class DLPWebRules(ZscalerObject):
             self.icap_server = None
             self.external_auditor_email = None
             self.dlp_content_locations_scopes = []
+            self.dlp_engines = []
 
     def request_format(self):
         """
@@ -235,6 +236,7 @@ class DLPWebRules(ZscalerObject):
             "icapServer": self.icap_server.request_format() if self.icap_server else None,
             "externalAuditorEmail": self.external_auditor_email,
             "dlpContentLocationsScopes": self.dlp_content_locations_scopes,
+            "dlpEngines": [engine.request_format() for engine in (self.dlp_engines or [])],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

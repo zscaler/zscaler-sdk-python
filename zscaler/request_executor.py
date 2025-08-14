@@ -85,9 +85,13 @@ class RequestExecutor:
         self.microtenant_id = self._config["client"].get("microtenantId")  # Optional for ZIA/ZCC
         self.vanity_domain = self._config["client"].get("vanityDomain")  # Required for zidentity service
 
-        # OAuth2 setup
-        self._oauth = OAuth(self, self._config)
-        self._access_token = None
+        # OAuth2 setup - only for OneAPI clients, not legacy clients
+        if not self.use_legacy_client:
+            self._oauth = OAuth(self, self._config)
+            self._access_token = None
+        else:
+            self._oauth = None
+            self._access_token = None
 
         # Set default headers from config
         self._default_headers = {
@@ -519,7 +523,7 @@ class RequestExecutor:
         # Check for 401 -> Trigger re-auth if we still have retries left
         if response.status_code == 401:
             # We only want to attempt refreshing the token if we haven't hit max_retries
-            if attempts < max_retries:
+            if attempts < max_retries and self._oauth is not None:
                 logger.info("Got 401 response; clearing token and re-authenticating.")
                 self._oauth.clear_access_token()
 
@@ -535,8 +539,8 @@ class RequestExecutor:
                 attempts += 1
                 return self.fire_request_helper(request, attempts, request_start_time)
             else:
-                logger.error("401 Unauthorized - token refresh attempts exhausted.")
-                return request, response, response.text, Exception("401 Unauthorized - token refresh attempts exhausted.")
+                logger.error("401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
+                return request, response, response.text, Exception("401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
 
         # Handle “retryable” statuses such as 429, 503, etc.
         if attempts < max_retries and self.is_retryable_status(response.status_code):

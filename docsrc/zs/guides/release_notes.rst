@@ -6,6 +6,65 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.7.6 (August 12, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Enhancements
+--------------
+
+* (`#356 <https://github.com/zscaler/zscaler-sdk-python/pull/356>`_) - Enhanced OAuth token management with improved caching and simplified expiration handling for OneAPI clients:
+  - **Token Caching**: Added optional in-memory token caching with configurable TTL/TTI for improved performance
+  - **Simplified Token Expiration**: Implemented natural token expiration handling using `expires_in` attribute from OAuth responses
+  - **Cache Key Generation**: Unique cache keys based on client configuration to prevent conflicts
+  - **Token Information Monitoring**: Added `get_token_info()` method for real-time token status monitoring
+  - **Legacy Client Compatibility**: Enhanced OAuth client gracefully handles legacy client configurations without affecting existing functionality
+  - **Singleton Pattern**: OAuth instances are shared across requests with the same configuration for optimal resource usage
+  - **Error Handling**: Improved error handling for cache operations and configuration validation
+  - **Security-First Approach**: In-memory caching only, no token persistence to disk, following industry best practices
+  - **Comprehensive Testing**: Added complete test suite (`tests/test_enhanced_oauth_client.py`) with 12 test cases covering all OAuth functionality
+
+Bug Fixes
+-----------
+
+* (`#356 <https://github.com/zscaler/zscaler-sdk-python/pull/356>`_) - Fixed `dlp_engines` attribute within the `ZIA` `dlp_web_rules` model to ensure attribute is correctly parsed during API response.
+
+1.7.5 (August 12, 2025)
+-------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+New ZIA Endpoint - Activation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Added the following new ZIA API Endpoints:
+    - Added `GET /eusaStatus/latest` Retrieves the End User Subscription Agreement (EUSA) acceptance status
+    - Added `PUT /eusaStatus/{eusaStatusId}` Updates the EUSA status based on the specified status ID
+
+Bug Fixes
+-----------
+
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Fixed deauthentication URL construction for production cloud to use `https://api.zsapi.net`, and non-production to use `https://api.<cloud>.zsapi.net`. This resolves DNS errors like `api.%7bself.cloud%7d.zsapi.net` during context exit.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Deauthentication is now only triggered after mutating requests (POST/PUT/DELETE). GET-only flows will skip deauth to avoid unnecessary calls.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Treat HTTP 204 as a successful deauthentication response in addition to 200.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed PAC file validation endpoint to send raw data without encoding or escaping, ensuring proper transmission of PAC file content for validation.
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) Fixed ZCC `get_device_details()` method to handle mixed snake_case/camelCase API responses and return properly populated DeviceDetails object
+
+Enhancements
+--------------
+
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Include a new `dlpContentLocationsScopes` attribute in the WebDlpRule model used in `/webDlpRules` endpoints
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Include a new `passwordProtected` attribute in the File Type Rules model used in `/fileTypeRules` endpoints  
+* (`#354 <https://github.com/zscaler/zscaler-sdk-python/pull/354>`_) ZIA: Include a new new query parameter `fetchLocations` is available for the `GET /locations/groups` endpoint
+
+
 1.7.4 (August 12, 2025)
 -------------------------
 
