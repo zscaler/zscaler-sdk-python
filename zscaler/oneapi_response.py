@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 class ZscalerAPIResponse:
     """
     Class for defining the wrapper of a Zscaler API response.
-    Inspired by the Okta approach, this class only returns the initial page of results.
     The user can check if more pages exist with `has_next()` and fetch them on-demand using `next()`.
     """
 
@@ -118,7 +117,7 @@ class ZscalerAPIResponse:
 
     def get_headers(self):
         """
-        Returns the response body of the Okta API Response.
+        Returns the response body of the Zscaler API Response.
 
         Returns:
             CIMultiDictProxy: dict-like object
@@ -128,7 +127,7 @@ class ZscalerAPIResponse:
 
     def get_body(self):
         """
-        Returns the response body of the Okta API Response.
+        Returns the response body of the Zscaler API Response.
 
         Returns:
             dict: Dictionary format of response
