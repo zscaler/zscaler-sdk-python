@@ -87,27 +87,22 @@ class IPDestinationGroupsAPI(APIClient):
 
         query_params = query_params or {}
 
-        # Add excludeType to query_params if it's provided
         if exclude_type:
             query_params["excludeType"] = exclude_type
 
-        # Prepare request body and headers
         body = {}
         headers = {}
 
-        # Create the request
         request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
 
         if error:
             return (None, None, error)
 
-        # Execute the request
         response, error = self._request_executor.execute(request)
 
         if error:
             return (None, response, error)
 
-        # Parse the response into IPDestinationGroups instances
         try:
             result = []
             for item in response.get_results():

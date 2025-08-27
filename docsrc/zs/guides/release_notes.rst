@@ -6,6 +6,45 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.7.7 (August 27, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+* (`#360 <https://github.com/zscaler/zscaler-sdk-python/pull/360>`_)- Fixed non standard camelCase attribute `surrogateIPEnforcedForKnownBrowsers` in ZIA `location_management` model to ensure proper value parsing during response.
+
+Enhancements
+--------------
+
+* (`#360 <https://github.com/zscaler/zscaler-sdk-python/pull/360>`_) - Included the following new request parameters in ZIA Cloud Firewall at the `list_rules` function
+    - `rule_name` - Filters rules based on rule names using the specified keywords
+    - `rule_label` - Filters rules based on rule labels using the specified keywords
+    - `rule_order` - Filters rules based on rule order using the specified keywords
+    - `rule_description` - Filters rules based on rule descriptions using the specified keywords
+    - `rule_action` - Filters rules based on rule actions using the specified keywords
+    - `location` - Filters rules based on locations using the specified keywords
+    - `department` - Filters rules based on user departments using the specified keywords
+    - `group` - Filters rules based on user groups using the specified keywords
+    - `user` - Filters rules based on users using the specified keywords
+    - `device` - Filters rules based on devices using the specified keywords
+    - `device_group` - Filters rules based on device groups using the specified keywords
+    - `device_trust_level` - Filters rules based on device trust levels using the specified keywords
+    - `src_ips` - Filters rules based on source IP addresses using the specified keywords
+    - `dest_addresses` - Filters rules based on destination IP addresses using the specified keywords
+    - `src_ip_groups` - Filters rules based on source IP groups using the specified keywords
+    - `dest_ip_groups` - Filters rules based on destination IP groups using the specified keywords
+    - `nw_application` - Filters rules based on network applications using the specified keywords
+    - `nw_services` - Filters rules based on network services using the specified keywords
+    - `dest_ip_categories` - Filters rules based on destination URL categories using the specified keywords
+    - `page` - Specifies the page offset
+    - `page_size` - Specifies the page size. The default size is set to 5,000, if not specified
+
 1.7.6 (August 12, 2025)
 -------------------------
 
