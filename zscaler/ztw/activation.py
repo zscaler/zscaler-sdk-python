@@ -31,7 +31,7 @@ class ActivationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def activate(self, force: bool = False) -> tuple:
+    def activate(self, force: bool = False, **kwargs) -> tuple:
         """
         Activate the configuration.
 
@@ -60,8 +60,10 @@ class ActivationAPI(APIClient):
 
         api_url = format_url(f"{self._ztw_base_endpoint}{endpoint_path}")
 
+        body = kwargs
+
         # Create the request
-        request, error = self._request_executor.create_request(http_method, api_url, body={}, headers={}, params={})
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, headers={}, params={})
         if error:
             return (None, None, error)
 

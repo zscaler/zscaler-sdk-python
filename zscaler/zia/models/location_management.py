@@ -66,12 +66,19 @@ class LocationManagement(ZscalerObject):
                 or False  # ← fallback
             )
 
+            self.surrogate_ip_enforced_for_known_browsers = (
+                config.get("surrogate_ip_enforced_for_known_browsers")  # ← used by the converted keys
+                or config.get("surrogateIpEnforcedForKnownBrowsers")  # ← if not snake_cased
+                or config.get("surrogateIPEnforcedForKnownBrowsers")  # ← raw from the API
+                or False  # ← fallback
+            )
+            
             self.cookies_and_proxy = config["cookiesAndProxy"] if "cookiesAndProxy" in config else None
             self.idle_time_in_minutes = config["idleTimeInMinutes"] if "idleTimeInMinutes" in config else None
             self.display_time_unit = config["displayTimeUnit"] if "displayTimeUnit" in config else None
-            self.surrogate_ip_enforced_for_known_browsers = (
-                config["surrogateIPEnforcedForKnownBrowsers"] if "surrogateIPEnforcedForKnownBrowsers" in config else False
-            )
+            # self.surrogate_ip_enforced_for_known_browsers = (
+            #     config["surrogateIPEnforcedForKnownBrowsers"] if "surrogateIPEnforcedForKnownBrowsers" in config else False
+            # )
             self.surrogate_refresh_time_in_minutes = (
                 config["surrogateRefreshTimeInMinutes"] if "surrogateRefreshTimeInMinutes" in config else None
             )
@@ -106,7 +113,8 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-
+            self.ports = config["ports"] if "ports"  in config else None
+            
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
                 config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.CommonIDName
@@ -199,6 +207,7 @@ class LocationManagement(ZscalerObject):
             self.extranet = None
             self.extranet_ip_pool = None
             self.extranet_dns = None
+            self.ports = None
             self.static_location_groups = []
             self.dynamic_location_groups = []
             self.vpn_credentials = []
@@ -255,6 +264,7 @@ class LocationManagement(ZscalerObject):
             "ipAddresses": self.ip_addresses,
             "ipv6Enabled": self.ipv6_enabled,
             "extranet": self.extranet,
+            "ports": self.ports,
             "extranetIpPool": self.extranet_ip_pool,
             "extranetDns": self.extranet_dns,
             "defaultExtranetTsPool": self.default_extranet_ts_pool,
