@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
-from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.utils import format_url
 
 
 class NWServiceGroupsAPI(APIClient):
