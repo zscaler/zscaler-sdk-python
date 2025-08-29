@@ -39,6 +39,7 @@ class LocationManagement(ZscalerObject):
             self.up_bandwidth = config["upBandwidth"] if "upBandwidth" in config else None
             self.dn_bandwidth = config["dnBandwidth"] if "dnBandwidth" in config else None
             self.country = config["country"] if "country" in config else None
+            self.state = config["state"] if "state" in config else None
             self.language = config["language"] if "language" in config else None
             self.tz = config["tz"] if "tz" in config else None
             self.geo_override = config["geoOverride"] if "geoOverride" in config else False
@@ -76,9 +77,9 @@ class LocationManagement(ZscalerObject):
             self.cookies_and_proxy = config["cookiesAndProxy"] if "cookiesAndProxy" in config else None
             self.idle_time_in_minutes = config["idleTimeInMinutes"] if "idleTimeInMinutes" in config else None
             self.display_time_unit = config["displayTimeUnit"] if "displayTimeUnit" in config else None
-            # self.surrogate_ip_enforced_for_known_browsers = (
-            #     config["surrogateIPEnforcedForKnownBrowsers"] if "surrogateIPEnforcedForKnownBrowsers" in config else False
-            # )
+            self.surrogate_refresh_time_unit = (
+                config["surrogateRefreshTimeUnit"] if "surrogateRefreshTimeUnit" in config else None
+            )
             self.surrogate_refresh_time_in_minutes = (
                 config["surrogateRefreshTimeInMinutes"] if "surrogateRefreshTimeInMinutes" in config else None
             )
@@ -169,6 +170,7 @@ class LocationManagement(ZscalerObject):
             self.up_bandwidth = None
             self.dn_bandwidth = None
             self.country = None
+            self.state = None
             self.language = None
             self.tz = None
             self.geo_override = False
@@ -226,6 +228,7 @@ class LocationManagement(ZscalerObject):
             "upBandwidth": self.up_bandwidth,
             "dnBandwidth": self.dn_bandwidth,
             "country": self.country,
+            "state": self.state,
             "language": self.language,
             "tz": self.tz,
             "geoOverride": self.geo_override,
@@ -243,6 +246,7 @@ class LocationManagement(ZscalerObject):
             "displayTimeUnit": self.display_time_unit,
             "surrogateIPEnforcedForKnownBrowsers": self.surrogate_ip_enforced_for_known_browsers,
             "surrogateRefreshTimeInMinutes": self.surrogate_refresh_time_in_minutes,
+            "surrogateRefreshTimeUnit": self.surrogate_refresh_time_unit,
             "kerberosAuth": self.kerberos_auth,
             "basicAuthEnabled": self.basic_auth_enabled,
             "digestAuthEnabled": self.digest_auth_enabled,

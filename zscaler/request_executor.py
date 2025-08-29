@@ -651,16 +651,10 @@ class RequestExecutor:
         try:
             # Determine the base URL and endpoint based on service type
             if service_type.lower() == "zia":
-                if self.cloud and self.cloud != "production":
-                    base_url = f"https://api.{self.cloud}.zsapi.net"
-                else:
-                    base_url = "https://api.{self.cloud}.zsapi.net"
+                base_url = self.get_base_url("/zia/api/v1/authenticatedSession")
                 endpoint = "/zia/api/v1/authenticatedSession"
             elif service_type.lower() == "ztw":
-                if self.cloud and self.cloud != "production":
-                    base_url = f"https://api.{self.cloud}.zsapi.net"
-                else:
-                    base_url = "https://api.{self.cloud}.zsapi.net"
+                base_url = self.get_base_url("/ztw/api/v1/auth")
                 endpoint = "/ztw/api/v1/auth"
             
             url = f"{base_url}{endpoint}"
