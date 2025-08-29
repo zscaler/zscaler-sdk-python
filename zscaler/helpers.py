@@ -152,6 +152,7 @@ def to_lower_camel_case(string):
     FIELD_EXCEPTIONS = {
         "predefined_adp_controls": "predefinedADPControls",
         "surrogate_ip": "surrogateIP",
+        "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
         "internal_ip_range": "internalIpRange",
         "start_ip_address": "startIPAddress",
         "end_ip_address": "endIPAddress",
