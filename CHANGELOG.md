@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.7.8 (August 29, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #361](https://github.com/zscaler/zscaler-sdk-python/pull/361) - Fixed non standard camelCase attribute `surrogateIPEnforcedForKnownBrowsers` in ZIA `location_management` model to ensure proper value parsing during response.
+
 ## 1.7.7 (August 27, 2025)
 
 ### Notes
