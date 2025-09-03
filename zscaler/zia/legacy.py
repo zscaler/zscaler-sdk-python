@@ -18,6 +18,8 @@ import datetime
 import logging
 import os
 import re
+import time
+import uuid
 from time import sleep
 
 import requests
@@ -28,7 +30,7 @@ from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import obfuscate_api_key
-from zscaler.logger import setup_logging
+from zscaler.logger import setup_logging, dump_request, dump_response
 from zscaler.errors.response_checker import check_response_for_error
 
 setup_logging(logger_name="zscaler-sdk-python")
@@ -190,7 +192,17 @@ class LegacyZIAClientHelper:
         }
 
         url = f"{self.url}/api/v1/authenticatedSession"
+        method = "POST"
+        request_uuid = str(uuid.uuid4())
+        start_time = time.time()
+
+        # Log authentication request using the same formatting as regular API calls
+        dump_request(logger, url, method, payload, {}, self.headers, request_uuid)
+
         resp = requests.post(url, json=payload, headers=self.headers, timeout=self.timeout)
+
+        # Log authentication response using the same formatting as regular API calls
+        dump_response(logger, url, method, resp, {}, request_uuid, start_time)
 
         parsed_response, err = check_response_for_error(url, resp, resp.text)
         if err:
