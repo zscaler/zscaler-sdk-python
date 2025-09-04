@@ -1,5 +1,16 @@
 # Zscaler Python SDK Changelog
 
+## 1.7.9 (September 4, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #365](https://github.com/zscaler/zscaler-sdk-python/pull/365) - Enhanced session management for ZIA Legacy client to handle 5-minute idle timeout with proactive session validation and refresh capabilities
+Please refer to the [Developer Guide](https://help.zscaler.com/zia/getting-started-zia-api#CreateSession) for more details.
+
 ## 1.7.8 (August 29, 2025)
 
 ### Notes
