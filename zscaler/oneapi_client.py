@@ -368,6 +368,8 @@ class LegacyZIAClient(Client):
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
         request_executor_impl = config.get("requestExecutor", None)
+        session_safety_margin = config.get("session_safety_margin", None)
+        use_session_validation = config.get("use_session_validation", None)
 
         # Initialize the LegacyZIAClientHelper with the extracted parameters
         legacy_helper = LegacyZIAClientHelper(
@@ -379,6 +381,8 @@ class LegacyZIAClient(Client):
             cache=cache,
             fail_safe=fail_safe,
             request_executor_impl=request_executor_impl,
+            session_safety_margin=session_safety_margin,
+            use_session_validation=use_session_validation,
         )
         super().__init__(config, zia_legacy_client=legacy_helper, use_legacy_client=True)
 

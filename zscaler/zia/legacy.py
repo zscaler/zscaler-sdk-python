@@ -18,6 +18,8 @@ import datetime
 import logging
 import os
 import re
+import time
+import uuid
 from time import sleep
 
 import requests
@@ -28,7 +30,7 @@ from zscaler.cache.zscaler_cache import ZscalerCache
 from zscaler.ratelimiter.ratelimiter import RateLimiter
 from zscaler.user_agent import UserAgent
 from zscaler.utils import obfuscate_api_key
-from zscaler.logger import setup_logging
+from zscaler.logger import setup_logging, dump_request, dump_response
 from zscaler.errors.response_checker import check_response_for_error
 
 setup_logging(logger_name="zscaler-sdk-python")
@@ -64,6 +66,15 @@ class LegacyZIAClientHelper:
             attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
             i.e. http:// or https://.
 
+        session_safety_margin (int):
+            Safety margin in seconds before the 5-minute session idle timeout to proactively refresh
+            the session. Default is 30 seconds (refreshes at 4.5 minutes). Cannot exceed 5 minutes.
+
+        use_session_validation (bool):
+            Whether to use the new session idle timeout validation (default: True) or legacy
+            passwordExpiryTime validation (False). The new behavior is recommended for the 5-minute
+            session timeout requirement.
+
     """
 
     _vendor = "Zscaler"
@@ -73,7 +84,7 @@ class LegacyZIAClientHelper:
     url = "https://zsapi.zscaler.net"
     env_cloud = "zscaler"
 
-    def __init__(self, cloud, timeout=240, cache=None, fail_safe=False, request_executor_impl=None, **kw):
+    def __init__(self, cloud, timeout=240, cache=None, fail_safe=False, request_executor_impl=None, session_safety_margin=30, use_session_validation=True, **kw):
         from zscaler.request_executor import RequestExecutor
 
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
@@ -99,6 +110,21 @@ class LegacyZIAClientHelper:
         self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
+        
+        # Session management configuration
+        env_safety_margin = os.getenv(f"{self._env_base}_SESSION_SAFETY_MARGIN")
+        if env_safety_margin is not None:
+            self.session_safety_margin = int(env_safety_margin)
+        else:
+            self.session_safety_margin = kw.get("session_safety_margin", session_safety_margin)
+        
+        # Ensure session_safety_margin has a default value if None
+        if self.session_safety_margin is None:
+            self.session_safety_margin = 30  # Default 30 seconds
+        
+        self.max_idle_time = datetime.timedelta(minutes=5) - datetime.timedelta(seconds=self.session_safety_margin)
+        self.last_activity = None
+        self.use_session_validation = kw.get("use_session_validation", use_session_validation) or os.getenv(f"{self._env_base}_USE_SESSION_VALIDATION", "true").lower() == "true"
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
         self.cache = NoOpCache()
         if cache is None and cache_enabled:
@@ -157,10 +183,8 @@ class LegacyZIAClientHelper:
 
     def is_session_expired(self) -> bool:
         """
-        Checks whether the current session is expired.
-
-        Returns:
-            bool: True if the session is expired or if the session details are missing.
+        Checks whether the current session is expired using passwordExpiryTime.
+        This maintains backward compatibility.
         """
         # no session yet → force login
         if self.auth_details is None or self.session_refreshed is None:
@@ -174,6 +198,68 @@ class LegacyZIAClientHelper:
         expiry_time = datetime.datetime.fromtimestamp(expiry_ms / 1000)
         safety_window = self.session_timeout_offset
         return datetime.datetime.utcnow() >= (expiry_time - safety_window)
+
+    def is_session_idle_expired(self) -> bool:
+        """
+        Checks if the session has been idle for too long (approaching 5-minute limit).
+        This is the new default behavior for session idle timeout.
+        """
+        if self.last_activity is None:
+            return True
+        
+        idle_duration = datetime.datetime.utcnow() - self.last_activity
+        return idle_duration >= self.max_idle_time
+
+    def validate_session_status(self) -> bool:
+        """
+        Actively checks session status via GET /api/v1/authenticatedSession.
+        Returns True if session is valid, False if expired.
+        """
+        try:
+            url = f"{self.url}/api/v1/authenticatedSession"
+            headers = self.headers.copy()
+            headers["Cookie"] = f"JSESSIONID={self.session_id}"
+            
+            response = requests.get(url, headers=headers, timeout=self.timeout)
+            
+            if response.status_code == 200:
+                # Session is still valid, update last activity
+                self.last_activity = datetime.datetime.utcnow()
+                return True
+            else:
+                # Session expired or invalid
+                return False
+                
+        except Exception as e:
+            logger.warning(f"Session validation failed: {e}")
+            return False
+
+    def ensure_valid_session(self):
+        """
+        Ensures the session is valid before making API calls.
+        Uses the configured validation strategy.
+        """
+        if self.use_session_validation:
+            # New default behavior: check session idle timeout
+            if self.is_session_idle_expired():
+                logger.info("Session approaching idle timeout, refreshing...")
+                self.authenticate()
+                return
+            
+            # Actively validate session status
+            if not self.validate_session_status():
+                logger.info("Session validation failed, refreshing...")
+                self.authenticate()
+                return
+        else:
+            # Legacy behavior: use passwordExpiryTime
+            if self.is_session_expired():
+                logger.info("Session expired based on passwordExpiryTime, refreshing...")
+                self.authenticate()
+                return
+        
+        # Update last activity time
+        self.last_activity = datetime.datetime.utcnow()
 
     def authenticate(self):
         """
@@ -190,7 +276,17 @@ class LegacyZIAClientHelper:
         }
 
         url = f"{self.url}/api/v1/authenticatedSession"
+        method = "POST"
+        request_uuid = str(uuid.uuid4())
+        start_time = time.time()
+
+        # Log authentication request using the same formatting as regular API calls
+        dump_request(logger, url, method, payload, {}, self.headers, request_uuid)
+
         resp = requests.post(url, json=payload, headers=self.headers, timeout=self.timeout)
+
+        # Log authentication response using the same formatting as regular API calls
+        dump_response(logger, url, method, resp, {}, request_uuid, start_time)
 
         parsed_response, err = check_response_for_error(url, resp, resp.text)
         if err:
@@ -202,6 +298,7 @@ class LegacyZIAClientHelper:
 
         self.session_refreshed = datetime.datetime.now()
         self.auth_details = parsed_response
+        self.last_activity = datetime.datetime.utcnow()  # Set initial activity time
         logger.info("Authentication successful. JSESSIONID set.")
 
     def __enter__(self):
@@ -254,9 +351,8 @@ class LegacyZIAClientHelper:
 
         while attempts < 5:
             try:
-                if self.is_session_expired():
-                    logger.warning("Session expired. Refreshing...")
-                    self.authenticate()
+                # Ensure session is valid before making any request
+                self.ensure_valid_session()
 
                 # Always refresh session cookie
                 headers_with_user_agent = self.headers.copy()
