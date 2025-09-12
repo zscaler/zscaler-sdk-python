@@ -20,6 +20,7 @@ from zscaler.zia.models.saas_security_api import DomainProfiles
 from zscaler.zia.models.saas_security_api import QuarantineTombstoneTemplate
 from zscaler.zia.models.saas_security_api import CasbEmailLabel
 from zscaler.zia.models.saas_security_api import CasbTenant
+from zscaler.zia.models.saas_security_api import SaaSScanInfo
 from zscaler.utils import format_url
 
 
@@ -274,6 +275,65 @@ class SaaSSecurityAPI(APIClient):
             result = []
             for item in response.get_results():
                 result.append(CasbTenant(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_saas_scan_info(self, query_params=None) -> tuple:
+        """
+        Retrieves the SaaS Security Scan Configuration information.
+
+        Args:
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.page]`` (int): Specifies the page offset.
+
+                ``[query_params.page_size]`` (int): Specifies the page size.
+                    The default size is 500.
+
+        Returns:
+            tuple:
+                List SaaS Security Scan Configuration information (SaaSScanInfo, Response, error).
+
+        Examples:
+            List all SaaS Security Scan Configuration information:
+
+            >>> scan_info_list, _, err = client.zia.saas_security_api.list_saas_scan_info()
+            >>> if err:
+            ...     print(f"Error listing scan information: {err}")
+            ...     return
+            ... print(f"Total scan information found: {len(scan_info_list)}")
+            ... for scan_info in scan_info_list:
+            ...     print(scan_info.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /casbTenant/scanInfo
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(SaaSScanInfo(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

@@ -1077,6 +1077,17 @@ class LegacyZIAClientHelper:
         return VZENClustersAPI(self.request_executor)
 
     @property
+    def vzen_nodes(self):
+        """
+        The interface object for the :ref:`Virtual ZEN Nodes interface <zia-vzen_nodes>`.
+
+        """
+
+        from zscaler.zia.vzen_nodes import VZENNodesAPI
+
+        return VZENNodesAPI(self.request_executor)
+
+    @property
     def browser_control_settings(self):
         """
         The interface object for the :ref:`Browser Control Settings interface <zia-browser_control_settings>`.

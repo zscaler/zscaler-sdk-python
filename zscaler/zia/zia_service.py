@@ -85,6 +85,7 @@ from zscaler.zia.traffic_datacenters import TrafficDatacentersAPI
 from zscaler.zia.nss_servers import NssServersAPI
 from zscaler.zia.nat_control_policy import NatControlPolicyAPI
 from zscaler.zia.vzen_clusters import VZENClustersAPI
+from zscaler.zia.vzen_nodes import VZENNodesAPI
 from zscaler.zia.saas_security_api import SaaSSecurityAPI
 from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
 
@@ -669,6 +670,15 @@ class ZIAService:
         """
 
         return VZENClustersAPI(self._request_executor)
+
+    @property
+    def vzen_nodes(self):
+        """
+        The interface object for the :ref:`Virtual ZEN Nodes interface <zia-vzen_nodes>`.
+
+        """
+
+        return VZENNodesAPI(self._request_executor)
 
     @property
     def browser_control_settings(self):
