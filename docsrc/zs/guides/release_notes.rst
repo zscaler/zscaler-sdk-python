@@ -58,6 +58,7 @@ Enhancements
 --------------
 
 * (`#365 <https://github.com/zscaler/zscaler-sdk-python/pull/365>`_) - Enhanced session management for ZIA Legacy client to handle 5-minute idle timeout with proactive session validation and refresh capabilities
+
 Please refer to the (`Developer Guide <https://help.zscaler.com/zia/getting-started-zia-api#CreateSession>`_) for more details.
 
 

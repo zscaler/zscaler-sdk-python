@@ -84,7 +84,17 @@ class LegacyZIAClientHelper:
     url = "https://zsapi.zscaler.net"
     env_cloud = "zscaler"
 
-    def __init__(self, cloud, timeout=240, cache=None, fail_safe=False, request_executor_impl=None, session_safety_margin=30, use_session_validation=True, **kw):
+    def __init__(
+        self,
+        cloud,
+        timeout=240,
+        cache=None,
+        fail_safe=False,
+        request_executor_impl=None,
+        session_safety_margin=30,
+        use_session_validation=True,
+        **kw
+    ):
         from zscaler.request_executor import RequestExecutor
 
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
@@ -110,21 +120,23 @@ class LegacyZIAClientHelper:
         self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
         self.timeout = timeout
         self.fail_safe = fail_safe
-        
+
         # Session management configuration
         env_safety_margin = os.getenv(f"{self._env_base}_SESSION_SAFETY_MARGIN")
         if env_safety_margin is not None:
             self.session_safety_margin = int(env_safety_margin)
         else:
             self.session_safety_margin = kw.get("session_safety_margin", session_safety_margin)
-        
+
         # Ensure session_safety_margin has a default value if None
         if self.session_safety_margin is None:
             self.session_safety_margin = 30  # Default 30 seconds
-        
+
         self.max_idle_time = datetime.timedelta(minutes=5) - datetime.timedelta(seconds=self.session_safety_margin)
         self.last_activity = None
-        self.use_session_validation = kw.get("use_session_validation", use_session_validation) or os.getenv(f"{self._env_base}_USE_SESSION_VALIDATION", "true").lower() == "true"
+        self.use_session_validation = kw.get("use_session_validation", use_session_validation) or os.getenv(
+            f"{self._env_base}_USE_SESSION_VALIDATION", "true").lower() == "true"
+
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "false").lower() == "true"
         self.cache = NoOpCache()
         if cache is None and cache_enabled:
@@ -206,7 +218,7 @@ class LegacyZIAClientHelper:
         """
         if self.last_activity is None:
             return True
-        
+
         idle_duration = datetime.datetime.utcnow() - self.last_activity
         return idle_duration >= self.max_idle_time
 
@@ -219,9 +231,9 @@ class LegacyZIAClientHelper:
             url = f"{self.url}/api/v1/authenticatedSession"
             headers = self.headers.copy()
             headers["Cookie"] = f"JSESSIONID={self.session_id}"
-            
+
             response = requests.get(url, headers=headers, timeout=self.timeout)
-            
+
             if response.status_code == 200:
                 # Session is still valid, update last activity
                 self.last_activity = datetime.datetime.utcnow()
@@ -229,7 +241,7 @@ class LegacyZIAClientHelper:
             else:
                 # Session expired or invalid
                 return False
-                
+
         except Exception as e:
             logger.warning(f"Session validation failed: {e}")
             return False
@@ -245,7 +257,7 @@ class LegacyZIAClientHelper:
                 logger.info("Session approaching idle timeout, refreshing...")
                 self.authenticate()
                 return
-            
+
             # Actively validate session status
             if not self.validate_session_status():
                 logger.info("Session validation failed, refreshing...")
@@ -257,7 +269,7 @@ class LegacyZIAClientHelper:
                 logger.info("Session expired based on passwordExpiryTime, refreshing...")
                 self.authenticate()
                 return
-        
+
         # Update last activity time
         self.last_activity = datetime.datetime.utcnow()
 

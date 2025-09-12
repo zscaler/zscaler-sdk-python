@@ -73,7 +73,7 @@ class LocationManagement(ZscalerObject):
                 or config.get("surrogateIPEnforcedForKnownBrowsers")  # ← raw from the API
                 or False  # ← fallback
             )
-            
+
             self.cookies_and_proxy = config["cookiesAndProxy"] if "cookiesAndProxy" in config else None
             self.idle_time_in_minutes = config["idleTimeInMinutes"] if "idleTimeInMinutes" in config else None
             self.display_time_unit = config["displayTimeUnit"] if "displayTimeUnit" in config else None
@@ -114,8 +114,7 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-            self.ports = config["ports"] if "ports"  in config else None
-            
+            self.ports = config["ports"] if "ports" in config else None
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
                 config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.CommonIDName

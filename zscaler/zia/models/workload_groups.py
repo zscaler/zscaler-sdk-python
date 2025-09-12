@@ -76,7 +76,6 @@ class WorkloadGroups(ZscalerObject):
         }
 
 
-
 class ExpressionJson(ZscalerObject):
     """
     A class for ExpressionJson objects.
@@ -151,6 +150,7 @@ class ExpressionContainers(ZscalerObject):
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
+
 class TagContainer(ZscalerObject):
     """
     A class for TagContainer objects.
@@ -179,6 +179,7 @@ class TagContainer(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
 
 class Tags(ZscalerObject):
     """

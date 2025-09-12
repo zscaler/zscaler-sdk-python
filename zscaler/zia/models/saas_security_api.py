@@ -276,7 +276,7 @@ class SaaSScanInfo(ZscalerObject):
                 if "saasApplication" in config else None
             self.scan_action = config["scanAction"] \
                 if "scanAction" in config else None
-                
+
             if "scanInfo" in config:
                 if isinstance(config["scanInfo"], ScanInfo):
                     self.scan_info = config["scanInfo"]
