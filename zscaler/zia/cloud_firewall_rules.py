@@ -41,7 +41,7 @@ class FirewallPolicyAPI(APIClient):
                 ``[query_params.rule_name]`` {str}: Filters rules based on rule names using the specified keywords
                 ``[query_params.rule_label]`` {str}: Filters rules based on rule labels using the specified keywords
                 ``[query_params.rule_order]`` {str}: Filters rules based on rule order using the specified keywords
-                ``[query_params.rule_description]`` {str}: Filters rules based on rule descriptions using the specified keywords
+                ``[query_params.rule_description]`` {str}: Filters rules based on descriptions using the specified keywords
                 ``[query_params.rule_action]`` {str}: Filters rules based on rule actions using the specified keywords
                 ``[query_params.location]`` {str}: Filters rules based on locations using the specified keywords
                 ``[query_params.department]`` {str}: Filters rules based on user departments using the specified keywords
@@ -49,16 +49,16 @@ class FirewallPolicyAPI(APIClient):
                 ``[query_params.user]`` {str}: Filters rules based on users using the specified keywords
                 ``[query_params.device]`` {str}: Filters rules based on devices using the specified keywords
                 ``[query_params.device_group]`` {str}: Filters rules based on device groups using the specified keywords
-                ``[query_params.device_trust_level]`` {str}: Filters rules based on device trust levels using the specified keywords
+                ``[query_params.device_trust_level]`` {str}: Filters rules based on device trust levels using keywords
                 ``[query_params.src_ips]`` {str}: Filters rules based on source IP addresses using the specified keywords
-                ``[query_params.dest_addresses]`` {str}: Filters rules based on destination IP addresses using the specified keywords
+                ``[query_params.dest_addresses]`` {str}: Filters rules based on destination IP using the specified keywords
                 ``[query_params.src_ip_groups]`` {str}: Filters rules based on source IP groups using the specified keywords
-                ``[query_params.dest_ip_groups]`` {str}: Filters rules based on destination IP groups using the specified keywords
-                ``[query_params.nw_application]`` {str}: Filters rules based on network applications using the specified keywords
+                ``[query_params.dest_ip_groups]`` {str}: Filters rules based on destination groups using the specified keywords
+                ``[query_params.nw_application]`` {str}: Filters rules based on network applications using keywords
                 ``[query_params.nw_services]`` {str}: Filters rules based on network services using the specified keywords
-                ``[query_params.dest_ip_categories]`` {str}: Filters rules based on destination URL categories using the specified keywords
+                ``[query_params.dest_ip_categories]`` {str}: Filters rules based on destination URL categories using keywords
                 ``[query_params.page]`` {str}: Specifies the page offset
-                ``[query_params.page_size]`` {str}: Specifies the page size. The default size is set to 5,000, if not specified.
+                ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
 
         Returns:
             tuple: A tuple containing (list of firewall rules instances, Response, error)

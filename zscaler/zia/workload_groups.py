@@ -147,11 +147,15 @@ class WorkloadGroupsAPI(APIClient):
             description (str): Additional notes or information about the workload group.
             expression (str): The expression string for the workload group.
             expression_json (dict): JSON object containing the expression configuration with the following structure:
+
                 - expression_containers (list): List of expression containers, each containing:
+
                     - tag_type (str): Type of tag (e.g., "ATTR", "ENI", "VPC", "VM").
                     - operator (str): Logical operator for the expression (e.g., "AND", "OR").
                     - tag_container (dict): Container for tags with:
+
                         - tags (list): List of tag objects, each containing:
+
                             - key (str): The tag key identifier.
                             - value (str): The tag value.
                         - operator (str): Logical operator for tags within the container.
@@ -254,11 +258,15 @@ class WorkloadGroupsAPI(APIClient):
             description (str): Additional notes or information about the workload group.
             expression (str): The expression string for the workload group.
             expression_json (dict): JSON object containing the expression configuration with the following structure:
+
                 - expression_containers (list): List of expression containers, each containing:
+
                     - tag_type (str): Type of tag (e.g., "ATTR", "ENI", "VPC", "VM").
                     - operator (str): Logical operator for the expression (e.g., "AND", "OR").
                     - tag_container (dict): Container for tags with:
+
                         - tags (list): List of tag objects, each containing:
+
                             - key (str): The tag key identifier.
                             - value (str): The tag value.
                         - operator (str): Logical operator for tags within the container.
