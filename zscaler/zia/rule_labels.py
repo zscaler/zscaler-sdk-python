@@ -222,9 +222,7 @@ class RuleLabelsAPI(APIClient):
             /ruleLabels/{label_id}
         """
         )
-        body = {}
-
-        body.update(kwargs)
+        body = kwargs
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:

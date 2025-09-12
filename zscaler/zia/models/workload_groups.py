@@ -33,12 +33,16 @@ class WorkloadGroups(ZscalerObject):
             self.expression = config["expression"] if "expression" in config else None
             self.last_modified_time = config["lastModifiedTime"] if "lastModifiedTime" in config else None
 
-            # Handling deeply nested expressionContainers with ZscalerCollection
-            self.expression_containers = ZscalerCollection.form_list(
-                config.get("expressionJson", {}).get("expressionContainers", []), dict
-            )
+            if "expressionJson" in config:
+                if isinstance(config["expressionJson"], ExpressionJson):
+                    self.expression_json = config["expressionJson"]
+                elif config["expressionJson"] is not None:
+                    self.expression_json = ExpressionJson(config["expressionJson"])
+                else:
+                    self.expression_json = None
+            else:
+                self.expression_json = None
 
-            # Handling lastModifiedBy as a simple dictionary value
             if "lastModifiedBy" in config:
                 if isinstance(config["lastModifiedBy"], common.CommonBlocks):
                     self.last_modified_by = config["lastModifiedBy"]
@@ -54,8 +58,8 @@ class WorkloadGroups(ZscalerObject):
             self.description = None
             self.expression = None
             self.last_modified_time = None
-            self.expression_containers = []
             self.last_modified_by = None
+            self.expression_json = None
 
     def request_format(self):
         """
@@ -68,5 +72,137 @@ class WorkloadGroups(ZscalerObject):
             "expression": self.expression,
             "lastModifiedTime": self.last_modified_time,
             "lastModifiedBy": self.last_modified_by,
-            "expressionJson": {"expressionContainers": self.expression_containers},
+            "expressionJson": self.expression_json
         }
+
+
+
+class ExpressionJson(ZscalerObject):
+    """
+    A class for ExpressionJson objects.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.tag_type = config["tagType"] if "tagType" in config else None
+            self.operator = config["operator"] if "operator" in config else None
+
+            self.expression_containers = ZscalerCollection.form_list(
+                config["expressionContainers"] if "expressionContainers" in config else [], ExpressionContainers
+            )
+
+        else:
+            self.tag_type = None
+            self.operator = None
+            self.tag_container = None
+            self.expression_containers = []
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "tagType": self.tag_type,
+            "operator": self.operator,
+            "expressionContainers": self.expression_containers
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class ExpressionContainers(ZscalerObject):
+    """
+    A class for ExpressionContainers objects.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.tag_type = config["tagType"] if "tagType" in config else None
+            self.operator = config["operator"] if "operator" in config else None
+
+            if "tagContainer" in config:
+                if isinstance(config["tagContainer"], TagContainer):
+                    self.tag_container = config["tagContainer"]
+                elif config["tagContainer"] is not None:
+                    self.tag_container = TagContainer(config["tagContainer"])
+                else:
+                    self.tag_container = None
+            else:
+                self.tag_container = None
+
+        else:
+            self.tag_type = None
+            self.operator = None
+            self.tag_container = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "tagType": self.tag_type,
+            "operator": self.operator,
+            "tagContainer": self.tag_container
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class TagContainer(ZscalerObject):
+    """
+    A class for TagContainer objects.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.operator = config["operator"] if "operator" in config else None
+            self.tags = ZscalerCollection.form_list(
+                config["tags"] if "tags" in config else [], Tags
+            )
+
+        else:
+            self.operator = None
+            self.tags = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "operator": self.operator,
+            "tags": self.tags,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+class Tags(ZscalerObject):
+    """
+    A class for Tags objects.
+    """
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        if config:
+            self.key = config["key"] if "key" in config else None
+            self.value = config["value"] if "value" in config else None
+
+        else:
+            self.key = None
+            self.value = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "key": self.key,
+            "value": self.value,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
