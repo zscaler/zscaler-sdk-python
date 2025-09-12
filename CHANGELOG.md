@@ -1,5 +1,39 @@
 # Zscaler Python SDK Changelog
 
+## 1.8.0 (September xx, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+#### NEW ZIA Endpoints
+
+[PR #370](https://github.com/zscaler/zscaler-sdk-python/pull/370) - Added the following new ZIA API Endpoints:
+    - Added `GET /virtualZenNodes` Retrieves the ZIA Virtual Service Edge for an organization
+    - Added `GET /virtualZenNodes/{id}` Retrieves the ZIA Virtual Service Edge for an organization based on the specified ID
+    - Added `POST /virtualZenNodes` Adds a ZIA Virtual Service Edge for an organization
+    - Added `PUT /virtualZenNodes/{id}` Updates the ZIA Virtual Service Edge for an organization based on the specified ID
+    - Added `DELETE /virtualZenNodes/{id}` Deletes the ZIA Virtual Service Edge for an organization based on the specified ID
+
+[PR #370](https://github.com/zscaler/zscaler-sdk-python/pull/370) - Added the following new ZIA API Endpoints:
+    - Added `GET /workloadGroups/{id}` Retrieves the workload group based on the specified ID
+    - Added `POST /workloadGroups` Adds a workload group for an organization
+    - Added `PUT /workloadGroups/{id}` Updates the workload group for an organization based on the specified ID
+    - Added `DELETE /workloadGroups/{id}` Updates the workload group based on the specified ID
+
+[PR #370](https://github.com/zscaler/zscaler-sdk-python/pull/370) - Added the following new ZIA API Endpoints:
+    - Added `GET /casbTenant/scanInfo` Retrieves the SaaS Security Scan Configuration information
+
+#### NEW ZPA Endpoints
+
+[PR #370](https://github.com/zscaler/zscaler-sdk-python/pull/370) - Added the following new ZPA API Endpoints:
+    - Added `GET /application/bulkUpdateMultiMatch` Update multimatch feature in multiple application segments.
+    - Added `GET /application/multimatchUnsupportedReferences` Get the unsupported feature references for multimatch for domains.
+  
+### Bug Fixes:
+
+[PR #370](https://github.com/zscaler/zscaler-sdk-python/pull/370) -  Fixed ZIA service deauthentication to only occur for POST/PUT/DELETE requests, not GET requests. This improves efficiency by avoiding unnecessary deauthentication calls for read-only operations.
+
 ## 1.7.9 (September 4, 2025)
 
 ### Notes

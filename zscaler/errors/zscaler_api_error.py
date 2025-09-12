@@ -23,7 +23,16 @@ class ZscalerAPIError(Exception):
         if self.error_message:
             message_parts.append(self.error_message)
         if self.params:
-            message_parts.append(f"Parameters: {', '.join(self.params)}")
+            # Handle mixed types in params (lists and strings) safely
+            param_strings = []
+            for param in self.params:
+                if isinstance(param, list):
+                    # Flatten lists and join with commas
+                    param_strings.append(', '.join(str(item) for item in param))
+                else:
+                    # Convert non-list items to strings
+                    param_strings.append(str(param))
+            message_parts.append(f"Parameters: {', '.join(param_strings)}")
 
         self.message = " ".join(message_parts)
         super().__init__(self.message)  # ✅ This is what makes it raise-able

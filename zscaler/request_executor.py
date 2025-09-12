@@ -119,6 +119,10 @@ class RequestExecutor:
 
         exceptions.raise_exception = self._config["client"].get("raiseException", False)
         self._custom_headers = {}
+        
+        # Track whether any mutations (POST/PUT/DELETE) have occurred during this session
+        # This is used to determine if deauthentication is needed for ZIA/ZTW services
+        self._mutations_occurred = False
 
     def get_base_url(self, endpoint: str) -> str:
         """
@@ -301,6 +305,14 @@ class RequestExecutor:
         # Special handling for ZDX endpoints - keep snake_case format
         if "/zdx/" in endpoint:
             return body  # Do not convert ZDX requests to camelCase
+
+        # Special handling for ZCC service - use selective conversion
+        if "/zcc/" in endpoint and body:
+            from zscaler.helpers import convert_keys_to_camel_case_selective
+            from zscaler.zcc.models.webpolicy import WebPolicy
+            # Use the WebPolicy's snake_case keys for selective conversion
+            body = convert_keys_to_camel_case_selective(body, WebPolicy.SNAKE_CASE_KEYS)
+            return body
 
         # Preserve existing logic for other services
         if body:
@@ -513,6 +525,13 @@ class RequestExecutor:
             logger.warning("Request Timeout exceeded.")
             return None, None, None, Exception("Request Timeout exceeded.")
 
+        # Track mutations (POST/PUT/DELETE) for ZIA/ZTW deauthentication logic
+        if request["method"].upper() in ["POST", "PUT", "DELETE"]:
+            self._mutations_occurred = True
+            logger.debug(f"Mutation detected: {request['method']} request to {request['url']}")
+        else:
+            logger.debug(f"Non-mutation request: {request['method']} request to {request['url']} (mutations_occurred={self._mutations_occurred})")
+
         # Perform the actual HTTP request
         response, error = self._http_client.send_request(request)
 
@@ -632,10 +651,22 @@ class RequestExecutor:
         logger.debug("Getting custom headers.")
         return self._custom_headers
 
+    def has_mutations_occurred(self):
+        """
+        Check if any mutations (POST/PUT/DELETE) have occurred during this session.
+        
+        Returns:
+            bool: True if mutations occurred, False otherwise.
+        """
+        return self._mutations_occurred
+
     def deauthenticate(self, service_type=None):
         """
         Deauthenticate from Zscaler services that support session-based authentication.
         Currently supports ZIA and ZTW services.
+        
+        For ZIA service, deauthentication is only performed if mutations (POST/PUT/DELETE) 
+        have occurred during the session. GET-only sessions do not require deauthentication.
         
         Args:
             service_type (str, optional): The service type to deauthenticate from.
@@ -647,6 +678,11 @@ class RequestExecutor:
         if service_type.lower() not in ["zia", "ztw"]:
             logger.debug(f"Deauthentication not supported for service: {service_type}")
             return False
+        
+        # For ZIA service, only deauthenticate if mutations occurred
+        if service_type.lower() == "zia" and not self._mutations_occurred:
+            logger.debug("ZIA service: No mutations occurred during session, skipping deauthentication")
+            return True
         
         try:
             # Determine the base URL and endpoint based on service type

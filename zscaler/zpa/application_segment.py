@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
+from zscaler.zpa.models.application_segment import MultiMatchUnsupportedReferences
 from zscaler.utils import format_url, add_id_groups
 import logging
 
@@ -946,4 +947,117 @@ class ApplicationSegmentAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
+        return (result, response, None)
+
+    def bulk_update_multimatch(self, **kwargs) -> tuple:
+        """
+        Update multimatch feature in multiple application segments.
+
+        Args:
+            application_ids (list of str): List of application segment IDs to update.
+            match_style (str): The match style to apply. Values: `EXCLUSIVE`, `INCLUSIVE`.
+
+        Keyword Args:
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing the updated :obj:`MultiMatchUnsupportedReferences` object,
+            the raw response object, and an error object (if any).
+
+        Examples:
+            Updating multiple application segments with new multimatch settings:
+
+            >>> bulk_update, _, err = client.zpa.application_segment.bulk_update_multimatch(
+            ...     application_ids=["216196257331372697", "216196257331372698"],
+            ...     match_style="INCLUSIVE"
+            ... )
+            >>> if err:
+            ...     print(f"Error updating multimatch: {err}")
+            ...     return
+            ... print(f"Multimatch updated successfully: {bulk_update.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/bulkUpdateMultiMatch
+        """
+        )
+
+        body = kwargs
+
+        microtenant_id = kwargs.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        if response is None:
+            return ({"message": "Bulk update multimatch operation completed successfully."}, response, None)
+
+        try:
+            result = MultiMatchUnsupportedReferences(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_multimatch_unsupported_references(self, domains, **kwargs) -> tuple:
+        """
+        Get the unsupported feature references for multimatch for domains.
+
+        This endpoint checks which application segments have unsupported features
+        when using multimatch functionality for the specified domains.
+
+        Args:
+            domains (list of str): List of domain names to check for unsupported features.
+            microtenant_id (str, optional): ID of the microtenant, if applicable.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of MultiMatchUnsupportedReferences instances, Response, error).
+
+        Examples:
+            >>> references, _, err = client.zpa.application_segment.get_multimatch_unsupported_references(
+            ...     ["app2.securitygeek.io"]
+            ... )
+            ... if err:
+            ...     print(f"Error getting multimatch unsupported references: {err}")
+            ...     return
+            ... print(f"Found {len(references)} references with unsupported features:")
+            ... for ref in references:
+            ...     print(f"Reference: {ref.as_dict()}")
+            ...     print("---")
+        """
+        http_method = "post".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/multimatchUnsupportedReferences
+        """
+        )
+
+        # The API expects a simple array of domain strings as the body
+        body = domains
+
+        microtenant_id = kwargs.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, MultiMatchUnsupportedReferences)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(MultiMatchUnsupportedReferences(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
         return (result, response, None)
