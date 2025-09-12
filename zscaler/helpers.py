@@ -314,3 +314,36 @@ def convert_keys_to_camel_case(data):
         return [convert_keys_to_camel_case(item) for item in data]
     else:
         return data
+
+
+def convert_keys_to_camel_case_selective(data, preserve_snake_case_keys=None):
+    """
+    Recursively convert keys to camelCase while preserving specific snake_case keys.
+    This function allows users to use snake_case for all attributes, and only converts
+    to camelCase if the attribute is NOT in the preserve_snake_case_keys set.
+    
+    Args:
+        data: Dictionary or list to convert
+        preserve_snake_case_keys: Set of keys that should remain in snake_case
+    
+    Returns:
+        Converted data with selective key preservation
+    """
+    if preserve_snake_case_keys is None:
+        preserve_snake_case_keys = set()
+    
+    if isinstance(data, dict):
+        result = {}
+        for k, v in data.items():
+            # Check if this key should be preserved in snake_case
+            if k in preserve_snake_case_keys:
+                # Keep as snake_case
+                result[k] = convert_keys_to_camel_case_selective(v, preserve_snake_case_keys)
+            else:
+                # Convert to camelCase
+                result[to_lower_camel_case(k)] = convert_keys_to_camel_case_selective(v, preserve_snake_case_keys)
+        return result
+    elif isinstance(data, list):
+        return [convert_keys_to_camel_case_selective(item, preserve_snake_case_keys) for item in data]
+    else:
+        return data

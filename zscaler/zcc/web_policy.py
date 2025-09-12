@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
-from zscaler.utils import format_url, zcc_param_mapper
+from zscaler.utils import format_url, zcc_param_mapper, transform_common_id_fields, reformat_params
 from zscaler.zcc.models.webpolicy import WebPolicy
 
 
@@ -155,9 +155,10 @@ class WebPolicyAPI(APIClient):
             /web/policy/edit
         """
         )
-        body = {}
+        
+        body = kwargs
 
-        body.update(kwargs)
+        transform_common_id_fields(reformat_params, body, body)
 
         request, error = self._request_executor.create_request(http_method, api_url, body, {}, {})
         if error:

@@ -23,6 +23,37 @@ class WebPolicy(ZscalerObject):
     A class for WebPolicy objects.
     """
 
+    # Define keys that should remain in snake_case format for API compatibility
+    SNAKE_CASE_KEYS = {
+        # Main WebPolicy attributes
+        'device_type', 'pac_url', 'reauth_period', 'install_ssl_certs',
+        'bypass_mms_apps', 'quota_in_roaming', 'wifi_ssid', 'limit', 'billing_day',
+        'allowed_apps', 'custom_text', 'bypass_android_apps',
+
+        # Windows Policy attributes
+        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
+
+        # Linux Policy attributes
+        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
+
+        # iOS Policy attributes
+        'disable_password', 'logout_password', 'uninstall_password',
+
+        # Android Policy attributes
+        'disable_password', 'logout_password', 'uninstall_password', 'allowed_apps', 'billing_day',
+        'bypass_android_apps', 'bypass_mms_apps', 'custom_text', 'enforced', 'install_ssl_certs',
+        'limit', 'quota_in_roaming', 'wifi_ssid',
+        
+        # macOS Policy attributes
+        'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
+
+        # Policy Extension attributes that should remain snake_case
+        'truncate_large_udpdns_response', 'purge_kerberos_preferred_dc_cache',
+
+        # Disaster Recovery attributes
+        'enable_zia_dr'
+    }
+
     def __init__(self, config=None):
         """
         Initialize the WebPolicy model based on API response.
@@ -36,19 +67,15 @@ class WebPolicy(ZscalerObject):
             self.active = config["active"] if "active" in config else None
             self.description = config["description"] if "description" in config else None
             self.allow_unreachable_pac = config["allowUnreachablePac"] if "allowUnreachablePac" in config else None
-            self.android_policy = config["androidPolicy"] if "androidPolicy" in config else None
             self.device_type = config["device_type"] if "device_type" in config else None
             self.enable_device_groups = config["enableDeviceGroups"] if "enableDeviceGroups" in config else None
             self.forwarding_profile_id = config["forwardingProfileId"] if "forwardingProfileId" in config else None
             self.group_all = config["groupAll"] if "groupAll" in config else None
             self.highlight_active_control = config["highlightActiveControl"] if "highlightActiveControl" in config else None
             self.id = config["id"] if "id" in config else None
-            self.ios_policy = config["iosPolicy"] if "iosPolicy" in config else None
-            self.linux_policy = config["linuxPolicy"] if "linuxPolicy" in config else None
             self.log_file_size = config["logFileSize"] if "logFileSize" in config else None
             self.log_level = config["logLevel"] if "logLevel" in config else None
             self.log_mode = config["logMode"] if "logMode" in config else None
-            self.mac_policy = config["macPolicy"] if "macPolicy" in config else None
             self.name = config["name"] if "name" in config else None
             self.pac_url = config["pac_url"] if "pac_url" in config else None
             self.reactivate_web_security_minutes = (
@@ -60,7 +87,6 @@ class WebPolicy(ZscalerObject):
                 config["sendDisableServiceReason"] if "sendDisableServiceReason" in config else None
             )
             self.tunnel_zapp_traffic = config["tunnelZappTraffic"] if "tunnelZappTraffic" in config else None
-            self.windows_policy = config["windowsPolicy"] if "windowsPolicy" in config else None
             self.zia_posture_config_id = config["ziaPostureConfigId"] if "ziaPostureConfigId" in config else None
 
             self.app_identity_names = ZscalerCollection.form_list(
@@ -90,10 +116,61 @@ class WebPolicy(ZscalerObject):
             self.user_ids = ZscalerCollection.form_list(config["userIds"] if "userIds" in config else [], str)
             self.user_names = ZscalerCollection.form_list(config["userNames"] if "userNames" in config else [], str)
 
-            self.users = ZscalerCollection.form_list(
-                config["users"] if "users" in config else [], Users
-            )
+            # self.users = ZscalerCollection.form_list(config["users"] if "users" in config else [], str)
+            # self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], str)
+            self.users = ZscalerCollection.form_list(config["users"] if "users" in config else [], Users)
+            self.groups = ZscalerCollection.form_list(config["groups"] if "groups" in config else [], Groups)
 
+            if "windowsPolicy" in config:
+                if isinstance(config["windowsPolicy"], WindowsPolicy):
+                    self.windows_policy = config["windowsPolicy"]
+                elif config["windowsPolicy"] is not None:
+                    self.windows_policy = WindowsPolicy(config["windowsPolicy"])
+                else:
+                    self.windows_policy = None
+            else:
+                self.windows_policy = None
+
+            if "androidPolicy" in config:
+                if isinstance(config["androidPolicy"], AndroidPolicy):
+                    self.android_policy = config["androidPolicy"]
+                elif config["androidPolicy"] is not None:
+                    self.android_policy = AndroidPolicy(config["androidPolicy"])
+                else:
+                    self.android_policy = None
+            else:
+                self.android_policy = None
+
+            if "iosPolicy" in config:
+                if isinstance(config["iosPolicy"], IOSPolicy):
+                    self.ios_policy = config["iosPolicy"]
+                elif config["iosPolicy"] is not None:
+                    self.ios_policy = IOSPolicy(config["iosPolicy"])
+                else:
+                    self.ios_policy = None
+            else:
+                self.ios_policy = None
+
+            if "linuxPolicy" in config:
+                if isinstance(config["linuxPolicy"], LinuxPolicy):
+                    self.linux_policy = config["linuxPolicy"]
+                elif config["linuxPolicy"] is not None:
+                    self.linux_policy = LinuxPolicy(config["linuxPolicy"])
+                else:
+                    self.linux_policy = None
+            else:
+                self.linux_policy = None
+
+            if "macPolicy" in config:
+                if isinstance(config["macPolicy"], MacOSPolicy):
+                    self.mac_policy = config["macPolicy"]
+                elif config["macPolicy"] is not None:
+                    self.mac_policy = MacOSPolicy(config["macPolicy"])
+                else:
+                    self.mac_policy = None
+            else:
+                self.mac_policy = None
+            
             if "policyExtension" in config:
                 if isinstance(config["policyExtension"], PolicyExtension):
                     self.policy_extension = config["policyExtension"]
@@ -140,8 +217,8 @@ class WebPolicy(ZscalerObject):
             self.enable_device_groups = None
             self.forwarding_profile_id = None
             self.group_all = None
-            self.group_ids = ZscalerCollection.form_list([], str)
-            self.group_names = ZscalerCollection.form_list([], str)
+            self.group_ids = []
+            self.group_names = []
             self.highlight_active_control = None
             self.id = None
             self.ios_policy = None
@@ -158,8 +235,10 @@ class WebPolicy(ZscalerObject):
             self.rule_order = None
             self.send_disable_service_reason = None
             self.tunnel_zapp_traffic = None
-            self.user_ids = ZscalerCollection.form_list([], str)
-            self.user_names = ZscalerCollection.form_list([], str)
+            self.user_ids = []
+            self.user_names = []
+            self.users = []
+            self.groups = []
             self.windows_policy = None
             self.zia_posture_config_id = None
 
@@ -207,6 +286,8 @@ class WebPolicy(ZscalerObject):
             "userNames": self.user_names,
             "windowsPolicy": self.windows_policy,
             "ziaPostureConfigId": self.zia_posture_config_id,
+            "groups": self.groups,
+            "users": self.users,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
@@ -301,7 +382,7 @@ class PolicyExtension(ZscalerObject):
                 if "interceptZIATrafficAllAdapters" in config else None
             self.enable_anti_tampering = config["enableAntiTampering"] \
                 if "enableAntiTampering" in config else None
-            self.override_a_t_cmd_by_policy = config["overrideATCmdByPolicy"] \
+            self.override_at_cmd_by_policy = config["overrideATCmdByPolicy"] \
                 if "overrideATCmdByPolicy" in config else None
             self.reactivate_anti_tampering_time = config["reactivateAntiTamperingTime"] \
                 if "reactivateAntiTamperingTime" in config else None
@@ -394,7 +475,7 @@ class PolicyExtension(ZscalerObject):
             self.use_proxy_port_for_t2 = None
             self.intercept_zia_traffic_all_adapters = None
             self.enable_anti_tampering = None
-            self.override_a_t_cmd_by_policy = None
+            self.override_at_cmd_by_policy = None
             self.reactivate_anti_tampering_time = None
             self.enforce_split_dns = None
             self.drop_quic_traffic = None
@@ -464,7 +545,7 @@ class PolicyExtension(ZscalerObject):
             "useProxyPortForT2": self.use_proxy_port_for_t2,
             "interceptZIATrafficAllAdapters": self.intercept_zia_traffic_all_adapters,
             "enableAntiTampering": self.enable_anti_tampering,
-            "overrideATCmdByPolicy": self.override_a_t_cmd_by_policy,
+            "overrideATCmdByPolicy": self.override_at_cmd_by_policy,
             "reactivateAntiTamperingTime": self.reactivate_anti_tampering_time,
             "enforceSplitDNS": self.enforce_split_dns,
             "dropQuicTraffic": self.drop_quic_traffic,
@@ -673,6 +754,412 @@ class Users(ZscalerObject):
             "lastModification": self.last_modification,
             "active": self.active,
             "companyId": self.company_id
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class Groups(ZscalerObject):
+    """
+    A class for Groups objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the Groups model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] \
+                if "id" in config else None
+        else:
+            self.id = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+    
+
+class WindowsPolicy(ZscalerObject):
+    """
+    A class for WindowsPolicy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the WindowsPolicy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.cache_system_proxy = config["cacheSystemProxy"] \
+                if "cacheSystemProxy" in config else None
+            self.disable_password = config["disable_password"] \
+                if "disable_password" in config else None
+            self.disable_loop_back_restriction = config["disableLoopBackRestriction"] \
+                if "disableLoopBackRestriction" in config else None
+            self.remove_exempted_containers = config["removeExemptedContainers"] \
+                if "removeExemptedContainers" in config else None
+            self.disable_parallel_ipv4and_ipv6 = config["disableParallelIpv4andIpv6"] \
+                if "disableParallelIpv4andIpv6" in config else None
+            self.flow_logger_config = config["flowLoggerConfig"] \
+                if "flowLoggerConfig" in config else None
+            self.domain_profile_detection_config = config["domainProfileDetectionConfig"] \
+                if "domainProfileDetectionConfig" in config else None
+            self.all_inbound_traffic_config = config["allInboundTrafficConfig"] \
+                if "allInboundTrafficConfig" in config else None
+            self.install_ssl_certs = config["install_ssl_certs"] \
+                if "install_ssl_certs" in config else None
+            self.trigger_domain_profle_detection = config["triggerDomainProfleDetection"] \
+                if "triggerDomainProfleDetection" in config else None
+            self.logout_password = config["logout_password"] \
+                if "logout_password" in config else None
+            self.override_wpad = config["overrideWPAD"] \
+                if "overrideWPAD" in config else None
+            self.pac_data_path = config["pacDataPath"] \
+                if "pacDataPath" in config else None
+            self.pac_type = config["pacType"] \
+                if "pacType" in config else None
+            self.prioritize_i_pv4 = config["prioritizeIPv4"] \
+                if "prioritizeIPv4" in config else None
+            self.restart_win_http_svc = config["restartWinHttpSvc"] \
+                if "restartWinHttpSvc" in config else None
+            self.sccm_config = config["sccmConfig"] \
+                if "sccmConfig" in config else None
+            self.uninstall_password = config["uninstall_password"] \
+                if "uninstall_password" in config else None
+            self.wfp_driver = config["wfpDriver"] \
+                if "wfpDriver" in config else None
+            self.captive_portal_config = config["captivePortalConfig"] \
+                if "captivePortalConfig" in config else None
+            self.install_windows_firewall_inbound_rule = config["installWindowsFirewallInboundRule"] \
+                if "installWindowsFirewallInboundRule" in config else None
+            self.force_location_refresh_sccm = config["forceLocationRefreshSccm"] \
+                if "forceLocationRefreshSccm" in config else None
+        else:
+            self.cache_system_proxy = None
+            self.disable_password = None
+            self.disable_loop_back_restriction = None
+            self.remove_exempted_containers = None
+            self.disable_parallel_ipv4and_ipv6 = None
+            self.flow_logger_config = None
+            self.domain_profile_detection_config = None
+            self.all_inbound_traffic_config = None
+            self.install_ssl_certs = None
+            self.trigger_domain_profle_detection = None
+            self.logout_password = None
+            self.override_wpad = None
+            self.pac_data_path = None
+            self.pac_type = None
+            self.prioritize_i_pv4 = None
+            self.restart_win_http_svc = None
+            self.sccm_config = None
+            self.uninstall_password = None
+            self.wfp_driver = None
+            self.captive_portal_config = None
+            self.install_windows_firewall_inbound_rule = None
+            self.force_location_refresh_sccm = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cacheSystemProxy": self.cache_system_proxy,
+            "disable_password": self.disable_password,
+            "disableLoopBackRestriction": self.disable_loop_back_restriction,
+            "removeExemptedContainers": self.remove_exempted_containers,
+            "disableParallelIpv4andIpv6": self.disable_parallel_ipv4and_ipv6,
+            "flowLoggerConfig": self.flow_logger_config,
+            "domainProfileDetectionConfig": self.domain_profile_detection_config,
+            "allInboundTrafficConfig": self.all_inbound_traffic_config,
+            "install_ssl_certs": self.install_ssl_certs,
+            "triggerDomainProfleDetection": self.trigger_domain_profle_detection,
+            "logout_password": self.logout_password,
+            "overrideWPAD": self.override_wpad,
+            "pacDataPath": self.pac_data_path,
+            "pacType": self.pac_type,
+            "prioritizeIPv4": self.prioritize_i_pv4,
+            "restartWinHttpSvc": self.restart_win_http_svc,
+            "sccmConfig": self.sccm_config,
+            "uninstall_password": self.uninstall_password,
+            "wfpDriver": self.wfp_driver,
+            "captivePortalConfig": self.captive_portal_config,
+            "installWindowsFirewallInboundRule": self.install_windows_firewall_inbound_rule,
+            "forceLocationRefreshSccm": self.force_location_refresh_sccm
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class LinuxPolicy(ZscalerObject):
+    """
+    A class for LinuxPolicy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the LinuxPolicy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.disable_password = config["disablePassword"] \
+                if "disablePassword" in config else None
+            self.install_ssl_certs = config["installCerts"] \
+                if "installCerts" in config else None
+            self.logout_password = config["logoutPassword"] \
+                if "logoutPassword" in config else None
+            self.uninstall_password = config["uninstallPassword"] \
+                if "uninstallPassword" in config else None
+        else:
+            self.disable_password = None
+            self.install_ssl_certs = None
+            self.logout_password = None
+            self.uninstall_password = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "disablePassword": self.disable_password,
+            "installCerts": self.install_ssl_certs,
+            "logoutPassword": self.logout_password,
+            "uninstallPassword": self.uninstall_password
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class IOSPolicy(ZscalerObject):
+    """
+    A class for IOSPolicy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the IOSPolicy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.disable_password = config["disablePassword"] \
+                if "disablePassword" in config else None
+            self.logout_password = config["logoutPassword"] \
+                if "logoutPassword" in config else None
+            self.uninstall_password = config["uninstallPassword"] \
+                if "uninstallPassword" in config else None
+            self.ipv6_mode = config["ipv6Mode"] \
+                if "ipv6Mode" in config else None
+            self.passcode = config["passcode"] \
+                if "passcode" in config else None
+
+            self.show_vpn_tun_notification = config["showVPNTunNotification"] \
+                if "showVPNTunNotification" in config else None
+
+        else:
+            self.disable_password = None
+            self.logout_password = None
+            self.uninstall_password = None
+            self.ipv6_mode = None
+            self.passcode = None
+            self.show_vpn_tun_notification = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "disablePassword": self.disable_password,
+            "logoutPassword": self.logout_password,
+            "uninstallPassword": self.uninstall_password,
+            "ipv6Mode": self.ipv6_mode,
+            "passcode": self.passcode,
+            "showVPNTunNotification": self.show_vpn_tun_notification,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class AndroidPolicy(ZscalerObject):
+    """
+    A class for AndroidPolicy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the AndroidPolicy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.allowed_apps = config["allowedApps"] \
+                if "allowedApps" in config else None
+            self.billing_day = config["billingDay"] \
+                if "billingDay" in config else None
+            self.bypass_android_apps = config["bypassAndroidApps"] \
+                if "bypassAndroidApps" in config else None
+            self.bypass_mms_apps = config["bypassMmsApps"] \
+                if "bypassMmsApps" in config else None
+            self.custom_text = config["customText"] \
+                if "customText" in config else None
+            self.disable_password = config["disablePassword"] \
+                if "disablePassword" in config else None
+            self.enable_verbose_log = config["enableVerboseLog"] \
+                if "enableVerboseLog" in config else None
+            self.enforced = config["enforced"] \
+                if "enforced" in config else None
+            self.install_certs = config["installCerts"] \
+                if "installCerts" in config else None
+            self.limit = config["limit"] \
+                if "limit" in config else None
+            self.logout_password = config["logoutPassword"] \
+                if "logoutPassword" in config else None
+            self.quota_roaming = config["quotaRoaming"] \
+                if "quotaRoaming" in config else None
+            self.uninstall_password = config["uninstallPassword"] \
+                if "uninstallPassword" in config else None
+            self.wifissid = config["wifissid"] \
+                if "wifissid" in config else None
+        else:
+            self.allowed_apps = None
+            self.billing_day = None
+            self.bypass_android_apps = None
+            self.bypass_mms_apps = None
+            self.custom_text = None
+            self.disable_password = None
+            self.enable_verbose_log = None
+            self.enforced = None
+            self.install_certs = None
+            self.limit = None
+            self.logout_password = None
+            self.quota_roaming = None
+            self.uninstall_password = None
+            self.wifissid = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "allowedApps": self.allowed_apps,
+            "billingDay": self.billing_day,
+            "bypassAndroidApps": self.bypass_android_apps,
+            "bypassMmsApps": self.bypass_mms_apps,
+            "customText": self.custom_text,
+            "disablePassword": self.disable_password,
+            "enableVerboseLog": self.enable_verbose_log,
+            "enforced": self.enforced,
+            "installCerts": self.install_certs,
+            "limit": self.limit,
+            "logoutPassword": self.logout_password,
+            "quotaRoaming": self.quota_roaming,
+            "uninstallPassword": self.uninstall_password,
+            "wifissid": self.wifissid
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class MacOSPolicy(ZscalerObject):
+    """
+    A class for MacOSPolicy objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the MacOSPolicy model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.add_ifscope_route = config["addIfscopeRoute"] \
+                if "addIfscopeRoute" in config else None
+            self.cache_system_proxy = config["cacheSystemProxy"] \
+                if "cacheSystemProxy" in config else None
+            self.clear_arp_cache = config["clearArpCache"] \
+                if "clearArpCache" in config else None
+            self.disable_password = config["disablePassword"] \
+                if "disablePassword" in config else None
+            self.dns_priority_ordering = config["dnsPriorityOrdering"] \
+                if "dnsPriorityOrdering" in config else None
+            self.dns_priority_ordering_for_trusted_dns_criteria = config["dnsPriorityOrderingForTrustedDnsCriteria"] \
+                if "dnsPriorityOrderingForTrustedDnsCriteria" in config else None
+            self.enable_application_based_bypass = config["enableApplicationBasedBypass"] \
+                if "enableApplicationBasedBypass" in config else None
+            self.enable_zscaler_firewall = config["enableZscalerFirewall"] \
+                if "enableZscalerFirewall" in config else None
+            self.install_certs = config["installCerts"] \
+                if "installCerts" in config else None
+            self.logout_password = config["logoutPassword"] \
+                if "logoutPassword" in config else None
+            self.persistent_zscaler_firewall = config["persistentZscalerFirewall"] \
+                if "persistentZscalerFirewall" in config else None
+            self.uninstall_password = config["uninstallPassword"] \
+                if "uninstallPassword" in config else None
+        else:
+            self.add_ifscope_route = None
+            self.cache_system_proxy = None
+            self.clear_arp_cache = None
+            self.disable_password = None
+            self.dns_priority_ordering = None
+            self.dns_priority_ordering_for_trusted_dns_criteria = None
+            self.enable_application_based_bypass = None
+            self.enable_zscaler_firewall = None
+            self.install_certs = None
+            self.logout_password = None
+            self.persistent_zscaler_firewall = None
+            self.uninstall_password = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "addIfscopeRoute": self.add_ifscope_route,
+            "cacheSystemProxy": self.cache_system_proxy,
+            "clearArpCache": self.clear_arp_cache,
+            "disablePassword": self.disable_password,
+            "dnsPriorityOrdering": self.dns_priority_ordering,
+            "dnsPriorityOrderingForTrustedDnsCriteria": self.dns_priority_ordering_for_trusted_dns_criteria,
+            "enableApplicationBasedBypass": self.enable_application_based_bypass,
+            "enableZscalerFirewall": self.enable_zscaler_firewall,
+            "installCerts": self.install_certs,
+            "logoutPassword": self.logout_password,
+            "persistentZscalerFirewall": self.persistent_zscaler_firewall,
+            "uninstallPassword": self.uninstall_password
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

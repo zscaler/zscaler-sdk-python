@@ -251,3 +251,99 @@ class CasbTenant(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class SaaSScanInfo(ZscalerObject):
+    """
+    A class for SaaSScanInfo objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the SaaSScanInfo model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.tenant_name = config["tenantName"] \
+                if "tenantName" in config else None
+            self.tenant_id = config["tenantId"] \
+                if "tenantId" in config else None
+            self.saas_application = config["saasApplication"] \
+                if "saasApplication" in config else None
+            self.scan_action = config["scanAction"] \
+                if "scanAction" in config else None
+
+            if "scanInfo" in config:
+                if isinstance(config["scanInfo"], ScanInfo):
+                    self.scan_info = config["scanInfo"]
+                elif config["scanInfo"] is not None:
+                    self.scan_info = ScanInfo(config["scanInfo"])
+                else:
+                    self.scan_info = None
+            else:
+                self.scan_info = None
+        else:
+            self.tenant_name = None
+            self.tenant_id = None
+            self.saas_application = None
+            self.scan_info = None
+            self.scan_action = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "tenantName": self.tenant_name,
+            "tenantId": self.tenant_id,
+            "saasApplication": self.saas_application,
+            "scanInfo": self.scan_info,
+            "scanAction": self.scan_action
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class ScanInfo(ZscalerObject):
+    """
+    A class for ScanInfo objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the ScanInfo model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.cur_scan_start_time = config["cur_scan_start_time"] \
+                if "cur_scan_start_time" in config else None
+            self.prev_scan_end_time = config["prev_scan_end_time"] \
+                if "prev_scan_end_time" in config else None
+            self.scan_reset_num = config["scan_reset_num"] \
+                if "scan_reset_num" in config else None
+        else:
+            self.cur_scan_start_time = None
+            self.prev_scan_end_time = None
+            self.scan_reset_num = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "cur_scan_start_time": self.cur_scan_start_time,
+            "prev_scan_end_time": self.prev_scan_end_time,
+            "scan_reset_num": self.scan_reset_num
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

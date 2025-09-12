@@ -1061,3 +1061,66 @@ class AppSegmentByType(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class MultiMatchUnsupportedReferences(ZscalerObject):
+    """
+    A class for MultiMatchUnsupportedReferences objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the MultiMatchUnsupportedReferences model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the MultiMatchUnsupportedReferences configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.app_segment_name = config["appSegmentName"] if "appSegmentName" in config else None
+            self.match_style = config["matchStyle"] if "matchStyle" in config else None
+            self.microtenant_name = config["microtenantName"] if "microtenantName" in config else None
+
+            self.application_ids = ZscalerCollection.form_list(
+                config["applicationIds"] if "applicationIds" in config else [], str
+            )
+
+            self.domains = ZscalerCollection.form_list(
+                config["domains"] if "domains" in config else [], str
+            )
+            self.unsupported_features = ZscalerCollection.form_list(
+                config["unsupportedFeatures"] if "unsupportedFeatures" in config else [], str
+            )
+            
+            self.tcp_ports = ZscalerCollection.form_list(
+                config["tcpPorts"] if "tcpPorts" in config else [], str
+            )
+        else:
+            self.id = None
+            self.app_segment_name = None
+            self.match_style = None
+            self.microtenant_name = None
+            self.application_ids = []
+            self.domains = []
+            self.tcp_ports = []
+            self.unsupported_features = []
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "appSegmentName": self.app_segment_name,
+            "matchStyle": self.match_style,
+            "microtenantName": self.microtenant_name,
+            "applicationIds": self.application_ids,
+            "domains": self.domains,
+            "tcpPorts": self.tcp_ports,
+            "unsupportedFeatures": self.unsupported_features,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
