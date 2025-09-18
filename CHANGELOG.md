@@ -1,5 +1,21 @@
 # Zscaler Python SDK Changelog
 
+## 1.8.1 (September 18, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #378](https://github.com/zscaler/zscaler-sdk-python/pull/378) - Enhanced `download_disable_reasons` function with support for date range filtering, OS type filtering, and timezone specification. Added automatic date format validation and conversion to ZCC API format (YYYY-MM-DD HH:MM:SS GMT). Extended `zcc_param_mapper` decorator to handle new parameters: `start_date`, `end_date`, and `time_zone`.
+
+* [PR #378](https://github.com/zscaler/zscaler-sdk-python/pull/378) - Fixed ZPA pagination issue where subsequent pages used inconsistent page sizes, causing data gaps. Removed automatic pagesize override for ZPA service to let API handle its own default behavior, ensuring consistent pagination throughout all pages.
+
+### Enhancements
+
+* [PR #378](https://github.com/zscaler/zscaler-sdk-python/pull/378) - Added new ZPA model `DesktopPolicyMappingsDTO` and enhanced policy set controllers (v1 and v2) with `device_posture_failure_notification_enabled` and `desktopPolicyMappings` attributes for improved desktop policy management.
+
 ## 1.8.0 (September xx, 2025)
 
 ### Notes

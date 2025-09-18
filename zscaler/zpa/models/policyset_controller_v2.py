@@ -48,6 +48,8 @@ class PolicySetControllerV2(ZscalerObject):
             self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
             self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
             self.custom_msg = config["customMsg"] if "customMsg" in config else None
+            self.device_posture_failure_notification_enabled = config["devicePostureFailureNotificationEnabled"] \
+                if "devicePostureFailureNotificationEnabled" in config else None
             self.disabled = config["disabled"] if "disabled" in config else None
             self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
@@ -79,6 +81,10 @@ class PolicySetControllerV2(ZscalerObject):
 
             self.service_edge_groups = ZscalerCollection.form_list(
                 config["serviceEdgeGroups"] if "serviceEdgeGroups" in config else [], service_edge_groups.ServiceEdgeGroup
+            )
+
+            self.desktop_policy_mappings = ZscalerCollection.form_list(
+                config["desktopPolicyMappings"] if "desktopPolicyMappings" in config else [], common.DesktopPolicyMappingsDTO
             )
 
             if "privilegedCapabilities" in config:
@@ -172,6 +178,8 @@ class PolicySetControllerV2(ZscalerObject):
             self.reauth_timeout = None
             self.read_only = None
             self.zscaler_managed = None
+            self.device_posture_failure_notification_enabled = None
+            self.desktop_policy_mappings = []
 
     def request_format(self):
         parent_req_format = super().request_format()
@@ -214,6 +222,8 @@ class PolicySetControllerV2(ZscalerObject):
             "appConnectorGroups": [group.request_format() for group in self.app_connector_groups],
             "appServerGroups": [group.request_format() for group in self.app_server_groups],
             "serviceEdgeGroups": [group.request_format() for group in self.service_edge_groups],
+            "devicePostureFailureNotificationEnabled": self.device_posture_failure_notification_enabled,
+            "desktopPolicyMappings": [mapping.request_format() for mapping in self.desktop_policy_mappings],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
