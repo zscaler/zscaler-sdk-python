@@ -1093,7 +1093,7 @@ class MultiMatchUnsupportedReferences(ZscalerObject):
             self.unsupported_features = ZscalerCollection.form_list(
                 config["unsupportedFeatures"] if "unsupportedFeatures" in config else [], str
             )
-            
+
             self.tcp_ports = ZscalerCollection.form_list(
                 config["tcpPorts"] if "tcpPorts" in config else [], str
             )
