@@ -48,7 +48,8 @@ class PolicySetControllerV2(ZscalerObject):
             self.reauth_idle_timeout = config["reauthIdleTimeout"] if "reauthIdleTimeout" in config else None
             self.reauth_timeout = config["reauthTimeout"] if "reauthTimeout" in config else None
             self.custom_msg = config["customMsg"] if "customMsg" in config else None
-            self.device_posture_failure_notification_enabled = config["devicePostureFailureNotificationEnabled"] if "devicePostureFailureNotificationEnabled" in config else None
+            self.device_posture_failure_notification_enabled = config["devicePostureFailureNotificationEnabled"] \
+                if "devicePostureFailureNotificationEnabled" in config else None
             self.disabled = config["disabled"] if "disabled" in config else None
             self.extranet_enabled = config["extranetEnabled"] if "extranetEnabled" in config else False
             self.microtenant_id = config["microtenantId"] if "microtenantId" in config else None
