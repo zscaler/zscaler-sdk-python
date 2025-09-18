@@ -819,6 +819,60 @@ def format_url(base_string):
 
 #     return wrapper
 
+def validate_and_format_date(date_str: str) -> str:
+    """
+    Validates and formats date string for ZCC API.
+    Accepts various date formats and returns ZCC API format (YYYY-MM-DD HH:MM:SS GMT).
+    
+    Args:
+        date_str (str): Date string in various formats
+        
+    Returns:
+        str: Date in ZCC API format (YYYY-MM-DD HH:MM:SS GMT)
+        
+    Raises:
+        ValueError: If date format is invalid
+    """
+    if not date_str:
+        raise ValueError("Date string cannot be empty")
+    
+    try:
+        # Try to parse the date string
+        parsed_date = parser.parse(date_str)
+        
+        # If no timezone info, assume UTC
+        if parsed_date.tzinfo is None:
+            parsed_date = pytz.UTC.localize(parsed_date)
+        
+        # Convert to ZCC API format: YYYY-MM-DD HH:MM:SS GMT
+        return parsed_date.strftime("%Y-%m-%d %H:%M:%S GMT")
+    except (ValueError, TypeError) as e:
+        raise ValueError(f"Invalid date format: {date_str}. Expected formats: YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Error: {e}")
+
+
+def validate_time_zone(time_zone_str: str) -> str:
+    """
+    Validates time zone string against IANA Time Zone database.
+    
+    Args:
+        time_zone_str (str): IANA time zone string
+        
+    Returns:
+        str: Validated time zone string
+        
+    Raises:
+        ValueError: If time zone is invalid
+    """
+    if not time_zone_str:
+        raise ValueError("Time zone cannot be empty")
+    
+    # Check if it's a valid IANA time zone
+    if time_zone_str not in pytz.all_timezones:
+        raise ValueError(f"Invalid time zone: {time_zone_str}. Please use a valid IANA time zone (e.g., 'America/New_York', 'UTC', 'Europe/London')")
+    
+    return time_zone_str
+
+
 def zcc_param_mapper(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
@@ -873,10 +927,54 @@ def zcc_param_mapper(func):
             else:
                 mapped_params["registrationTypes"] = ",".join(mapped)
 
+        # Handle date parameters
+        start_date = (
+            query_params.get("start_date") or
+            query_params.get("startDate") or
+            body.get("start_date") or
+            body.get("startDate")
+        )
+        
+        if start_date:
+            try:
+                mapped_params["startDate"] = validate_and_format_date(start_date)
+            except ValueError as e:
+                raise ValueError(f"Invalid start_date: {e}")
+        
+        end_date = (
+            query_params.get("end_date") or
+            query_params.get("endDate") or
+            body.get("end_date") or
+            body.get("endDate")
+        )
+        
+        if end_date:
+            try:
+                mapped_params["endDate"] = validate_and_format_date(end_date)
+            except ValueError as e:
+                raise ValueError(f"Invalid end_date: {e}")
+        
+        # Handle time zone parameter
+        time_zone = (
+            query_params.get("time_zone") or
+            query_params.get("Time-Zone") or
+            body.get("time_zone") or
+            body.get("Time-Zone")
+        )
+        
+        if time_zone:
+            try:
+                mapped_params["Time-Zone"] = validate_time_zone(time_zone)
+            except ValueError as e:
+                raise ValueError(f"Invalid time_zone: {e}")
+
         # Clean aliases
         for key in [
             "os_type", "os_types",
             "registration_type", "registration_types",
+            "start_date", "startDate",
+            "end_date", "endDate", 
+            "time_zone", "Time-Zone",
         ]:
             query_params.pop(key, None)
             kwargs.pop(key, None)

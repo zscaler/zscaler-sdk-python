@@ -210,6 +210,104 @@ class DevicesAPI(APIClient):
         return filename
 
     @zcc_param_mapper
+    def download_disable_reasons(self, query_params=None, filename: str = None):
+        """
+        Downloads or exports a report as a CSV file showing the disable reasons of devices.
+
+        Args:
+            query_params (dict, optional): A dictionary containing supported filters.
+
+                ``[query_params.os_types]`` {list}: Filter by OS type. Valid values:
+                    ios, android, windows, macos, linux.
+
+                ``[query_params.start_date]`` {str}: Start date for the report. Accepts various formats:
+                    YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Will be converted to ZCC API format.
+
+                ``[query_params.end_date]`` {str}: End date for the report. Accepts various formats:
+                    YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Will be converted to ZCC API format.
+
+                ``[query_params.time_zone]`` {str}: IANA time zone for date interpretation. 
+                    Examples: 'America/New_York', 'UTC', 'Europe/London'.
+
+            filename (str, optional): Custom filename for the CSV file. Defaults to timestamped name.
+
+        Returns:
+            str: Path to the downloaded CSV file.
+
+        Examples:
+            Download disable reasons report for Windows devices:
+
+            >>> try:
+            ...     filename = client.zcc.devices.download_disable_reasons(
+            ...         query_params={
+            ...             "os_types": ["windows"],
+            ...             "start_date": "2024-01-01",
+            ...             "end_date": "2024-01-31",
+            ...             "time_zone": "America/New_York"
+            ...         },
+            ...         filename="disable_reasons_jan2024.csv"
+            ...     )
+            ...     print(f"Disable reasons report downloaded successfully: {filename}")
+            ... except Exception as e:
+            ...     print(f"Error during download: {e}")
+
+            Download disable reasons for all devices with specific date range:
+
+            >>> try:
+            ...     filename = client.zcc.devices.download_disable_reasons(
+            ...         query_params={
+            ...             "start_date": "2024-01-01 00:00:00",
+            ...             "end_date": "2024-01-31 23:59:59",
+            ...             "time_zone": "UTC"
+            ...         }
+            ...     )
+            ...     print(f"Report downloaded: {filename}")
+            ... except Exception as e:
+            ...     print(f"Error: {e}")
+        """
+        query_params = query_params or {}
+
+        if not filename:
+            filename = f"zcc-disable-reasons-{datetime.now().strftime('%Y%m%d-%H_%M_%S')}.csv"
+
+        # The zcc_param_mapper decorator handles parameter mapping and validation
+        # We just need to pass the query_params through
+        params = query_params.copy()
+
+        http_method = "get".upper()
+        api_url = format_url(f"{self._zcc_base_endpoint}/downloadDisableReasons")
+
+        # Prepare headers - include Time-Zone if provided
+        headers = {"Accept": "*/*"}
+        if "Time-Zone" in params:
+            headers["Time-Zone"] = params.pop("Time-Zone")
+
+        request, error = self._request_executor.create_request(
+            http_method,
+            api_url,
+            params=params,
+            headers=headers
+        )
+
+        if error:
+            raise Exception("Error creating request for downloading disable reasons report.")
+
+        response, error = self._request_executor.execute(request, return_raw_response=True)
+        if error:
+            raise error
+        if response is None:
+            raise Exception("No response received when downloading disable reasons report.")
+
+        content_type = response.headers.get("Content-Type", "").lower()
+        if not content_type.startswith("application/octet-stream") and not response.text.startswith('"User","Device type"'):
+            raise Exception("Invalid response content type or unexpected response format.")
+
+        with open(filename, "wb") as f:
+            f.write(response.content)
+
+        return filename
+
+    @zcc_param_mapper
     def list_devices(self, query_params=None) -> tuple:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
@@ -624,3 +722,4 @@ class DevicesAPI(APIClient):
             return None, response, error
 
         return result, response, None
+

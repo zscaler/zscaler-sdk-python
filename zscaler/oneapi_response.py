@@ -66,9 +66,6 @@ class ZscalerAPIResponse:
         if end_time:
             self._params["endTime"] = end_time
 
-        # If service is ZPA and user did not specify a pagesize, set it to max=500 by default
-        if self._service_type.upper() == "ZPA" and "pagesize" not in self._params:
-            self._params["pagesize"] = self.SERVICE_PAGE_LIMITS["ZPA"]["max"]
 
         # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
         if self._service_type == "zia":
