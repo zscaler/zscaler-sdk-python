@@ -21,6 +21,22 @@ class ZscalerObject:
     def __contains__(self, key):
         return hasattr(self, key)
 
+    def get(self, key, default=None):
+        """
+        Get an attribute value with a default if the attribute doesn't exist.
+        Similar to dict.get() method.
+        
+        Args:
+            key (str): The attribute name to get
+            default: The default value to return if the attribute doesn't exist
+            
+        Returns:
+            The attribute value or the default value
+        """
+        if hasattr(self, key):
+            return getattr(self, key)
+        return default
+
     def as_dict(self):
         result = {}
         for key, val in self.request_format().items():

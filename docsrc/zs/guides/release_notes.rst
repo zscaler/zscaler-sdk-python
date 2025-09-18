@@ -6,6 +6,19 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.8.2 (September 18, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+(`#380 <https://github.com/zscaler/zscaler-sdk-python/pull/380>`_) - Added `.get()` method to `ZscalerObject` base class to support dictionary-like access with default values. This resolves issues where users expected `.get()` method to be available on returned objects from API calls like `list_segments()`.
+
 1.8.1 (September 18, 2025)
 ---------------------------
 
