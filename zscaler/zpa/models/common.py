@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zpa.models import application_segment as application_segment
 
 
 class CommonIDName(ZscalerObject):
@@ -516,6 +517,57 @@ class SortBy(ZscalerObject):
         current_obj_format = {
             "sortName": self.sort_name,
             "sortOrder": self.sort_order,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class DesktopPolicyMappingsDTO(ZscalerObject):
+    """
+    A class for DesktopPolicyMappingsDTO objects.
+    Handles common block attributes shared across multiple resources
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the DesktopPolicyMappingsDTO model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the response.
+        """
+        super().__init__(config)
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
+            self.image_id = config["imageId"] if "imageId" in config else None
+            self.image_name = config["imageName"] if "imageName" in config else None
+            self.app_segments = ZscalerCollection.form_list(
+                config["appSegments"] if "appSegments" in config else [], application_segment.ApplicationSegments
+            )
+        else:
+            self.id = None
+            self.modified_time = None
+            self.creation_time = None
+            self.modified_by = None
+            self.image_id = None
+            self.image_name = None
+            self.app_segments = []
+
+    def request_format(self):
+        """
+        Returns the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "modifiedTime": self.modified_time,
+            "creationTime": self.creation_time,
+            "modifiedBy": self.modified_by,
+            "imageId": self.image_id,
+            "imageName": self.image_name,
+            "appSegments": [segment.as_dict() for segment in self.app_segments],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

@@ -414,7 +414,7 @@ class IntermediateCertsAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            //intermediateCaCertificate/downloadCsr/{cert_id}
+            /intermediateCaCertificate/downloadCsr/{cert_id}
         """
         )
 
@@ -575,12 +575,14 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def upload_cert(self, cert_id: int) -> tuple:
+    def upload_cert(self, cert_id: int, file_input_stream: str = None, file_path: str = None) -> tuple:
         """
         Uploads a custom intermediate CA certificate signed by your Certificate Authority (CA) for SSL inspection.
 
         Args:
             cert_id (int): The unique identifier for the intermediate CA certificate.
+            file_input_stream (str): The certificate content in PEM format (alternative to file_path).
+            file_path (str): Path to the certificate file (alternative to file_input_stream).
 
         Returns:
             tuple: A tuple containing (intermediate CA certificate instance, Response, error).
@@ -593,10 +595,45 @@ class IntermediateCertsAPI(APIClient):
         """
         )
 
-        body = {}
-        headers = {}
+        # Prepare file content
+        if file_path:
+            # Use file path for upload
+            with open(file_path, 'rb') as f:
+                file_content = f.read()
+        elif file_input_stream:
+            # Use string content for upload
+            file_content = file_input_stream.encode('utf-8')
+        else:
+            return (None, None, ValueError("Either file_path or file_input_stream must be provided"))
 
-        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+        # Create multipart form data manually (like Postman does)
+        import io
+        import uuid
+        
+        # Generate a random boundary (like Postman does)
+        boundary = f"----WebKitFormBoundary{str(uuid.uuid4()).replace('-', '')}"
+        
+        # Build multipart form data
+        form_data = io.BytesIO()
+        
+        # Add the file part
+        form_data.write(f'--{boundary}\r\n'.encode())
+        form_data.write(b'Content-Disposition: form-data; name="fileUpload"; filename="certificate.pem"\r\n')
+        form_data.write(b'Content-Type: application/octet-stream\r\n\r\n')
+        form_data.write(file_content)
+        form_data.write(f'\r\n--{boundary}--\r\n'.encode())
+        
+        headers = {
+            'Content-Type': f'multipart/form-data; boundary={boundary}'
+        }
+
+        request, error = self._request_executor.create_request(
+            http_method, 
+            api_url, 
+            body=form_data.getvalue(),
+            headers=headers,
+            use_raw_data_for_body=True
+        )
         if error:
             return (None, None, error)
 
