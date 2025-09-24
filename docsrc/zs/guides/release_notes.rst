@@ -6,6 +6,18 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.8.3 (September 22, 2025)
+---------------------------
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+(`#384 <https://github.com/zscaler/zscaler-sdk-python/pull/384>`_) - Fixed ZTW EC Group endpoint misplaced formatting. (`#Issue <https://github.com/zscaler/zscaler-sdk-python/pull/384>`_)
+
 1.8.2 (September 18, 2025)
 ---------------------------
 
