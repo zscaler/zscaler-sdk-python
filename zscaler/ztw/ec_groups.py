@@ -262,7 +262,7 @@ class ECGroupsAPI(APIClient):
         api_url = format_url(
             f"""
             {self._ztw_base_endpoint}
-            /ecgroup/{group_id}/{vm_id}
+            /ecgroup/{group_id}/vm/{vm_id}
         """
         )
 
@@ -303,7 +303,7 @@ class ECGroupsAPI(APIClient):
         api_url = format_url(
             f"""
             {self._ztw_base_endpoint}
-            /ecgroup/{group_id}/{vm_id}
+            /ecgroup/{group_id}/vm/{vm_id}
         """
         )
 
