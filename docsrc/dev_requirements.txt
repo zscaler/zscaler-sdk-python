@@ -1,4 +1,4 @@
-furo==2024.1.29
+furo==2025.9.25
 flatdict>=4.0.0
 pre-commit==4.3.0
 pytest==8.4.1
