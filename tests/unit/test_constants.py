@@ -58,7 +58,7 @@ def test_dev_auth_url():
 
 def test_retryable_status_codes():
     """Test retryable status codes are correctly defined."""
-    expected_codes = {408, 409, 412, 429, 500, 502, 503, 504}
+    expected_codes = { 429, 500, 502, 503, 504}
     assert RETRYABLE_STATUS_CODES == expected_codes
     assert len(RETRYABLE_STATUS_CODES) == 8
     
