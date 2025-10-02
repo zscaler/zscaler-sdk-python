@@ -50,6 +50,43 @@ def _sanitize_for_logging(data):
         return data
 
 
+def _sanitize_plaintext_for_logging(text):
+    """
+    Scan and mask sensitive keywords in plaintext strings.
+    
+    Args:
+        text (str): Plain text that might contain sensitive data
+    
+    Returns:
+        str: Text with sensitive patterns masked
+    """
+    import re
+    
+    if not isinstance(text, str):
+        return text
+    
+    # Patterns to match common sensitive data formats in plain text
+    # Match patterns like "password":"value", "password": "value", password=value, etc.
+    patterns = [
+        (r'("password"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("api_key"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("apiKey"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("clientSecret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("client_secret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("access_token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("refresh_token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("secret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("privateKey"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+    ]
+    
+    sanitized_text = text
+    for pattern, replacement in patterns:
+        sanitized_text = re.sub(pattern, replacement, sanitized_text, flags=re.IGNORECASE)
+    
+    return sanitized_text
+
+
 def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
     """
     Set up logging with specified level and logger name.
@@ -181,8 +218,8 @@ def dump_response(
             sanitized_body = _sanitize_for_logging(parsed_body)
             response_body = jsonp.dumps(sanitized_body)
         except (jsonp.JSONDecodeError, ValueError):
-            # If not JSON, log as-is (likely plain text like "SUCCESS")
-            pass
+            # If not JSON, sanitize sensitive keywords in plaintext
+            response_body = _sanitize_plaintext_for_logging(response_body)
     
     if response_body and response_body != "" and response_body != "null":
         log_lines.append(f"\n{response_body}")

@@ -7,7 +7,14 @@ Tests logger setup, configuration, and log level handling.
 import logging
 import os
 import pytest
-from zscaler.logger import setup_logging, LOG_FORMAT, _sanitize_for_logging, SENSITIVE_FIELDS, SENSITIVE_HEADERS
+from zscaler.logger import (
+    setup_logging, 
+    LOG_FORMAT, 
+    _sanitize_for_logging, 
+    _sanitize_plaintext_for_logging,
+    SENSITIVE_FIELDS, 
+    SENSITIVE_HEADERS
+)
 
 
 class TestLoggerSetup:
@@ -358,4 +365,75 @@ class TestSensitiveDataSanitization:
         assert "authorization" in SENSITIVE_HEADERS
         assert "x-api-key" in SENSITIVE_HEADERS
         assert "client-secret" in SENSITIVE_HEADERS
+
+
+class TestPlaintextSanitization:
+    """Test plaintext sanitization for logging."""
+
+    def test_sanitize_plaintext_with_password(self):
+        """Test _sanitize_plaintext_for_logging masks passwords in text."""
+        text = '{"username":"admin","password":"secret123"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        assert "admin" in sanitized
+        assert "secret123" not in sanitized
+        assert "***REDACTED***" in sanitized
+
+    def test_sanitize_plaintext_with_api_key(self):
+        """Test _sanitize_plaintext_for_logging masks API keys."""
+        text = '{"api_key":"key123","name":"test"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        assert "key123" not in sanitized
+        assert "***REDACTED***" in sanitized
+        assert "test" in sanitized
+
+    def test_sanitize_plaintext_with_client_secret(self):
+        """Test _sanitize_plaintext_for_logging masks client secrets."""
+        text = '{"clientId":"id123","clientSecret":"secret456"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        assert "id123" in sanitized
+        assert "secret456" not in sanitized
+        assert "***REDACTED***" in sanitized
+
+    def test_sanitize_plaintext_with_access_token(self):
+        """Test _sanitize_plaintext_for_logging masks access tokens."""
+        text = '{"access_token":"token123"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        assert "token123" not in sanitized
+        assert "***REDACTED***" in sanitized
+
+    def test_sanitize_plaintext_case_insensitive(self):
+        """Test _sanitize_plaintext_for_logging is case-insensitive."""
+        text = '{"Password":"pass1","PASSWORD":"pass2","ApiKey":"key1"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        assert "pass1" not in sanitized
+        assert "pass2" not in sanitized
+        assert "key1" not in sanitized
+        assert sanitized.count("***REDACTED***") >= 3
+
+    def test_sanitize_plaintext_preserves_non_sensitive(self):
+        """Test _sanitize_plaintext_for_logging preserves non-sensitive data."""
+        text = '{"id":"123","name":"TestUser","email":"test@example.com"}'
+        sanitized = _sanitize_plaintext_for_logging(text)
+        
+        # Non-sensitive fields should be preserved
+        assert "123" in sanitized
+        assert "TestUser" in sanitized
+        assert "test@example.com" in sanitized
+
+    def test_sanitize_plaintext_with_non_string(self):
+        """Test _sanitize_plaintext_for_logging handles non-strings."""
+        assert _sanitize_plaintext_for_logging(123) == 123
+        assert _sanitize_plaintext_for_logging(None) is None
+        assert _sanitize_plaintext_for_logging(True) is True
+
+    def test_sanitize_plaintext_success_message(self):
+        """Test _sanitize_plaintext_for_logging preserves simple success messages."""
+        text = "SUCCESS"
+        sanitized = _sanitize_plaintext_for_logging(text)
+        assert sanitized == "SUCCESS"
 
