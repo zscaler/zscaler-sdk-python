@@ -375,6 +375,7 @@ or
 
 ```
 -----BEGIN PRIVATE KEY-----
+# Example private key (not a real key)
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCv3krdYg3z7h0H
 60QoePJMghllQxsfPxp3mgFfYEaIbF88Z8dvPZEfhAtP19/Mv62ASjwgqzQzKHRV
 -----END PRIVATE KEY-----
@@ -515,10 +516,11 @@ query_parameters = {'page_size': 100}
 groups, resp, err = client.zia.user_management.list_groups(query_parameters)
 
 while resp.has_next():
-    more_groups, err = resp.next()
+    more_groups, resp, err = resp.next()  # Unpack all 3 return values
     if err:
         break
-    groups.extend(more_groups)
+    if more_groups:
+        groups.extend(more_groups)
 ```
 
 ### Searching and Filtering
@@ -556,12 +558,13 @@ def main():
             print(group)
 
         while resp.has_next():
-            next_page, err = resp.next()
+            next_page, resp, err = resp.next()  # Unpack all 3 return values
             if err:
                 print(f"Error fetching next page: {err}")
                 break
-            for group in next_page:
-                print(group)
+            if next_page:
+                for group in next_page:
+                    print(group)
 
         try:
             resp.next()  # Will raise StopIteration if no more data
@@ -574,18 +577,21 @@ if __name__ == "__main__":
 
 ### Pagination Limits and Controls
 
-Each Zscaler service has its own pagination requiremens and max page size:
+Each Zscaler service has its own pagination requirements and limits. The SDK automatically respects these API defaults when no `page_size` is provided:
 
-| Service | Default Page Size | Max Page Size |             Notes                               |
-|---------|-------------------|---------------|-------------------------------------------------|
-| ZCC     | Varies            | Varies        | Uses `pageSize` (camelCase)                     |
-| ZDX     | 10                | Varies        | Uses `limit` + `offset`, similar to cursor API  |
-| ZIA     | 100               | Varies        | Uses `pageSize` (camelCase)                     |
-| ZPA     | 100               | 500           | Uses `pagesize` (lowercase)                     |
-| ZTW     | 100               | Varies        | Uses `pageSize` (camelCase)                     |
-| ZWA     | Varies            | Varies        | Uses `pageSize` (camelCase)                     |
+| Service | API Default Page Size | Max Page Size | Pagination Parameters                           |
+|---------|-----------------------|---------------|-------------------------------------------------|
+| ZCC     | Varies by endpoint    | Varies        | Uses `page`, `pageSize`                         |
+| ZDX     | 10                    | Varies        | Uses `limit` + `offset` (cursor-based)          |
+| ZIA     | 100                   | 1000          | Uses `page`, `pageSize`                         |
+| ZPA     | 20                    | 500           | Uses `page`, `pagesize`                         |
+| ZTW     | 100                   | Varies        | Uses `page`, `pageSize`                         |
+| ZWA     | Varies by endpoint    | Varies        | Uses `page`, `pageSize`                         |
 
-⚠️ **Note:** Always use `snake_case` for all parameter names, even when the API expects camelCase.The SDK handles conversion internally.
+**Important Notes:**
+- ✅ The SDK automatically uses each API's default page size when no `page_size` is specified
+- ✅ Always use `snake_case` for parameter names (e.g., `page_size`). The SDK handles conversion internally
+- ✅ Pagination stops automatically when fewer results than the page size are returned
 
 
 You can control how many total items or pages the SDK will fetch even if more data is available.

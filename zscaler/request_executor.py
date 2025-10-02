@@ -580,11 +580,11 @@ class RequestExecutor:
         """
         Checks if HTTP status is retryable.
 
-        Retryable statuses: 408, 409, 412, 429, 500, 502, 503, 504
+        Retryable statuses: 429, 500, 502, 503, 504
         """
         return status is not None and status in (
-            HTTPStatus.REQUEST_TIMEOUT,
-            HTTPStatus.CONFLICT,
+            # HTTPStatus.REQUEST_TIMEOUT,
+            # HTTPStatus.CONFLICT,
             # HTTPStatus.PRECONDITION_FAILED,
             HTTPStatus.TOO_MANY_REQUESTS,
             HTTPStatus.SERVICE_UNAVAILABLE,
