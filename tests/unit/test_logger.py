@@ -7,7 +7,7 @@ Tests logger setup, configuration, and log level handling.
 import logging
 import os
 import pytest
-from zscaler.logger import setup_logging, LOG_FORMAT
+from zscaler.logger import setup_logging, LOG_FORMAT, _sanitize_for_logging, SENSITIVE_FIELDS, SENSITIVE_HEADERS
 
 
 class TestLoggerSetup:
@@ -230,4 +230,132 @@ class TestLoggerIntegration:
         
         # Verify NullHandler is present
         assert any(isinstance(h, logging.NullHandler) for h in logger.handlers)
+
+
+class TestSensitiveDataSanitization:
+    """Test sensitive data sanitization for logging."""
+
+    def test_sanitize_dict_with_password(self):
+        """Test _sanitize_for_logging masks password in dict."""
+        data = {"username": "admin", "password": "secret123"}
+        sanitized = _sanitize_for_logging(data)
+        
+        assert sanitized["username"] == "admin"
+        assert sanitized["password"] == "***REDACTED***"
+
+    def test_sanitize_dict_with_api_key(self):
+        """Test _sanitize_for_logging masks API keys."""
+        data = {"api_key": "key123", "apiKey": "key456", "name": "test"}
+        sanitized = _sanitize_for_logging(data)
+        
+        assert sanitized["api_key"] == "***REDACTED***"
+        assert sanitized["apiKey"] == "***REDACTED***"
+        assert sanitized["name"] == "test"
+
+    def test_sanitize_dict_with_client_secret(self):
+        """Test _sanitize_for_logging masks client secrets."""
+        data = {"clientId": "id123", "clientSecret": "secret456", "client_secret": "secret789"}
+        sanitized = _sanitize_for_logging(data)
+        
+        assert sanitized["clientId"] == "id123"
+        assert sanitized["clientSecret"] == "***REDACTED***"
+        assert sanitized["client_secret"] == "***REDACTED***"
+
+    def test_sanitize_nested_dict(self):
+        """Test _sanitize_for_logging handles nested dicts."""
+        data = {
+            "user": {
+                "name": "admin",
+                "password": "secret123"
+            },
+            "config": {
+                "api_key": "key456"
+            }
+        }
+        sanitized = _sanitize_for_logging(data)
+        
+        assert sanitized["user"]["name"] == "admin"
+        assert sanitized["user"]["password"] == "***REDACTED***"
+        assert sanitized["config"]["api_key"] == "***REDACTED***"
+
+    def test_sanitize_list_of_dicts(self):
+        """Test _sanitize_for_logging handles lists of dicts."""
+        data = [
+            {"name": "user1", "password": "pass1"},
+            {"name": "user2", "token": "token2"}
+        ]
+        sanitized = _sanitize_for_logging(data)
+        
+        assert sanitized[0]["name"] == "user1"
+        assert sanitized[0]["password"] == "***REDACTED***"
+        assert sanitized[1]["name"] == "user2"
+        assert sanitized[1]["token"] == "***REDACTED***"
+
+    def test_sanitize_case_insensitive(self):
+        """Test _sanitize_for_logging is case-insensitive."""
+        data = {
+            "Password": "secret1",
+            "PASSWORD": "secret2",
+            "ApiKey": "key1",
+            "APIKEY": "key2"
+        }
+        sanitized = _sanitize_for_logging(data)
+        
+        # All variations should be redacted
+        assert sanitized["Password"] == "***REDACTED***"
+        assert sanitized["PASSWORD"] == "***REDACTED***"
+        assert sanitized["ApiKey"] == "***REDACTED***"
+        assert sanitized["APIKEY"] == "***REDACTED***"
+
+    def test_sanitize_non_sensitive_fields(self):
+        """Test _sanitize_for_logging preserves non-sensitive fields."""
+        data = {
+            "id": "123",
+            "name": "TestUser",
+            "email": "test@example.com",
+            "created_at": "2025-10-01",
+            "enabled": True,
+            "count": 42
+        }
+        sanitized = _sanitize_for_logging(data)
+        
+        # All non-sensitive fields should be preserved
+        assert sanitized == data
+
+    def test_sanitize_empty_dict(self):
+        """Test _sanitize_for_logging handles empty dict."""
+        data = {}
+        sanitized = _sanitize_for_logging(data)
+        assert sanitized == {}
+
+    def test_sanitize_none_values(self):
+        """Test _sanitize_for_logging handles None values."""
+        data = {"password": None, "name": "test"}
+        sanitized = _sanitize_for_logging(data)
+        
+        # None password should still be redacted
+        assert sanitized["password"] == "***REDACTED***"
+        assert sanitized["name"] == "test"
+
+    def test_sanitize_non_dict_non_list(self):
+        """Test _sanitize_for_logging handles primitives."""
+        assert _sanitize_for_logging("string") == "string"
+        assert _sanitize_for_logging(123) == 123
+        assert _sanitize_for_logging(True) is True
+        assert _sanitize_for_logging(None) is None
+
+    def test_sensitive_fields_constant(self):
+        """Test SENSITIVE_FIELDS constant is properly defined."""
+        assert isinstance(SENSITIVE_FIELDS, set)
+        assert "password" in SENSITIVE_FIELDS
+        assert "api_key" in SENSITIVE_FIELDS
+        assert "clientSecret" in SENSITIVE_FIELDS
+        assert "access_token" in SENSITIVE_FIELDS
+
+    def test_sensitive_headers_constant(self):
+        """Test SENSITIVE_HEADERS constant is properly defined."""
+        assert isinstance(SENSITIVE_HEADERS, set)
+        assert "authorization" in SENSITIVE_HEADERS
+        assert "x-api-key" in SENSITIVE_HEADERS
+        assert "client-secret" in SENSITIVE_HEADERS
 
