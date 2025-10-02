@@ -259,7 +259,7 @@ class Client:
         if self._zidentity is None:
             self._zidentity = ZIdentityService(self._request_executor)
         return self._zidentity
-    
+
     def __enter__(self):
         """
         Automatically create and set session within context manager.
@@ -276,7 +276,7 @@ class Client:
         if hasattr(self, "_session"):
             self._session.close()
             self.logger.debug("Session closed.")
-        
+
         # Clean up Zscaler authentication session
         if hasattr(self, '_request_executor'):
             # For legacy clients, use their deauthenticate method
@@ -291,7 +291,7 @@ class Client:
                 service_type = getattr(self._request_executor, '_last_service_type', None)
                 if not service_type:
                     service_type = self._config.get("client", {}).get("service", "zia")
-                
+
                 if service_type.lower() in ["zia", "ztw"]:
                     # For ZIA, deauthenticate only if mutations occurred; executor will decide.
                     self.logger.debug(f"Deauthenticating Zscaler session for {service_type} service.")
