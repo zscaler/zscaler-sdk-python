@@ -6,6 +6,23 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.8.4 (October 2, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes
+-----------
+
+(`#393 <https://github.com/zscaler/zscaler-sdk-python/pull/393>`_) - Fixed ZIA pagination to use correct API parameter names (`page` and `pageSize` instead of `pageNumber`). Removed forced default page sizes to respect each API's native defaults (ZIA: 100, ZPA: 20). Improved pagination termination logic to stop when partial pages are returned, preventing unnecessary API calls.
+
+(`#393 <https://github.com/zscaler/zscaler-sdk-python/pull/393>`_) - Fixed `check_static_ip()` method to correctly return `True` for available IPs (HTTP 200 "SUCCESS") instead of treating the plain text response as an error. The method now properly validates IP availability by checking the actual HTTP status code.
+
+(`#393 <https://github.com/zscaler/zscaler-sdk-python/pull/393>`_) - Fixed regex escape sequence deprecation warnings in `dlp_dictionary.py` docstrings by using raw strings (`r"""`).
+
 1.8.3 (September 22, 2025)
 ---------------------------
 

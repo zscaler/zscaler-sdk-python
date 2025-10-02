@@ -300,21 +300,31 @@ class TrafficStaticIPAPI(APIClient):
 
     def check_static_ip(self, ip_address: str) -> tuple:
         """
-        Validates if a static IP object is correct.
+        Validates if a static IP address can be added to the organization.
+
+        This method checks if the provided IP address is available for use.
+        The API returns plain text "SUCCESS" (HTTP 200) if the IP is available,
+        or a JSON error (HTTP 409) if the IP already exists.
 
         Args:
-            ip_address (str): The static IP address.
+            ip_address (str): The static IP address to validate.
 
         Returns:
-            tuple: (True, None, None) if the static IP provided is valid and response is "SUCCESS".
-                   (False, response, error) if the IP is invalid or if there's an error.
+            tuple: A tuple of (is_valid, response, error) where:
+                - **is_valid=True, response=None, error=None**: IP is available (not in system)
+                - **is_valid=False, response=raw_response, error=error_obj**: IP already exists (HTTP 409)
+                - **is_valid=False, response=None, error=error_obj**: Network or request error
 
         Examples:
-            >>> success, _, _ = zia.traffic.check_static_ip(ip_address='203.0.113.11')
-            >>> if success:
-            >>>     print("IP is valid.")
+            Check if an IP address is available:
+
+            >>> is_valid, _, err = client.zia.traffic_static_ip.check_static_ip('203.0.113.11')
+            >>> if err:
+            ...     print(f"Error: {err}")
+            >>> elif is_valid:
+            ...     print("IP is available - can be added")
             >>> else:
-            >>>     print("IP is invalid or already exists.")
+            ...     print("IP already exists in the organization")
         """
         # Define the HTTP method and API endpoint
         http_method = "post".upper()
@@ -334,17 +344,30 @@ class TrafficStaticIPAPI(APIClient):
         if error:
             return (False, None, error)
 
-        # ✅ Tell the executor to return the raw response so we can manually parse text
+        # Get raw response - this endpoint returns plain text "SUCCESS" for valid IPs
         raw_response, error = self._request_executor.execute(request, return_raw_response=True)
 
-        if error:
-            return (False, raw_response, error)
+        # Check the actual HTTP status code, not the error object
+        # The executor may return an "error" for non-JSON responses even on HTTP 200
+        if raw_response is None:
+            # True network/request error
+            return (False, None, error)
 
         try:
-            body = raw_response.text.strip()
-            if raw_response.status_code == 200 and body.upper() == "SUCCESS":
+            status_code = raw_response.status_code
+            body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
+
+            # HTTP 200 with "SUCCESS" = IP is valid (not in system)
+            if status_code == 200 and body_text.upper() == "SUCCESS":
                 return (True, None, None)
+            
+            # HTTP 409 = IP already exists (duplicate)
+            elif status_code == 409:
+                return (False, raw_response, error)
+            
+            # Any other response = invalid
             else:
-                return (False, raw_response, None)
+                return (False, raw_response, error if error else f"Unexpected response: {status_code}")
+                
         except Exception as ex:
             return (False, raw_response, ex)

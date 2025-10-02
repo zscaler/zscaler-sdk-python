@@ -42,6 +42,8 @@ help:
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:unit                     Run only unit tests$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  test:unit:coverage            Run unit tests with coverage report$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zcc          Run only zcc integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:ztw          Run only ztw integration tests$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:integration:zdx          Run only zdx integration tests$(COLOR_NONE)"
@@ -83,87 +85,95 @@ docs: clean-docsrc
 	open docsrc/_build/html/index.html
 
 lint:
-	flake8 zscaler --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zcc:
-	flake8 zscaler/zcc --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zcc --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/zcc --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zcc --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:ztw:
-	flake8 zscaler/ztw --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/ztw --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/ztw --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/ztw --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zdx:
-	flake8 zscaler/zdx --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zdx --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/zdx --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zdx --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zpa:
-	flake8 zscaler/zpa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zpa --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/zpa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zpa --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zia:
-	flake8 zscaler/zia --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zia --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/zia --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zia --count --select=E9,F63,F7,F82 --show-source --statistics
 
 lint\:zidentity:
-	flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
+	poetry run flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
 
 format:
-	black .
+	poetry run black .
 
 check-format:
-	black --check --diff .
+	poetry run black --check --diff .
+
+test\:unit:
+	@echo "$(COLOR_ZSCALER)Running unit tests...$(COLOR_NONE)"
+	poetry run pytest tests/unit --disable-warnings -v
+
+test\:unit\:coverage:
+	@echo "$(COLOR_ZSCALER)Running unit tests with coverage...$(COLOR_NONE)"
+	poetry run pytest tests/unit --cov=zscaler --cov-report xml --cov-report term --disable-warnings -v
 
 test\:integration\:zcc:
 	@echo "$(COLOR_ZSCALER)Running zcc integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zcc --disable-warnings
+	poetry run pytest tests/integration/zcc --disable-warnings
 
 test\:integration\:ztw:
 	@echo "$(COLOR_ZSCALER)Running ztw integration tests...$(COLOR_NONE)"
-	pytest tests/integration/ztw --disable-warnings
+	poetry run pytest tests/integration/ztw --disable-warnings
 
 test\:integration\:zdx:
 	@echo "$(COLOR_ZSCALER)Running zdx integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zdx --disable-warnings
+	poetry run pytest tests/integration/zdx --disable-warnings
 
 test\:integration\:zpa:
 	@echo "$(COLOR_ZSCALER)Running zpa integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zpa --disable-warnings
+	poetry run pytest tests/integration/zpa --disable-warnings
 
 test\:integration\:zia:
 	@echo "$(COLOR_ZSCALER)Running zia integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zia --disable-warnings
+	poetry run pytest tests/integration/zia --disable-warnings
 
 test\:integration\:zidentity:
 	@echo "$(COLOR_ZSCALER)Running zidentity integration tests...$(COLOR_NONE)"
-	pytest tests/integration/zidentity --disable-warnings
+	poetry run pytest tests/integration/zidentity --disable-warnings
 
 
 test-simple:
-	pytest --disable-warnings
+	poetry run pytest --disable-warnings
 
 coverage:
-	pytest --cov=zscaler --cov-report xml --cov-report term
+	poetry run pytest --cov=zscaler --cov-report xml --cov-report term
 
 coverage\:zcc:
-	pytest tests/integration/zcc -v --cov=zscaler/zcc --cov-report xml --cov-report term
+	poetry run pytest tests/integration/zcc -v --cov=zscaler/zcc --cov-report xml --cov-report term
 
 coverage\:ztw:
-	pytest tests/integration/ztw -v --cov=zscaler/ztw --cov-report xml --cov-report term
+	poetry run pytest tests/integration/ztw -v --cov=zscaler/ztw --cov-report xml --cov-report term
 
 coverage\:zdx:
-	pytest tests/integration/zdx -v --cov=zscaler/zdx --cov-report xml --cov-report term
+	poetry run pytest tests/integration/zdx -v --cov=zscaler/zdx --cov-report xml --cov-report term
 
 coverage\:zia:
-	pytest tests/integration/zia --cov=zscaler/zia --cov-report xml --cov-report term 
+	poetry run pytest tests/integration/zia --cov=zscaler/zia --cov-report xml --cov-report term 
 
 coverage\:zpa:
-	pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
+	poetry run pytest tests/integration/zpa --cov=zscaler/zpa --cov-report xml --cov-report term
 
 coverage\:zidentity:
-	pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
+	poetry run pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
 
 sweep\:zia:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"

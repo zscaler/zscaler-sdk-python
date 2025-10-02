@@ -7,6 +7,85 @@ from http.client import HTTPConnection
 
 LOG_FORMAT = "%(asctime)s - %(name)s - %(module)s - %(levelname)s - %(message)s"
 
+# Fields to sanitize in logs (case-insensitive matching)
+SENSITIVE_FIELDS = {
+    "password", "api_key", "apiKey", "apikey", 
+    "clientSecret", "client_secret", "clientsecret",
+    "authorization", "Authorization",
+    "access_token", "accessToken", "accesstoken",
+    "refresh_token", "refreshToken", "refreshtoken",
+    "secret", "Secret",
+    "privateKey", "private_key", "privatekey",
+    "token", "Token",
+    "key", "Key",
+}
+
+# Sensitive header keys (case-insensitive)
+SENSITIVE_HEADERS = {
+    "authorization", "x-api-key", "apikey", "api-key",
+    "clientsecret", "client-secret", "access-token", 
+    "refresh-token", "x-auth-token",
+}
+
+
+def _sanitize_for_logging(data):
+    """
+    Recursively mask sensitive fields in dicts/lists for logging.
+    
+    Args:
+        data: The data structure to sanitize (dict, list, or other)
+    
+    Returns:
+        Sanitized copy of the data with sensitive fields masked
+    """
+    if isinstance(data, dict):
+        return {
+            k: "***REDACTED***" if k in SENSITIVE_FIELDS or k.lower() in SENSITIVE_FIELDS 
+            else _sanitize_for_logging(v)
+            for k, v in data.items()
+        }
+    elif isinstance(data, list):
+        return [_sanitize_for_logging(item) for item in data]
+    else:
+        return data
+
+
+def _sanitize_plaintext_for_logging(text):
+    """
+    Scan and mask sensitive keywords in plaintext strings.
+    
+    Args:
+        text (str): Plain text that might contain sensitive data
+    
+    Returns:
+        str: Text with sensitive patterns masked
+    """
+    import re
+    
+    if not isinstance(text, str):
+        return text
+    
+    # Patterns to match common sensitive data formats in plain text
+    # Match patterns like "password":"value", "password": "value", password=value, etc.
+    patterns = [
+        (r'("password"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("api_key"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("apiKey"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("clientSecret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("client_secret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("access_token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("refresh_token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("token"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("secret"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+        (r'("privateKey"\s*:\s*")[^"]*(")', r'\1***REDACTED***\2'),
+    ]
+    
+    sanitized_text = text
+    for pattern, replacement in patterns:
+        sanitized_text = re.sub(pattern, replacement, sanitized_text, flags=re.IGNORECASE)
+    
+    return sanitized_text
+
 
 def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
     """
@@ -66,12 +145,20 @@ def setup_logging(logger_name="zscaler-sdk-python", enabled=None, verbose=None):
 
 
 def dump_request(logger, url: str, method: str, json, params, headers, request_uuid: str, body=True):
-    request_headers_filtered = {key: value for key, value in headers.items() if key != "Authorization"}
+    # Mask sensitive header values (e.g., Authorization, X-Api-Key, etc.)
+    request_headers_filtered = {
+        key: "***REDACTED***" if key.lower() in SENSITIVE_HEADERS else value 
+        for key, value in headers.items()
+    }
+    
     # Log the request details before sending the request
     log_lines = []
     request_body = ""
-    if body:
-        request_body = jsonp.dumps(json)
+    if body and json:
+        # Sanitize request body before logging
+        sanitized_json = _sanitize_for_logging(json)
+        request_body = jsonp.dumps(sanitized_json)
+    
     log_lines.append(f"\n---[ ZSCALER SDK REQUEST | ID:{request_uuid} ]-------------------------------")
     full_url = url
     if params:
@@ -100,8 +187,13 @@ def dump_response(
     duration_seconds = end_time - start_time
     # Convert the duration to milliseconds
     duration_ms = duration_seconds * 1000
-    # Convert the headers to a regular dictionary
-    response_headers_dict = dict(resp.headers)
+    
+    # Mask sensitive headers in response
+    response_headers_dict = {
+        key: "***REDACTED***" if key.lower() in SENSITIVE_HEADERS else value
+        for key, value in dict(resp.headers).items()
+    }
+    
     full_url = url
     if params:
         full_url += "?" + urlencode(params)
@@ -116,9 +208,19 @@ def dump_response(
     log_lines.append(f"{method} {full_url}")
     for key, value in response_headers_dict.items():
         log_lines.append(f"{key}: {value}")
+    
     response_body = ""
     if resp.text:
         response_body = resp.text
+        # Try to sanitize response body if it's JSON
+        try:
+            parsed_body = jsonp.loads(response_body)
+            sanitized_body = _sanitize_for_logging(parsed_body)
+            response_body = jsonp.dumps(sanitized_body)
+        except (jsonp.JSONDecodeError, ValueError):
+            # If not JSON, sanitize sensitive keywords in plaintext
+            response_body = _sanitize_plaintext_for_logging(response_body)
+    
     if response_body and response_body != "" and response_body != "null":
         log_lines.append(f"\n{response_body}")
     log_lines.append("-" * 68)
