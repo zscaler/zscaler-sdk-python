@@ -188,19 +188,22 @@ def test_retryable_status_codes_coverage():
 
 def test_help_urls_consistency():
     """Test that help URLs are consistent and follow expected patterns."""
+    from urllib.parse import urlparse
+    
     # All help URLs should be from help.zscaler.com
     help_urls = [ZSCALER_ONE_API_DEV, ZIDENTITY_DEV]
     for url in help_urls:
-        assert "help.zscaler.com" in url
-        assert url.startswith("https://")
+        parsed = urlparse(url)
+        assert parsed.netloc == "help.zscaler.com", f"Expected help.zscaler.com but got {parsed.netloc}"
+        assert parsed.scheme == "https"
     
-    # GET URLs should reference the help URLs
-    assert ZIDENTITY_DEV in GET_ZSCALER_CLIENT_ID
-    assert ZIDENTITY_DEV in GET_ZSCALER_CLIENT_SECRET
-    assert ZIDENTITY_DEV in GET_ZSCALER_VANITY_DOMAIN
-    assert ZIDENTITY_DEV in GET_ZSCALER_CLOUD
-    assert ZSCALER_ONE_API_DEV in GET_ZPA_CUSTOMER_ID
-    assert ZSCALER_ONE_API_DEV in GET_ZPA_MICROTENANT_ID
+    # GET URLs should reference the help URLs (use startswith for safe prefix checking)
+    assert GET_ZSCALER_CLIENT_ID.startswith(ZIDENTITY_DEV)
+    assert GET_ZSCALER_CLIENT_SECRET.startswith(ZIDENTITY_DEV)
+    assert GET_ZSCALER_VANITY_DOMAIN.startswith(ZIDENTITY_DEV)
+    assert GET_ZSCALER_CLOUD.startswith(ZIDENTITY_DEV)
+    assert GET_ZPA_CUSTOMER_ID.startswith(ZSCALER_ONE_API_DEV)
+    assert GET_ZPA_MICROTENANT_ID.startswith(ZSCALER_ONE_API_DEV)
 
 
 def test_constants_immutability():
@@ -256,6 +259,8 @@ def test_retry_constants_mathematical_properties():
 
 def test_url_security():
     """Test that all URLs use HTTPS for security."""
+    from urllib.parse import urlparse
+    
     all_urls = [
         DEV_AUTH_URL,
         ZSCALER_ONE_API_DEV,
@@ -271,6 +276,22 @@ def test_url_security():
     # Add all ZPA base URLs
     all_urls.extend(ZPA_BASE_URLS.values())
     
+    # Valid Zscaler domain suffixes
+    valid_domains = [
+        ".zscaler.com",
+        ".zpath.net",
+        ".zsapi.net",
+        ".zpatwo.net",
+        ".zpabeta.net",
+        ".zpagov.net",
+        ".zpagov.us",
+        ".zpapreview.net",
+    ]
+    
     for url in all_urls:
-        assert url.startswith("https://"), f"URL {url} should use HTTPS"
-        assert "http://" not in url, f"URL {url} should not use HTTP"
+        parsed = urlparse(url)
+        assert parsed.scheme == "https", f"URL {url} should use HTTPS scheme"
+        # Verify it's a valid Zscaler domain using proper domain validation
+        is_valid_domain = any(parsed.netloc.endswith(domain) or parsed.netloc == domain.lstrip('.') 
+                             for domain in valid_domains)
+        assert is_valid_domain, f"URL {url} (host: {parsed.netloc}) should be from a valid Zscaler domain"

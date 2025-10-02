@@ -96,7 +96,10 @@ def test_http_client_setup_proxy():
     
     proxy_string = client._setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
+    # Use urlparse for safe URL validation
+    from urllib.parse import urlparse
+    parsed = urlparse(proxy_string)
+    assert parsed.netloc == "user:pass@proxy.example.com:8080" or parsed.hostname == "proxy.example.com"
     assert "8080" in proxy_string
     assert "user" in proxy_string
     assert "pass" in proxy_string
@@ -114,9 +117,12 @@ def test_http_client_setup_proxy_without_auth():
     
     proxy_string = client._setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
-    assert "8080" in proxy_string
-    assert "http://" in proxy_string
+    # Use urlparse for safe URL validation
+    from urllib.parse import urlparse
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.port == 8080 or "8080" in proxy_string
+    assert parsed.scheme == "http"
 
 
 def test_http_client_setup_proxy_without_port():
@@ -130,8 +136,11 @@ def test_http_client_setup_proxy_without_port():
     
     proxy_string = client._setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
-    assert "http://" in proxy_string
+    # Use urlparse for safe URL validation
+    from urllib.parse import urlparse
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.scheme == "http"
 
 
 def test_http_client_send_request_with_error_handling():
