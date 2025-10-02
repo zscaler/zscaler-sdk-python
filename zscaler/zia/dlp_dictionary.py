@@ -212,7 +212,7 @@ class DLPDictionaryAPI(APIClient):
         return (result, response, None)
 
     def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> tuple:
-        """
+        r"""
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
         Args:
@@ -236,7 +236,7 @@ class DLPDictionaryAPI(APIClient):
 
                 .. code-block:: python
 
-                    ('all', '\d{2} \d{3} \d{3} \d{3}')
+                    ('all', r'\d{2} \d{3} \d{3} \d{3}')
                     ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
 
         Returns:
@@ -249,7 +249,7 @@ class DLPDictionaryAPI(APIClient):
             ...                description='Matches IPv4 address pattern.',
             ...                match_type='all',
             ...                patterns=[
-            ...                    ('all', '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/(\d|[1-2]\d|3[0-2]))?')
+            ...                    ('all', r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/(\d|[1-2]\d|3[0-2]))?')
             ...                ]))
 
             Match text found that contains government document caveats using phrases.
@@ -321,7 +321,7 @@ class DLPDictionaryAPI(APIClient):
         return (result, response, None)
 
     def update_dict(self, dict_id: int, **kwargs) -> tuple:
-        """
+        r"""
         Updates the specified DLP Dictionary.
 
         Args:
@@ -347,7 +347,7 @@ class DLPDictionaryAPI(APIClient):
 
                 .. code-block:: python
 
-                    ('all', '\d{2} \d{3} \d{3} \d{3}')
+                    ('all', r'\d{2} \d{3} \d{3} \d{3}')
                     ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
 
         Returns:

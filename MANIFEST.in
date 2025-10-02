@@ -4,4 +4,5 @@ recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
-recursive-include docsrc *.rst conf.py Makefile
+# Documentation files excluded from package distribution for security
+# recursive-include docsrc *.rst conf.py Makefile

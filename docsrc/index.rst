@@ -514,6 +514,7 @@ or
 ::
 
    -----BEGIN PRIVATE KEY-----
+   # Example private key (not a real key)
    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCv3krdYg3z7h0H
    60QoePJMghllQxsfPxp3mgFfYEaIbF88Z8dvPZEfhAtP19/Mv62ASjwgqzQzKHRV
    -----END PRIVATE KEY-----
