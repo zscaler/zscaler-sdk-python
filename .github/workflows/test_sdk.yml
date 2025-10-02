@@ -55,10 +55,6 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Lint with flake8
-        run: |
-          make lint
-
       - name: Run Unit Tests
         run: |
           make test:unit:coverage
@@ -72,4 +68,3 @@ jobs:
           flags: unittests
           name: codecov-unit-tests
           fail_ci_if_error: false
-

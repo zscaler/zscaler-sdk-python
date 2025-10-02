@@ -66,7 +66,6 @@ class ZscalerAPIResponse:
         if end_time:
             self._params["endTime"] = end_time
 
-
         # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
         if self._service_type == "zia":
             if "page_size" in self._params:
@@ -110,11 +109,11 @@ class ZscalerAPIResponse:
             # Don't set any default - let the API use its own default behavior
             logger.debug("No page size provided - letting API use its default")
             return None
-            
+
         limits = self.SERVICE_PAGE_LIMITS.get(service_type, {})
         max_page_size = limits.get("max", 100)
         min_page_size = limits.get("min", 1)
-        
+
         validated_size = min(max(int(page_size), min_page_size), max_page_size)
         logger.debug("Validated page size: %d (user provided: %s)", validated_size, page_size)
         return validated_size
@@ -196,7 +195,7 @@ class ZscalerAPIResponse:
 
         self._items_fetched += len(self._list)
         self._pages_fetched += 1
-    
+
     def get_results(self):
         """
         Returns the current page of results.
@@ -239,36 +238,6 @@ class ZscalerAPIResponse:
                 logger.warning(f"Failed to wrap pagination results with {self._type}: {wrap_error}")
 
         return results, self, None
-
-
-    # def _fetch_next_page(self):
-    #     if not self._has_next():
-    #         logger.debug("No more pages to fetch")
-    #         return [], None
-
-    #     if self._service_type == "ZDX":
-    #         self._params["offset"] = self._next_offset
-    #     else:
-    #         self._page += 1
-    #         self._params["page"] = self._page
-
-    #     logger.debug(f"Requesting next page with params: {self._params}")
-
-    #     req = {
-    #         "method": "GET",
-    #         "url": self._url,
-    #         "headers": self._headers,
-    #         "params": self._params,
-    #         "uuid": uuid.uuid4(),
-    #     }
-    #     _, _, response_body, error = self._request_executor.fire_request(req)
-
-    #     if error:
-    #         logger.error(f"Error fetching the next page: {error}")
-    #         return None, error
-
-    #     self._build_json_response(response_body)
-    #     return self._list, None
 
     def _fetch_next_page(self):
         logger.debug(f"[DEBUG] _fetch_next_page called. service_type={self._service_type}, params={self._params}")
@@ -359,8 +328,8 @@ class ZscalerAPIResponse:
                     # No explicit limit set - assume more pages exist if we got results
                     # This may result in one extra empty API call, but respects API defaults
                     has_next = bool(self._list)
-            
-            logger.debug("Has next page for ZIA/ZCC: %s (page %d, items fetched: %d, limit: %s)", 
+
+            logger.debug("Has next page for ZIA/ZCC: %s (page %d, items fetched: %d, limit: %s)",
                         has_next, self._page, len(self._list), self._limit)
             return has_next
 

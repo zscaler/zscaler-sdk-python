@@ -25,11 +25,11 @@ class ZscalerObject:
         """
         Get an attribute value with a default if the attribute doesn't exist.
         Similar to dict.get() method.
-        
+
         Args:
             key (str): The attribute name to get
             default: The default value to return if the attribute doesn't exist
-            
+
         Returns:
             The attribute value or the default value
         """
