@@ -58,9 +58,9 @@ def test_dev_auth_url():
 
 def test_retryable_status_codes():
     """Test retryable status codes are correctly defined."""
-    expected_codes = { 429, 500, 502, 503, 504}
+    expected_codes = {429, 500, 502, 503, 504}
     assert RETRYABLE_STATUS_CODES == expected_codes
-    assert len(RETRYABLE_STATUS_CODES) == 8
+    assert len(RETRYABLE_STATUS_CODES) == 5
     
     # Test that all codes are in the 4xx-5xx range
     for code in RETRYABLE_STATUS_CODES:
@@ -171,23 +171,19 @@ def test_zpa_base_urls_environment_mapping():
 
 def test_retryable_status_codes_coverage():
     """Test that retryable status codes cover expected scenarios."""
-    # Client timeout
-    assert 408 in RETRYABLE_STATUS_CODES
-    
-    # Conflict (retry might resolve)
-    assert 409 in RETRYABLE_STATUS_CODES
-    
-    # Precondition failed (retry might resolve)
-    assert 412 in RETRYABLE_STATUS_CODES
-    
     # Rate limiting
     assert 429 in RETRYABLE_STATUS_CODES
     
-    # Server errors
-    assert 500 in RETRYABLE_STATUS_CODES
-    assert 502 in RETRYABLE_STATUS_CODES
-    assert 503 in RETRYABLE_STATUS_CODES
-    assert 504 in RETRYABLE_STATUS_CODES
+    # Server errors (transient failures that benefit from retry)
+    assert 500 in RETRYABLE_STATUS_CODES  # Internal Server Error
+    assert 502 in RETRYABLE_STATUS_CODES  # Bad Gateway
+    assert 503 in RETRYABLE_STATUS_CODES  # Service Unavailable
+    assert 504 in RETRYABLE_STATUS_CODES  # Gateway Timeout
+    
+    # Client errors that should NOT be retried (removed from retryable list)
+    assert 408 not in RETRYABLE_STATUS_CODES  # Request Timeout - client should handle
+    assert 409 not in RETRYABLE_STATUS_CODES  # Conflict - requires client action
+    assert 412 not in RETRYABLE_STATUS_CODES  # Precondition Failed - requires client fix
 
 
 def test_help_urls_consistency():
