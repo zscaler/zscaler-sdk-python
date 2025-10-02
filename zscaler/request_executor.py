@@ -119,7 +119,7 @@ class RequestExecutor:
 
         exceptions.raise_exception = self._config["client"].get("raiseException", False)
         self._custom_headers = {}
-        
+
         # Track whether any mutations (POST/PUT/DELETE) have occurred during this session
         # This is used to determine if deauthentication is needed for ZIA/ZTW services
         self._mutations_occurred = False
@@ -136,18 +136,18 @@ class RequestExecutor:
         # logger.debug(f"Determining base URL for cloud: {self.cloud}")
         if "/zscsb" in endpoint:
             return f"https://csbapi.{self.sandbox_cloud}.net"
-        
+
         # Special handling for zidentity service
         if "/zidentity" in endpoint or "/admin/api/v1" in endpoint:
             if not self.vanity_domain:
                 raise ValueError("vanityDomain is required for zidentity service")
-            
+
             # For zidentity, the URL pattern is: https://{{vanity_domain}}-admin.zslogin{{cloud}}.net/admin/api/v1
             if self.cloud and self.cloud != "production":
                 return f"https://{self.vanity_domain}-admin.zslogin{self.cloud}.net/admin/api/v1"
             else:
                 return f"https://{self.vanity_domain}-admin.zslogin.net/admin/api/v1"
-        
+
         if self.cloud and self.cloud != "production":
             return f"https://api.{self.cloud}.zsapi.net"
         return self.BASE_URL
@@ -260,7 +260,7 @@ class RequestExecutor:
 
         # Track the service type for deauthentication
         self._last_service_type = service_type
-        
+
         request = {
             "method": method,
             "url": final_url,
@@ -269,7 +269,7 @@ class RequestExecutor:
             "uuid": uuid.uuid4(),
             "service_type": service_type,
         }
-        
+
         # Special handling for PAC file validation endpoint
         if "/pacFiles/validate" in endpoint and service_type == "zia":
             # For PAC file validation, send as raw data without any modification
@@ -289,7 +289,7 @@ class RequestExecutor:
             headers = {**default_headers, **(self._custom_headers or {}), **headers}
         else:
             headers = {**self._default_headers, **(self._custom_headers or {}), **headers}
-        
+
         if "/zscsb" not in endpoint and not self.use_legacy_client:
             headers["Authorization"] = f"Bearer {self._oauth._get_access_token()}"
         return headers
@@ -530,7 +530,8 @@ class RequestExecutor:
             self._mutations_occurred = True
             logger.debug(f"Mutation detected: {request['method']} request to {request['url']}")
         else:
-            logger.debug(f"Non-mutation request: {request['method']} request to {request['url']} (mutations_occurred={self._mutations_occurred})")
+            logger.debug(f"Non-mutation request: {request['method']} request to {request['url']} "
+                         f"(mutations_occurred={self._mutations_occurred})")
 
         # Perform the actual HTTP request
         response, error = self._http_client.send_request(request)
@@ -559,7 +560,8 @@ class RequestExecutor:
                 return self.fire_request_helper(request, attempts, request_start_time)
             else:
                 logger.error("401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
-                return request, response, response.text, Exception("401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
+                return request, response, response.text, Exception(
+                    "401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
 
         # Handle “retryable” statuses such as 429, 503, etc.
         if attempts < max_retries and self.is_retryable_status(response.status_code):
@@ -580,11 +582,11 @@ class RequestExecutor:
         """
         Checks if HTTP status is retryable.
 
-        Retryable statuses: 408, 409, 412, 429, 500, 502, 503, 504
+        Retryable statuses: 429, 500, 502, 503, 504
         """
         return status is not None and status in (
-            HTTPStatus.REQUEST_TIMEOUT,
-            HTTPStatus.CONFLICT,
+            # HTTPStatus.REQUEST_TIMEOUT,
+            # HTTPStatus.CONFLICT,
             # HTTPStatus.PRECONDITION_FAILED,
             HTTPStatus.TOO_MANY_REQUESTS,
             HTTPStatus.SERVICE_UNAVAILABLE,
@@ -654,7 +656,7 @@ class RequestExecutor:
     def has_mutations_occurred(self):
         """
         Check if any mutations (POST/PUT/DELETE) have occurred during this session.
-        
+
         Returns:
             bool: True if mutations occurred, False otherwise.
         """
@@ -664,26 +666,26 @@ class RequestExecutor:
         """
         Deauthenticate from Zscaler services that support session-based authentication.
         Currently supports ZIA and ZTW services.
-        
-        For ZIA service, deauthentication is only performed if mutations (POST/PUT/DELETE) 
+
+        For ZIA service, deauthentication is only performed if mutations (POST/PUT/DELETE)
         have occurred during the session. GET-only sessions do not require deauthentication.
-        
+
         Args:
             service_type (str, optional): The service type to deauthenticate from.
                 If None, will attempt to determine from the current configuration.
         """
         if not service_type:
             service_type = self.service
-        
+
         if service_type.lower() not in ["zia", "ztw"]:
             logger.debug(f"Deauthentication not supported for service: {service_type}")
             return False
-        
+
         # For ZIA service, only deauthenticate if mutations occurred
         if service_type.lower() == "zia" and not self._mutations_occurred:
             logger.debug("ZIA service: No mutations occurred during session, skipping deauthentication")
             return True
-        
+
         try:
             # Determine the base URL and endpoint based on service type
             if service_type.lower() == "zia":
@@ -692,23 +694,24 @@ class RequestExecutor:
             elif service_type.lower() == "ztw":
                 base_url = self.get_base_url("/ztw/api/v1/auth")
                 endpoint = "/ztw/api/v1/auth"
-            
+
             url = f"{base_url}{endpoint}"
-            
+
             # Prepare headers using the standard method to include bearer token
             # For DELETE requests, we'll exclude Content-Type to avoid issues with empty body
             headers = self._prepare_headers({}, endpoint)
             # Remove Content-Type for DELETE requests to avoid issues with empty body
             headers.pop("Content-Type", None)
-            
+
             # Both ZIA and ZTW require explicit deauthentication to activate staged configurations
             # regardless of authentication method (OAuth or session-based)
             if service_type.lower() in ["zia", "ztw"]:
-                logger.debug(f"{service_type.upper()} service requires explicit deauthentication to activate staged configurations")
-            
+                logger.debug(f"{service_type.upper()} service requires explicit deauthentication to activate "
+                             f"staged configurations")
+
             # Send DELETE request to deauthenticate
             logger.debug(f"Deauthenticating from {service_type} at {url}")
-            
+
             # Use the HTTP client to send the request
             request = {
                 "method": "DELETE",
@@ -718,31 +721,30 @@ class RequestExecutor:
                 "uuid": uuid.uuid4(),
                 "service_type": service_type,
             }
-            
+
             response, error = self._http_client.send_request(request)
-            
+
             if error:
                 logger.warning(f"Failed to deauthenticate from {service_type}: {error}")
                 return False
-            
+
             if response and response.status_code == 200:
                 logger.debug(f"Successfully deauthenticated from {service_type}")
                 return True
             else:
                 logger.warning(f"Unexpected response during deauthentication: {response.status_code if response else 'No response'}")
                 return False
-                
+
         except Exception as e:
             logger.warning(f"Exception during deauthentication for {service_type}: {e}")
             return False
 
-
     def get_retry_after(self, headers, logger):
         retry_limit_reset_header = (
-            headers.get("x-ratelimit-reset") or 
+            headers.get("x-ratelimit-reset") or
             headers.get("X-RateLimit-Reset") or
             headers.get("RateLimit-Reset") or
-            
+
             # ZCC Specific Rate Limiting Headers (LegacyZCCClientHelper)
             headers.get("X-Rate-Limit-Retry-After-Seconds") or
             headers.get("X-Rate-Limit-Remaining")

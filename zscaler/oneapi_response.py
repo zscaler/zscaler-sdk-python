@@ -66,7 +66,6 @@ class ZscalerAPIResponse:
         if end_time:
             self._params["endTime"] = end_time
 
-
         # If service is ZIA, ensure the pagination parameter is "pageSize" in camelCase
         if self._service_type == "zia":
             if "page_size" in self._params:
@@ -102,14 +101,21 @@ class ZscalerAPIResponse:
                     self._list = []
 
     def validate_page_size(self, page_size, service_type):
+        """
+        Validates the page size if provided by the user.
+        Returns None if no page_size provided - let the API use its own default.
+        """
+        if page_size is None:
+            # Don't set any default - let the API use its own default behavior
+            logger.debug("No page size provided - letting API use its default")
+            return None
+
         limits = self.SERVICE_PAGE_LIMITS.get(service_type, {})
         max_page_size = limits.get("max", 100)
-        default_page_size = limits.get("default", 20)
+        min_page_size = limits.get("min", 1)
 
-        if page_size is None:
-            return default_page_size
-        validated_size = min(max(int(page_size), limits.get("min", 1)), max_page_size)
-        logger.debug("Validated page size: %d", validated_size)
+        validated_size = min(max(int(page_size), min_page_size), max_page_size)
+        logger.debug("Validated page size: %d (user provided: %s)", validated_size, page_size)
         return validated_size
 
     def get_headers(self):
@@ -189,7 +195,7 @@ class ZscalerAPIResponse:
 
         self._items_fetched += len(self._list)
         self._pages_fetched += 1
-    
+
     def get_results(self):
         """
         Returns the current page of results.
@@ -233,36 +239,6 @@ class ZscalerAPIResponse:
 
         return results, self, None
 
-
-    # def _fetch_next_page(self):
-    #     if not self._has_next():
-    #         logger.debug("No more pages to fetch")
-    #         return [], None
-
-    #     if self._service_type == "ZDX":
-    #         self._params["offset"] = self._next_offset
-    #     else:
-    #         self._page += 1
-    #         self._params["page"] = self._page
-
-    #     logger.debug(f"Requesting next page with params: {self._params}")
-
-    #     req = {
-    #         "method": "GET",
-    #         "url": self._url,
-    #         "headers": self._headers,
-    #         "params": self._params,
-    #         "uuid": uuid.uuid4(),
-    #     }
-    #     _, _, response_body, error = self._request_executor.fire_request(req)
-
-    #     if error:
-    #         logger.error(f"Error fetching the next page: {error}")
-    #         return None, error
-
-    #     self._build_json_response(response_body)
-    #     return self._list, None
-
     def _fetch_next_page(self):
         logger.debug(f"[DEBUG] _fetch_next_page called. service_type={self._service_type}, params={self._params}")
         if not self._has_next():
@@ -275,9 +251,10 @@ class ZscalerAPIResponse:
         elif self._service_type.upper() == "ZIA":
             logger.debug("[DEBUG] Taking ZIA pagination branch.")
             self._page += 1
-            self._params["pageNumber"] = str(self._page)
-            # Ensure page parameter is never set for ZIA
-            self._params.pop("page", None)
+            self._params["page"] = self._page
+            # Only set pageSize if user explicitly provided it (don't override API defaults)
+            if self._limit and "pageSize" not in self._params:
+                self._params["pageSize"] = self._limit
             logger.debug(f"[DEBUG] _fetch_next_page params for ZIA: {self._params}")
         elif self._service_type == "zidentity":
             logger.debug("[DEBUG] Taking ZIDENTITY pagination branch.")
@@ -334,15 +311,26 @@ class ZscalerAPIResponse:
             logger.debug("Has next page for ZIDENTITY: %s", has_next)
             return has_next
         else:
-            # For ZIA/ZCC, if we got results last time, assume we can try next page
-            # If next page returns empty, has_next() will be False on next call.
-            # This logic may need refinement depending on API behavior, but follows a pattern:
-            #   If the previous page was not empty, we assume another page might exist.
-            #   If next() returns empty, we won't continue.
-            has_next = bool(self._list) and (self._pages_fetched == 1 or self._page < 9999999)
-            # The above large number is a placeholder. Ideally, you'd base this on known API behavior.
-            # If the API doesn't give a clear signal that there's another page, we may need a heuristic.
-            logger.debug("Has next page for ZIA/ZCC: %s", has_next)
+            # For ZIA/ZCC:
+            # - If we're on the first page and got results, try next page
+            # - If we're on a subsequent page and the last fetch returned results equal to or greater than limit, try next page
+            # - If the last fetch returned fewer results than limit (or 0), we're done
+            if self._pages_fetched == 1:
+                # First page - continue if we got any results
+                has_next = bool(self._list)
+            else:
+                # Subsequent pages - if no explicit limit, use heuristic based on results returned
+                # If we got results, try one more page. The next call will return empty and stop.
+                # If user provided limit, only continue if last page was "full"
+                if self._limit:
+                    has_next = len(self._list) >= self._limit
+                else:
+                    # No explicit limit set - assume more pages exist if we got results
+                    # This may result in one extra empty API call, but respects API defaults
+                    has_next = bool(self._list)
+
+            logger.debug("Has next page for ZIA/ZCC: %s (page %d, items fetched: %d, limit: %s)",
+                        has_next, self._page, len(self._list), self._limit)
             return has_next
 
     def __str__(self):

@@ -2,6 +2,7 @@ import json
 
 raise_exception = False
 
+
 # Zscaler Base Exceptions
 class ZscalerBaseException(Exception):
     def __init__(self, url, response, response_body):
@@ -84,6 +85,7 @@ class TokenRefreshError(Exception):
 
 class HeaderUpdateError(Exception):
     pass
+
 
 class RetryTooLong(Exception):
     """Raised when backoff time exceeds maxRetrySeconds configuration."""
