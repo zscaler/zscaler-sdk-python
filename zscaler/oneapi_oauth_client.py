@@ -1,15 +1,51 @@
 import logging
 import json
 import requests
-import jwt
+from jose import jwt
 import time
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from zscaler.user_agent import UserAgent
 from zscaler.oneapi_http_client import HTTPClient
 from zscaler.errors.response_checker import check_response_for_error
 
 logger = logging.getLogger(__name__)
+
+# Security constants for key validation
+MIN_RSA_KEY_SIZE = 2048  # NIST recommends minimum 2048 bits for RSA keys
+
+
+def validate_rsa_key_strength(private_key_obj):
+    """
+    Validate that an RSA private key meets minimum security requirements.
+    
+    This addresses CWE-326 (Inadequate Encryption Strength) by ensuring
+    RSA keys meet NIST recommendations of at least 2048 bits.
+    
+    Args:
+        private_key_obj: RSA private key object from cryptography library
+        
+    Raises:
+        ValueError: If the key size is below the minimum requirement
+        
+    Returns:
+        int: The key size in bits
+    """
+    if isinstance(private_key_obj, rsa.RSAPrivateKey):
+        key_size = private_key_obj.key_size
+        if key_size < MIN_RSA_KEY_SIZE:
+            logger.error(f"RSA key size ({key_size} bits) is below minimum requirement ({MIN_RSA_KEY_SIZE} bits)")
+            raise ValueError(
+                f"Insufficient RSA key strength: {key_size} bits. "
+                f"Minimum required: {MIN_RSA_KEY_SIZE} bits (NIST recommendation). "
+                f"Please use a stronger RSA key to ensure secure authentication."
+            )
+        logger.debug(f"RSA key validation passed: {key_size} bits")
+        return key_size
+    else:
+        logger.warning(f"Key validation skipped: Unsupported key type {type(private_key_obj)}")
+        return None
 
 
 class OAuth:
@@ -279,6 +315,9 @@ class OAuth:
             logging.info("Using private key from file.")
             with open(private_key, "rb") as key_file:
                 private_key_obj = serialization.load_pem_private_key(key_file.read(), password=None, backend=default_backend())
+
+        # **Validate key strength to mitigate CWE-326 (Inadequate Encryption Strength)**
+        validate_rsa_key_strength(private_key_obj)
 
         # **Step 2: Create JWT for Client Assertion**
         now = int(time.time())
