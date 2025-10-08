@@ -1,5 +1,19 @@
 # Zscaler Python SDK Changelog
 
+## 1.8.5 (October 8, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Security Enhancements:
+
+* [PR #396](https://github.com/zscaler/zscaler-sdk-python/pull/396) - Added RSA key strength validation for OAuth JWT authentication. The SDK now enforces a minimum 2048-bit key size for RSA private keys (NIST recommendation), rejecting weak keys with clear error messages.
+
+* [PR #396](https://github.com/zscaler/zscaler-sdk-python/pull/396) - Migrated from PyJWT to python-jose for consistency with the Go SDK. This addresses CWE-326 concerns and is transparent to users (API compatible).
+
+* Added comprehensive security documentation (`SECURITY.md`) with JWT library assessment, security best practices, and key management recommendations.
+
 ## 1.8.4 (October 2, 2025)
 
 ### Notes
