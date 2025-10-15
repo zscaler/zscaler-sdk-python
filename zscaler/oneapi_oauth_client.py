@@ -268,10 +268,17 @@ class OAuth:
             "Content-Type": "application/x-www-form-urlencoded",
             "User-Agent": user_agent,
         }
+        proxies = None
+        if "proxy" in self._config["client"]:
+            proxy_cfg = self._config["client"]["proxy"]
+            proxies = {
+                "http": f"http://{proxy_cfg['host']}:{proxy_cfg['port']}",
+                "https": f"http://{proxy_cfg['host']}:{proxy_cfg['port']}",
+            }
 
         # logging.debug(f"Sending authentication request to {auth_url}.")
         # Synchronous HTTP request (with form data in the body)
-        response = requests.post(auth_url, data=form_data, headers=headers)
+        response = requests.post(auth_url, data=form_data, headers=headers, proxies=proxies)
 
         if response.status_code >= 300:
             logging.error(f"Error authenticating: {response.status_code}, {response.text}")

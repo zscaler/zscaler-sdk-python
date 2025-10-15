@@ -4,7 +4,7 @@ Testing OAuth functions for Zscaler SDK
 
 import pytest
 import json
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import Mock, patch, AsyncMock, MagicMock
 from zscaler.oneapi_oauth_client import OAuth
 
 
@@ -435,3 +435,35 @@ def test_oauth_client_integration():
         # Test OAuth client functionality
         assert oauth is not None
         assert oauth._config == config
+
+
+def test_auth_uses_proxy():
+    cfg = {
+        "client": {
+            "vanityDomain": "mycompany",
+            "clientId": "dummy-id",
+            "clientSecret": "dummy-secret",
+            "proxy": {"host": "127.0.0.1", "port": "8080"},
+        }
+    }
+
+    client = OAuth(Mock(), cfg)
+
+    # Patch requests.post inside the module under test
+    with patch("zscaler.oneapi_oauth_client.requests.post") as mock_post:
+        fake_response = MagicMock()
+        fake_response.status_code = 200
+        fake_response.json.return_value = {"access_token": "fake-token"}
+        mock_post.return_value = fake_response
+
+        resp = client._authenticate_with_client_secret("dummy-id", "dummy-secret")
+
+        assert mock_post.called, "requests.post was not called"
+        _, kwargs = mock_post.call_args
+        assert "proxies" in kwargs and kwargs["proxies"] is not None, "proxies argument not forwarded"
+
+        expected_proxy = {
+            "http": "http://127.0.0.1:8080",
+            "https": "http://127.0.0.1:8080",
+        }
+        assert kwargs["proxies"] == expected_proxy, f"proxies mismatch: {kwargs.get('proxies')}"
