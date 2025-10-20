@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -25,7 +26,7 @@ class LocationManagement(ZscalerObject):
     A class representing a Location object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         # print("🚨 Raw config passed into LocationManagement:")
         # import pprint
@@ -214,7 +215,7 @@ class LocationManagement(ZscalerObject):
             self.vpn_credentials = []
             self.ip_addresses = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -285,7 +286,7 @@ class VPNCredentials(ZscalerObject):
     A class representing a VPN Credentials object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -303,7 +304,7 @@ class VPNCredentials(ZscalerObject):
             self.comments = None
             self.location = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -324,7 +325,7 @@ class RegionInfo(ZscalerObject):
     A class for RegionInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RegionInfo model based on API response.
 
@@ -366,7 +367,7 @@ class RegionInfo(ZscalerObject):
             self.postal_code = None
             self.continent_code = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

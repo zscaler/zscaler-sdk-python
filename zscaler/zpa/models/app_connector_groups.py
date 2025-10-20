@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 
 class AppConnectorGroup(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppConnectorGroup model based on API response.
 
@@ -112,7 +113,7 @@ class AppConnectorGroup(ZscalerObject):
             self.zscaler_managed = None
             self.dc_hosting_info = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -158,7 +159,7 @@ class AppConnectorGroup(ZscalerObject):
 
 
 class NPAssistantGroup(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the NPAssistantGroup model based on API response.
         """
@@ -180,7 +181,7 @@ class NPAssistantGroup(ZscalerObject):
             self.mtu = None
             self.lan_subnets = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -196,7 +197,7 @@ class NPAssistantGroup(ZscalerObject):
 
 
 class LanSubnet(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LanSubnet model based on API response.
         """
@@ -226,7 +227,7 @@ class LanSubnet(ZscalerObject):
             self.fqdns = []
             self.np_dns_ns_record = NPDnsNsRecord()
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -246,7 +247,7 @@ class LanSubnet(ZscalerObject):
 
 
 class NPDnsNsRecord(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the NPDnsNsRecord model based on API response.
         """
@@ -272,7 +273,7 @@ class NPDnsNsRecord(ZscalerObject):
             self.fqdn = []
             self.nameserver_ips = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,

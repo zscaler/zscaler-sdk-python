@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class SoftwareList(ZscalerObject):
     A class for SoftwareList objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
                 Initialize the SoftwareList model based on API response.
 
@@ -42,7 +43,7 @@ class SoftwareList(ZscalerObject):
             self.next_offset = None
             self.devices = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -60,7 +61,7 @@ class DeviceSoftwareInventory(ZscalerObject):
     A class for DeviceSoftwareInventory objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the overview about your organization's distribution of software associated with an alert rule model
 
@@ -86,7 +87,7 @@ class DeviceSoftwareInventory(ZscalerObject):
             self.user_total = None
             self.device_total = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

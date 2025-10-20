@@ -1,3 +1,5 @@
+from typing import Tuple, Optional, Any, Union, Dict
+import requests
 import json
 import logging
 from zscaler.errors.http_error import HTTPError

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
@@ -24,7 +25,7 @@ class GeneratedTickets(ZscalerObject):
     A class for GeneratedTickets objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the GeneratedTickets model based on API response.
 
@@ -51,7 +52,7 @@ class GeneratedTickets(ZscalerObject):
             self.cursor = None
             self.tickets = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -66,7 +67,7 @@ class Tickets(ZscalerObject):
     A class for Tickets objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Tickets model based on API response.
 
@@ -98,7 +99,7 @@ class Tickets(ZscalerObject):
             self.project_name = None
             self.ticket_info = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -119,7 +120,7 @@ class TicketInfo(ZscalerObject):
     A class for TicketInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the TicketInfo model based on API response.
 
@@ -138,7 +139,7 @@ class TicketInfo(ZscalerObject):
             self.ticket_url = None
             self.state = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

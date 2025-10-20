@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class ForwardingProfile(ZscalerObject):
     A class for ForwardingProfile objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ForwardingProfile model based on API response.
 
@@ -93,7 +94,7 @@ class ForwardingProfile(ZscalerObject):
             self.trusted_networks = ZscalerCollection.form_list([], str)
             self.trusted_subnets = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -131,7 +132,7 @@ class ForwardingProfileActions(ZscalerObject):
     A class for ForwardingProfileActions objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ForwardingProfileActions model based on the JSON response.
 
@@ -222,7 +223,7 @@ class ForwardingProfileActions(ZscalerObject):
             self.zen_threshold_limit = None
             self.system_proxy_data = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -262,7 +263,7 @@ class ForwardingProfileZpaActions(ZscalerObject):
     A class for ForwardingProfileZpaActions objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ForwardingProfileZpaActions model based on API response.
 
@@ -319,7 +320,7 @@ class ForwardingProfileZpaActions(ZscalerObject):
             self.primary_transport = None
             self.send_trusted_network_result_to_zpa = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

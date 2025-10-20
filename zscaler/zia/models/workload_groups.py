@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
@@ -24,7 +25,7 @@ class WorkloadGroups(ZscalerObject):
     A class for WorkloadGroup objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -61,7 +62,7 @@ class WorkloadGroups(ZscalerObject):
             self.last_modified_by = None
             self.expression_json = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -81,7 +82,7 @@ class ExpressionJson(ZscalerObject):
     A class for ExpressionJson objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.tag_type = config["tagType"] if "tagType" in config else None
@@ -97,7 +98,7 @@ class ExpressionJson(ZscalerObject):
             self.tag_container = None
             self.expression_containers = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -116,7 +117,7 @@ class ExpressionContainers(ZscalerObject):
     A class for ExpressionContainers objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.tag_type = config["tagType"] if "tagType" in config else None
@@ -137,7 +138,7 @@ class ExpressionContainers(ZscalerObject):
             self.operator = None
             self.tag_container = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -156,7 +157,7 @@ class TagContainer(ZscalerObject):
     A class for TagContainer objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.operator = config["operator"] if "operator" in config else None
@@ -168,7 +169,7 @@ class TagContainer(ZscalerObject):
             self.operator = None
             self.tags = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -186,7 +187,7 @@ class Tags(ZscalerObject):
     A class for Tags objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.key = config["key"] if "key" in config else None
@@ -196,7 +197,7 @@ class Tags(ZscalerObject):
             self.key = None
             self.value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

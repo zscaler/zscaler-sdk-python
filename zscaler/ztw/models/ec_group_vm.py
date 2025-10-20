@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import ecgroup as ecgroup
@@ -24,7 +25,7 @@ class ECGroupVM(ZscalerObject):
     A class for Ecgroupvm objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Ecgroupvm model based on API response.
 
@@ -93,7 +94,7 @@ class ECGroupVM(ZscalerObject):
             self.upgrade_end_time = None
             self.upgrade_day_of_week = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

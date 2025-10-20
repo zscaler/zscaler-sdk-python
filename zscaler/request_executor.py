@@ -1,3 +1,4 @@
+from typing import Dict, Any, Optional, Tuple, List, Union
 import logging
 import time
 import uuid
@@ -462,7 +463,7 @@ class RequestExecutor:
     def _cache_enabled(self):
         return self._config["client"]["cache"]["enabled"] == True
 
-    def fire_request(self, request):
+    def fire_request(self, request: Dict[str, Any]) -> Tuple[Optional["ZscalerAPIResponse"], Optional[int], Optional[str], Optional[Exception]]:
         """
         Send request using HTTP client.
 

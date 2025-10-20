@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class PrivateCloudController(ZscalerObject):
     A class for PrivateCloudController objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PrivateCloudController model based on API response.
 
@@ -233,7 +234,7 @@ class PrivateCloudController(ZscalerObject):
             self.zpn_sub_module_upgrade_list = []
             self.zscaler_managed = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -308,7 +309,7 @@ class ZPNSubmoduleUpgradeList(ZscalerObject):
     A class for ZPNSubmoduleUpgradeList objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ZPNSubmoduleUpgradeList model based on API response.
 
@@ -356,7 +357,7 @@ class ZPNSubmoduleUpgradeList(ZscalerObject):
             self.upgrade_status = None
             self.upgrade_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -384,7 +385,7 @@ class PrivateCloudcontrollerVersion(ZscalerObject):
     A class for PrivateCloudcontrollerVersion objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PrivateCloudcontrollerVersion model based on API response.
 
@@ -520,7 +521,7 @@ class PrivateCloudcontrollerVersion(ZscalerObject):
             self.upgrade_status = None
             self.userdb_last_sync_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

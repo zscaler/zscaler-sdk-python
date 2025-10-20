@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class URLCategory(ZscalerObject):
     A class representing the URL Category in Zscaler.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -127,7 +128,7 @@ class URLCategory(ZscalerObject):
             self.custom_ip_ranges_count = 0
             self.ip_ranges_retaining_parent_category_count = 0
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -159,7 +160,7 @@ class UrlDomainReview(ZscalerObject):
     A class representing a URL Domain Review in Zscaler.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -174,7 +175,7 @@ class UrlDomainReview(ZscalerObject):
             self.domain_type = None
             self.matches = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"url": self.url, "domainType": self.domain_type, "matches": self.matches}
         parent_req_format.update(current_obj_format)

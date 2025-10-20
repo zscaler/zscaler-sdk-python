@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment as application_segment
@@ -25,7 +26,7 @@ class CommonIDName(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDName model based on API response.
 
@@ -42,7 +43,7 @@ class CommonIDName(ZscalerObject):
             self.name = None
             self.enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -62,7 +63,7 @@ class CommonNameReason(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonNameReason model based on API response.
 
@@ -77,7 +78,7 @@ class CommonNameReason(ZscalerObject):
             self.id = None
             self.reason = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -96,7 +97,7 @@ class ExtranetDTO(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ExtranetDTO model based on API response.
 
@@ -129,7 +130,7 @@ class ExtranetDTO(ZscalerObject):
             self.zia_er_id = None
             self.location_dto = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -153,7 +154,7 @@ class LocationGroupDTO(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LocationGroupDTO model based on API response.
 
@@ -174,7 +175,7 @@ class LocationGroupDTO(ZscalerObject):
             self.name = None
             self.zia_locations = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -193,7 +194,7 @@ class InspectionControlException(ZscalerObject):
     A class for InspectionControlException objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the InspectionControlException model based on API response.
 
@@ -217,7 +218,7 @@ class InspectionControlException(ZscalerObject):
             self.variables = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -237,7 +238,7 @@ class Domains(ZscalerObject):
     A class for Domains objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Domains model based on API response.
 
@@ -253,7 +254,7 @@ class Domains(ZscalerObject):
             self.match_type = None
             self.var_value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -271,7 +272,7 @@ class Paths(ZscalerObject):
     A class for Paths objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Paths model based on API response.
 
@@ -287,7 +288,7 @@ class Paths(ZscalerObject):
             self.match_type = None
             self.var_value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -305,7 +306,7 @@ class Variables(ZscalerObject):
     A class for Variables objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Variables model based on API response.
 
@@ -321,7 +322,7 @@ class Variables(ZscalerObject):
             self.match_type = None
             self.var_value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -340,7 +341,7 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDName model based on API response.
 
@@ -356,7 +357,7 @@ class PrivilegedCapabilitiesResource(ZscalerObject):
             self.capabilities = None
             self.microtenant_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -374,7 +375,7 @@ class CommonFilterSearch(ZscalerObject):
     A class for CommonFilterSearch objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonFilterSearch model based on API response.
 
@@ -397,7 +398,7 @@ class CommonFilterSearch(ZscalerObject):
             self.page_by = None
             self.sort_by = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -412,7 +413,7 @@ class FilterBy(ZscalerObject):
     A class for FilterBy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the FilterBy model based on API response.
 
@@ -433,7 +434,7 @@ class FilterBy(ZscalerObject):
             self.operator = None
             self.values = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -453,7 +454,7 @@ class PageBy(ZscalerObject):
     A class for PageBy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PageBy model based on API response.
 
@@ -473,7 +474,7 @@ class PageBy(ZscalerObject):
             self.valid_page = None
             self.valid_page_size = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -493,7 +494,7 @@ class SortBy(ZscalerObject):
     A class for SortBy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SortBy model based on API response.
 
@@ -509,7 +510,7 @@ class SortBy(ZscalerObject):
             self.sort_name = None
             self.sort_order = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -528,7 +529,7 @@ class DesktopPolicyMappingsDTO(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DesktopPolicyMappingsDTO model based on API response.
 
@@ -555,7 +556,7 @@ class DesktopPolicyMappingsDTO(ZscalerObject):
             self.image_name = None
             self.app_segments = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
 class ResourceReference(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -33,7 +34,7 @@ class ResourceReference(ZscalerObject):
             self.external_id = None
             self.extensions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"id": self.id, "name": self.name, "externalId": self.external_id, "extensions": self.extensions}
         parent_req_format.update(current_obj_format)
@@ -45,7 +46,7 @@ class Extensions(ZscalerObject):
     A generic class to wrap dynamic extension data.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         # Simply store the dictionary as is
         if config and isinstance(config, dict):
@@ -53,7 +54,7 @@ class Extensions(ZscalerObject):
         else:
             self.data = {}
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the extension data as a dictionary.
         """
@@ -72,7 +73,7 @@ class CommonBlocks(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonBlocks model based on API response.
 
@@ -92,7 +93,7 @@ class CommonBlocks(ZscalerObject):
             self.external_id = None
             self.extensions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -113,7 +114,7 @@ class CommonIDName(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDName model based on API response.
 
@@ -129,7 +130,7 @@ class CommonIDName(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -148,7 +149,7 @@ class CommonIDNameTag(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDNameTag model based on API response.
 
@@ -165,7 +166,7 @@ class CommonIDNameTag(ZscalerObject):
             self.name = None
             self.is_name_l10n_tag = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

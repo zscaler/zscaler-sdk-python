@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
@@ -24,7 +25,7 @@ class DLPICAPServer(ZscalerObject):
     A class representing DLP ICAP Server objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -37,7 +38,7 @@ class DLPICAPServer(ZscalerObject):
             self.url = None
             self.status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -57,7 +58,7 @@ class DLPIDMProfile(ZscalerObject):
     A class representing DLP IDM Profile objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.profile_id = config["profileId"] if "profileId" in config else None
@@ -100,7 +101,7 @@ class DLPIDMProfile(ZscalerObject):
             self.last_modified_time = None
             self.modified_by = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -131,7 +132,7 @@ class DLPEDMSchema(ZscalerObject):
     A class representing DLP EDM Schema objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.schema_id = config["schemaId"] if "schemaId" in config else None
@@ -171,7 +172,7 @@ class DLPEDMSchema(ZscalerObject):
             self.token_list = []
             self.schedule_present = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

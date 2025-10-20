@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 
 class PrivateCloudGroup(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PrivateCloudGroup model based on API response.
 
@@ -82,7 +83,7 @@ class PrivateCloudGroup(ZscalerObject):
             self.zscaler_managed = None
             self.site = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -119,7 +120,7 @@ class PrivateCloudGroupSite(ZscalerObject):
     A class for PrivateCloudGroupSite objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PrivateCloudGroupSite model based on API response.
 
@@ -176,7 +177,7 @@ class PrivateCloudGroupSite(ZscalerObject):
             self.zscaler_managed = None
             self.private_broker_group_ids = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -206,7 +207,7 @@ class PrivateBrokerGroupID(ZscalerObject):
     A class for PrivateBrokerGroupID objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PrivateBrokerGroupID model based on API response.
 
@@ -227,7 +228,7 @@ class PrivateBrokerGroupID(ZscalerObject):
             self.name = None
             self.enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

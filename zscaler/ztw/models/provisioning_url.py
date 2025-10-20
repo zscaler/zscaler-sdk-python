@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import location_templates as location_templates
@@ -26,7 +27,7 @@ class ProvisioningURL(ZscalerObject):
     A class for ProvisioningURL objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ProvisioningURL model based on API response.
 
@@ -89,7 +90,7 @@ class ProvisioningURL(ZscalerObject):
             self.last_mod_uid = None
             self.last_mod_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -115,7 +116,7 @@ class ProvURLData(ZscalerObject):
     A class for ProvURLData objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ProvURLData model based on API response.
 
@@ -201,7 +202,7 @@ class ProvURLData(ZscalerObject):
             self.hypervisors = None
             self.location = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -36,7 +37,7 @@ class CloudApplicationControl(ZscalerObject):
     A class representing a Cloud Application Control Policy object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -171,7 +172,7 @@ class CloudApplicationControl(ZscalerObject):
             self.cloud_app_risk_profile = None
             self.cbi_profile = {}
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -225,7 +226,7 @@ class CloudApplicationControl(ZscalerObject):
 
 # USED IN /webApplicationRules/{rule_type}/availableActions
 class Application(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         self.val = config["val"] if "val" in config else None
         self.web_application_class = config["webApplicationClass"] if "webApplicationClass" in config else None
@@ -238,7 +239,7 @@ class Application(ZscalerObject):
         self.under_migration = config["underMigration"] if "underMigration" in config else False
         self.app_cat_modified = config["appCatModified"] if "appCatModified" in config else False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         return {
             "val": self.val,
             "webApplicationClass": self.web_application_class,
@@ -254,11 +255,11 @@ class Application(ZscalerObject):
 
 
 class CloudAppInstance(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         self.id = config["id"] if "id" in config else None
         self.name = config["name"] if "name" in config else None
         self.type = config["type"] if "type" in config else None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         return {"id": self.id, "name": self.name, "type": self.type}

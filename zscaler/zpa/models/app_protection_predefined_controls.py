@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_protection_predefined_controls as app_protection_predefined_controls
@@ -25,7 +26,7 @@ class PredefinedInspectionControlResource(ZscalerObject):
     A class for PredefinedInspectionControlResource objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PredefinedInspectionControlResource model based on API response.
 
@@ -87,7 +88,7 @@ class PredefinedInspectionControlResource(ZscalerObject):
         else:
             raise TypeError(f"Invalid index type: {type(index)}")
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -106,7 +107,7 @@ class PredefinedInspectionControls(ZscalerObject):
     A class for PredefinedInspectionControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PredefinedInspectionControls model based on API response.
 
@@ -189,7 +190,7 @@ class PredefinedInspectionControls(ZscalerObject):
             self.severity = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

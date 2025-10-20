@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common
@@ -24,7 +25,7 @@ class CloudApplicationInstances(ZscalerObject):
     A class for CloudApplicationInstances objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CloudApplicationInstances model based on API response.
 
@@ -63,7 +64,7 @@ class CloudApplicationInstances(ZscalerObject):
             self.modified_at = None
             self.instance_identifiers = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -85,7 +86,7 @@ class InstanceIdentifiers(ZscalerObject):
     A class for InstanceIdentifiers objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the InstanceIdentifiers model based on API response.
 
@@ -122,7 +123,7 @@ class InstanceIdentifiers(ZscalerObject):
             self.modified_at = None
             self.modified_by = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

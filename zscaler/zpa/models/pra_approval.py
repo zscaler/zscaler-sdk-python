@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import application_segment as application_segment
@@ -24,7 +25,7 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
     A class representing the Privileged Remote Access Approval.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -61,7 +62,7 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
             self.applications = []
             self.working_hours = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 
@@ -87,7 +88,7 @@ class WorkingHours(ZscalerObject):
     A class for WorkingHours objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WorkingHours model based on API response.
 
@@ -117,7 +118,7 @@ class WorkingHours(ZscalerObject):
             self.time_zone = None
             self.days = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

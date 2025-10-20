@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class CloudConnectorGroup(ZscalerObject):
     A class representing a Cloud Connector Group object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.creation_time = config["creationTime"] if config and "creationTime" in config else None
@@ -43,7 +44,7 @@ class CloudConnectorGroup(ZscalerObject):
             self.zia_cloud = None
             self.zia_org_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the Cloud Connector Group data into a dictionary suitable for API requests.
         """

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class AdminUser(ZscalerObject):
     A class for Adminuser objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminUser model based on API response.
 
@@ -50,7 +51,7 @@ class AdminUser(ZscalerObject):
             self.service_type = None
             self.user_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -74,7 +75,7 @@ class AdminUserSyncInfo(ZscalerObject):
     A class for AdminUserSyncInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminUserSyncInfo model based on API response.
 
@@ -122,7 +123,7 @@ class AdminUserSyncInfo(ZscalerObject):
             self.zia_start_sync_time = None
             self.zpa_start_sync_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

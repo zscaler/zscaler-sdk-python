@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import server_group as server_group
@@ -25,7 +26,7 @@ class ApplicationSegments(ZscalerObject):
     A class representing the Application Segment.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -192,7 +193,7 @@ class ApplicationSegments(ZscalerObject):
             self.application_group = None
             self.zpn_er_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the Application Segment data into a dictionary suitable for API requests.
         """
@@ -245,7 +246,7 @@ class ApplicationSegments(ZscalerObject):
 
 
 class CommonAppsDto(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.deleted_ba_apps = ZscalerCollection.form_list(
@@ -266,7 +267,7 @@ class CommonAppsDto(ZscalerObject):
             self.deleted_inspect_apps = []
             self.deleted_pra_apps = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the AppConfig data into a dictionary suitable for API requests.
         """
@@ -286,7 +287,7 @@ class AppsConfig(ZscalerObject):
     A class for Appsconfig objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Appsconfig model based on API response.
 
@@ -378,7 +379,7 @@ class AppsConfig(ZscalerObject):
             self.protocols = ZscalerCollection.form_list([], str)
             self.trust_untrusted_cert = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -416,7 +417,7 @@ class AppsConfig(ZscalerObject):
 
 
 class InspectionApps(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -451,7 +452,7 @@ class InspectionApps(ZscalerObject):
             self.microtenant_name = None
             self.microtenant_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the AppConfig data into a dictionary suitable for API requests.
         """
@@ -476,7 +477,7 @@ class InspectionApps(ZscalerObject):
 
 
 class PRAApps(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -511,7 +512,7 @@ class PRAApps(ZscalerObject):
             self.microtenant_name = None
             self.microtenant_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the AppConfig data into a dictionary suitable for API requests.
         """
@@ -541,7 +542,7 @@ class SharedMicrotenantDetails(ZscalerObject):
     A class for SharedMicrotenantDetails objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SharedMicrotenantDetails model based on API response.
 
@@ -575,7 +576,7 @@ class SharedMicrotenantDetails(ZscalerObject):
             self.shared_from_microtenant = None
             self.shared_to_microtenant = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -593,7 +594,7 @@ class SharedFromMicrotenant(ZscalerObject):
     A class for SharedFromMicrotenant objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SharedFromMicrotenant model based on API response.
 
@@ -610,7 +611,7 @@ class SharedFromMicrotenant(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -628,7 +629,7 @@ class SharedToMicrotenants(ZscalerObject):
     A class for SharedToMicrotenants objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SharedToMicrotenants model based on API response.
 
@@ -645,7 +646,7 @@ class SharedToMicrotenants(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -664,7 +665,7 @@ class ZPNExtranetResource(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ZPNExtranetResource model based on API response.
 
@@ -694,7 +695,7 @@ class ZPNExtranetResource(ZscalerObject):
             self.zia_modified_time = None
             self.zia_org_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -719,7 +720,7 @@ class BAAppDto(ZscalerObject):
     A class for Clientless Application Segment Entity objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -777,7 +778,7 @@ class BAAppDto(ZscalerObject):
             self.ext_domain_name = None
             self.ext_label = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return a dictionary representing this object for API requests.
         """
@@ -815,7 +816,7 @@ class AppResource(ZscalerObject):
     A class for AppResource objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppResource model based on API response.
 
@@ -951,7 +952,7 @@ class AppResource(ZscalerObject):
             self.udp_port_range = []
             self.zscaler_managed = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -1000,7 +1001,7 @@ class AppSegmentByType(ZscalerObject):
     A class for AppSegmentByType objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppSegmentByType model based on API response.
 
@@ -1042,7 +1043,7 @@ class AppSegmentByType(ZscalerObject):
             self.microtenant_name = None
             self.app_resource = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -1068,7 +1069,7 @@ class MultiMatchUnsupportedReferences(ZscalerObject):
     A class for MultiMatchUnsupportedReferences objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the MultiMatchUnsupportedReferences model based on API response.
 
@@ -1107,7 +1108,7 @@ class MultiMatchUnsupportedReferences(ZscalerObject):
             self.tcp_ports = []
             self.unsupported_features = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

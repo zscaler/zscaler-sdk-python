@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, Any
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.activate import ActivationAPI
 from zscaler.zia.advanced_settings import AdvancedSettingsAPI
@@ -93,12 +94,12 @@ from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
 class ZIAService:
     """ZIA Service client, exposing various ZIA APIs."""
 
-    def __init__(self, request_executor: RequestExecutor):
+    def __init__(self, request_executor: RequestExecutor) -> None:
         # Ensure the service gets the request executor from the Client object
         self._request_executor = request_executor
 
     @property
-    def activate(self):
+    def activate(self) -> ActivationAPI:
         """
         The interface object for the :ref:`ZIA Activation interface <zia-activate>`.
 
@@ -106,7 +107,7 @@ class ZIAService:
         return ActivationAPI(self._request_executor)
 
     @property
-    def admin_roles(self):
+    def admin_roles(self) -> AdminRolesAPI:
         """
         The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_roles>`.
 
@@ -114,7 +115,7 @@ class ZIAService:
         return AdminRolesAPI(self._request_executor)
 
     @property
-    def admin_users(self):
+    def admin_users(self) -> AdminUsersAPI:
         """
         The interface object for the :ref:`ZIA Admin Users interface <zia-admin_users>`.
 
@@ -122,7 +123,7 @@ class ZIAService:
         return AdminUsersAPI(self._request_executor)
 
     @property
-    def audit_logs(self):
+    def audit_logs(self) -> AuditLogsAPI:
         """
         The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
 
@@ -130,7 +131,7 @@ class ZIAService:
         return AuditLogsAPI(self._request_executor)
 
     @property
-    def apptotal(self):
+    def apptotal(self) -> AppTotalAPI:
         """
         The interface object for the :ref:`ZIA AppTotal interface <zia-apptotal>`.
 
@@ -138,7 +139,7 @@ class ZIAService:
         return AppTotalAPI(self._request_executor)
 
     @property
-    def advanced_settings(self):
+    def advanced_settings(self) -> AdvancedSettingsAPI:
         """
         The interface object for the :ref:`ZIA Advanced Settings interface <zia-advanced_settings>`.
 
@@ -146,7 +147,7 @@ class ZIAService:
         return AdvancedSettingsAPI(self._request_executor)
 
     @property
-    def atp_policy(self):
+    def atp_policy(self) -> ATPPolicyAPI:
         """
         The interface object for the :ref:`ZIA Advanced Threat Protection Policy interface <zia-atp_policy>`.
 
@@ -154,7 +155,7 @@ class ZIAService:
         return ATPPolicyAPI(self._request_executor)
 
     @property
-    def authentication_settings(self):
+    def authentication_settings(self) -> AuthenticationSettingsAPI:
         """
         The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-authentication_settings>`.
 
@@ -162,7 +163,7 @@ class ZIAService:
         return AuthenticationSettingsAPI(self._request_executor)
 
     @property
-    def cloudappcontrol(self):
+    def cloudappcontrol(self) -> CloudAppControlAPI:
         """
         The interface object for the :ref:`ZIA Cloud App Control <zia-cloudappcontrol>`.
 
@@ -170,7 +171,7 @@ class ZIAService:
         return CloudAppControlAPI(self._request_executor)
 
     @property
-    def casb_dlp_rules(self):
+    def casb_dlp_rules(self) -> CasbdDlpRulesAPI:
         """
         The interface object for the :ref:`ZIA Casb DLP Rules interface <zia-casb_dlp_rules>`.
 
@@ -179,7 +180,7 @@ class ZIAService:
         return CasbdDlpRulesAPI(self._request_executor)
 
     @property
-    def casb_malware_rules(self):
+    def casb_malware_rules(self) -> CasbMalwareRulesAPI:
         """
         The interface object for the :ref:`ZIA Casb Malware Rules interface <zia-casb_malware_rules>`.
 
@@ -188,7 +189,7 @@ class ZIAService:
         return CasbMalwareRulesAPI(self._request_executor)
 
     @property
-    def cloud_applications(self):
+    def cloud_applications(self) -> CloudApplicationsAPI:
         """
         The interface object for the :ref:`ZIA Cloud App Control <zia-cloud_applications>`.
 
@@ -196,7 +197,7 @@ class ZIAService:
         return CloudApplicationsAPI(self._request_executor)
 
     @property
-    def shadow_it_report(self):
+    def shadow_it_report(self) -> ShadowITAPI:
         """
         The interface object for the :ref:`ZIA Shadow IT Report <zia-shadow_it_report>`.
 
@@ -204,7 +205,7 @@ class ZIAService:
         return ShadowITAPI(self._request_executor)
 
     @property
-    def cloud_nss(self):
+    def cloud_nss(self) -> CloudNSSAPI:
         """
         The interface object for the :ref:`ZIA Cloud NSS interface <zia-cloud_nss>`.
 
@@ -212,7 +213,7 @@ class ZIAService:
         return CloudNSSAPI(self._request_executor)
 
     @property
-    def cloud_firewall_dns(self):
+    def cloud_firewall_dns(self) -> FirewallDNSRulesAPI:
         """
         The interface object for the :ref:`ZIA Firewall DNS Policies interface <zia-cloud_firewall_dns>`.
 
@@ -220,7 +221,7 @@ class ZIAService:
         return FirewallDNSRulesAPI(self._request_executor)
 
     @property
-    def cloud_firewall_ips(self):
+    def cloud_firewall_ips(self) -> FirewallIPSRulesAPI:
         """
         The interface object for the :ref:`ZIA Firewall IPS Policies interface <zia-cloud_firewall_ips>`.
 
@@ -228,7 +229,7 @@ class ZIAService:
         return FirewallIPSRulesAPI(self._request_executor)
 
     @property
-    def cloud_firewall_rules(self):
+    def cloud_firewall_rules(self) -> FirewallPolicyAPI:
         """
         The interface object for the :ref:`ZIA Firewall Policies interface <zia-cloud_firewall_rules>`.
 
@@ -236,7 +237,7 @@ class ZIAService:
         return FirewallPolicyAPI(self._request_executor)
 
     @property
-    def cloud_firewall(self):
+    def cloud_firewall(self) -> FirewallResourcesAPI:
         """
         The interface object for the :ref:`ZIA Cloud Firewall resources interface <zia-cloud_firewall>`.
 
@@ -245,7 +246,7 @@ class ZIAService:
         return FirewallResourcesAPI(self._request_executor)
 
     @property
-    def dlp_dictionary(self):
+    def dlp_dictionary(self) -> DLPDictionaryAPI:
         """
         The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp_dictionary>`.
 
@@ -253,7 +254,7 @@ class ZIAService:
         return DLPDictionaryAPI(self._request_executor)
 
     @property
-    def dlp_engine(self):
+    def dlp_engine(self) -> DLPEngineAPI:
         """
         The interface object for the :ref:`ZIA DLP Engine interface <zia-dlp_engine>`.
 
@@ -261,7 +262,7 @@ class ZIAService:
         return DLPEngineAPI(self._request_executor)
 
     @property
-    def dlp_web_rules(self):
+    def dlp_web_rules(self) -> DLPWebRuleAPI:
         """
         The interface object for the :ref:`ZIA DLP Web Rules interface <zia-dlp_web_rules>`.
 
@@ -269,7 +270,7 @@ class ZIAService:
         return DLPWebRuleAPI(self._request_executor)
 
     @property
-    def dlp_templates(self):
+    def dlp_templates(self) -> DLPTemplatesAPI:
         """
         The interface object for the :ref:`ZIA DLP Templates interface <zia-dlp_templates>`.
 
@@ -277,7 +278,7 @@ class ZIAService:
         return DLPTemplatesAPI(self._request_executor)
 
     @property
-    def dlp_resources(self):
+    def dlp_resources(self) -> DLPResourcesAPI:
         """
         The interface object for the :ref:`ZIA DLP Resources interface <zia-dlp_resources>`.
 
@@ -285,7 +286,7 @@ class ZIAService:
         return DLPResourcesAPI(self._request_executor)
 
     @property
-    def device_management(self):
+    def device_management(self) -> DeviceManagementAPI:
         """
         The interface object for the :ref:`ZIA Device Management interface <zia-device_management>`.
 
@@ -293,7 +294,7 @@ class ZIAService:
         return DeviceManagementAPI(self._request_executor)
 
     @property
-    def end_user_notification(self):
+    def end_user_notification(self) -> EndUserNotificationAPI:
         """
         The interface object for the :ref:`ZIA End user Notification interface <zia-end_user_notification>`.
 
@@ -301,7 +302,7 @@ class ZIAService:
         return EndUserNotificationAPI(self._request_executor)
 
     @property
-    def file_type_control_rule(self):
+    def file_type_control_rule(self) -> FileTypeControlRuleAPI:
         """
         The interface object for the :ref:`ZIA File Type Control Rule interface <zia-file_type_control_rule>`.
 
@@ -309,7 +310,7 @@ class ZIAService:
         return FileTypeControlRuleAPI(self._request_executor)
 
     @property
-    def ipv6_config(self):
+    def ipv6_config(self) -> TrafficIPV6ConfigAPI:
         """
         The interface object for the :ref:`ZIA Traffic IPV6 Configuration <zia-ipv6_config>`.
 
@@ -317,7 +318,7 @@ class ZIAService:
         return TrafficIPV6ConfigAPI(self._request_executor)
 
     @property
-    def cloud_browser_isolation(self):
+    def cloud_browser_isolation(self) -> CBIProfileAPI:
         """
         The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-cloud_browser_isolation>`.
 
@@ -325,7 +326,7 @@ class ZIAService:
         return CBIProfileAPI(self._request_executor)
 
     @property
-    def intermediate_certificates(self):
+    def intermediate_certificates(self) -> IntermediateCertsAPI:
         """
         The interface object for the :ref:`ZIA Intermediate Certificate interface <zia-intermediate_certificates>`.
 
@@ -333,7 +334,7 @@ class ZIAService:
         return IntermediateCertsAPI(self._request_executor)
 
     @property
-    def forwarding_control(self):
+    def forwarding_control(self) -> ForwardingControlAPI:
         """
         The interface object for the :ref:`ZIA Forwarding Control Policies interface <zia-forwarding_control>`.
 
@@ -341,7 +342,7 @@ class ZIAService:
         return ForwardingControlAPI(self._request_executor)
 
     @property
-    def locations(self):
+    def locations(self) -> LocationsAPI:
         """
         The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
 
@@ -349,7 +350,7 @@ class ZIAService:
         return LocationsAPI(self._request_executor)
 
     @property
-    def malware_protection_policy(self):
+    def malware_protection_policy(self) -> MalwareProtectionPolicyAPI:
         """
         The interface object for the :ref:`ZIA Malware Protection Policy interface <zia-malware_protection_policy>`.
 
@@ -357,7 +358,7 @@ class ZIAService:
         return MalwareProtectionPolicyAPI(self._request_executor)
 
     @property
-    def organization_information(self):
+    def organization_information(self) -> OrganizationInformationAPI:
         """
         The interface object for the :ref:`ZIA Organization Information interface <zia-organization_information>`.
 
@@ -365,7 +366,7 @@ class ZIAService:
         return OrganizationInformationAPI(self._request_executor)
 
     @property
-    def pac_files(self):
+    def pac_files(self) -> PacFilesAPI:
         """
         The interface object for the :ref:`ZIA Pac Files interface <zia-pac_files>`.
 
@@ -373,7 +374,7 @@ class ZIAService:
         return PacFilesAPI(self._request_executor)
 
     @property
-    def policy_export(self):
+    def policy_export(self) -> PolicyExportAPI:
         """
         The interface object for the :ref:`ZIA Policy Export interface <zia-policy_export>`.
 
@@ -381,7 +382,7 @@ class ZIAService:
         return PolicyExportAPI(self._request_executor)
 
     @property
-    def remote_assistance(self):
+    def remote_assistance(self) -> RemoteAssistanceAPI:
         """
         The interface object for the :ref:`ZIA Remote Assistance interface <zia-remote_assistance>`.
 
@@ -389,7 +390,7 @@ class ZIAService:
         return RemoteAssistanceAPI(self._request_executor)
 
     @property
-    def rule_labels(self):
+    def rule_labels(self) -> RuleLabelsAPI:
         """
         The interface object for the :ref:`ZIA Rule Labels interface <zia-rule_labels>`.
 
@@ -397,7 +398,7 @@ class ZIAService:
         return RuleLabelsAPI(self._request_executor)
 
     @property
-    def sandbox(self):
+    def sandbox(self) -> CloudSandboxAPI:
         """
         The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
 
@@ -405,7 +406,7 @@ class ZIAService:
         return CloudSandboxAPI(self._request_executor)
 
     @property
-    def sandbox_rules(self):
+    def sandbox_rules(self) -> SandboxRulesAPI:
         """
         The interface object for the :ref:`ZIA Sandbox Rules interface <zia-sandbox_rules>`.
 
@@ -413,7 +414,7 @@ class ZIAService:
         return SandboxRulesAPI(self._request_executor)
 
     @property
-    def security_policy_settings(self):
+    def security_policy_settings(self) -> SecurityPolicyAPI:
         """
         The interface object for the :ref:`ZIA Security Policy Settings interface <zia-security_policy_settings>`.
 
@@ -421,7 +422,7 @@ class ZIAService:
         return SecurityPolicyAPI(self._request_executor)
 
     @property
-    def ssl_inspection_rules(self):
+    def ssl_inspection_rules(self) -> SSLInspectionAPI:
         """
         The interface object for the :ref:`ZIA SSL Inspection Rules interface <zia-ssl_inspection_rules>`.
 
@@ -429,7 +430,7 @@ class ZIAService:
         return SSLInspectionAPI(self._request_executor)
 
     @property
-    def traffic_extranet(self):
+    def traffic_extranet(self) -> TrafficExtranetAPI:
         """
         The interface object for the :ref:`ZIA Extranet interface <zia-traffic_extranet>`.
 
@@ -437,7 +438,7 @@ class ZIAService:
         return TrafficExtranetAPI(self._request_executor)
 
     @property
-    def gre_tunnel(self):
+    def gre_tunnel(self) -> TrafficForwardingGRETunnelAPI:
         """
         The interface object for the :ref:`ZIA Traffic GRE Tunnel interface <zia-gre_tunnel>`.
 
@@ -445,7 +446,7 @@ class ZIAService:
         return TrafficForwardingGRETunnelAPI(self._request_executor)
 
     @property
-    def traffic_vpn_credentials(self):
+    def traffic_vpn_credentials(self) -> TrafficVPNCredentialAPI:
         """
         The interface object for the :ref:`ZIA Traffic VPN Credential interface <zia-traffic_vpn_credentials>`.
 
@@ -453,7 +454,7 @@ class ZIAService:
         return TrafficVPNCredentialAPI(self._request_executor)
 
     @property
-    def traffic_static_ip(self):
+    def traffic_static_ip(self) -> TrafficStaticIPAPI:
         """
         The interface object for the :ref:`ZIA Traffic Static IP interface <zia-traffic_static_ip>`.
 
@@ -461,7 +462,7 @@ class ZIAService:
         return TrafficStaticIPAPI(self._request_executor)
 
     @property
-    def url_categories(self):
+    def url_categories(self) -> URLCategoriesAPI:
         """
         The interface object for the :ref:`ZIA URL Categories interface <zia-url_categories>`.
 
@@ -469,7 +470,7 @@ class ZIAService:
         return URLCategoriesAPI(self._request_executor)
 
     @property
-    def url_filtering(self):
+    def url_filtering(self) -> URLFilteringAPI:
         """
         The interface object for the :ref:`ZIA URL Filtering interface <zia-url_filtering>`.
 
@@ -477,7 +478,7 @@ class ZIAService:
         return URLFilteringAPI(self._request_executor)
 
     @property
-    def user_management(self):
+    def user_management(self) -> UserManagementAPI:
         """
         The interface object for the :ref:`ZIA User Management interface <zia-user_management>`.
 
@@ -485,7 +486,7 @@ class ZIAService:
         return UserManagementAPI(self._request_executor)
 
     @property
-    def zpa_gateway(self):
+    def zpa_gateway(self) -> ZPAGatewayAPI:
         """
         The interface object for the :ref:`ZPA Gateway <zia-zpa_gateway>`.
 
@@ -493,7 +494,7 @@ class ZIAService:
         return ZPAGatewayAPI(self._request_executor)
 
     @property
-    def workload_groups(self):
+    def workload_groups(self) -> WorkloadGroupsAPI:
         """
         The interface object for the :ref:`ZIA Workload Groups <zia-workload_groups>`.
 
@@ -501,7 +502,7 @@ class ZIAService:
         return WorkloadGroupsAPI(self._request_executor)
 
     @property
-    def sub_clouds(self):
+    def sub_clouds(self) -> SubCloudsAPI:
         """
         The interface object for the :ref:`ZIA Workload Groups <zia-sub_clouds>`.
 
@@ -510,7 +511,7 @@ class ZIAService:
         return SubCloudsAPI(self._request_executor)
 
     @property
-    def system_audit(self):
+    def system_audit(self) -> SystemAuditReportAPI:
         """
         The interface object for the :ref:`ZIA System Audit Report <zia-system_audit>`.
 
@@ -519,7 +520,7 @@ class ZIAService:
         return SystemAuditReportAPI(self._request_executor)
 
     @property
-    def iot_report(self):
+    def iot_report(self) -> IOTReportAPI:
         """
         The interface object for the :ref:`ZIA IOT Report interface <zia-iot_report>`.
 
@@ -528,7 +529,7 @@ class ZIAService:
         return IOTReportAPI(self._request_executor)
 
     @property
-    def mobile_threat_settings(self):
+    def mobile_threat_settings(self) -> MobileAdvancedSettingsAPI:
         """
         The interface object for the :ref:`ZIA Mobile Threat Settings interface <zia-mobile_threat_settings>`.
 
@@ -537,7 +538,7 @@ class ZIAService:
         return MobileAdvancedSettingsAPI(self._request_executor)
 
     @property
-    def dns_gatways(self):
+    def dns_gatways(self) -> DNSGatewayAPI:
         """
         The interface object for the :ref:`ZIA DNS Gateway interface <zia-dns_gatways>`.
 
@@ -546,7 +547,7 @@ class ZIAService:
         return DNSGatewayAPI(self._request_executor)
 
     @property
-    def alert_subscriptions(self):
+    def alert_subscriptions(self) -> AlertSubscriptionsAPI:
         """
         The interface object for the :ref:`ZIA Alert Subscriptions interface <zia-alert_subscriptions>`.
 
@@ -555,7 +556,7 @@ class ZIAService:
         return AlertSubscriptionsAPI(self._request_executor)
 
     @property
-    def bandwidth_classes(self):
+    def bandwidth_classes(self) -> BandwidthClassesAPI:
         """
         The interface object for the :ref:`ZIA Bandwidth Classes interface <zia-bandwidth_classes>`.
 
@@ -564,7 +565,7 @@ class ZIAService:
         return BandwidthClassesAPI(self._request_executor)
 
     @property
-    def bandwidth_control_rules(self):
+    def bandwidth_control_rules(self) -> BandwidthControlRulesAPI:
         """
         The interface object for the :ref:`ZIA Bandwidth Control Rule interface <zia-bandwidth_control_rules>`.
 
@@ -573,7 +574,7 @@ class ZIAService:
         return BandwidthControlRulesAPI(self._request_executor)
 
     @property
-    def risk_profiles(self):
+    def risk_profiles(self) -> RiskProfilesAPI:
         """
         The interface object for the :ref:`ZIA Risk Profiles interface <zia-risk_profiles>`.
 
@@ -582,7 +583,7 @@ class ZIAService:
         return RiskProfilesAPI(self._request_executor)
 
     @property
-    def cloud_app_instances(self):
+    def cloud_app_instances(self) -> CloudApplicationInstancesAPI:
         """
         The interface object for the :ref:`ZIA Cloud Application Instances interface <zia-cloud_app_instances>`.
 
@@ -591,7 +592,7 @@ class ZIAService:
         return CloudApplicationInstancesAPI(self._request_executor)
 
     @property
-    def tenancy_restriction_profile(self):
+    def tenancy_restriction_profile(self) -> TenancyRestrictionProfileAPI:
         """
         The interface object for the :ref:`ZIA Tenant Restriction Profile interface <zia-tenancy_restriction_profile>`.
 
@@ -600,7 +601,7 @@ class ZIAService:
         return TenancyRestrictionProfileAPI(self._request_executor)
 
     @property
-    def time_intervals(self):
+    def time_intervals(self) -> TimeIntervalsAPI:
         """
         The interface object for the :ref:`ZIA Time Intervals interface <zia-time_intervals>`.
 
@@ -609,7 +610,7 @@ class ZIAService:
         return TimeIntervalsAPI(self._request_executor)
 
     @property
-    def ftp_control_policy(self):
+    def ftp_control_policy(self) -> FTPControlPolicyAPI:
         """
         The interface object for the :ref:`ZIA FTP Control Policy interface <zia-ftp_control_policy>`.
 
@@ -618,7 +619,7 @@ class ZIAService:
         return FTPControlPolicyAPI(self._request_executor)
 
     @property
-    def proxies(self):
+    def proxies(self) -> ProxiesAPI:
         """
         The interface object for the :ref:`ZIA Proxies interface <zia-proxies>`.
 
@@ -627,7 +628,7 @@ class ZIAService:
         return ProxiesAPI(self._request_executor)
 
     @property
-    def dedicated_ip_gateways(self):
+    def dedicated_ip_gateways(self) -> DedicatedIPGatewaysAPI:
         """
         The interface object for the :ref:`ZIA Dedicated IP Gateways interface <zia-dedicated_ip_gateways>`.
 
@@ -636,7 +637,7 @@ class ZIAService:
         return DedicatedIPGatewaysAPI(self._request_executor)
 
     @property
-    def traffic_datacenters(self):
+    def traffic_datacenters(self) -> TrafficDatacentersAPI:
         """
         The interface object for the :ref:`ZIA Traffic Datacenters interface <zia-traffic_datacenters>`.
 
@@ -645,7 +646,7 @@ class ZIAService:
         return TrafficDatacentersAPI(self._request_executor)
 
     @property
-    def nss_servers(self):
+    def nss_servers(self) -> NssServersAPI:
         """
         The interface object for the :ref:`ZIA NSS Servers interface <zia-nss_servers>`.
 
@@ -654,7 +655,7 @@ class ZIAService:
         return NssServersAPI(self._request_executor)
 
     @property
-    def nat_control_policy(self):
+    def nat_control_policy(self) -> NatControlPolicyAPI:
         """
         The interface object for the :ref:`ZIA NAT Control Policy interface <zia-nat_control_policy>`.
 
@@ -663,7 +664,7 @@ class ZIAService:
         return NatControlPolicyAPI(self._request_executor)
 
     @property
-    def vzen_clusters(self):
+    def vzen_clusters(self) -> VZENClustersAPI:
         """
         The interface object for the :ref:`Virtual ZEN Clusters interface <zia-vzen_clusters>`.
 
@@ -672,7 +673,7 @@ class ZIAService:
         return VZENClustersAPI(self._request_executor)
 
     @property
-    def vzen_nodes(self):
+    def vzen_nodes(self) -> VZENNodesAPI:
         """
         The interface object for the :ref:`Virtual ZEN Nodes interface <zia-vzen_nodes>`.
 
@@ -681,7 +682,7 @@ class ZIAService:
         return VZENNodesAPI(self._request_executor)
 
     @property
-    def browser_control_settings(self):
+    def browser_control_settings(self) -> BrowserControlSettingsPI:
         """
         The interface object for the :ref:`Browser Control Settings interface <zia-browser_control_settings>`.
 
@@ -690,7 +691,7 @@ class ZIAService:
         return BrowserControlSettingsPI(self._request_executor)
 
     @property
-    def saas_security_api(self):
+    def saas_security_api(self) -> SaaSSecurityAPI:
         """
         The interface object for the :ref:`ZIA SaaS Security API interface <zia-saas_security_api>`.
 
@@ -699,7 +700,7 @@ class ZIAService:
         return SaaSSecurityAPI(self._request_executor)
 
     @property
-    def cloud_to_cloud_ir(self):
+    def cloud_to_cloud_ir(self) -> CloudToCloudIRAPI:
         """
         The interface object for the :ref:`ZIA Cloud-to-Cloud DLP Incident Receiver API interface <zia-cloud_to_cloud_ir>`.
 

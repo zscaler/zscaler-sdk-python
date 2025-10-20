@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
@@ -27,7 +28,7 @@ class PolicySetControllerV2(ZscalerObject):
     A class representing a Policy Set Controller V2.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -181,7 +182,7 @@ class PolicySetControllerV2(ZscalerObject):
             self.device_posture_failure_notification_enabled = None
             self.desktop_policy_mappings = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -230,7 +231,7 @@ class PolicySetControllerV2(ZscalerObject):
 
 
 class Condition(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -247,7 +248,7 @@ class Condition(ZscalerObject):
             self.operator = None
             self.operands = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"operator": self.operator, "operands": [operand.request_format() for operand in self.operands]}
         parent_req_format.update(current_obj_format)
@@ -255,7 +256,7 @@ class Condition(ZscalerObject):
 
 
 class Operand(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -272,7 +273,7 @@ class Operand(ZscalerObject):
             self.values = []
             self.entry_values = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"objectType": self.object_type, "values": self.values, "entryValues": self.entry_values}
         parent_req_format.update(current_obj_format)
@@ -280,7 +281,7 @@ class Operand(ZscalerObject):
 
 
 class Credential(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -292,7 +293,7 @@ class Credential(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"id": self.id, "name": self.name}
         parent_req_format.update(current_obj_format)

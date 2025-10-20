@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
 class ManagePass(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ManagePass model based on API response.
 
@@ -53,7 +54,7 @@ class ManagePass(ZscalerObject):
             self.zia_disable_pass = None
             self.zpa_disable_pass = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "companyId": self.company_id,
@@ -73,7 +74,7 @@ class ManagePass(ZscalerObject):
 
 
 class ManagePassResponseContract(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ManagePassResponseContract model based on API response.
 
@@ -87,7 +88,7 @@ class ManagePassResponseContract(ZscalerObject):
         else:
             self.error_message = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "errorMessage": self.error_message,
