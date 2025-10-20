@@ -1,6 +1,7 @@
 import logging
 import json
 import requests
+import os
 from jose import jwt
 import time
 from cryptography.hazmat.backends import default_backend
@@ -46,6 +47,33 @@ def validate_rsa_key_strength(private_key_obj):
     else:
         logger.warning(f"Key validation skipped: Unsupported key type {type(private_key_obj)}")
         return None
+
+
+def _setup_proxy(proxy):
+    """Sets up the proxy string from the configuration or environment variables."""
+    proxy_string = ""
+
+    if proxy is None:
+        if "HTTP_PROXY" in os.environ:
+            proxy_string = os.environ["HTTP_PROXY"]
+        if "HTTPS_PROXY" in os.environ:
+            proxy_string = os.environ["HTTPS_PROXY"]
+        return proxy_string if proxy_string != "" else None
+
+    host = proxy["host"]
+    port = int(proxy["port"]) if "port" in proxy else ""
+
+    if "username" in proxy and "password" in proxy:
+        username = proxy["username"]
+        password = proxy["password"]
+        proxy_string = f"http://{username}:{password}@{host}"
+    else:
+        proxy_string = f"http://{host}"
+
+    if port:
+        proxy_string += f":{port}/"
+
+    return proxy_string if proxy_string != "" else None
 
 
 class OAuth:
@@ -269,9 +297,14 @@ class OAuth:
             "User-Agent": user_agent,
         }
 
+        # Get proxy configuration from config
+        proxy_config = self._config["client"].get("proxy")
+        proxy_string = _setup_proxy(proxy_config)
+        proxies = {"http": proxy_string, "https": proxy_string} if proxy_string else None
+
         # logging.debug(f"Sending authentication request to {auth_url}.")
         # Synchronous HTTP request (with form data in the body)
-        response = requests.post(auth_url, data=form_data, headers=headers)
+        response = requests.post(auth_url, data=form_data, headers=headers, proxies=proxies)
 
         if response.status_code >= 300:
             logging.error(f"Error authenticating: {response.status_code}, {response.text}")
@@ -346,8 +379,13 @@ class OAuth:
             "User-Agent": "Zscaler-SDK",
         }
 
+        # Get proxy configuration from config
+        proxy_config = self._config["client"].get("proxy")
+        proxy_string = _setup_proxy(proxy_config)
+        proxies = {"http": proxy_string, "https": proxy_string} if proxy_string else None
+
         logging.debug(f"Sending authentication request to {auth_url} with JWT.")
-        response = requests.post(auth_url, data=form_data, headers=headers)
+        response = requests.post(auth_url, data=form_data, headers=headers, proxies=proxies)
 
         if response.status_code >= 300:
             logging.error(f"Error authenticating: {response.status_code}, {response.text}")
