@@ -26,10 +26,11 @@ def test_oauth_proxy_setup_function():
     
     proxy_string = _setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
-    assert "8080" in proxy_string
-    assert "user" in proxy_string
-    assert "pass" in proxy_string
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.port == 8080
+    assert parsed.username == "user"
+    assert parsed.password == "pass"
     
     # Test with proxy configuration without auth
     proxy_config_no_auth = {
@@ -39,21 +40,25 @@ def test_oauth_proxy_setup_function():
     
     proxy_string = _setup_proxy(proxy_config_no_auth)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
-    assert "8080" in proxy_string
-    assert "user" not in proxy_string
-    assert "pass" not in proxy_string
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.port == 8080
+    assert parsed.username is None
+    assert parsed.password is None
 
 
 def test_oauth_proxy_setup_without_port():
     """Test _setup_proxy function without port."""
+    from urllib.parse import urlparse
+    
     proxy_config = {
         "host": "proxy.example.com"
     }
     
     proxy_string = _setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com" in proxy_string
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
 
 
 def test_oauth_client_secret_with_proxy():
@@ -93,8 +98,15 @@ def test_oauth_client_secret_with_proxy():
         assert proxies is not None
         assert 'http' in proxies
         assert 'https' in proxies
-        assert 'proxy.example.com:8080' in proxies['http']
-        assert 'proxy.example.com:8080' in proxies['https']
+        
+        # Ensure the proxy host and port are correctly set
+        from urllib.parse import urlparse
+        http_parsed = urlparse(proxies['http'])
+        https_parsed = urlparse(proxies['https'])
+        assert http_parsed.hostname == "proxy.example.com"
+        assert str(http_parsed.port) == "8080"
+        assert https_parsed.hostname == "proxy.example.com"
+        assert str(https_parsed.port) == "8080"
 
 
 def test_oauth_private_key_with_proxy():
@@ -127,9 +139,12 @@ def test_oauth_private_key_with_proxy():
     
     # Test that the _setup_proxy function works with the config
     from zscaler.oneapi_oauth_client import _setup_proxy
+    from urllib.parse import urlparse
     proxy_string = _setup_proxy(proxy_config)
     assert proxy_string is not None
-    assert "proxy.example.com:8080" in proxy_string
+    parsed = urlparse(proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.port == 8080
     
     # The actual private key authentication is complex to mock due to JWT signing,
     # but the proxy configuration logic is identical to client secret authentication
@@ -177,10 +192,13 @@ def test_oauth_proxy_with_authentication():
         assert 'https' in proxies
         
         # Check that proxy URL includes authentication
+        from urllib.parse import urlparse
         proxy_url = proxies['http']
-        assert 'proxy_user' in proxy_url
-        assert 'proxy_pass' in proxy_url
-        assert 'proxy.example.com:8080' in proxy_url
+        parsed = urlparse(proxy_url)
+        assert parsed.username == "proxy_user"
+        assert parsed.password == "proxy_pass"
+        assert parsed.hostname == "proxy.example.com"
+        assert parsed.port == 8080
 
 
 def test_oauth_no_proxy_configuration():
@@ -252,7 +270,10 @@ def test_oauth_proxy_environment_variables():
             assert 'proxies' in call_args.kwargs
             proxies = call_args.kwargs['proxies']
             assert proxies is not None
-            assert 'env-proxy.example.com:8080' in proxies['http']
+            from urllib.parse import urlparse
+            parsed = urlparse(proxies['http'])
+            assert parsed.hostname == "env-proxy.example.com"
+            assert parsed.port == 8080
 
 
 def test_oauth_proxy_error_handling():
@@ -309,10 +330,12 @@ def test_oauth_proxy_consistency_with_http_client():
     # Both should produce the same proxy string
     assert oauth_proxy_string == http_proxy_string
     assert oauth_proxy_string is not None
-    assert "proxy.example.com" in oauth_proxy_string
-    assert "8080" in oauth_proxy_string
-    assert "user" in oauth_proxy_string
-    assert "pass" in oauth_proxy_string
+    from urllib.parse import urlparse
+    parsed = urlparse(oauth_proxy_string)
+    assert parsed.hostname == "proxy.example.com"
+    assert parsed.port == 8080
+    assert parsed.username == "user"
+    assert parsed.password == "pass"
 
 
 def test_oauth_proxy_different_clouds():
@@ -354,7 +377,10 @@ def test_oauth_proxy_different_clouds():
             assert 'proxies' in call_args.kwargs
             proxies = call_args.kwargs['proxies']
             assert proxies is not None
-            assert 'proxy.example.com:8080' in proxies['http']
+            from urllib.parse import urlparse
+            parsed = urlparse(proxies['http'])
+            assert parsed.hostname == "proxy.example.com"
+            assert parsed.port == 8080
 
 
 def test_oauth_proxy_integration():
@@ -397,5 +423,10 @@ def test_oauth_proxy_integration():
             assert 'proxies' in call_args.kwargs
             proxies = call_args.kwargs['proxies']
             assert proxies is not None
-            assert 'proxy.example.com:8080' in proxies['http']
-            assert 'proxy.example.com:8080' in proxies['https']
+            from urllib.parse import urlparse
+            http_parsed = urlparse(proxies['http'])
+            https_parsed = urlparse(proxies['https'])
+            assert http_parsed.hostname == "proxy.example.com"
+            assert str(http_parsed.port) == "8080"
+            assert https_parsed.hostname == "proxy.example.com"
+            assert str(https_parsed.port) == "8080"
