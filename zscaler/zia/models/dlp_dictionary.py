@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class DLPDictionary(ZscalerObject):
     A class for Dictionary objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -97,7 +98,7 @@ class DLPDictionary(ZscalerObject):
             self.custom_phrase_supported = False
             self.hierarchical_dictionary = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -141,7 +142,7 @@ class DictionaryPhrases(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DictionaryPhrases model based on API response.
 
@@ -157,7 +158,7 @@ class DictionaryPhrases(ZscalerObject):
             self.action = None
             self.phrase = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -176,7 +177,7 @@ class DictionaryPattern(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DictionaryPattern model based on API response.
 
@@ -192,7 +193,7 @@ class DictionaryPattern(ZscalerObject):
             self.action = None
             self.pattern = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -210,7 +211,7 @@ class DLPPatternValidation(ZscalerObject):
     A class representing the response from validating a DLP Pattern.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.status = config["status"] if "status" in config else None
@@ -227,7 +228,7 @@ class DLPPatternValidation(ZscalerObject):
             self.err_suggestion = None
             self.id_list = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

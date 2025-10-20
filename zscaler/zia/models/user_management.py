@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.oneapi_object import ZscalerObject
 
@@ -23,7 +24,7 @@ class UserManagement(ZscalerObject):
     A class for UserManagement objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the UserManagement model based on API response.
 
@@ -72,7 +73,7 @@ class UserManagement(ZscalerObject):
             self.groups = []
             self.department = {}
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -98,7 +99,7 @@ class Department(ZscalerObject):
     A class for Department objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Department model based on API response.
 
@@ -119,7 +120,7 @@ class Department(ZscalerObject):
             self.idp_id = None
             self.deleted = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -140,7 +141,7 @@ class Groups(ZscalerObject):
     A class for Groups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Groups model based on API response.
 
@@ -165,7 +166,7 @@ class Groups(ZscalerObject):
             self.idp_id = None
             self.is_system_defined = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

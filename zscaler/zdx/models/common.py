@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class GeoLocations(ZscalerObject):
     A class for GeoLocations objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the GeoLocations model based on API response.
 
@@ -44,7 +45,7 @@ class GeoLocations(ZscalerObject):
             self.country = None
             self.num_devices = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -65,7 +66,7 @@ class Departments(ZscalerObject):
     A class for Departments objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Departments model based on API response.
 
@@ -82,7 +83,7 @@ class Departments(ZscalerObject):
             self.name = None
             self.num_devices = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -101,7 +102,7 @@ class Locations(ZscalerObject):
     A class for Locations objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Locations model based on API response.
 
@@ -129,7 +130,7 @@ class Locations(ZscalerObject):
             self.num_devices = None
             self.groups = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -149,7 +150,7 @@ class CommonIDName(ZscalerObject):
     A class for Groups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Common model based on API response.
 
@@ -168,7 +169,7 @@ class CommonIDName(ZscalerObject):
             self.email = None
             self.score = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -188,7 +189,7 @@ class MostImpactedGeos(ZscalerObject):
     A class for Most Impacted Geos objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Most Impacted Geos model based on API response.
 
@@ -218,7 +219,7 @@ class MostImpactedGeos(ZscalerObject):
             self.geo_long = None
             self.geo_detection = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -243,7 +244,7 @@ class MostImpactedRegion(ZscalerObject):
     A class for Most Impacted Region objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Most Impacted Region model based on API response.
 
@@ -260,7 +261,7 @@ class MostImpactedRegion(ZscalerObject):
             self.id = None
             self.country = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -278,7 +279,7 @@ class DataPoints(ZscalerObject):
     A class for DataPoints objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DataPoints model based on API response.
 
@@ -294,7 +295,7 @@ class DataPoints(ZscalerObject):
             self.timestamp = None
             self.value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -312,7 +313,7 @@ class Devices(ZscalerObject):
     A class for Devices objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Devices model based on API response.
 
@@ -337,7 +338,7 @@ class Devices(ZscalerObject):
             self.zs_loc = []
             self.geo_loc = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -356,7 +357,7 @@ class CommonMetrics(ZscalerObject):
     A class for Metrics objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Metrics model based on API response.
 
@@ -377,7 +378,7 @@ class CommonMetrics(ZscalerObject):
             self.unit = None
             self.datapoints = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

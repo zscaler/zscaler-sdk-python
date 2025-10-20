@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common as common
 
@@ -23,7 +24,7 @@ class TrafficGRETunnel(ZscalerObject):
     A class representing a Traffic Forwarding GRE Tunnel object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -72,7 +73,7 @@ class TrafficGRETunnel(ZscalerObject):
             self.primary_dest_vip = None
             self.secondary_dest_vip = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -100,7 +101,7 @@ class GreVirtualIP(ZscalerObject):
     Handles arbitrary keys dynamically.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the GreVirtualIP model based on API response.
 
@@ -120,7 +121,7 @@ class GreVirtualIP(ZscalerObject):
             self.private_service_edge = None
             self.datacenter = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

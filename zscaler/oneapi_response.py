@@ -1,6 +1,8 @@
+from typing import Dict, List, Any, Optional, Tuple, Union, Type
 import json
 import logging
 import uuid
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -19,19 +21,19 @@ class ZscalerAPIResponse:
 
     def __init__(
         self,
-        request_executor,
-        req,
-        service_type,
-        res_details=None,
-        response_body="",
-        data_type=None,
-        all_entries=False,
-        sort_order=None,
-        sort_by=None,
-        sort_dir=None,
-        start_time=None,
-        end_time=None,
-    ):
+        request_executor: "RequestExecutor",
+        req: Dict[str, Any],
+        service_type: str,
+        res_details: Optional[requests.Response] = None,
+        response_body: str = "",
+        data_type: Optional[Type] = None,
+        all_entries: bool = False,
+        sort_order: Optional[str] = None,
+        sort_by: Optional[str] = None,
+        sort_dir: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+    ) -> None:
         self._url = req.get("url", None)
         self._headers = req.get("headers", {})
         self._params = req.get("params", {})
@@ -100,7 +102,7 @@ class ZscalerAPIResponse:
                     self._body = response_body
                     self._list = []
 
-    def validate_page_size(self, page_size, service_type):
+    def validate_page_size(self, page_size: Optional[int], service_type: str) -> Optional[int]:
         """
         Validates the page size if provided by the user.
         Returns None if no page_size provided - let the API use its own default.
@@ -118,7 +120,7 @@ class ZscalerAPIResponse:
         logger.debug("Validated page size: %d (user provided: %s)", validated_size, page_size)
         return validated_size
 
-    def get_headers(self):
+    def get_headers(self) -> Dict[str, Any]:
         """
         Returns the response body of the Zscaler API Response.
 
@@ -128,7 +130,7 @@ class ZscalerAPIResponse:
         logger.debug("Fetching response headers")
         return self._resp_headers
 
-    def get_body(self):
+    def get_body(self) -> Optional[Union[Dict[str, Any], List[Any]]]:
         """
         Returns the response body of the Zscaler API Response.
 
@@ -137,7 +139,7 @@ class ZscalerAPIResponse:
         """
         return self._body
 
-    def get_status(self):
+    def get_status(self) -> Optional[int]:
         """
         Returns HTTP Status Code of response
 
@@ -147,7 +149,7 @@ class ZscalerAPIResponse:
         logger.debug("Fetching response status code: %s", self._status)
         return self._status
 
-    def _build_json_response(self, response_body):
+    def _build_json_response(self, response_body: str) -> None:
         """
         Converts JSON response text into Python dictionary.
 
@@ -196,7 +198,7 @@ class ZscalerAPIResponse:
         self._items_fetched += len(self._list)
         self._pages_fetched += 1
 
-    def get_results(self):
+    def get_results(self) -> List[Any]:
         """
         Returns the current page of results.
         The initial call to the API returns only one page.
@@ -212,7 +214,7 @@ class ZscalerAPIResponse:
 
         return self._list
 
-    def has_next(self):
+    def has_next(self) -> bool:
         """
         Returns True if there are more pages to fetch, False otherwise.
 
@@ -221,7 +223,7 @@ class ZscalerAPIResponse:
         """
         return self._has_next()
 
-    def next(self):
+    def next(self) -> Tuple[Optional[List[Any]], "ZscalerAPIResponse", Optional[Exception]]:
         if not self.has_next():
             raise StopIteration("No more pages available.")
 
@@ -239,7 +241,7 @@ class ZscalerAPIResponse:
 
         return results, self, None
 
-    def _fetch_next_page(self):
+    def _fetch_next_page(self) -> Tuple[List[Any], Optional[Exception]]:
         logger.debug(f"[DEBUG] _fetch_next_page called. service_type={self._service_type}, params={self._params}")
         if not self._has_next():
             logger.debug("No more pages to fetch")
@@ -293,7 +295,7 @@ class ZscalerAPIResponse:
         self._build_json_response(response_body)
         return self._list, None
 
-    def _has_next(self):
+    def _has_next(self) -> bool:
 
         if self._service_type == "ZPA":
             # More pages if current page < total_pages
@@ -333,7 +335,7 @@ class ZscalerAPIResponse:
                         has_next, self._page, len(self._list), self._limit)
             return has_next
 
-    def __str__(self):
+    def __str__(self) -> str:
         try:
             return json.dumps(self.get_results(), indent=2)
         except Exception as e:

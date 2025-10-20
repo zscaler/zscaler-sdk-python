@@ -1,3 +1,4 @@
+from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -28,7 +29,7 @@ class CloudSandboxAPI:
     _sandbox_base_endpoint = "/zscsb"
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         self._request_executor: RequestExecutor = request_executor
 
     def submit_file(self, file_path: str, force: bool = False) -> tuple:

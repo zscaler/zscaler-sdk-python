@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import admin_roles as admin_roles
@@ -25,7 +26,7 @@ class AdminUser(ZscalerObject):
     A class for AdminUser objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -122,7 +123,7 @@ class AdminUser(ZscalerObject):
             self.admin_scope_type = None
             self.admin_scope_scope_entities = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -158,7 +159,7 @@ class AdminScope(ZscalerObject):
     A class for AdminScope objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminScope model based on API response.
 
@@ -180,7 +181,7 @@ class AdminScope(ZscalerObject):
         else:
             self.scope_group_member_entities = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -197,7 +198,7 @@ class ScopeGroupMemberEntities(ZscalerObject):
     A class for ScopeGroupMemberEntities objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminScope model based on API response.
 
@@ -218,7 +219,7 @@ class ScopeGroupMemberEntities(ZscalerObject):
             self.extensions = None
             self.external_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -238,7 +239,7 @@ class ScopeEntities(ZscalerObject):
     A class for ScopeEntities objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminScope model based on API response.
 
@@ -260,7 +261,7 @@ class ScopeEntities(ZscalerObject):
             self.external_id = None
             self.extensions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -280,7 +281,7 @@ class ExecMobileAppTokens(ZscalerObject):
     A class for ExecMobileAppTokens objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdminScope model based on API response.
 
@@ -311,7 +312,7 @@ class ExecMobileAppTokens(ZscalerObject):
             self.device_id = None
             self.device_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class CommonIDNameDisplayName(ZscalerObject):
     A class for common ID, Name, and DisplayName objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDNameDisplayName model based on API response.
 
@@ -43,7 +44,7 @@ class CommonIDNameDisplayName(ZscalerObject):
             self.name = None
             self.display_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -62,7 +63,7 @@ class CommonIDName(ZscalerObject):
     A class for common ID, and Name objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDName model based on API response.
 
@@ -80,7 +81,7 @@ class CommonIDName(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

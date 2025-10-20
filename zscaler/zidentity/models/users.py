@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zidentity.models import common
@@ -24,7 +25,7 @@ class Users(ZscalerObject):
     A class for Users objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Users model based on API response.
 
@@ -55,7 +56,7 @@ class Users(ZscalerObject):
             self.prev_link = None
             self.records = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -77,7 +78,7 @@ class UserRecord(ZscalerObject):
     A class for UserRecord objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the UserRecord model based on API response.
 
@@ -155,7 +156,7 @@ class UserRecord(ZscalerObject):
             self.admin_entitlement_enabled = None
             self.service_entitlement_enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

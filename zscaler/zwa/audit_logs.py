@@ -1,3 +1,4 @@
+from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -22,7 +23,7 @@ from zscaler.utils import format_url
 
 class AuditLogsAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, Any
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.account_details import AccountDetailsAPI
 from zscaler.ztw.activation import ActivationAPI
@@ -41,7 +42,7 @@ class ZTWService:
         self._request_executor = request_executor
 
     @property
-    def account_details(self):
+    def account_details(self) -> AccountDetailsAPI:
         """
         The interface object for the :ref:`ZTW Account Details interface <ztw-account_details>`.
 
@@ -49,7 +50,7 @@ class ZTWService:
         return AccountDetailsAPI(self._request_executor)
 
     @property
-    def activate(self):
+    def activate(self) -> ActivationAPI:
         """
         The interface object for the :ref:`ZTW Activation interface <ztw-activate>`.
 
@@ -57,7 +58,7 @@ class ZTWService:
         return ActivationAPI(self._request_executor)
 
     @property
-    def admin_roles(self):
+    def admin_roles(self) -> AdminRolesAPI:
         """
         The interface object for the :ref:`ZTW Admin and Role Management interface <ztw-admin_roles>`.
 
@@ -65,7 +66,7 @@ class ZTWService:
         return AdminRolesAPI(self._request_executor)
 
     @property
-    def admin_users(self):
+    def admin_users(self) -> AdminUsersAPI:
         """
         The interface object for the :ref:`ZTW Admin Users interface <ztw-admin_users>`.
 
@@ -73,7 +74,7 @@ class ZTWService:
         return AdminUsersAPI(self._request_executor)
 
     @property
-    def ec_groups(self):
+    def ec_groups(self) -> ECGroupsAPI:
         """
         The interface object for the :ref:`ZTW EC Groups interface <ztw-ec_groups>`.
 
@@ -81,7 +82,7 @@ class ZTWService:
         return ECGroupsAPI(self._request_executor)
 
     @property
-    def location_management(self):
+    def location_management(self) -> LocationManagementAPI:
         """
         The interface object for the :ref:`ZTW Locations interface <ztw-location_management>`.
 
@@ -90,7 +91,7 @@ class ZTWService:
         return LocationManagementAPI(self._request_executor)
 
     @property
-    def location_template(self):
+    def location_template(self) -> LocationTemplateAPI:
         """
         The interface object for the :ref:`ZTW Locations interface <ztw-location_template>`.
 
@@ -99,7 +100,7 @@ class ZTWService:
         return LocationTemplateAPI(self._request_executor)
 
     @property
-    def api_keys(self):
+    def api_keys(self) -> ProvisioningAPIKeyAPI:
         """
         The interface object for the :ref:`ZTW Provisioning API Key interface <ztw-api_keys>`.
 
@@ -108,7 +109,7 @@ class ZTWService:
         return ProvisioningAPIKeyAPI(self._request_executor)
 
     @property
-    def provisioning_url(self):
+    def provisioning_url(self) -> ProvisioningURLAPI:
         """
         The interface object for the :ref:`ZTW Provisioning URL interface <ztw-provisioning_url>`.
 
@@ -117,7 +118,7 @@ class ZTWService:
         return ProvisioningURLAPI(self._request_executor)
 
     @property
-    def forwarding_gateways(self):
+    def forwarding_gateways(self) -> ForwardingGatewaysAPI:
         """
         The interface object for the :ref:`ZTW Forwarding Gateway interface <ztw-forwarding_gateways>`.
 
@@ -126,7 +127,7 @@ class ZTWService:
         return ForwardingGatewaysAPI(self._request_executor)
 
     @property
-    def forwarding_rules(self):
+    def forwarding_rules(self) -> ForwardingControlRulesAPI:
         """
         The interface object for the :ref:`ZTW Forwarding Control Rules interface <ztw-forwarding_rules>`.
 
@@ -135,7 +136,7 @@ class ZTWService:
         return ForwardingControlRulesAPI(self._request_executor)
 
     @property
-    def ip_destination_groups(self):
+    def ip_destination_groups(self) -> IPDestinationGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Destination Groups interface <ztw-ip_destination_groups>`.
 
@@ -144,7 +145,7 @@ class ZTWService:
         return IPDestinationGroupsAPI(self._request_executor)
 
     @property
-    def ip_source_groups(self):
+    def ip_source_groups(self) -> IPSourceGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Source Groups interface <ztw-ip_source_groups>`.
 
@@ -153,7 +154,7 @@ class ZTWService:
         return IPSourceGroupsAPI(self._request_executor)
 
     @property
-    def ip_groups(self):
+    def ip_groups(self) -> IPGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Source Groups interface <ztw-ip_groups>`.
 
@@ -162,7 +163,7 @@ class ZTWService:
         return IPGroupsAPI(self._request_executor)
 
     @property
-    def nw_service_groups(self):
+    def nw_service_groups(self) -> NWServiceGroupsAPI:
         """
         The interface object for the :ref:`ZTW Network Service Groups interface <ztw-nw_service_groups>`.
 
@@ -171,7 +172,7 @@ class ZTWService:
         return NWServiceGroupsAPI(self._request_executor)
 
     @property
-    def nw_service(self):
+    def nw_service(self) -> NWServiceAPI:
         """
         The interface object for the :ref:`ZTW Network Services interface <ztw-nw_service>`.
 

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.ztw.models import common as common
@@ -24,7 +25,7 @@ class ECGroup(ZscalerObject):
     A class for Ecgroup objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Ecgroup model based on API response.
 
@@ -82,7 +83,7 @@ class ECGroup(ZscalerObject):
             self.tunnel_mode = None
             self.ec_v_ms = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -111,7 +112,7 @@ class ECVMS(ZscalerObject):
     A class for ECVMS objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ECVMS model based on API response.
 
@@ -171,7 +172,7 @@ class ECVMS(ZscalerObject):
             self.upgrade_end_time = None
             self.upgrade_day_of_week = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -204,7 +205,7 @@ class EcInstance(ZscalerObject):
     A class for ECInstance objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ECInstance model based on API response.
 
@@ -228,7 +229,7 @@ class ManagementNW(ZscalerObject):
     A class for ManagementNW objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ManagementNW model based on API response.
 
@@ -264,7 +265,7 @@ class ManagementNW(ZscalerObject):
             self.nw_type = None
             self.dns = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -287,7 +288,7 @@ class DNS(ZscalerObject):
     A class for DNS objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DNS model based on API response.
 
@@ -306,7 +307,7 @@ class DNS(ZscalerObject):
             self.ips = None
             self.dns_type = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -325,7 +326,7 @@ class ECInstances(ZscalerObject):
     A class for ECInstances objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ECInstances model based on API response.
 
@@ -370,7 +371,7 @@ class ECInstances(ZscalerObject):
             self.dns_ip = None
             self.nw_type = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -392,7 +393,7 @@ class ServiceIPs(ZscalerObject):
     A class for ServiceIPs objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ServiceIPs model based on API response.
 
@@ -409,7 +410,7 @@ class ServiceIPs(ZscalerObject):
             self.ip_start = None
             self.ip_end = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -427,7 +428,7 @@ class LBIPAddr(ZscalerObject):
     A class for LBIPAddr objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LBIPAddr model based on API response.
 
@@ -444,7 +445,7 @@ class LBIPAddr(ZscalerObject):
             self.ip_start = None
             self.ip_end = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

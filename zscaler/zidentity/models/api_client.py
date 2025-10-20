@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zidentity.models import common
@@ -24,7 +25,7 @@ class APIClients(ZscalerObject):
     A class for API Clients objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the API Clients model based on API response.
 
@@ -57,7 +58,7 @@ class APIClients(ZscalerObject):
             self.prev_link = None
             self.records = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -79,7 +80,7 @@ class APIClientRecords(ZscalerObject):
     A class for Apiclientsecrets objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Apiclientsecrets model based on API response.
 
@@ -124,7 +125,7 @@ class APIClientRecords(ZscalerObject):
             self.client_resources = []
             self.id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -147,7 +148,7 @@ class ClientAuthentication(ZscalerObject):
     A class for Client Authentication objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Client Authentication model based on API response.
 
@@ -176,7 +177,7 @@ class ClientAuthentication(ZscalerObject):
             self.public_keys = []
             self.client_certificates = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -196,7 +197,7 @@ class ClientCertificates(ZscalerObject):
     A class for Client Certificates objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Client Certificates model based on API response.
 
@@ -211,7 +212,7 @@ class ClientCertificates(ZscalerObject):
         else:
             self.cert_content = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -228,7 +229,7 @@ class ClientResources(ZscalerObject):
     A class for Client Resources objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Client Resources model based on API response.
 
@@ -254,7 +255,7 @@ class ClientResources(ZscalerObject):
             self.default_api = None
             self.selected_scopes = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -274,7 +275,7 @@ class PublicKeys(ZscalerObject):
     A class for Public Keys objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Public Keys model based on API response.
 
@@ -292,7 +293,7 @@ class PublicKeys(ZscalerObject):
             self.key_name = None
             self.key_value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -310,7 +311,7 @@ class APIClientSecrets(ZscalerObject):
     A class for Api Client Secrets objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Api Client Secrets model based on API response.
 
@@ -334,7 +335,7 @@ class APIClientSecrets(ZscalerObject):
             self.created_at = None
             self.value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zidentity.models import common
@@ -24,7 +25,7 @@ class ResourceServers(ZscalerObject):
     A class for Resource Servers objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Resource Servers model based on API response.
 
@@ -55,7 +56,7 @@ class ResourceServers(ZscalerObject):
             self.prev_link = None
             self.records = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -77,7 +78,7 @@ class ResourceServersRecord(ZscalerObject):
     A class for Resource Servers Record objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Resource Servers Record model based on API response.
 
@@ -111,7 +112,7 @@ class ResourceServersRecord(ZscalerObject):
             self.default_api = None
             self.service_scopes = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -134,7 +135,7 @@ class ServiceScopes(ZscalerObject):
     A class for Service Scopes Record objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Service Scopes Record model based on API response.
 
@@ -159,7 +160,7 @@ class ServiceScopes(ZscalerObject):
         else:
             self.service = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -176,7 +177,7 @@ class Service(ZscalerObject):
     A class for Service objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Service model based on API response.
 
@@ -203,7 +204,7 @@ class Service(ZscalerObject):
             self.cloud_name = None
             self.org_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

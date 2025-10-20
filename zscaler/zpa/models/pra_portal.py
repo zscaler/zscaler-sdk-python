@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
     A class representing the Privileged Remote Access Portal.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -70,7 +71,7 @@ class PrivilegedRemoteAccessPortal(ZscalerObject):
             self.user_portal_gid = None
             self.user_portal_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the PRA portal data into a dictionary suitable for API requests.
         """

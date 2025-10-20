@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class NetworkServices(ZscalerObject):
     A class representing a Cloud Firewall Network Service object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -52,7 +53,7 @@ class NetworkServices(ZscalerObject):
             self.src_udp_ports = []
             self.dest_udp_ports = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -76,7 +77,7 @@ class PortRange(ZscalerObject):
     A class representing a port range with a start and optional end.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.start = config["start"] if "start" in config else None
@@ -85,5 +86,5 @@ class PortRange(ZscalerObject):
             self.start = None
             self.end = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         return {"start": self.start, "end": self.end}

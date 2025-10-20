@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
@@ -24,7 +25,7 @@ class AuditLogs(ZscalerObject):
     A class for AuditLogs objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AuditLogs model based on API response.
 
@@ -50,7 +51,7 @@ class AuditLogs(ZscalerObject):
             self.cursor = None
             self.logs = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -65,7 +66,7 @@ class Logs(ZscalerObject):
     A class for Logs objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Logs model based on API response.
 
@@ -90,7 +91,7 @@ class Logs(ZscalerObject):
             self.module = None
             self.resource = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -109,7 +110,7 @@ class Action(ZscalerObject):
     A class for Action objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Action model based on API response.
 
@@ -123,7 +124,7 @@ class Action(ZscalerObject):
         else:
             self.action = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

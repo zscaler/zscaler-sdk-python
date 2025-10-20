@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import devices as devices
@@ -24,7 +25,7 @@ class DeviceDeepTraces(ZscalerObject):
     A class for DeepTrace objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTrace model based on API response.
 
@@ -67,7 +68,7 @@ class DeviceDeepTraces(ZscalerObject):
             self.started_at = None
             self.ended_at = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -90,7 +91,7 @@ class TraceDetails(ZscalerObject):
     A class for Tracedetails objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Tracedetails model based on API response.
 
@@ -123,7 +124,7 @@ class TraceDetails(ZscalerObject):
             self.session_length_minutes = None
             self.probe_device = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -146,7 +147,7 @@ class StartDeepTrace(ZscalerObject):
     A class for StartDeepTrace objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the StartDeepTrace model based on API response.
 
@@ -212,7 +213,7 @@ class StartDeepTrace(ZscalerObject):
             self.started_at = None
             self.ended_at = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -241,7 +242,7 @@ class DeviceTopProcesses(ZscalerObject):
     A class for DeviceTopProcesses objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceTopProcesses model based on API response.
 
@@ -257,7 +258,7 @@ class DeviceTopProcesses(ZscalerObject):
             self.timestamp = None
             self.top_processes = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -272,7 +273,7 @@ class DeepTraceWebProbeMetrics(ZscalerObject):
     A class for DeepTraceWebProbeMetrics objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTraceWebProbeMetrics model based on API response.
 
@@ -290,7 +291,7 @@ class DeepTraceWebProbeMetrics(ZscalerObject):
             self.unit = None
             self.datapoints = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -305,7 +306,7 @@ class DeepTraceCloudPathMetric(ZscalerObject):
     A class for DeepTraceCloudPathMetric objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTraceCloudPathMetric model based on API response.
 
@@ -323,7 +324,7 @@ class DeepTraceCloudPathMetric(ZscalerObject):
             self.leg_dst = None
             self.stats = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -338,7 +339,7 @@ class DeepTraceCloudPath(ZscalerObject):
     A class for DeepTraceCloudPath objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTraceCloudPath model based on API response.
 
@@ -354,7 +355,7 @@ class DeepTraceCloudPath(ZscalerObject):
             self.timestamp = None
             self.cloudpath = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -369,7 +370,7 @@ class DeepTraceHealthMetrics(ZscalerObject):
     A class for DeepTraceHealthMetrics objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTraceHealthMetrics model based on API response.
 
@@ -385,7 +386,7 @@ class DeepTraceHealthMetrics(ZscalerObject):
             self.category = None
             self.instances = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -400,7 +401,7 @@ class DeepTraceEvents(ZscalerObject):
     A class for DeepTraceEvents objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepTraceEvents model based on API response.
 
@@ -418,7 +419,7 @@ class DeepTraceEvents(ZscalerObject):
             self.timestamp = None
             self.events = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -436,7 +437,7 @@ class DeviceApplicationAnalysis(ZscalerObject):
     A class for DeviceApplicationAnalysis objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceApplicationAnalysis model based on API response.
 
@@ -456,7 +457,7 @@ class DeviceApplicationAnalysis(ZscalerObject):
             self.t0 = None
             self.t1 = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

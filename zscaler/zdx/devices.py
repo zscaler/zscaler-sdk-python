@@ -1,3 +1,4 @@
+from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -34,7 +35,7 @@ from zscaler.utils import format_url, zdx_params
 
 class DevicesAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zwa.models import common as common
@@ -25,7 +26,7 @@ class IncidentSearch(ZscalerObject):
     A class for IncidentSearch objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IncidentSearch model based on API response.
 
@@ -50,7 +51,7 @@ class IncidentSearch(ZscalerObject):
             self.cursor = None
             self.incidents = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -65,7 +66,7 @@ class Incidents(ZscalerObject):
     A class for Incidents objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Incidents model based on API response.
 
@@ -81,7 +82,7 @@ class Incidents(ZscalerObject):
         else:
             self.incidents = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

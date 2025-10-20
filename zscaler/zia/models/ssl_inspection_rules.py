@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import cloud_firewall_destination_groups as destination_groups
@@ -36,7 +37,7 @@ class SSLInspectionRules(ZscalerObject):
     A class for SSLInspectionRules objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SSLInspectionRules model based on API response.
 
@@ -165,7 +166,7 @@ class SSLInspectionRules(ZscalerObject):
             self.predefined = None
             self.default_rule = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -216,7 +217,7 @@ class Action(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Action model based on API response.
 
@@ -303,7 +304,7 @@ class Action(ZscalerObject):
             self.do_not_decrypt_sub_actions = None
             self.ssl_interception_cert = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -329,7 +330,7 @@ class SSLInterceptionCert(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SSLInterceptionCert model based on API response.
 
@@ -347,7 +348,7 @@ class SSLInterceptionCert(ZscalerObject):
             self.name = None
             self.default_certificate = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -367,7 +368,7 @@ class DoNotDecryptSubActions(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DoNotDecryptSubActions model based on API response.
 
@@ -405,7 +406,7 @@ class DoNotDecryptSubActions(ZscalerObject):
             self.block_ssl_traffic_with_no_sni_enabled = None
             self.min_tls_version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -427,7 +428,7 @@ class DecryptSubActions(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DoNotDecryptSubActions model based on API response.
 
@@ -484,7 +485,7 @@ class DecryptSubActions(ZscalerObject):
             self.block_undecrypt = None
             self.http2_enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

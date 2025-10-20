@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zidentity.models import common
@@ -24,7 +25,7 @@ class Entitlement(ZscalerObject):
     A class for Entitlement objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Entitlement model based on API response.
 
@@ -63,7 +64,7 @@ class Entitlement(ZscalerObject):
             self.scope = None
             self.service = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -82,7 +83,7 @@ class Service(ZscalerObject):
     A class for Service objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Service model based on API response.
 
@@ -112,7 +113,7 @@ class Service(ZscalerObject):
             self.org_name = None
             self.org_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -134,7 +135,7 @@ class Entitlements(ZscalerObject):
     A class for Entitlements collection objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Entitlements collection model based on API response.
 
@@ -150,7 +151,7 @@ class Entitlements(ZscalerObject):
         else:
             self.entitlements = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

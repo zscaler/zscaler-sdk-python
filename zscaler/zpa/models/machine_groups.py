@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
 class MachineGroup(ZscalerObject):
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Machine Group model based on API response.
 
@@ -48,7 +49,7 @@ class MachineGroup(ZscalerObject):
             self.modified_time = None
             self.modified_by = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the Machine Group data into a dictionary suitable for API requests.
 

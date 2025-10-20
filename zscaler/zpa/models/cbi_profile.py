@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -24,7 +25,7 @@ class CBIProfile(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CBIProfile model based on API response.
 
@@ -115,7 +116,7 @@ class CBIProfile(ZscalerObject):
             self.region_ids = []
             self.certificate_ids = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -146,7 +147,7 @@ class DebugMode(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DebugMode model based on API response.
 
@@ -164,7 +165,7 @@ class DebugMode(ZscalerObject):
             self.allowed = None
             self.file_password = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -183,7 +184,7 @@ class UserExperience(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the UserExperience model based on API response.
 
@@ -220,7 +221,7 @@ class UserExperience(ZscalerObject):
             self.forward_to_zia = None
             self.zgpu = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -243,7 +244,7 @@ class ForwardToZia(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ForwardToZia model based on API response.
 
@@ -267,7 +268,7 @@ class ForwardToZia(ZscalerObject):
             self.pac_file_url = None
             self.organization_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -288,7 +289,7 @@ class SecurityControls(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SecurityControls model based on API response.
 
@@ -346,7 +347,7 @@ class SecurityControls(ZscalerObject):
             self.watermark = None
             self.flattened_pdf = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -373,7 +374,7 @@ class DeepLink(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeepLink model based on API response.
 
@@ -393,7 +394,7 @@ class DeepLink(ZscalerObject):
             self.enabled = None
             self.applications = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -412,7 +413,7 @@ class Watermark(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Watermark model based on API response.
 
@@ -439,7 +440,7 @@ class Watermark(ZscalerObject):
             self.show_message = None
             self.message = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -461,7 +462,7 @@ class Certificates(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Certificates model based on API response.
 
@@ -485,7 +486,7 @@ class Certificates(ZscalerObject):
             self.enabled = None
             self.is_default = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -506,7 +507,7 @@ class Regions(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Regions model based on API response.
 
@@ -524,7 +525,7 @@ class Regions(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -543,7 +544,7 @@ class Banner(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Banner model based on API response.
 
@@ -558,7 +559,7 @@ class Banner(ZscalerObject):
         else:
             self.id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

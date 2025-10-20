@@ -25,7 +25,7 @@ class ZWAService:
         self._request_executor = client._request_executor
 
     @property
-    def audit_logs(self):
+    def audit_logs(self) -> AuditLogsAPI:
         """
         The interface object for the :ref:`ZWA Audit Logs interface <zwa-audit_logs>`.
 
@@ -33,7 +33,7 @@ class ZWAService:
         return AuditLogsAPI(self._request_executor)
 
     @property
-    def dlp_incidents(self):
+    def dlp_incidents(self) -> DLPIncidentsAPI:
         """
         The interface object for the :ref:`ZWA DLP Incidents interface <zwa-dlp_incidents>`.
 

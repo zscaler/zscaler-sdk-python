@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class ProvisioningKey(ZscalerObject):
     A class for ProvisioningKey objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -53,7 +54,7 @@ class ProvisioningKey(ZscalerObject):
             self.enrollment_cert_id = None
             self.enrollment_cert_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the current object for making requests.
         """

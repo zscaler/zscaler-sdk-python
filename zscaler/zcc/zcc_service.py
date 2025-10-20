@@ -34,7 +34,7 @@ class ZCCService:
         self._request_executor = client._request_executor
 
     @property
-    def devices(self):
+    def devices(self) -> DevicesAPI:
         """
         The interface object for the :ref:`ZCC devices interface <zcc-devices>`.
 
@@ -42,7 +42,7 @@ class ZCCService:
         return DevicesAPI(self._request_executor)
 
     @property
-    def secrets(self):
+    def secrets(self) -> SecretsAPI:
         """
         The interface object for the :ref:`ZCC secrets interface <zcc-secrets>`.
 
@@ -50,7 +50,7 @@ class ZCCService:
         return SecretsAPI(self._request_executor)
 
     @property
-    def admin_user(self):
+    def admin_user(self) -> AdminUserAPI:
         """
         The interface object for the :ref:`ZCC admin user interface <zcc-admin_user>`.
 
@@ -58,7 +58,7 @@ class ZCCService:
         return AdminUserAPI(self._request_executor)
 
     @property
-    def company(self):
+    def company(self) -> CompanyInfoAPI:
         """
         The interface object for the :ref:`ZCC company info interface <zcc-company_info>`.
 
@@ -66,7 +66,7 @@ class ZCCService:
         return CompanyInfoAPI(self._request_executor)
 
     @property
-    def entitlements(self):
+    def entitlements(self) -> EntitlementAPI:
         """
         The interface object for the :ref:`ZCC entitlement for zdx and zpa interface <zcc-entitlements>`.
 
@@ -74,7 +74,7 @@ class ZCCService:
         return EntitlementAPI(self._request_executor)
 
     @property
-    def forwarding_profile(self):
+    def forwarding_profile(self) -> ForwardingProfileAPI:
         """
         The interface object for the :ref:`ZCC web forwarding profile interface <zcc-forwarding_profile>`.
 
@@ -82,7 +82,7 @@ class ZCCService:
         return ForwardingProfileAPI(self._request_executor)
 
     @property
-    def fail_open_policy(self):
+    def fail_open_policy(self) -> FailOpenPolicyAPI:
         """
         The interface object for the :ref:`ZCC fail open policy interface <zcc-fail_open_policy>`.
 
@@ -90,7 +90,7 @@ class ZCCService:
         return FailOpenPolicyAPI(self._request_executor)
 
     @property
-    def web_policy(self):
+    def web_policy(self) -> WebPolicyAPI:
         """
         The interface object for the :ref:`ZCC web policy interface <zcc-web_policy>`.
 
@@ -98,7 +98,7 @@ class ZCCService:
         return WebPolicyAPI(self._request_executor)
 
     @property
-    def web_app_service(self):
+    def web_app_service(self) -> WebAppServiceAPI:
         """
         The interface object for the :ref:`ZCC web app service interface <zcc-web_app_service>`.
 
@@ -106,7 +106,7 @@ class ZCCService:
         return WebAppServiceAPI(self._request_executor)
 
     @property
-    def web_privacy(self):
+    def web_privacy(self) -> WebPrivacyAPI:
         """
         The interface object for the :ref:`ZCC web privacy interface <zcc-web_privacy>`.
 
@@ -114,7 +114,7 @@ class ZCCService:
         return WebPrivacyAPI(self._request_executor)
 
     @property
-    def trusted_networks(self):
+    def trusted_networks(self) -> TrustedNetworksAPI:
         """
         The interface object for the :ref:`ZCC trusted networks interface <zcc-trusted_networks>`.
 

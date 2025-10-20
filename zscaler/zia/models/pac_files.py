@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
@@ -24,7 +25,7 @@ class PacFiles(ZscalerObject):
     A class for Pac File objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Pac Files model based on API response.
 
@@ -80,7 +81,7 @@ class PacFiles(ZscalerObject):
             self.last_modified_by = None
             self.create_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -113,7 +114,7 @@ class PacFileValidationResponse(ZscalerObject):
     A class for Pac File Validation Response objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Pac File Validation Response model based on API response.
 
@@ -145,7 +146,7 @@ class PacFileValidationResponse(ZscalerObject):
             self.warning_count = None
             self.error_count = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -167,7 +168,7 @@ class Messages(ZscalerObject):
     A class for Messages objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Messages model based on API response.
 
@@ -200,7 +201,7 @@ class Messages(ZscalerObject):
             self.message = None
             self.fatal = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
