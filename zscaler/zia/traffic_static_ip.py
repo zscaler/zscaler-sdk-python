@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional, Any, Union
+import json
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -351,21 +352,40 @@ class TrafficStaticIPAPI(APIClient):
 
         # Check the actual HTTP status code, not the error object
         # The executor may return an "error" for non-JSON responses even on HTTP 200
+        # When return_raw_response=True, we need to check the actual response status
         if raw_response is None:
             # True network/request error
             return (False, None, error)
 
         try:
+            # Ensure we have a valid response object with status_code attribute
+            if not hasattr(raw_response, 'status_code'):
+                return (False, raw_response, error if error else "Invalid response object")
+            
             status_code = raw_response.status_code
             body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
 
             # HTTP 200 with "SUCCESS" = IP is valid (not in system)
+            # Important: Ignore any error that might have been set for non-JSON responses
             if status_code == 200 and body_text.upper() == "SUCCESS":
                 return (True, None, None)
             
             # HTTP 409 = IP already exists (duplicate)
+            # For 409, parse the JSON error from the response body
             elif status_code == 409:
-                return (False, raw_response, error)
+                # Try to parse the error from the response body
+                try:
+                    if body_text:
+                        error_data = json.loads(body_text)
+                        # Create a structured error object if available
+                        structured_error = error_data if isinstance(error_data, dict) else error
+                    else:
+                        structured_error = error
+                except (json.JSONDecodeError, ValueError):
+                    # If parsing fails, use the provided error or create a generic one
+                    structured_error = error if error else {"status": 409, "message": "IP already exists"}
+                
+                return (False, raw_response, structured_error)
             
             # Any other response = invalid
             else:
