@@ -1,5 +1,25 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.0 (November 3, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Enhancements
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added comprehensive type hints to ~856 API methods across all packages (ZIA, ZPA, ZCC, ZDX, ZTW, ZWA, ZIdentity) enabling IDE autocomplete and intellisense support. Introduced `APIResult[T]` type alias for standardized return type annotations.
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Fixed `check_static_ip` method to correctly return `is_valid=True` when IP is available. The method now properly handles HTTP 200 responses with plain text "SUCCESS" body, ignoring non-JSON response errors that were incorrectly causing the validation to fail. 
+
+## 1.8.6 (October 20, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+* [PR #404](https://github.com/zscaler/zscaler-sdk-python/pull/404) - Fix OAuth authentication to respect proxy configuration. OAuth requests now use the same proxy settings as regular API calls, resolving issues where authentication would fail when proxy was configured.
+
 ## 1.8.5 (October 8, 2025)
 
 ### Notes
