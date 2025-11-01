@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,11 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_roles import AdminRoles
 from zscaler.zia.models.admin_roles import PasswordExpiry
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdminRolesAPI(APIClient):
@@ -33,7 +35,7 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(self, query_params=None) -> tuple:
+    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
         """
         Return a list of the configured admin roles in ZIA.
 
@@ -104,7 +106,7 @@ class AdminRolesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_role(self, role_id: int) -> tuple:
+    def get_role(self, role_id: int) -> APIResult[AdminRoles]:
         """
         Fetches a specific admin role by ID.
 
@@ -147,7 +149,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_role(self, **kwargs) -> tuple:
+    def add_role(self, **kwargs) -> APIResult[AdminRoles]:
         """
         Creates a new ZIA admin roles.
 
@@ -373,7 +375,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_role(self, role_id: int, **kwargs) -> tuple:
+    def update_role(self, role_id: int, **kwargs) -> APIResult[AdminRoles]:
         """
         Updates information for the specified ZIA admin role.
 
@@ -507,7 +509,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_role(self, role_id: int) -> tuple:
+    def delete_role(self, role_id: int) -> APIResult[None]:
         """
         Deletes the specified admin roles.
 
@@ -543,7 +545,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def get_password_expiry_settings(self) -> tuple:
+    def get_password_expiry_settings(self) -> APIResult[PasswordExpiry]:
         """
         Retrieves the password expiration information for all the admins
 
@@ -589,7 +591,7 @@ class AdminRolesAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_password_expiry_settings(self, **kwargs) -> tuple:
+    def update_password_expiry_settings(self, **kwargs) -> APIResult[PasswordExpiry]:
         """
         Updates the password expiration information for all the admins.
 

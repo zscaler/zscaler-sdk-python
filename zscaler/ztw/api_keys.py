@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.api_keys import ApiKeys
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ProvisioningAPIKeyAPI(APIClient):
@@ -32,7 +33,7 @@ class ProvisioningAPIKeyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_keys(self, query_params=None) -> tuple:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all existing API keys.
 
@@ -84,7 +85,7 @@ class ProvisioningAPIKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def regenerate_api_key(self, key_id: str, **kwargs) -> tuple:
+    def regenerate_api_key(self, key_id: str, **kwargs) -> APIResult[dict]:
         """
         Regenerate the specified API key.
 

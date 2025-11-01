@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.private_cloud_group import PrivateCloudGroup
 from zscaler.zpa.models.common import CommonIDName
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class PrivateCloudGroupAPI(APIClient):
@@ -33,7 +34,7 @@ class PrivateCloudGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_groups(self, query_params=None) -> tuple:
+    def list_cloud_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates Private Cloud Groups in your organization with pagination.
         A subset of Private Cloud Groups can be returned that match a supported
@@ -92,7 +93,7 @@ class PrivateCloudGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cloud_group(self, group_id: str, query_params=None) -> tuple:
+    def get_cloud_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a specific Private Cloud Group by ID.
 
@@ -138,7 +139,7 @@ class PrivateCloudGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_cloud_group(self, **kwargs) -> tuple:
+    def add_cloud_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new ZPA App Private Cloud Group.
 
@@ -232,7 +233,7 @@ class PrivateCloudGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cloud_group(self, group_id: str, **kwargs) -> tuple:
+    def update_cloud_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing ZPA App Private Cloud Group.
 
@@ -333,7 +334,7 @@ class PrivateCloudGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cloud_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_cloud_group(self, group_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified App Private Cloud Group from ZPA.
 
@@ -373,7 +374,7 @@ class PrivateCloudGroupAPI(APIClient):
 
         return (None, response, None)
 
-    def list_private_cloud_group_summary(self, query_params=None) -> tuple:
+    def list_private_cloud_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the name and ID of the configured Private Cloud Group.
 

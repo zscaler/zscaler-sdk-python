@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class NWServiceGroupsAPI(APIClient):
@@ -31,8 +32,8 @@ class NWServiceGroupsAPI(APIClient):
 
     def list_network_svc_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists network service groups in your organization with pagination.
         A subset of network service groups can be returned that match a supported

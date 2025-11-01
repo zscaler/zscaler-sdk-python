@@ -21,6 +21,7 @@ from zscaler.zia.models.ipv6_config import IPV6PrefixMask
 from zscaler.zia.models.ipv6_config import IPV6Configuration
 
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficIPV6ConfigAPI(APIClient):
@@ -34,7 +35,7 @@ class TrafficIPV6ConfigAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_ipv6_config(self) -> tuple:
+    def get_ipv6_config(self) -> APIResult[dict]:
         """
         Gets the IPv6 configuration details for the organization.
 
@@ -75,7 +76,7 @@ class TrafficIPV6ConfigAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_dns64_prefix(self, query_params=None) -> tuple:
+    def list_dns64_prefix(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches the list of NAT64 prefixes configured as the DNS64 prefix for the organization
 
@@ -132,7 +133,7 @@ class TrafficIPV6ConfigAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def list_nat64_prefix(self, query_params=None) -> tuple:
+    def list_nat64_prefix(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches the list of NAT64 prefixes configured for the organization
 

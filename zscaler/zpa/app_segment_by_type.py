@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zpa.models.application_segment import AppSegmentByType
+from zscaler.types import APIResult
 
 
 class ApplicationSegmentByTypeAPI(APIClient):
@@ -32,7 +33,7 @@ class ApplicationSegmentByTypeAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_segments_by_type(self, application_type: str, expand_all: bool = False, query_params=None, **kwargs) -> tuple:
+    def get_segments_by_type(self, application_type: str, expand_all: bool = False, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Retrieve all configured application segments of a specified type, optionally expanding all related data.
 

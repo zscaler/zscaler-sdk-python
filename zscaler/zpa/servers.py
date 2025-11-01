@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_servers import AppServers
 from zscaler.api_client import APIClient
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AppServersAPI(APIClient):
@@ -33,7 +34,7 @@ class AppServersAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_servers(self, query_params=None) -> tuple:
+    def list_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates application servers in your organization with pagination.
         A subset of application servers can be returned that match a supported
@@ -91,7 +92,7 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_server(self, server_id: str, query_params=None) -> tuple:
+    def get_server(self, server_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified server.
 
@@ -135,7 +136,7 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_server(self, **kwargs) -> tuple:
+    def add_server(self, **kwargs) -> APIResult[dict]:
         """
         Add a new application server.
 
@@ -190,7 +191,7 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_server(self, server_id: str, **kwargs) -> tuple:
+    def update_server(self, server_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified server.
 
@@ -248,7 +249,7 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_server(self, server_id: str, microtenant_id: str = None) -> tuple:
+    def delete_server(self, server_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Delete the specified server.
 

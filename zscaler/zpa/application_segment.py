@@ -22,6 +22,7 @@ from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.models.application_segment import MultiMatchUnsupportedReferences
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 import logging
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ class ApplicationSegmentAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segments(self, query_params=None) -> tuple:
+    def list_segments(self, query_params: Optional[dict] = None) -> APIResult[List[ApplicationSegments]]:
         """
         Enumerates application segments in your organization with pagination.
         A subset of application segments can be returned that match a supported
@@ -108,7 +109,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_segment(self, segment_id: str, query_params=None) -> tuple:
+    def get_segment(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[ApplicationSegments]:
         """
         Retrieve an application segment by its ID.
 
@@ -161,7 +162,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_segment(self, **kwargs) -> tuple:
+    def add_segment(self, **kwargs) -> APIResult[ApplicationSegments]:
         """
         Create a new application segment.
 
@@ -309,7 +310,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_segment(self, segment_id: str, **kwargs) -> tuple:
+    def update_segment(self, segment_id: str, **kwargs) -> APIResult[ApplicationSegments]:
         """
         Update an existing application segment.
 
@@ -472,7 +473,7 @@ class ApplicationSegmentAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_segment(self, segment_id: str, force_delete: bool = False, microtenant_id: str = None) -> tuple:
+    def delete_segment(self, segment_id: str, force_delete: bool = False, microtenant_id: Optional[str] = None) -> APIResult[None]:
         """
         Deletes the specified Application Segment from ZPA.
 
@@ -522,7 +523,7 @@ class ApplicationSegmentAPI(APIClient):
 
         return (None, response, None)
 
-    def app_segment_move(self, application_id: str, **kwargs) -> tuple:
+    def app_segment_move(self, application_id: str, **kwargs) -> APIResult[dict]:
         """
         Moves application segments from one microtenant to another
         Note: Application segments can only be moved from a Default Microtenant microtenant_id as 0 to a child tenant
@@ -597,7 +598,7 @@ class ApplicationSegmentAPI(APIClient):
 
         return (result, response, None)
 
-    def app_segment_share(self, application_id: str, **kwargs) -> tuple:
+    def app_segment_share(self, application_id: str, **kwargs) -> APIResult[dict]:
         """
         Shares the application segment to the Microtenant for the specified ID.
 
@@ -664,7 +665,7 @@ class ApplicationSegmentAPI(APIClient):
 
         return (result, response, None)
 
-    def add_segment_provision(self, **kwargs) -> tuple:
+    def add_segment_provision(self, **kwargs) -> APIResult[dict]:
         """
         Provision a new application segment for a given customer, creating all related objects as needed.
 
@@ -804,7 +805,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_weighted_lb_config(self, segment_id: str, query_params=None) -> tuple:
+    def get_weighted_lb_config(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[WeightedLBConfig]:
         """
         Get Weighted Load Balancer Config for AppSegment
 
@@ -857,7 +858,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_weighted_lb_config(self, segment_id: str, query_params=None, **kwargs) -> tuple:
+    def update_weighted_lb_config(self, segment_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[WeightedLBConfig]:
         """
         Updates the Weighted Load Balancing configuration for the specified Application Segment.
 
@@ -950,7 +951,7 @@ class ApplicationSegmentAPI(APIClient):
 
         return (result, response, None)
 
-    def bulk_update_multimatch(self, **kwargs) -> tuple:
+    def bulk_update_multimatch(self, **kwargs) -> APIResult[dict]:
         """
         Update multimatch feature in multiple application segments.
 
@@ -1007,7 +1008,7 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_multimatch_unsupported_references(self, domains, **kwargs) -> tuple:
+    def get_multimatch_unsupported_references(self, domains, **kwargs) -> APIResult[List[MultiMatchUnsupportedReferences]]:
         """
         Get the unsupported feature references for multimatch for domains.
 

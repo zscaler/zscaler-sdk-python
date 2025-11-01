@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_connector_groups import AppConnectorGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AppConnectorGroupAPI(APIClient):
@@ -32,7 +33,7 @@ class AppConnectorGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_connector_groups(self, query_params=None) -> tuple:
+    def list_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorGroup]]:
         """
         Enumerates connector groups in your organization with pagination.
         A subset of connector groups can be returned that match a supported
@@ -91,7 +92,7 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_connector_group(self, group_id: str, query_params=None) -> tuple:
+    def get_connector_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[AppConnectorGroup]:
         """
         Fetches a specific connector group by ID.
 
@@ -137,7 +138,7 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_connector_group(self, **kwargs) -> tuple:
+    def add_connector_group(self, **kwargs) -> APIResult[AppConnectorGroup]:
         """
         Adds a new ZPA App Connector Group.
 
@@ -227,7 +228,7 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_connector_group(self, group_id: str, **kwargs) -> tuple:
+    def update_connector_group(self, group_id: str, **kwargs) -> APIResult[AppConnectorGroup]:
         """
         Updates an existing ZPA App Connector Group.
 
@@ -322,7 +323,7 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_connector_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_connector_group(self, group_id: str, microtenant_id: Optional[str] = None) -> APIResult[None]:
         """
         Deletes the specified App Connector Group from ZPA.
 

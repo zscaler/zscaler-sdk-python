@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_domain import CustomerDomainController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CustomerDomainControllerAPI(APIClient):
@@ -32,7 +33,7 @@ class CustomerDomainControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_domains(self, type: str, query_params=None) -> tuple:
+    def list_domains(self, type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get all customer domains.
 
@@ -81,7 +82,7 @@ class CustomerDomainControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_update_domain(self, type: str, domain_list: list, microtenant_id: str = None) -> tuple:
+    def add_update_domain(self, type: str, domain_list: list, microtenant_id: str = None) -> APIResult[dict]:
         """
         Add or update domains for a customer.
         Association type field in request body is ignored

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.risk_profiles import RiskProfiles
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class RiskProfilesAPI(APIClient):
@@ -32,7 +33,7 @@ class RiskProfilesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_risk_profiles(self, query_params=None) -> tuple:
+    def list_risk_profiles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the cloud application risk profile
 
@@ -87,7 +88,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_risk_profiles_lite(self) -> tuple:
+    def list_risk_profiles_lite(self) -> APIResult[dict]:
         """
         Retrieves the cloud application risk profile lite
 
@@ -136,7 +137,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_risk_profile(self, profile_id: int) -> tuple:
+    def get_risk_profile(self, profile_id: int) -> APIResult[dict]:
         """
         Fetches a specific risk profile by ID.
 
@@ -182,7 +183,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_risk_profile(self, **kwargs) -> tuple:
+    def add_risk_profile(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Risk Profile.
 
@@ -333,7 +334,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_risk_profile(self, profile_id: int, **kwargs) -> tuple:
+    def update_risk_profile(self, profile_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Risk Profile.
 
@@ -413,7 +414,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_risk_profile(self, profile_id: int) -> tuple:
+    def delete_risk_profile(self, profile_id: int) -> APIResult[dict]:
         """
         Deletes the specified Risk Profile.
 

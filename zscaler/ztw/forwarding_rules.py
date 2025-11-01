@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.forwarding_rules import ForwardingControlRule
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class ForwardingControlRulesAPI(APIClient):
@@ -31,8 +32,8 @@ class ForwardingControlRulesAPI(APIClient):
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists forwarding control rules rules in your organization with pagination.
 
@@ -101,7 +102,7 @@ class ForwardingControlRulesAPI(APIClient):
 
         return (results, response, None)
 
-    def add_rule(self, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new forwarding control rule.
 
@@ -234,7 +235,7 @@ class ForwardingControlRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Adds a new forwarding control rule.
 

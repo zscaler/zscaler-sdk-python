@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.admin_roles import AdminRoles
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdminRolesAPI(APIClient):
@@ -32,7 +33,7 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(self, query_params=None) -> tuple:
+    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all existing admin roles.
 
@@ -109,7 +110,7 @@ class AdminRolesAPI(APIClient):
         username_access: str = "NONE",
         dashboard_access: str = "NONE",
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Create a new admin role.
 
@@ -209,7 +210,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_role(self, role_id: str, **kwargs) -> tuple:
+    def update_role(self, role_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing admin role.
 
@@ -291,7 +292,7 @@ class AdminRolesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_role(self, role_id: str) -> tuple:
+    def delete_role(self, role_id: str) -> APIResult[dict]:
         """
         Delete the specified admin role.
 

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_engine import DLPEngine, DLPVAlidateExpression
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DLPEngineAPI(APIClient):
@@ -32,7 +33,7 @@ class DLPEngineAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_dlp_engines(self, query_params=None) -> tuple:
+    def list_dlp_engines(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all DLP Engines.
 
@@ -100,8 +101,8 @@ class DLPEngineAPI(APIClient):
 
     def list_dlp_engines_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists name and ID Engine of all custom and predefined DLP dictionaries.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -168,7 +169,7 @@ class DLPEngineAPI(APIClient):
 
         return (results, response, None)
 
-    def get_dlp_engines(self, engine_id: int) -> tuple:
+    def get_dlp_engines(self, engine_id: int) -> APIResult[dict]:
         """
         Returns the dlp engine details for a given DLP Engine.
 
@@ -209,7 +210,7 @@ class DLPEngineAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_dlp_engine(self, **kwargs) -> tuple:
+    def add_dlp_engine(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new dlp engine.
 
@@ -274,7 +275,7 @@ class DLPEngineAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_dlp_engine(self, engine_id: int, **kwargs) -> tuple:
+    def update_dlp_engine(self, engine_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates an existing dlp engine.
 
@@ -334,7 +335,7 @@ class DLPEngineAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_dlp_engine(self, engine_id: int) -> tuple:
+    def delete_dlp_engine(self, engine_id: int) -> APIResult[dict]:
         """
         Deletes the specified dlp engine.
 
@@ -366,7 +367,7 @@ class DLPEngineAPI(APIClient):
 
         return (None, response, None)
 
-    def validate_dlp_expression(self, expression: str) -> tuple:
+    def validate_dlp_expression(self, expression: str) -> APIResult[dict]:
         """
         Validates a DLP engine expression.
 

@@ -24,6 +24,7 @@ from zscaler.zia.models.gre_tunnel_info import GreTunnelInfo
 from zscaler.zia.models.gre_vips import GroupByDatacenter
 
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficForwardingGRETunnelAPI(APIClient):
@@ -37,7 +38,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gre_tunnels(self, query_params=None) -> tuple:
+    def list_gre_tunnels(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured GRE tunnels.
 
@@ -93,7 +94,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_gre_tunnel(self, tunnel_id: int) -> tuple:
+    def get_gre_tunnel(self, tunnel_id: int) -> APIResult[dict]:
         """
         Returns information for the specified GRE tunnel.
 
@@ -141,7 +142,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
     def add_gre_tunnel(
         self,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new GRE tunnel.
 
@@ -247,7 +248,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_gre_tunnel(self, tunnel_id: str, **kwargs) -> tuple:
+    def update_gre_tunnel(self, tunnel_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing GRE tunnel.
 
@@ -353,7 +354,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_gre_tunnel(self, tunnel_id: int) -> tuple:
+    def delete_gre_tunnel(self, tunnel_id: int) -> APIResult[dict]:
         """
         Delete the specified GRE Tunnel.
 
@@ -391,7 +392,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return (None, response, None)
 
-    def list_gre_ranges(self, query_params=None) -> tuple:
+    def list_gre_ranges(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of available GRE tunnel ranges.
 
@@ -441,7 +442,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return (result, response, None)
 
-    def list_vips_recommended(self, query_params=None) -> tuple:
+    def list_vips_recommended(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
@@ -516,7 +517,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
+    def get_closest_diverse_vip_ids(self, ip_address: str) -> APIResult[dict]:
         """
         Returns the closest diverse Zscaler destination VIPs for a given IP address.
 
@@ -554,7 +555,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return recommended_vips
 
-    def list_vip_group_by_dc(self, query_params=None) -> tuple:
+    def list_vip_group_by_dc(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
 
@@ -613,7 +614,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_vips(self, query_params=None) -> tuple:
+    def list_vips(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
@@ -676,7 +677,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ip_gre_tunnel_info(self, query_params=None) -> tuple:
+    def get_ip_gre_tunnel_info(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information for the list of IP addresses with GRE tunnel details.
 

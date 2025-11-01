@@ -21,6 +21,7 @@ from zscaler.ztw.models.ecgroup import ECGroup
 from zscaler.ztw.models.ec_group_vm import ECGroupVM
 from zscaler.ztw.models.common import CommonIDNameExternalID
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ECGroupsAPI(APIClient):
@@ -34,7 +35,7 @@ class ECGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ec_groups(self, query_params=None) -> tuple:
+    def list_ec_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all Cloud & Branch Connector groups.
 
@@ -86,7 +87,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ec_group(self, group_id: str) -> tuple:
+    def get_ec_group(self, group_id: str) -> APIResult[dict]:
         """
         Get details for a specific Cloud or Branch Connector group by ID.
 
@@ -140,7 +141,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_group_lite(self, query_params=None) -> tuple:
+    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of a subset of Cloud & Branch Connector group information.
 
@@ -192,7 +193,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_instance_lite(self) -> tuple:
+    def list_ec_instance_lite(self) -> APIResult[dict]:
         """
         Returns the list of a subset of Cloud & Branch Connector instance information.
 
@@ -242,7 +243,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ec_group_vm(self, group_id: str, vm_id: str) -> tuple:
+    def get_ec_group_vm(self, group_id: str, vm_id: str) -> APIResult[dict]:
         """
         Gets a VM by specified Cloud or Branch Connector group ID and VM ID
 

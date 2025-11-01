@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.trustednetworks import TrustedNetworks
+from zscaler.types import APIResult
 
 
 class TrustedNetworksAPI(APIClient):
@@ -28,7 +29,7 @@ class TrustedNetworksAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params=None) -> tuple:
+    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of Trusted Networks By Company ID in the Client Connector Portal.
 
@@ -84,7 +85,7 @@ class TrustedNetworksAPI(APIClient):
 
         return (result, response, None)
 
-    def add_trusted_network(self, **kwargs) -> tuple:
+    def add_trusted_network(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Rule Label.
 
@@ -157,7 +158,7 @@ class TrustedNetworksAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_trusted_network(self, **kwargs) -> tuple:
+    def update_trusted_network(self, **kwargs) -> APIResult[dict]:
         """
         Update Trusted Network
 
@@ -211,7 +212,7 @@ class TrustedNetworksAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_trusted_network(self, network_id: int) -> tuple:
+    def delete_trusted_network(self, network_id: int) -> APIResult[dict]:
         """
         Deletes the specified Trusted Network.
 

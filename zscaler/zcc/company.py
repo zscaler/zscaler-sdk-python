@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zcc.models.getcompanyinfo import GetCompanyInfo
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CompanyInfoAPI(APIClient):
@@ -28,7 +29,7 @@ class CompanyInfoAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_company_info(self) -> tuple:
+    def get_company_info(self) -> APIResult[dict]:
         """
         Gets information about your organization such as the name of the business, domains, etc.
         Note: This API endpoint is allowed if called via OneAPI or if the token has admin or read-only admin privileges.

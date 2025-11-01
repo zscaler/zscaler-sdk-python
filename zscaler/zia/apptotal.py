@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.apptotal import AppTotal
 from zscaler.zia.models.apptotal import AppTotalSearch
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AppTotalAPI(APIClient):
@@ -33,7 +34,7 @@ class AppTotalAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_app(self, app_id: str, verbose: bool = False) -> tuple:
+    def get_app(self, app_id: str, verbose: bool = False) -> APIResult[dict]:
         """
         Searches the AppTotal App Catalog by app ID. If the app exists in the catalog, the app's information is
         returned. If not, the app is submitted for analysis. After analysis is complete, a subsequent GET request is
@@ -78,7 +79,7 @@ class AppTotalAPI(APIClient):
 
         return (result, response, None)
 
-    def scan_app(self, app_id: str) -> tuple:
+    def scan_app(self, app_id: str) -> APIResult[dict]:
         """
         Submits an app for analysis in the AppTotal Sandbox. After analysis is complete, a subsequent GET request is
         required to fetch the app's information.
@@ -123,7 +124,7 @@ class AppTotalAPI(APIClient):
 
         return (result, response, None)
 
-    def search_app(self, app_name: str) -> tuple:
+    def search_app(self, app_name: str) -> APIResult[dict]:
         """
         Searches for an app by name. Any app whose name contains the search term (app_name) is returned.
         Note: The maximum number of results that are returned is 200.
@@ -172,7 +173,7 @@ class AppTotalAPI(APIClient):
 
         return (result, response, None)
 
-    def app_views(self, app_view_id: str) -> tuple:
+    def app_views(self, app_view_id: str) -> APIResult[dict]:
         """
         Searches for an app by name. Any app whose name contains the search term (app_name) is returned.
         Note: The maximum number of results that are returned is 200.

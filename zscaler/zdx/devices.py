@@ -31,6 +31,7 @@ from zscaler.zdx.models.devices import DeviceActiveApplications
 from zscaler.zdx.models.devices import DeviceHealthMetrics
 from zscaler.zdx.models.devices import DeviceEvents
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class DevicesAPI(APIClient):
@@ -41,7 +42,7 @@ class DevicesAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_devices(self, query_params=None) -> tuple:
+    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active devices and its basic details.
         If the time range is not specified, the endpoint defaults to the previous 2 hours.
@@ -122,7 +123,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_device(self, device_id: str, query_params=None) -> tuple:
+    def get_device(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a single device in ZDX.
 
@@ -186,7 +187,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_device_apps(self, device_id: str, query_params=None) -> tuple:
+    def get_device_apps(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active applications for a device.
 
@@ -256,8 +257,8 @@ class DevicesAPI(APIClient):
         self,
         device_id: str,
         app_id: str,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns a single application for a device.
 
@@ -314,7 +315,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_web_probes(self, device_id: str, app_id: str, query_params=None) -> tuple:
+    def get_web_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active web probes for a specific application being used by a device.
 
@@ -383,7 +384,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_web_probe(self, device_id: str, app_id: str, probe_id: str, query_params=None) -> tuple:
+    def get_web_probe(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a single web probe for a specific application being used by a device.
 
@@ -452,7 +453,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params=None) -> tuple:
+    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active cloudpath probes for a specific application being used by a device.
 
@@ -570,7 +571,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, query_params=None) -> tuple:
+    def get_cloudpath(self, device_id: str, app_id: str, probe_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a single cloudpath for a specific application being used by a device.
 
@@ -631,7 +632,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_call_quality_metrics(self, device_id: str, app_id: str, query_params=None) -> tuple:
+    def get_call_quality_metrics(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a single call quality metrics for a specific application being used by a device.
 
@@ -686,7 +687,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_health_metrics(self, device_id: str, query_params=None) -> tuple:
+    def get_health_metrics(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns health metrics trend for a specific device.
 
@@ -743,7 +744,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_events(self, device_id: str, query_params=None) -> tuple:
+    def get_events(self, device_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all events for a specific device.
 
@@ -800,7 +801,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_geolocations(self, query_params=None) -> tuple:
+    def list_geolocations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active geolocations configured within the ZDX tenant.
 

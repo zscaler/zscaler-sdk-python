@@ -18,6 +18,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IOTReportAPI(APIClient):
@@ -31,7 +32,7 @@ class IOTReportAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_device_types(self) -> tuple:
+    def get_device_types(self) -> APIResult[dict]:
         """
         Retrieve the mapping between device type universally unique identifier (UUID)
         values and the device type names for all the device types supported by the Zscaler AI/ML.
@@ -74,7 +75,7 @@ class IOTReportAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_categories(self) -> tuple:
+    def get_categories(self) -> APIResult[dict]:
         """
         Retrieve the mapping between the device category universally unique identifier (UUID)
         values and the category names for all the device categories supported by the Zscaler AI/ML.
@@ -118,7 +119,7 @@ class IOTReportAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_classifications(self) -> tuple:
+    def get_classifications(self) -> APIResult[dict]:
         """
         Retrieve the mapping between the device classification universally unique identifier (UUID)
         values and the classification names for all the device classifications supported by Zscaler AI/ML.
@@ -162,7 +163,7 @@ class IOTReportAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_device_list(self) -> tuple:
+    def get_device_list(self) -> APIResult[dict]:
         """
         Retrieve a list of discovered devices with the following key contexts, IP address,
         location, ML auto-label, classification, category, and type.

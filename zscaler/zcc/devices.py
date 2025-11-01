@@ -24,6 +24,7 @@ from zscaler.zcc.models.devices import ForceRemoveDevices
 from zscaler.zcc.models.devices import SetDeviceCleanupInfo
 from zscaler.zcc.models.devices import DeviceCleanup
 from zscaler.zcc.models.devices import DeviceDetails
+from zscaler.types import APIResult
 from datetime import datetime
 
 
@@ -309,7 +310,7 @@ class DevicesAPI(APIClient):
         return filename
 
     @zcc_param_mapper
-    def list_devices(self, query_params=None) -> tuple:
+    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
 
@@ -371,7 +372,7 @@ class DevicesAPI(APIClient):
 
         return result, response, None
 
-    def get_device_cleanup_info(self) -> tuple:
+    def get_device_cleanup_info(self) -> APIResult[dict]:
         """
         Returns device cleanup sync information from the Client Connector Portal.
 
@@ -418,7 +419,7 @@ class DevicesAPI(APIClient):
 
         return result, response, None
 
-    def update_device_cleanup_info(self, **kwargs) -> tuple:
+    def update_device_cleanup_info(self, **kwargs) -> APIResult[dict]:
         """
         Set Device Cleaup Information
 
@@ -467,7 +468,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_device_details(self, query_params=None) -> tuple:
+    def get_device_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
        Lists device details of enrolled devices of your organization.
 
@@ -526,7 +527,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zcc_param_mapper
-    def remove_devices(self, query_params=None, **kwargs) -> tuple:
+    def remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Remove of the devices from the Client Connector Portal.
 
@@ -595,7 +596,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zcc_param_mapper
-    def force_remove_devices(self, query_params=None, **kwargs) -> tuple:
+    def force_remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Force remove of the devices from the Client Connector Portal.
 
@@ -663,7 +664,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def remove_machine_tunnel(self, query_params=None, **kwargs) -> tuple:
+    def remove_machine_tunnel(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Remove machine tunnel devices from the Client Connector Portal.
 

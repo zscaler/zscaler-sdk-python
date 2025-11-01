@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.c2c_ip_ranges import IpRanges
 from zscaler.zpa.models.common import CommonFilterSearch
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IPRangesAPI(APIClient):
@@ -33,7 +34,7 @@ class IPRangesAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_ip_ranges(self) -> tuple:
+    def list_ip_ranges(self) -> APIResult[dict]:
         """
         Enumerates ip ranges in your organization with pagination.
         A subset of ip ranges can be returned that match a supported
@@ -94,7 +95,7 @@ class IPRangesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ip_range(self, range_id: str) -> tuple:
+    def get_ip_range(self, range_id: str) -> APIResult[dict]:
         """
         Gets information on the specified ip range.
 
@@ -135,7 +136,7 @@ class IPRangesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_ip_range(self, **kwargs) -> tuple:
+    def add_ip_range(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new ip range.
 
@@ -203,7 +204,7 @@ class IPRangesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_range(self, range_id: str, **kwargs) -> tuple:
+    def update_ip_range(self, range_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified ip range.
 
@@ -280,7 +281,7 @@ class IPRangesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_range(self, range_id: str) -> tuple:
+    def delete_ip_range(self, range_id: str) -> APIResult[None]:
         """
         Deletes the specified ip range.
 
@@ -317,7 +318,7 @@ class IPRangesAPI(APIClient):
             return (None, response, error)
         return (None, response, error)
 
-    def get_ip_range_search(self, **kwargs) -> tuple:
+    def get_ip_range_search(self, **kwargs) -> APIResult[dict]:
         """
         Gets the IP range by page and pageSize for the specified customer based on given filters.
 

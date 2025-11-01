@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.client_settings import ClientSettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ClientSettingsAPI(APIClient):
@@ -32,7 +33,7 @@ class ClientSettingsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_client_settings(self, query_params=None) -> tuple:
+    def get_client_settings(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of client setting details.
         ClientCertType defaults to `CLIENT_CONNECTOR`
@@ -91,7 +92,7 @@ class ClientSettingsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_all_client_settings(self) -> tuple:
+    def get_all_client_settings(self) -> APIResult[dict]:
         """
         Returns all client setting details.
         ClientCertType defaults to `CLIENT_CONNECTOR`
@@ -131,7 +132,7 @@ class ClientSettingsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_client_setting(self, **kwargs) -> tuple:
+    def add_client_setting(self, **kwargs) -> APIResult[dict]:
         """
         Ccreate Client Setting for a customer. `ClientCertType` defaults to `CLIENT_CONNECTOR`
 
@@ -175,7 +176,7 @@ class ClientSettingsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_client_setting(self) -> tuple:
+    def delete_client_setting(self) -> APIResult[None]:
         """
         Deletes the specified client setting.
 

@@ -30,15 +30,15 @@ class Client:
 
     def __init__(
         self,
-        user_config: dict = {},
-        zcc_legacy_client: LegacyZCCClientHelper = None,
-        ztw_legacy_client: LegacyZTWClientHelper = None,
-        zdx_legacy_client: LegacyZDXClientHelper = None,
-        zpa_legacy_client: LegacyZPAClientHelper = None,
-        zia_legacy_client: LegacyZIAClientHelper = None,
-        zwa_legacy_client: LegacyZWAClientHelper = None,
+        user_config: Dict[str, Any] = {},
+        zcc_legacy_client: Optional[LegacyZCCClientHelper] = None,
+        ztw_legacy_client: Optional[LegacyZTWClientHelper] = None,
+        zdx_legacy_client: Optional[LegacyZDXClientHelper] = None,
+        zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
+        zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
+        zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
         use_legacy_client: bool = False,
-    ):
+    ) -> None:
         self.use_legacy_client = use_legacy_client
         self.zcc_legacy_client = zcc_legacy_client
         self.ztw_legacy_client = ztw_legacy_client

@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.resource_servers import ResourceServers
 from zscaler.zidentity.models.resource_servers import ResourceServersRecord
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ResourceServersAPI(APIClient):
@@ -33,7 +34,7 @@ class ResourceServersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_resource_servers(self, query_params=None) -> tuple:
+    def list_resource_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a paginated list of resource servers with an optional query parameters
         for pagination
@@ -105,7 +106,7 @@ class ResourceServersAPI(APIClient):
 
         return (result, response, None)
 
-    def get_resource_server(self, resource_id: str) -> tuple:
+    def get_resource_server(self, resource_id: str) -> APIResult[dict]:
         """
         Retrieves details about a specific resource server using the server ID.
 

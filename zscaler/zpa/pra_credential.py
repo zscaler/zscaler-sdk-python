@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_credential import PrivilegedRemoteAccessCredential
 from zscaler.utils import format_url, is_valid_ssh_key
+from zscaler.types import APIResult
 
 
 class PRACredentialAPI(APIClient):
@@ -32,7 +33,7 @@ class PRACredentialAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_credentials(self, query_params=None) -> tuple:
+    def list_credentials(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all privileged remote access credentials.
 
@@ -85,7 +86,7 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_credential(self, credential_id: str, query_params=None) -> tuple:
+    def get_credential(self, credential_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified privileged remote access credential.
 
@@ -131,7 +132,7 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_credential(self, **kwargs) -> tuple:
+    def add_credential(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new privileged remote access credential.
 
@@ -211,7 +212,7 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_credential(self, credential_id: str, **kwargs) -> tuple:
+    def update_credential(self, credential_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a specified credential based on provided keyword arguments.
 
@@ -292,7 +293,7 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_credential(self, credential_id: str, microtenant_id: str = None) -> tuple:
+    def delete_credential(self, credential_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified privileged remote access credential.
 
@@ -331,7 +332,7 @@ class PRACredentialAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def credential_move(self, credential_id: str, query_params=None) -> tuple:
+    def credential_move(self, credential_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Moves privileged remote access credentials between parent tenant and microtenants.
 

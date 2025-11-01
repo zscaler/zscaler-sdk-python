@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_source_groups import IPSourceGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IPSourceGroupsAPI(APIClient):
@@ -31,8 +32,8 @@ class IPSourceGroupsAPI(APIClient):
 
     def list_ip_source_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List IP Source Groups in your organization.
 
@@ -101,8 +102,8 @@ class IPSourceGroupsAPI(APIClient):
 
     def list_ip_source_groups_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -173,7 +174,7 @@ class IPSourceGroupsAPI(APIClient):
 
         return (results, response, None)
 
-    def add_ip_source_group(self, **kwargs) -> tuple:
+    def add_ip_source_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new IP Source Group.
 
@@ -223,7 +224,7 @@ class IPSourceGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_source_group(self, group_id: int) -> tuple:
+    def delete_ip_source_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes an IP Source Group.
 

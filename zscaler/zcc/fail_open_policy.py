@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.failopenpolicy import FailOpenPolicy
+from zscaler.types import APIResult
 
 
 class FailOpenPolicyAPI(APIClient):
@@ -28,7 +29,7 @@ class FailOpenPolicyAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params=None) -> tuple:
+    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of Fail Open Policy By Company in the Client Connector Portal.
 
@@ -80,7 +81,7 @@ class FailOpenPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_failopen_policy(self, **kwargs) -> tuple:
+    def update_failopen_policy(self, **kwargs) -> APIResult[dict]:
         """
         Update Fail Open Policy
 

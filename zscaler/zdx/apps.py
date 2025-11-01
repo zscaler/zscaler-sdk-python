@@ -24,6 +24,7 @@ from zscaler.zdx.models.applications import ApplicationMetrics
 from zscaler.zdx.models.application_users import ApplicationUserDetails
 from zscaler.zdx.models.application_users import ApplicationActiveUsers
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class AppsAPI(APIClient):
@@ -34,7 +35,7 @@ class AppsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_apps(self, query_params=None) -> tuple:
+    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active applications configured within the ZDX tenant.
 
@@ -103,7 +104,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_app(self, app_id: str, query_params=None) -> tuple:
+    def get_app(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the application's ZDX Score (for the previous 2 hours).
         Including most impacted locations, and the total number of users impacted.
@@ -165,7 +166,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_app_score(self, app_id: str, query_params=None) -> tuple:
+    def get_app_score(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the ZDX score trend for the specified application configured within the ZDX tenant.
 
@@ -236,7 +237,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_app_metrics(self, app_id: str, query_params=None) -> tuple:
+    def get_app_metrics(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the ZDX metrics for the specified application configured within the ZDX tenant.
 
@@ -315,7 +316,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_app_users(self, app_id: str, query_params=None) -> tuple:
+    def list_app_users(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of users and devices that were used to access the specified application configured within
         the ZDX tenant.
@@ -392,7 +393,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_app_user(self, app_id: str, user_id: str, query_params=None) -> tuple:
+    def get_app_user(self, app_id: str, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified user and device that was used to access the specified application
         configured within the ZDX tenant.

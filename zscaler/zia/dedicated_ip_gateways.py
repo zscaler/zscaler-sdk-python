@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
 from zscaler.zia.models.dedicated_ip_gateways import DedicatedIPGateways
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DedicatedIPGatewaysAPI(APIClient):
@@ -35,8 +36,8 @@ class DedicatedIPGatewaysAPI(APIClient):
 
     def list_dedicated_ip_gw_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Retrieves a list of dedicated IP gateways
 

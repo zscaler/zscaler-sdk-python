@@ -19,6 +19,7 @@ import mimetypes
 import time
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudSandboxAPI:
@@ -32,7 +33,7 @@ class CloudSandboxAPI:
     def __init__(self, request_executor: "RequestExecutor") -> None:
         self._request_executor: RequestExecutor = request_executor
 
-    def submit_file(self, file_path: str, force: bool = False) -> tuple:
+    def submit_file(self, file_path: str, force: bool = False) -> APIResult[dict]:
         """
         Submits a file to the ZIA Advanced Cloud Sandbox for analysis.
 
@@ -96,7 +97,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def submit_file_for_inspection(self, file_path: str) -> tuple:
+    def submit_file_for_inspection(self, file_path: str) -> APIResult[dict]:
         """
         Submits a file for inspection.
 
@@ -160,7 +161,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def get_quota(self) -> tuple:
+    def get_quota(self) -> APIResult[dict]:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
 
@@ -195,7 +196,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def get_report(self, md5_hash: str, report_details: str = "summary") -> tuple:
+    def get_report(self, md5_hash: str, report_details: str = "summary") -> APIResult[dict]:
         """
         Returns the Cloud Sandbox Report for the provided hash.
 
@@ -238,7 +239,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def get_behavioral_analysis(self) -> tuple:
+    def get_behavioral_analysis(self) -> APIResult[dict]:
         """
         Returns the custom list of MD5 file hashes that are blocked by Sandbox.
 
@@ -273,7 +274,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def get_file_hash_count(self) -> tuple:
+    def get_file_hash_count(self) -> APIResult[dict]:
         """
         Retrieves the Cloud Sandbox used and unused quota for blocking MD5 file hashes.
 
@@ -313,7 +314,7 @@ class CloudSandboxAPI:
 
         return (result, response, None)
 
-    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> tuple:
+    def add_hash_to_custom_list(self, file_hashes_to_be_blocked: list) -> APIResult[dict]:
         """
         Updates the custom list of MD5 file hashes that are blocked by Sandbox.
 

@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -19,6 +18,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.advanced_settings import AdvancedSettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdvancedSettingsAPI(APIClient):
@@ -32,7 +32,7 @@ class AdvancedSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_advanced_settings(self) -> tuple:
+    def get_advanced_settings(self) -> APIResult[AdvancedSettings]:
         """
         Retrieves the current advanced settings configured in the ZIA Admin Portal.
 
@@ -78,7 +78,7 @@ class AdvancedSettingsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_advanced_settings(self, **kwargs) -> tuple:
+    def update_advanced_settings(self, **kwargs) -> APIResult[AdvancedSettings]:
         """
         Updates advanced settings in the ZIA Admin Portal with the provided configuration.
 

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_version_profile import CustomerVersionProfile
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CustomerVersionProfileAPI(APIClient):
@@ -32,7 +33,7 @@ class CustomerVersionProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_version_profiles(self, query_params=None) -> tuple:
+    def list_version_profiles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all visible version profiles.
 

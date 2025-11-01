@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.ssl_inspection_rules import SSLInspectionRules
+from zscaler.types import APIResult
 
 
 class SSLInspectionAPI(APIClient):
@@ -31,8 +32,8 @@ class SSLInspectionAPI(APIClient):
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists ssl inspection rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -92,7 +93,7 @@ class SSLInspectionAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified ssl inspection filter rule.
 
@@ -139,7 +140,7 @@ class SSLInspectionAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a new ssl inspection filter rule.
 
@@ -233,7 +234,7 @@ class SSLInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> tuple:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates an existing ssl inspection filter rule.
 
@@ -321,7 +322,7 @@ class SSLInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> tuple:
+    def delete_rule(self, rule_id: int) -> APIResult[dict]:
         """
         Deletes the specified ssl inspection filter rule.
 

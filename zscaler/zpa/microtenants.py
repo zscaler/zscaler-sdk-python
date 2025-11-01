@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.microtenants import Microtenant
 from zscaler.zpa.models.common import CommonFilterSearch
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class MicrotenantsAPI(APIClient):
@@ -33,7 +34,7 @@ class MicrotenantsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_microtenants(self, query_params=None) -> tuple:
+    def list_microtenants(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates microtenants in your organization with pagination.
         A subset of microtenants can be returned that match a supported
@@ -84,7 +85,7 @@ class MicrotenantsAPI(APIClient):
     def get_microtenant(
         self,
         microtenant_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information on the specified microtenant.
 
@@ -123,7 +124,7 @@ class MicrotenantsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_microtenant_summary(self) -> tuple:
+    def get_microtenant_summary(self) -> APIResult[dict]:
         """
         Returns the name and ID of the configured Microtenant.
 
@@ -164,7 +165,7 @@ class MicrotenantsAPI(APIClient):
 
         return (microtenant_list, None)
 
-    def get_microtenant_search(self, **kwargs) -> tuple:
+    def get_microtenant_search(self, **kwargs) -> APIResult[dict]:
         """
         Gets all configured Microtenants for the specified customer based on given filters.
 
@@ -251,7 +252,7 @@ class MicrotenantsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_microtenant(self, **kwargs) -> tuple:
+    def add_microtenant(self, **kwargs) -> APIResult[dict]:
         """
         Add a new microtenant.
 
@@ -300,7 +301,7 @@ class MicrotenantsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_microtenant(self, microtenant_id: str, **kwargs) -> tuple:
+    def update_microtenant(self, microtenant_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified microtenant.
 

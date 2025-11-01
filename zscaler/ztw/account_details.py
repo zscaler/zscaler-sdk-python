@@ -18,6 +18,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AccountDetailsAPI(APIClient):
@@ -31,7 +32,7 @@ class AccountDetailsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_public_account_details(self, query_params=None) -> tuple:
+    def list_public_account_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of public cloud account information.
 
@@ -84,7 +85,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_public_account_details(self, account_id: str, query_params=None) -> tuple:
+    def get_public_account_details(self, account_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information for the public (Cloud Connector) cloud account information for the specified ID.
 
@@ -137,7 +138,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_details_lite(self, query_params=None) -> tuple:
+    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a subset of public (Cloud Connector) cloud account information.
 
@@ -199,7 +200,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_status(self) -> tuple:
+    def list_public_account_status(self) -> APIResult[dict]:
         """
         Returns a List of public (Cloud Connector) cloud account status information (enabled/disabled).
 
@@ -235,7 +236,7 @@ class AccountDetailsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_public_account_status(self, **kwargs) -> tuple:
+    def update_public_account_status(self, **kwargs) -> APIResult[dict]:
         """
         Update an existing public account status.
 

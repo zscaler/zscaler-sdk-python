@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_approval import PrivilegedRemoteAccessApproval
 from zscaler.utils import format_url
 from zscaler.utils import validate_and_convert_times
+from zscaler.types import APIResult
 
 
 class PRAApprovalAPI(APIClient):
@@ -33,7 +34,7 @@ class PRAApprovalAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_approval(self, query_params=None) -> tuple:
+    def list_approval(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all privileged remote access approvals.
 
@@ -90,7 +91,7 @@ class PRAApprovalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_approval(self, approval_id: str, query_params=None) -> tuple:
+    def get_approval(self, approval_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified pra approval.
 
@@ -138,7 +139,7 @@ class PRAApprovalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_approval(self, **kwargs) -> tuple:
+    def add_approval(self, **kwargs) -> APIResult[dict]:
         """
         Adds a privileged remote access approval.
 
@@ -231,7 +232,7 @@ class PRAApprovalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_approval(self, approval_id: str, **kwargs) -> tuple:
+    def update_approval(self, approval_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a specified approval based on provided keyword arguments.
 
@@ -325,7 +326,7 @@ class PRAApprovalAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_approval(self, approval_id: str, microtenant_id: str = None) -> tuple:
+    def delete_approval(self, approval_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes a specified privileged remote access approval.
 
@@ -365,7 +366,7 @@ class PRAApprovalAPI(APIClient):
 
         return (None, response, None)
 
-    def expired_approval(self, microtenant_id: str = None) -> tuple:
+    def expired_approval(self, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes all expired privileged approvals.
 

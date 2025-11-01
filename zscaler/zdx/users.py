@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.users import ActiveUsers
 from zscaler.zdx.models.users import UserDeviceDetails
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class UsersAPI(APIClient):
@@ -30,7 +31,7 @@ class UsersAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_users(self, query_params=None) -> tuple:
+    def list_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all active users configured within the ZDX tenant.
 
@@ -109,7 +110,7 @@ class UsersAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def get_user(self, user_id: str, query_params=None) -> tuple:
+    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified user configured within the ZDX tenant.
 

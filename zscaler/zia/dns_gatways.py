@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dns_gateways import DNSGateways
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,7 +33,7 @@ class DNSGatewayAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_dns_gateways(self, query_params=None) -> tuple:
+    def list_dns_gateways(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of dns gateways.
 
@@ -112,7 +113,7 @@ class DNSGatewayAPI(APIClient):
     def get_dns_gateways(
         self,
         gateway_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Retrieves a list of Proxy Gateways.
 
@@ -154,7 +155,7 @@ class DNSGatewayAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_dns_gateway(self, **kwargs) -> tuple:
+    def add_dns_gateway(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA DNS Gateway.
 
@@ -220,7 +221,7 @@ class DNSGatewayAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_dns_gateway(self, gateway_id: int, **kwargs) -> tuple:
+    def update_dns_gateway(self, gateway_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA DNS Gateway.
 
@@ -287,7 +288,7 @@ class DNSGatewayAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_dns_gateway(self, gateway_id: int) -> tuple:
+    def delete_dns_gateway(self, gateway_id: int) -> APIResult[dict]:
         """
         Deletes the specified DNS Gateway.
 

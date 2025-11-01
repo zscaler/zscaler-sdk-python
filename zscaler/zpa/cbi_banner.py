@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_banner import CBIBanner
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CBIBannerAPI(APIClient):
@@ -32,7 +33,7 @@ class CBIBannerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_banners(self) -> tuple:
+    def list_cbi_banners(self) -> APIResult[dict]:
         """
         Returns a list of all cloud browser isolation banners.
 
@@ -72,7 +73,7 @@ class CBIBannerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cbi_banner(self, banner_id: str) -> tuple:
+    def get_cbi_banner(self, banner_id: str) -> APIResult[dict]:
         """
         Returns information on the specified cloud browser isolation banner.
 
@@ -112,7 +113,7 @@ class CBIBannerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_cbi_banner(self, **kwargs) -> tuple:
+    def add_cbi_banner(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new cloud browser isolation banner.
 
@@ -162,7 +163,7 @@ class CBIBannerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cbi_banner(self, banner_id: str, **kwargs) -> tuple:
+    def update_cbi_banner(self, banner_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing cloud browser isolation banner.
 
@@ -219,7 +220,7 @@ class CBIBannerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cbi_banner(self, banner_id: str) -> tuple:
+    def delete_cbi_banner(self, banner_id: str) -> APIResult[dict]:
         """
         Deletes the specified cloud browser isolation banner.
 

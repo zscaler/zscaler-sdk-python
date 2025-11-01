@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.zdxgroupentitlements import ZdxGroupEntitlements
 from zscaler.zcc.models.zpagroupentitlements import ZpaGroupEntitlements
+from zscaler.types import APIResult
 
 
 class EntitlementAPI(APIClient):
@@ -29,7 +30,7 @@ class EntitlementAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_zdx_group_entitlements(self, query_params=None) -> tuple:
+    def get_zdx_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list ZDX group entitlements in the Client Connector Portal.
 
@@ -79,7 +80,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_zdx_group_entitlement(self) -> tuple:
+    def update_zdx_group_entitlement(self) -> APIResult[dict]:
         """
         Updates ZDX Group Entitlement.
 
@@ -112,7 +113,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_zpa_group_entitlements(self, query_params=None) -> tuple:
+    def get_zpa_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list ZPA group entitlements in the Client Connector Portal.
 
@@ -162,7 +163,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_zpa_group_entitlement(self) -> tuple:
+    def update_zpa_group_entitlement(self) -> APIResult[dict]:
         """
         Updates ZPA Group Entitlement.
 

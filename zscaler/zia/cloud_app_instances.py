@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_app_instances import CloudApplicationInstances
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudApplicationInstancesAPI(APIClient):
@@ -31,8 +32,8 @@ class CloudApplicationInstancesAPI(APIClient):
 
     def list_cloud_app_instances(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Retrieves the list of cloud application instances configured in the ZIA Admin Portal
 
@@ -94,7 +95,7 @@ class CloudApplicationInstancesAPI(APIClient):
 
         return (result, response, None)
 
-    def get_cloud_app_instances(self, instance_id: int) -> tuple:
+    def get_cloud_app_instances(self, instance_id: int) -> APIResult[dict]:
         """
         Retrieves information about a cloud application instance based on the specified ID
 
@@ -140,7 +141,7 @@ class CloudApplicationInstancesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_cloud_app_instances(self, **kwargs) -> tuple:
+    def add_cloud_app_instances(self, **kwargs) -> APIResult[dict]:
         """
         Add a new cloud application instance.
 
@@ -210,7 +211,7 @@ class CloudApplicationInstancesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cloud_app_instances(self, instance_id: int, **kwargs) -> tuple:
+    def update_cloud_app_instances(self, instance_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information about a cloud application instance based on the specified ID
 
@@ -265,7 +266,7 @@ class CloudApplicationInstancesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cloud_app_instances(self, instance_id: int) -> tuple:
+    def delete_cloud_app_instances(self, instance_id: int) -> APIResult[dict]:
         """
         Deletes a cloud application instance based on the specified ID
 

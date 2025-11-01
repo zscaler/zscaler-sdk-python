@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.provisioning_url import ProvisioningURL
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ProvisioningURLAPI(APIClient):
@@ -32,7 +33,7 @@ class ProvisioningURLAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_provisioning_url(self, query_params=None) -> tuple:
+    def list_provisioning_url(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all provisioning URLs.
 
@@ -84,7 +85,7 @@ class ProvisioningURLAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_provisioning_url(self, provision_id: str) -> tuple:
+    def get_provisioning_url(self, provision_id: str) -> APIResult[dict]:
         """
         Get details for a provisioning template by ID.
 

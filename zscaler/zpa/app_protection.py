@@ -21,6 +21,7 @@ from zscaler.zpa.models.app_protection_profile import AppProtectionProfile
 from zscaler.zpa.models.app_protection_profile import CustomControls
 from zscaler.zpa.models.app_protection_predefined_controls import PredefinedInspectionControlResource
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 from requests.utils import quote
 
 
@@ -58,8 +59,8 @@ class InspectionControllerAPI(APIClient):
 
     def list_profiles(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Enumerates App Protection Profile in your organization with pagination.
         A subset of App Protection Profile can be returned that match a supported
@@ -104,7 +105,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_profile(self, profile_id: str, **kwargs) -> tuple:
+    def get_profile(self, profile_id: str, **kwargs) -> APIResult[AppProtectionProfile]:
         """
         Gets information on the specified inspection profile.
 
@@ -136,7 +137,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_profile(self, **kwargs) -> tuple:
+    def add_profile(self, **kwargs) -> APIResult[dict]:
         """
         Create a new inspection profile.
 
@@ -280,7 +281,7 @@ class InspectionControllerAPI(APIClient):
         except Exception as error:
             return None, response, error
 
-    def update_profile(self, profile_id: str, **kwargs) -> tuple:
+    def update_profile(self, profile_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified inspection profile.
 
@@ -385,7 +386,7 @@ class InspectionControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> tuple:
+    def profile_control_attach(self, profile_id: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Attaches or detaches all predefined ZPA Inspection Controls to a ZPA Inspection Profile.
 
@@ -432,7 +433,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_profile_and_controls(self, profile_id: str, **kwargs) -> tuple:
+    def update_profile_and_controls(self, profile_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the inspection profile and controls for the specified ID.
 
@@ -528,8 +529,8 @@ class InspectionControllerAPI(APIClient):
 
     def list_custom_controls(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Enumerates App Protection Custom Control in your organization with pagination.
         A subset of App Protection Custom Control can be returned that match a supported
@@ -576,8 +577,8 @@ class InspectionControllerAPI(APIClient):
 
     def get_all_predef_control(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns all predefined inspection controls.
 
@@ -627,7 +628,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_predef_control(self, control_id: str) -> tuple:
+    def get_predef_control(self, control_id: str) -> APIResult[dict]:
         """
         Returns the specified predefined ZPA Inspection Control.
 
@@ -666,7 +667,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_custom_control(self, control_id: str) -> tuple:
+    def get_custom_control(self, control_id: str) -> APIResult[CustomControls]:
         """
         Returns the specified custom ZPA Inspection Control.
 
@@ -697,7 +698,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_custom_control(self, **kwargs) -> tuple:
+    def add_custom_control(self, **kwargs) -> APIResult[CustomControls]:
         """
         Adds a new ZPA Inspection Custom Control.
 
@@ -734,7 +735,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_custom_control(self, control_id: str, **kwargs) -> tuple:
+    def update_custom_control(self, control_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified custom ZPA Inspection Control.
 
@@ -817,7 +818,7 @@ class InspectionControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def list_predef_controls(self, query_params=None) -> tuple:
+    def list_predef_controls(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of predefined ZPA Inspection Controls.
 
@@ -893,7 +894,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_control_action_types(self) -> tuple:
+    def list_control_action_types(self) -> APIResult[dict]:
         """
         Returns a list of ZPA Inspection Control Action Types.
 
@@ -934,7 +935,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_control_severity_types(self) -> tuple:
+    def list_control_severity_types(self) -> APIResult[dict]:
         """
         Returns a list of Inspection Control Severity Types.
 
@@ -975,7 +976,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_control_types(self) -> tuple:
+    def list_control_types(self) -> APIResult[dict]:
         """
         Returns a list of ZPA Inspection Control Types.
 
@@ -1016,7 +1017,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_custom_http_methods(self) -> tuple:
+    def list_custom_http_methods(self) -> APIResult[dict]:
         """
         Returns a list of custom ZPA Inspection Control HTTP Methods.
 
@@ -1057,7 +1058,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_predef_control_versions(self) -> tuple:
+    def list_predef_control_versions(self) -> APIResult[dict]:
         """
         Returns a list of predefined ZPA Inspection Control versions.
 
@@ -1095,7 +1096,7 @@ class InspectionControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def list_predef_control_adp(self, query_params=None) -> tuple:
+    def list_predef_control_adp(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns all predefined ADP inspection controls for the specified customer.
 
@@ -1137,7 +1138,7 @@ class InspectionControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_predef_control_api(self, query_params=None) -> tuple:
+    def list_predef_control_api(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns all predefined inspection controls for the specified customer.
 

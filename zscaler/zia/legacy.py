@@ -21,6 +21,7 @@ import re
 import time
 import uuid
 from time import sleep
+from typing import Optional, Dict, Any, Tuple, Type
 
 import requests
 from zscaler import __version__
@@ -86,15 +87,15 @@ class LegacyZIAClientHelper:
 
     def __init__(
         self,
-        cloud,
-        timeout=240,
-        cache=None,
-        fail_safe=False,
-        request_executor_impl=None,
-        session_safety_margin=30,
-        use_session_validation=True,
-        **kw
-    ):
+        cloud: str,
+        timeout: int = 240,
+        cache: Optional[Cache] = None,
+        fail_safe: bool = False,
+        request_executor_impl: Optional[Type] = None,
+        session_safety_margin: int = 30,
+        use_session_validation: bool = True,
+        **kw: Any
+    ) -> None:
         from zscaler.request_executor import RequestExecutor
 
         self.api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
@@ -179,7 +180,7 @@ class LegacyZIAClientHelper:
         }
         self.request_executor = (request_executor_impl or RequestExecutor)(self.config, self.cache, zia_legacy_client=self)
 
-    def extractJSessionIDFromHeaders(self, header):
+    def extractJSessionIDFromHeaders(self, header: Dict[str, str]) -> str:
         session_id_str = header.get("Set-Cookie", "")
 
         if not session_id_str:
@@ -246,7 +247,7 @@ class LegacyZIAClientHelper:
             logger.warning(f"Session validation failed: {e}")
             return False
 
-    def ensure_valid_session(self):
+    def ensure_valid_session(self) -> None:
         """
         Ensures the session is valid before making API calls.
         Uses the configured validation strategy.
@@ -273,7 +274,7 @@ class LegacyZIAClientHelper:
         # Update last activity time
         self.last_activity = datetime.datetime.utcnow()
 
-    def authenticate(self):
+    def authenticate(self) -> None:
         """
         Creates a ZIA authentication session and sets the JSESSIONID.
         """
@@ -313,14 +314,14 @@ class LegacyZIAClientHelper:
         self.last_activity = datetime.datetime.utcnow()  # Set initial activity time
         logger.info("Authentication successful. JSESSIONID set.")
 
-    def __enter__(self):
+    def __enter__(self) -> "LegacyZIAClientHelper":
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type: Optional[type], exc_val: Optional[Exception], exc_tb: Optional[Any]) -> None:
         logger.debug("deauthenticating...")
         self.deauthenticate()
 
-    def deauthenticate(self):
+    def deauthenticate(self) -> bool:
         """
         Ends the ZIA authentication session.
         """
@@ -340,10 +341,18 @@ class LegacyZIAClientHelper:
         except requests.RequestException as e:
             return False
 
-    def get_base_url(self, endpoint):
+    def get_base_url(self, endpoint: str) -> str:
         return self.url
 
-    def send(self, method, path, json=None, params=None, data=None, headers=None):
+    def send(
+        self,
+        method: str,
+        path: str,
+        json: Optional[Dict[str, Any]] = None,
+        params: Optional[Dict[str, Any]] = None,
+        data: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Tuple[requests.Response, Dict[str, Any]]:
         """
         Send a request to the ZIA API using JSESSIONID-based authentication.
 
@@ -423,12 +432,12 @@ class LegacyZIAClientHelper:
 
         raise ValueError("Request execution failed after maximum retries.")
 
-    def set_session(self, session):
+    def set_session(self, session: Any) -> None:
         """Dummy method for compatibility with the request executor."""
         self._session = session
 
     @property
-    def activate(self):
+    def activate(self) -> "ActivationAPI":
         """
         The interface object for the :ref:`ZIA Activation interface <zia-activate>`.
 
@@ -438,7 +447,7 @@ class LegacyZIAClientHelper:
         return ActivationAPI(self.request_executor)
 
     @property
-    def admin_roles(self):
+    def admin_roles(self) -> "AdminRolesAPI":
         """
         The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_roles>`.
 
@@ -448,7 +457,7 @@ class LegacyZIAClientHelper:
         return AdminRolesAPI(self.request_executor)
 
     @property
-    def admin_users(self):
+    def admin_users(self) -> "AdminUsersAPI":
         """
         The interface object for the :ref:`ZIA Admin Users interface <zia-admin_users>`.
 
@@ -458,7 +467,7 @@ class LegacyZIAClientHelper:
         return AdminUsersAPI(self.request_executor)
 
     @property
-    def audit_logs(self):
+    def audit_logs(self) -> "AuditLogsAPI":
         """
         The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
 
@@ -468,7 +477,7 @@ class LegacyZIAClientHelper:
         return AuditLogsAPI(self.request_executor)
 
     @property
-    def apptotal(self):
+    def apptotal(self) -> "AppTotalAPI":
         """
         The interface object for the :ref:`ZIA AppTotal interface <zia-apptotal>`.
 
@@ -478,7 +487,7 @@ class LegacyZIAClientHelper:
         return AppTotalAPI(self.request_executor)
 
     @property
-    def advanced_settings(self):
+    def advanced_settings(self) -> "AdvancedSettingsAPI":
         """
         The interface object for the :ref:`ZIA Advanced Settings interface <zia-advanced_settings>`.
 
@@ -488,7 +497,7 @@ class LegacyZIAClientHelper:
         return AdvancedSettingsAPI(self.request_executor)
 
     @property
-    def atp_policy(self):
+    def atp_policy(self) -> "ATPPolicyAPI":
         """
         The interface object for the :ref:`ZIA Advanced Settings interface <zia-advanced_settings>`.
 
@@ -498,7 +507,7 @@ class LegacyZIAClientHelper:
         return ATPPolicyAPI(self.request_executor)
 
     @property
-    def authentication_settings(self):
+    def authentication_settings(self) -> "AuthenticationSettingsAPI":
         """
         The interface object for the :ref:`ZIA Authentication Security Settings interface <zia-authentication_settings>`.
 
@@ -508,7 +517,7 @@ class LegacyZIAClientHelper:
         return AuthenticationSettingsAPI(self.request_executor)
 
     @property
-    def cloudappcontrol(self):
+    def cloudappcontrol(self) -> "CloudAppControlAPI":
         """
         The interface object for the :ref:`ZIA Cloud App Control interface <zia-cloudappcontrol>`.
 
@@ -518,7 +527,7 @@ class LegacyZIAClientHelper:
         return CloudAppControlAPI(self.request_executor)
 
     @property
-    def casb_dlp_rules(self):
+    def casb_dlp_rules(self) -> "CasbdDlpRulesAPI":
         """
         The interface object for the :ref:`ZIA Casb DLP Rules interface <zia-casb_dlp_rules>`.
 
@@ -528,7 +537,7 @@ class LegacyZIAClientHelper:
         return CasbdDlpRulesAPI(self.request_executor)
 
     @property
-    def casb_malware_rules(self):
+    def casb_malware_rules(self) -> "CasbMalwareRulesAPI":
         """
         The interface object for the :ref:`ZIA Casb Malware Rules interface <zia-casb_malware_rules>`.
 
@@ -539,7 +548,7 @@ class LegacyZIAClientHelper:
         return CasbMalwareRulesAPI(self.request_executor)
 
     @property
-    def cloud_applications(self):
+    def cloud_applications(self) -> "CloudApplicationsAPI":
         """
         The interface object for the :ref:`ZIA Cloud App Control <zia-cloud_applications>`.
 
@@ -549,7 +558,7 @@ class LegacyZIAClientHelper:
         return CloudApplicationsAPI(self.request_executor)
 
     @property
-    def shadow_it_report(self):
+    def shadow_it_report(self) -> "ShadowITAPI":
         """
         The interface object for the :ref:`ZIA Shadow IT Report <zia-shadow_it_report>`.
 
@@ -559,7 +568,7 @@ class LegacyZIAClientHelper:
         return ShadowITAPI(self.request_executor)
 
     @property
-    def cloud_browser_isolation(self):
+    def cloud_browser_isolation(self) -> "CBIProfileAPI":
         """
         The interface object for the :ref:`ZIA Cloud Browser Isolation Profile <zia-cloud_browser_isolation>`.
 
@@ -569,7 +578,7 @@ class LegacyZIAClientHelper:
         return CBIProfileAPI(self.request_executor)
 
     @property
-    def cloud_nss(self):
+    def cloud_nss(self) -> "CloudNSSAPI":
         """
         The interface object for the :ref:`ZIA Cloud NSS interface <zia-cloud_nss>`.
 
@@ -579,7 +588,7 @@ class LegacyZIAClientHelper:
         return CloudNSSAPI(self.request_executor)
 
     @property
-    def cloud_firewall_dns(self):
+    def cloud_firewall_dns(self) -> "FirewallDNSRulesAPI":
         """
         The interface object for the :ref:`ZIA Firewall DNS Policies interface <zia-cloud_firewall_dns>`.
 
@@ -589,7 +598,7 @@ class LegacyZIAClientHelper:
         return FirewallDNSRulesAPI(self.request_executor)
 
     @property
-    def cloud_firewall_ips(self):
+    def cloud_firewall_ips(self) -> "FirewallIPSRulesAPI":
         """
         The interface object for the :ref:`ZIA Firewall IPS Policies interface <zia-cloud_firewall_ips>`.
 
@@ -599,7 +608,7 @@ class LegacyZIAClientHelper:
         return FirewallIPSRulesAPI(self.request_executor)
 
     @property
-    def cloud_firewall_rules(self):
+    def cloud_firewall_rules(self) -> "FirewallPolicyAPI":
         """
         The interface object for the :ref:`ZIA Firewall Policies interface <zia-cloud_firewall_rules>`.
 
@@ -609,7 +618,7 @@ class LegacyZIAClientHelper:
         return FirewallPolicyAPI(self.request_executor)
 
     @property
-    def cloud_firewall(self):
+    def cloud_firewall(self) -> "FirewallResourcesAPI":
         """
         The interface object for the :ref:`ZIA Cloud Firewall resources interface <zia-cloud_firewall>`.
 
@@ -619,7 +628,7 @@ class LegacyZIAClientHelper:
         return FirewallResourcesAPI(self.request_executor)
 
     @property
-    def dlp_dictionary(self):
+    def dlp_dictionary(self) -> "DLPDictionaryAPI":
         """
         The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp_dictionary>`.
 
@@ -629,7 +638,7 @@ class LegacyZIAClientHelper:
         return DLPDictionaryAPI(self.request_executor)
 
     @property
-    def dlp_engine(self):
+    def dlp_engine(self) -> "DLPEngineAPI":
         """
         The interface object for the :ref:`ZIA DLP Engine interface <zia-dlp_engine>`.
 
@@ -639,7 +648,7 @@ class LegacyZIAClientHelper:
         return DLPEngineAPI(self.request_executor)
 
     @property
-    def dlp_web_rules(self):
+    def dlp_web_rules(self) -> "DLPWebRuleAPI":
         """
         The interface object for the :ref:`ZIA DLP Web Rules interface <zia-dlp_web_rules>`.
 
@@ -649,7 +658,7 @@ class LegacyZIAClientHelper:
         return DLPWebRuleAPI(self.request_executor)
 
     @property
-    def dlp_templates(self):
+    def dlp_templates(self) -> "DLPTemplatesAPI":
         """
         The interface object for the :ref:`ZIA DLP Templates interface <zia-dlp_templates>`.
 
@@ -659,7 +668,7 @@ class LegacyZIAClientHelper:
         return DLPTemplatesAPI(self.request_executor)
 
     @property
-    def dlp_resources(self):
+    def dlp_resources(self) -> "DLPResourcesAPI":
         """
         The interface object for the :ref:`ZIA DLP Resources interface <zia-dlp_resources>`.
 
@@ -669,7 +678,7 @@ class LegacyZIAClientHelper:
         return DLPResourcesAPI(self.request_executor)
 
     @property
-    def device_management(self):
+    def device_management(self) -> "DeviceManagementAPI":
         """
         The interface object for the :ref:`ZIA Device Management interface <zia-device_management>`.
 
@@ -679,7 +688,7 @@ class LegacyZIAClientHelper:
         return DeviceManagementAPI(self.request_executor)
 
     @property
-    def end_user_notification(self):
+    def end_user_notification(self) -> "EndUserNotificationAPI":
         """
         The interface object for the :ref:`ZIA End user Notification interface <zia-end_user_notification>`.
 
@@ -689,7 +698,7 @@ class LegacyZIAClientHelper:
         return EndUserNotificationAPI(self.request_executor)
 
     @property
-    def ipv6_config(self):
+    def ipv6_config(self) -> "TrafficIPV6ConfigAPI":
         """
         The interface object for the :ref:`ZIA Traffic IPV6 Configuration <zia-ipv6_config>`.
 
@@ -699,7 +708,7 @@ class LegacyZIAClientHelper:
         return TrafficIPV6ConfigAPI(self.request_executor)
 
     @property
-    def file_type_control_rule(self):
+    def file_type_control_rule(self) -> "FileTypeControlRuleAPI":
         """
         The interface object for the :ref:`ZIA File Type Control Rule interface <zia-file_type_control_rule>`.
 
@@ -709,7 +718,7 @@ class LegacyZIAClientHelper:
         return FileTypeControlRuleAPI(self.request_executor)
 
     @property
-    def locations(self):
+    def locations(self) -> "LocationsAPI":
         """
         The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
 
@@ -719,7 +728,7 @@ class LegacyZIAClientHelper:
         return LocationsAPI(self.request_executor)
 
     @property
-    def malware_protection_policy(self):
+    def malware_protection_policy(self) -> "MalwareProtectionPolicyAPI":
         """
         The interface object for the :ref:`ZIA Malware Protection Policy interface <zia-malware_protection_policy>`.
 
@@ -729,7 +738,7 @@ class LegacyZIAClientHelper:
         return MalwareProtectionPolicyAPI(self.request_executor)
 
     @property
-    def organization_information(self):
+    def organization_information(self) -> "OrganizationInformationAPI":
         """
         The interface object for the :ref:`ZIA Organization Information interface <zia-organization_information>`.
 
@@ -739,7 +748,7 @@ class LegacyZIAClientHelper:
         return OrganizationInformationAPI(self.request_executor)
 
     @property
-    def pac_files(self):
+    def pac_files(self) -> "PacFilesAPI":
         """
         The interface object for the :ref:`ZIA Pac Files interface <zia-pac_files>`.
 
@@ -749,7 +758,7 @@ class LegacyZIAClientHelper:
         return PacFilesAPI(self.request_executor)
 
     @property
-    def policy_export(self):
+    def policy_export(self) -> "PolicyExportAPI":
         """
         The interface object for the :ref:`ZIA Policy Export interface <zia-policy_export>`.
 
@@ -759,7 +768,7 @@ class LegacyZIAClientHelper:
         return PolicyExportAPI(self.request_executor)
 
     @property
-    def remote_assistance(self):
+    def remote_assistance(self) -> "RemoteAssistanceAPI":
         """
         The interface object for the ZIA Remote Assistance interface.
         """
@@ -768,7 +777,7 @@ class LegacyZIAClientHelper:
         return RemoteAssistanceAPI(self.request_executor)
 
     @property
-    def rule_labels(self):
+    def rule_labels(self) -> "RuleLabelsAPI":
         """
         The interface object for the ZIA Rule Labels interface.
         """
@@ -777,7 +786,7 @@ class LegacyZIAClientHelper:
         return RuleLabelsAPI(self.request_executor)
 
     @property
-    def sandbox(self):
+    def sandbox(self) -> "CloudSandboxAPI":
         """
         The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
 
@@ -787,7 +796,7 @@ class LegacyZIAClientHelper:
         return CloudSandboxAPI(self.request_executor)
 
     @property
-    def sandbox_rules(self):
+    def sandbox_rules(self) -> "SandboxRulesAPI":
         """
         The interface object for the :ref:`ZIA Sandbox Rules interface <zia-sandbox_rules>`.
 
@@ -797,7 +806,7 @@ class LegacyZIAClientHelper:
         return SandboxRulesAPI(self.request_executor)
 
     @property
-    def security_policy_settings(self):
+    def security_policy_settings(self) -> "SecurityPolicyAPI":
         """
         The interface object for the :ref:`ZIA Security Policy Settings interface <zia-security_policy_settings>`.
 
@@ -807,7 +816,7 @@ class LegacyZIAClientHelper:
         return SecurityPolicyAPI(self.request_executor)
 
     @property
-    def ssl_inspection_rules(self):
+    def ssl_inspection_rules(self) -> "SSLInspectionAPI":
         """
         The interface object for the :ref:`ZIA SSL Inspection Rules interface <zia-security_policy_settings>`.
 
@@ -817,7 +826,7 @@ class LegacyZIAClientHelper:
         return SSLInspectionAPI(self.request_executor)
 
     @property
-    def traffic_extranet(self):
+    def traffic_extranet(self) -> "TrafficExtranetAPI":
         """
         The interface object for the :ref:`ZIA Extranet interface <zia-traffic_extranet>`.
 
@@ -827,7 +836,7 @@ class LegacyZIAClientHelper:
         return TrafficExtranetAPI(self.request_executor)
 
     @property
-    def gre_tunnel(self):
+    def gre_tunnel(self) -> "TrafficForwardingGRETunnelAPI":
         """
         The interface object for the :ref:`ZIA Traffic GRE Tunnel interface <zia-gre_tunnel>`.
 
@@ -837,7 +846,7 @@ class LegacyZIAClientHelper:
         return TrafficForwardingGRETunnelAPI(self.request_executor)
 
     @property
-    def traffic_vpn_credentials(self):
+    def traffic_vpn_credentials(self) -> "TrafficVPNCredentialAPI":
         """
         The interface object for the :ref:`ZIA Traffic VPN Credential interface <zia-traffic_vpn_credentials>`.
 
@@ -847,7 +856,7 @@ class LegacyZIAClientHelper:
         return TrafficVPNCredentialAPI(self.request_executor)
 
     @property
-    def traffic_static_ip(self):
+    def traffic_static_ip(self) -> "TrafficStaticIPAPI":
         """
         The interface object for the :ref:`ZIA Traffic Static IP interface <zia-traffic_static_ip>`.
 
@@ -857,7 +866,7 @@ class LegacyZIAClientHelper:
         return TrafficStaticIPAPI(self.request_executor)
 
     @property
-    def url_categories(self):
+    def url_categories(self) -> "URLCategoriesAPI":
         """
         The interface object for the :ref:`ZIA URL Categories interface <zia-url_categories>`.
 
@@ -867,7 +876,7 @@ class LegacyZIAClientHelper:
         return URLCategoriesAPI(self.request_executor)
 
     @property
-    def url_filtering(self):
+    def url_filtering(self) -> "URLFilteringAPI":
         """
         The interface object for the :ref:`ZIA URL Filtering interface <zia-url_filtering>`.
 
@@ -877,7 +886,7 @@ class LegacyZIAClientHelper:
         return URLFilteringAPI(self.request_executor)
 
     @property
-    def user_management(self):
+    def user_management(self) -> "UserManagementAPI":
         """
         The interface object for the :ref:`ZIA User Management interface <zia-user_management>`.
 
@@ -887,7 +896,7 @@ class LegacyZIAClientHelper:
         return UserManagementAPI(self.request_executor)
 
     @property
-    def zpa_gateway(self):
+    def zpa_gateway(self) -> "ZPAGatewayAPI":
         """
         The interface object for the :ref:`ZPA Gateway <zia-zpa_gateway>`.
 
@@ -897,7 +906,7 @@ class LegacyZIAClientHelper:
         return ZPAGatewayAPI(self.request_executor)
 
     @property
-    def workload_groups(self):
+    def workload_groups(self) -> "WorkloadGroupsAPI":
         """
         The interface object for the :ref:`ZIA Workload Groups <zia-workload_groups>`.
 
@@ -907,7 +916,7 @@ class LegacyZIAClientHelper:
         return WorkloadGroupsAPI(self.request_executor)
 
     @property
-    def system_audit(self):
+    def system_audit(self) -> "SystemAuditReportAPI":
         """
         The interface object for the :ref:`ZIA System Audit interface <zia-system_audit>`.
 
@@ -917,7 +926,7 @@ class LegacyZIAClientHelper:
         return SystemAuditReportAPI(self.request_executor)
 
     @property
-    def iot_report(self):
+    def iot_report(self) -> "IOTReportAPI":
         """
         The interface object for the :ref:`ZIA IOT Report interface <zia-iot_report>`.
 
@@ -927,7 +936,7 @@ class LegacyZIAClientHelper:
         return IOTReportAPI(self.request_executor)
 
     @property
-    def mobile_threat_settings(self):
+    def mobile_threat_settings(self) -> "MobileAdvancedSettingsAPI":
         """
         The interface object for the :ref:`ZIA Mobile Threat Settings interface <zia-mobile_threat_settings>`.
 
@@ -937,7 +946,7 @@ class LegacyZIAClientHelper:
         return MobileAdvancedSettingsAPI(self.request_executor)
 
     @property
-    def dns_gatways(self):
+    def dns_gatways(self) -> "DNSGatewayAPI":
         """
         The interface object for the :ref:`ZIA DNS Gateway interface <zia-dns_gatways>`.
 
@@ -947,7 +956,7 @@ class LegacyZIAClientHelper:
         return DNSGatewayAPI(self.request_executor)
 
     @property
-    def alert_subscriptions(self):
+    def alert_subscriptions(self) -> "AlertSubscriptionsAPI":
         """
         The interface object for the :ref:`ZIA Alert Subscriptions interface <zia-alert_subscriptions>`.
 
@@ -957,7 +966,7 @@ class LegacyZIAClientHelper:
         return AlertSubscriptionsAPI(self.request_executor)
 
     @property
-    def bandwidth_classes(self):
+    def bandwidth_classes(self) -> "BandwidthClassesAPI":
         """
         The interface object for the :ref:`ZIA Bandwidth Classes interface <zia-bandwidth_classes>`.
 
@@ -967,7 +976,7 @@ class LegacyZIAClientHelper:
         return BandwidthClassesAPI(self.request_executor)
 
     @property
-    def bandwidth_control_rules(self):
+    def bandwidth_control_rules(self) -> "BandwidthControlRulesAPI":
         """
         The interface object for the :ref:`ZIA Bandwidth Control Rule interface <zia-bandwidth_control_rules>`.
 
@@ -977,7 +986,7 @@ class LegacyZIAClientHelper:
         return BandwidthControlRulesAPI(self.request_executor)
 
     @property
-    def risk_profiles(self):
+    def risk_profiles(self) -> "RiskProfilesAPI":
         """
         The interface object for the :ref:`ZIA Risk Profiles interface <zia-risk_profiles>`.
 
@@ -987,7 +996,7 @@ class LegacyZIAClientHelper:
         return RiskProfilesAPI(self.request_executor)
 
     @property
-    def cloud_app_instances(self):
+    def cloud_app_instances(self) -> "CloudApplicationInstancesAPI":
         """
         The interface object for the :ref:`ZIA Cloud Application Instances interface <zia-cloud_app_instances>`.
 
@@ -997,7 +1006,7 @@ class LegacyZIAClientHelper:
         return CloudApplicationInstancesAPI(self.request_executor)
 
     @property
-    def tenancy_restriction_profile(self):
+    def tenancy_restriction_profile(self) -> "TenancyRestrictionProfileAPI":
         """
         The interface object for the :ref:`ZIA Tenant Restriction Profile interface <zia-tenancy_restriction_profile>`.
 
@@ -1007,7 +1016,7 @@ class LegacyZIAClientHelper:
         return TenancyRestrictionProfileAPI(self.request_executor)
 
     @property
-    def time_intervals(self):
+    def time_intervals(self) -> "TimeIntervalsAPI":
         """
         The interface object for the :ref:`ZIA Time Intervals interface <zia-time_intervals>`.
 
@@ -1017,7 +1026,7 @@ class LegacyZIAClientHelper:
         return TimeIntervalsAPI(self.request_executor)
 
     @property
-    def ftp_control_policy(self):
+    def ftp_control_policy(self) -> "FTPControlPolicyAPI":
         """
         The interface object for the :ref:`ZIA FTP Control Policy interface <zia-ftp_control_policy>`.
 
@@ -1027,7 +1036,7 @@ class LegacyZIAClientHelper:
         return FTPControlPolicyAPI(self.request_executor)
 
     @property
-    def proxies(self):
+    def proxies(self) -> "ProxiesAPI":
         """
         The interface object for the :ref:`ZIA Proxies interface <zia-proxies>`.
 
@@ -1037,7 +1046,7 @@ class LegacyZIAClientHelper:
         return ProxiesAPI(self.request_executor)
 
     @property
-    def dedicated_ip_gateways(self):
+    def dedicated_ip_gateways(self) -> "DedicatedIPGatewaysAPI":
         """
         The interface object for the :ref:`ZIA Dedicated IP Gateways interface <zia-dedicated_ip_gateways>`.
 
@@ -1047,7 +1056,7 @@ class LegacyZIAClientHelper:
         return DedicatedIPGatewaysAPI(self.request_executor)
 
     @property
-    def traffic_datacenters(self):
+    def traffic_datacenters(self) -> "TrafficDatacentersAPI":
         """
         The interface object for the :ref:`ZIA Traffic Datacenters interface <zia-traffic_datacenters>`.
 
@@ -1057,7 +1066,7 @@ class LegacyZIAClientHelper:
         return TrafficDatacentersAPI(self.request_executor)
 
     @property
-    def nss_servers(self):
+    def nss_servers(self) -> "NssServersAPI":
         """
         The interface object for the :ref:`ZIA NSS Servers interface <zia-nss_servers>`.
 
@@ -1067,7 +1076,7 @@ class LegacyZIAClientHelper:
         return NssServersAPI(self.request_executor)
 
     @property
-    def nat_control_policy(self):
+    def nat_control_policy(self) -> "NatControlPolicyAPI":
         """
         The interface object for the :ref:`ZIA NAT Control Policy interface <zia-nat_control_policy>`.
 
@@ -1078,7 +1087,7 @@ class LegacyZIAClientHelper:
         return NatControlPolicyAPI(self.request_executor)
 
     @property
-    def vzen_clusters(self):
+    def vzen_clusters(self) -> "VZENClustersAPI":
         """
         The interface object for the :ref:`Virtual ZEN Clusters interface <zia-vzen_clusters>`.
 
@@ -1089,7 +1098,7 @@ class LegacyZIAClientHelper:
         return VZENClustersAPI(self.request_executor)
 
     @property
-    def vzen_nodes(self):
+    def vzen_nodes(self) -> "VZENNodesAPI":
         """
         The interface object for the :ref:`Virtual ZEN Nodes interface <zia-vzen_nodes>`.
 
@@ -1100,7 +1109,7 @@ class LegacyZIAClientHelper:
         return VZENNodesAPI(self.request_executor)
 
     @property
-    def browser_control_settings(self):
+    def browser_control_settings(self) -> "BrowserControlSettingsPI":
         """
         The interface object for the :ref:`Browser Control Settings interface <zia-browser_control_settings>`.
 
@@ -1111,7 +1120,7 @@ class LegacyZIAClientHelper:
         return BrowserControlSettingsPI(self.request_executor)
 
     @property
-    def saas_security_api(self):
+    def saas_security_api(self) -> "SaaSSecurityAPI":
         """
         The interface object for the :ref:`ZIA SaaS Security API interface <zia-saas_security_api>`.
 
@@ -1122,7 +1131,7 @@ class LegacyZIAClientHelper:
         return SaaSSecurityAPI(self.request_executor)
 
     @property
-    def cloud_to_cloud_ir(self):
+    def cloud_to_cloud_ir(self) -> "CloudToCloudIRAPI":
         """
         The interface object for the :ref:`ZIA Cloud-to-Cloud DLP Incident Receiver API interface <zia-cloud_to_cloud_ir>`.
 
@@ -1136,14 +1145,14 @@ class LegacyZIAClientHelper:
     Misc
     """
 
-    def set_custom_headers(self, headers):
+    def set_custom_headers(self, headers: Dict[str, str]) -> None:
         self.request_executor.set_custom_headers(headers)
 
-    def clear_custom_headers(self):
+    def clear_custom_headers(self) -> None:
         self.request_executor.clear_custom_headers()
 
-    def get_custom_headers(self):
+    def get_custom_headers(self) -> Dict[str, str]:
         return self.request_executor.get_custom_headers()
 
-    def get_default_headers(self):
+    def get_default_headers(self) -> Dict[str, str]:
         return self.request_executor.get_default_headers()

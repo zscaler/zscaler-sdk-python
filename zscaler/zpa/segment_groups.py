@@ -1,4 +1,4 @@
-pofrom typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.segment_group import SegmentGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SegmentGroupsAPI(APIClient):
@@ -33,7 +34,7 @@ class SegmentGroupsAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_groups(self, query_params=None) -> tuple:
+    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates segment groups in your organization with pagination.
         A subset of segment groups can be returned that match a supported
@@ -99,7 +100,7 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str, query_params=None) -> tuple:
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified segment group.
 
@@ -147,7 +148,7 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> tuple:
+    def add_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new segment group.
 
@@ -202,7 +203,7 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: str, **kwargs) -> tuple:
+    def update_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified segment group.
 
@@ -264,7 +265,7 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group_v2(self, group_id: str, **kwargs) -> tuple:
+    def update_group_v2(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified segment group.
 
@@ -326,7 +327,7 @@ class SegmentGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_group(self, group_id: str, microtenant_id: str = None) -> APIResult[None]:
         """
         Deletes the specified segment group.
 

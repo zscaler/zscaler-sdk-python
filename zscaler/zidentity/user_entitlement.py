@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.user_entitlement import Entitlement, Entitlements
 from zscaler.zidentity.models.user_entitlement import Service
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class EntitlementAPI(APIClient):
@@ -33,7 +34,7 @@ class EntitlementAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_admin_entitlement(self, user_id: str) -> tuple:
+    def get_admin_entitlement(self, user_id: str) -> APIResult[dict]:
         """
         Retrieves the administrative entitlements for a specific user by their user ID.
 
@@ -79,7 +80,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_service_entitlement(self, user_id: str) -> tuple:
+    def get_service_entitlement(self, user_id: str) -> APIResult[dict]:
         """
         Retrieves service entitlements for a specified user ID.
 

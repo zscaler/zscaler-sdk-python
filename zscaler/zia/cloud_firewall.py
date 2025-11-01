@@ -25,6 +25,7 @@ from zscaler.zia.models.cloud_firewall_nw_service_groups import NetworkServiceGr
 from zscaler.zia.models.cloud_firewall_nw_service import NetworkServices
 from zscaler.zia.models.cloud_firewall_time_windows import TimeWindows
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class FirewallResourcesAPI(APIClient):
@@ -35,7 +36,7 @@ class FirewallResourcesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of IP Destination Groups.
 
@@ -117,7 +118,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -201,7 +202,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -291,7 +292,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups_lite(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ipv6_destination_groups_lite(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -382,7 +383,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ip_destination_group(self, group_id: int) -> tuple:
+    def get_ip_destination_group(self, group_id: int) -> APIResult[dict]:
         """
         Returns information on the specified IP Destination Group.
 
@@ -427,7 +428,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_ip_destination_group(self, **kwargs) -> tuple:
+    def add_ip_destination_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new IP Destination Group.
 
@@ -515,7 +516,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_destination_group(self, group_id: str, **kwargs) -> tuple:
+    def update_ip_destination_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified IP Destination Group.
 
@@ -603,7 +604,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_destination_group(self, group_id: int) -> tuple:
+    def delete_ip_destination_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes the specified IP Destination Group.
 
@@ -641,8 +642,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_ip_source_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List IP Source Groups in your organization.
 
@@ -709,8 +710,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_ipv6_source_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List IPv6 Source Groups in your organization.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -779,8 +780,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_ip_source_groups_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -854,8 +855,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_ipv6_source_groups_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists IPv6 Source Groups name and ID all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -931,7 +932,7 @@ class FirewallResourcesAPI(APIClient):
     def get_ip_source_group(
         self,
         group_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified IP Source Group.
 
@@ -973,7 +974,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_ip_source_group(self, **kwargs) -> tuple:
+    def add_ip_source_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new IP Source Group.
 
@@ -1027,7 +1028,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_source_group(self, group_id: int, **kwargs) -> tuple:
+    def update_ip_source_group(self, group_id: int, **kwargs) -> APIResult[dict]:
         """
         Update an IP Source Group.
 
@@ -1090,7 +1091,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_source_group(self, group_id: int) -> tuple:
+    def delete_ip_source_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes an IP Source Group.
 
@@ -1128,8 +1129,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_network_app_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List Network Application Groups in your organization.
 
@@ -1197,7 +1198,7 @@ class FirewallResourcesAPI(APIClient):
     def get_network_app_group(
         self,
         group_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified Network Application Group.
 
@@ -1242,7 +1243,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_network_app_group(self, **kwargs) -> tuple:
+    def add_network_app_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new Network Application Group.
 
@@ -1297,7 +1298,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_app_group(self, group_id: int, **kwargs) -> tuple:
+    def update_network_app_group(self, group_id: int, **kwargs) -> APIResult[dict]:
         """
         Update an Network Application Group.
 
@@ -1357,7 +1358,7 @@ class FirewallResourcesAPI(APIClient):
     def delete_network_app_group(
         self,
         group_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Deletes the specified Network Application Group.
 
@@ -1395,8 +1396,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_network_apps(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists Network Applications in your organization with pagination.
         A subset of Network Applications can be returned that match a supported
@@ -1468,7 +1469,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_network_app(self, app_id: int) -> tuple:
+    def get_network_app(self, app_id: int) -> APIResult[dict]:
         """
         Returns information for the specified Network Application.
 
@@ -1511,8 +1512,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_network_svc_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists network service groups in your organization with pagination.
         A subset of network service groups can be returned that match a supported
@@ -1582,8 +1583,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_network_svc_groups_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists Network Service Groups name and ID  all network service groups.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -1655,7 +1656,7 @@ class FirewallResourcesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_network_svc_group(self, group_id: int) -> tuple:
+    def get_network_svc_group(self, group_id: int) -> APIResult[dict]:
         """
         Returns information for the specified Network Service Group.
 
@@ -1698,7 +1699,7 @@ class FirewallResourcesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_network_svc_group(self, **kwargs) -> tuple:
+    def add_network_svc_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new Network Service Group.
 
@@ -1754,7 +1755,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_svc_group(self, group_id: int, **kwargs) -> tuple:
+    def update_network_svc_group(self, group_id: int, **kwargs) -> APIResult[dict]:
         """
         Update a Network Service Group.
 
@@ -1813,7 +1814,7 @@ class FirewallResourcesAPI(APIClient):
     def delete_network_svc_group(
         self,
         group_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Deletes the specified Network Service Group.
 
@@ -1850,7 +1851,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_network_services(self, query_params=None) -> tuple:
+    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported
@@ -1923,8 +1924,8 @@ class FirewallResourcesAPI(APIClient):
 
     def list_network_services_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists network services name and ID all network services.
         A subset of network service groups can be returned that match a supported
@@ -2000,7 +2001,7 @@ class FirewallResourcesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_network_service(self, service_id: int) -> tuple:
+    def get_network_service(self, service_id: int) -> APIResult[dict]:
         """
         Returns information for the specified Network Service.
 
@@ -2045,7 +2046,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_network_service(self, ports: list = None, **kwargs) -> tuple:
+    def add_network_service(self, ports: list = None, **kwargs) -> APIResult[dict]:
         """
         Adds a new Network Service
 
@@ -2125,7 +2126,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> tuple:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> APIResult[dict]:
         """
         Updates the specified Network Service.
 
@@ -2205,7 +2206,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_network_service(self, service_id: int) -> tuple:
+    def delete_network_service(self, service_id: int) -> APIResult[dict]:
         """
         Deletes the specified Network Service.
 
@@ -2242,7 +2243,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_time_windows(self) -> tuple:
+    def list_time_windows(self) -> APIResult[dict]:
         """
         Returns a list of time intervals used by the Firewall policy or the URL Filtering policy.
 
@@ -2283,7 +2284,7 @@ class FirewallResourcesAPI(APIClient):
 
         return (result, response, None)
 
-    def list_time_windows_lite(self) -> tuple:
+    def list_time_windows_lite(self) -> APIResult[dict]:
         """
         Returns name and ID dictionary of time intervals used by the Firewall policy or the URL Filtering policy.
 

@@ -15,10 +15,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_region import CBIRegion
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CBIRegionAPI(APIClient):
@@ -32,7 +34,7 @@ class CBIRegionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_regions(self) -> list:
+    def list_cbi_regions(self) -> APIResult[List[CBIRegion]]:
         """
         Returns a list of all cloud browser isolation regions.
 

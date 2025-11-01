@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.tenancy_restriction_profile import TenancyRestrictionProfile
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TenancyRestrictionProfileAPI(APIClient):
@@ -31,8 +32,8 @@ class TenancyRestrictionProfileAPI(APIClient):
 
     def list_restriction_profile(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Retrieves all the restricted tenant profiles.
 
@@ -91,7 +92,7 @@ class TenancyRestrictionProfileAPI(APIClient):
 
         return (results, response, None)
 
-    def get_restriction_profile(self, profile_id: int) -> tuple:
+    def get_restriction_profile(self, profile_id: int) -> APIResult[dict]:
         """
         Retrieves the restricted tenant profile based on the specified ID
 
@@ -137,7 +138,7 @@ class TenancyRestrictionProfileAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_restriction_profile(self, **kwargs) -> tuple:
+    def add_restriction_profile(self, **kwargs) -> APIResult[dict]:
         """
         Creates restricted tenant profiles.
 
@@ -240,7 +241,7 @@ class TenancyRestrictionProfileAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_restriction_profile(self, profile_id: int, **kwargs) -> tuple:
+    def update_restriction_profile(self, profile_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates the restricted tenant profile based on the specified ID
 
@@ -294,7 +295,7 @@ class TenancyRestrictionProfileAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_restriction_profile(self, profile_id: int) -> tuple:
+    def delete_restriction_profile(self, profile_id: int) -> APIResult[dict]:
         """
         Deletes a restricted tenant profile based on the specified ID
 
@@ -337,7 +338,7 @@ class TenancyRestrictionProfileAPI(APIClient):
         self,
         app_type: str,
         item_type: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Retrieves the item count of the specified item type for a given application, excluding any specified profile.
 

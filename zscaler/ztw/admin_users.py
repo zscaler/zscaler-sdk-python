@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.admin_users import AdminUsers
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdminUsersAPI(APIClient):
@@ -32,7 +33,7 @@ class AdminUsersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def change_password(self, username: str, old_password: str, new_password: str, **kwargs) -> tuple:
+    def change_password(self, username: str, old_password: str, new_password: str, **kwargs) -> APIResult[dict]:
         """
         Change the password for the specified admin user.
 
@@ -88,7 +89,7 @@ class AdminUsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_admins(self, query_params=None) -> tuple:
+    def list_admins(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all existing admin users.
 
@@ -154,7 +155,7 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def get_admin(self, admin_id: str) -> tuple:
+    def get_admin(self, admin_id: str) -> APIResult[dict]:
         """
         Get details for a specific admin user.
 
@@ -200,7 +201,7 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def add_admin(self, user_name: str, login_name: str, role: str, email: str, password: str, **kwargs) -> tuple:
+    def add_admin(self, user_name: str, login_name: str, role: str, email: str, password: str, **kwargs) -> APIResult[dict]:
         """
         Create a new admin user.
 
@@ -297,7 +298,7 @@ class AdminUsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_admin(self, admin_id: str, **kwargs) -> tuple:
+    def update_admin(self, admin_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing admin user.
 

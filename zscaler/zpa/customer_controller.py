@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_controller import RemoteAssistance
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CustomerControllerAPI(APIClient):
@@ -71,7 +72,7 @@ class CustomerControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    # def get_remote_assistance(self) -> tuple:
+    # def get_remote_assistance(self) -> APIResult[dict]:
     #     """
     #     Gets information on Remote Assistance configuration for a given customer
 
@@ -109,7 +110,7 @@ class CustomerControllerAPI(APIClient):
     #         return (None, response, error)
     #     return (result, response, None)
 
-    # def add_remote_assistance(self, **kwargs) -> tuple:
+    # def add_remote_assistance(self, **kwargs) -> APIResult[dict]:
     #     """
     #     Add remote assistance configuration for a given customer
 
