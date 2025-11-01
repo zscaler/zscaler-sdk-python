@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.software_inventory import SoftwareList
 from zscaler.zdx.models.software_inventory import DeviceSoftwareInventory
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class InventoryAPI(APIClient):
@@ -30,7 +31,7 @@ class InventoryAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_softwares(self, query_params=None) -> tuple:
+    def list_softwares(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all software in ZDX.
 
@@ -101,7 +102,7 @@ class InventoryAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_software_keys(self, software_key: str, query_params=None) -> tuple:
+    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all users and devices for the given software name and version.
 

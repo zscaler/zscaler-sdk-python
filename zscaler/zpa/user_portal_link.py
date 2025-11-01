@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_link import UserPortalLink
 from zscaler.zpa.models.user_portal_link import UserPortalLinks
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 
 
 class UserPortalLinkAPI(APIClient):
@@ -38,7 +39,7 @@ class UserPortalLinkAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_portal_link(self, query_params=None) -> tuple:
+    def list_portal_link(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates user portal link link in an organization with pagination.
 
@@ -102,7 +103,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_portal_link(self, portal_link_id: str, query_params=None) -> tuple:
+    def get_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified user portal link.
 
@@ -150,7 +151,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_portal_link(self, **kwargs) -> tuple:
+    def add_portal_link(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new user portal link.
 
@@ -212,7 +213,7 @@ class UserPortalLinkAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_portal_link(self, portal_link_id: str, **kwargs) -> tuple:
+    def update_portal_link(self, portal_link_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified user portal link.
 
@@ -282,7 +283,7 @@ class UserPortalLinkAPI(APIClient):
         self,
         portal_link_id: str,
         microtenant_id: str = None
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Deletes the specified user portal link.
 
@@ -325,7 +326,7 @@ class UserPortalLinkAPI(APIClient):
         portal_links: list,
         user_portal_link_ids: list = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds multiple user portal links in bulk.
 
@@ -439,7 +440,7 @@ class UserPortalLinkAPI(APIClient):
 
         return (result, response, None)
 
-    def get_user_portal_link(self, portal_link_id: str, query_params=None) -> tuple:
+    def get_user_portal_link(self, portal_link_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on a User Portal Links for Specified Portal.
 

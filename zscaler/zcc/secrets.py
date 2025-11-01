@@ -20,6 +20,7 @@ from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.api_client import APIClient
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords
+from zscaler.types import APIResult
 
 
 class SecretsAPI(APIClient):
@@ -28,7 +29,7 @@ class SecretsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_otp(self, query_params=None) -> tuple:
+    def get_otp(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the OTP code for the specified device id.
 
@@ -82,7 +83,7 @@ class SecretsAPI(APIClient):
             return None, response, error
 
     @zcc_param_mapper
-    def get_passwords(self, query_params=None) -> tuple:
+    def get_passwords(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Return passwords for the specified username and device OS type.
 

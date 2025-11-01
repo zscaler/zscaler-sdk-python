@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.subclouds import TenantSubClouds
 from zscaler.zia.models.subclouds import LastDCInCountry
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SubCloudsAPI(APIClient):
@@ -33,7 +34,7 @@ class SubCloudsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_sub_clouds(self, query_params=None) -> tuple:
+    def list_sub_clouds(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured Tenant Sub Clouds.
 
@@ -87,7 +88,7 @@ class SubCloudsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_sub_clouds(self, cloud_id: int, **kwargs) -> tuple:
+    def update_sub_clouds(self, cloud_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the subcloud and excluded data centers based on the specified ID.
 
@@ -122,7 +123,7 @@ class SubCloudsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params=None) -> tuple:
+    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information for the list of all the excluded data centers in a country.
 

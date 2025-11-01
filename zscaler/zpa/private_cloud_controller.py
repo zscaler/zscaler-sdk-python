@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.private_cloud_controller import PrivateCloudController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class PrivateCloudControllerAPI(APIClient):
@@ -32,7 +33,7 @@ class PrivateCloudControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_controllers(self, query_params=None) -> tuple:
+    def list_cloud_controllers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates Private Cloud Controller in your organization with pagination.
         A subset of Private Cloud Controller can be returned that match a supported
@@ -96,7 +97,7 @@ class PrivateCloudControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cloud_controller(self, controller_id: str, query_params=None) -> tuple:
+    def get_cloud_controller(self, controller_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified Private Cloud Controller.
 
@@ -140,7 +141,7 @@ class PrivateCloudControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cloud_controller(self, controller_id: str, **kwargs) -> tuple:
+    def update_cloud_controller(self, controller_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing ZPA Private Cloud Controller.
 
@@ -201,7 +202,7 @@ class PrivateCloudControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cloud_controller(self, controller_id: str, microtenant_id: str = None) -> tuple:
+    def delete_cloud_controller(self, controller_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified Private Cloud Controller from ZPA.
 
@@ -244,7 +245,7 @@ class PrivateCloudControllerAPI(APIClient):
         self,
         controller_id: str,
         microtenant_id: str = None
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Triggers restart of the Private Cloud Controller
 

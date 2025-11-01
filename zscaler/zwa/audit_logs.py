@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zwa.models.audit_logs import AuditLogs
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AuditLogsAPI(APIClient):
@@ -28,7 +29,7 @@ class AuditLogsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"
 
-    def audit_logs(self, query_params=None, fields=None, time_range=None, **kwargs) -> tuple:
+    def audit_logs(self, query_params: Optional[dict] = None, fields=None, time_range=None, **kwargs) -> APIResult[dict]:
         """
         Filters audit logs based on the specified time period and field values.
 

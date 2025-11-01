@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_browser_isolation import CBIProfile
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CBIProfileAPI(APIClient):
@@ -34,8 +35,8 @@ class CBIProfileAPI(APIClient):
 
     def list_isolation_profiles(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists isolation profiles in your organization with pagination.
         A subset of isolation profiles  can be returned that match a supported

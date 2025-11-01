@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.devices import Devices
 from zscaler.zia.models.device_groups import DeviceGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DeviceManagementAPI(APIClient):
@@ -35,8 +36,8 @@ class DeviceManagementAPI(APIClient):
 
     def list_device_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of ZIA Device Groups.
 
@@ -94,8 +95,8 @@ class DeviceManagementAPI(APIClient):
 
     def list_devices(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of Devices.
 
@@ -156,7 +157,7 @@ class DeviceManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_device_lite(self) -> tuple:
+    def list_device_lite(self) -> APIResult[dict]:
         """
         Returns the list of devices that includes device ID, name, and owner name.
 

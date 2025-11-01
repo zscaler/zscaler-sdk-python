@@ -375,7 +375,12 @@ class RequestExecutor:
             return params["microtenantId"]
         return self.microtenant_id
 
-    def execute(self, request, response_type=None, return_raw_response=False):
+    def execute(
+        self,
+        request: Dict[str, Any],
+        response_type: Optional[type] = None,
+        return_raw_response: bool = False,
+    ) -> Tuple[Optional["ZscalerAPIResponse"], Optional[Exception]]:
         """
         High-level request execution method.
         Args:

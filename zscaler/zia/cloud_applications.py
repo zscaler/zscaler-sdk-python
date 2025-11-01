@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zia.models.cloud_app_policy import CloudApplicationPolicy
+from zscaler.types import APIResult
 
 
 class CloudApplicationsAPI(APIClient):
@@ -32,7 +33,7 @@ class CloudApplicationsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_app_policy(self, query_params=None) -> tuple:
+    def list_cloud_app_policy(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Return a list of of Predefined and User Defined Cloud Applications associated with the DLP rules,
         Cloud App Control rules, Advanced Settings, Bandwidth Classes, and File Type Control rules.
@@ -107,7 +108,7 @@ class CloudApplicationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_cloud_app_ssl_policy(self, query_params=None) -> tuple:
+    def list_cloud_app_ssl_policy(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of Predefined and User Defined Cloud Applications associated with the SSL Inspection rules.
         Retrives AppInfo when groupResults is set to false and retrieves the application count grouped by application

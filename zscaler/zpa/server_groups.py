@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.server_group import ServerGroup
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 
 
 class ServerGroupsAPI(APIClient):
@@ -37,7 +38,7 @@ class ServerGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_groups(self, query_params=None) -> tuple:
+    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates server groups in your organization with pagination.
         A subset of server groups can be returned that match a supported
@@ -95,7 +96,7 @@ class ServerGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str, query_params=None) -> tuple:
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Provides information on the specified server group.
 
@@ -141,7 +142,7 @@ class ServerGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> tuple:
+    def add_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a server group.
 
@@ -230,7 +231,7 @@ class ServerGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: str, **kwargs) -> tuple:
+    def update_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a server group.
 
@@ -304,7 +305,7 @@ class ServerGroupsAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_group(self, group_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified server group.
 

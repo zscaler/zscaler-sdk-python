@@ -25,6 +25,7 @@ from zscaler.zwa.models.incident_search import IncidentSearch
 from zscaler.zwa.models.incident_group_search import IncidentGroupSearch
 from zscaler.zwa.models.incident_trigger import IncidentTrigger
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DLPIncidentsAPI(APIClient):
@@ -34,7 +35,7 @@ class DLPIncidentsAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zwa_base_endpoint = "/zwa/dlp/v1"
 
-    def get_incident_transactions(self, transaction_id: str, query_params=None) -> tuple:
+    def get_incident_transactions(self, transaction_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information DLP incident details based on the incident ID.
 
@@ -89,7 +90,7 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def get_incident_details(self, incident_id: str, query_params=None) -> tuple:
+    def get_incident_details(self, incident_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information DLP incident details based on the incident ID.
 
@@ -144,7 +145,7 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def change_history(self, incident_id: str, query_params=None) -> tuple:
+    def change_history(self, incident_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns details of updates made to an incident based on the given ID and timeline.
 
@@ -196,7 +197,7 @@ class DLPIncidentsAPI(APIClient):
     def get_incident_triggers(
         self,
         incident_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information DLP incident details based on the incident ID.
 
@@ -246,7 +247,7 @@ class DLPIncidentsAPI(APIClient):
     def get_generated_tickets(
         self,
         incident_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns details of of the ticket generated for the incident.
         For example, ticket type, ticket ID, ticket status, etc.
@@ -301,7 +302,7 @@ class DLPIncidentsAPI(APIClient):
     def get_incident_evidence(
         self,
         incident_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Gets the evidence URL of the incident.
         The evidence link can be used to view and download the XML file with the actual
@@ -348,7 +349,7 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def dlp_incident_search(self, query_params=None, fields=None, time_range=None, **kwargs) -> tuple:
+    def dlp_incident_search(self, query_params: Optional[dict] = None, fields=None, time_range=None, **kwargs) -> APIResult[dict]:
         """
         Filters DLP incidents based on the given time range and field values.
 
@@ -457,7 +458,7 @@ class DLPIncidentsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def incident_group_search(self, incident_id: str, incident_group_ids: list = None) -> tuple:
+    def incident_group_search(self, incident_id: str, incident_group_ids: list = None) -> APIResult[dict]:
         """
         Filters a list of DLP incident groups to which the specified incident ID belongs.
 
@@ -499,7 +500,7 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def assign_labels(self, incident_id: str, labels: list = None) -> tuple:
+    def assign_labels(self, incident_id: str, labels: list = None) -> APIResult[dict]:
         """
         Assigns labels (name-value pairs) to a DLP incident.
 
@@ -547,7 +548,7 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def incident_notes(self, incident_id: str, notes: str = None) -> tuple:
+    def incident_notes(self, incident_id: str, notes: str = None) -> APIResult[dict]:
         """
         Adds notes to a DLP incident.
 
@@ -597,7 +598,7 @@ class DLPIncidentsAPI(APIClient):
 
     def incident_close(
         self, incident_id: str, resolution_label: dict = None, resolution_code: str = None, notes: str = None
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Updates the status of the incident to resolved and closes the incident with a resolution label and a resolution code.
 

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.enrollment_certificates import EnrollmentCertificate
 from zscaler.utils import format_url, validate_and_convert_times
+from zscaler.types import APIResult
 
 
 class EnrollmentCertificateAPI(APIClient):
@@ -33,7 +34,7 @@ class EnrollmentCertificateAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_enrolment(self, query_params=None) -> tuple:
+    def list_enrolment(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates Enrollment Certificates in your organization with pagination.
         A subset of Enrollment Certificates can be returned that match a supported
@@ -93,7 +94,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_enrolment(self, certificate_id: str) -> tuple:
+    def get_enrolment(self, certificate_id: str) -> APIResult[dict]:
         """
         Returns information on the specified enrollment certificate.
 
@@ -137,7 +138,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_enrollment_cert(self, **kwargs) -> tuple:
+    def add_enrollment_cert(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new Enrollment Certificate.
 
@@ -209,7 +210,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_enrollment(self, cert_id: str, **kwargs) -> tuple:
+    def update_enrollment(self, cert_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified enrollment certificate.
 
@@ -280,7 +281,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_enrollment_certificate(self, cert_id: str, dry_run: bool = None) -> tuple:
+    def delete_enrollment_certificate(self, cert_id: str, dry_run: bool = None) -> APIResult[dict]:
         """
         Deletes the specified enrollment certificate.
 
@@ -320,7 +321,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (None, response, error)
 
-    def generate_csr(self, **kwargs) -> tuple:
+    def generate_csr(self, **kwargs) -> APIResult[dict]:
         """
         Generates a new csr.
 
@@ -368,7 +369,7 @@ class EnrollmentCertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def generate_self_signed(self, **kwargs) -> tuple:
+    def generate_self_signed(self, **kwargs) -> APIResult[dict]:
         """
         Generates a new csr.
 

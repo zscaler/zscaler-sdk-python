@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.shadow_it_report import CloudapplicationsAndTags
 from zscaler.utils import format_url, convert_keys
+from zscaler.types import APIResult
 
 
 class ShadowITAPI(APIClient):
@@ -44,7 +45,7 @@ class ShadowITAPI(APIClient):
         """
         return [{"id": str(id)} for id in id_list]
 
-    def list_apps(self, query_params=None) -> tuple:
+    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets the list of predefined and custom cloud applications
 
@@ -103,7 +104,7 @@ class ShadowITAPI(APIClient):
 
         return (result, response, None)
 
-    def list_custom_tags(self) -> tuple:
+    def list_custom_tags(self) -> APIResult[dict]:
         """
         List all custom tags by name and id.
 
@@ -151,7 +152,7 @@ class ShadowITAPI(APIClient):
 
         return (result, response, None)
 
-    def bulk_update(self, sanction_state: str, **kwargs) -> tuple:
+    def bulk_update(self, sanction_state: str, **kwargs) -> APIResult[dict]:
         """
         Updates application status and tag information for predefined or custom cloud applications based on the
         IDs specified.
@@ -246,7 +247,7 @@ class ShadowITAPI(APIClient):
         result = self.form_response_body(body) if body else {}
         return (result, response, None)
 
-    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> tuple:
+    def export_shadow_it_report(self, duration: str = "LAST_1_DAYS", **kwargs) -> APIResult[dict]:
         """
         Export the Shadow IT Report (in CSV format) for the cloud applications recognized by Zscaler
         based on their usage in your organisation.

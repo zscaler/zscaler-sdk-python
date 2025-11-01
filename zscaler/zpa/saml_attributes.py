@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.saml_attributes import SAMLAttribute
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SAMLAttributesAPI(APIClient):
@@ -33,7 +34,7 @@ class SAMLAttributesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_saml_attributes(self, query_params=None) -> tuple:
+    def list_saml_attributes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured SAML attributes.
 
@@ -84,7 +85,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_saml_attributes_by_idp(self, idp_id: str, query_params=None) -> tuple:
+    def list_saml_attributes_by_idp(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured SAML attributes for the specified IdP.
 
@@ -138,7 +139,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_saml_attribute(self, attribute_id: str, query_params=None) -> tuple:
+    def get_saml_attribute(self, attribute_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified SAML attribute.
 
@@ -179,7 +180,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_saml_attribute(self, **kwargs) -> tuple:
+    def add_saml_attribute(self, **kwargs) -> APIResult[dict]:
         """
         Add a new saml attribute for a given customer
 
@@ -228,7 +229,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_saml_attribute(self, attribute_id: str, **kwargs) -> tuple:
+    def update_saml_attribute(self, attribute_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified Saml Attribute.
 
@@ -281,7 +282,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_saml_attribute(self, attribute_id: str, microtenant_id: str = None) -> tuple:
+    def delete_saml_attribute(self, attribute_id: str, microtenant_id: str = None) -> APIResult[None]:
         """
         Deletes the specified Saml Attribute.
 

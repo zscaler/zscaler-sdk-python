@@ -21,6 +21,7 @@ from zscaler.zia.models.organization_information import OrganizationInformation
 from zscaler.zia.models.organization_information import OrganizationInformationLite
 from zscaler.zia.models.organization_information import OrganizationSubscription
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class OrganizationInformationAPI(APIClient):
@@ -34,7 +35,7 @@ class OrganizationInformationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_organization_information(self) -> tuple:
+    def get_organization_information(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -80,7 +81,7 @@ class OrganizationInformationAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_org_info_lite(self) -> tuple:
+    def get_org_info_lite(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -126,7 +127,7 @@ class OrganizationInformationAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_subscriptions(self) -> tuple:
+    def get_subscriptions(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.remoteassistance import RemoteAssistance
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class RemoteAssistanceAPI(APIClient):
@@ -32,7 +33,7 @@ class RemoteAssistanceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_remote_assistance(self) -> tuple:
+    def get_remote_assistance(self) -> APIResult[dict]:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
         Using this option, you can allow Zscaler Support to access your organization's ZIA Admin Portal
@@ -77,7 +78,7 @@ class RemoteAssistanceAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_remote_assistance(self, **kwargs) -> tuple:
+    def update_remote_assistance(self, **kwargs) -> APIResult[dict]:
         """
         Retrieves information about the Remote Assistance option configured in the ZIA Admin Portal.
 

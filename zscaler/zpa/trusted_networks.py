@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.trusted_network import TrustedNetwork
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrustedNetworksAPI(APIClient):
@@ -33,7 +34,7 @@ class TrustedNetworksAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_trusted_networks(self, query_params=None) -> tuple:
+    def list_trusted_networks(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured trusted networks.
 
@@ -102,7 +103,7 @@ class TrustedNetworksAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_network(self, network_id: str) -> tuple:
+    def get_network(self, network_id: str) -> APIResult[dict]:
         """
         Returns information on the specified trusted network.
 

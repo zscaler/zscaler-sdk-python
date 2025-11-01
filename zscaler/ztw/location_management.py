@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_management import LocationManagement
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class LocationManagementAPI(APIClient):
@@ -32,7 +33,7 @@ class LocationManagementAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params=None) -> tuple:
+    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of locations.
 
@@ -117,7 +118,7 @@ class LocationManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_location(self, location_id: int) -> tuple:
+    def get_location(self, location_id: int) -> APIResult[dict]:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -161,7 +162,7 @@ class LocationManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_locations_lite(self, query_params=None) -> tuple:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns only the name and ID of all configured locations.
 

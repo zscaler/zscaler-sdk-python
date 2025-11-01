@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.machine_groups import MachineGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class MachineGroupsAPI(APIClient):
@@ -32,7 +33,7 @@ class MachineGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_machine_groups(self, query_params=None) -> tuple:
+    def list_machine_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates machine groups in your organization with pagination.
         A subset of machine groups can be returned that match a supported
@@ -89,7 +90,7 @@ class MachineGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str, query_params=None) -> tuple:
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches information on the specified machine group.
 

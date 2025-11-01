@@ -21,6 +21,7 @@ from zscaler.zdx.models.alerts import Alerts
 from zscaler.zdx.models.alerts import AlertDetails
 from zscaler.zdx.models.alerts import AffectedDevices
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class AlertsAPI(APIClient):
@@ -31,7 +32,7 @@ class AlertsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_ongoing(self, query_params=None) -> tuple:
+    def list_ongoing(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all ongoing alert rules across an organization in ZDX.
         All ongoing alert rules are returned if the search filter is not specified.
@@ -111,7 +112,7 @@ class AlertsAPI(APIClient):
 
         return (result, response, None)
 
-    def get_alert(self, alert_id: str) -> tuple:
+    def get_alert(self, alert_id: str) -> APIResult[dict]:
         """
         Returns details of a single alert including the impacted department,
         Zscaler locations, geolocation, and alert trigger.
@@ -157,7 +158,7 @@ class AlertsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_historical(self, query_params=None) -> tuple:
+    def list_historical(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of alert history rules defined across an organization.
         All alert history rules are returned if the search filter is not specified.
@@ -238,7 +239,7 @@ class AlertsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_affected_devices(self, alert_id, query_params=None) -> tuple:
+    def list_affected_devices(self, alert_id, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all affected devices associated with
         an alert rule in conjunction with provided filters.

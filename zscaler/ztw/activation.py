@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.activation import Activation
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ActivationAPI(APIClient):
@@ -32,7 +33,7 @@ class ActivationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def activate(self, force: bool = False, **kwargs) -> tuple:
+    def activate(self, force: bool = False, **kwargs) -> APIResult[dict]:
         """
         Activate the configuration.
 

@@ -19,6 +19,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.forwarding_gateways import ForwardingGateways
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ForwardingGatewaysAPI(APIClient):
@@ -29,7 +30,7 @@ class ForwardingGatewaysAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gateways(self, query_params=None) -> tuple:
+    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of ZIA gateways and Log and Control gateways.
 
@@ -80,8 +81,8 @@ class ForwardingGatewaysAPI(APIClient):
 
     def list_gateway_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -152,7 +153,7 @@ class ForwardingGatewaysAPI(APIClient):
 
         return (results, response, None)
 
-    def add_gateway(self, **kwargs) -> tuple:
+    def add_gateway(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZTW Forwarding Gateway.
 
@@ -206,7 +207,7 @@ class ForwardingGatewaysAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_gateway(self, gateway_id: int) -> tuple:
+    def delete_gateway(self, gateway_id: int) -> APIResult[dict]:
         """
         Deletes a ZIA gateway or Log and Control gateway based on the specified ID.
 

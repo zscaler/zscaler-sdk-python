@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.config_override_controller import ConfigOverrideController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ConfigOverrideControllerAPI(APIClient):
@@ -32,7 +33,7 @@ class ConfigOverrideControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_config_overrides(self, query_params=None) -> tuple:
+    def list_config_overrides(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all config-override details.
 
@@ -88,7 +89,7 @@ class ConfigOverrideControllerAPI(APIClient):
     def get_config_override(
         self,
         config_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information on the specified config-override details by ID.
 
@@ -127,7 +128,7 @@ class ConfigOverrideControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_config_override(self, **kwargs) -> tuple:
+    def add_config_override(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new config-override.
 
@@ -169,7 +170,7 @@ class ConfigOverrideControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_config_override(self, config_id: str, **kwargs) -> tuple:
+    def update_config_override(self, config_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified config-override.
 

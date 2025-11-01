@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_vpn_credentials import TrafficVPNCredentials
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficVPNCredentialAPI(APIClient):
@@ -32,7 +33,7 @@ class TrafficVPNCredentialAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_vpn_credentials(self, query_params=None) -> tuple:
+    def list_vpn_credentials(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured VPN credentials with optional filtering.
 
@@ -109,7 +110,7 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_vpn_credential(self, credential_id: int) -> tuple:
+    def get_vpn_credential(self, credential_id: int) -> APIResult[dict]:
         """
         Get VPN credentials for the specified ID or fqdn.
 
@@ -155,7 +156,7 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_vpn_credential(self, **kwargs) -> tuple:
+    def add_vpn_credential(self, **kwargs) -> APIResult[dict]:
         """
         Add new VPN credentials.
 
@@ -221,7 +222,7 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_vpn_credential(self, credential_id: int, **kwargs) -> tuple:
+    def update_vpn_credential(self, credential_id: int, **kwargs) -> APIResult[dict]:
         """
         Update VPN credentials with the specified ID.
 
@@ -289,7 +290,7 @@ class TrafficVPNCredentialAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_vpn_credential(self, credential_id: int) -> tuple:
+    def delete_vpn_credential(self, credential_id: int) -> APIResult[dict]:
         """
         Delete VPN credentials for the specified ID.
 
@@ -323,7 +324,7 @@ class TrafficVPNCredentialAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def bulk_delete_vpn_credentials(self, credential_ids: list) -> tuple:
+    def bulk_delete_vpn_credentials(self, credential_ids: list) -> APIResult[dict]:
         """
         Bulk delete VPN credentials.
 

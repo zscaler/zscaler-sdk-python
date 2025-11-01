@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.authentication_settings import AuthenticationSettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 import time
 
 
@@ -33,7 +34,7 @@ class AuthenticationSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_exempted_urls(self) -> tuple:
+    def get_exempted_urls(self) -> APIResult[dict]:
         """
         Gets a list of URLs that were exempted from cookie authentication.
 
@@ -67,7 +68,7 @@ class AuthenticationSettingsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def add_urls_to_exempt_list(self, url_list: list) -> tuple:
+    def add_urls_to_exempt_list(self, url_list: list) -> APIResult[dict]:
         """
         Adds the provided URLs to the exempt list.
 
@@ -105,7 +106,7 @@ class AuthenticationSettingsAPI(APIClient):
         time.sleep(2)
         return self.get_exempted_urls()
 
-    def delete_urls_from_exempt_list(self, url_list: list) -> tuple:
+    def delete_urls_from_exempt_list(self, url_list: list) -> APIResult[dict]:
         """
         Deletes the provided URLs from the exemption list.
 
@@ -143,7 +144,7 @@ class AuthenticationSettingsAPI(APIClient):
         time.sleep(2)
         return self.get_exempted_urls()
 
-    def get_authentication_settings(self) -> tuple:
+    def get_authentication_settings(self) -> APIResult[dict]:
         """
         Retrieves the organization's default authentication settings.
 
@@ -186,7 +187,7 @@ class AuthenticationSettingsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_authentication_settings_lite(self) -> tuple:
+    def get_authentication_settings_lite(self) -> APIResult[dict]:
         """
         Retrieves the organization's default authentication settings information.
 
@@ -229,7 +230,7 @@ class AuthenticationSettingsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_authentication_settings(self, **kwargs) -> tuple:
+    def update_authentication_settings(self, **kwargs) -> APIResult[dict]:
         """
         Updates the organization's default authentication settings information.
 

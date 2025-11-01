@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.api_keys import ApiKeys
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ApiKeysAPI(APIClient):
@@ -32,7 +33,7 @@ class ApiKeysAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_api_keys(self, query_params=None) -> tuple:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all API keys details.
 
@@ -89,7 +90,7 @@ class ApiKeysAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_api_key(self, key_id: str, query_params=None) -> tuple:
+    def get_api_key(self, key_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a specific api key by ID.
 
@@ -135,7 +136,7 @@ class ApiKeysAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_api_key(self, **kwargs) -> tuple:
+    def add_api_key(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new ZPA API Key.
 
@@ -197,7 +198,7 @@ class ApiKeysAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_api_key(self, key_id: str, **kwargs) -> tuple:
+    def update_api_key(self, key_id: str, **kwargs) -> APIResult[dict]:
         """
         Update a new ZPA API Key.
 
@@ -267,7 +268,7 @@ class ApiKeysAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_api_key(self, key_id: str, microtenant_id: str = None) -> tuple:
+    def delete_api_key(self, key_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified API Key from ZPA.
 

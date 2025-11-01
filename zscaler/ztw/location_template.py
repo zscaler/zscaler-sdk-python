@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_templates import LocationTemplate
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class LocationTemplateAPI(APIClient):
@@ -32,7 +33,7 @@ class LocationTemplateAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_location_templates(self, query_params=None) -> tuple:
+    def list_location_templates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all existing location templates.
 
@@ -99,7 +100,7 @@ class LocationTemplateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_template_lite(self, query_params=None) -> tuple:
+    def list_template_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -156,7 +157,7 @@ class LocationTemplateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_location_template(self, name: str, template: dict = None, **kwargs) -> tuple:
+    def add_location_template(self, name: str, template: dict = None, **kwargs) -> APIResult[dict]:
         """
         Add a new location template.
 
@@ -247,7 +248,7 @@ class LocationTemplateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_location_template(self, template_id: str, **kwargs) -> tuple:
+    def update_location_template(self, template_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing location template.
 

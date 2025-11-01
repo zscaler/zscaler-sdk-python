@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.lss import LSSResourceModel
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class LSSConfigControllerAPI(APIClient):
@@ -89,7 +90,7 @@ class LSSConfigControllerAPI(APIClient):
 
         return template
 
-    def list_configs(self, query_params=None) -> tuple:
+    def list_configs(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates log receivers in your organization with pagination.
         A subset of log receivers can be returned that match a supported
@@ -139,7 +140,7 @@ class LSSConfigControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_config(self, lss_config_id: str, query_params=None) -> tuple:
+    def get_config(self, lss_config_id: str, query_params: Optional[dict] = None) -> APIResult[LSSResourceModel]:
         """
         Gets information on the specified LSS Receiver config.
 
@@ -184,7 +185,7 @@ class LSSConfigControllerAPI(APIClient):
         source_log_format: str = "csv",
         use_tls: bool = False,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a new LSS Receiver Config to ZPA.
 
@@ -293,7 +294,7 @@ class LSSConfigControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_lss_config(self, lss_config_id: str, **kwargs) -> tuple:
+    def update_lss_config(self, lss_config_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified LSS Receiver Config.
 
@@ -418,7 +419,7 @@ class LSSConfigControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_lss_config(self, lss_config_id: str) -> tuple:
+    def delete_lss_config(self, lss_config_id: str) -> APIResult[None]:
         """
         Deletes the specified LSS Receiver Config.
 

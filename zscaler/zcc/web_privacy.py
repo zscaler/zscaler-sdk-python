@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.webprivacy import WebPrivacy
+from zscaler.types import APIResult
 
 
 class WebPrivacyAPI(APIClient):
@@ -28,7 +29,7 @@ class WebPrivacyAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_web_privacy(self) -> tuple:
+    def get_web_privacy(self) -> APIResult[dict]:
         """
         Returns Web Privacy Information from the Client Connector Portal.
 
@@ -72,7 +73,7 @@ class WebPrivacyAPI(APIClient):
 
         return result
 
-    def set_web_privacy_info(self, **kwargs) -> tuple:
+    def set_web_privacy_info(self, **kwargs) -> APIResult[dict]:
         """
         Adds or updates the configuration information for end user and device-related PII.
 

@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_templates import DLPTemplates
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DLPTemplatesAPI(APIClient):
@@ -34,8 +35,8 @@ class DLPTemplatesAPI(APIClient):
 
     def list_dlp_templates(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists DLP Notification Templates. in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -107,7 +108,7 @@ class DLPTemplatesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_dlp_templates(self, template_id: int) -> tuple:
+    def get_dlp_templates(self, template_id: int) -> APIResult[dict]:
         """
         Returns the dlp notification template details for a given DLP template.
 
@@ -154,7 +155,7 @@ class DLPTemplatesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_dlp_template(self, **kwargs) -> tuple:
+    def add_dlp_template(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new DLP notification template to ZIA.
 
@@ -209,7 +210,7 @@ class DLPTemplatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_dlp_template(self, template_id: str, **kwargs) -> tuple:
+    def update_dlp_template(self, template_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified DLP Notification Template.
 
@@ -263,7 +264,7 @@ class DLPTemplatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_dlp_template(self, template_id: str) -> tuple:
+    def delete_dlp_template(self, template_id: str) -> APIResult[dict]:
         """
         Deletes the DLP Notification Template that matches the specified Template id.
 

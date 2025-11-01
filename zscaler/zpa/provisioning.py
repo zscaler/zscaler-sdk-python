@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.provisioning_keys import ProvisioningKey
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 def simplify_key_type(key_type):
@@ -50,7 +51,7 @@ class ProvisioningKeyAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_provisioning_keys(self, key_type: str, query_params=None) -> tuple:
+    def list_provisioning_keys(self, key_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured provisioning keys that match the specified ``key_type``.
 
@@ -125,7 +126,7 @@ class ProvisioningKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_provisioning_key(self, key_id: str, key_type: str, query_params=None) -> tuple:
+    def get_provisioning_key(self, key_id: str, key_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified provisioning key.
 
@@ -187,7 +188,7 @@ class ProvisioningKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_provisioning_key(self, key_type: str, **kwargs) -> tuple:
+    def add_provisioning_key(self, key_type: str, **kwargs) -> APIResult[dict]:
         """
         Adds a new provisioning key to ZPA.
 
@@ -259,7 +260,7 @@ class ProvisioningKeyAPI(APIClient):
 
         return (result, response, None)
 
-    def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> tuple:
+    def update_provisioning_key(self, key_id: str, key_type: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified provisioning key.
 
@@ -327,7 +328,7 @@ class ProvisioningKeyAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_provisioning_key(self, key_id: str, key_type: str, microtenant_id: str = None) -> tuple:
+    def delete_provisioning_key(self, key_id: str, key_type: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified provisioning key from ZPA.
 

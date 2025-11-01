@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_static_ip import TrafficStaticIP
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficStaticIPAPI(APIClient):
@@ -32,7 +33,7 @@ class TrafficStaticIPAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_static_ips(self, query_params=None) -> tuple:
+    def list_static_ips(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured static IPs.
 
@@ -98,7 +99,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_static_ip(self, static_ip_id: int) -> tuple:
+    def get_static_ip(self, static_ip_id: int) -> APIResult[dict]:
         """
         Returns information for the specified static IP.
 
@@ -140,7 +141,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_static_ip(self, **kwargs) -> tuple:
+    def add_static_ip(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new static IP.
 
@@ -208,7 +209,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_static_ip(self, static_ip_id: int, **kwargs) -> tuple:
+    def update_static_ip(self, static_ip_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information relating to the specified static IP.
 
@@ -264,7 +265,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_static_ip(self, static_ip_id: int) -> tuple:
+    def delete_static_ip(self, static_ip_id: int) -> APIResult[dict]:
         """
         Delete the specified static IP.
 
@@ -299,7 +300,7 @@ class TrafficStaticIPAPI(APIClient):
 
         return (None, response, None)
 
-    def check_static_ip(self, ip_address: str) -> tuple:
+    def check_static_ip(self, ip_address: str) -> APIResult[dict]:
         """
         Validates if a static IP address can be added to the organization.
 

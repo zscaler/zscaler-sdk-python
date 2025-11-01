@@ -20,6 +20,7 @@ from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.policyset_controller_v1 import PolicySetControllerV1
 from zscaler.zpa.models.policyset_controller_v2 import PolicySetControllerV2
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 from threading import Lock
 from functools import wraps
 
@@ -300,7 +301,7 @@ class PolicySetControllerAPI(APIClient):
 
         return result
 
-    def get_policy(self, policy_type: str, query_params=None) -> tuple:
+    def get_policy(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the policy and rule sets for the given policy type.
 
@@ -368,7 +369,7 @@ class PolicySetControllerAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def get_rule(self, policy_type: str, rule_id: str, query_params=None) -> tuple:
+    def get_rule(self, policy_type: str, rule_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the specified policy rule.
 
@@ -433,7 +434,7 @@ class PolicySetControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_rules(self, policy_type: str, query_params=None) -> tuple:
+    def list_rules(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns policy rules for a given policy type.
 
@@ -509,7 +510,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = [],
         app_server_group_ids: list = [],
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Access Policy rule.
 
@@ -618,7 +619,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = None,
         app_server_group_ids: list = None,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -711,7 +712,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_timeout_rule(self, **kwargs) -> tuple:
+    def add_timeout_rule(self, **kwargs) -> APIResult[dict]:
         """
         Add a new Timeout Policy rule.
 
@@ -787,7 +788,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_timeout_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_timeout_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -878,7 +879,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> tuple:
+    def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Client Forwarding Policy rule.
 
@@ -987,7 +988,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_client_forwarding_rule(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> tuple:
+    def update_client_forwarding_rule(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing Client Forwarding Policy rule.
 
@@ -1108,7 +1109,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> tuple:
+    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Add a new Isolation Policy rule.
 
@@ -1214,7 +1215,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_isolation_rule(
         self, rule_id: str, name: str = None, action: str = None, zpn_isolation_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing client isolation policy rule.
 
@@ -1333,7 +1334,7 @@ class PolicySetControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> tuple:
+    def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Add a new App Protection Policy rule.
         """
@@ -1385,7 +1386,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_app_protection_rule(
         self, rule_id: str, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing app protection policy rule.
 
@@ -1498,7 +1499,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = [],
         app_server_group_ids: list = [],
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Access Policy rule.
 
@@ -1655,7 +1656,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = None,
         app_server_group_ids: list = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -1826,7 +1827,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_timeout_rule_v2(self, name: str, **kwargs) -> tuple:
+    def add_timeout_rule_v2(self, name: str, **kwargs) -> APIResult[dict]:
         """
         Add a new timeout policy rule.
 
@@ -1950,7 +1951,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_timeout_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+    def update_timeout_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -2078,7 +2079,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_client_forwarding_rule_v2(self, name: str, action: str, **kwargs) -> tuple:
+    def add_client_forwarding_rule_v2(self, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Client Forwarding Policy rule.
 
@@ -2199,7 +2200,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_client_forwarding_rule_v2(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> tuple:
+    def update_client_forwarding_rule_v2(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing client forwarding policy rule.
 
@@ -2316,7 +2317,7 @@ class PolicySetControllerAPI(APIClient):
         action: str,
         zpn_isolation_profile_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Isolation Policy rule.
 
@@ -2443,7 +2444,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_isolation_rule_v2(
         self, rule_id: str, name: str = None, action: str = None, zpn_isolation_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing client isolation policy rule.
 
@@ -2571,7 +2572,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_app_protection_rule_v2(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> tuple:
+    def add_app_protection_rule_v2(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing app protection policy rule.
 
@@ -2699,7 +2700,7 @@ class PolicySetControllerAPI(APIClient):
         action: str,
         zpn_inspection_profile_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new App Protection Policy rule.
 
@@ -2837,7 +2838,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         credential_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Privileged Remote Access Credential Policy rule.
 
@@ -2983,7 +2984,7 @@ class PolicySetControllerAPI(APIClient):
         credential_id: str = None,
         name: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing privileged credential policy rule.
 
@@ -3127,7 +3128,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_capabilities_rule_v2(self, name: str, **kwargs) -> tuple:
+    def add_capabilities_rule_v2(self, name: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Capability Access rule.
 
@@ -3279,7 +3280,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_capabilities_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+    def update_capabilities_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing capabilities policy rule.
 
@@ -3440,7 +3441,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> tuple:
+    def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> APIResult[dict]:
         """
         Add a new Redirection Policy rule.
 
@@ -3581,7 +3582,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_redirection_rule_v2(
         self, rule_id: str, name: str, action: str, service_edge_group_ids: list = [], **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
         Ensure you are using the correct arguments for the policy type that you want to update.
@@ -3738,7 +3739,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         action: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add browser protection rule.
 
@@ -3863,7 +3864,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         action: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -3986,7 +3987,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def delete_rule(self, policy_type: str, rule_id: str, microtenant_id: str = None) -> tuple:
+    def delete_rule(self, policy_type: str, rule_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified policy rule.
 
@@ -4052,7 +4053,7 @@ class PolicySetControllerAPI(APIClient):
         return (None, response, None)
 
     @synchronized(global_rule_lock)
-    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str, **kwargs) -> tuple:
+    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str, **kwargs) -> APIResult[dict]:
         """
         Change the order of an existing policy rule.
 
@@ -4131,7 +4132,7 @@ class PolicySetControllerAPI(APIClient):
         return (None, response, None)
 
     @synchronized(global_rule_lock)
-    def bulk_reorder_rules(self, policy_type: str, rules_orders: list[str], **kwargs) -> tuple:
+    def bulk_reorder_rules(self, policy_type: str, rules_orders: list[str], **kwargs) -> APIResult[dict]:
         """
         Bulk change the order of policy rules.
 

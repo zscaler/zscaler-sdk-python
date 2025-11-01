@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.user_portal_controller import UserPortalController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class UserPortalControllerAPI(APIClient):
@@ -32,7 +33,7 @@ class UserPortalControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_user_portals(self, query_params=None) -> tuple:
+    def list_user_portals(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates user portals in an organization with pagination.
 
@@ -97,7 +98,7 @@ class UserPortalControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_user_portal(self, portal_id: str, query_params=None) -> tuple:
+    def get_user_portal(self, portal_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified user portal.
 
@@ -145,7 +146,7 @@ class UserPortalControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_user_portal(self, **kwargs) -> tuple:
+    def add_user_portal(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new user portal.
 
@@ -209,7 +210,7 @@ class UserPortalControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_user_portal(self, portal_id: str, **kwargs) -> tuple:
+    def update_user_portal(self, portal_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified user portal.
 
@@ -271,7 +272,7 @@ class UserPortalControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_user_portal(self, portal_id: str, microtenant_id: str = None) -> tuple:
+    def delete_user_portal(self, portal_id: str, microtenant_id: str = None) -> APIResult[None]:
         """
         Deletes the specified user portal.
 

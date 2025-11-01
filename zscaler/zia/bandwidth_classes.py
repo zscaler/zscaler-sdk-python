@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.bandwidth_classes import BandwidthClasses
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class BandwidthClassesAPI(APIClient):
@@ -32,7 +33,7 @@ class BandwidthClassesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_classes(self, query_params=None) -> tuple:
+    def list_classes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of bandwidth classes for an organization.
 
@@ -92,7 +93,7 @@ class BandwidthClassesAPI(APIClient):
 
         return (results, response, None)
 
-    def list_classes_lite(self) -> tuple:
+    def list_classes_lite(self) -> APIResult[dict]:
         """
         Fetches a specific bandwidth class lite by ID.
 
@@ -142,7 +143,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_class(self, class_id: int) -> tuple:
+    def get_class(self, class_id: int) -> APIResult[dict]:
         """
         Fetches a specific bandwidth class by ID.
 
@@ -187,7 +188,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_class(self, **kwargs) -> tuple:
+    def add_class(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Bandwidth Class.
 
@@ -243,7 +244,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_class(self, class_id: int, **kwargs) -> tuple:
+    def update_class(self, class_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Bandwidth Class.
 
@@ -293,7 +294,7 @@ class BandwidthClassesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_class(self, class_id: int) -> tuple:
+    def delete_class(self, class_id: int) -> APIResult[dict]:
         """
         Deletes the specified Bandwidth Class.
 

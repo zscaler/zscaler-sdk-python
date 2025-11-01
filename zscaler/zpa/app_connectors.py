@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.app_connectors import AppConnectorController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AppConnectorControllerAPI(APIClient):
@@ -37,7 +38,7 @@ class AppConnectorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_connectors(self, query_params=None) -> tuple:
+    def list_connectors(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates app connectors in your organization with pagination.
         A subset of app connectors can be returned that match a supported
@@ -96,7 +97,7 @@ class AppConnectorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_connector(self, connector_id: str, query_params=None) -> tuple:
+    def get_connector(self, connector_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified App Connector.
 
@@ -140,7 +141,7 @@ class AppConnectorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_connector(self, connector_id: str, **kwargs) -> tuple:
+    def update_connector(self, connector_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing ZPA App Connector.
 
@@ -201,7 +202,7 @@ class AppConnectorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_connector(self, connector_id: str, microtenant_id: str = None) -> tuple:
+    def delete_connector(self, connector_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified App Connector from ZPA.
 
@@ -240,7 +241,7 @@ class AppConnectorControllerAPI(APIClient):
 
         return (None, response, None)
 
-    def bulk_delete_connectors(self, connector_ids: list, microtenant_id: str = None) -> tuple:
+    def bulk_delete_connectors(self, connector_ids: list, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes all specified App Connectors from ZPA.
 

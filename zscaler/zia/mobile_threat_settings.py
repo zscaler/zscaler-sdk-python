@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.mobile_threat_settings import MobileAdvancedThreatSettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class MobileAdvancedSettingsAPI(APIClient):
@@ -32,7 +33,7 @@ class MobileAdvancedSettingsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_mobile_advanced_settings(self) -> tuple:
+    def get_mobile_advanced_settings(self) -> APIResult[dict]:
         """
         Retrieves all the rules in the Mobile Malware Protection policy
 
@@ -79,7 +80,7 @@ class MobileAdvancedSettingsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_mobile_advanced_settings(self, **kwargs) -> tuple:
+    def update_mobile_advanced_settings(self, **kwargs) -> APIResult[dict]:
         """
         Updates mobile settings in the ZIA Admin Portal with the provided configuration.
 

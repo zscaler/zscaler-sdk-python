@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,11 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.activation import Activation
 from zscaler.zia.models.activation import EusaStatus
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ActivationAPI(APIClient):
@@ -33,7 +35,7 @@ class ActivationAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def status(self) -> tuple:
+    def status(self) -> APIResult[Activation]:
         """
         Returns the activation status for a configuration change.
 
@@ -70,7 +72,7 @@ class ActivationAPI(APIClient):
 
         return (result, response, None)
 
-    def activate(self) -> tuple:
+    def activate(self) -> APIResult[Activation]:
         """
         Activates configuration changes.
 
@@ -107,7 +109,7 @@ class ActivationAPI(APIClient):
 
         return (result, response, None)
 
-    def get_eusa_status(self) -> tuple:
+    def get_eusa_status(self) -> APIResult[EusaStatus]:
         """
         Retrieves the End User Subscription Agreement (EUSA) acceptance status.
         If the status does not exist, it returns a status object with no ID.
@@ -153,7 +155,7 @@ class ActivationAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_eusa_status(self, status_id: int, **kwargs) -> tuple:
+    def update_eusa_status(self, status_id: int, **kwargs) -> APIResult[EusaStatus]:
         """
         Updates the EUSA status based on the specified status ID
 

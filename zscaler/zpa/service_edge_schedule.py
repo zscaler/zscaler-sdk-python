@@ -20,6 +20,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.service_edge_schedule import ServiceEdgeSchedule
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ServiceEdgeScheduleAPI(APIClient):
@@ -37,7 +38,7 @@ class ServiceEdgeScheduleAPI(APIClient):
 
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{self.customer_id}"
 
-    def get_service_edge_schedule(self, customer_id=None) -> tuple:
+    def get_service_edge_schedule(self, customer_id=None) -> APIResult[dict]:
         """
         Returns the configured Service Edge Schedule frequency.
 
@@ -83,7 +84,7 @@ class ServiceEdgeScheduleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_service_edge_schedule(self, schedule) -> tuple:
+    def add_service_edge_schedule(self, schedule) -> APIResult[dict]:
         """
         Configure an Service Edge schedule frequency to delete inactive connectors based on the configured frequency.
 
@@ -149,7 +150,7 @@ class ServiceEdgeScheduleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_service_edge_schedule(self, scheduler_id: str, schedule) -> tuple:
+    def update_service_edge_schedule(self, scheduler_id: str, schedule) -> APIResult[dict]:
         """
         Updates Service Edge schedule frequency to delete inactive connectors based on the configured frequency.
 

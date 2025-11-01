@@ -19,6 +19,7 @@ from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cloud_connector_groups import CloudConnectorGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudConnectorGroupsAPI(APIClient):
@@ -32,7 +33,7 @@ class CloudConnectorGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_connector_groups(self, query_params=None) -> tuple:
+    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured cloud connector groups.
 
@@ -88,7 +89,7 @@ class CloudConnectorGroupsAPI(APIClient):
     def get_cloud_connector_groups(
         self,
         group_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information on the specified cloud connector group.
 
