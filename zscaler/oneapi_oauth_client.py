@@ -1,6 +1,7 @@
 from typing import Dict, Optional, Any, Union
 import logging
 import json
+import os
 import requests
 from jose import jwt
 import time
@@ -239,6 +240,32 @@ class OAuth:
         # logging.debug("Authentication process completed.")
         return response
 
+    def _setup_proxy(self, proxy: Optional[Union[Dict[str, Any], str]]) -> Optional[str]:
+        """Sets up the proxy string from the configuration or environment variables."""
+        proxy_string: str = ""
+
+        if proxy is None:
+            if "HTTP_PROXY" in os.environ:
+                proxy_string = os.environ["HTTP_PROXY"]
+            if "HTTPS_PROXY" in os.environ:
+                proxy_string = os.environ["HTTPS_PROXY"]
+            return proxy_string if proxy_string != "" else None
+
+        host: str = proxy["host"]
+        port: Union[int, str] = int(proxy["port"]) if "port" in proxy else ""
+
+        if "username" in proxy and "password" in proxy:
+            username: str = proxy["username"]
+            password: str = proxy["password"]
+            proxy_string = f"http://{username}:{password}@{host}"
+        else:
+            proxy_string = f"http://{host}"
+
+        if port:
+            proxy_string += f":{port}/"
+
+        return proxy_string if proxy_string != "" else None
+
     def _authenticate_with_client_secret(self, client_id: str, client_secret: str) -> requests.Response:
         """
         Authenticate using client ID and client secret.
@@ -270,9 +297,16 @@ class OAuth:
             "User-Agent": user_agent,
         }
 
+        # Setup proxy if configured
+        proxy_config: Optional[Dict[str, Any]] = self._config["client"].get("proxy")
+        proxy_string: Optional[str] = self._setup_proxy(proxy_config)
+        proxies: Optional[Dict[str, str]] = None
+        if proxy_string:
+            proxies = {"http": proxy_string, "https": proxy_string}
+
         # logging.debug(f"Sending authentication request to {auth_url}.")
         # Synchronous HTTP request (with form data in the body)
-        response: requests.Response = requests.post(auth_url, data=form_data, headers=headers)
+        response: requests.Response = requests.post(auth_url, data=form_data, headers=headers, proxies=proxies)
 
         if response.status_code >= 300:
             logging.error(f"Error authenticating: {response.status_code}, {response.text}")
@@ -348,8 +382,15 @@ class OAuth:
             "User-Agent": "Zscaler-SDK",
         }
 
+        # Setup proxy if configured
+        proxy_config: Optional[Dict[str, Any]] = self._config["client"].get("proxy")
+        proxy_string: Optional[str] = self._setup_proxy(proxy_config)
+        proxies: Optional[Dict[str, str]] = None
+        if proxy_string:
+            proxies = {"http": proxy_string, "https": proxy_string}
+
         logging.debug(f"Sending authentication request to {auth_url} with JWT.")
-        response: requests.Response = requests.post(auth_url, data=form_data, headers=headers)
+        response: requests.Response = requests.post(auth_url, data=form_data, headers=headers, proxies=proxies)
 
         if response.status_code >= 300:
             logging.error(f"Error authenticating: {response.status_code}, {response.text}")
