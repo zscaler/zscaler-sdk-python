@@ -361,7 +361,7 @@ class TrafficStaticIPAPI(APIClient):
             # Ensure we have a valid response object with status_code attribute
             if not hasattr(raw_response, 'status_code'):
                 return (False, raw_response, error if error else "Invalid response object")
-            
+
             status_code = raw_response.status_code
             body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
 
@@ -369,7 +369,7 @@ class TrafficStaticIPAPI(APIClient):
             # Important: Ignore any error that might have been set for non-JSON responses
             if status_code == 200 and body_text.upper() == "SUCCESS":
                 return (True, None, None)
-            
+
             # HTTP 409 = IP already exists (duplicate)
             # For 409, parse the JSON error from the response body
             elif status_code == 409:
@@ -384,12 +384,12 @@ class TrafficStaticIPAPI(APIClient):
                 except (json.JSONDecodeError, ValueError):
                     # If parsing fails, use the provided error or create a generic one
                     structured_error = error if error else {"status": 409, "message": "IP already exists"}
-                
+
                 return (False, raw_response, structured_error)
-            
+
             # Any other response = invalid
             else:
                 return (False, raw_response, error if error else f"Unexpected response: {status_code}")
-                
+
         except Exception as ex:
             return (False, raw_response, ex)

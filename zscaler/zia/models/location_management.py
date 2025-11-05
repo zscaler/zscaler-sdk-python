@@ -115,7 +115,12 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-            self.ports = config["ports"] if "ports" in config else None
+            self.ports = ZscalerCollection.form_list(config["ports"] if "ports" in config else [], str)
+            self.sub_loc_scope_values = ZscalerCollection.form_list(
+                config["subLocScopeValues"] if "subLocScopeValues" in config else [], str)
+            self.sub_loc_acc_ids = ZscalerCollection.form_list(config["subLocAccIds"] if "subLocAccIds" in config else [], str)
+            self.sub_loc_scope_enabled = config["subLocScopeEnabled"] if "subLocScopeEnabled" in config else None
+            self.sub_loc_scope = config["subLocScope"] if "subLocScope" in config else None
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
                 config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.CommonIDName
@@ -209,11 +214,15 @@ class LocationManagement(ZscalerObject):
             self.extranet = None
             self.extranet_ip_pool = None
             self.extranet_dns = None
-            self.ports = None
+            self.ports = []
             self.static_location_groups = []
             self.dynamic_location_groups = []
             self.vpn_credentials = []
             self.ip_addresses = []
+            self.sub_loc_scope_enabled = False
+            self.sub_loc_scope = None
+            self.sub_loc_scope_values = []
+            self.sub_loc_acc_ids = []
 
     def request_format(self) -> Dict[str, Any]:
         """
@@ -273,6 +282,10 @@ class LocationManagement(ZscalerObject):
             "extranetDns": self.extranet_dns,
             "defaultExtranetTsPool": self.default_extranet_ts_pool,
             "defaultExtranetDns": self.default_extranet_dns,
+            "subLocScopeEnabled": self.sub_loc_scope_enabled,
+            "subLocScope": self.sub_loc_scope,
+            "subLocScopeValues": self.sub_loc_scope_values,
+            "subLocAccIds": self.sub_loc_acc_ids,
             "staticLocationGroups": [static.request_format() for static in (self.static_location_groups or [])],
             "dynamiclocationGroups": [dyn.request_format() for dyn in (self.dynamic_location_groups or [])],
             "vpnCredentials": [vpn.request_format() for vpn in (self.vpn_credentials or [])],

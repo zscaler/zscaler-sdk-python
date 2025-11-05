@@ -228,7 +228,7 @@ class DevicesAPI(APIClient):
                 ``[query_params.end_date]`` {str}: End date for the report. Accepts various formats:
                     YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Will be converted to ZCC API format.
 
-                ``[query_params.time_zone]`` {str}: IANA time zone for date interpretation. 
+                ``[query_params.time_zone]`` {str}: IANA time zone for date interpretation.
                     Examples: 'America/New_York', 'UTC', 'Europe/London'.
 
             filename (str, optional): Custom filename for the CSV file. Defaults to timestamped name.
@@ -724,4 +724,3 @@ class DevicesAPI(APIClient):
             return None, response, error
 
         return result, response, None
-

@@ -157,7 +157,7 @@ class WebPolicyAPI(APIClient):
             /web/policy/edit
         """
         )
-        
+
         body = kwargs
 
         transform_common_id_fields(reformat_params, body, body)

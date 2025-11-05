@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import logging
 import os
 import time
-import json
 import requests
+from typing import TYPE_CHECKING
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.logger import setup_logging
@@ -11,6 +13,11 @@ from zscaler.user_agent import UserAgent
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
+
+# Import all ZWA API classes for type hints only (to avoid circular imports)
+if TYPE_CHECKING:
+    from zscaler.zwa.audit_logs import AuditLogsAPI
+    from zscaler.zwa.dlp_incidents import DLPIncidentsAPI
 
 
 class LegacyZWAClientHelper:
@@ -237,7 +244,7 @@ class LegacyZWAClientHelper:
             raise ValueError(f"Request execution failed: {error}")
 
     @property
-    def audit_logs(self):
+    def audit_logs(self) -> "AuditLogsAPI":
         """
         The interface object for the :ref:`ZWA Audit Logs interface <zwa-audit_logs>`.
 
@@ -247,7 +254,7 @@ class LegacyZWAClientHelper:
         return AuditLogsAPI(self.request_executor)
 
     @property
-    def dlp_incidents(self):
+    def dlp_incidents(self) -> "DLPIncidentsAPI":
         """
         The interface object for the :ref:`ZWA DLP Incidents interface <zwa-dlp_incidents>`.
 

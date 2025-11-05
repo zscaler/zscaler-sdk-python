@@ -229,7 +229,13 @@ class ZPAGatewayAPI(APIClient):
 
         return (result, response, None)
 
-    def update_gateway(self, gateway_id: str, zpa_server_group: dict = None, zpa_app_segments: dict = None, **kwargs) -> APIResult[dict]:
+    def update_gateway(
+        self,
+        gateway_id: str,
+        zpa_server_group: dict = None,
+        zpa_app_segments: dict = None,
+        **kwargs
+    ) -> APIResult[dict]:
         """
         Updates information for the specified ZPA Gateway.
 

@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import logging
 import os
 import urllib.parse
 import time
 import requests
 from datetime import datetime, timedelta
+from typing import TYPE_CHECKING
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.user_agent import UserAgent
@@ -17,6 +20,19 @@ from zscaler.logger import setup_logging
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
+
+# Import all ZCC API classes for type hints only (to avoid circular imports)
+if TYPE_CHECKING:
+    from zscaler.zcc.devices import DevicesAPI
+    from zscaler.zcc.admin_user import AdminUserAPI
+    from zscaler.zcc.company import CompanyInfoAPI
+    from zscaler.zcc.entitlements import EntitlementAPI
+    from zscaler.zcc.forwarding_profile import ForwardingProfileAPI
+    from zscaler.zcc.fail_open_policy import FailOpenPolicyAPI
+    from zscaler.zcc.web_policy import WebPolicyAPI
+    from zscaler.zcc.web_app_service import WebAppServiceAPI
+    from zscaler.zcc.web_privacy import WebPrivacyAPI
+    from zscaler.zcc.trusted_networks import TrustedNetworksAPI
 
 
 class LegacyZCCClientHelper:
@@ -57,7 +73,16 @@ class LegacyZCCClientHelper:
     RATE_LIMIT_RESET_TIME = timedelta(hours=1)
     DOWNLOAD_DEVICES_RESET_TIME = timedelta(days=1)
 
-    def __init__(self, api_key=None, secret_key=None, cloud=None, partner_id=None, timeout=240, cache=None, request_executor_impl=None):
+    def __init__(
+        self,
+        api_key=None,
+        secret_key=None,
+        cloud=None,
+        partner_id=None,
+        timeout=240,
+        cache=None,
+        request_executor_impl=None
+    ):
         from zscaler.request_executor import RequestExecutor
 
         self._api_key = api_key or os.getenv("api_key", os.getenv(f"{self._env_base}_CLIENT_ID"))
@@ -314,7 +339,7 @@ class LegacyZCCClientHelper:
         self._session = session
 
     @property
-    def devices(self):
+    def devices(self) -> "DevicesAPI":
         """
         The interface object for the :ref:`ZCC devices interface <zcc-devices>`.
 
@@ -324,7 +349,7 @@ class LegacyZCCClientHelper:
         return DevicesAPI(self.request_executor)
 
     @property
-    def admin_user(self):
+    def admin_user(self) -> "AdminUserAPI":
         """
         The interface object for the :ref:`ZCC admin user interface <zcc-admin_user>`.
 
@@ -334,7 +359,7 @@ class LegacyZCCClientHelper:
         return AdminUserAPI(self.request_executor)
 
     @property
-    def company(self):
+    def company(self) -> "CompanyInfoAPI":
         """
         The interface object for the :ref:`ZCC admin user interface <zcc-company_info>`.
 
@@ -344,7 +369,7 @@ class LegacyZCCClientHelper:
         return CompanyInfoAPI(self.request_executor)
 
     @property
-    def entitlements(self):
+    def entitlements(self) -> "EntitlementAPI":
         """
         The interface object for the :ref:`ZCC admin user interface <zcc-entitlements>`.
 
@@ -354,7 +379,7 @@ class LegacyZCCClientHelper:
         return EntitlementAPI(self.request_executor)
 
     @property
-    def forwarding_profile(self):
+    def forwarding_profile(self) -> "ForwardingProfileAPI":
         """
         The interface object for the :ref:`ZCC web forwarding profile interface <zcc-forwarding_profile>`.
 
@@ -364,7 +389,7 @@ class LegacyZCCClientHelper:
         return ForwardingProfileAPI(self.request_executor)
 
     @property
-    def fail_open_policy(self):
+    def fail_open_policy(self) -> "FailOpenPolicyAPI":
         """
         The interface object for the :ref:`ZCC fail open policy interface <zcc-fail_open_policy>`.
 
@@ -374,7 +399,7 @@ class LegacyZCCClientHelper:
         return FailOpenPolicyAPI(self.request_executor)
 
     @property
-    def web_policy(self):
+    def web_policy(self) -> "WebPolicyAPI":
         """
         The interface object for the :ref:`ZCC web policy interface <zcc-web_policy>`.
 
@@ -384,7 +409,7 @@ class LegacyZCCClientHelper:
         return WebPolicyAPI(self.request_executor)
 
     @property
-    def web_app_service(self):
+    def web_app_service(self) -> "WebAppServiceAPI":
         """
         The interface object for the :ref:`ZCC web app service interface <zcc-web_app_service>`.
 
@@ -394,7 +419,7 @@ class LegacyZCCClientHelper:
         return WebAppServiceAPI(self.request_executor)
 
     @property
-    def web_privacy(self):
+    def web_privacy(self) -> "WebPrivacyAPI":
         """
         The interface object for the :ref:`ZCC web privacy interface <zcc-web_privacy>`.
 
@@ -404,7 +429,7 @@ class LegacyZCCClientHelper:
         return WebPrivacyAPI(self.request_executor)
 
     @property
-    def trusted_networks(self):
+    def trusted_networks(self) -> "TrustedNetworksAPI":
         """
         The interface object for the :ref:`ZCC trusted networks interface <zcc-trusted_networks>`.
 

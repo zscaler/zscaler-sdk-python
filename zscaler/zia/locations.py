@@ -264,6 +264,14 @@ class LocationsAPI(APIClient):
             description (str, optional):
                 Additional notes or information regarding the location or sub-location. The description cannot
                 exceed 1024 characters.
+            sub_loc_scope_enabled (bool, optional):
+                Indicates whether defining scopes is allowed for this sublocation
+            sub_loc_scope (str, optional):
+                Defines a scope for the sublocation from the available types to segregate workload traffic
+            sub_loc_scope_values (list[str], optional):
+                Specifies values for the selected sublocation scope type
+            sub_loc_acc_ids (list[int], optional):
+                Specifies one or more Amazon Web Services (AWS) account IDs.
 
         Returns:
             :obj:`tuple`: The newly created location resource record

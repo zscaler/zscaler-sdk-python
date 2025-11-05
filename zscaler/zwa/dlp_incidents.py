@@ -349,7 +349,13 @@ class DLPIncidentsAPI(APIClient):
 
         return (result, response, None)
 
-    def dlp_incident_search(self, query_params: Optional[dict] = None, fields=None, time_range=None, **kwargs) -> APIResult[dict]:
+    def dlp_incident_search(
+        self,
+        query_params: Optional[dict] = None,
+        fields=None,
+        time_range=None,
+        **kwargs
+    ) -> APIResult[dict]:
         """
         Filters DLP incidents based on the given time range and field values.
 
