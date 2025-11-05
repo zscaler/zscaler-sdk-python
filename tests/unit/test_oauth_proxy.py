@@ -5,15 +5,19 @@ Testing OAuth proxy configuration for Zscaler SDK
 import pytest
 import requests
 from unittest.mock import Mock, patch, MagicMock
-from zscaler.oneapi_oauth_client import OAuth, _setup_proxy
+from zscaler.oneapi_oauth_client import OAuth
+from zscaler.oneapi_http_client import HTTPClient
 
 
 def test_oauth_proxy_setup_function():
     """Test the _setup_proxy helper function."""
     from urllib.parse import urlparse
     
+    # Create HTTPClient instance to access _setup_proxy method
+    http_client = HTTPClient({"headers": {}})
+    
     # Test with None proxy
-    proxy_string = _setup_proxy(None)
+    proxy_string = http_client._setup_proxy(None)
     assert proxy_string is None or isinstance(proxy_string, str)
     
     # Test with proxy configuration
@@ -24,7 +28,7 @@ def test_oauth_proxy_setup_function():
         "password": "pass"
     }
     
-    proxy_string = _setup_proxy(proxy_config)
+    proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
     assert parsed.hostname == "proxy.example.com"
@@ -38,7 +42,7 @@ def test_oauth_proxy_setup_function():
         "port": "8080"
     }
     
-    proxy_string = _setup_proxy(proxy_config_no_auth)
+    proxy_string = http_client._setup_proxy(proxy_config_no_auth)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
     assert parsed.hostname == "proxy.example.com"
@@ -51,11 +55,14 @@ def test_oauth_proxy_setup_without_port():
     """Test _setup_proxy function without port."""
     from urllib.parse import urlparse
     
+    # Create HTTPClient instance to access _setup_proxy method
+    http_client = HTTPClient({"headers": {}})
+    
     proxy_config = {
         "host": "proxy.example.com"
     }
     
-    proxy_string = _setup_proxy(proxy_config)
+    proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
     assert parsed.hostname == "proxy.example.com"
@@ -138,9 +145,9 @@ def test_oauth_private_key_with_proxy():
     assert proxy_config["port"] == "8080"
     
     # Test that the _setup_proxy function works with the config
-    from zscaler.oneapi_oauth_client import _setup_proxy
     from urllib.parse import urlparse
-    proxy_string = _setup_proxy(proxy_config)
+    http_client = HTTPClient({"headers": {}})
+    proxy_string = http_client._setup_proxy(proxy_config)
     assert proxy_string is not None
     parsed = urlparse(proxy_string)
     assert parsed.hostname == "proxy.example.com"
@@ -307,9 +314,7 @@ def test_oauth_proxy_error_handling():
 
 def test_oauth_proxy_consistency_with_http_client():
     """Test that OAuth proxy configuration is consistent with HTTPClient."""
-    from zscaler.oneapi_http_client import HTTPClient
-    
-    # Test OAuth proxy setup
+    # Test HTTPClient proxy setup
     oauth_proxy_config = {
         "host": "proxy.example.com",
         "port": "8080",
@@ -317,9 +322,6 @@ def test_oauth_proxy_consistency_with_http_client():
         "password": "pass"
     }
     
-    oauth_proxy_string = _setup_proxy(oauth_proxy_config)
-    
-    # Test HTTPClient proxy setup
     http_config = {
         "headers": {},
         "proxy": oauth_proxy_config
@@ -327,11 +329,10 @@ def test_oauth_proxy_consistency_with_http_client():
     http_client = HTTPClient(http_config)
     http_proxy_string = http_client._setup_proxy(oauth_proxy_config)
     
-    # Both should produce the same proxy string
-    assert oauth_proxy_string == http_proxy_string
-    assert oauth_proxy_string is not None
+    # Verify the proxy string is correct
+    assert http_proxy_string is not None
     from urllib.parse import urlparse
-    parsed = urlparse(oauth_proxy_string)
+    parsed = urlparse(http_proxy_string)
     assert parsed.hostname == "proxy.example.com"
     assert parsed.port == 8080
     assert parsed.username == "user"

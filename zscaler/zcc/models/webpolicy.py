@@ -44,7 +44,7 @@ class WebPolicy(ZscalerObject):
         'disable_password', 'logout_password', 'uninstall_password', 'allowed_apps', 'billing_day',
         'bypass_android_apps', 'bypass_mms_apps', 'custom_text', 'enforced', 'install_ssl_certs',
         'limit', 'quota_in_roaming', 'wifi_ssid',
-        
+
         # macOS Policy attributes
         'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
 
@@ -171,7 +171,7 @@ class WebPolicy(ZscalerObject):
                     self.mac_policy = None
             else:
                 self.mac_policy = None
-            
+
             if "policyExtension" in config:
                 if isinstance(config["policyExtension"], PolicyExtension):
                     self.policy_extension = config["policyExtension"]
@@ -790,7 +790,7 @@ class Groups(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class WindowsPolicy(ZscalerObject):
     """

@@ -16,8 +16,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from typing import Dict, List, Optional, Any, Union
 import time
-from typing import List, Optional, Any
-
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import chunker
 from zscaler.api_client import APIClient

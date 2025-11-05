@@ -202,7 +202,11 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ip_destination_groups_lite(
+        self,
+        exclude_type: str = None,
+        query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -292,7 +296,11 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups_lite(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ipv6_destination_groups_lite(
+        self,
+        exclude_type: str = None,
+        query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -516,11 +524,23 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ip_destination_group(self, group_id: str, **kwargs) -> APIResult[dict]:
+    def update_ip_destination_group(
+        self,
+        group_id: str,
+        query_params: Optional[dict] = None,
+        **kwargs
+    ) -> APIResult[dict]:
         """
         Updates the specified IP Destination Group.
 
         Args:
+            query_params (dict):
+                Map of query parameters for the request.
+
+                ``[query_params.override]`` (bool): Indicates whether the IPs must be overridden.
+                    When set to false, the IPs are appended
+                    Else the existing IPs are overridden. The default value is true.
+
             group_id (str): The unique ID of the IP Destination Group.
             **kwargs: Optional keyword args.
 

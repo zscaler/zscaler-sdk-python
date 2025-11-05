@@ -611,27 +611,27 @@ class IntermediateCertsAPI(APIClient):
         # Create multipart form data manually (like Postman does)
         import io
         import uuid
-        
+
         # Generate a random boundary (like Postman does)
         boundary = f"----WebKitFormBoundary{str(uuid.uuid4()).replace('-', '')}"
-        
+
         # Build multipart form data
         form_data = io.BytesIO()
-        
+
         # Add the file part
         form_data.write(f'--{boundary}\r\n'.encode())
         form_data.write(b'Content-Disposition: form-data; name="fileUpload"; filename="certificate.pem"\r\n')
         form_data.write(b'Content-Type: application/octet-stream\r\n\r\n')
         form_data.write(file_content)
         form_data.write(f'\r\n--{boundary}--\r\n'.encode())
-        
+
         headers = {
             'Content-Type': f'multipart/form-data; boundary={boundary}'
         }
 
         request, error = self._request_executor.create_request(
-            http_method, 
-            api_url, 
+            http_method,
+            api_url,
             body=form_data.getvalue(),
             headers=headers,
             use_raw_data_for_body=True
