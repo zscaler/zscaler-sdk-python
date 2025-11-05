@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_zpa_profile import ZPACBIProfile
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CBIZPAProfileAPI(APIClient):
@@ -32,7 +34,7 @@ class CBIZPAProfileAPI(APIClient):
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cbi_zpa_profiles(self, query_params=None, **kwargs) -> tuple:
+    def list_cbi_zpa_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 
@@ -76,7 +78,7 @@ class CBIZPAProfileAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_isolation_profiles(self, query_params=None, **kwargs) -> tuple:
+    def list_isolation_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 

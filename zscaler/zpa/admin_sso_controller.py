@@ -14,9 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdminSSOControllerAPI(APIClient):
@@ -30,7 +32,7 @@ class AdminSSOControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def get_sso_controller(self) -> tuple:
+    def get_sso_controller(self) -> APIResult[dict]:
         """
         Fetches Admin SSO Login Details
 
@@ -74,7 +76,7 @@ class AdminSSOControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def update_sso_controller(self, **kwargs) -> tuple:
+    def update_sso_controller(self, **kwargs) -> APIResult[dict]:
         """
         Update SSO Options
 

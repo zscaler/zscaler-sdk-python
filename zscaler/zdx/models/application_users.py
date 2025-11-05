@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common
@@ -24,7 +25,7 @@ class ApplicationActiveUsers(ZscalerObject):
     A class for active users, their devices, active geolocations objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the active users, their devices, active geolocations model based on API response.
 
@@ -43,7 +44,7 @@ class ApplicationActiveUsers(ZscalerObject):
             self.next_offset = None
             self.users = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -61,7 +62,7 @@ class ApplicationUserDetails(ZscalerObject):
     A class for ApplicationUserDetails objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationUserDetails model based on API response.
 
@@ -85,7 +86,7 @@ class ApplicationUserDetails(ZscalerObject):
             self.score = None
             self.devices = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

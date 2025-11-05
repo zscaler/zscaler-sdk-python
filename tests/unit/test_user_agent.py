@@ -257,3 +257,110 @@ class TestUserAgentIntegration:
         assert "key" not in ua_string.lower()
         assert "token" not in ua_string.lower()
 
+
+class TestPartnerIdHeader:
+    """
+    Test x-partner-id header functionality.
+    
+    Note: This is not part of the UserAgent class itself, but tests the
+    partnerId configuration feature that automatically adds the x-partner-id
+    header to all API requests when partnerId is provided in the configuration.
+    This feature is implemented in RequestExecutor and is tested here for
+    completeness alongside user agent functionality.
+    """
+
+    def test_partner_id_header_in_request_executor(self):
+        """Test that x-partner-id header is added when partnerId is in config."""
+        from zscaler.request_executor import RequestExecutor
+        from zscaler.cache.no_op_cache import NoOpCache
+        
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "542585sdsdw"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header is in default headers
+        default_headers = executor.get_default_headers()
+        assert "x-partner-id" in default_headers
+        assert default_headers["x-partner-id"] == "542585sdsdw"
+
+    def test_partner_id_header_not_added_when_not_provided(self):
+        """Test that x-partner-id header is NOT added when partnerId is not in config."""
+        from zscaler.request_executor import RequestExecutor
+        from zscaler.cache.no_op_cache import NoOpCache
+        
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header is NOT in default headers
+        default_headers = executor.get_default_headers()
+        assert "x-partner-id" not in default_headers
+
+    def test_partner_id_header_value_matches_config(self):
+        """Test that x-partner-id header value matches the partnerId from config."""
+        from zscaler.request_executor import RequestExecutor
+        from zscaler.cache.no_op_cache import NoOpCache
+        
+        partner_id = "test-partner-id-12345"
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": partner_id
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header value matches
+        default_headers = executor.get_default_headers()
+        assert default_headers["x-partner-id"] == partner_id
+
+    def test_partner_id_header_in_prepared_headers(self):
+        """Test that x-partner-id header is included in prepared headers."""
+        from zscaler.request_executor import RequestExecutor
+        from zscaler.cache.no_op_cache import NoOpCache
+        from unittest.mock import Mock, patch
+        
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "test-partner-123"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Mock OAuth to avoid authentication issues
+        mock_oauth = Mock()
+        mock_oauth._get_access_token.return_value = "mock-token"
+        with patch.object(executor, '_oauth', mock_oauth):
+            headers = executor._prepare_headers({}, "/zia/api/v1/test")
+            
+            assert "x-partner-id" in headers
+            assert headers["x-partner-id"] == "test-partner-123"
+

@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_mapper, transform_common_id_fields, reformat_params
 from zscaler.zcc.models.webpolicy import WebPolicy
+from zscaler.types import APIResult
 
 
 class WebPolicyAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
     @zcc_param_mapper
-    def list_by_company(self, query_params=None) -> tuple:
+    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of Web Policy By Company ID in the Client Connector Portal.
 
@@ -87,7 +89,7 @@ class WebPolicyAPI(APIClient):
 
         return result, response, None
 
-    def activate_web_policy(self, **kwargs) -> tuple:
+    def activate_web_policy(self, **kwargs) -> APIResult[dict]:
         """
         Enables or disables a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
@@ -139,7 +141,7 @@ class WebPolicyAPI(APIClient):
 
         return (result, response, None)
 
-    def web_policy_edit(self, **kwargs) -> tuple:
+    def web_policy_edit(self, **kwargs) -> APIResult[dict]:
         """
         Adds or updates a policy or app profile for the company by platform (iOS, Android, Windows, macOS, and Linux).
 
@@ -155,7 +157,7 @@ class WebPolicyAPI(APIClient):
             /web/policy/edit
         """
         )
-        
+
         body = kwargs
 
         transform_common_id_fields(reformat_params, body, body)
@@ -174,7 +176,7 @@ class WebPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_web_policy(self, policy_id: int) -> tuple:
+    def delete_web_policy(self, policy_id: int) -> APIResult[dict]:
         """
         Deletes the specified Web Policy.
 

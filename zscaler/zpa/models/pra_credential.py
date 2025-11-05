@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class PrivilegedRemoteAccessCredential(ZscalerObject):
     A class representing the Privileged Remote Access Credential.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -47,7 +48,7 @@ class PrivilegedRemoteAccessCredential(ZscalerObject):
             self.microtenant_id = None
             self.microtenant_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the credential data into a dictionary suitable for API requests.
         """

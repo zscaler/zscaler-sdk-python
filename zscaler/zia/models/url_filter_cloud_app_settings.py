@@ -15,6 +15,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -23,7 +24,7 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
     A class for AdvancedUrlFilterAndCloudAppSettings objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AdvancedUrlFilterAndCloudAppSettings model based on API response.
 
@@ -83,7 +84,7 @@ class AdvancedUrlFilterAndCloudAppSettings(ZscalerObject):
             self.enable_block_override_for_non_auth_user = False
             self.enable_cipa_compliance = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

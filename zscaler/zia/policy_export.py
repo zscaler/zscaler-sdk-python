@@ -14,9 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class PolicyExportAPI(APIClient):
@@ -26,11 +28,11 @@ class PolicyExportAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def policy_export(self, policy_types=None, output_file=None) -> tuple:
+    def policy_export(self, policy_types=None, output_file=None) -> APIResult[dict]:
         """
         Exports the rules for the specified policy types. The server typically returns
         a ZIP file containing one JSON file per policy type.

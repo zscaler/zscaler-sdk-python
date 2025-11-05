@@ -14,12 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 
 class Device(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Device model based on API response.
 
@@ -82,7 +83,7 @@ class Device(ZscalerObject):
             self.vpn_state = None
             self.zapp_arch = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "agentVersion": self.agent_version,
@@ -120,7 +121,7 @@ class ForceRemoveDevices(ZscalerObject):
     A class for ForceRemoveDevices objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ForceRemoveDevices model based on API response.
 
@@ -146,7 +147,7 @@ class ForceRemoveDevices(ZscalerObject):
             self.devices_removed = None
             self.error_msg = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -168,7 +169,7 @@ class SetDeviceCleanupInfo(ZscalerObject):
     A class for SetDeviceCleanupInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SetDeviceCleanupInfo model based on API response.
 
@@ -200,7 +201,7 @@ class SetDeviceCleanupInfo(ZscalerObject):
             self.force_remove_type_string = None
             self.id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -226,7 +227,7 @@ class DeviceCleanup(ZscalerObject):
     A class for DeviceCleanup objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceCleanup model based on API response.
 
@@ -268,7 +269,7 @@ class DeviceCleanup(ZscalerObject):
             self.force_remove_type_string = None
             self.id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -294,7 +295,7 @@ class DeviceDetails(ZscalerObject):
     A class for Device Details objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Device Details model based on API response.
 
@@ -467,7 +468,7 @@ class DeviceDetails(ZscalerObject):
             self.expected_zcc_version_timestamp = None
             self.zcc_upgrade_status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -540,7 +541,7 @@ class LogFetchInfo(ZscalerObject):
     A class for LogFetchInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LogFetchInfo model based on API response.
 
@@ -570,7 +571,7 @@ class LogFetchInfo(ZscalerObject):
             self.log_fetch_db_enabled = None
             self.log_fetch_from_no_of_days = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

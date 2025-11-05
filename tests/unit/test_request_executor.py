@@ -981,3 +981,169 @@ def test_extract_and_append_query_params_with_none_params():
     
     assert cleaned_url == "https://api.example.com/test"
     assert updated_params["existing"] == "value"
+
+
+class TestPartnerIdHeader:
+    """Test x-partner-id header functionality in RequestExecutor."""
+
+    def test_partner_id_header_added_when_provided(self):
+        """Test that x-partner-id header is added when partnerId is in config."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "542585sdsdw"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header is in default headers
+        default_headers = executor.get_default_headers()
+        assert "x-partner-id" in default_headers
+        assert default_headers["x-partner-id"] == "542585sdsdw"
+
+    def test_partner_id_header_not_added_when_not_provided(self):
+        """Test that x-partner-id header is NOT added when partnerId is not in config."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header is NOT in default headers
+        default_headers = executor.get_default_headers()
+        assert "x-partner-id" not in default_headers
+
+    def test_partner_id_header_not_added_when_empty_string(self):
+        """Test that x-partner-id header is NOT added when partnerId is empty string."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": ""
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header is NOT in default headers (empty string is falsy)
+        default_headers = executor.get_default_headers()
+        assert "x-partner-id" not in default_headers
+
+    def test_partner_id_header_value_matches_config(self):
+        """Test that x-partner-id header value matches the partnerId from config."""
+        partner_id = "test-partner-id-12345"
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": partner_id
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Check that header value matches
+        default_headers = executor.get_default_headers()
+        assert default_headers["x-partner-id"] == partner_id
+
+    def test_partner_id_header_in_prepared_headers(self):
+        """Test that x-partner-id header is included in prepared headers."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "test-partner-123"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Mock OAuth to avoid authentication issues
+        mock_oauth = Mock()
+        mock_oauth._get_access_token.return_value = "mock-token"
+        with patch.object(executor, '_oauth', mock_oauth):
+            headers = executor._prepare_headers({}, "/zia/api/v1/test")
+            
+            assert "x-partner-id" in headers
+            assert headers["x-partner-id"] == "test-partner-123"
+
+    def test_partner_id_header_in_create_request(self):
+        """Test that x-partner-id header is included in created requests."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "test-partner-456"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Mock OAuth to avoid authentication issues
+        mock_oauth = Mock()
+        mock_oauth._get_access_token.return_value = "mock-token"
+        with patch.object(executor, '_oauth', mock_oauth):
+            request, error = executor.create_request(
+                method="GET",
+                endpoint="/zia/api/v1/test",
+                headers={},
+                params={}
+            )
+            
+            assert error is None
+            assert "headers" in request
+            assert "x-partner-id" in request["headers"]
+            assert request["headers"]["x-partner-id"] == "test-partner-456"
+
+    def test_partner_id_header_with_custom_headers(self):
+        """Test that x-partner-id header works alongside custom headers."""
+        config = {
+            "client": {
+                "requestTimeout": 240,
+                "rateLimit": {"maxRetries": 2},
+                "cloud": "production",
+                "service": "zia",
+                "partnerId": "custom-partner-789"
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # Set custom headers
+        executor.set_custom_headers({"Custom-Header": "custom-value"})
+        
+        # Mock OAuth to avoid authentication issues
+        mock_oauth = Mock()
+        mock_oauth._get_access_token.return_value = "mock-token"
+        with patch.object(executor, '_oauth', mock_oauth):
+            headers = executor._prepare_headers({}, "/zia/api/v1/test")
+            
+            # Both headers should be present
+            assert "x-partner-id" in headers
+            assert headers["x-partner-id"] == "custom-partner-789"
+            assert "Custom-Header" in headers
+            assert headers["Custom-Header"] == "custom-value"

@@ -44,12 +44,14 @@ class LegacyZDXClientHelper:
         client_id=None,
         client_secret=None,
         cloud=None,
+        partner_id=None,
         timeout=240,
         request_executor_impl=None,  # Uses centralized request executor
     ):
         self._client_id = client_id or os.getenv(f"{self._env_base}_CLIENT_ID")
         self._client_secret = client_secret or os.getenv(f"{self._env_base}_CLIENT_SECRET")
         self._env_cloud = cloud or os.getenv(f"{self._env_base}_CLOUD", "zdxcloud")
+        self.partner_id = partner_id or os.getenv("ZSCALER_PARTNER_ID")
         self.url = f"https://api.{self._env_cloud}.net"
         self.timeout = timeout
 
@@ -65,6 +67,7 @@ class LegacyZDXClientHelper:
                 "clientId": self._client_id,
                 "clientSecret": self._client_secret,
                 "cloud": self._env_cloud,
+                "partnerId": self.partner_id or "",
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
                 "cache": {"enabled": False},
@@ -321,7 +324,8 @@ class LegacyZDXClientHelper:
 
         # Ensure the User-Agent header is set
         headers["User-Agent"] = self.user_agent
-
+        # Add default headers (includes x-partner-id if partnerId is in config)
+        headers.update(self.request_executor.get_default_headers())
         # **Add the Authorization header if a token is available**
         if self.auth_token:
             headers.setdefault("Authorization", f"Bearer {self.auth_token}")

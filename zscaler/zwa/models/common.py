@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class Common(ZscalerObject):
     A class for Common objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Common model based on API response.
 
@@ -37,7 +38,7 @@ class Common(ZscalerObject):
         else:
             self.cursor = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -54,7 +55,7 @@ class Pagination(ZscalerObject):
     A class for Pagination objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Pagination model based on API response.
 
@@ -76,7 +77,7 @@ class Pagination(ZscalerObject):
             self.page_id = None
             self.total_elements = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -93,7 +94,7 @@ class Pagination(ZscalerObject):
 
 
 class MatchingPolicies(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -107,7 +108,7 @@ class MatchingPolicies(ZscalerObject):
             self.rules = []
             self.dictionaries = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         return {
             "engines": self.engines,
             "rules": self.rules,
@@ -120,7 +121,7 @@ class Engines(ZscalerObject):
     A class for Engines objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Engines model based on API response.
 
@@ -137,7 +138,7 @@ class Engines(ZscalerObject):
             self.name = None
             self.rule = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -155,7 +156,7 @@ class Rules(ZscalerObject):
     A class for Rules objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Rules model based on API response.
 
@@ -170,7 +171,7 @@ class Rules(ZscalerObject):
         else:
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -187,7 +188,7 @@ class Dictionaries(ZscalerObject):
     A class for Dictionaries objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Dictionaries model based on API response.
 
@@ -203,7 +204,7 @@ class Dictionaries(ZscalerObject):
         else:
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -222,7 +223,7 @@ class UserInfo(ZscalerObject):
     A class for UserInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the UserInfo model based on API response.
 
@@ -259,7 +260,7 @@ class UserInfo(ZscalerObject):
             self.department = None
             self.home_country = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -282,7 +283,7 @@ class ManagerInfo(ZscalerObject):
     A class for ManagerInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ManagerInfo model based on API response.
 
@@ -300,7 +301,7 @@ class ManagerInfo(ZscalerObject):
             self.name = None
             self.email = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -319,7 +320,7 @@ class ApplicationInfo(ZscalerObject):
     A class for ApplicationInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationInfo model based on API response.
 
@@ -341,7 +342,7 @@ class ApplicationInfo(ZscalerObject):
             self.hostname_or_application = None
             self.additional_info = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -362,7 +363,7 @@ class ContentInfo(ZscalerObject):
     A class for ContentInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ContentInfo model based on API response.
 
@@ -380,7 +381,7 @@ class ContentInfo(ZscalerObject):
             self.file_type = None
             self.additional_info = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -399,7 +400,7 @@ class NetworkInfo(ZscalerObject):
     A class for NetworkInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the NetworkInfo model based on API response.
 
@@ -415,7 +416,7 @@ class NetworkInfo(ZscalerObject):
             self.source = None
             self.destination = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -433,7 +434,7 @@ class AssignedAdmin(ZscalerObject):
     A class for AssignedAdmin objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AssignedAdmin model based on API response.
 
@@ -447,7 +448,7 @@ class AssignedAdmin(ZscalerObject):
         else:
             self.email = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -464,7 +465,7 @@ class LastNotifiedUser(ZscalerObject):
     A class for LastNotifiedUser objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LastNotifiedUser model based on API response.
 
@@ -481,7 +482,7 @@ class LastNotifiedUser(ZscalerObject):
             self.role = None
             self.email = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -499,7 +500,7 @@ class Notes(ZscalerObject):
     A class for Notes objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Notes model based on API response.
 
@@ -521,7 +522,7 @@ class Notes(ZscalerObject):
             self.created_by = None
             self.last_updated_by = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -542,7 +543,7 @@ class IncidentGroups(ZscalerObject):
     A class for IncidentGroups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IncidentGroups model based on API response.
 
@@ -570,7 +571,7 @@ class IncidentGroups(ZscalerObject):
             # self.is_dlp_incident_group_already_mapped = None
             # self.is_dlp_admin_config_already_mapped = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -593,7 +594,7 @@ class DLPIncidentTickets(ZscalerObject):
     A class for DLPIncidentTickets objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DLPIncidentTickets model based on API response.
 
@@ -624,7 +625,7 @@ class DLPIncidentTickets(ZscalerObject):
             self.project_id = None
             self.project_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -644,7 +645,7 @@ class TicketInfo(ZscalerObject):
     A class for TicketInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the TicketInfo model based on API response.
 
@@ -663,7 +664,7 @@ class TicketInfo(ZscalerObject):
             self.ticket_url = None
             self.state = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -682,7 +683,7 @@ class Labels(ZscalerObject):
     A class for Labels objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Labels model based on API response.
 
@@ -699,7 +700,7 @@ class Labels(ZscalerObject):
             self.key = None
             self.value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

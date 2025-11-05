@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.security_policy_settings import SecurityPolicySettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SecurityPolicyAPI(APIClient):
@@ -27,11 +29,11 @@ class SecurityPolicyAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_whitelist(self) -> tuple:
+    def get_whitelist(self) -> APIResult[dict]:
         """
         Returns a list of whitelisted URLs.
 
@@ -59,7 +61,7 @@ class SecurityPolicyAPI(APIClient):
 
         return (result, response, None)
 
-    def get_blacklist(self) -> tuple:
+    def get_blacklist(self) -> APIResult[dict]:
         """
         Returns a list of blacklisted URLs.
 
@@ -87,7 +89,7 @@ class SecurityPolicyAPI(APIClient):
 
         return (result, response, None)
 
-    def replace_whitelist(self, url_list: list) -> tuple:
+    def replace_whitelist(self, url_list: list) -> APIResult[dict]:
         """
         Replaces the existing whitelist with the URLs provided.
 
@@ -115,7 +117,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.get_whitelist()
 
-    def add_urls_to_whitelist(self, url_list: list) -> tuple:
+    def add_urls_to_whitelist(self, url_list: list) -> APIResult[dict]:
         """
         Adds the provided URLs to the whitelist.
 
@@ -133,7 +135,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.replace_whitelist(whitelist.whitelist_urls)
 
-    def delete_urls_from_whitelist(self, url_list: list) -> tuple:
+    def delete_urls_from_whitelist(self, url_list: list) -> APIResult[dict]:
         """
         Deletes the provided URLs from the whitelist.
 
@@ -151,7 +153,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.replace_whitelist(whitelist.whitelist_urls)
 
-    def add_urls_to_blacklist(self, url_list: list) -> tuple:
+    def add_urls_to_blacklist(self, url_list: list) -> APIResult[dict]:
         """
         Adds the provided URLs to the blacklist.
 
@@ -179,7 +181,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.get_blacklist()
 
-    def delete_urls_from_blacklist(self, url_list: list) -> tuple:
+    def delete_urls_from_blacklist(self, url_list: list) -> APIResult[dict]:
         """
         Deletes the provided URLs from the blacklist.
 
@@ -207,7 +209,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.get_blacklist()
 
-    def replace_blacklist(self, url_list: list) -> tuple:
+    def replace_blacklist(self, url_list: list) -> APIResult[dict]:
         """
         Replaces the existing blacklist with the URLs provided.
 
@@ -235,7 +237,7 @@ class SecurityPolicyAPI(APIClient):
 
         return self.get_blacklist()
 
-    def erase_blacklist(self) -> tuple:
+    def erase_blacklist(self) -> APIResult[dict]:
         """
         Erases all URLs in the blacklist.
 
@@ -247,7 +249,7 @@ class SecurityPolicyAPI(APIClient):
         """
         return self.replace_blacklist([])
 
-    def erase_whitelist(self) -> tuple:
+    def erase_whitelist(self) -> APIResult[dict]:
         """
         Erases all URLs in the whitelist.
 

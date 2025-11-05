@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.administration import Administration
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class AdminAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_departments(self, query_params=None) -> tuple:
+    def list_departments(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
 
@@ -95,7 +97,7 @@ class AdminAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_locations(self, query_params=None) -> tuple:
+    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured Zscaler locations if the search filters are not specified.
 

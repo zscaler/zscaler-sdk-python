@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -24,7 +25,7 @@ class GetCompanyInfo(ZscalerObject):
     A class for GetCompanyInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the GetCompanyInfo model based on API response.
 
@@ -376,7 +377,7 @@ class GetCompanyInfo(ZscalerObject):
             self.zdx_manual_rollout = None
             self.win_zdx_lite_enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -501,7 +502,7 @@ class WebAppConfig(ZscalerObject):
     A class for WebAppConfig objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WebAppConfig model based on API response.
 
@@ -1082,7 +1083,7 @@ class WebAppConfig(ZscalerObject):
             self.resize_window_to_fit_to_page_visibility = None
             self.enable_zcc_fail_close_settings_for_se_mode = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -1283,7 +1284,7 @@ class DevicePostureFrequency(ZscalerObject):
     A class for DevicePostureFrequency objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DevicePostureFrequency model based on API response.
 
@@ -1319,7 +1320,7 @@ class DevicePostureFrequency(ZscalerObject):
             self.linux_value = None
             self.default_value = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

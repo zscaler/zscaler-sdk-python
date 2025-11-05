@@ -14,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.api_client import APIClients
 from zscaler.zidentity.models.api_client import APIClientRecords
 from zscaler.zidentity.models.api_client import APIClientSecrets
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class APIClientAPI(APIClient):
@@ -29,11 +31,11 @@ class APIClientAPI(APIClient):
 
     _zidentity_base_endpoint = "/admin/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_clients(self, query_params=None) -> tuple:
+    def list_api_clients(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a paginated list of API clients
         providing details such as total records, current page offset, and links for pagination navigation
@@ -102,7 +104,7 @@ class APIClientAPI(APIClient):
 
         return (result, response, None)
 
-    def get_api_client(self, client_id: str) -> tuple:
+    def get_api_client(self, client_id: str) -> APIResult[dict]:
         """
         Retrieves detailed information about a specific API client using its ID.
 
@@ -148,7 +150,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_api_client(self, **kwargs) -> tuple:
+    def add_api_client(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new API client with authentication settings and assigned roles.
 
@@ -259,7 +261,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_api_client(self, client_id: str, **kwargs) -> tuple:
+    def update_api_client(self, client_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the existing API client details based on the provided ID.
         This allows modification of attributes such as name, authentication settings, and assigned roles.
@@ -351,7 +353,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_api_client(self, client_id: str) -> tuple:
+    def delete_api_client(self, client_id: str) -> APIResult[dict]:
         """
         Removes an existing API client from the system.
         After deletion, the API client cannot be recovered.
@@ -390,7 +392,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def get_api_client_secret(self, client_id: str) -> tuple:
+    def get_api_client_secret(self, client_id: str) -> APIResult[dict]:
         """
         Retrieves a list of secrets associated with a specific API client using its ID.
 
@@ -436,7 +438,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_api_client_secret(self, client_id: str, **kwargs) -> tuple:
+    def add_api_client_secret(self, client_id: str, **kwargs) -> APIResult[dict]:
         """
        Creates and associates a new secret with a specified API client ID.
        This secret can be used for authentication with ZIdentity.
@@ -493,7 +495,7 @@ class APIClientAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_api_client_secret(self, client_id: str, secret_id: str) -> tuple:
+    def delete_api_client_secret(self, client_id: str, secret_id: str) -> APIResult[dict]:
         """
         Removes an existing API client from the system.
         After deletion, the API client cannot be recovered.

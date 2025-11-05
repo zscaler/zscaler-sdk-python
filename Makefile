@@ -39,6 +39,7 @@ help:
 	@echo "$(COLOR_OK)  lint:zpa                      Check style with flake8 for zpa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zia                      Check style with flake8 for zia packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  lint:zidentity                Check style with flake8 for zidentity packages$(COLOR_NONE)"
+	@echo "$(COLOR_OK)  lint:zwa                      Check style with flake8 for zwa packages$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  coverage                      Check code coverage quickly with the default Python$(COLOR_NONE)"
 	@echo "$(COLOR_WARNING)test$(COLOR_NONE)"
 	@echo "$(COLOR_OK)  test:all                      Run all tests$(COLOR_NONE)"
@@ -112,6 +113,10 @@ lint\:zidentity:
 	poetry run flake8 zscaler/zidentity --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zidentity --count --select=E9,F63,F7,F82 --show-source --statistics
 
+lint\:zwa:
+	poetry run flake8 zscaler/zwa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zwa --count --select=E9,F63,F7,F82 --show-source --statistics
+
 format:
 	poetry run black .
 
@@ -150,6 +155,9 @@ test\:integration\:zidentity:
 	@echo "$(COLOR_ZSCALER)Running zidentity integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zidentity --disable-warnings
 
+test\:integration\:zwa:
+	@echo "$(COLOR_ZSCALER)Running zwa integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zwa --disable-warnings
 
 test-simple:
 	poetry run pytest --disable-warnings

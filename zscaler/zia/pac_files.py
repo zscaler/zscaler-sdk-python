@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.pac_files import PacFiles
 from zscaler.zia.models.pac_files import PacFileValidationResponse
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 import textwrap
 
 
@@ -29,11 +31,11 @@ class PacFilesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_pac_files(self, query_params=None) -> tuple:
+    def list_pac_files(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists pac files in your organization with pagination.
         A subset of pac files can be returned that match a supported
@@ -105,7 +107,7 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_pac_file(self, pac_id: int, query_params=None,) -> tuple:
+    def get_pac_file(self, pac_id: int, query_params: Optional[dict] = None,) -> APIResult[dict]:
         """
         Retrieves all versions of a PAC file based on the specified ID
 
@@ -169,7 +171,7 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_pac_file_version(self, pac_id: int, pac_version: int, query_params=None) -> tuple:
+    def get_pac_file_version(self, pac_id: int, pac_version: int, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the PAC file version details for a given PAC ID and version.
 
@@ -221,7 +223,7 @@ class PacFilesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_pac_file(self, **kwargs) -> tuple:
+    def add_pac_file(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new custom PAC file after validating the PAC content.
 
@@ -294,7 +296,7 @@ class PacFilesAPI(APIClient):
 
         return (result, response, None)
 
-    def clone_pac_file(self, pac_id: int, pac_version: str, **kwargs) -> tuple:
+    def clone_pac_file(self, pac_id: int, pac_version: str, **kwargs) -> APIResult[dict]:
         """
         Clones an existing PAC file by creating a new PAC file based on the specified PAC ID and version.
 
@@ -392,7 +394,7 @@ class PacFilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def validate_pac_file(self, pac_file_content: str) -> tuple:
+    def validate_pac_file(self, pac_file_content: str) -> APIResult[dict]:
         """
         Sends the PAC file content for validation and returns the validation result.
 
@@ -451,7 +453,7 @@ class PacFilesAPI(APIClient):
 
     def update_pac_file(
         self, pac_id: int, pac_version: int, pac_version_action: str, new_lkg_ver: int = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Performs the specified action on the PAC file version and updates the file status.
         Supported actions include deploying, staging, unstaging, and marking or unmarking
@@ -533,7 +535,7 @@ class PacFilesAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_pac_file(self, pac_id: int) -> tuple:
+    def delete_pac_file(self, pac_id: int) -> APIResult[dict]:
         """
         Deletes an existing PAC file including all of its versions based on the specified ID
 

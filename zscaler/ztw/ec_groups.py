@@ -14,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.ecgroup import ECGroup
 from zscaler.ztw.models.ec_group_vm import ECGroupVM
 from zscaler.ztw.models.common import CommonIDNameExternalID
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ECGroupsAPI(APIClient):
@@ -29,11 +31,11 @@ class ECGroupsAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ec_groups(self, query_params=None) -> tuple:
+    def list_ec_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all Cloud & Branch Connector groups.
 
@@ -85,7 +87,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ec_group(self, group_id: str) -> tuple:
+    def get_ec_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get details for a specific Cloud or Branch Connector group by ID.
 
@@ -139,7 +141,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_group_lite(self, query_params=None) -> tuple:
+    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of a subset of Cloud & Branch Connector group information.
 
@@ -191,7 +193,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_instance_lite(self) -> tuple:
+    def list_ec_instance_lite(self) -> APIResult[dict]:
         """
         Returns the list of a subset of Cloud & Branch Connector instance information.
 
@@ -241,7 +243,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ec_group_vm(self, group_id: str, vm_id: str) -> tuple:
+    def get_ec_group_vm(self, group_id: str, vm_id: str) -> APIResult[dict]:
         """
         Gets a VM by specified Cloud or Branch Connector group ID and VM ID
 

@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.service_edge_groups import ServiceEdgeGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ServiceEdgeGroupAPI(APIClient):
@@ -31,7 +33,7 @@ class ServiceEdgeGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_service_edge_groups(self, query_params=None) -> tuple:
+    def list_service_edge_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates connector groups in your organization with pagination.
         A subset of connector groups can be returned that match a supported
@@ -90,7 +92,7 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_service_edge_group(self, group_id: str, query_params=None) -> tuple:
+    def get_service_edge_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves information about a specific service edge group.
 
@@ -138,7 +140,7 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_service_edge_group(self, **kwargs) -> tuple:
+    def add_service_edge_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new service edge group.
 
@@ -241,7 +243,7 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_service_edge_group(self, group_id: str, **kwargs) -> tuple:
+    def update_service_edge_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a specified service edge group.
 
@@ -314,7 +316,7 @@ class ServiceEdgeGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_service_edge_group(self, group_id: str, microtenant_id: str = None) -> tuple:
+    def delete_service_edge_group(self, group_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified service edge group.
 

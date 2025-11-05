@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import add_id_groups, format_url
+from zscaler.types import APIResult
 
 
 class AppSegmentsInspectionAPI(APIClient):
@@ -37,7 +39,7 @@ class AppSegmentsInspectionAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segment_inspection(self, query_params=None, **kwargs) -> tuple:
+    def list_segment_inspection(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Returns all configured application segment inspection with pagination support.
 
@@ -92,7 +94,7 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_segment_inspection(self, segment_id: str, query_params: dict = None) -> tuple:
+    def get_segment_inspection(self, segment_id: str, query_params: dict = None) -> APIResult[dict]:
         """
         Get information for an AppProtection application segment.
 
@@ -134,7 +136,7 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_segment_inspection(self, **kwargs) -> tuple:
+    def add_segment_inspection(self, **kwargs) -> APIResult[dict]:
         """
         Create an AppProtection application segment.
 
@@ -282,7 +284,7 @@ class AppSegmentsInspectionAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_segment_inspection(self, segment_id: str, **kwargs) -> tuple:
+    def update_segment_inspection(self, segment_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an AppProtection application segment.
 

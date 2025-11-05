@@ -15,10 +15,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.certificates import Certificate
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CertificatesAPI(APIClient):
@@ -33,7 +35,7 @@ class CertificatesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_certificates(self, query_params=None) -> tuple:
+    def list_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a list of all certificates with pagination support.
 
@@ -92,7 +94,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_issued_certificates(self, query_params=None) -> tuple:
+    def list_issued_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a list of all issued certificates with pagination support.
 
@@ -154,7 +156,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_certificate(self, certificate_id: str, query_params=None) -> tuple:
+    def get_certificate(self, certificate_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a specific certificate by ID.
 
@@ -201,7 +203,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_certificate(self, **kwargs) -> tuple:
+    def add_certificate(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new certificate.
 
@@ -252,7 +254,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_certificate(self, certificate_id: str, **kwargs) -> tuple:
+    def update_certificate(self, certificate_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a specific certificate.
 
@@ -311,7 +313,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_certificate(self, certificate_id, microtenant_id: str = None) -> tuple:
+    def delete_certificate(self, certificate_id, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes a certificate by its ID.
 

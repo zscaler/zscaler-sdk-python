@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import gre_tunnels as gre_tunnels
@@ -24,7 +25,7 @@ class TrafficVips(ZscalerObject):
     A class for TrafficVips objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the TrafficVips model based on API response.
 
@@ -67,7 +68,7 @@ class TrafficVips(ZscalerObject):
             self.svpn_ips = ZscalerCollection.form_list([], str)
             self.svpn_domain_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -98,7 +99,7 @@ class GroupByDatacenter(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the GroupByDatacenter model based on API response.
 
@@ -122,7 +123,7 @@ class GroupByDatacenter(ZscalerObject):
         else:
             self.datacenter = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -140,7 +141,7 @@ class DataCenter(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DataCenter model based on API response.
 
@@ -154,7 +155,7 @@ class DataCenter(ZscalerObject):
         else:
             self.datacenter = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

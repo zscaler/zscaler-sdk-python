@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class ShadowITReport(ZscalerObject):
     A class representing a Shadow IT Report object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.duration = config["duration"] if "duration" in config else None
@@ -200,7 +201,7 @@ class ShadowITReport(ZscalerObject):
             self.supported_certifications = None
             self.data_consumed = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -250,7 +251,7 @@ class ShadowITReport(ZscalerObject):
 
 
 class CloudapplicationsAndTags(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Cloud Applications and Tags model based on API response.
 
@@ -267,7 +268,7 @@ class CloudapplicationsAndTags(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -285,7 +286,7 @@ class CloudApplicationBulkUpdate(ZscalerObject):
     A class representing the payload for the bulk update of Cloud Applications.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.sanctioned_state = config["sanctionedState"] if "sanctionedState" in config else None
@@ -302,7 +303,7 @@ class CloudApplicationBulkUpdate(ZscalerObject):
             self.application_ids = []
             self.custom_tags = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

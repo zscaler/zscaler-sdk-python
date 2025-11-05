@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_portal import PrivilegedRemoteAccessPortal
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class PRAPortalAPI(APIClient):
@@ -31,7 +33,7 @@ class PRAPortalAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_portals(self, query_params=None) -> tuple:
+    def list_portals(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured PRA portals with pagination support.
 
@@ -88,7 +90,7 @@ class PRAPortalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_portal(self, portal_id: str, query_params=None) -> tuple:
+    def get_portal(self, portal_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Provides information on the specified PRA portal.
 
@@ -134,7 +136,7 @@ class PRAPortalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_portal(self, **kwargs) -> tuple:
+    def add_portal(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new PRA portal.
 
@@ -189,7 +191,7 @@ class PRAPortalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_portal(self, portal_id: str, **kwargs) -> tuple:
+    def update_portal(self, portal_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified PRA portal.
 
@@ -248,7 +250,7 @@ class PRAPortalAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_portal(self, portal_id: str, microtenant_id: str = None) -> tuple:
+    def delete_portal(self, portal_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified PRA portal.
 

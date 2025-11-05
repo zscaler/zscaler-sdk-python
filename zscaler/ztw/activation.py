@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.activation import Activation
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ActivationAPI(APIClient):
@@ -27,11 +29,11 @@ class ActivationAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def activate(self, force: bool = False, **kwargs) -> tuple:
+    def activate(self, force: bool = False, **kwargs) -> APIResult[dict]:
         """
         Activate the configuration.
 

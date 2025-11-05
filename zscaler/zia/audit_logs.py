@@ -14,9 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 import time
 
 
@@ -27,11 +29,11 @@ class AuditLogsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_status(self) -> tuple:
+    def get_status(self) -> APIResult[dict]:
         """
         Get the status of a request for an audit log report.
 
@@ -60,7 +62,7 @@ class AuditLogsAPI(APIClient):
 
         return response.get_body()
 
-    def create(self, start_time: str, end_time: str) -> tuple:
+    def create(self, start_time: str, end_time: str) -> APIResult[dict]:
         """
         Creates an audit log report for the specified time period and saves it as a CSV file.
 
@@ -98,7 +100,7 @@ class AuditLogsAPI(APIClient):
         time.sleep(2)
         return response.get_status()
 
-    def cancel(self) -> tuple:
+    def cancel(self) -> APIResult[dict]:
         """
         Cancels the request to create an audit log report.
 
@@ -127,7 +129,7 @@ class AuditLogsAPI(APIClient):
 
         return response.status_code
 
-    def get_report(self) -> tuple:
+    def get_report(self) -> APIResult[dict]:
         """
         Returns the most recently created audit log report.
 

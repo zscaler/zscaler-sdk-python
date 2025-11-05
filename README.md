@@ -225,7 +225,7 @@ on-demand sync of newly created roles.
 
 ### Default Environment Variables
 
-You can provide credentials via the `ZSCALER_CLIENT_ID`, `ZSCALER_CLIENT_SECRET`, `ZSCALER_VANITY_DOMAIN`, `ZSCALER_CLOUD` environment variables, representing your Zidentity OneAPI credentials `clientId`, `clientSecret`, `vanityDomain` and `cloud` respectively.
+You can provide credentials via the `ZSCALER_CLIENT_ID`, `ZSCALER_CLIENT_SECRET`, `ZSCALER_VANITY_DOMAIN`, `ZSCALER_CLOUD`, `ZSCALER_PARTNER_ID` environment variables, representing your Zidentity OneAPI credentials `clientId`, `clientSecret`, `vanityDomain`, `cloud` and `partnerId` respectively.
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
@@ -234,6 +234,7 @@ You can provide credentials via the `ZSCALER_CLIENT_ID`, `ZSCALER_CLIENT_SECRET`
 | `privateKey`       | _(String)_ A string Private key value.| `ZSCALER_PRIVATE_KEY` |
 | `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
 | `cloud`       | _(String)_ The host and basePath for the cloud services API is `$api.<cloud_name>.zsapi.net`.| `ZSCALER_CLOUD` |
+| `partnerId`       | _(String)_ Optional partner ID. When provided, the SDK automatically includes the `x-partner-id` header in all API requests.| `ZSCALER_PARTNER_ID` |
 | `sandboxToken`       | _(String)_ The Zscaler Internet Access Sandbox Token | `ZSCALER_SANDBOX_TOKEN` |
 | `sandboxCloud`       | _(String)_ The Zscaler Internet Access Sandbox cloud name | `ZSCALER_SANDBOX_CLOUD` |
 
@@ -271,7 +272,7 @@ export ZSCALER_CLOUD="beta"
 
 ### Authenticating to Zscaler Private Access (ZPA)
 
-The authentication to Zscaler Private Access (ZPA) via the OneAPI framework, requires the extra attribute called `customerId` and optionally the attribute `microtenantId`.
+The authentication to Zscaler Private Access (ZPA) via the OneAPI framework, requires the extra attribute called `customerId` and optionally the attributes `microtenantId` and `partnerId`.
 
 | Argument     | Description | Environment variable |
 |--------------|-------------|-------------------|
@@ -280,6 +281,7 @@ The authentication to Zscaler Private Access (ZPA) via the OneAPI framework, req
 | `privateKey`       | _(String)_ A string Private key value.| `ZSCALER_PRIVATE_KEY` |
 | `customerId`       | _(String)_ The ZPA tenant ID found under Configuration & Control > Public API > API Keys menu in the ZPA console.| `ZPA_CUSTOMER_ID` |
 | `microtenantId`       | _(String)_ The ZPA microtenant ID found in the respective microtenant instance under Configuration & Control > Public API > API Keys menu in the ZPA console.| `ZPA_MICROTENANT_ID` |
+| `partnerId`       | _(String)_ Optional partner ID. When provided, the SDK automatically includes the `x-partner-id` header in all API requests.| `ZSCALER_PARTNER_ID` |
 | `vanityDomain`       | _(String)_ Refers to the domain name used by your organization `https://<vanity_domain>.zslogin.net/oauth2/v1/token` | `ZSCALER_VANITY_DOMAIN` |
 | `cloud`
 
@@ -299,6 +301,7 @@ config = {
     "cloud": "beta", # Optional when authenticating to an alternative cloud environment
     "customerId": "", # Optional parameter. Required only when using ZPA
     "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+    "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
     "logging": {"enabled": False, "verbose": False},
 }
 
@@ -336,6 +339,7 @@ config = {
     "cloud": "beta", # Optional when authenticating to an alternative cloud environment
     "customerId": "", # Optional parameter. Required only when using ZPA
     "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+    "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
     "logging": {"enabled": False, "verbose": False},
 }
 
@@ -405,6 +409,37 @@ def main():
 Note, that custom headers will be overwritten with default headers with the same name.
 This doesn't allow breaking the client. Get default headers:
 
+### Automatic x-partner-id Header Injection
+
+The SDK automatically includes the `x-partner-id` header in all API requests when `partnerId` is provided in the configuration. This feature works seamlessly across all services (ZIA, ZPA, ZTW, ZCC, ZDX, ZWA) and both OneAPI and Legacy clients.
+
+**How it works:**
+- When `partnerId` is provided via config dictionary or `ZSCALER_PARTNER_ID` environment variable, the SDK automatically adds `x-partner-id: <partnerId>` to all request headers
+- If `partnerId` is not provided, the header is not included
+- No additional code is required - the header injection is handled automatically by the SDK
+
+**Example:**
+
+```py
+from zscaler import ZscalerClient
+
+config = {
+    "clientId": '{yourClientId}',
+    "clientSecret": '{yourClientSecret}',
+    "vanityDomain": '{yourvanityDomain}',
+    "partnerId": "542585sdsdw", # Automatically adds x-partner-id header to all requests
+    "logging": {"enabled": False, "verbose": False},
+}
+
+def main():
+    with ZscalerClient(config) as client:
+        # All API requests will automatically include: x-partner-id: 542585sdsdw
+        groups, resp, err = client.zpa.segment_groups.list_groups()
+        # ... rest of your code
+```
+
+**Note:** This feature is also supported in Legacy clients. When using `LegacyZPAClient`, `LegacyZIAClient`, etc., you can provide `partnerId` in the config dictionary and the header will be automatically included in all requests.
+
 ### ZIA and ZTW Context Manager
 
 The Zscaler SDK provides a context manager pattern that automatically handles authentication and session cleanup for both ZIA and ZTW services. This pattern ensures that all configuration changes are properly activated when the context manager exits.
@@ -438,6 +473,7 @@ config = {
     "cloud": "beta", # Optional when authenticating to an alternative cloud environment
     "customerId": "", # Optional parameter. Required only when using ZPA
     "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+    "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
     "logging": {"enabled": False, "verbose": False},
 }
 
@@ -523,23 +559,71 @@ while resp.has_next():
         groups.extend(more_groups)
 ```
 
-### Searching and Filtering
+### ZPA Searching and Filtering
 
-You can filter or search using available query parameters. The available parameters vary by service, so refer to each method's documentation for details.
+The ZPA API uses a filtering/query parameter format for search operations. Search strings must follow the format: `fieldName operator fieldValue`. The SDK provides automatic conversion for simple name searches while allowing full control for advanced filtering.
+
+#### Simple Name Search (Automatic Conversion)
+
+For convenience, you can provide a simple search string when searching by name. The SDK automatically converts it to the `name+EQ+<search_string>` format for exact name matching:
 
 ```py
-# Query parameters are optional on methods that can use them!
-# Check the method definition for details on which query parameters are accepted.
-# Using the search parameter to support search by features and fields.
-query_parameters = {'search': 'Group1'}
+# Simple string search - automatically converted to name+EQ+CDE Segment Group
+query_parameters = {'search': 'CDE Segment Group'}
 groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
 ```
 
+#### Advanced Filtering (Explicit Format)
+
+To search by other fields or use different operators, you must provide the complete filter format: `fieldName+operator+fieldValue`. Common operators include:
+
+- `EQ` - Equals
+- `NE` - Not equals
+- `GT` - Greater than
+- `LT` - Less than
+- `GE` - Greater than or equal
+- `LE` - Less than or equal
+- `CONTAINS` - Contains substring
+- `STARTSWITH` - Starts with
+- `ENDSWITH` - Ends with
+
+**Examples:**
+
 ```py
-# Query parameters are optional on methods that can use them!
-# Check the method definition for details on which query parameters are accepted.
-query_parameters = {'page': '1', 'page_size': '100'}
+# Search by enabled status
+query_parameters = {'search': 'enabled+EQ+true'}
 groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+
+# Search by description with CONTAINS operator
+query_parameters = {'search': 'description+CONTAINS+test'}
+groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+
+# Search by name with STARTSWITH operator
+query_parameters = {'search': 'name+STARTSWITH+CDE'}
+groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+```
+
+**Note:** If your search string already contains a filter operator pattern (like `+EQ+` or `+CONTAINS+`), the SDK will use it as-is without modification. This allows full control over filtering criteria while maintaining convenience for simple name searches.
+
+#### Combining Search with Pagination
+
+You can combine search filters with pagination parameters:
+
+```py
+query_parameters = {
+    'search': 'name+EQ+CDE Segment Group',
+    'page': 1,
+    'pagesize': 20
+}
+groups, resp, err = client.zpa.segment_groups.list_groups(query_parameters)
+
+# Pagination works seamlessly with filtered searches
+while resp.has_next():
+    more_groups, resp, err = resp.next()
+    if err:
+        break
+    if more_groups:
+        groups.extend(more_groups)
 ```
 
 ### Full Example with Error Handling
@@ -1204,7 +1288,7 @@ The ZPA Cloud is identified by several cloud name prefixes, which determines whi
 
 ### Environment variables
 
-You can provide credentials via the `ZPA_CLIENT_ID`, `ZPA_CLIENT_SECRET`, `ZPA_CUSTOMER_ID`, `ZPA_CLOUD` environment variables, representing your ZPA `clientId`, `clientSecret`, `customerId` and `cloud` of your ZPA account, respectively.
+You can provide credentials via the `ZPA_CLIENT_ID`, `ZPA_CLIENT_SECRET`, `ZPA_CUSTOMER_ID`, `ZPA_CLOUD`, `ZSCALER_PARTNER_ID` environment variables, representing your ZPA `clientId`, `clientSecret`, `customerId`, `cloud` and `partnerId` of your ZPA account, respectively.
 
 ~> **NOTE** `ZPA_CLOUD` environment variable is required, and is used to identify the correct API gateway where the API requests should be forwarded to.
 
@@ -1214,6 +1298,7 @@ You can provide credentials via the `ZPA_CLIENT_ID`, `ZPA_CLIENT_SECRET`, `ZPA_C
 | `clientSecret`       | _(String)_ The ZPA API client secret generated from the ZPA console.| `ZPA_CLIENT_SECRET` |
 | `customerId`       | _(String)_ The ZPA tenant ID found in the Administration > Company menu in the ZPA console.| `ZPA_CUSTOMER_ID` |
 | `microtenantId`       | _(String)_ The ZPA microtenant ID found in the respective microtenant instance under Configuration & Control > Public API > API Keys menu in the ZPA console.| `ZPA_MICROTENANT_ID` |
+| `partnerId`       | _(String)_ Optional partner ID. When provided, the SDK automatically includes the `x-partner-id` header in all API requests.| `ZSCALER_PARTNER_ID` |
 | `cloud`       | _(String)_ The Zscaler cloud for your tenancy.| `ZPA_CLOUD` |
 
 ### ZPA Legacy Client Initialization
@@ -1227,6 +1312,7 @@ config = {
     "clientSecret": '{yourClientSecret}',
     "customerId": '{yourCustomerId}',
     "microtenantId": '{yourMicrotenantId}',
+    "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
     "cloud": '{yourCloud}',
     "logging": {"enabled": False, "verbose": False},
 }

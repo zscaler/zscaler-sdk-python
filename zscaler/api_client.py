@@ -1,3 +1,4 @@
+from typing import Dict, Any, List, Union
 from pydash.strings import camel_case
 
 
@@ -13,7 +14,7 @@ class APIClient:
         pass
 
     @staticmethod
-    def form_response_body(body):
+    def form_response_body(body: Union[Dict[str, Any], List[Any], Any]) -> Union[Dict[str, Any], List[Any], Any]:
         # If body is a dictionary, process its items
         if isinstance(body, dict):
             result = {}
@@ -53,7 +54,7 @@ class APIClient:
         return body
 
     @staticmethod
-    def format_request_body(body: dict):
+    def format_request_body(body: Dict[str, Any]) -> Dict[str, Any]:
         """
         Method to format the request body from snake_case to camelCase.
         Args:

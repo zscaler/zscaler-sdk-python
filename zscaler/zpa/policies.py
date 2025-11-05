@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.policyset_controller_v1 import PolicySetControllerV1
 from zscaler.zpa.models.policyset_controller_v2 import PolicySetControllerV2
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 from threading import Lock
 from functools import wraps
 
@@ -299,7 +301,7 @@ class PolicySetControllerAPI(APIClient):
 
         return result
 
-    def get_policy(self, policy_type: str, query_params=None) -> tuple:
+    def get_policy(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the policy and rule sets for the given policy type.
 
@@ -367,7 +369,7 @@ class PolicySetControllerAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def get_rule(self, policy_type: str, rule_id: str, query_params=None) -> tuple:
+    def get_rule(self, policy_type: str, rule_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the specified policy rule.
 
@@ -432,7 +434,7 @@ class PolicySetControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_rules(self, policy_type: str, query_params=None) -> tuple:
+    def list_rules(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns policy rules for a given policy type.
 
@@ -508,7 +510,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = [],
         app_server_group_ids: list = [],
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Access Policy rule.
 
@@ -617,7 +619,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = None,
         app_server_group_ids: list = None,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -710,7 +712,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_timeout_rule(self, **kwargs) -> tuple:
+    def add_timeout_rule(self, **kwargs) -> APIResult[dict]:
         """
         Add a new Timeout Policy rule.
 
@@ -786,7 +788,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_timeout_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_timeout_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -877,7 +879,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> tuple:
+    def add_client_forwarding_rule(self, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Client Forwarding Policy rule.
 
@@ -986,7 +988,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_client_forwarding_rule(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> tuple:
+    def update_client_forwarding_rule(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing Client Forwarding Policy rule.
 
@@ -1107,7 +1109,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> tuple:
+    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str = None, **kwargs) -> APIResult[dict]:
         """
         Add a new Isolation Policy rule.
 
@@ -1213,7 +1215,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_isolation_rule(
         self, rule_id: str, name: str = None, action: str = None, zpn_isolation_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing client isolation policy rule.
 
@@ -1332,7 +1334,9 @@ class PolicySetControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def add_app_protection_rule(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> tuple:
+    def add_app_protection_rule(
+        self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
+    ) -> APIResult[dict]:
         """
         Add a new App Protection Policy rule.
         """
@@ -1384,7 +1388,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_app_protection_rule(
         self, rule_id: str, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing app protection policy rule.
 
@@ -1497,7 +1501,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = [],
         app_server_group_ids: list = [],
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Access Policy rule.
 
@@ -1654,7 +1658,7 @@ class PolicySetControllerAPI(APIClient):
         app_connector_group_ids: list = None,
         app_server_group_ids: list = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -1825,7 +1829,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_timeout_rule_v2(self, name: str, **kwargs) -> tuple:
+    def add_timeout_rule_v2(self, name: str, **kwargs) -> APIResult[dict]:
         """
         Add a new timeout policy rule.
 
@@ -1949,7 +1953,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_timeout_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+    def update_timeout_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -2077,7 +2081,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_client_forwarding_rule_v2(self, name: str, action: str, **kwargs) -> tuple:
+    def add_client_forwarding_rule_v2(self, name: str, action: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Client Forwarding Policy rule.
 
@@ -2198,7 +2202,9 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_client_forwarding_rule_v2(self, rule_id: str, name: str = None, action: str = None, **kwargs) -> tuple:
+    def update_client_forwarding_rule_v2(
+        self, rule_id: str, name: str = None, action: str = None, **kwargs
+    ) -> APIResult[dict]:
         """
         Update an existing client forwarding policy rule.
 
@@ -2315,7 +2321,7 @@ class PolicySetControllerAPI(APIClient):
         action: str,
         zpn_isolation_profile_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Isolation Policy rule.
 
@@ -2442,7 +2448,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_isolation_rule_v2(
         self, rule_id: str, name: str = None, action: str = None, zpn_isolation_profile_id: str = None, **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing client isolation policy rule.
 
@@ -2570,7 +2576,9 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_app_protection_rule_v2(self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs) -> tuple:
+    def add_app_protection_rule_v2(
+        self, name: str, action: str, zpn_inspection_profile_id: str = None, **kwargs
+    ) -> APIResult[dict]:
         """
         Update an existing app protection policy rule.
 
@@ -2698,7 +2706,7 @@ class PolicySetControllerAPI(APIClient):
         action: str,
         zpn_inspection_profile_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new App Protection Policy rule.
 
@@ -2836,7 +2844,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         credential_id: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add a new Privileged Remote Access Credential Policy rule.
 
@@ -2982,7 +2990,7 @@ class PolicySetControllerAPI(APIClient):
         credential_id: str = None,
         name: str = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing privileged credential policy rule.
 
@@ -3126,7 +3134,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_capabilities_rule_v2(self, name: str, **kwargs) -> tuple:
+    def add_capabilities_rule_v2(self, name: str, **kwargs) -> APIResult[dict]:
         """
         Add a new Capability Access rule.
 
@@ -3278,7 +3286,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def update_capabilities_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+    def update_capabilities_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> APIResult[dict]:
         """
         Update an existing capabilities policy rule.
 
@@ -3439,7 +3447,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> tuple:
+    def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> APIResult[dict]:
         """
         Add a new Redirection Policy rule.
 
@@ -3580,7 +3588,7 @@ class PolicySetControllerAPI(APIClient):
     @synchronized(global_rule_lock)
     def update_redirection_rule_v2(
         self, rule_id: str, name: str, action: str, service_edge_group_ids: list = [], **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
         Ensure you are using the correct arguments for the policy type that you want to update.
@@ -3737,7 +3745,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         action: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Add browser protection rule.
 
@@ -3862,7 +3870,7 @@ class PolicySetControllerAPI(APIClient):
         name: str,
         action: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Update an existing policy rule.
 
@@ -3985,7 +3993,7 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
-    def delete_rule(self, policy_type: str, rule_id: str, microtenant_id: str = None) -> tuple:
+    def delete_rule(self, policy_type: str, rule_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified policy rule.
 
@@ -4051,7 +4059,7 @@ class PolicySetControllerAPI(APIClient):
         return (None, response, None)
 
     @synchronized(global_rule_lock)
-    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str, **kwargs) -> tuple:
+    def reorder_rule(self, policy_type: str, rule_id: str, rule_order: str, **kwargs) -> APIResult[dict]:
         """
         Change the order of an existing policy rule.
 
@@ -4130,7 +4138,7 @@ class PolicySetControllerAPI(APIClient):
         return (None, response, None)
 
     @synchronized(global_rule_lock)
-    def bulk_reorder_rules(self, policy_type: str, rules_orders: list[str], **kwargs) -> tuple:
+    def bulk_reorder_rules(self, policy_type: str, rules_orders: list[str], **kwargs) -> APIResult[dict]:
         """
         Bulk change the order of policy rules.
 
@@ -4216,3 +4224,297 @@ class PolicySetControllerAPI(APIClient):
         if error:
             return (None, response, error)
         return (None, response, None)
+
+    def get_risk_score_values(self, query_params: Optional[dict] = None) -> APIResult[List[str]]:
+        """
+        Gets the list of risk score values available for the specified customer.
+
+        This endpoint returns a list of risk score values that can be used in policy conditions.
+        The API does not require any parameters, but optionally accepts `exclude_unknown` to
+        exclude the "UNKNOWN" value from the response.
+
+        Keyword Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.exclude_unknown]`` (bool, optional): If True, excludes
+                    "UNKNOWN" from the returned list of risk score values.
+
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of risk score value strings, Response, error).
+
+            The response is a list of strings with possible values:
+            - ``CRITICAL``
+            - ``HIGH``
+            - ``MEDIUM``
+            - ``LOW``
+            - ``UNKNOWN`` (if exclude_unknown is not True)
+
+        Examples:
+            Get all risk score values:
+
+            >>> risk_scores, _, err = client.zpa.policies.get_risk_score_values()
+            ... if err:
+            ...     print(f"Error getting risk score values: {err}")
+            ...     return
+            ... print(f"Available risk score values: {risk_scores}")
+
+            Get risk score values excluding UNKNOWN:
+
+            >>> risk_scores, _, err = client.zpa.policies.get_risk_score_values(
+            ...     query_params={'exclude_unknown': True}
+            ... )
+            ... if err:
+            ...     print(f"Error getting risk score values: {err}")
+            ...     return
+            ... print(f"Available risk score values: {risk_scores}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v2}
+            /riskScoreValues
+        """
+        )
+
+        query_params = query_params or {}
+
+        # Extract exclude_unknown from query_params and convert to excludeUnknown (camelCase)
+        exclude_unknown = query_params.pop("exclude_unknown", None)
+        if exclude_unknown is not None:
+            query_params["excludeUnknown"] = exclude_unknown
+
+        microtenant_id = query_params.get("microtenant_id")
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+            query_params.pop("microtenant_id", None)
+        else:
+            query_params.pop("microtenantId", None)
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            # Get the raw response body (list of strings)
+            response_body = response.get_body()
+            if not response_body:
+                return (None, response, None)
+            # Return the list directly (it's already a list of strings)
+            return (response_body, response, None)
+
+        except Exception as error:
+            return (None, response, error)
+
+    def get_policy_rule_count(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+        """
+        Get the count of policy rules for a given policy type.
+
+        This endpoint returns the count of policy rules configured for the specified policy type.
+        The API returns a dictionary with a "count" key containing the number of rules.
+
+        Args:
+            policy_type (str): The type of policy. Can be either user-friendly format (e.g., ``access``)
+            or API format (e.g., ``ACCESS_POLICY``). Accepted values are:
+
+                User-friendly format:
+                |  ``access`` - returns count for Access Policy
+                |  ``capabilities`` - returns count for Capabilities Policy
+                |  ``client_forwarding`` - returns count for Client Forwarding Policy
+                |  ``clientless`` - returns count for Clientless Session Protection Policy
+                |  ``credential`` - returns count for Credential Policy
+                |  ``inspection`` - returns count for Inspection Policy
+                |  ``isolation`` - returns count for Isolation Policy
+                |  ``redirection`` - returns count for Redirection Policy
+                |  ``siem`` - returns count for SIEM Policy
+                |  ``timeout`` - returns count for Timeout Policy
+
+                API format (also accepted):
+                |  ``ACCESS_POLICY``, ``CAPABILITIES_POLICY``, ``CLIENT_FORWARDING_POLICY``, etc.
+
+            query_params (dict, optional): Map of query parameters for the request.
+
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (dictionary with count, Response, error).
+
+            The response is a dictionary with the following structure:
+            - ``count`` (str): The count of policy rules as a string.
+
+        Raises:
+            ValueError: If the policy_type is invalid.
+
+        Examples:
+            Get the count of access policy rules:
+
+            >>> count_result, _, err = client.zpa.policies.get_policy_rule_count('access')
+            ... if err:
+            ...     print(f"Error getting policy rule count: {err}")
+            ...     return
+            ... print(f"Policy rule count: {count_result.get('count')}")
+
+            Get the count with microtenant ID:
+
+            >>> count_result, _, err = client.zpa.policies.get_policy_rule_count(
+            ...     'access',
+            ...     query_params={'microtenant_id': '1234567890'}
+            ... )
+            ... if err:
+            ...     print(f"Error getting policy rule count: {err}")
+            ...     return
+            ... print(f"Policy rule count: {count_result.get('count')}")
+        """
+        # Check if policy_type is already in the mapped format (API format)
+        # If it's in the values of POLICY_MAP, use it directly
+        if policy_type in self.POLICY_MAP.values():
+            mapped_policy_type = policy_type
+        else:
+            # Try to map from user-friendly format
+            mapped_policy_type = self.POLICY_MAP.get(policy_type)
+            if not mapped_policy_type:
+                raise ValueError(f"Incorrect policy type provided: {policy_type}")
+
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v1}
+            /policySet/rules/policyType/{mapped_policy_type}/count
+        """
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id")
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+            query_params.pop("microtenant_id", None)
+        else:
+            query_params.pop("microtenantId", None)
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            # Get the raw response body (dict with "count" key)
+            response_body = response.get_body()
+            if not response_body:
+                return (None, response, None)
+            return (response_body, response, None)
+
+        except Exception as error:
+            return (None, response, error)
+
+    def list_rules_by_appplication_id(
+        self, policy_type: str, application_id: str, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
+        """
+        Gets paginated policy rules for the specified policy type by application ID
+
+        Args:
+            policy_type (str): The policy type. Can be either user-friendly format (e.g., ``access``)
+            or API format (e.g., ``ACCESS_POLICY``). Accepted values are:
+
+                User-friendly format:
+                |  ``access`` - returns Access Policy rules
+                |  ``capabilities`` - returns Capabilities Policy rules
+                |  ``client_forwarding`` - returns Client Forwarding Policy rules
+                |  ``clientless`` - returns Clientless Session Protection Policy
+                |  ``credential`` - returns Credential Policy rules
+                |  ``inspection`` - returns Inspection Policy rules
+                |  ``isolation`` - returns Isolation Policy rules
+                |  ``redirection`` - returns Redirection Policy rules
+                |  ``siem`` - returns SIEM Policy rules
+                |  ``timeout`` - returns Timeout Policy rules
+
+                API format (also accepted):
+                |  ``ACCESS_POLICY``, ``CAPABILITIES_POLICY``, ``CLIENT_FORWARDING_POLICY``, etc.
+
+            application_id (str): The ID of the application to get policy rules for.
+
+        Keyword Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+                ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
+
+        Returns:
+            list: A list of PolicySetControllerV2 objects.
+
+        Examples:
+            List policy rules for an application:
+
+            >>> rules, _, err = client.zpa.policies.list_rules_by_appplication_id(
+            ...     'access',
+            ...     '72058304855116918'
+            ... )
+            ... if err:
+            ...     print(f"Error listing policy rules: {err}")
+            ...     return
+            ... print(f"Total policy rules found: {len(rules)}")
+            ... for rule in rules:
+            ...     print(rule.as_dict())
+
+            List policy rules with pagination and microtenant ID:
+
+            >>> rules, _, err = client.zpa.policies.list_rules_by_appplication_id(
+            ...     'access',
+            ...     '72058304855116918',
+            ...     query_params={'page': '1', 'page_size': '50', 'microtenant_id': '1234567890'}
+            ... )
+            ... if err:
+            ...     print(f"Error listing policy rules: {err}")
+            ...     return
+            ... print(f"Total policy rules found: {len(rules)}")
+        """
+        # Map the policy type to the ZPA API equivalent
+        if policy_type in self.POLICY_MAP.values():
+            mapped_policy_type = policy_type
+        else:
+            # Try to map from user-friendly format
+            mapped_policy_type = self.POLICY_MAP.get(policy_type)
+            if not mapped_policy_type:
+                raise ValueError(f"Incorrect policy type provided: {policy_type}")
+
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint_v1}
+            /policySet/rules/policyType/{mapped_policy_type}/application/{application_id}
+        """
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PolicySetControllerV2)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(PolicySetControllerV2(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

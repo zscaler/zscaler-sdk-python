@@ -14,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zpa.models import server_group as server_group
 
 
 class AppConnectorGroup(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppConnectorGroup model based on API response.
 
@@ -73,6 +75,9 @@ class AppConnectorGroup(ZscalerObject):
 
             self.np_assistant_group = NPAssistantGroup(config["npAssistantGroup"] if "npAssistantGroup" in config else None)
 
+            self.server_groups = ZscalerCollection.form_list(
+                config["serverGroups"] if "serverGroups" in config else [], server_group.ServerGroup
+            )
         else:
             self.id = None
             self.ip_acl = None
@@ -111,8 +116,9 @@ class AppConnectorGroup(ZscalerObject):
             self.restriction_type = None
             self.zscaler_managed = None
             self.dc_hosting_info = None
+            self.server_groups = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -152,13 +158,14 @@ class AppConnectorGroup(ZscalerObject):
             "restrictionType": self.restriction_type,
             "zscalerManaged": self.zscaler_managed,
             "dcHostingInfo": self.dc_hosting_info,
+            "serverGroups": [server_group.request_format() for server_group in self.server_groups],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
 
 
 class NPAssistantGroup(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the NPAssistantGroup model based on API response.
         """
@@ -180,7 +187,7 @@ class NPAssistantGroup(ZscalerObject):
             self.mtu = None
             self.lan_subnets = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -196,7 +203,7 @@ class NPAssistantGroup(ZscalerObject):
 
 
 class LanSubnet(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LanSubnet model based on API response.
         """
@@ -226,7 +233,7 @@ class LanSubnet(ZscalerObject):
             self.fqdns = []
             self.np_dns_ns_record = NPDnsNsRecord()
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -246,7 +253,7 @@ class LanSubnet(ZscalerObject):
 
 
 class NPDnsNsRecord(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the NPDnsNsRecord model based on API response.
         """
@@ -272,7 +279,7 @@ class NPDnsNsRecord(ZscalerObject):
             self.fqdn = []
             self.nameserver_ips = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,

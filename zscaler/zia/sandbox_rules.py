@@ -14,24 +14,26 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.sandboxrules import SandboxRules
+from zscaler.types import APIResult
 
 
 class SandboxRulesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists sandbox rules in your organization with pagination.
         A subset of sandbox rules  can be returned that match a supported
@@ -91,7 +93,7 @@ class SandboxRulesAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified sandbox filter rule.
 
@@ -140,7 +142,7 @@ class SandboxRulesAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a new sandbox filter rule.
 
@@ -232,7 +234,7 @@ class SandboxRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> tuple:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates an existing sandbox filter rule.
 
@@ -326,7 +328,7 @@ class SandboxRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> tuple:
+    def delete_rule(self, rule_id: int) -> APIResult[dict]:
         """
         Deletes the specified sandbox filter rule.
 

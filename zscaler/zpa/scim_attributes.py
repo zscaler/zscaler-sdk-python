@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.scim_attributes import SCIMAttributeHeader
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ScimAttributeHeaderAPI(APIClient):
@@ -32,7 +34,7 @@ class ScimAttributeHeaderAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_userconfig = f"/zpa/userconfig/v1/customers/{customer_id}"
 
-    def list_scim_attributes(self, idp_id: str, query_params=None) -> tuple:
+    def list_scim_attributes(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured SCIM attributes for the specified IdP.
 
@@ -89,7 +91,7 @@ class ScimAttributeHeaderAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_scim_attribute(self, idp_id: str, attribute_id: str, query_params=None) -> tuple:
+    def get_scim_attribute(self, idp_id: str, attribute_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified SCIM attribute.
 
@@ -127,7 +129,7 @@ class ScimAttributeHeaderAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_scim_values(self, idp_id: str, attribute_id: str, query_params=None) -> tuple:
+    def get_scim_values(self, idp_id: str, attribute_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified SCIM attribute values.
 

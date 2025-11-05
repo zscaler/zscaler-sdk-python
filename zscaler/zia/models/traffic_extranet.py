@@ -16,6 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 # AUTO-GENERATED! DO NOT EDIT FILE DIRECTLY
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -25,7 +26,7 @@ class TrafficExtranet(ZscalerObject):
     A class for TrafficExtranet objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the TrafficExtranet model based on API response.
 
@@ -58,7 +59,7 @@ class TrafficExtranet(ZscalerObject):
             self.created_at = None
             self.modified_at = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -86,7 +87,7 @@ class ExtranetDNSList(ZscalerObject):
     A class for ExtranetDNSList objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ExtranetDNSList model based on API response.
 
@@ -107,7 +108,7 @@ class ExtranetDNSList(ZscalerObject):
             self.secondary_dns_server = None
             self.use_as_default = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -128,7 +129,7 @@ class ExtranetIPPoolList(ZscalerObject):
     A class for ExtranetIPPoolList objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ExtranetIPPoolList model based on API response.
 
@@ -149,7 +150,7 @@ class ExtranetIPPoolList(ZscalerObject):
             self.ip_end = None
             self.use_as_default = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

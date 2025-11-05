@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_extranet import TrafficExtranet
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficExtranetAPI(APIClient):
@@ -27,11 +29,11 @@ class TrafficExtranetAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_extranets(self, query_params=None) -> tuple:
+    def list_extranets(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists extranet in your organization with pagination.
         A subset of extranet  can be returned that match a supported
@@ -89,7 +91,7 @@ class TrafficExtranetAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_extranet(self, extranet_id: int) -> tuple:
+    def get_extranet(self, extranet_id: int) -> APIResult[dict]:
         """
         Fetches a specific extranet by ID.
 
@@ -134,7 +136,7 @@ class TrafficExtranetAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_extranet(self, **kwargs) -> tuple:
+    def add_extranet(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new extranet for the organization.
 
@@ -204,7 +206,7 @@ class TrafficExtranetAPI(APIClient):
         return (result, response, None)
 
     # Needs to file a bug as method is returning 405 Error
-    def update_extranet(self, extranet_id: int, **kwargs) -> tuple:
+    def update_extranet(self, extranet_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Extranet.
 
@@ -268,7 +270,7 @@ class TrafficExtranetAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_extranet(self, extranet_id: int) -> tuple:
+    def delete_extranet(self, extranet_id: int) -> APIResult[dict]:
         """
         Deletes the specified Extranet.
 

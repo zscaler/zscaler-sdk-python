@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class DLPEngine(ZscalerObject):
     A class representing a DLP Engine object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -40,7 +41,7 @@ class DLPEngine(ZscalerObject):
             self.engine_expression = None
             self.custom_dlp_engine = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -62,7 +63,7 @@ class DLPVAlidateExpression(ZscalerObject):
     A class representing the response from validating a DLP Pattern.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.status = config["status"] if "status" in config else None
@@ -75,7 +76,7 @@ class DLPVAlidateExpression(ZscalerObject):
             self.err_parameter = None
             self.err_suggestion = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

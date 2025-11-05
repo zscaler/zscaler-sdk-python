@@ -31,7 +31,7 @@ class ZDXService:
         self._request_executor = client._request_executor
 
     @property
-    def admin(self):
+    def admin(self) -> AdminAPI:
         """
         The interface object for the :ref:`ZDX Admin interface <zdx-admin>`.
 
@@ -39,7 +39,7 @@ class ZDXService:
         return AdminAPI(self._request_executor)
 
     @property
-    def alerts(self):
+    def alerts(self) -> AlertsAPI:
         """
         The interface object for the :ref:`ZDX Alerts interface <zdx-alerts>`.
 
@@ -47,7 +47,7 @@ class ZDXService:
         return AlertsAPI(self._request_executor)
 
     @property
-    def apps(self):
+    def apps(self) -> AppsAPI:
         """
         The interface object for the :ref:`ZDX Apps interface <zdx-apps>`.
 
@@ -55,7 +55,7 @@ class ZDXService:
         return AppsAPI(self._request_executor)
 
     @property
-    def devices(self):
+    def devices(self) -> DevicesAPI:
         """
         The interface object for the :ref:`ZDX Devices interface <zdx-devices>`.
 
@@ -63,7 +63,7 @@ class ZDXService:
         return DevicesAPI(self._request_executor)
 
     @property
-    def inventory(self):
+    def inventory(self) -> InventoryAPI:
         """
         The interface object for the :ref:`ZDX Inventory interface <zdx-inventory>`.
 
@@ -71,7 +71,7 @@ class ZDXService:
         return InventoryAPI(self._request_executor)
 
     @property
-    def troubleshooting(self):
+    def troubleshooting(self) -> TroubleshootingAPI:
         """
         The interface object for the :ref:`ZDX Troubleshooting interface <zdx-troubleshooting>`.
 
@@ -79,7 +79,7 @@ class ZDXService:
         return TroubleshootingAPI(self._request_executor)
 
     @property
-    def users(self):
+    def users(self) -> UsersAPI:
         """
         The interface object for the :ref:`ZDX Users interface <zdx-users>`.
 
@@ -87,7 +87,7 @@ class ZDXService:
         return UsersAPI(self._request_executor)
 
     @property
-    def snapshot(self):
+    def snapshot(self) -> SnapshotAPI:
         """
         The interface object for the :ref:`ZDX Snapshot Alert interface <zdx-snapshot>`.
 

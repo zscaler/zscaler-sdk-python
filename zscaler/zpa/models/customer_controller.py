@@ -14,13 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
 
 class AuthDomain(ZscalerObject):
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Auth Domain model based on API response.
         Args:
@@ -34,7 +35,7 @@ class AuthDomain(ZscalerObject):
         else:
             self.auth_domains = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the Auth Domain data into a dictionary suitable for API requests.
         """
@@ -51,7 +52,7 @@ class RemoteAssistance(ZscalerObject):
     A class for RemoteAssistance objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RemoteAssistance model based on API response.
 
@@ -70,7 +71,7 @@ class RemoteAssistance(ZscalerObject):
             self.access_type = None
             self.access_mappings = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -88,7 +89,7 @@ class AccessMappings(ZscalerObject):
     A class for AccessMappings objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AccessMappings model based on API response.
 
@@ -121,7 +122,7 @@ class AccessMappings(ZscalerObject):
             self.role_id = None
             self.customer_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

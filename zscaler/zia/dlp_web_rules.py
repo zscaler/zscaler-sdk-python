@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_web_rules import DLPWebRules
 from zscaler.utils import transform_common_id_fields, format_url, reformat_params
+from zscaler.types import APIResult
 
 
 class DLPWebRuleAPI(APIClient):
@@ -27,14 +29,14 @@ class DLPWebRuleAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List dlp web rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -94,7 +96,7 @@ class DLPWebRuleAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns a DLP policy rule, excluding SaaS Security API DLP policy rules.
 
@@ -138,7 +140,7 @@ class DLPWebRuleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_rules_lite(self, query_params: dict = None) -> tuple:
+    def list_rules_lite(self, query_params: dict = None) -> APIResult[dict]:
         """
         Lists name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules
 
@@ -207,7 +209,7 @@ class DLPWebRuleAPI(APIClient):
 
         return (results, response, None)
 
-    def add_rule(self, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new DLP policy rule.
 
@@ -315,7 +317,7 @@ class DLPWebRuleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing DLP policy rule. Not applicable to SaaS Security API DLP policy rules.
 
@@ -400,7 +402,7 @@ class DLPWebRuleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> tuple:
+    def delete_rule(self, rule_id: int) -> APIResult[dict]:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 

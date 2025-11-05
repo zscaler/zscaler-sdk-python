@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common
@@ -24,7 +25,7 @@ class CloudToCloudIR(ZscalerObject):
     A class for Cloud-to-Cloud Incident Forwarding objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Cloud-to-Cloud Incident Forwarding model based on API response.
 
@@ -87,7 +88,7 @@ class CloudToCloudIR(ZscalerObject):
             self.last_validation_msg = None
             self.onboardable_entity = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -111,7 +112,7 @@ class TenantAuthorizationInfo(ZscalerObject):
     A class for Tenant Authorization Info objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Tenant Authorization Info model based on API response.
 
@@ -237,7 +238,7 @@ class TenantAuthorizationInfo(ZscalerObject):
             self.qtn_info = []
             self.qtn_info_cleared = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -289,7 +290,7 @@ class OnboardableEntity(ZscalerObject):
     A class for OnboardableEntity objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the OnboardableEntity model based on API response.
 
@@ -349,7 +350,7 @@ class OnboardableEntity(ZscalerObject):
             self.enterprise_tenant_id = None
             self.last_validation_msg = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -373,7 +374,7 @@ class SmirBucketConfig(ZscalerObject):
     A class for SmirBucketConfig objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SmirBucketConfig model based on API response.
 
@@ -397,7 +398,7 @@ class SmirBucketConfig(ZscalerObject):
             self.url = None
             self.status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -417,7 +418,7 @@ class QtnInfo(ZscalerObject):
     A class for QtnInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the QtnInfo model based on API response.
 
@@ -438,7 +439,7 @@ class QtnInfo(ZscalerObject):
             self.qtn_folder_path = None
             self.mod_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -457,7 +458,7 @@ class LastValidationMsg(ZscalerObject):
     A class for LastValidationMsg objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LastValidationMsg model based on API response.
 
@@ -475,7 +476,7 @@ class LastValidationMsg(ZscalerObject):
             self.error_msg = None
             self.error_code = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

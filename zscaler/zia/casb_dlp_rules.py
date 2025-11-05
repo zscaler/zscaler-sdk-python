@@ -14,24 +14,26 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.casb_dlp_rules import CasbdDlpRules
+from zscaler.types import APIResult
 
 
 class CasbdDlpRulesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns a list of all Casb DLP Rules for the specified rule type.
 
@@ -97,7 +99,7 @@ class CasbdDlpRulesAPI(APIClient):
         self,
         rule_id: int,
         rule_type: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified Casb DLP Rule under the specified rule type.
 
@@ -156,7 +158,7 @@ class CasbdDlpRulesAPI(APIClient):
 
     def list_all_rules(
         self,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns a list of all Casb DLP Rules.
 
@@ -207,7 +209,7 @@ class CasbdDlpRulesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_rule(self, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new cloud app control rule.
 
@@ -409,7 +411,7 @@ class CasbdDlpRulesAPI(APIClient):
 
         return (result, response, None)
 
-    def update_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing casb dlp rule.
 
@@ -612,7 +614,7 @@ class CasbdDlpRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_type: str, rule_id: int) -> tuple:
+    def delete_rule(self, rule_type: str, rule_id: int) -> APIResult[dict]:
         """
         Deletes the specified casb dlp rules.
 

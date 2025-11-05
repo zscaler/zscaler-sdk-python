@@ -1,3 +1,4 @@
+import json
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -14,10 +15,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_static_ip import TrafficStaticIP
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TrafficStaticIPAPI(APIClient):
@@ -27,11 +30,11 @@ class TrafficStaticIPAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_static_ips(self, query_params=None) -> tuple:
+    def list_static_ips(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured static IPs.
 
@@ -97,7 +100,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_static_ip(self, static_ip_id: int) -> tuple:
+    def get_static_ip(self, static_ip_id: int) -> APIResult[dict]:
         """
         Returns information for the specified static IP.
 
@@ -139,7 +142,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_static_ip(self, **kwargs) -> tuple:
+    def add_static_ip(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new static IP.
 
@@ -207,7 +210,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_static_ip(self, static_ip_id: int, **kwargs) -> tuple:
+    def update_static_ip(self, static_ip_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information relating to the specified static IP.
 
@@ -263,7 +266,7 @@ class TrafficStaticIPAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_static_ip(self, static_ip_id: int) -> tuple:
+    def delete_static_ip(self, static_ip_id: int) -> APIResult[dict]:
         """
         Delete the specified static IP.
 
@@ -298,7 +301,7 @@ class TrafficStaticIPAPI(APIClient):
 
         return (None, response, None)
 
-    def check_static_ip(self, ip_address: str) -> tuple:
+    def check_static_ip(self, ip_address: str) -> APIResult[dict]:
         """
         Validates if a static IP address can be added to the organization.
 
@@ -349,25 +352,49 @@ class TrafficStaticIPAPI(APIClient):
 
         # Check the actual HTTP status code, not the error object
         # The executor may return an "error" for non-JSON responses even on HTTP 200
+        # When return_raw_response=True, we need to check the actual response status
         if raw_response is None:
             # True network/request error
             return (False, None, error)
 
         try:
+            # Ensure we have a valid response object with status_code attribute
+            if not hasattr(raw_response, 'status_code'):
+                return (False, raw_response, error if error else "Invalid response object")
+
             status_code = raw_response.status_code
             body_text = raw_response.text.strip() if hasattr(raw_response, 'text') else ""
 
             # HTTP 200 with "SUCCESS" = IP is valid (not in system)
+            # Important: Ignore any error that might have been set for non-JSON responses
             if status_code == 200 and body_text.upper() == "SUCCESS":
                 return (True, None, None)
-            
+
             # HTTP 409 = IP already exists (duplicate)
+            # For 409, parse the JSON error from the response body
             elif status_code == 409:
-                return (False, raw_response, error)
-            
+                # Try to parse the error from the response body
+                try:
+                    if body_text:
+                        error_data = json.loads(body_text)
+                        # Create a structured error object if available
+                        # Ensure status code is included in the error dict
+                        if isinstance(error_data, dict):
+                            structured_error = error_data.copy()
+                            structured_error["status"] = 409
+                        else:
+                            structured_error = error
+                    else:
+                        structured_error = error
+                except (json.JSONDecodeError, ValueError):
+                    # If parsing fails, use the provided error or create a generic one
+                    structured_error = error if error else {"status": 409, "message": "IP already exists"}
+
+                return (False, raw_response, structured_error)
+
             # Any other response = invalid
             else:
                 return (False, raw_response, error if error else f"Unexpected response: {status_code}")
-                
+
         except Exception as ex:
             return (False, raw_response, ex)

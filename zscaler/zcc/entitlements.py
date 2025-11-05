@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.zdxgroupentitlements import ZdxGroupEntitlements
 from zscaler.zcc.models.zpagroupentitlements import ZpaGroupEntitlements
+from zscaler.types import APIResult
 
 
 class EntitlementAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_zdx_group_entitlements(self, query_params=None) -> tuple:
+    def get_zdx_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list ZDX group entitlements in the Client Connector Portal.
 
@@ -78,7 +80,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_zdx_group_entitlement(self) -> tuple:
+    def update_zdx_group_entitlement(self) -> APIResult[dict]:
         """
         Updates ZDX Group Entitlement.
 
@@ -111,7 +113,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_zpa_group_entitlements(self, query_params=None) -> tuple:
+    def get_zpa_group_entitlements(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list ZPA group entitlements in the Client Connector Portal.
 
@@ -161,7 +163,7 @@ class EntitlementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_zpa_group_entitlement(self) -> tuple:
+    def update_zpa_group_entitlement(self) -> APIResult[dict]:
         """
         Updates ZPA Group Entitlement.
 

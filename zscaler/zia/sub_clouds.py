@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.subclouds import TenantSubClouds
 from zscaler.zia.models.subclouds import LastDCInCountry
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SubCloudsAPI(APIClient):
@@ -28,11 +30,11 @@ class SubCloudsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_sub_clouds(self, query_params=None) -> tuple:
+    def list_sub_clouds(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of all configured Tenant Sub Clouds.
 
@@ -86,7 +88,7 @@ class SubCloudsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_sub_clouds(self, cloud_id: int, **kwargs) -> tuple:
+    def update_sub_clouds(self, cloud_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the subcloud and excluded data centers based on the specified ID.
 
@@ -121,7 +123,7 @@ class SubCloudsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params=None) -> tuple:
+    def get_sub_cloud_last_dc_in_country(self, cloud_id: int, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information for the list of all the excluded data centers in a country.
 

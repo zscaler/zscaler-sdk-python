@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -43,7 +44,7 @@ class WebPolicy(ZscalerObject):
         'disable_password', 'logout_password', 'uninstall_password', 'allowed_apps', 'billing_day',
         'bypass_android_apps', 'bypass_mms_apps', 'custom_text', 'enforced', 'install_ssl_certs',
         'limit', 'quota_in_roaming', 'wifi_ssid',
-        
+
         # macOS Policy attributes
         'disable_password', 'install_ssl_certs', 'logout_password', 'uninstall_password',
 
@@ -54,7 +55,7 @@ class WebPolicy(ZscalerObject):
         'enable_zia_dr'
     }
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WebPolicy model based on API response.
 
@@ -170,7 +171,7 @@ class WebPolicy(ZscalerObject):
                     self.mac_policy = None
             else:
                 self.mac_policy = None
-            
+
             if "policyExtension" in config:
                 if isinstance(config["policyExtension"], PolicyExtension):
                     self.policy_extension = config["policyExtension"]
@@ -242,7 +243,7 @@ class WebPolicy(ZscalerObject):
             self.windows_policy = None
             self.zia_posture_config_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -298,7 +299,7 @@ class PolicyExtension(ZscalerObject):
     A class for PolicyExtension objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PolicyExtension model based on API response.
 
@@ -501,7 +502,7 @@ class PolicyExtension(ZscalerObject):
             self.show_confirmation_dialog_for_cached_cert = None
             self.enable_flow_based_tunnel = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -580,7 +581,7 @@ class DisasterRecovery(ZscalerObject):
     A class for DisasterRecovery objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DisasterRecovery model based on API response.
 
@@ -637,7 +638,7 @@ class DisasterRecovery(ZscalerObject):
             self.allow_zia_test = None
             self.allow_zpa_test = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -668,7 +669,7 @@ class OnNetPolicy(ZscalerObject):
     A class for OnNetPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the OnNetPolicy model based on API response.
 
@@ -695,7 +696,7 @@ class OnNetPolicy(ZscalerObject):
             self.predefined_trusted_networks = None
             self.predefined_tn_all = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -716,7 +717,7 @@ class Users(ZscalerObject):
     A class for Users objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Users model based on API response.
 
@@ -743,7 +744,7 @@ class Users(ZscalerObject):
             self.active = None
             self.company_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -764,7 +765,7 @@ class Groups(ZscalerObject):
     A class for Groups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Groups model based on API response.
 
@@ -779,7 +780,7 @@ class Groups(ZscalerObject):
         else:
             self.id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -789,14 +790,14 @@ class Groups(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
-    
+
 
 class WindowsPolicy(ZscalerObject):
     """
     A class for WindowsPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WindowsPolicy model based on API response.
 
@@ -874,7 +875,7 @@ class WindowsPolicy(ZscalerObject):
             self.install_windows_firewall_inbound_rule = None
             self.force_location_refresh_sccm = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -912,7 +913,7 @@ class LinuxPolicy(ZscalerObject):
     A class for LinuxPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LinuxPolicy model based on API response.
 
@@ -936,7 +937,7 @@ class LinuxPolicy(ZscalerObject):
             self.logout_password = None
             self.uninstall_password = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -956,7 +957,7 @@ class IOSPolicy(ZscalerObject):
     A class for IOSPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IOSPolicy model based on API response.
 
@@ -988,7 +989,7 @@ class IOSPolicy(ZscalerObject):
             self.passcode = None
             self.show_vpn_tun_notification = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -1010,7 +1011,7 @@ class AndroidPolicy(ZscalerObject):
     A class for AndroidPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AndroidPolicy model based on API response.
 
@@ -1064,7 +1065,7 @@ class AndroidPolicy(ZscalerObject):
             self.uninstall_password = None
             self.wifissid = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -1094,7 +1095,7 @@ class MacOSPolicy(ZscalerObject):
     A class for MacOSPolicy objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the MacOSPolicy model based on API response.
 
@@ -1142,7 +1143,7 @@ class MacOSPolicy(ZscalerObject):
             self.persistent_zscaler_firewall = None
             self.uninstall_password = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

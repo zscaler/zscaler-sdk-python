@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common
@@ -24,7 +25,7 @@ class ActiveApplications(ZscalerObject):
     A class for Active Applications objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Active Applications model based on API response.
 
@@ -56,7 +57,7 @@ class ActiveApplications(ZscalerObject):
             self.total_users = None
             self.most_impacted_region = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -77,7 +78,7 @@ class ApplicationScore(ZscalerObject):
     A class for Application Score objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationScore model based on API response.
 
@@ -117,7 +118,7 @@ class ApplicationScore(ZscalerObject):
             self.most_impacted_region = None
             self.stats = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -138,7 +139,7 @@ class Stats(ZscalerObject):
     A class for Stats objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Stats model based on API response.
 
@@ -160,7 +161,7 @@ class Stats(ZscalerObject):
             self.num_okay = None
             self.num_good = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -181,7 +182,7 @@ class ApplicationScoreTrend(ZscalerObject):
     A class for ApplicationScoreTrend objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationScoreTrend model based on API response.
 
@@ -202,7 +203,7 @@ class ApplicationScoreTrend(ZscalerObject):
             self.unit = None
             self.datapoints = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -221,7 +222,7 @@ class ApplicationMetrics(ZscalerObject):
     A class for ApplicationMetrics objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationMetrics model based on API response.
 
@@ -242,7 +243,7 @@ class ApplicationMetrics(ZscalerObject):
             self.unit = None
             self.datapoints = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

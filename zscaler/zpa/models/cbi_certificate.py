@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class CBICertificate(ZscalerObject):
     A class representing a Cloud Browser Isolation Certificate object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CBICertificate model based on API response.
 
@@ -36,7 +37,7 @@ class CBICertificate(ZscalerObject):
         self.pem = config["pem"] if config and "pem" in config else None
         self.is_default = config["isDefault"] if config and "isDefault" in config else False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 

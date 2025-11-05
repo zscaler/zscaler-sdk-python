@@ -14,13 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 import time
-
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import chunker
 from zscaler.api_client import APIClient
 from zscaler.zia.models.urlcategory import URLCategory
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class URLCategoriesAPI(APIClient):
@@ -30,14 +31,14 @@ class URLCategoriesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_categories(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[List[URLCategory]]:
         """
         Returns information on URL categories.
 
@@ -100,7 +101,7 @@ class URLCategoriesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_category(self, category_id: str) -> tuple:
+    def get_category(self, category_id: str) -> APIResult[URLCategory]:
         """
         Returns URL category information for the provided category.
 
@@ -148,10 +149,10 @@ class URLCategoriesAPI(APIClient):
     def add_url_category(
         self,
         super_category: str,
-        urls: list = None,
-        configured_name: str = None,
+        urls: Optional[List[str]] = None,
+        configured_name: Optional[str] = None,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[URLCategory]:
         """
         Adds a new custom URL category.
 
@@ -264,7 +265,7 @@ class URLCategoriesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_tld_category(self, configured_name: str, tlds: list, **kwargs) -> tuple:
+    def add_tld_category(self, configured_name: str, tlds: List[str], **kwargs) -> APIResult[URLCategory]:
         """
         Adds a new custom TLD category.
 
@@ -338,7 +339,7 @@ class URLCategoriesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_url_category(self, category_id: str, action: str = None, **kwargs) -> tuple:
+    def update_url_category(self, category_id: str, action: Optional[str] = None, **kwargs) -> APIResult[URLCategory]:
         """
         Updates a URL category.
 
@@ -480,7 +481,7 @@ class URLCategoriesAPI(APIClient):
 
         return (result, response, None)
 
-    def add_urls_to_category(self, category_id: str, **kwargs) -> tuple:
+    def add_urls_to_category(self, category_id: str, **kwargs) -> APIResult[URLCategory]:
         """
         Adds URLS to a URL category.
 
@@ -530,7 +531,7 @@ class URLCategoriesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_urls_from_category(self, category_id: str, **kwargs) -> tuple:
+    def delete_urls_from_category(self, category_id: str, **kwargs) -> APIResult[URLCategory]:
         """
         Deletes URLS from a URL category.
 
@@ -583,7 +584,7 @@ class URLCategoriesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_category(self, category_id: str) -> tuple:
+    def delete_category(self, category_id: str) -> APIResult[None]:
         """
         Deletes the specified URL category.
 
@@ -753,7 +754,7 @@ class URLCategoriesAPI(APIClient):
 
         return results
 
-    def get_quota(self) -> tuple:
+    def get_quota(self) -> dict:
         """
         Returns information on URL category quota usage.
 

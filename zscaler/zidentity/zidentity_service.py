@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, Any
 from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.api_client import APIClientAPI
 from zscaler.zidentity.user_entitlement import EntitlementAPI
@@ -30,7 +31,7 @@ class ZIdentityService:
         self._request_executor = request_executor
 
     @property
-    def api_client(self):
+    def api_client(self) -> APIClientAPI:
         """
         The interface object for the :ref:`Zidentity API Client interface <zidentity-api_client>`.
 
@@ -38,7 +39,7 @@ class ZIdentityService:
         return APIClientAPI(self._request_executor)
 
     @property
-    def groups(self):
+    def groups(self) -> GroupsAPI:
         """
         The interface object for the :ref:`Zidentity Groups interface <zidentity-groups>`.
 
@@ -46,7 +47,7 @@ class ZIdentityService:
         return GroupsAPI(self._request_executor)
 
     @property
-    def users(self):
+    def users(self) -> UsersAPI:
         """
         The interface object for the :ref:`Zidentity Users interface <zidentity-users>`.
 
@@ -54,7 +55,7 @@ class ZIdentityService:
         return UsersAPI(self._request_executor)
 
     @property
-    def user_entitlement(self):
+    def user_entitlement(self) -> EntitlementAPI:
         """
         The interface object for the :ref:`Zidentity Entitlement interface <zidentity-user_entitlement>`.
 
@@ -62,7 +63,7 @@ class ZIdentityService:
         return EntitlementAPI(self._request_executor)
 
     @property
-    def resource_servers(self):
+    def resource_servers(self) -> ResourceServersAPI:
         """
         The interface object for the :ref:`Zidentity Resource Servers interface <zidentity-resource_servers>`.
 

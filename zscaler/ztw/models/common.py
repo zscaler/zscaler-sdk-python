@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -23,7 +24,7 @@ class CommonIDName(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CommonIDName model based on API response.
 
@@ -39,7 +40,7 @@ class CommonIDName(ZscalerObject):
             self.id = None
             self.name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -53,7 +54,7 @@ class CommonIDName(ZscalerObject):
 
 
 class CommonIDNameExternalID(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -74,7 +75,7 @@ class CommonIDNameExternalID(ZscalerObject):
             self.external_id = None
             self.association_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -83,6 +84,34 @@ class CommonIDNameExternalID(ZscalerObject):
             "deleted": self.deleted,
             "externalId": self.external_id,
             "associationTime": self.association_time,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class CommonPublicCloudInfo(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.cloud_type = config["cloudType"] if "cloudType" in config else None
+            self.status = config["status"] if "status" in config else False
+
+        else:
+            self.id = None
+            self.name = None
+            self.cloud_type = None
+            self.status = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "cloudType": self.cloud_type,
+            "status": self.status,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

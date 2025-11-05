@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zidentity.models import common
@@ -24,7 +25,7 @@ class Groups(ZscalerObject):
     A class for Groups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Groups model based on API response.
 
@@ -55,7 +56,7 @@ class Groups(ZscalerObject):
             self.prev_link = None
             self.records = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -77,7 +78,7 @@ class GroupRecord(ZscalerObject):
     A class for Group Record objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Group Record model based on API response.
 
@@ -162,7 +163,7 @@ class GroupRecord(ZscalerObject):
             self.secondary_email = None
             self.status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
 from zscaler.zia.models.dedicated_ip_gateways import DedicatedIPGateways
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DedicatedIPGatewaysAPI(APIClient):
@@ -28,14 +30,14 @@ class DedicatedIPGatewaysAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_dedicated_ip_gw_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Retrieves a list of dedicated IP gateways
 

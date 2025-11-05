@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class ConfigAudit(ZscalerObject):
     A class for ConfigAudit objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ConfigAudit model based on API response.
 
@@ -97,7 +98,7 @@ class ConfigAudit(ZscalerObject):
             self.office365_recommended_configuration = None
             self.ip_visibility_recommended_configuration = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -133,7 +134,7 @@ class AuthFrequency(ZscalerObject):
     A class for AuthFrequency objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AuthFrequency model based on API response.
 
@@ -150,7 +151,7 @@ class AuthFrequency(ZscalerObject):
             self.auth_frequency = None
             self.auth_custom_frequency = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -168,7 +169,7 @@ class IPVisibility(ZscalerObject):
     A class for IPVisibility objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IPVisibility model based on API response.
 
@@ -190,7 +191,7 @@ class IPVisibility(ZscalerObject):
             self.locations_with_nat = None
             self.details = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -210,7 +211,7 @@ class PacFile(ZscalerObject):
     A class for PacFile objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PacFile model based on API response.
 
@@ -228,7 +229,7 @@ class PacFile(ZscalerObject):
             self.total_pac_files = None
             self.pac_with_static_ips = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -246,7 +247,7 @@ class PacWithStaticIPs(ZscalerObject):
     A class for PacWithStaticIPs objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PacFile model based on API response.
 
@@ -269,7 +270,7 @@ class PacWithStaticIPs(ZscalerObject):
             self.static_service_ips = None
             self.static_virtual_ips = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

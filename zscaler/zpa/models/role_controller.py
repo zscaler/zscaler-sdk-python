@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class RoleController(ZscalerObject):
     A class for RoleController objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RoleController model based on API response.
 
@@ -94,7 +95,7 @@ class RoleController(ZscalerObject):
             self.new_audit_message = None
             self.old_audit_message = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -128,7 +129,7 @@ class Permissions(ZscalerObject):
     A class for Permissions objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Permissions model based on API response.
 
@@ -172,7 +173,7 @@ class Permissions(ZscalerObject):
             self.role = None
             self.customer_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -196,7 +197,7 @@ class ClassType(ZscalerObject):
     A class for ClassType objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ClassType model based on API response.
 
@@ -232,7 +233,7 @@ class ClassType(ZscalerObject):
             self.local_scope_mask = None
             self.customer_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -256,7 +257,7 @@ class ClassPermissionGroups(ZscalerObject):
     A class for ClassPermissionGroups objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ClassPermissionGroups model based on API response.
 
@@ -298,7 +299,7 @@ class ClassPermissionGroups(ZscalerObject):
             self.local_scope_permission_group = None
             self.class_permissions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -323,7 +324,7 @@ class ClassPermissions(ZscalerObject):
     A class for ClassPermissions objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ClassPermissions model based on API response.
 
@@ -370,7 +371,7 @@ class ClassPermissions(ZscalerObject):
             self.permission = None
             self.class_type = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -392,7 +393,7 @@ class Permission(ZscalerObject):
     A class for Permission objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Permission model based on API response.
 
@@ -414,7 +415,7 @@ class Permission(ZscalerObject):
             self.type = None
             self.max_mask = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

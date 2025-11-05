@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common
@@ -24,7 +25,7 @@ class DomainProfiles(ZscalerObject):
     A class for DomainProfiles objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DomainProfiles model based on API response.
 
@@ -60,7 +61,7 @@ class DomainProfiles(ZscalerObject):
             self.custom_domains = []
             self.predefined_email_domains = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -83,7 +84,7 @@ class QuarantineTombstoneTemplate(ZscalerObject):
     A class for QuarantineTombstoneTemplate objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the QuarantineTombstoneTemplate model based on API response.
 
@@ -105,7 +106,7 @@ class QuarantineTombstoneTemplate(ZscalerObject):
             self.name = None
             self.description = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -124,7 +125,7 @@ class CasbEmailLabel(ZscalerObject):
     A class for CasbEmailLabel objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CasbEmailLabel model based on API response.
 
@@ -151,7 +152,7 @@ class CasbEmailLabel(ZscalerObject):
             self.label_color = None
             self.label_deleted = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -172,7 +173,7 @@ class CasbTenant(ZscalerObject):
     A class for CasbTenant objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CasbTenant model based on API response.
 
@@ -230,7 +231,7 @@ class CasbTenant(ZscalerObject):
             self.re_auth = None
             self.features_supported = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -258,7 +259,7 @@ class SaaSScanInfo(ZscalerObject):
     A class for SaaSScanInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SaaSScanInfo model based on API response.
 
@@ -293,7 +294,7 @@ class SaaSScanInfo(ZscalerObject):
             self.scan_info = None
             self.scan_action = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -314,7 +315,7 @@ class ScanInfo(ZscalerObject):
     A class for ScanInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ScanInfo model based on API response.
 
@@ -335,7 +336,7 @@ class ScanInfo(ZscalerObject):
             self.prev_scan_end_time = None
             self.scan_reset_num = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

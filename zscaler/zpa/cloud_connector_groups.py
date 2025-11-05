@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cloud_connector_groups import CloudConnectorGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudConnectorGroupsAPI(APIClient):
@@ -31,7 +33,7 @@ class CloudConnectorGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_connector_groups(self, query_params=None) -> tuple:
+    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured cloud connector groups.
 
@@ -87,7 +89,7 @@ class CloudConnectorGroupsAPI(APIClient):
     def get_cloud_connector_groups(
         self,
         group_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information on the specified cloud connector group.
 
@@ -123,6 +125,59 @@ class CloudConnectorGroupsAPI(APIClient):
 
         try:
             result = CloudConnectorGroup(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+        """
+        Retrieves all configured cloud connector groups Name and IDs
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of CloudConnectorGroups instances, Response, error)
+
+        Examples:
+            >>> group_list, _, err = client.zpa.cloud_connector_groups.list_cloud_connector_group_summary(
+            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing cloud connector groups: {err}")
+            ...     return
+            ... print(f"Total cloud connector groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /cloudConnectorGroup/summary
+        """
+        )
+
+        query_params = query_params or {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, CloudConnectorGroup)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(CloudConnectorGroup(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

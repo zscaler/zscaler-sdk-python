@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.npn_client_controller import NPNClientController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class NPNClientControllerAPI(APIClient):
@@ -31,7 +33,7 @@ class NPNClientControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_vpn_connected_users(self, query_params=None) -> tuple:
+    def list_vpn_connected_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured applications configured.
 
