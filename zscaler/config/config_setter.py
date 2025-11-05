@@ -27,6 +27,7 @@ class ConfigSetter:
             "userAgent": "",
             "customerId": "",
             "microtenantId": "",
+            "partnerId": "",
             "sandboxToken": "",
             "sandboxCloud": "",
             "connectionTimeout": 30,

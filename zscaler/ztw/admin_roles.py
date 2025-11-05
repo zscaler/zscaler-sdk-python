@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.admin_roles import AdminRoles
@@ -42,9 +42,11 @@ class AdminRolesAPI(APIClient):
 
                 ``[query_params.include_auditor_role]`` {bool}: Include or exclude auditor user information in the list.
 
-                ``[query_params.include_partner_role]`` {bool}: Include or exclude admin user information in the list. Default is True.
+                ``[query_params.include_partner_role]`` {bool}: Include or exclude admin user
+                    information in the list. Default is True.
 
-                ``[query_params.include_api_roles]`` {bool}: Include or exclude API role information in the list. Default is True.
+                ``[query_params.include_api_roles]`` {bool}: Include or exclude API role
+                    information in the list. Default is True.
 
                 ``[query_params.id]`` {list}: Include or exclude role ID information in the list.
 

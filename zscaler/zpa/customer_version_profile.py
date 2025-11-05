@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.customer_version_profile import CustomerVersionProfile
@@ -91,3 +91,91 @@ class CustomerVersionProfileAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
+
+    def get_associated_version_profile(self) -> APIResult[CustomerVersionProfile]:
+        """
+        Get associated version profile for a customer.
+
+        This endpoint retrieves the version profile associated with the customer.
+        The API does not require any parameters.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (CustomerVersionProfile instance, Response, error)
+
+        Examples:
+            Get associated version profile for a customer:
+
+            >>> version_profile, _, err = client.zpa.customer_version_profile.get_associated_version_profile()
+            ... if err:
+            ...     print(f"Error getting associated version profile: {err}")
+            ...     return
+            ... print(version_profile.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /versionProfile
+        """
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, CustomerVersionProfile)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = CustomerVersionProfile(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def update_version_profile(self, profile_id: str, remove_override_flag: bool) -> APIResult[None]:
+        """
+        Update the version profile for a given customer.
+
+        This endpoint allows you to update the version profile for a given customer.
+        The API requires the `remove_override_flag` attribute to be passed in the body.
+
+        Args:
+            profile_id (str): The unique identifier for the version profile.
+            remove_override_flag (bool): Whether to remove the override flag for the version profile.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing None (API returns 204 No Content), response object, and error if any.
+
+            Note: This API returns 204 No Content on success, so the result will be None. To get the
+            updated version profile, call `get_associated_version_profile()` after this operation.
+
+        Examples:
+            >>> updated_profile, _, err = client.zpa.customer_version_profile.update_version_profile(
+            ...     profile_id='0',
+            ...     remove_override_flag=True
+            ... )
+            ... if err:
+            ...     print(f"Error updating version profile: {err}")
+            ...     return
+            ... print(f"Version profile updated: {updated_profile.as_dict()}")
+        """
+        http_method = "put".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /versionProfiles/{profile_id}
+        """
+        )
+
+        body = {"removeOverrideFlag": remove_override_flag}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=body)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)

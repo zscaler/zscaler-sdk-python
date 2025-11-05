@@ -42,7 +42,8 @@ class NWServiceAPI(APIClient):
                 ``[query_params.protocol]`` {str}: Filter based on the network service protocol.
                 Supported Values: `ICMP`, `TCP`, `UDP`, `GRE`, `ESP`, `OTHER`,
 
-                ``[query_params.search]`` {str}: The search string used to match against a service's name or description attributes.
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a service's name or description attributes.
 
                 ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``,
                     ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application

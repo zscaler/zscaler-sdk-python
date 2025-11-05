@@ -127,6 +127,7 @@ def to_snake_case(string):
         "locationDTO": "location_dto",
         "predefinedADPControls": "predefined_adp_controls",
         "runtimeOS": "runtime_os",
+        "defaultCSP": "default_csp",
 
         # ZIdentity Edge Cases
         # "clientJWKsUrl": "clientJWKsUrl",
@@ -265,7 +266,8 @@ def to_lower_camel_case(string):
         "location_group_dto": "locationGroupDTO",
         "location_dto": "locationDTO",
         "predefined_adp_controls": "predefinedADPControls",
-        "runtime_os": "runtimeOS"
+        "runtime_os": "runtimeOS",
+        "default_csp": "defaultCSP",
     }
 
     if string in FIELD_EXCEPTIONS:

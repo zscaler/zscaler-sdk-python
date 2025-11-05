@@ -17,6 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
+from zscaler.zpa.models import server_group as server_group
 
 
 class AppConnectorGroup(ZscalerObject):
@@ -74,6 +75,9 @@ class AppConnectorGroup(ZscalerObject):
 
             self.np_assistant_group = NPAssistantGroup(config["npAssistantGroup"] if "npAssistantGroup" in config else None)
 
+            self.server_groups = ZscalerCollection.form_list(
+                config["serverGroups"] if "serverGroups" in config else [], server_group.ServerGroup
+            )
         else:
             self.id = None
             self.ip_acl = None
@@ -112,6 +116,7 @@ class AppConnectorGroup(ZscalerObject):
             self.restriction_type = None
             self.zscaler_managed = None
             self.dc_hosting_info = None
+            self.server_groups = []
 
     def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
@@ -153,6 +158,7 @@ class AppConnectorGroup(ZscalerObject):
             "restrictionType": self.restriction_type,
             "zscalerManaged": self.zscaler_managed,
             "dcHostingInfo": self.dc_hosting_info,
+            "serverGroups": [server_group.request_format() for server_group in self.server_groups],
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

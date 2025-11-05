@@ -119,6 +119,7 @@ class LegacyZIAClientHelper:
 
         self.conv_box = True
         self.sandbox_token = kw.get("sandbox_token") or os.getenv(f"{self._env_base}_SANDBOX_TOKEN")
+        self.partner_id = kw.get("partner_id") or os.getenv("ZSCALER_PARTNER_ID")
         self.timeout = timeout
         self.fail_safe = fail_safe
 
@@ -163,6 +164,9 @@ class LegacyZIAClientHelper:
             "Accept": "application/json",
             "User-Agent": self.user_agent,
         }
+        # Add x-partner-id header if partnerId is provided
+        if self.partner_id:
+            self.headers["x-partner-id"] = self.partner_id
         self.session_timeout_offset = datetime.timedelta(minutes=5)
         self.session_refreshed = None
         self.auth_details = None
@@ -173,6 +177,7 @@ class LegacyZIAClientHelper:
         self.config = {
             "client": {
                 "cloud": self.env_cloud,
+                "partnerId": self.partner_id or "",
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
                 "cache": {"enabled": True},

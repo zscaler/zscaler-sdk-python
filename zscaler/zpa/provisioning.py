@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.provisioning_keys import ProvisioningKey
@@ -66,7 +66,9 @@ class ProvisioningKeyAPI(APIClient):
                 ``[query_params.page_size]`` {str}: Specifies the page size.
                     If not provided, the default page size is 20. The max page size is 500.
 
-                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+                ``[query_params.search]`` {str}: The search string used to support
+                    search by features and fields for the API.
+
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
@@ -166,6 +168,76 @@ class ProvisioningKeyAPI(APIClient):
             f"""{
             self._zpa_base_endpoint}
             /associationType/{simplify_key_type(key_type)}/provisioningKey/{key_id}
+        """
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, ProvisioningKey)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = ProvisioningKey(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_provisioning_key_by_zcomponent(
+        self, zcomponent_id: str, key_type: str, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
+        """
+        Returns information on the specified provisioning key by App Connector or Service Edge ID.
+
+        Args:
+            key_type (str): The type of provisioning key, accepted values are:
+                ``connector`` and ``service_edge``.
+            zcomponent_id (str): The unique id of the App Connector or Service Edge.
+
+            query_params (dict, optional): Map of query parameters for the request.
+                ``[query_params.microtenant_id]`` {str}: The microtenant ID, if applicable.
+
+        Returns:
+            :obj:`Tuple`: The requested provisioning key resource record.
+
+        Examples:
+            Get the specified App Connector or Service Edge provisioning key.
+
+        Examples:
+            >>> fetched_key, _, err = client.zpa.provisioning.get_provisioning_key(
+                zcomponent_id='9999',
+                key_type=connector
+            ... if err:
+            ...     print(f"Error fetching provisioning key by App Connector or Service Edge ID: {err}")
+            ...     return
+            ... print(
+            ...     f"Fetched provisioning key by App Connector or Service Edge "
+            ...     f"provisioning key ID: {fetched_key.as_dict()}"
+            ... )
+
+            Get the specified Service Edge provisioning key:
+
+            >>> fetched_key, _, err = (
+            ...     client.zpa.provisioning.get_provisioning_key_by_zcomponent(
+                zcomponent_id='9999',
+                key_type=service_edge
+            ... if err:
+            ...     print(f"Error fetching provisioning key by App Connector or Service Edge ID: {err}")
+            ...     return
+            ... print(f"Fetched provisioning key by App Connector or Service Edge ID: {fetched_key.as_dict()}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""{
+            self._zpa_base_endpoint}
+            /associationType/{simplify_key_type(key_type)}zcomponent/{zcomponent_id}/provisioningKey
         """
         )
 

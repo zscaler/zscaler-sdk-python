@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_templates import LocationTemplate
@@ -60,7 +60,11 @@ class LocationTemplateAPI(APIClient):
 
             Gets a Provisioning Templates by name.
 
-            >>> template_list, _, error = client.ztw.location_template.list_location_templates(query_params={'search': 'Template01'})
+            >>> template_list, _, error = (
+            ...     client.ztw.location_template.list_location_templates(
+            ...         query_params={'search': 'Template01'}
+            ...     )
+            ... )
             ... if error:
             ...     print(f"Error listing location templates: {error}")
             ...     return

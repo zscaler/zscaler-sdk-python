@@ -6,11 +6,179 @@
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 
+### New ZPA Endpoint - Application Server Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /server/summary` Get all the configured application servers Name and IDs
+
+### New ZPA Endpoint - Application Segment Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /application/{applicationId}/mappings` Get the application segment mapping details
+    - Added `DELETE /application/{applicationId}/deleteAppByType` Delete a BA/Inspection and PRA Application
+    - Added `POST /application/{applicationId}/validate` Validate conflicting wildcard domain names. Expect the applicationID to be populated in the case of update
+    - Added `GET /application/configured/count` Returns the count of configured application Segment for the provided customer between the date range passed in request body.
+    - Added `GET /application/count/currentAndMaxLimit` get current Applications count of domains and maxLimit configured for a given customer
+
+### New ZPA Endpoint - App Connector Group
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /appConnectorGroup/summary` Get all the configured App Connector Group id and name.
+
+### New ZPA Endpoint - Branch Connector Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /branchConnector` Get all BranchConnectors configured for a given customer.
+
+### New ZPA Endpoint - Branch Connector Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /branchConnectorGroup/summary` Get all branch connector group id and names configured for a given customer.
+    - Added `GET /branchConnectorGroup` Get all configured Branch Connector Groups.
+
+### New ZPA Endpoint - Browser Protection Profile Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /activeBrowserProtectionProfile` Get the active browser protection profile details for the specified customer.
+    - Added `GET /browserProtectionProfile` Gets all configured browser protection profiles for the specified customer.
+    - Added `PUT /browserProtectionProfile/setActive/{browserProtectionProfileId}` Updates a specified browser protection profile as active for the specified customer.
+
+### New ZPA Endpoint - Customer Config Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /config/isZiaCloudConfigAvailable` Check if zia cloud config for a given customer is available.
+    - Added `GET /config/ziaCloudConfig` Get zia cloud service config for a given customer.
+    - Added `POST /config/ziaCloudConfig` Add or update zia cloud service config for a given customer.
+    - Added `GET /sessionTerminationOnReauth` Get session termination on reauth for a given customer.
+    - Added `PUT /sessionTerminationOnReauth` Add /update boolean value for session termination on reauth.
+
+### New ZPA Endpoint - Customer DR Tool Version Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /customerDRToolVersion` Fetch latest the Customer Support DR Tool Versions sorted by latest filter
+
+### New ZPA Endpoint - Customer Version Profile Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /versionProfiles/{versionProfileId}` Update Version Profile for customer
+
+### New ZPA Endpoint - Cloud Connector Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /cloudConnectorGroup/summary` Get all edge connector group id and names configured for a given customer
+
+### New ZPA Endpoint - Extranet Resource Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /extranetResource/partner` Get all extranet resources
+
+### New ZPA Endpoint - Machine Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /machineGroup/summary` Get all Machine Group Id and Names configured for a given customer
+
+### New ZPA Endpoint - Managed Browser Profile Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /managedBrowserProfile/search` Gets all the managed browser profiles for a customer
+
+### New ZPA Endpoint - Provisioning Key Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /associationType/{associationType}/zcomponent/{zcomponentId}/provisioningKey` get provisioningKey details by zcomponentId for associationType.
+
+### New ZPA Endpoint - OAuth User Code Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `POST /{associationType}/usercodes` Verifies the provided list of user codes for a given component provisioning.
+    - Added `POST /{associationType}/usercodes/status` Adds a new Provisioning Key for the specified customer.
+
+### New ZPA Endpoint - Policy-Set Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /riskScoreValues` Gets values of risk scores for the specified customer.
+    - Added `GET /policySet/rules/policyType/{policyType}/count` For a customer, get count of policy rules for a given policy type. Providing only endtime would give cumulative count till the endTime.Providing both startTime and endtime would give count between that time period.Not Providing startTime and endtime would give overall count.
+    - Added `GET /policySet/rules/policyType/{policyType/application/{applicationId}` Gets paginated policy rules for the specified policy type by application id
+
+### New ZPA Endpoint - Server Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /serverGroup/summary` Get all Server Group id and names configured for a given customer
+
+### New ZPA Endpoint - Step up Auth Level Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /stepupauthlevel/summary` Get a step up auth levels.
+
+### New ZPA Endpoint - Step up Auth Level Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /userportal/aup/{id}` Get user portal aup
+    - Added `PUT /userportal/aup/{id}` Update user portal aup
+    - Added `DELETE /userportal/aup/{id}` Delete user portal aup
+    - Added `GET /userportal/aup` Get all AUPs configured for a given customer
+    - Added `POST /userportal/aup` Add a new aup for a given customer.
+
+### New ZPA Endpoint - ZPN Location Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) -Added the following new ZPA Endpoints
+    - Added `GET /location/extranetResource/{zpnErId}`
+    - Added `PUT /location/summary` Get all Location id and names configured for a given customer.
+
+### New ZPA Endpoint - ZPN Location Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /locationGroup/extranetResource/{zpnErId}`
+
+### New ZPA Endpoint - Workload Tag Group Controller
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /workloadTagGroup/summary`
+
+### New ZTW Endpoint - Partner Integrations - Public Account Info
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /publicCloudInfo` - Retrieves the list of AWS accounts with metadata
+    - Added `POST /publicCloudInfo` - Creates a new AWS account with the provided account and region details.
+    - Added `GET /publicCloudInfo/cloudFormationTemplate` - Retrieves the CloudFormation template URL.
+    - Added `GET /publicCloudInfo/count` - Retrieves the total number of AWS accounts.
+    - Added `POST /publicCloudInfo/generateExternalId` - Creates an external ID for an AWS account.
+    - Added `GET /publicCloudInfo/lite` - Retrieves basic information about the AWS cloud accounts
+    - Added `GET /publicCloudInfo/supportedRegions` - Retrieves a list of AWS regions supported for workload discovery settings (WDS).
+    - Added `GET /publicCloudInfo/{id}` - Retrieves the existing AWS account details based on the provided ID.
+    - Added `PUT /publicCloudInfo/{id}` - Updates the existing AWS account details based on the provided ID.
+    - Added `DELETE /publicCloudInfo/{id}` - Removes a specific AWS account based on the provided ID.
+    - Added `DELETE /publicCloudInfo/{id}/changeState` - Enables or disables a specific AWS account in all regions based on the provided ID.
+
+### New ZTW Endpoint - Partner Integrations - Workload Discovery Service
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /discoveryService/workloadDiscoverySettings` - Retrieves the workload discovery service settings.
+    - Added `PUT /discoveryService/{id}/permissions` - Verifies the specified AWS account permissions using the discovery role and external ID.
+
+### New ZTW Endpoint - Partner Integrations - Account Groups
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added the following new ZPA Endpoints
+    - Added `GET /accountGroups` - Retrieves the details of AWS account groups with metadata.
+    - Added `POST /accountGroups` - Creates an AWS account group. You can create a maximum of 128 groups in each organization. 
+    - Added `GET /accountGroups/count` - Retrieves the total number of AWS account groups.
+    - Added `GET /accountGroups/lite` - Retrieves the ID and name of all the AWS account groups.
+    - Added `PUT /accountGroups/{id}` - Updates the existing AWS account group details based on the provided ID.
+    - Added `DELETE /accountGroups/{id}` - Removes a specific AWS account group based on the provided ID.
+  
 ### Enhancements
 
 * [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added comprehensive type hints to ~856 API methods across all packages (ZIA, ZPA, ZCC, ZDX, ZTW, ZWA, ZIdentity) enabling IDE autocomplete and intellisense support. Introduced `APIResult[T]` type alias for standardized return type annotations.
 
 * [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Fixed `check_static_ip` method to correctly return `is_valid=True` when IP is available. The method now properly handles HTTP 200 responses with plain text "SUCCESS" body, ignoring non-JSON response errors that were incorrectly causing the validation to fail. 
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added support for ZPA filtering API format in search parameters. Simple search strings are automatically converted to `name+EQ+<value>` format for exact name matching, while advanced filter formats (e.g., `enabled+EQ+true`) can be provided explicitly. This resolves issues where search terms containing keywords like "Segment" were incorrectly interpreted as filter operands.
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Added automatic `x-partner-id` header injection for all API requests when `partnerId` is provided in the configuration. The header is automatically included in all requests across OneAPI and Legacy clients (ZIA, ZPA, ZTW, ZCC, ZDX, ZWA) when `partnerId` is specified via config dictionary or `ZSCALER_PARTNER_ID` environment variable.
+
+### Bug Fixes:
+
+* [PR #410](https://github.com/zscaler/zscaler-sdk-python/pull/410) - Fixed context manager deauthentication for ZTW and ZIA services to only trigger on mutations (POST/PUT/DELETE operations). GET-only sessions no longer invoke unnecessary deauthentication, improving performance and reducing API calls.
 
 ## 1.8.6 (October 20, 2025)
 

@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
@@ -50,8 +50,16 @@ class AccountDetailsAPI(APIClient):
 
             List locations, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for location in ztw.provisioning.list_public_account_details(page_size=200, max_pages=2):
-            ...    print(location)
+        Examples:
+            Gets a list of all public account details.
+
+            >>> public_account_details_list, _, error = ztw.account_details.list_public_account_details()
+            ... if error:
+            ...     print(f"Error listing account groups: {error}")
+            ...     return
+            ... print(f"Total account groups found: {len(account_groups_list)}")
+            ... for account_group in account_groups_list:
+            ...     print(account_group.as_dict())
 
         """
         http_method = "get".upper()

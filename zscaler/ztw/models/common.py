@@ -87,3 +87,31 @@ class CommonIDNameExternalID(ZscalerObject):
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format
+
+
+class CommonPublicCloudInfo(ZscalerObject):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(config)
+
+        if config:
+            self.id = config["id"] if "id" in config else None
+            self.name = config["name"] if "name" in config else None
+            self.cloud_type = config["cloudType"] if "cloudType" in config else None
+            self.status = config["status"] if "status" in config else False
+
+        else:
+            self.id = None
+            self.name = None
+            self.cloud_type = None
+            self.status = None
+
+    def request_format(self) -> Dict[str, Any]:
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name,
+            "cloudType": self.cloud_type,
+            "status": self.status,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format

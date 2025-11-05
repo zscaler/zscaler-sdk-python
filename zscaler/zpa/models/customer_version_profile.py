@@ -61,6 +61,12 @@ class CustomerVersionProfile(ZscalerObject):
                 config["customScopeCustomerIds"] if "customScopeCustomerIds" in config else [], str
             )
 
+            self.version_details = (
+                ZscalerCollection.form_list(config["versionDetails"], VersionDetails)
+                if "versionDetails" in config
+                else []
+            )
+
         else:
             self.id = None
             self.name = None
@@ -79,6 +85,7 @@ class CustomerVersionProfile(ZscalerObject):
             self.visibility_scope = None
             self.custom_scope_request_customer_ids = {}
             self.custom_scope_customer_ids = []
+            self.version_details = []
 
     def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
@@ -100,6 +107,50 @@ class CustomerVersionProfile(ZscalerObject):
             "upgradePriority": self.upgrade_priority,
             "versions": self.versions,
             "visibilityScope": self.visibility_scope,
+            "versionDetails": self.version_details,
+            "customScopeRequestCustomerIds": self.custom_scope_request_customer_ids,
+            "customScopeCustomerIds": self.custom_scope_customer_ids,
+        }
+        parent_req_format.update(current_obj_format)
+        return parent_req_format
+
+
+class VersionDetails(ZscalerObject):
+    """
+    A class for VersionDetails objects.
+    """
+
+    def __init__(self, config=None):
+        """
+        Initialize the VersionDetails model based on API response.
+
+        Args:
+            config (dict): A dictionary representing the configuration.
+        """
+        super().__init__(config)
+
+        if config:
+            self.latest_platform = config["latestPlatform"] \
+                if "latestPlatform" in config else None
+            self.role = config["role"] \
+                if "role" in config else None
+            self.version = config["version"] \
+                if "version" in config else None
+
+        else:
+            self.latest_platform = None
+            self.role = None
+            self.version = None
+
+    def request_format(self):
+        """
+        Return the object as a dictionary in the format expected for API requests.
+        """
+        parent_req_format = super().request_format()
+        current_obj_format = {
+            "latestPlatform": self.latest_platform,
+            "role": self.role,
+            "version": self.version,
         }
         parent_req_format.update(current_obj_format)
         return parent_req_format

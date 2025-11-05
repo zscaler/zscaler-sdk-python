@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
@@ -35,13 +35,15 @@ class NWServiceGroupsAPI(APIClient):
         query_params: Optional[dict] = None,
     ) -> APIResult[dict]:
         """
-        Lists network service groups in your organization with pagination.
-        A subset of network service groups can be returned that match a supported
-        filter expression or query.
+            Lists network service groups in your organization with pagination.
+            A subset of network service groups can be returned that match a supported
+            filter expression or query.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a group's name or description attributes.
 
         Returns:
             tuple: List of Network Service Group resource records.
@@ -59,7 +61,11 @@ class NWServiceGroupsAPI(APIClient):
 
             Gets a list of all network services group.
 
-            >>> group_list, response, error = ztw.nw_service_groups.list_network_svc_groups(query_params={"search": 'Group01'}):
+            >>> group_list, response, error = (
+            ...     ztw.nw_service_groups.list_network_svc_groups(
+            ...         query_params={"search": 'Group01'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing network services group: {error}")
             ...     return

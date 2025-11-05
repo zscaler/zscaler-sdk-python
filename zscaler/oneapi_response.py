@@ -159,8 +159,25 @@ class ZscalerAPIResponse:
         self._body = json.loads(response_body)
 
         if isinstance(self._body, list):
-            # ZIA response may just be a list of items
+            # Handle direct list responses (ZIA, ZPA simple lists, etc.)
             self._list = self._body
+            # Check if this is a list of simple types (strings, numbers, etc.) vs dicts
+            # If it's a list of simple types, skip the cleaning logic
+            if self._body and len(self._body) > 0 and not isinstance(self._body[0], dict):
+                # This is a list of simple types (e.g., ["CRITICAL", "HIGH", ...])
+                # Don't filter it - keep the original list as-is
+                # No cleaning needed for simple types
+                pass
+            elif self._body and len(self._body) > 0:
+                # This is a list of dicts - apply cleaning logic
+                cleaned_list = []
+                for item in self._list:
+                    if isinstance(item, dict):
+                        cleaned_list.append(item)
+                    else:
+                        logger.warning("Non-dict item found in response list, skipping: %s", item)
+                self._list = cleaned_list
+            # If list is empty, _list is already set to empty list, no cleaning needed
         elif self._service_type == "ZDX":
             self._list = self._body.get("items", [])
             self._next_offset = self._body.get("next_offset")
@@ -187,13 +204,15 @@ class ZscalerAPIResponse:
                 self._total_pages = int(self._body.get("totalPages", 1))
                 self._total_count = int(self._body.get("totalCount", 0))
 
-        cleaned_list = []
-        for item in self._list:
-            if isinstance(item, dict):
-                cleaned_list.append(item)
-            else:
-                logger.warning("Non-dict item found in response list, skipping: %s", item)
-        self._list = cleaned_list
+        # Only apply cleaning logic if we haven't already handled it above
+        if not isinstance(self._body, list):
+            cleaned_list = []
+            for item in self._list:
+                if isinstance(item, dict):
+                    cleaned_list.append(item)
+                else:
+                    logger.warning("Non-dict item found in response list, skipping: %s", item)
+            self._list = cleaned_list
 
         self._items_fetched += len(self._list)
         self._pages_fetched += 1

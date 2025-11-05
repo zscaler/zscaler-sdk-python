@@ -14,11 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from __future__ import annotations
+
 import datetime
 import logging
 import os
 import re
 from time import sleep
+from typing import TYPE_CHECKING
 
 import requests
 from zscaler import __version__
@@ -28,6 +31,28 @@ from zscaler.user_agent import UserAgent
 from zscaler.utils import obfuscate_api_key
 from zscaler.logger import setup_logging
 from zscaler.errors.response_checker import check_response_for_error
+
+# Import all ZTW API classes for type hints only (to avoid circular imports)
+if TYPE_CHECKING:
+    from zscaler.ztw.account_details import AccountDetailsAPI
+    from zscaler.ztw.activation import ActivationAPI
+    from zscaler.ztw.admin_roles import AdminRolesAPI
+    from zscaler.ztw.admin_users import AdminUsersAPI
+    from zscaler.ztw.ec_groups import ECGroupsAPI
+    from zscaler.ztw.location_management import LocationManagementAPI
+    from zscaler.ztw.location_template import LocationTemplateAPI
+    from zscaler.ztw.api_keys import ProvisioningAPIKeyAPI
+    from zscaler.ztw.provisioning_url import ProvisioningURLAPI
+    from zscaler.ztw.forwarding_gateways import ForwardingGatewaysAPI
+    from zscaler.ztw.forwarding_rules import ForwardingControlRulesAPI
+    from zscaler.ztw.ip_destination_groups import IPDestinationGroupsAPI
+    from zscaler.ztw.ip_source_groups import IPSourceGroupsAPI
+    from zscaler.ztw.ip_groups import IPGroupsAPI
+    from zscaler.ztw.nw_service_groups import NWServiceGroupsAPI
+    from zscaler.ztw.nw_service import NWServiceAPI
+    from zscaler.ztw.public_cloud_info import PublicCloudInfoAPI
+    from zscaler.ztw.account_groups import AccountGroupsAPI
+    from zscaler.ztw.discovery_service import DiscoveryServiceAPI
 
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
@@ -71,6 +96,7 @@ class LegacyZTWClientHelper:
         self.conv_box = True
         self.timeout = timeout
         self.fail_safe = fail_safe
+        self.partner_id = kw.get("partner_id") or os.getenv("ZSCALER_PARTNER_ID")
 
         ua = UserAgent()
         self.user_agent = ua.get_user_agent_string()
@@ -87,6 +113,9 @@ class LegacyZTWClientHelper:
             "Accept": "application/json",
             "User-Agent": self.user_agent,
         }
+        # Add x-partner-id header if partnerId is provided
+        if self.partner_id:
+            self.headers["x-partner-id"] = self.partner_id
         self.session_timeout_offset = datetime.timedelta(minutes=5)
         self.session_refreshed = None
         self.auth_details = None
@@ -98,6 +127,7 @@ class LegacyZTWClientHelper:
         self.config = {
             "client": {
                 "cloud": self.env_cloud,
+                "partnerId": self.partner_id or "",
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
                 "cache": {
@@ -197,17 +227,6 @@ class LegacyZTWClientHelper:
         except requests.RequestException as e:
             return False
 
-    def __enter__(self):
-        if self.is_session_expired():
-            resp = self.authenticate()
-            if resp.status_code > 299:
-                raise Exception(f"Error auth:{resp.json()}")
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        logger.debug("deauthenticating...")
-        self.deauthenticate()
-
     def get_base_url(self, endpoint):
         return self.url
 
@@ -285,7 +304,7 @@ class LegacyZTWClientHelper:
         self._session = session
 
     @property
-    def account_details(self):
+    def account_details(self) -> AccountDetailsAPI:
         """
         The interface object for the :ref:`ZTW Account Details interface <ztw-account_details>`.
 
@@ -295,7 +314,7 @@ class LegacyZTWClientHelper:
         return AccountDetailsAPI(self.request_executor)
 
     @property
-    def activate(self):
+    def activate(self) -> ActivationAPI:
         """
         The interface object for the :ref:`ZTW Activation interface <ztw-activate>`.
 
@@ -305,7 +324,7 @@ class LegacyZTWClientHelper:
         return ActivationAPI(self.request_executor)
 
     @property
-    def admin_roles(self):
+    def admin_roles(self) -> AdminRolesAPI:
         """
         The interface object for the :ref:`ZTW Admin and Role Management interface <ztw-admin_roles>`.
 
@@ -315,7 +334,7 @@ class LegacyZTWClientHelper:
         return AdminRolesAPI(self.request_executor)
 
     @property
-    def admin_users(self):
+    def admin_users(self) -> AdminUsersAPI:
         """
         The interface object for the :ref:`ZTW Admin Users interface <ztw-admin_users>`.
 
@@ -325,7 +344,7 @@ class LegacyZTWClientHelper:
         return AdminUsersAPI(self.request_executor)
 
     @property
-    def ec_groups(self):
+    def ec_groups(self) -> ECGroupsAPI:
         """
         The interface object for the :ref:`ZTW EC Groups interface <ztw-ec_groups>`.
 
@@ -335,7 +354,7 @@ class LegacyZTWClientHelper:
         return ECGroupsAPI(self.request_executor)
 
     @property
-    def location_management(self):
+    def location_management(self) -> LocationManagementAPI:
         """
         The interface object for the :ref:`ZTW Locations interface <ztw-location_management>`.
 
@@ -345,7 +364,7 @@ class LegacyZTWClientHelper:
         return LocationManagementAPI(self.request_executor)
 
     @property
-    def location_template(self):
+    def location_template(self) -> LocationTemplateAPI:
         """
         The interface object for the :ref:`ZTW Locations interface <ztw-location_template>`.
 
@@ -355,7 +374,7 @@ class LegacyZTWClientHelper:
         return LocationTemplateAPI(self.request_executor)
 
     @property
-    def api_keys(self):
+    def api_keys(self) -> ProvisioningAPIKeyAPI:
         """
         The interface object for the :ref:`ZTW Provisioning API Key interface <ztw-api_keys>`.
 
@@ -365,7 +384,7 @@ class LegacyZTWClientHelper:
         return ProvisioningAPIKeyAPI(self.request_executor)
 
     @property
-    def provisioning_url(self):
+    def provisioning_url(self) -> ProvisioningURLAPI:
         """
         The interface object for the :ref:`ZTW Provisioning URL interface <ztw-provisioning_url>`.
 
@@ -376,7 +395,7 @@ class LegacyZTWClientHelper:
         return ProvisioningURLAPI(self.request_executor)
 
     @property
-    def forwarding_gateways(self):
+    def forwarding_gateways(self) -> ForwardingGatewaysAPI:
         """
         The interface object for the :ref:`ZTW Forwarding Gateway interface <ztw-forwarding_gateways>`.
 
@@ -387,7 +406,7 @@ class LegacyZTWClientHelper:
         return ForwardingGatewaysAPI(self.request_executor)
 
     @property
-    def forwarding_rules(self):
+    def forwarding_rules(self) -> ForwardingControlRulesAPI:
         """
         The interface object for the :ref:`ZTW Forwarding Control Rules interface <ztw-forwarding_rules>`.
 
@@ -398,7 +417,7 @@ class LegacyZTWClientHelper:
         return ForwardingControlRulesAPI(self.request_executor)
 
     @property
-    def ip_destination_groups(self):
+    def ip_destination_groups(self) -> IPDestinationGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Destination Groups interface <ztw-ip_destination_groups>`.
 
@@ -409,7 +428,7 @@ class LegacyZTWClientHelper:
         return IPDestinationGroupsAPI(self.request_executor)
 
     @property
-    def ip_source_groups(self):
+    def ip_source_groups(self) -> IPSourceGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Source Groups interface <ztw-ip_source_groups>`.
 
@@ -420,7 +439,7 @@ class LegacyZTWClientHelper:
         return IPSourceGroupsAPI(self.request_executor)
 
     @property
-    def ip_groups(self):
+    def ip_groups(self) -> IPGroupsAPI:
         """
         The interface object for the :ref:`ZTW IP Source Groups interface <ztw-ip_groups>`.
 
@@ -431,7 +450,7 @@ class LegacyZTWClientHelper:
         return IPGroupsAPI(self.request_executor)
 
     @property
-    def nw_service_groups(self):
+    def nw_service_groups(self) -> NWServiceGroupsAPI:
         """
         The interface object for the :ref:`ZTW Network Service Groups interface <ztw-nw_service_groups>`.
 
@@ -442,7 +461,7 @@ class LegacyZTWClientHelper:
         return NWServiceGroupsAPI(self.request_executor)
 
     @property
-    def nw_service(self):
+    def nw_service(self) -> NWServiceAPI:
         """
         The interface object for the :ref:`ZTW Network Services interface <ztw-nw_service>`.
 
@@ -451,6 +470,33 @@ class LegacyZTWClientHelper:
         from zscaler.ztw.nw_service import NWServiceAPI
 
         return NWServiceAPI(self.request_executor)
+
+    @property
+    def public_cloud_info(self) -> PublicCloudInfoAPI:
+        """
+        The interface object for the :ref:`ZTW Public Cloud Info interface <ztw-public_cloud_info>`.
+
+        """
+        from zscaler.ztw.public_cloud_info import PublicCloudInfoAPI
+        return PublicCloudInfoAPI(self.request_executor)
+
+    @property
+    def account_groups(self) -> AccountGroupsAPI:
+        """
+        The interface object for the :ref:`ZTW Account Groups interface <ztw-account_groups>`.
+
+        """
+        from zscaler.ztw.account_groups import AccountGroupsAPI
+        return AccountGroupsAPI(self.request_executor)
+
+    @property
+    def discovery_service(self) -> DiscoveryServiceAPI:
+        """
+        The interface object for the :ref:`ZTW Discovery Service interface <ztw-discovery_service>`.
+
+        """
+        from zscaler.ztw.discovery_service import DiscoveryServiceAPI
+        return DiscoveryServiceAPI(self.request_executor)
 
     """
     Misc

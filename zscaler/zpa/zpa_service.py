@@ -59,6 +59,19 @@ from zscaler.zpa.user_portal_controller import UserPortalControllerAPI
 from zscaler.zpa.user_portal_link import UserPortalLinkAPI
 from zscaler.zpa.npn_client_controller import NPNClientControllerAPI
 from zscaler.zpa.config_override_controller import ConfigOverrideControllerAPI
+from zscaler.zpa.branch_connector_group import BranchConnectorGroupAPI
+from zscaler.zpa.branch_connectors import BranchConnectorControllerAPI
+from zscaler.zpa.browser_protection import BrowserProtectionProfileAPI
+from zscaler.zpa.zia_customer_config import ZIACustomerConfigAPI
+from zscaler.zpa.customer_dr_tool import CustomerDRToolVersionAPI
+from zscaler.zpa.extranet_resource import ExtranetResourceAPI
+from zscaler.zpa.cloud_connector_controller import CloudConnectorControllerAPI
+from zscaler.zpa.managed_browser_profile import ManagedBrowserProfileAPI
+from zscaler.zpa.oauth2_user_code import OAuth2UserCodeAPI
+from zscaler.zpa.stepup_auth_level import StepUpAuthLevelAPI
+from zscaler.zpa.user_portal_aup import UserPortalAUPAPI
+from zscaler.zpa.location_controller import LocationControllerAPI
+from zscaler.zpa.workload_tag_group import WorkloadTagGroupAPI
 
 
 class ZPAService:
@@ -220,7 +233,9 @@ class ZPAService:
 
     @property
     def pra_credential_pool(self) -> PRACredentialPoolAPI:
-        """The interface object for the :ref:`ZPA Privileged Remote Access Credential pool interface <zpa-pra_credential_pool>`."""
+        """
+        The interface object for the :ref:`ZPA Privileged Remote Access Credential pool interface <zpa-pra_credential_pool>`.
+        """
         return PRACredentialPoolAPI(self._request_executor, self._config)
 
     @property
@@ -348,3 +363,67 @@ class ZPAService:
         """The interface object for the :ref:`ZPA Config Override interface <zpa-config_override_controller>`."""
         return ConfigOverrideControllerAPI(self._request_executor, self._config)
 
+    @property
+    def branch_connector_group(self) -> BranchConnectorGroupAPI:
+        """The interface object for the :ref:`ZPA Branch Connector Group interface <zpa-branch_connector_group>`."""
+        return BranchConnectorGroupAPI(self._request_executor, self._config)
+
+    @property
+    def branch_connectors(self) -> BranchConnectorControllerAPI:
+        """The interface object for the :ref:`ZPA Branch Connectors interface <zpa-branch_connectors>`."""
+        return BranchConnectorControllerAPI(self._request_executor, self._config)
+
+    @property
+    def browser_protection(self) -> BrowserProtectionProfileAPI:
+        """The interface object for the :ref:`ZPA Browser Protection Profile interface <zpa-browser-protection>`."""
+        return BrowserProtectionProfileAPI(self._request_executor, self._config)
+
+    @property
+    def zia_customer_config(self) -> ZIACustomerConfigAPI:
+        """The interface object for the :ref:`ZIA Customer Config interface <zpa-zia-customer-config>`."""
+        return ZIACustomerConfigAPI(self._request_executor, self._config)
+
+    @property
+    def customer_dr_tool(self) -> CustomerDRToolVersionAPI:
+        """The interface object for the :ref:`ZPA Customer DR Tool Version interface <zpa-customer-dr-tool>`."""
+        return CustomerDRToolVersionAPI(self._request_executor, self._config)
+
+    @property
+    def extranet_resource(self) -> ExtranetResourceAPI:
+        """The interface object for the :ref:`ZPA Extranet Resource interface <zpa-extranet_resource>`."""
+        return ExtranetResourceAPI(self._request_executor, self._config)
+
+    @property
+    def cloud_connector_controller(self) -> CloudConnectorControllerAPI:
+        """The interface object for the :ref:`ZPA Cloud Connector Controller interface <zpa-cloud_connector_controller>`."""
+        return CloudConnectorControllerAPI(self._request_executor, self._config)
+
+    @property
+    def managed_browser_profile(self) -> ManagedBrowserProfileAPI:
+        """The interface object for the :ref:`ZPA Managed Browser Profile interface <zpa-managed_browser_profile>`."""
+        return ManagedBrowserProfileAPI(self._request_executor, self._config)
+
+    @property
+    def oauth2_user_code(self) -> OAuth2UserCodeAPI:
+        """The interface object for the :ref:`ZPA OAuth2 User Code interface <zpa-oauth2_user_code>`."""
+        return OAuth2UserCodeAPI(self._request_executor, self._config)
+
+    @property
+    def stepup_auth_level(self) -> StepUpAuthLevelAPI:
+        """The interface object for the :ref:`ZPA Step Up Auth Level interface <zpa-stepup_auth_level>`."""
+        return StepUpAuthLevelAPI(self._request_executor, self._config)
+
+    @property
+    def user_portal_aup(self) -> UserPortalAUPAPI:
+        """The interface object for the :ref:`ZPA User Portal AUP interface <zpa-user_portal_aup>`."""
+        return UserPortalAUPAPI(self._request_executor, self._config)
+
+    @property
+    def location_controller(self) -> LocationControllerAPI:
+        """The interface object for the :ref:`ZPA Location Controller interface <zpa-location_controller>`."""
+        return LocationControllerAPI(self._request_executor, self._config)
+
+    @property
+    def workload_tag_group(self) -> WorkloadTagGroupAPI:
+        """The interface object for the :ref:`ZPA Workload Tag Group interface <zpa-workload_tag_group>`."""
+        return WorkloadTagGroupAPI(self._request_executor, self._config)

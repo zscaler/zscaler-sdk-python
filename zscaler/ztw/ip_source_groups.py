@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_source_groups import IPSourceGroup
@@ -35,10 +35,11 @@ class IPSourceGroupsAPI(APIClient):
         query_params: Optional[dict] = None,
     ) -> APIResult[dict]:
         """
-        List IP Source Groups in your organization.
+            List IP Source Groups in your organization.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
@@ -111,7 +112,9 @@ class IPSourceGroupsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a group's name or description attributes.
 
         Returns:
             tuple: List of IP Source Groups resource records.
@@ -129,7 +132,11 @@ class IPSourceGroupsAPI(APIClient):
 
             Gets a list of all IP source groups name and ID.
 
-            >>> group_list, response, error = ztw.ip_source_groups.list_ip_source_groups_lite(query_params={"search": 'Group01'}):
+            >>> group_list, response, error = (
+            ...     ztw.ip_source_groups.list_ip_source_groups_lite(
+            ...         query_params={"search": 'Group01'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
             ...     return
