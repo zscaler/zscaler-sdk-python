@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
@@ -33,7 +33,12 @@ class ApplicationSegmentByTypeAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def get_segments_by_type(self, application_type: str, expand_all: bool = False, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def get_segments_by_type(
+        self, application_type: str,
+        expand_all: bool = False,
+        query_params: Optional[dict] = None,
+        **kwargs
+    ) -> APIResult[dict]:
         """
         Retrieve all configured application segments of a specified type, optionally expanding all related data.
 
@@ -93,3 +98,60 @@ class ApplicationSegmentByTypeAPI(APIClient):
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
+
+    def delete_segments_by_type(
+        self,
+        segment_id: str,
+        application_type: str,
+        microtenant_id: Optional[str] = None
+    ) -> APIResult[None]:
+        """
+        Deletes the specified Application Segment from ZPA by type.
+
+        See the
+        `Deleting a Application Segment Using API reference:
+        <https://help.zscaler.com/zpa/application-segment-management#/mgmtconfig/v1/admin/customers/{customerId}/application/{applicationId}-delete>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            segment_id (str): The unique identifier for the Application Segment.
+            application_type (str): Type of application segment to delete.
+                Must be one of "BROWSER_ACCESS", "INSPECT", "SECURE_REMOTE_ACCESS".
+
+        Keyword Args:
+            microtenant_id (str, optional): The optional ID of the microtenant if applicable.
+
+        Returns:
+            tuple: A tuple containing the response and error (if any).
+
+        Examples:
+            >>> _, _, err = client.zpa.app_segments.delete_segments_by_type(
+            ...     segment_id='999999',
+            ...     application_type='BROWSER_ACCESS'
+            ... )
+            ... if err:
+            ...     print(f"Error deleting application segment type: {err}")
+            ...     return
+            ... print(f"Application segment with ID 999999 deleted successfully.")
+        """
+        http_method = "delete".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/{segment_id}/deleteAppByType
+        """
+        )
+
+        params = {"applicationType": application_type}
+        if microtenant_id:
+            params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        return (None, response, None)

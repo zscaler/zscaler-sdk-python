@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 import json
 """
 Copyright (c) 2023, Zscaler Inc.
@@ -16,6 +15,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.traffic_static_ip import TrafficStaticIP

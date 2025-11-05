@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.api_client import APIClient

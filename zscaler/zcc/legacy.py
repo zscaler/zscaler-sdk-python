@@ -57,12 +57,13 @@ class LegacyZCCClientHelper:
     RATE_LIMIT_RESET_TIME = timedelta(hours=1)
     DOWNLOAD_DEVICES_RESET_TIME = timedelta(days=1)
 
-    def __init__(self, api_key=None, secret_key=None, cloud=None, timeout=240, cache=None, request_executor_impl=None):
+    def __init__(self, api_key=None, secret_key=None, cloud=None, partner_id=None, timeout=240, cache=None, request_executor_impl=None):
         from zscaler.request_executor import RequestExecutor
 
         self._api_key = api_key or os.getenv("api_key", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._secret_key = secret_key or os.getenv("secret_key", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._env_cloud = cloud or os.getenv(f"{self._env_base}_CLOUD", "zscaler")
+        self.partner_id = partner_id or os.getenv("ZSCALER_PARTNER_ID")
         self.login_url = f"https://api-mobile.{self._env_cloud}.net/papi/auth/v1/login"
         self.url = f"https://api-mobile.{self._env_cloud}.net"
 
@@ -76,6 +77,7 @@ class LegacyZCCClientHelper:
                 "apiKey": self._api_key,
                 "secretKey": self._secret_key or "",
                 "cloud": self._env_cloud,
+                "partnerId": self.partner_id or "",
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
                 "cache": {
@@ -120,6 +122,9 @@ class LegacyZCCClientHelper:
                 "auth-token": f"{self.auth_token}",
                 "User-Agent": self.user_agent,
             }
+            # Add x-partner-id header if partnerId is provided
+            if self.partner_id:
+                self.headers["x-partner-id"] = self.partner_id
 
     # @retry_with_backoff(retries=5)
     def login(self):
@@ -212,10 +217,6 @@ class LegacyZCCClientHelper:
         if params:
             url = f"{url}?{urllib.parse.urlencode(params)}"
 
-        headers_with_user_agent = self.headers.copy()
-        headers_with_user_agent["User-Agent"] = self.user_agent
-        headers_with_user_agent.update(self.request_executor.get_custom_headers())
-
         # ---------- pre-flight local quota -------------------------
         try:
             self.check_rate_limit(path)
@@ -232,6 +233,10 @@ class LegacyZCCClientHelper:
         while True:
             try:
                 self.refreshToken()
+                # Copy headers after refreshToken() to include x-partner-id if it was added
+                headers_with_user_agent = self.headers.copy()
+                headers_with_user_agent["User-Agent"] = self.user_agent
+                headers_with_user_agent.update(self.request_executor.get_custom_headers())
 
                 response = requests.request(
                     method=method,

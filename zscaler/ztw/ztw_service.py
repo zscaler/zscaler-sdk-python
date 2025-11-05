@@ -32,6 +32,9 @@ from zscaler.ztw.ip_source_groups import IPSourceGroupsAPI
 from zscaler.ztw.ip_groups import IPGroupsAPI
 from zscaler.ztw.nw_service_groups import NWServiceGroupsAPI
 from zscaler.ztw.nw_service import NWServiceAPI
+from zscaler.ztw.public_cloud_info import PublicCloudInfoAPI
+from zscaler.ztw.account_groups import AccountGroupsAPI
+from zscaler.ztw.discovery_service import DiscoveryServiceAPI
 
 
 class ZTWService:
@@ -179,3 +182,30 @@ class ZTWService:
         """
 
         return NWServiceAPI(self._request_executor)
+
+    @property
+    def public_cloud_info(self) -> PublicCloudInfoAPI:
+        """
+        The interface object for the :ref:`ZTW Public Cloud Info interface <ztw-public_cloud_info>`.
+
+        """
+
+        return PublicCloudInfoAPI(self._request_executor)
+
+    @property
+    def account_groups(self) -> AccountGroupsAPI:
+        """
+        The interface object for the :ref:`ZTW Account Groups interface <ztw-account_groups>`.
+
+        """
+
+        return AccountGroupsAPI(self._request_executor)
+
+    @property
+    def discovery_service(self) -> DiscoveryServiceAPI:
+        """
+        The interface object for the :ref:`ZTW Discovery Service interface <ztw-discovery_service>`.
+
+        """
+
+        return DiscoveryServiceAPI(self._request_executor)

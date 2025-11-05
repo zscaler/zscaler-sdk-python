@@ -90,6 +90,7 @@ reformat_params = [
     ("email_recipient_profile_ids", "emailRecipientProfiles"),
     ("entity_group_ids", "entityGroups"),
     ("scope_entity_ids", "adminScopeScopeEntities"),
+    ("supported_region_ids", "supportedRegions"),
 ]
 
 

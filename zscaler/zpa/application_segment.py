@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
@@ -122,7 +122,7 @@ class ApplicationSegmentAPI(APIClient):
             segment_id (str): The unique identifier of the application segment.
 
         Keyword Args:
-            microtenant_id (str, optional): ID of the microtenant, if applicable.
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
 
         Returns:
             :obj:`Tuple`: A tuple containing the `ApplicationSegment` instance, response object, and error if any.
@@ -473,7 +473,12 @@ class ApplicationSegmentAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_segment(self, segment_id: str, force_delete: bool = False, microtenant_id: Optional[str] = None) -> APIResult[None]:
+    def delete_segment(
+        self,
+        segment_id: str,
+        force_delete: bool = False,
+        microtenant_id: Optional[str] = None
+    ) -> APIResult[None]:
         """
         Deletes the specified Application Segment from ZPA.
 
@@ -858,7 +863,12 @@ class ApplicationSegmentAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_weighted_lb_config(self, segment_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[WeightedLBConfig]:
+    def update_weighted_lb_config(
+        self,
+        segment_id: str,
+        query_params: Optional[dict] = None,
+        **kwargs
+    ) -> APIResult[WeightedLBConfig]:
         """
         Updates the Weighted Load Balancing configuration for the specified Application Segment.
 
@@ -1060,6 +1070,210 @@ class ApplicationSegmentAPI(APIClient):
             result = []
             for item in response.get_results():
                 result.append(MultiMatchUnsupportedReferences(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_current_and_max_limit(self) -> APIResult[dict]:
+        """
+        Get current Applications count and maxLimit configured for a given customer.
+
+        This endpoint returns the current number of applications and the maximum limit
+        allowed for the customer without requiring any parameters.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing a dictionary with `currentAppsCount` and `maxAppsLimit`,
+            the response object, and error if any.
+
+        Examples:
+            >>> limits, _, err = client.zpa.application_segment.get_current_and_max_limit()
+            ... if err:
+            ...     print(f"Error getting current and max limit: {err}")
+            ...     return
+            ... print(f"Current apps count: {limits.get('currentAppsCount')}")
+            ... print(f"Max apps limit: {limits.get('maxAppsLimit')}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/count/currentAndMaxLimit
+        """
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = self.form_response_body(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_application_segment_count(self) -> APIResult[List[dict]]:
+        """
+        Returns the count of configured application segments for the provided customer.
+
+        This endpoint returns a list of dictionaries, each containing the number of
+        applications configured and the date when the configuration was set.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing a list of dictionaries with `appsConfigured`
+            and `configuredDateInEpochSeconds`, the response object, and error if any.
+
+        Examples:
+            >>> counts, _, err = client.zpa.application_segment.get_application_segment_count()
+            ... if err:
+            ...     print(f"Error getting application segment count: {err}")
+            ...     return
+            ... print(f"Found {len(counts)} count records:")
+            ... for count in counts:
+            ...     print(f"Apps configured: {count.get('appsConfigured')}")
+            ...     print(f"Configured date: {count.get('configuredDateInEpochSeconds')}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/configured/count
+        """
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(self.form_response_body(item))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_application_segment_mappings(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[List[dict]]:
+        """
+        Get the Application Segment Mapping details.
+
+        This endpoint returns a list of mappings for the specified application segment,
+        each containing names and a type.
+
+        Args:
+            segment_id (str): The unique identifier of the application segment.
+
+        Keyword Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing a list of dictionaries with `names` (list of strings)
+            and `type` (string), the response object, and error if any.
+
+        Examples:
+            >>> mappings, _, err = client.zpa.application_segment.get_application_segment_mappings(
+            ...     segment_id='999999'
+            ... )
+            ... if err:
+            ...     print(f"Error getting application segment mappings: {err}")
+            ...     return
+            ... print(f"Found {len(mappings)} mappings:")
+            ... for mapping in mappings:
+            ...     print(f"Type: {mapping.get('type')}")
+            ...     print(f"Names: {mapping.get('names')}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/{segment_id}/mappings
+        """
+        )
+
+        query_params = query_params or {}
+
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(self.form_response_body(item))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def application_segment_export(self, query_params: Optional[dict] = None) -> APIResult[str]:
+        """
+        Export application segments as a CSV document.
+
+        This endpoint returns a raw CSV file containing application segment data
+        with headers and comma-separated values.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.single]`` {bool}: Returns a single application segment
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing the CSV content as a string, the response object, and error if any.
+
+        Examples:
+            >>> csv_content, _, err = client.zpa.application_segment.application_segment_export()
+            ... if err:
+            ...     print(f"Error exporting application segments: {err}")
+            ...     return
+            ... print(csv_content)
+            ... # Optionally save to file
+            ... with open('application_segments.csv', 'w', encoding='utf-8') as f:
+            ...     f.write(csv_content)
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /application/export
+        """
+        )
+
+        query_params = query_params or {}
+
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        headers = {"Accept": "text/csv"}
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params, headers=headers)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            # Return the raw CSV content as a string
+            result = response.get_body()
         except Exception as error:
             return (None, response, error)
         return (result, response, None)

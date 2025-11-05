@@ -336,6 +336,7 @@ class LegacyZPAClient(Client):
         customer_id = config.get("customerId", os.getenv("ZPA_CUSTOMER_ID"))
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
         microtenant_id = config.get("microtenantId", os.getenv("ZPA_MICROTENANT_ID"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
@@ -348,6 +349,7 @@ class LegacyZPAClient(Client):
             customer_id=customer_id,
             cloud=cloud,
             microtenant_id=microtenant_id,
+            partner_id=partner_id,
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
@@ -365,6 +367,7 @@ class LegacyZIAClient(Client):
         password = config.get("password", os.getenv("ZIA_PASSWORD"))
         api_key = config.get("api_key", os.getenv("ZIA_API_KEY"))
         cloud = config.get("cloud", os.getenv("ZIA_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
@@ -378,6 +381,7 @@ class LegacyZIAClient(Client):
             password=password,
             api_key=api_key,
             cloud=cloud,
+            partner_id=partner_id,
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
@@ -397,6 +401,7 @@ class LegacyZTWClient(Client):
         password = config.get("password", os.getenv("ZTW_PASSWORD"))
         api_key = config.get("api_key", os.getenv("ZTW_API_KEY"))
         cloud = config.get("cloud", os.getenv("ZTW_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         cache = config.get("cache", None)
         fail_safe = config.get("failSafe", None)
@@ -407,6 +412,7 @@ class LegacyZTWClient(Client):
             password=password,
             api_key=api_key,
             cloud=cloud,
+            partner_id=partner_id,
             timeout=timeout,
             cache=cache,
             fail_safe=fail_safe,
@@ -423,6 +429,7 @@ class LegacyZCCClient(Client):
         api_key = config.get("api_key", os.getenv("ZCC_CLIENT_ID"))
         secret_key = config.get("secret_key", os.getenv("ZCC_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZCC_CLOUD"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         request_executor_impl = config.get("requestExecutor", None)
 
@@ -431,6 +438,7 @@ class LegacyZCCClient(Client):
             api_key=api_key,
             secret_key=secret_key,
             cloud=cloud,
+            partner_id=partner_id,
             timeout=timeout,
             request_executor_impl=request_executor_impl,
         )
@@ -445,6 +453,7 @@ class LegacyZDXClient(Client):
         client_id = config.get("key_id", os.getenv("ZDX_CLIENT_ID"))
         client_secret = config.get("key_secret", os.getenv("ZDX_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZDX_CLOUD", "zdxcloud"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZDXClientHelper with the extracted parameters
@@ -452,6 +461,7 @@ class LegacyZDXClient(Client):
             client_id=client_id,
             client_secret=client_secret,
             cloud=cloud,
+            partner_id=partner_id,
             timeout=timeout,
             request_executor_impl=request_executor_impl,
         )
@@ -466,6 +476,7 @@ class LegacyZWAClient(Client):
         key_id = config.get("key_id", os.getenv("ZWA_CLIENT_ID"))
         key_secret = config.get("key_secret", os.getenv("ZWA_CLIENT_SECRET"))
         cloud = config.get("cloud", os.getenv("ZWA_CLOUD", "us1"))
+        partner_id = config.get("partnerId", os.getenv("ZSCALER_PARTNER_ID"))
         timeout = config.get("timeout", 240)
         request_executor_impl = config.get("requestExecutor", None)
         # Initialize the LegacyZWAClientHelper with the extracted parameters
@@ -473,6 +484,7 @@ class LegacyZWAClient(Client):
             key_id=key_id,
             key_secret=key_secret,
             cloud=cloud,
+            partner_id=partner_id,
             timeout=timeout,
             request_executor_impl=request_executor_impl,
         )

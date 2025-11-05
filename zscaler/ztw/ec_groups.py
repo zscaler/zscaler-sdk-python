@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.ecgroup import ECGroup
@@ -87,7 +87,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ec_group(self, group_id: str) -> APIResult[dict]:
+    def get_ec_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get details for a specific Cloud or Branch Connector group by ID.
 

@@ -1,4 +1,3 @@
-from typing import Dict, List, Optional, Any, Union
 """
 Copyright (c) 2023, Zscaler Inc.
 
@@ -15,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_destination_groups import IPDestinationGroups
@@ -59,7 +59,11 @@ class IPDestinationGroupsAPI(APIClient):
 
             Gets a list of all IP destination groups by excluding specific type.
 
-            >>> group_list, response, error = client.ztw.ip_destination_groups.list_ip_destination_groups(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+            >>> group_list, response, error = (
+            ...     client.ztw.ip_destination_groups.list_ip_destination_groups(
+            ...         query_params={"exclude_type": 'DSTN_DOMAIN'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -113,7 +117,9 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ip_destination_groups_lite(
+        self, exclude_type: str = None, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -143,7 +149,11 @@ class IPDestinationGroupsAPI(APIClient):
 
             Gets a list of all IP destination groups by excluding specific type.
 
-            >>> group_list, response, error = client.ztw.ip_destination_groups.list_ip_destination_groups_lite(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+            >>> group_list, response, error = (
+            ...     client.ztw.ip_destination_groups.list_ip_destination_groups_lite(
+            ...         query_params={"exclude_type": 'DSTN_DOMAIN'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return

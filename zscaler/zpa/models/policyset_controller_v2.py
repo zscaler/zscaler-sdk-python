@@ -295,6 +295,9 @@ class Credential(ZscalerObject):
 
     def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
-        current_obj_format = {"id": self.id, "name": self.name}
+        current_obj_format = {
+            "id": self.id,
+            "name": self.name
+        }
         parent_req_format.update(current_obj_format)
         return parent_req_format

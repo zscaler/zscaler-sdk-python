@@ -2,6 +2,8 @@ from typing import Dict, Any, Optional, Tuple, List, Union
 import logging
 import time
 import uuid
+import re
+from urllib.parse import quote
 from zscaler.oneapi_http_client import HTTPClient
 from zscaler.oneapi_response import ZscalerAPIResponse
 from zscaler.oneapi_oauth_client import OAuth
@@ -85,6 +87,7 @@ class RequestExecutor:
         self.customer_id = self._config["client"].get("customerId")  # Optional for ZIA/ZCC
         self.microtenant_id = self._config["client"].get("microtenantId")  # Optional for ZIA/ZCC
         self.vanity_domain = self._config["client"].get("vanityDomain")  # Required for zidentity service
+        self.partner_id = self._config["client"].get("partnerId")  # Optional partner ID
 
         # OAuth2 setup - only for OneAPI clients, not legacy clients
         if not self.use_legacy_client:
@@ -100,6 +103,10 @@ class RequestExecutor:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+
+        # Add x-partner-id header if partnerId is provided in config
+        if self.partner_id:
+            self._default_headers["x-partner-id"] = self.partner_id
 
         # Initialize the HTTP client, considering proxy and SSL context from config
         http_client_impl = http_client or HTTPClient
@@ -355,6 +362,38 @@ class RequestExecutor:
                     converted["pagesize"] = psize_value
 
                 params = converted
+
+            # Handle search parameter for ZPA - the API now uses a filtering/query parameter format.
+            # The search string must be in the format: fieldName operator fieldValue
+            # Examples: "name+EQ+CDE Segment Group", "enabled+EQ+true"
+            # 
+            # For user convenience, if a simple string is provided (not in filter format),
+            # we automatically convert it to "name+EQ+<search_string>" for exact name matching.
+            # If the search string already contains operators (EQ, NE, GT, LT, etc.), we use it as-is.
+            if "search" in params and isinstance(params["search"], str):
+                search_value = params["search"].strip()
+                if search_value:
+                    # Remove any existing quotes
+                    if search_value.startswith('"') and search_value.endswith('"'):
+                        search_value = search_value[1:-1]
+                    
+                    # Check if the search string already contains filter operators
+                    # Common ZPA filter operators: EQ, NE, GT, LT, GE, LE, CONTAINS, STARTSWITH, ENDSWITH
+                    filter_operators = ['+EQ+', '+NE+', '+GT+', '+LT+', '+GE+', '+LE+', 
+                                      '+CONTAINS+', '+STARTSWITH+', '+ENDSWITH+',
+                                      '%2BEQ%2B', '%2BNE%2B', '%2BGT%2B', '%2BLT%2B', 
+                                      '%2BGE%2B', '%2BLE%2B']
+                    
+                    # Check if search value already contains any filter operator pattern
+                    has_filter_operator = any(op in search_value.upper() for op in filter_operators)
+                    
+                    if not has_filter_operator:
+                        # Simple search string - convert to name+EQ+<search_string> format
+                        # This provides exact name matching by default
+                        params["search"] = f"name+EQ+{search_value}"
+                    else:
+                        # Already in filter format - use as-is
+                        params["search"] = search_value
 
             # Finally, handle microtenant (unchanged)
             microtenant_id = self._get_microtenant_id(body, params)
@@ -659,6 +698,13 @@ class RequestExecutor:
         logger.debug("Getting custom headers.")
         return self._custom_headers
 
+    def get_default_headers(self):
+        """
+        Get the current default headers (includes x-partner-id if partnerId is in config).
+        """
+        logger.debug("Getting default headers.")
+        return self._default_headers.copy()
+
     def has_mutations_occurred(self):
         """
         Check if any mutations (POST/PUT/DELETE) have occurred during this session.
@@ -673,8 +719,9 @@ class RequestExecutor:
         Deauthenticate from Zscaler services that support session-based authentication.
         Currently supports ZIA and ZTW services.
 
-        For ZIA service, deauthentication is only performed if mutations (POST/PUT/DELETE)
-        have occurred during the session. GET-only sessions do not require deauthentication.
+        For both ZIA and ZTW services, deauthentication is only performed if mutations
+        (POST/PUT/DELETE) have occurred during the session. GET-only sessions do not
+        require deauthentication.
 
         Args:
             service_type (str, optional): The service type to deauthenticate from.
@@ -687,9 +734,9 @@ class RequestExecutor:
             logger.debug(f"Deauthentication not supported for service: {service_type}")
             return False
 
-        # For ZIA service, only deauthenticate if mutations occurred
-        if service_type.lower() == "zia" and not self._mutations_occurred:
-            logger.debug("ZIA service: No mutations occurred during session, skipping deauthentication")
+        # For both ZIA and ZTW services, only deauthenticate if mutations occurred
+        if service_type.lower() in ["zia", "ztw"] and not self._mutations_occurred:
+            logger.debug(f"{service_type.upper()} service: No mutations occurred during session, skipping deauthentication")
             return True
 
         try:
@@ -710,7 +757,7 @@ class RequestExecutor:
             headers.pop("Content-Type", None)
 
             # Both ZIA and ZTW require explicit deauthentication to activate staged configurations
-            # regardless of authentication method (OAuth or session-based)
+            # but only when mutations (POST/PUT/DELETE) have occurred during the session
             if service_type.lower() in ["zia", "ztw"]:
                 logger.debug(f"{service_type.upper()} service requires explicit deauthentication to activate "
                              f"staged configurations")
