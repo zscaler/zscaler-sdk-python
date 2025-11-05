@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class AppServers(ZscalerObject):
     A class for Application Server objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -44,7 +45,7 @@ class AppServers(ZscalerObject):
             self.app_server_group_ids = []
             self.config_space = "DEFAULT"
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return a dictionary representing this object for API requests.
         """

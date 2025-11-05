@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.proxies import Proxies
 from zscaler.zia.models.proxy_gateways import ProxyGatways
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ProxiesAPI(APIClient):
@@ -28,11 +30,11 @@ class ProxiesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_proxy_gateways(self) -> tuple:
+    def list_proxy_gateways(self) -> APIResult[dict]:
         """
         Retrieves a list of Proxy Gateways.
 
@@ -78,7 +80,7 @@ class ProxiesAPI(APIClient):
 
         return (result, response, None)
 
-    def list_proxy_gateway_lite(self) -> tuple:
+    def list_proxy_gateway_lite(self) -> APIResult[dict]:
         """
         Retrieves the name and ID of the proxy.
 
@@ -124,7 +126,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_proxies(self, query_params=None) -> tuple:
+    def list_proxies(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists Proxiess in your organization with pagination.
         A subset of Proxiess  can be returned that match a supported
@@ -184,7 +186,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_proxies_lite(self) -> tuple:
+    def list_proxies_lite(self) -> APIResult[dict]:
         """
         Fetches a specific Proxies lite.
 
@@ -232,7 +234,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_proxy(self, proxy_id: int) -> tuple:
+    def get_proxy(self, proxy_id: int) -> APIResult[dict]:
         """
         Fetches a specific Proxiess by ID.
 
@@ -268,7 +270,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_proxy(self, **kwargs) -> tuple:
+    def add_proxy(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new proxy for a third-party proxy service.
 
@@ -331,7 +333,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_proxy(self, proxy_id: int, **kwargs) -> tuple:
+    def update_proxy(self, proxy_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Proxies.
 
@@ -366,7 +368,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_proxy(self, proxy_id: int) -> tuple:
+    def delete_proxy(self, proxy_id: int) -> APIResult[dict]:
         """
         Deletes the specified Proxies.
 

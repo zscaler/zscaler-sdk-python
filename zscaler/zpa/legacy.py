@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 import logging
 import os
 import urllib.parse
+from typing import Optional, Dict, Any, Tuple, Type, TYPE_CHECKING
+
 import requests
 
 from zscaler import __version__
@@ -15,6 +19,78 @@ from zscaler.utils import (
 )
 from zscaler.logger import setup_logging
 from zscaler.errors.response_checker import check_response_for_error
+
+# Import all ZPA API classes for type hints only (to avoid circular imports)
+if TYPE_CHECKING:
+    from zscaler.zpa.customer_controller import CustomerControllerAPI
+    from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
+    from zscaler.zpa.application_segment import ApplicationSegmentAPI
+    from zscaler.zpa.app_segments_ba import ApplicationSegmentBAAPI
+    from zscaler.zpa.app_segments_ba_v2 import AppSegmentsBAV2API
+    from zscaler.zpa.app_segments_inspection import AppSegmentsInspectionAPI
+    from zscaler.zpa.app_segments_pra import AppSegmentsPRAAPI
+    from zscaler.zpa.app_connector_groups import AppConnectorGroupAPI
+    from zscaler.zpa.app_connectors import AppConnectorControllerAPI
+    from zscaler.zpa.app_connector_schedule import AppConnectorScheduleAPI
+    from zscaler.zpa.servers import AppServersAPI
+    from zscaler.zpa.cbi_banner import CBIBannerAPI
+    from zscaler.zpa.cbi_certificate import CBICertificateAPI
+    from zscaler.zpa.cbi_profile import CBIProfileAPI
+    from zscaler.zpa.cbi_region import CBIRegionAPI
+    from zscaler.zpa.cbi_zpa_profile import CBIZPAProfileAPI
+    from zscaler.zpa.certificates import CertificatesAPI
+    from zscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
+    from zscaler.zpa.customer_version_profile import CustomerVersionProfileAPI
+    from zscaler.zpa.emergency_access import EmergencyAccessAPI
+    from zscaler.zpa.enrollment_certificates import EnrollmentCertificateAPI
+    from zscaler.zpa.idp import IDPControllerAPI
+    from zscaler.zpa.app_protection import InspectionControllerAPI
+    from zscaler.zpa.machine_groups import MachineGroupsAPI
+    from zscaler.zpa.microtenants import MicrotenantsAPI
+    from zscaler.zpa.lss import LSSConfigControllerAPI
+    from zscaler.zpa.policies import PolicySetControllerAPI
+    from zscaler.zpa.posture_profiles import PostureProfilesAPI
+    from zscaler.zpa.pra_approval import PRAApprovalAPI
+    from zscaler.zpa.pra_console import PRAConsoleAPI
+    from zscaler.zpa.pra_credential import PRACredentialAPI
+    from zscaler.zpa.pra_credential_pool import PRACredentialPoolAPI
+    from zscaler.zpa.pra_portal import PRAPortalAPI
+    from zscaler.zpa.provisioning import ProvisioningKeyAPI
+    from zscaler.zpa.segment_groups import SegmentGroupsAPI
+    from zscaler.zpa.server_groups import ServerGroupsAPI
+    from zscaler.zpa.service_edges import ServiceEdgeControllerAPI
+    from zscaler.zpa.service_edge_group import ServiceEdgeGroupAPI
+    from zscaler.zpa.service_edge_schedule import ServiceEdgeScheduleAPI
+    from zscaler.zpa.saml_attributes import SAMLAttributesAPI
+    from zscaler.zpa.scim_groups import SCIMGroupsAPI
+    from zscaler.zpa.scim_attributes import ScimAttributeHeaderAPI
+    from zscaler.zpa.trusted_networks import TrustedNetworksAPI
+    from zscaler.zpa.role_controller import RoleControllerAPI
+    from zscaler.zpa.administrator_controller import AdministratorControllerAPI
+    from zscaler.zpa.admin_sso_controller import AdminSSOControllerAPI
+    from zscaler.zpa.client_settings import ClientSettingsAPI
+    from zscaler.zpa.c2c_ip_ranges import IPRangesAPI
+    from zscaler.zpa.api_keys import ApiKeysAPI
+    from zscaler.zpa.customer_domain import CustomerDomainControllerAPI
+    from zscaler.zpa.private_cloud_group import PrivateCloudGroupAPI
+    from zscaler.zpa.private_cloud_controller import PrivateCloudControllerAPI
+    from zscaler.zpa.user_portal_controller import UserPortalControllerAPI
+    from zscaler.zpa.user_portal_link import UserPortalLinkAPI
+    from zscaler.zpa.npn_client_controller import NPNClientControllerAPI
+    from zscaler.zpa.config_override_controller import ConfigOverrideControllerAPI
+    from zscaler.zpa.branch_connector_group import BranchConnectorGroupAPI
+    from zscaler.zpa.branch_connectors import BranchConnectorControllerAPI
+    from zscaler.zpa.browser_protection import BrowserProtectionProfileAPI
+    from zscaler.zpa.zia_customer_config import ZIACustomerConfigAPI
+    from zscaler.zpa.customer_dr_tool import CustomerDRToolVersionAPI
+    from zscaler.zpa.extranet_resource import ExtranetResourceAPI
+    from zscaler.zpa.cloud_connector_controller import CloudConnectorControllerAPI
+    from zscaler.zpa.managed_browser_profile import ManagedBrowserProfileAPI
+    from zscaler.zpa.oauth2_user_code import OAuth2UserCodeAPI
+    from zscaler.zpa.stepup_auth_level import StepUpAuthLevelAPI
+    from zscaler.zpa.user_portal_aup import UserPortalAUPAPI
+    from zscaler.zpa.location_controller import LocationControllerAPI
+    from zscaler.zpa.workload_tag_group import WorkloadTagGroupAPI
 
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
@@ -40,16 +116,17 @@ class LegacyZPAClientHelper:
 
     def __init__(
         self,
-        client_id,
-        client_secret,
-        customer_id,
-        cloud,
-        microtenant_id=None,
-        timeout=240,
-        cache=None,
-        fail_safe=False,
-        request_executor_impl=None,
-    ):
+        client_id: str,
+        client_secret: str,
+        customer_id: str,
+        cloud: str,
+        microtenant_id: Optional[str] = None,
+        partner_id: Optional[str] = None,
+        timeout: int = 240,
+        cache: Optional[Cache] = None,
+        fail_safe: bool = False,
+        request_executor_impl: Optional[Type] = None,
+    ) -> None:
         from zscaler.request_executor import RequestExecutor
 
         # Initialize rate limiter
@@ -74,6 +151,7 @@ class LegacyZPAClientHelper:
         self.customer_id = customer_id
         self.cloud = cloud
         self.microtenant_id = microtenant_id or os.getenv("ZPA_MICROTENANT_ID")
+        self.partner_id = partner_id or os.getenv("ZSCALER_PARTNER_ID")
         self.fail_safe = fail_safe
 
         cache_enabled = os.environ.get("ZSCALER_CLIENT_CACHE_ENABLED", "true").lower() == "true"
@@ -90,6 +168,7 @@ class LegacyZPAClientHelper:
             "client": {
                 "customerId": self.customer_id,
                 "microtenantId": self.microtenant_id or "",
+                "partnerId": self.partner_id or "",
                 "cloud": self.cloud,
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
@@ -106,7 +185,7 @@ class LegacyZPAClientHelper:
         self.headers = {}
         self.refreshToken()
 
-    def refreshToken(self):
+    def refreshToken(self) -> None:
         if not self.access_token or is_token_expired(self.access_token):
             response = self.login()
             if response is None or response.status_code > 299 or not response.json():
@@ -119,8 +198,11 @@ class LegacyZPAClientHelper:
                 "Authorization": f"Bearer {self.access_token}",
                 "User-Agent": self.user_agent,
             }
+            # Add x-partner-id header if partnerId is provided
+            if self.partner_id:
+                self.headers["x-partner-id"] = self.partner_id
 
-    def login(self):
+    def login(self) -> Optional[requests.Response]:
         params = {
             "client_id": self.client_id,
             "client_secret": self.client_secret,
@@ -150,10 +232,16 @@ class LegacyZPAClientHelper:
             logger.error("Login failed due to an exception: %s", str(e))
             return None
 
-    def get_base_url(self, endpoint):
+    def get_base_url(self, endpoint: str) -> str:
         return self.baseurl
 
-    def send(self, method, path, json=None, params=None):
+    def send(
+        self,
+        method: str,
+        path: str,
+        json: Optional[Dict[str, Any]] = None,
+        params: Optional[Dict[str, Any]] = None,
+    ) -> Tuple[requests.Response, Dict[str, Any]]:
         """
         Sends a request using the legacy client.
 
@@ -173,6 +261,9 @@ class LegacyZPAClientHelper:
             headers.update(self.request_executor.get_custom_headers())
             if not headers.get("Authorization"):
                 self.refreshToken()
+                # Re-copy headers after refreshToken() to include x-partner-id if it was added
+                headers = self.headers.copy()
+                headers.update(self.request_executor.get_custom_headers())
                 headers["Authorization"] = f"Bearer {self.access_token}"
 
             response = requests.request(
@@ -203,12 +294,12 @@ class LegacyZPAClientHelper:
             logger.error(f"Error sending request: {error}")
             raise ValueError(f"Request execution failed: {error}")
 
-    def set_session(self, session):
+    def set_session(self, session: Any) -> None:
         """Dummy method for compatibility with the request executor."""
         self._session = session
 
     @property
-    def customer_controller(self):
+    def customer_controller(self) -> CustomerControllerAPI:
         """
         The interface object for the :ref:`ZPA Auth Domains interface <zpa-customer_controller>`.
 
@@ -218,7 +309,7 @@ class LegacyZPAClientHelper:
         return CustomerControllerAPI(self.request_executor, self.config)
 
     @property
-    def servers(self):
+    def servers(self) -> AppServersAPI:
         """
         The interface object for the :ref:`ZPA Application Servers interface <zpa-app_servers>`.
 
@@ -228,7 +319,7 @@ class LegacyZPAClientHelper:
         return AppServersAPI(self.request_executor, self.config)
 
     @property
-    def app_segment_by_type(self):
+    def app_segment_by_type(self) -> ApplicationSegmentByTypeAPI:
         """
         The interface object for the :ref:`ZPA Application Segments By Type interface <zpa-app_segment_by_type>`.
 
@@ -238,7 +329,7 @@ class LegacyZPAClientHelper:
         return ApplicationSegmentByTypeAPI(self.request_executor, self.config)
 
     @property
-    def application_segment(self):
+    def application_segment(self) -> ApplicationSegmentAPI:
         """
         The interface object for the :ref:`ZPA Application Segments interface <zpa-application_segment>`.
 
@@ -248,7 +339,7 @@ class LegacyZPAClientHelper:
         return ApplicationSegmentAPI(self.request_executor, self.config)
 
     @property
-    def app_segments_ba(self):
+    def app_segments_ba(self) -> ApplicationSegmentBAAPI:
         """
         The interface object for the :ref:`ZPA Application Segments BA interface <zpa-app_segments_ba>`.
 
@@ -258,7 +349,7 @@ class LegacyZPAClientHelper:
         return ApplicationSegmentBAAPI(self.request_executor, self.config)
 
     @property
-    def app_segments_ba_v2(self):
+    def app_segments_ba_v2(self) -> AppSegmentsBAV2API:
         """
         The interface object for the :ref:`ZPA Application Segments BA V2 interface <zpa-app_segments_ba_v2>`.
 
@@ -268,7 +359,7 @@ class LegacyZPAClientHelper:
         return AppSegmentsBAV2API(self.request_executor, self.config)
 
     @property
-    def app_segments_pra(self):
+    def app_segments_pra(self) -> AppSegmentsPRAAPI:
         """
         The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_pra>`.
 
@@ -278,7 +369,7 @@ class LegacyZPAClientHelper:
         return AppSegmentsPRAAPI(self.request_executor, self.config)
 
     @property
-    def app_segments_inspection(self):
+    def app_segments_inspection(self) -> AppSegmentsInspectionAPI:
         """
         The interface object for the :ref:`ZPA Application Segments PRA interface <zpa-app_segments_inspection>`.
 
@@ -288,7 +379,7 @@ class LegacyZPAClientHelper:
         return AppSegmentsInspectionAPI(self.request_executor, self.config)
 
     @property
-    def app_connector_groups(self):
+    def app_connector_groups(self) -> AppConnectorGroupAPI:
         """
         The interface object for the :ref:`ZPA App Connector Groups interface <zpa-app_connector_groups>`.
 
@@ -298,7 +389,7 @@ class LegacyZPAClientHelper:
         return AppConnectorGroupAPI(self.request_executor, self.config)
 
     @property
-    def app_connector_schedule(self):
+    def app_connector_schedule(self) -> AppConnectorScheduleAPI:
         """
         The interface object for the :ref:`ZPA App Connector Groups interface <zpa-app_connector_schedule>`.
 
@@ -308,7 +399,7 @@ class LegacyZPAClientHelper:
         return AppConnectorScheduleAPI(self.request_executor, self.config)
 
     @property
-    def connectors(self):
+    def connectors(self) -> AppConnectorControllerAPI:
         """
         The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
 
@@ -318,7 +409,7 @@ class LegacyZPAClientHelper:
         return AppConnectorControllerAPI(self.request_executor, self.config)
 
     @property
-    def cbi_banner(self):
+    def cbi_banner(self) -> CBIBannerAPI:
         """
         The interface object for the :ref:`ZPA Cloud Browser Isolation Banner interface <zpa-cbi_banner>`.
 
@@ -328,7 +419,7 @@ class LegacyZPAClientHelper:
         return CBIBannerAPI(self.request_executor, self.config)
 
     @property
-    def cbi_certificate(self):
+    def cbi_certificate(self) -> CBICertificateAPI:
         """
         The interface object for the :ref:`ZPA Cloud Browser Isolation Certificate interface <zpa-cbi_certificate>`.
 
@@ -338,7 +429,7 @@ class LegacyZPAClientHelper:
         return CBICertificateAPI(self.request_executor, self.config)
 
     @property
-    def cbi_profile(self):
+    def cbi_profile(self) -> CBIProfileAPI:
         """
         The interface object for the :ref:`ZPA Cloud Browser Isolation Profile interface <zpa-cbi_profile>`.
 
@@ -348,7 +439,7 @@ class LegacyZPAClientHelper:
         return CBIProfileAPI(self.request_executor, self.config)
 
     @property
-    def cbi_region(self):
+    def cbi_region(self) -> CBIRegionAPI:
         """
         The interface object for the :ref:`ZPA Cloud Browser Isolation Region interface <zpa-cbi_region>`.
 
@@ -358,7 +449,7 @@ class LegacyZPAClientHelper:
         return CBIRegionAPI(self.request_executor, self.config)
 
     @property
-    def cbi_zpa_profile(self):
+    def cbi_zpa_profile(self) -> CBIZPAProfileAPI:
         """
         The interface object for the :ref:`ZPA Cloud Browser Isolation ZPA Profile interface <zpa-cbi_zpa_profile>`.
 
@@ -368,7 +459,7 @@ class LegacyZPAClientHelper:
         return CBIZPAProfileAPI(self.request_executor, self.config)
 
     @property
-    def certificates(self):
+    def certificates(self) -> CertificatesAPI:
         """
         The interface object for the :ref:`ZPA Browser Access Certificates interface <zpa-certificates>`.
 
@@ -378,7 +469,7 @@ class LegacyZPAClientHelper:
         return CertificatesAPI(self.request_executor, self.config)
 
     @property
-    def cloud_connector_groups(self):
+    def cloud_connector_groups(self) -> CloudConnectorGroupsAPI:
         """
         The interface object for the :ref:`ZPA Cloud Connector Groups interface <zpa-cloud_connector_groups>`.
 
@@ -388,7 +479,7 @@ class LegacyZPAClientHelper:
         return CloudConnectorGroupsAPI(self.request_executor, self.config)
 
     @property
-    def customer_version_profile(self):
+    def customer_version_profile(self) -> CustomerVersionProfileAPI:
         """
         The interface object for the :ref:`ZPA Customer Version profile interface <zpa-customer_version_profile>`.
 
@@ -398,7 +489,7 @@ class LegacyZPAClientHelper:
         return CustomerVersionProfileAPI(self.request_executor, self.config)
 
     @property
-    def emergency_access(self):
+    def emergency_access(self) -> EmergencyAccessAPI:
         """
         The interface object for the :ref:`ZPA Emergency Access interface <zpa-emergency_access>`.
 
@@ -408,7 +499,7 @@ class LegacyZPAClientHelper:
         return EmergencyAccessAPI(self.request_executor, self.config)
 
     @property
-    def enrollment_certificates(self):
+    def enrollment_certificates(self) -> EnrollmentCertificateAPI:
         """
         The interface object for the :ref:`ZPA Enrollment Certificate interface <zpa-enrollment_certificates>`.
 
@@ -418,7 +509,7 @@ class LegacyZPAClientHelper:
         return EnrollmentCertificateAPI(self.request_executor, self.config)
 
     @property
-    def idp(self):
+    def idp(self) -> IDPControllerAPI:
         """
         The interface object for the :ref:`ZPA IDP interface <zpa-idp>`.
 
@@ -428,7 +519,7 @@ class LegacyZPAClientHelper:
         return IDPControllerAPI(self.request_executor, self.config)
 
     @property
-    def app_protection(self):
+    def app_protection(self) -> InspectionControllerAPI:
         """
         The interface object for the :ref:`ZPA Inspection interface <zpa-app_protection>`.
 
@@ -438,7 +529,7 @@ class LegacyZPAClientHelper:
         return InspectionControllerAPI(self.request_executor, self.config)
 
     @property
-    def lss(self):
+    def lss(self) -> LSSConfigControllerAPI:
         """
         The interface object for the :ref:`ZIA Log Streaming Service Config interface <zpa-lss>`.
 
@@ -448,7 +539,7 @@ class LegacyZPAClientHelper:
         return LSSConfigControllerAPI(self.request_executor, self.config)
 
     @property
-    def machine_groups(self):
+    def machine_groups(self) -> MachineGroupsAPI:
         """
         The interface object for the :ref:`ZPA Machine Groups interface <zpa-machine_groups>`.
 
@@ -458,7 +549,7 @@ class LegacyZPAClientHelper:
         return MachineGroupsAPI(self.request_executor, self.config)
 
     @property
-    def microtenants(self):
+    def microtenants(self) -> MicrotenantsAPI:
         """
         The interface object for the :ref:`ZPA Microtenants interface <zpa-microtenants>`.
 
@@ -468,7 +559,7 @@ class LegacyZPAClientHelper:
         return MicrotenantsAPI(self.request_executor, self.config)
 
     @property
-    def policies(self):
+    def policies(self) -> PolicySetControllerAPI:
         """
         The interface object for the :ref:`ZPA Policy Sets interface <zpa-policies>`.
 
@@ -478,7 +569,7 @@ class LegacyZPAClientHelper:
         return PolicySetControllerAPI(self.request_executor, self.config)
 
     @property
-    def posture_profiles(self):
+    def posture_profiles(self) -> PostureProfilesAPI:
         """
         The interface object for the :ref:`ZPA Posture Profiles interface <zpa-posture_profiles>`.
 
@@ -488,7 +579,7 @@ class LegacyZPAClientHelper:
         return PostureProfilesAPI(self.request_executor, self.config)
 
     @property
-    def pra_approval(self):
+    def pra_approval(self) -> PRAApprovalAPI:
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Approval interface <zpa-pra_approval>`.
 
@@ -498,7 +589,7 @@ class LegacyZPAClientHelper:
         return PRAApprovalAPI(self.request_executor, self.config)
 
     @property
-    def pra_console(self):
+    def pra_console(self) -> PRAConsoleAPI:
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Console interface <zpa-pra_console>`.
 
@@ -508,7 +599,7 @@ class LegacyZPAClientHelper:
         return PRAConsoleAPI(self.request_executor, self.config)
 
     @property
-    def pra_credential(self):
+    def pra_credential(self) -> PRACredentialAPI:
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Credential interface <zpa-pra_credential>`.
 
@@ -518,7 +609,7 @@ class LegacyZPAClientHelper:
         return PRACredentialAPI(self.request_executor, self.config)
 
     @property
-    def pra_credential_pool(self):
+    def pra_credential_pool(self) -> PRACredentialPoolAPI:
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Credential pool interface <zpa-pra_credential_pool>`.
 
@@ -528,7 +619,7 @@ class LegacyZPAClientHelper:
         return PRACredentialPoolAPI(self.request_executor, self.config)
 
     @property
-    def pra_portal(self):
+    def pra_portal(self) -> PRAPortalAPI:
         """
         The interface object for the :ref:`ZPA Privileged Remote Access Portal interface <zpa-pra_portal>`.
 
@@ -538,7 +629,7 @@ class LegacyZPAClientHelper:
         return PRAPortalAPI(self.request_executor, self.config)
 
     @property
-    def provisioning(self):
+    def provisioning(self) -> ProvisioningKeyAPI:
         """
         The interface object for the :ref:`ZPA Provisioning interface <zpa-provisioning>`.
 
@@ -548,7 +639,7 @@ class LegacyZPAClientHelper:
         return ProvisioningKeyAPI(self.request_executor, self.config)
 
     @property
-    def saml_attributes(self):
+    def saml_attributes(self) -> SAMLAttributesAPI:
         """
         The interface object for the :ref:`ZPA SAML Attributes interface <zpa-saml_attributes>`.
 
@@ -558,7 +649,7 @@ class LegacyZPAClientHelper:
         return SAMLAttributesAPI(self.request_executor, self.config)
 
     @property
-    def scim_attributes(self):
+    def scim_attributes(self) -> ScimAttributeHeaderAPI:
         """
         The interface object for the :ref:`ZPA SCIM Attributes interface <zpa-scim_attributes>`.
 
@@ -568,7 +659,7 @@ class LegacyZPAClientHelper:
         return ScimAttributeHeaderAPI(self.request_executor, self.config)
 
     @property
-    def scim_groups(self):
+    def scim_groups(self) -> SCIMGroupsAPI:
         """
         The interface object for the :ref:`ZPA SCIM Groups interface <zpa-scim_groups>`.
 
@@ -578,7 +669,7 @@ class LegacyZPAClientHelper:
         return SCIMGroupsAPI(self.request_executor, self.config)
 
     @property
-    def segment_groups(self):
+    def segment_groups(self) -> SegmentGroupsAPI:
         """
         The interface object for the :ref:`ZPA Segment Groups interface <zpa-segment_groups>`.
 
@@ -588,7 +679,7 @@ class LegacyZPAClientHelper:
         return SegmentGroupsAPI(self.request_executor, self.config)
 
     @property
-    def server_groups(self):
+    def server_groups(self) -> ServerGroupsAPI:
         """
         The interface object for the :ref:`ZPA Server Groups interface <zpa-server_groups>`.
 
@@ -598,7 +689,7 @@ class LegacyZPAClientHelper:
         return ServerGroupsAPI(self.request_executor, self.config)
 
     @property
-    def service_edges(self):
+    def service_edges(self) -> ServiceEdgeControllerAPI:
         """
         The interface object for the :ref:`ZPA Service Edges interface <zpa-service_edges>`.
 
@@ -608,7 +699,7 @@ class LegacyZPAClientHelper:
         return ServiceEdgeControllerAPI(self.request_executor, self.config)
 
     @property
-    def service_edge_group(self):
+    def service_edge_group(self) -> ServiceEdgeGroupAPI:
         """
         The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_group>`.
 
@@ -618,7 +709,7 @@ class LegacyZPAClientHelper:
         return ServiceEdgeGroupAPI(self.request_executor, self.config)
 
     @property
-    def service_edge_schedule(self):
+    def service_edge_schedule(self) -> ServiceEdgeScheduleAPI:
         """
         The interface object for the :ref:`ZPA Service Edge Groups interface <zpa-service_edge_schedule>`.
 
@@ -628,7 +719,7 @@ class LegacyZPAClientHelper:
         return ServiceEdgeScheduleAPI(self.request_executor, self.config)
 
     @property
-    def trusted_networks(self):
+    def trusted_networks(self) -> TrustedNetworksAPI:
         """
         The interface object for the :ref:`ZPA Trusted Networks interface <zpa-trusted_networks>`.
 
@@ -638,7 +729,7 @@ class LegacyZPAClientHelper:
         return TrustedNetworksAPI(self.request_executor, self.config)
 
     @property
-    def administrator_controller(self):
+    def administrator_controller(self) -> AdministratorControllerAPI:
         """
         The interface object for the :ref:`ZPA Administrator Controller interface <zpa-administrator_controller>`.
 
@@ -648,7 +739,7 @@ class LegacyZPAClientHelper:
         return AdministratorControllerAPI(self.request_executor, self.config)
 
     @property
-    def admin_sso_controller(self):
+    def admin_sso_controller(self) -> AdminSSOControllerAPI:
         """
         The interface object for the :ref:`ZPA Admin SSL Login Controller interface <zpa-admin_sso_controller>`.
 
@@ -658,7 +749,7 @@ class LegacyZPAClientHelper:
         return AdminSSOControllerAPI(self.request_executor, self.config)
 
     @property
-    def role_controller(self):
+    def role_controller(self) -> RoleControllerAPI:
         """
         The interface object for the :ref:`ZPA Role Controller interface <zpa-role_controller>`.
 
@@ -668,7 +759,7 @@ class LegacyZPAClientHelper:
         return RoleControllerAPI(self.request_executor, self.config)
 
     @property
-    def client_settings(self):
+    def client_settings(self) -> ClientSettingsAPI:
         """
         The interface object for the :ref:`ZPA Client Setting interface <zpa-client_settings>`.
 
@@ -678,7 +769,7 @@ class LegacyZPAClientHelper:
         return ClientSettingsAPI(self.request_executor, self.config)
 
     @property
-    def c2c_ip_ranges(self):
+    def c2c_ip_ranges(self) -> IPRangesAPI:
         """
         The interface object for the :ref:`ZPA C2C IP Range Controller interface <zpa-c2c_ip_ranges>`.
 
@@ -688,7 +779,7 @@ class LegacyZPAClientHelper:
         return IPRangesAPI(self.request_executor, self.config)
 
     @property
-    def api_keys(self):
+    def api_keys(self) -> ApiKeysAPI:
         """
         The interface object for the :ref:`ZPA API Key Controller interface <zpa-api_keys>`.
 
@@ -698,7 +789,7 @@ class LegacyZPAClientHelper:
         return ApiKeysAPI(self.request_executor, self.config)
 
     @property
-    def customer_domain(self):
+    def customer_domain(self) -> CustomerDomainControllerAPI:
         """
         The interface object for the :ref:`ZPA Customer Domain Controller interface <zpa-customer_domain>`.
 
@@ -708,7 +799,7 @@ class LegacyZPAClientHelper:
         return CustomerDomainControllerAPI(self.request_executor, self.config)
 
     @property
-    def private_cloud_group(self):
+    def private_cloud_group(self) -> PrivateCloudGroupAPI:
         """
         The interface object for the :ref:`ZPA Private Cloud Controller Group interface <zpa-private_cloud_group>`.
 
@@ -718,7 +809,7 @@ class LegacyZPAClientHelper:
         return PrivateCloudGroupAPI(self.request_executor, self.config)
 
     @property
-    def private_cloud_controller(self):
+    def private_cloud_controller(self) -> PrivateCloudControllerAPI:
         """
         The interface object for the :ref:`ZPA Private Cloud Controller interface <zpa-private_cloud_controller>`.
 
@@ -728,7 +819,7 @@ class LegacyZPAClientHelper:
         return PrivateCloudControllerAPI(self.request_executor, self.config)
 
     @property
-    def user_portal_controller(self):
+    def user_portal_controller(self) -> UserPortalControllerAPI:
         """
         The interface object for the :ref:`ZPA User Portal Controller interface <zpa-user_portal_controller>`.
 
@@ -739,7 +830,7 @@ class LegacyZPAClientHelper:
         return UserPortalControllerAPI(self.request_executor, self.config)
 
     @property
-    def user_portal_link(self):
+    def user_portal_link(self) -> UserPortalLinkAPI:
         """
         The interface object for the :ref:`ZPA User Portal Link interface <zpa-user_portal_link>`.
 
@@ -750,7 +841,7 @@ class LegacyZPAClientHelper:
         return UserPortalLinkAPI(self.request_executor, self.config)
 
     @property
-    def npn_client_controller(self):
+    def npn_client_controller(self) -> NPNClientControllerAPI:
         """
         The interface object for the :ref:`ZPA VPN Connected Users interface <zpa-npn_client_controller>`.
 
@@ -761,7 +852,7 @@ class LegacyZPAClientHelper:
         return NPNClientControllerAPI(self.request_executor, self.config)
 
     @property
-    def config_override_controller(self):
+    def config_override_controller(self) -> ConfigOverrideControllerAPI:
         """
         The interface object for the :ref:`ZPA Config Override interface <zpa-config_override_controller>`.
 
@@ -771,18 +862,153 @@ class LegacyZPAClientHelper:
 
         return ConfigOverrideControllerAPI(self.request_executor, self.config)
 
+    @property
+    def branch_connector_group(self) -> BranchConnectorGroupAPI:
+        """
+        The interface object for the :ref:`ZPA Branch Connector Group interface <zpa-branch-connector-group>`.
+
+        """
+
+        from zscaler.zpa.branch_connector_group import BranchConnectorGroupAPI
+
+        return BranchConnectorGroupAPI(self.request_executor, self.config)
+
+    @property
+    def branch_connectors(self) -> BranchConnectorControllerAPI:
+        """
+        The interface object for the :ref:`ZPA Branch Connectors interface <zpa-branch-connectors>`.
+
+        """
+
+        from zscaler.zpa.branch_connectors import BranchConnectorControllerAPI
+
+        return BranchConnectorControllerAPI(self.request_executor, self.config)
+
+    @property
+    def browser_protection(self) -> BrowserProtectionProfileAPI:
+        """
+        The interface object for the :ref:`ZPA Browser Protection Profile interface <zpa-browser-protection>`.
+
+        """
+
+        from zscaler.zpa.browser_protection import BrowserProtectionProfileAPI
+
+        return BrowserProtectionProfileAPI(self.request_executor, self.config)
+
+    @property
+    def zia_customer_config(self) -> ZIACustomerConfigAPI:
+        """
+        The interface object for the :ref:`ZIA Customer Config interface <zpa-zia-customer-config>`.
+
+        """
+
+        from zscaler.zpa.zia_customer_config import ZIACustomerConfigAPI
+
+        return ZIACustomerConfigAPI(self.request_executor, self.config)
+
+    @property
+    def customer_dr_tool(self) -> CustomerDRToolVersionAPI:
+        """
+        The interface object for the :ref:`ZPA Customer DR Tool Version interface <zpa-customer-dr-tool>`.
+
+        """
+
+        from zscaler.zpa.customer_dr_tool import CustomerDRToolVersionAPI
+
+        return CustomerDRToolVersionAPI(self.request_executor, self.config)
+
+    @property
+    def extranet_resource(self) -> ExtranetResourceAPI:
+        """
+        The interface object for the :ref:`ZPA Extranet Resource interface <zpa-extranet_resource>`.
+
+        """
+        from zscaler.zpa.extranet_resource import ExtranetResourceAPI
+
+        return ExtranetResourceAPI(self.request_executor, self.config)
+
+    @property
+    def cloud_connector_controller(self) -> CloudConnectorControllerAPI:
+        """
+        The interface object for the :ref:`ZPA Cloud Connector Controller interface <zpa-cloud_connector_controller>`.
+
+        """
+        from zscaler.zpa.cloud_connector_controller import CloudConnectorControllerAPI
+
+        return CloudConnectorControllerAPI(self.request_executor, self.config)
+
+    @property
+    def managed_browser_profile(self) -> ManagedBrowserProfileAPI:
+        """
+        The interface object for the :ref:`ZPA Managed Browser Profile interface <zpa-managed_browser_profile>`.
+
+        """
+        from zscaler.zpa.managed_browser_profile import ManagedBrowserProfileAPI
+
+        return ManagedBrowserProfileAPI(self.request_executor, self.config)
+
+    @property
+    def oauth2_user_code(self) -> OAuth2UserCodeAPI:
+        """
+        The interface object for the :ref:`ZPA OAuth2 User Code interface <zpa-oauth2_user_code>`.
+
+        """
+        from zscaler.zpa.oauth2_user_code import OAuth2UserCodeAPI
+
+        return OAuth2UserCodeAPI(self.request_executor, self.config)
+
+    @property
+    def stepup_auth_level(self) -> StepUpAuthLevelAPI:
+        """
+        The interface object for the :ref:`ZPA Step Up Auth Level interface <zpa-stepup_auth_level>`.
+
+        """
+        from zscaler.zpa.stepup_auth_level import StepUpAuthLevelAPI
+
+        return StepUpAuthLevelAPI(self.request_executor, self.config)
+
+    @property
+    def user_portal_aup(self) -> UserPortalAUPAPI:
+        """
+        The interface object for the :ref:`ZPA User Portal AUP interface <zpa-user_portal_aup>`.
+
+        """
+        from zscaler.zpa.user_portal_aup import UserPortalAUPAPI
+
+        return UserPortalAUPAPI(self.request_executor, self.config)
+
+    @property
+    def location_controller(self) -> LocationControllerAPI:
+        """
+        The interface object for the :ref:`ZPA Location Controller interface <zpa-location_controller>`.
+
+        """
+        from zscaler.zpa.location_controller import LocationControllerAPI
+
+        return LocationControllerAPI(self.request_executor, self.config)
+
+    @property
+    def workload_tag_group(self) -> WorkloadTagGroupAPI:
+        """
+        The interface object for the :ref:`ZPA Workload Tag Group interface <zpa-workload_tag_group>`.
+
+        """
+        from zscaler.zpa.workload_tag_group import WorkloadTagGroupAPI
+
+        return WorkloadTagGroupAPI(self.request_executor, self.config)
+
     """
     Misc
     """
 
-    def set_custom_headers(self, headers):
+    def set_custom_headers(self, headers: Dict[str, str]) -> None:
         self.request_executor.set_custom_headers(headers)
 
-    def clear_custom_headers(self):
+    def clear_custom_headers(self) -> None:
         self.request_executor.clear_custom_headers()
 
-    def get_custom_headers(self):
+    def get_custom_headers(self) -> Dict[str, str]:
         return self.request_executor.get_custom_headers()
 
-    def get_default_headers(self):
+    def get_default_headers(self) -> Dict[str, str]:
         return self.request_executor.get_default_headers()

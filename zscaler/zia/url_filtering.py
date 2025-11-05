@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.url_filtering_rules import URLFilteringRule
 from zscaler.zia.models.url_filter_cloud_app_settings import AdvancedUrlFilterAndCloudAppSettings
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class URLFilteringAPI(APIClient):
@@ -44,14 +46,14 @@ class URLFilteringAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists url filtering rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -111,7 +113,7 @@ class URLFilteringAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -155,7 +157,7 @@ class URLFilteringAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_rule(self, **kwargs) -> tuple:
+    def add_rule(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -272,7 +274,7 @@ class URLFilteringAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: str, **kwargs) -> tuple:
+    def update_rule(self, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified URL Filtering Policy rule.
 
@@ -391,7 +393,7 @@ class URLFilteringAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: str) -> tuple:
+    def delete_rule(self, rule_id: str) -> APIResult[dict]:
         """
         Deletes the specified url filtering filter rule.
 
@@ -428,7 +430,7 @@ class URLFilteringAPI(APIClient):
 
         return (None, response, None)
 
-    def get_url_and_app_settings(self) -> tuple:
+    def get_url_and_app_settings(self) -> APIResult[dict]:
         """
         Retrieves information about URL and Cloud App Control advanced policy settings
 
@@ -471,7 +473,7 @@ class URLFilteringAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_url_and_app_settings(self, **kwargs) -> tuple:
+    def update_url_and_app_settings(self, **kwargs) -> APIResult[dict]:
         """
         Updates the URL and Cloud App Control advanced policy settings
 

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common
@@ -25,7 +26,7 @@ class BrowserControlSettings(ZscalerObject):
     A class for BrowserControlSettings objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the BrowserControlSettings model based on API response.
 
@@ -111,7 +112,7 @@ class BrowserControlSettings(ZscalerObject):
             self.smart_isolation_profile = None
             self.smart_isolation_profile_id = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

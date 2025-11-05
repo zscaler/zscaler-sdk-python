@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
@@ -28,7 +29,7 @@ class PolicySetControllerV1(ZscalerObject):
     A class representing a Policy Set Controller.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -176,7 +177,7 @@ class PolicySetControllerV1(ZscalerObject):
             self.device_posture_failure_notification_enabled = None
             self.desktop_policy_mappings = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -225,7 +226,7 @@ class PolicySetControllerV1(ZscalerObject):
 
 # The Condition class used within PolicySetController (kept inline with how operands are structured)
 class Condition(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -248,7 +249,7 @@ class Condition(ZscalerObject):
             self.negated = False
             self.operands = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,
@@ -264,7 +265,7 @@ class Condition(ZscalerObject):
 
 
 class Operand(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -291,7 +292,7 @@ class Operand(ZscalerObject):
             self.idp_id = None
             self.idp_name = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "id": self.id,

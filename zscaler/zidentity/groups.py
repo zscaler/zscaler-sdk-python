@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.groups import Groups
 from zscaler.zidentity.models.groups import GroupRecord
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class GroupsAPI(APIClient):
@@ -28,11 +30,11 @@ class GroupsAPI(APIClient):
 
     _zidentity_base_endpoint = "/admin/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_groups(self, query_params=None) -> tuple:
+    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a paginated list of groups with optional query parameters
         for pagination and filtering by group name or dynamic group status.
@@ -102,7 +104,7 @@ class GroupsAPI(APIClient):
 
         return (result, response, None)
 
-    def get_group(self, group_id: int) -> tuple:
+    def get_group(self, group_id: int) -> APIResult[dict]:
         """
         Fetches a specific zidentity group by ID.
 
@@ -148,7 +150,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> tuple:
+    def add_group(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new Zidentity Group.
 
@@ -214,7 +216,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: str, **kwargs) -> tuple:
+    def update_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified Zidentity Group.
 
@@ -271,7 +273,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_group(self, group_id: str) -> tuple:
+    def delete_group(self, group_id: str) -> APIResult[dict]:
         """
         Deletes the specified Group.
 
@@ -309,7 +311,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_group_users_details(self, group_id: str, query_params=None) -> tuple:
+    def list_group_users_details(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the list of users details for a specific group using the group ID.
 
@@ -380,7 +382,7 @@ class GroupsAPI(APIClient):
         group_id: str,
         user_id: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a specific user to an existing group using the group ID and the user ID.
 
@@ -438,7 +440,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_users_to_group(self, group_id: str, **kwargs) -> tuple:
+    def add_users_to_group(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Adds users to an existing group using the unique identifier ID of the group.
 
@@ -505,7 +507,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def replace_users_groups(self, group_id: str, **kwargs) -> tuple:
+    def replace_users_groups(self, group_id: str, **kwargs) -> APIResult[dict]:
         """
         Replaces the list of users in a specific group using the group ID.
         This operation completely replaces all existing users in the group.
@@ -573,7 +575,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def remove_user_from_group(self, group_id: str, user_id: str) -> tuple:
+    def remove_user_from_group(self, group_id: str, user_id: str) -> APIResult[dict]:
         """
         Deletes the specified Group.
 

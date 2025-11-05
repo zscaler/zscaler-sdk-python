@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import app_connector_groups as app_connector_groups
@@ -26,7 +27,7 @@ class LSSResourceModel(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LSSResourceModel model based on API response.
 
@@ -78,7 +79,7 @@ class LSSResourceModel(ZscalerObject):
             self.policy_rule_resource = None
             self.lss_config = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -100,7 +101,7 @@ class LSSConfig(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LSSConfig model based on API response.
 
@@ -140,7 +141,7 @@ class LSSConfig(ZscalerObject):
             self.lss_host = None
             self.lss_port = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

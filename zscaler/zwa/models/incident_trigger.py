@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -23,7 +24,7 @@ class IncidentTrigger(ZscalerObject):
     Handles arbitrary keys dynamically.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IncidentTrigger model based on API response.
 
@@ -35,7 +36,7 @@ class IncidentTrigger(ZscalerObject):
         # Store the entire dictionary since API does not return a fixed structure
         self.triggers = config if isinstance(config, dict) else {}
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

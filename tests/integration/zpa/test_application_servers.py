@@ -79,6 +79,12 @@ class TestApplicationServer:
                 servers_list, _, err = client.zpa.servers.list_servers()
                 assert err is None, f"Error listing servers: {err}"
                 assert any(server.id == server_id for server in servers_list)
+                
+                # List segment servers and ensure the updated server is in the list
+                servers_list, _, err = client.zpa.servers.list_servers_summary()
+                assert err is None, f"Error listing servers: {err}"
+                assert any(server.id == server_id for server in servers_list)
+
         except Exception as exc:
             errors.append(f"Application Server operation failed: {exc}")
 

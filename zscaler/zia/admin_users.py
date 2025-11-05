@@ -14,11 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.admin_users import AdminUser
 from zscaler.zia.models.user_management import UserManagement
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class AdminUsersAPI(APIClient):
@@ -28,14 +31,14 @@ class AdminUsersAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_admin_users(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[List[AdminUser]]:
         """
         Returns a list of admin users.
 
@@ -106,7 +109,7 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def get_admin_user(self, user_id: str) -> tuple:
+    def get_admin_user(self, user_id: str) -> APIResult[AdminUser]:
         """
         Returns information on the specified admin user id.
 
@@ -158,7 +161,7 @@ class AdminUsersAPI(APIClient):
         email: str,
         password: str,
         **kwargs
-    ) -> tuple:
+    ) -> APIResult[AdminUser]:
         """
         Adds a new admin user to ZIA.
 
@@ -281,7 +284,7 @@ class AdminUsersAPI(APIClient):
 
         return (result, response, None)
 
-    def update_admin_user(self, user_id: str, **kwargs) -> tuple:
+    def update_admin_user(self, user_id: str, **kwargs) -> APIResult[AdminUser]:
         """
         Update an admin user.
 
@@ -397,7 +400,7 @@ class AdminUsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_admin_user(self, user_id: int) -> tuple:
+    def delete_admin_user(self, user_id: int) -> APIResult[None]:
         """
         Deletes the specified admin user by id.
 
@@ -434,7 +437,7 @@ class AdminUsersAPI(APIClient):
 
         return (None, response, None)
 
-    def convert_to_user(self, user_id: str, query_params=None, **kwargs) -> tuple:
+    def convert_to_user(self, user_id: str, query_params: Optional[dict] = None, **kwargs) -> APIResult[UserManagement]:
         """
         Removes admin privileges for a user while retaining them as a regular user
         of your organization in the ZIA Admin Portal.

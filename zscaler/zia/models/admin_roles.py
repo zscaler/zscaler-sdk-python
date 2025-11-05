@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class AdminRoles(ZscalerObject):
     A class for AdminRole objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -68,7 +69,7 @@ class AdminRoles(ZscalerObject):
             self.role_type = None
             self.report_time_duration = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -101,7 +102,7 @@ class PasswordExpiry(ZscalerObject):
     Handles Password Expiry attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PasswordExpiry model based on API response.
 
@@ -120,7 +121,7 @@ class PasswordExpiry(ZscalerObject):
             self.password_expiration_enabled = None
             self.password_expiry_days = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

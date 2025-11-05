@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.posture_profiles import PostureProfile
 from zscaler.utils import format_url, remove_cloud_suffix
+from zscaler.types import APIResult
 
 
 class PostureProfilesAPI(APIClient):
@@ -32,7 +34,7 @@ class PostureProfilesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_posture_profiles(self, query_params=None) -> tuple:
+    def list_posture_profiles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured posture profiles.
 
@@ -97,7 +99,7 @@ class PostureProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_profile(self, profile_id: str) -> tuple:
+    def get_profile(self, profile_id: str) -> APIResult[dict]:
         """
         Gets a specific posture profile by its unique ID.
 

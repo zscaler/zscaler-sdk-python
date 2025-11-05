@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.workload_groups import WorkloadGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class WorkloadGroupsAPI(APIClient):
@@ -27,14 +29,14 @@ class WorkloadGroupsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of workload groups configured in the ZIA Admin Portal.
 
@@ -89,7 +91,7 @@ class WorkloadGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: int) -> tuple:
+    def get_group(self, group_id: int) -> APIResult[dict]:
         """
         Fetches a specific workload group by ID.
 
@@ -135,7 +137,7 @@ class WorkloadGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> tuple:
+    def add_group(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Workload Group.
 
@@ -245,7 +247,7 @@ class WorkloadGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: int, **kwargs) -> tuple:
+    def update_group(self, group_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Workload Group.
 
@@ -352,7 +354,7 @@ class WorkloadGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_group(self, group_id: int) -> tuple:
+    def delete_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes the specified Workload Group.
 

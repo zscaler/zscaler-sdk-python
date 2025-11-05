@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.machine_groups import MachineGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class MachineGroupsAPI(APIClient):
@@ -31,7 +33,7 @@ class MachineGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_machine_groups(self, query_params=None) -> tuple:
+    def list_machine_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates machine groups in your organization with pagination.
         A subset of machine groups can be returned that match a supported
@@ -45,7 +47,7 @@ class MachineGroupsAPI(APIClient):
                 ``[query_params.microtenant_id]`` {str}: ID of the microtenant, if applicable.
 
         Returns:
-            tuple: A tuple containing (list of AppConnectorGroup instances, Response, error)
+            tuple: A tuple containing (list of MachineGroup instances, Response, error)
 
         Examples:
             Retrieve machine groups with pagination parameters:
@@ -88,7 +90,65 @@ class MachineGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str, query_params=None) -> tuple:
+    def list_machine_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+        """
+        Retrieves all configured machine groups Name and IDs
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+
+                ``[query_params.page]`` {str}: Specifies the page number.
+
+                ``[query_params.page_size]`` {int}: Specifies the page size.
+                    If not provided, the default page size is 20. The max page size is 500.
+
+                ``[query_params.search]`` {str}: The search string used to support search by features and fields for the API.
+
+                ``[query_params.microtenant_id]`` {str}: The unique identifier of the microtenant of ZPA tenant.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing (list of MachineGroup instances, Response, error)
+
+        Examples:
+            >>> group_list, _, err = client.zpa.machine_groups.list_machine_group_summary(
+            ... query_params={'search': 'Group01', 'page': '1', 'page_size': '100'})
+            ... if err:
+            ...     print(f"Error listing machine groups: {err}")
+            ...     return
+            ... print(f"Total machine groups found: {len(group_list)}")
+            ... for group in group_list:
+            ...     print(group.as_dict())
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zpa_base_endpoint}
+            /machineGroup/summary
+        """
+        )
+
+        query_params = query_params or {}
+        microtenant_id = query_params.get("microtenant_id", None)
+        if microtenant_id:
+            query_params["microtenantId"] = microtenant_id
+
+        request, error = self._request_executor.create_request(http_method, api_url, params=query_params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, MachineGroup)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(MachineGroup(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def get_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches information on the specified machine group.
 

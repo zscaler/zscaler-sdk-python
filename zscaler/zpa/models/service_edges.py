@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class ServiceEdge(ZscalerObject):
     A class representing the Service Edge.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -112,7 +113,7 @@ class ServiceEdge(ZscalerObject):
             self.enrollment_cert = None
             self.zpn_sub_module_upgrade_list = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the Service Edge data into a dictionary suitable for API requests.
         """

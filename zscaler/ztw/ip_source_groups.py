@@ -14,29 +14,32 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_source_groups import IPSourceGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IPSourceGroupsAPI(APIClient):
 
     _zia_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_ip_source_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
-        List IP Source Groups in your organization.
+            List IP Source Groups in your organization.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
+
                 ``[query_params.search]`` {str}: Search string for filtering results by rule name.
 
         Returns:
@@ -100,8 +103,8 @@ class IPSourceGroupsAPI(APIClient):
 
     def list_ip_source_groups_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -109,7 +112,9 @@ class IPSourceGroupsAPI(APIClient):
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a group's name or description attributes.
 
         Returns:
             tuple: List of IP Source Groups resource records.
@@ -127,7 +132,11 @@ class IPSourceGroupsAPI(APIClient):
 
             Gets a list of all IP source groups name and ID.
 
-            >>> group_list, response, error = ztw.ip_source_groups.list_ip_source_groups_lite(query_params={"search": 'Group01'}):
+            >>> group_list, response, error = (
+            ...     ztw.ip_source_groups.list_ip_source_groups_lite(
+            ...         query_params={"search": 'Group01'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing IP source groups: {error}")
             ...     return
@@ -172,7 +181,7 @@ class IPSourceGroupsAPI(APIClient):
 
         return (results, response, None)
 
-    def add_ip_source_group(self, **kwargs) -> tuple:
+    def add_ip_source_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new IP Source Group.
 
@@ -222,7 +231,7 @@ class IPSourceGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_source_group(self, group_id: int) -> tuple:
+    def delete_ip_source_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes an IP Source Group.
 

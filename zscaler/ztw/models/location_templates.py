@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.ztw.models import common as common
 
@@ -23,7 +24,7 @@ class LocationTemplate(ZscalerObject):
     A class for LocationTemplate objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LocationTemplate model based on API response.
 
@@ -67,7 +68,7 @@ class LocationTemplate(ZscalerObject):
             self.last_mod_uid = None
             self.last_mod_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -93,7 +94,7 @@ class Template(ZscalerObject):
     snake_case attribute names to the expected camelCase keys for the API.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Template model based on API response or a plain dict.
 
@@ -138,7 +139,7 @@ class Template(ZscalerObject):
             self.surrogate_refresh_time_in_minutes = None
             self.surrogate_i_p = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary with the correct camelCase keys
         expected by the API.

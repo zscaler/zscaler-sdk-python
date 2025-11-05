@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zdx.models.troubleshooting import DeviceDeepTraces
@@ -26,15 +27,16 @@ from zscaler.zdx.models.troubleshooting import DeepTraceHealthMetrics
 from zscaler.zdx.models.troubleshooting import DeepTraceEvents
 from zscaler.zdx.models.troubleshooting import DeviceApplicationAnalysis
 from zscaler.utils import format_url, zdx_params
+from zscaler.types import APIResult
 
 
 class TroubleshootingAPI(APIClient):
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"
 
-    def list_deeptraces(self, device_id: str) -> tuple:
+    def list_deeptraces(self, device_id: str) -> APIResult[dict]:
         """
         Returns a list of all deep traces for a specific device.
 
@@ -83,7 +85,7 @@ class TroubleshootingAPI(APIClient):
 
         return (results, response, None)
 
-    def get_deeptrace(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns information on a single deeptrace for a specific device.
 
@@ -131,7 +133,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def start_deeptrace(self, device_id: str, **kwargs) -> tuple:
+    def start_deeptrace(self, device_id: str, **kwargs) -> APIResult[dict]:
         """
         Starts a deep trace for a specific device and application.
 
@@ -193,7 +195,7 @@ class TroubleshootingAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_deeptrace(self, device_id: str, trace_id: str) -> tuple:
+    def delete_deeptrace(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Deletes a single deeptrace session and associated data for a specific device.
 
@@ -236,7 +238,7 @@ class TroubleshootingAPI(APIClient):
         self,
         device_id: str,
         trace_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns a list of all deep traces for a specific device.
 
@@ -283,7 +285,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def get_deeptrace_webprobe_metrics(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace_webprobe_metrics(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns web probe metrics for a specific deeptrace.
 
@@ -332,7 +334,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def get_deeptrace_cloudpath_metrics(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace_cloudpath_metrics(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns cloudpath metrics for a specific deeptrace.
 
@@ -381,7 +383,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def get_deeptrace_cloudpath(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace_cloudpath(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns cloudpath for a specific deeptrace.
 
@@ -429,7 +431,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def get_deeptrace_health_metrics(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace_health_metrics(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns health metrics for a specific deeptrace.
 
@@ -478,7 +480,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def get_deeptrace_events(self, device_id: str, trace_id: str) -> tuple:
+    def get_deeptrace_events(self, device_id: str, trace_id: str) -> APIResult[dict]:
         """
         Returns events for a specific deeptrace.
 
@@ -526,7 +528,7 @@ class TroubleshootingAPI(APIClient):
 
         return (result, response, None)
 
-    def start_analysis(self, **kwargs) -> tuple:
+    def start_analysis(self, **kwargs) -> APIResult[dict]:
         """
         Starts a ZDX Score analysis on a device for a specific application.
 
@@ -583,7 +585,7 @@ class TroubleshootingAPI(APIClient):
     def get_analysis(
         self,
         analysis_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns status of the score analysis (e.g., progress or results).
         Args:
@@ -633,7 +635,7 @@ class TroubleshootingAPI(APIClient):
     def delete_analysis(
         self,
         analysis_id: str,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Stop the score analysis that is currently running.
 

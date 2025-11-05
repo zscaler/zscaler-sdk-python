@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class ZPACBIProfile(ZscalerObject):
     A class representing a ZPA Profile object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ZPAProfile model based on API response.
 
@@ -42,7 +43,7 @@ class ZPACBIProfile(ZscalerObject):
         self.cbi_url = config["cbiUrl"] if config and "cbiUrl" in config else None
         self.enabled = config["enabled"] if config and "enabled" in config else True
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 
@@ -71,7 +72,7 @@ class CBIProfile(ZscalerObject):
     A class representing a ZPA Profile object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ZPAProfile model based on API response.
 
@@ -93,7 +94,7 @@ class CBIProfile(ZscalerObject):
         self.microtenant_id = config["microtenantId"] if config and "microtenantId" in config else None
         self.microtenant_name = config["microtenantName"] if config and "microtenantName" in config else True
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 

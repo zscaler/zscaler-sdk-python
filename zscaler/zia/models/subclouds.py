@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class TenantSubClouds(ZscalerObject):
     A class for TenantSubClouds objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the TenantSubClouds model based on API response.
 
@@ -44,7 +45,7 @@ class TenantSubClouds(ZscalerObject):
             self.dcs = []
             self.exclusions = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -59,7 +60,7 @@ class DCs(ZscalerObject):
     A class for DCs objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DCs model based on API response.
 
@@ -78,7 +79,7 @@ class DCs(ZscalerObject):
             self.name = None
             self.country = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -97,7 +98,7 @@ class Exclusions(ZscalerObject):
     A class for Exclusions objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Exclusions model based on API response.
 
@@ -153,7 +154,7 @@ class Exclusions(ZscalerObject):
             self.last_modified_user = None
             self.last_modified_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -177,7 +178,7 @@ class Datacenter(ZscalerObject):
     A class for Datacenter objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Datacenter model based on API response.
 
@@ -198,7 +199,7 @@ class Datacenter(ZscalerObject):
             self.external_id = None
             self.extensions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -218,7 +219,7 @@ class LastModifiedUser(ZscalerObject):
     A class for LastModifiedUser objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LastModifiedUser model based on API response.
 
@@ -239,7 +240,7 @@ class LastModifiedUser(ZscalerObject):
             self.external_id = None
             self.extensions = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -254,7 +255,7 @@ class LastDCInCountry(ZscalerObject):
     A class for LastDCInCountry objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the LastDCInCountry model based on API response.
 
@@ -272,7 +273,7 @@ class LastDCInCountry(ZscalerObject):
             self.last_dc_exclusion = None
             self.dc_ids = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

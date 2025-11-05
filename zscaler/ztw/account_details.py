@@ -14,9 +14,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AccountDetailsAPI(APIClient):
@@ -26,11 +28,11 @@ class AccountDetailsAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_public_account_details(self, query_params=None) -> tuple:
+    def list_public_account_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of public cloud account information.
 
@@ -48,8 +50,16 @@ class AccountDetailsAPI(APIClient):
 
             List locations, returning 200 items per page for a maximum of 2 pages:
 
-            >>> for location in ztw.provisioning.list_public_account_details(page_size=200, max_pages=2):
-            ...    print(location)
+        Examples:
+            Gets a list of all public account details.
+
+            >>> public_account_details_list, _, error = ztw.account_details.list_public_account_details()
+            ... if error:
+            ...     print(f"Error listing account groups: {error}")
+            ...     return
+            ... print(f"Total account groups found: {len(account_groups_list)}")
+            ... for account_group in account_groups_list:
+            ...     print(account_group.as_dict())
 
         """
         http_method = "get".upper()
@@ -83,7 +93,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_public_account_details(self, account_id: str, query_params=None) -> tuple:
+    def get_public_account_details(self, account_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information for the public (Cloud Connector) cloud account information for the specified ID.
 
@@ -136,7 +146,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_details_lite(self, query_params=None) -> tuple:
+    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a subset of public (Cloud Connector) cloud account information.
 
@@ -198,7 +208,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_status(self) -> tuple:
+    def list_public_account_status(self) -> APIResult[dict]:
         """
         Returns a List of public (Cloud Connector) cloud account status information (enabled/disabled).
 
@@ -234,7 +244,7 @@ class AccountDetailsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_public_account_status(self, **kwargs) -> tuple:
+    def update_public_account_status(self, **kwargs) -> APIResult[dict]:
         """
         Update an existing public account status.
 

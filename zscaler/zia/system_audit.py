@@ -14,10 +14,12 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 # """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.system_audit import ConfigAudit
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SystemAuditReportAPI(APIClient):
@@ -27,12 +29,12 @@ class SystemAuditReportAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     # Returning {"code":"RBA_LIMITED","message":"Functional scope restriction requires Reports"}
-    def get_config_audit(self, query_params=None) -> tuple:
+    def get_config_audit(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the System Audit Report.
 

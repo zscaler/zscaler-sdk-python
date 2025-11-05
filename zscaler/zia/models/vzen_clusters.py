@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common as common_reference
@@ -24,7 +25,7 @@ class VZENClusters(ZscalerObject):
     A class for VZENClusters objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the VZENClusters model based on API response.
 
@@ -66,7 +67,7 @@ class VZENClusters(ZscalerObject):
             self.ip_sec_enabled = None
             self.virtual_zen_nodes = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

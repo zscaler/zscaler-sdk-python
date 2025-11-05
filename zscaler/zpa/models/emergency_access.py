@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -24,7 +25,7 @@ class EmergencyAccessUser(ZscalerObject):
     Args:
         config (dict): A dictionary representing the emergency access user configuration.
     """
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.user_id = config["userId"] if config and "userId" in config else None
@@ -50,7 +51,7 @@ class EmergencyAccessUser(ZscalerObject):
             self.allowed_deactivate = None
             self.update_enabled = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the model data for API requests.
         """

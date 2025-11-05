@@ -242,10 +242,10 @@ Default Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can provide credentials via the ``ZSCALER_CLIENT_ID``,
-``ZSCALER_CLIENT_SECRET``, ``ZSCALER_VANITY_DOMAIN``, ``ZSCALER_CLOUD``
-environment variables, representing your Zidentity OneAPI credentials
-``clientId``, ``clientSecret``, ``vanityDomain`` and ``cloud``
-respectively.
+``ZSCALER_CLIENT_SECRET``, ``ZSCALER_VANITY_DOMAIN``, ``ZSCALER_CLOUD``,
+``ZSCALER_PARTNER_ID`` environment variables, representing your Zidentity
+OneAPI credentials ``clientId``, ``clientSecret``, ``vanityDomain``,
+``cloud`` and ``partnerId`` respectively.
 
 +--------------------+-------------------+----------------------------+
 | Argument           | Description       | Environment variable       |
@@ -349,7 +349,7 @@ Authenticating to Zscaler Private Access (ZPA)
 
 The authentication to Zscaler Private Access (ZPA) via the OneAPI
 framework, requires the extra attribute called ``customerId`` and
-optionally the attribute ``microtenantId``.
+optionally the attributes ``microtenantId`` and ``partnerId``.
 
 +--------------------+-------------------+----------------------------+
 | Argument           | Description       | Environment variable       |
@@ -425,6 +425,7 @@ Construct a client instance by passing your Zidentity ``clientId``,
        "cloud": "beta", # Optional when authenticating to an alternative cloud environment
        "customerId": "", # Optional parameter. Required only when using ZPA
        "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
        "logging": {"enabled": False, "verbose": False},
    }
 
@@ -463,6 +464,7 @@ OneAPI Client ID and Private Key Authentication
        "cloud": "beta", # Optional when authenticating to an alternative cloud environment
        "customerId": "", # Optional parameter. Required only when using ZPA
        "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
        "logging": {"enabled": False, "verbose": False},
    }
 
@@ -547,6 +549,48 @@ Note, that custom headers will be overwritten with default headers with
 the same name. This doesn't allow breaking the client. Get default
 headers:
 
+Automatic x-partner-id Header Injection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SDK automatically includes the ``x-partner-id`` header in all API
+requests when ``partnerId`` is provided in the configuration. This
+feature works seamlessly across all services (ZIA, ZPA, ZTW, ZCC, ZDX,
+ZWA) and both OneAPI and Legacy clients.
+
+**How it works:**
+
+-  When ``partnerId`` is provided via config dictionary or
+   ``ZSCALER_PARTNER_ID`` environment variable, the SDK automatically
+   adds ``x-partner-id: <partnerId>`` to all request headers
+-  If ``partnerId`` is not provided, the header is not included
+-  No additional code is required - the header injection is handled
+   automatically by the SDK
+
+**Example:**
+
+.. code:: py
+
+   from zscaler import ZscalerClient
+
+   config = {
+       "clientId": '{yourClientId}',
+       "clientSecret": '{yourClientSecret}',
+       "vanityDomain": '{yourvanityDomain}',
+       "partnerId": "542585sdsdw", # Automatically adds x-partner-id header to all requests
+       "logging": {"enabled": False, "verbose": False},
+   }
+
+   def main():
+       with ZscalerClient(config) as client:
+           # All API requests will automatically include: x-partner-id: 542585sdsdw
+           groups, resp, err = client.zpa.segment_groups.list_groups()
+           # ... rest of your code
+
+**Note:** This feature is also supported in Legacy clients. When using
+``LegacyZPAClient``, ``LegacyZIAClient``, etc., you can provide
+``partnerId`` in the config dictionary and the header will be
+automatically included in all requests.
+
 ZIA and ZTW Context Manager
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -585,6 +629,7 @@ Example Usage
        "cloud": "beta", # Optional when authenticating to an alternative cloud environment
        "customerId": "", # Optional parameter. Required only when using ZPA
        "microtenantId": "", # Optional parameter. Required only when using ZPA with Microtenant
+       "partnerId": "", # Optional parameter. When provided, automatically includes x-partner-id header in all requests
        "logging": {"enabled": False, "verbose": False},
    }
 

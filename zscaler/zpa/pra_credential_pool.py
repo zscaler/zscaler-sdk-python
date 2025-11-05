@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_cred_pool_controller import PRACredentialPoolController
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 
 
 class PRACredentialPoolAPI(APIClient):
@@ -35,7 +37,7 @@ class PRACredentialPoolAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/waap-pra-config/v1/admin/customers/{customer_id}"
 
-    def list_credential_pool(self, query_params=None) -> tuple:
+    def list_credential_pool(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all privileged remote access credential pool details.
 
@@ -90,7 +92,7 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_credential_pool(self, pool_id: str, query_params=None) -> tuple:
+    def get_credential_pool(self, pool_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified Privileged credential pool.
 
@@ -138,7 +140,7 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_credential_pool_info(self, pool_id: str, query_params=None) -> tuple:
+    def get_credential_pool_info(self, pool_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Given Privileged credential pool id gets mapped privileged credential info
 
@@ -188,7 +190,7 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_credential_pool(self, **kwargs) -> tuple:
+    def add_credential_pool(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new Privileged Credential Pool.
 
@@ -243,7 +245,7 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_credential_pool(self, pool_id: str, **kwargs) -> tuple:
+    def update_credential_pool(self, pool_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a Privileged credential pool.
 
@@ -303,7 +305,7 @@ class PRACredentialPoolAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_credential_pool(self, pool_id: str, microtenant_id: str = None) -> tuple:
+    def delete_credential_pool(self, pool_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified privileged credential pool.
 

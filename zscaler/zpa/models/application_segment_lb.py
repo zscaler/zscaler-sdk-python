@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class WeightedLBConfig(ZscalerObject):
     A class for WeightedLBConfig objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WeightedLBConfig model based on API response.
 
@@ -48,7 +49,7 @@ class WeightedLBConfig(ZscalerObject):
             self.application_to_server_group_mappings = []
             self.weighted_load_balancing = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -67,7 +68,7 @@ class ApplicationToServerGroupMappings(ZscalerObject):
     A class for ApplicationToServerGroupMappings objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ApplicationToServerGroupMappings model based on API response.
 
@@ -91,7 +92,7 @@ class ApplicationToServerGroupMappings(ZscalerObject):
             self.passive = None
             self.weight = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

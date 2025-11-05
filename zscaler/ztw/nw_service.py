@@ -15,9 +15,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 from zscaler.request_executor import RequestExecutor
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service import NetworkServices
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class NWServiceAPI(APIClient):
@@ -28,7 +31,7 @@ class NWServiceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_network_services(self, query_params=None) -> tuple:
+    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported
@@ -39,7 +42,8 @@ class NWServiceAPI(APIClient):
                 ``[query_params.protocol]`` {str}: Filter based on the network service protocol.
                 Supported Values: `ICMP`, `TCP`, `UDP`, `GRE`, `ESP`, `OTHER`,
 
-                ``[query_params.search]`` {str}: The search string used to match against a service's name or description attributes.
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a service's name or description attributes.
 
                 ``[query_params.locale]`` (str): When set to one of the supported locales (e.g., ``en-US``, ``de-DE``,
                     ``es-ES``, ``fr-FR``, ``ja-JP``, ``zh-CN``), the network application
@@ -101,7 +105,7 @@ class NWServiceAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_network_service(self, ports: list = None, **kwargs) -> tuple:
+    def add_network_service(self, ports: list = None, **kwargs) -> APIResult[dict]:
         """
         Adds a new Network Service.
 
@@ -185,7 +189,7 @@ class NWServiceAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> tuple:
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> APIResult[dict]:
         """
         Updates the specified Network Service.
 
@@ -262,7 +266,7 @@ class NWServiceAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_network_service(self, service_id: int) -> tuple:
+    def delete_network_service(self, service_id: int) -> APIResult[dict]:
         """
         Deletes the specified Network Service.
 

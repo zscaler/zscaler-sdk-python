@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.zia.models import common
 
@@ -23,7 +24,7 @@ class Activation(ZscalerObject):
     A class for Activation objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Activation model based on API response.
 
@@ -37,7 +38,7 @@ class Activation(ZscalerObject):
         else:
             self.status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -54,7 +55,7 @@ class EusaStatus(ZscalerObject):
     A class for Eusa Status objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Eusa Status model based on API response.
 
@@ -84,7 +85,7 @@ class EusaStatus(ZscalerObject):
             self.version = None
             self.accepted_status = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

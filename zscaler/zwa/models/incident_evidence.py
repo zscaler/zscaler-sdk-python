@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class IncidentEvidence(ZscalerObject):
     A class for IncidentEvidence objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the IncidentEvidence model based on API response.
 
@@ -42,7 +43,7 @@ class IncidentEvidence(ZscalerObject):
             self.additional_info = None
             self.evidence_u_r_l = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

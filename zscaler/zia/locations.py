@@ -14,12 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.location_management import LocationManagement
 from zscaler.zia.models.location_management import RegionInfo
 from zscaler.zia.models.location_group import LocationGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class LocationsAPI(APIClient):
@@ -29,11 +32,11 @@ class LocationsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params=None) -> tuple:
+    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
         Returns a list of locations.
 
@@ -123,7 +126,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_location(self, location_id: int) -> tuple:
+    def get_location(self, location_id: int) -> APIResult[LocationManagement]:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -167,7 +170,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_location(self, **kwargs) -> tuple:
+    def add_location(self, **kwargs) -> APIResult[LocationManagement]:
         """
         Adds a new location.
 
@@ -261,6 +264,14 @@ class LocationsAPI(APIClient):
             description (str, optional):
                 Additional notes or information regarding the location or sub-location. The description cannot
                 exceed 1024 characters.
+            sub_loc_scope_enabled (bool, optional):
+                Indicates whether defining scopes is allowed for this sublocation
+            sub_loc_scope (str, optional):
+                Defines a scope for the sublocation from the available types to segregate workload traffic
+            sub_loc_scope_values (list[str], optional):
+                Specifies values for the selected sublocation scope type
+            sub_loc_acc_ids (list[int], optional):
+                Specifies one or more Amazon Web Services (AWS) account IDs.
 
         Returns:
             :obj:`tuple`: The newly created location resource record
@@ -319,7 +330,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_location(self, location_id: int, **kwargs) -> tuple:
+    def update_location(self, location_id: int, **kwargs) -> APIResult[LocationManagement]:
         """
         Update the specified location.
 
@@ -476,7 +487,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_location(self, location_id: int) -> tuple:
+    def delete_location(self, location_id: int) -> APIResult[None]:
         """
         Deletes the location or sub-location for the specified ID
 
@@ -513,7 +524,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def bulk_delete_locations(self, location_ids: list) -> tuple:
+    def bulk_delete_locations(self, location_ids: List[int]) -> APIResult[None]:
         """
         Deletes all specified Location Management from ZIA.
 
@@ -565,7 +576,7 @@ class LocationsAPI(APIClient):
 
         return (response, None)
 
-    def list_sub_locations(self, location_id: int, query_params: dict = None) -> tuple:
+    def list_sub_locations(self, location_id: int, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
         Returns sub-location information for the specified location ID.
 
@@ -639,7 +650,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_locations_lite(self, query_params=None) -> tuple:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -713,7 +724,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_location_groups(self, query_params=None) -> tuple:
+    def list_location_groups(self, query_params: Optional[dict] = None) -> APIResult[List[LocationGroup]]:
         """
         Return a list of location groups in ZIA.
 
@@ -781,7 +792,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_location_group(self, group_id: int) -> tuple:
+    def get_location_group(self, group_id: int) -> APIResult[LocationGroup]:
         """
         Fetches a specific location group for the specified ID.
 
@@ -826,7 +837,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_location_groups_lite(self, query_params=None) -> tuple:
+    def list_location_groups_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationGroup]]:
         """
         Returns a list of location groups (lite version) by their ID where only name and ID is returned in ZIA.
 
@@ -886,7 +897,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_location_groups_count(self, query_params=None) -> tuple:
+    def list_location_groups_count(self, query_params: Optional[dict] = None) -> APIResult[int]:
         """
         Returns a list of location groups for your organization.
 
@@ -946,7 +957,7 @@ class LocationsAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> tuple:
+    def list_region_geo_coordinates(self, latitude: float, longitude: float) -> APIResult[RegionInfo]:
         """
         Retrieves the geographical data of the region or city that is located in the specified latitude and longitude
         coordinates. The geographical data includes the city name, state, country, geographical ID of the city and
@@ -1004,7 +1015,7 @@ class LocationsAPI(APIClient):
 
         return (result, response, None)
 
-    def get_geo_by_ip(self, ip: str) -> tuple:
+    def get_geo_by_ip(self, ip: str) -> APIResult[RegionInfo]:
         """
         Retrieves the geographical data of the region or city that is located in the specified IP address. The
         geographical data includes the city name, state, country, geographical ID of the city and state, etc.
@@ -1057,7 +1068,7 @@ class LocationsAPI(APIClient):
 
         return (result, response, None)
 
-    def list_cities_by_name(self, query_params=None) -> tuple:
+    def list_cities_by_name(self, query_params: Optional[dict] = None) -> APIResult[List[RegionInfo]]:
         """
         Retrieves the list of cities (along with their geographical data) that match the prefix search.
         The geographical data includes the latitude and longitude coordinates of the city, geographical
@@ -1125,7 +1136,7 @@ class LocationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_supported_countries(self) -> tuple:
+    def get_supported_countries(self) -> APIResult[List[str]]:
         """
         Retrieves the list of countries supported in location configuration
         Note: The response shows the current list of supported values in an Enum list.

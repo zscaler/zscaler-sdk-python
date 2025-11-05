@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import logging
 import os
 import time
-import json
 import requests
+from typing import TYPE_CHECKING
 from zscaler import __version__
 from zscaler.cache.no_op_cache import NoOpCache
 from zscaler.logger import setup_logging
@@ -11,6 +13,11 @@ from zscaler.user_agent import UserAgent
 # Setup the logger
 setup_logging(logger_name="zscaler-sdk-python")
 logger = logging.getLogger("zscaler-sdk-python")
+
+# Import all ZWA API classes for type hints only (to avoid circular imports)
+if TYPE_CHECKING:
+    from zscaler.zwa.audit_logs import AuditLogsAPI
+    from zscaler.zwa.dlp_incidents import DLPIncidentsAPI
 
 
 class LegacyZWAClientHelper:
@@ -40,12 +47,14 @@ class LegacyZWAClientHelper:
         key_id=None,
         key_secret=None,
         cloud=None,
+        partner_id=None,
         timeout=240,
         request_executor_impl=None,  # Uses centralized request executor
     ):
         self._key_id = key_id or os.getenv(f"{self._env_base}_CLIENT_ID")
         self._key_secret = key_secret or os.getenv(f"{self._env_base}_CLIENT_SECRET")
         self._env_cloud = cloud or os.getenv(f"{self._env_base}_CLOUD", "us1")
+        self.partner_id = partner_id or os.getenv("ZSCALER_PARTNER_ID")
         self.url = f"https://api.{self._env_cloud}.zsworkflow.net"
         self.timeout = timeout
 
@@ -61,6 +70,7 @@ class LegacyZWAClientHelper:
                 "key_id": self._key_id,
                 "key_secret": self._key_secret,
                 "cloud": self._env_cloud,
+                "partnerId": self.partner_id or "",
                 "requestTimeout": self.timeout,
                 "rateLimit": {"maxRetries": 3},
                 "cache": {"enabled": False},
@@ -205,6 +215,8 @@ class LegacyZWAClientHelper:
 
         # Ensure the User-Agent header is set
         headers["User-Agent"] = self.user_agent
+        # Add default headers (includes x-partner-id if partnerId is in config)
+        headers.update(self.request_executor.get_default_headers())
         headers.update(self.request_executor.get_custom_headers())
         # **Add the Authorization header if a token is available**
         if self.auth_token:
@@ -232,7 +244,7 @@ class LegacyZWAClientHelper:
             raise ValueError(f"Request execution failed: {error}")
 
     @property
-    def audit_logs(self):
+    def audit_logs(self) -> "AuditLogsAPI":
         """
         The interface object for the :ref:`ZWA Audit Logs interface <zwa-audit_logs>`.
 
@@ -242,7 +254,7 @@ class LegacyZWAClientHelper:
         return AuditLogsAPI(self.request_executor)
 
     @property
-    def dlp_incidents(self):
+    def dlp_incidents(self) -> "DLPIncidentsAPI":
         """
         The interface object for the :ref:`ZWA DLP Incidents interface <zwa-dlp_incidents>`.
 

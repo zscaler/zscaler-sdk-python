@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.service_edges import ServiceEdge
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ServiceEdgeControllerAPI(APIClient):
@@ -32,7 +34,7 @@ class ServiceEdgeControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_service_edges(self, query_params=None) -> tuple:
+    def list_service_edges(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates service edges in your organization with pagination.
         A subset of service edges can be returned that match a supported
@@ -91,7 +93,7 @@ class ServiceEdgeControllerAPI(APIClient):
 
         return (result, response, None)
 
-    def get_service_edge(self, service_edge_id: str, **kwargs) -> tuple:
+    def get_service_edge(self, service_edge_id: str, **kwargs) -> APIResult[dict]:
         """
         Returns information on the specified Service Edge.
 
@@ -130,7 +132,7 @@ class ServiceEdgeControllerAPI(APIClient):
 
         return ServiceEdge(response.get_body())
 
-    def update_service_edge(self, service_edge_id: str, **kwargs) -> tuple:
+    def update_service_edge(self, service_edge_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified ZPA Service Edge.
 

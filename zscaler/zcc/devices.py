@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_map, zcc_param_mapper
@@ -23,12 +24,13 @@ from zscaler.zcc.models.devices import ForceRemoveDevices
 from zscaler.zcc.models.devices import SetDeviceCleanupInfo
 from zscaler.zcc.models.devices import DeviceCleanup
 from zscaler.zcc.models.devices import DeviceDetails
+from zscaler.types import APIResult
 from datetime import datetime
 
 
 class DevicesAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
@@ -226,7 +228,7 @@ class DevicesAPI(APIClient):
                 ``[query_params.end_date]`` {str}: End date for the report. Accepts various formats:
                     YYYY-MM-DD, YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SS, etc. Will be converted to ZCC API format.
 
-                ``[query_params.time_zone]`` {str}: IANA time zone for date interpretation. 
+                ``[query_params.time_zone]`` {str}: IANA time zone for date interpretation.
                     Examples: 'America/New_York', 'UTC', 'Europe/London'.
 
             filename (str, optional): Custom filename for the CSV file. Defaults to timestamped name.
@@ -308,7 +310,7 @@ class DevicesAPI(APIClient):
         return filename
 
     @zcc_param_mapper
-    def list_devices(self, query_params=None) -> tuple:
+    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
 
@@ -370,7 +372,7 @@ class DevicesAPI(APIClient):
 
         return result, response, None
 
-    def get_device_cleanup_info(self) -> tuple:
+    def get_device_cleanup_info(self) -> APIResult[dict]:
         """
         Returns device cleanup sync information from the Client Connector Portal.
 
@@ -417,7 +419,7 @@ class DevicesAPI(APIClient):
 
         return result, response, None
 
-    def update_device_cleanup_info(self, **kwargs) -> tuple:
+    def update_device_cleanup_info(self, **kwargs) -> APIResult[dict]:
         """
         Set Device Cleaup Information
 
@@ -466,7 +468,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_device_details(self, query_params=None) -> tuple:
+    def get_device_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
        Lists device details of enrolled devices of your organization.
 
@@ -525,7 +527,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zcc_param_mapper
-    def remove_devices(self, query_params=None, **kwargs) -> tuple:
+    def remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Remove of the devices from the Client Connector Portal.
 
@@ -594,7 +596,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zcc_param_mapper
-    def force_remove_devices(self, query_params=None, **kwargs) -> tuple:
+    def force_remove_devices(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Force remove of the devices from the Client Connector Portal.
 
@@ -662,7 +664,7 @@ class DevicesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def remove_machine_tunnel(self, query_params=None, **kwargs) -> tuple:
+    def remove_machine_tunnel(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Remove machine tunnel devices from the Client Connector Portal.
 
@@ -722,4 +724,3 @@ class DevicesAPI(APIClient):
             return None, response, error
 
         return result, response, None
-

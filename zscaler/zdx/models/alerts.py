@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common as common_reference
@@ -25,7 +26,7 @@ class Alerts(ZscalerObject):
     A class for ongoing alert rules across an organization objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ongoing alert rules across an organization model based on API response.
 
@@ -44,7 +45,7 @@ class Alerts(ZscalerObject):
             self.next_offset = None
             self.alerts = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -62,7 +63,7 @@ class AlertDetails(ZscalerObject):
     A class for AlertDetails objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AlertDetails model based on API response.
 
@@ -114,7 +115,7 @@ class AlertDetails(ZscalerObject):
             self.started_on = None
             self.ended_on = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -141,7 +142,7 @@ class AffectedDevices(ZscalerObject):
     A class for affected devices associated with an alert rule objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the affected devices associated with an alert rule model based on API response.
 
@@ -160,7 +161,7 @@ class AffectedDevices(ZscalerObject):
             self.next_offset = None
             self.devices = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -178,7 +179,7 @@ class DeviceDetails(ZscalerObject):
     A class for affected devices associated with an alert rule objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the affected devices associated with an alert rule model based on API response.
 
@@ -200,7 +201,7 @@ class DeviceDetails(ZscalerObject):
             self.user_name = None
             self.user_email = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

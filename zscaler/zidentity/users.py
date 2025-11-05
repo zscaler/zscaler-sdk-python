@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zidentity.models.users import Users
 from zscaler.zidentity.models.users import UserRecord
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class UsersAPI(APIClient):
@@ -28,11 +30,11 @@ class UsersAPI(APIClient):
 
     _zidentity_base_endpoint = "/admin/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_users(self, query_params=None) -> tuple:
+    def list_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of users with optional query parameters for pagination and filtering
 
@@ -111,7 +113,7 @@ class UsersAPI(APIClient):
 
         return (result, response, None)
 
-    def get_user(self, user_id: str) -> tuple:
+    def get_user(self, user_id: str) -> APIResult[dict]:
         """
         Retrieves detailed information about a specific user using the provided user ID.
 
@@ -157,7 +159,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_user(self, **kwargs) -> tuple:
+    def add_user(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new Zidentity User.
 
@@ -232,7 +234,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_user(self, user_id: str, **kwargs) -> tuple:
+    def update_user(self, user_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified Zidentity User.
 
@@ -292,7 +294,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_user(self, user_id: str) -> tuple:
+    def delete_user(self, user_id: str) -> APIResult[dict]:
         """
         Deletes the specified User.
 
@@ -330,7 +332,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_user_group_details(self, user_id: str, query_params=None) -> tuple:
+    def list_user_group_details(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a paginated list of groups associated with a specific user ID.
 

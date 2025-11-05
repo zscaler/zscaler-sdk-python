@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import user_portal_controller as user_portal_controller
@@ -25,7 +26,7 @@ class UserPortalLinks(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the User Portal Links model based on API response.
 
@@ -44,7 +45,7 @@ class UserPortalLinks(ZscalerObject):
             self.user_portals = []
             self.user_portal_links = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -62,7 +63,7 @@ class UserPortalLink(ZscalerObject):
     A class for User Portal Link objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the User Portal Link model based on API response.
 
@@ -124,7 +125,7 @@ class UserPortalLink(ZscalerObject):
             self.user_portal_id = None
             self.user_portals = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

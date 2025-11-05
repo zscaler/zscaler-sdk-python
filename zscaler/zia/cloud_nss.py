@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_nss import NSSTestConnectivity
 from zscaler.zia.models.cloud_nss import NssFeeds
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudNSSAPI(APIClient):
@@ -28,11 +30,11 @@ class CloudNSSAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_feed(self, query_params=None) -> tuple:
+    def list_nss_feed(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the cloud NSS feeds configured in the ZIA Admin Portal
 
@@ -87,7 +89,7 @@ class CloudNSSAPI(APIClient):
     def get_nss_feed(
         self,
         feed_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Retrieves information about cloud NSS feed based on the specified ID
 
@@ -134,7 +136,7 @@ class CloudNSSAPI(APIClient):
     def add_nss_feed(
         self,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a new cloud NSS feed.
 
@@ -332,7 +334,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_nss_feed(self, feed_id: int, **kwargs) -> tuple:
+    def update_nss_feed(self, feed_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates cloud NSS feed configuration based on the specified ID
 
@@ -515,7 +517,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_feed(self, feed_id: int) -> tuple:
+    def delete_feed(self, feed_id: int) -> APIResult[dict]:
         """
         Deletes cloud NSS feed configuration based on the specified ID
 
@@ -549,7 +551,7 @@ class CloudNSSAPI(APIClient):
 
         return (None, response, None)
 
-    def list_feed_output(self, query_params=None) -> tuple:
+    def list_feed_output(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the default cloud NSS feed output format for different log types
 
@@ -602,7 +604,7 @@ class CloudNSSAPI(APIClient):
     def test_connectivity(
         self,
         feed_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Tests the connectivity of cloud NSS feed based on the specified ID
 
@@ -646,7 +648,7 @@ class CloudNSSAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def validate_feed_format(self, feed_type: str = None) -> tuple:
+    def validate_feed_format(self, feed_type: str = None) -> APIResult[dict]:
         """
         Validates the cloud NSS feed format and returns the validation result.
 

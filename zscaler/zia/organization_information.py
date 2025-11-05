@@ -14,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.organization_information import OrganizationInformation
 from zscaler.zia.models.organization_information import OrganizationInformationLite
 from zscaler.zia.models.organization_information import OrganizationSubscription
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class OrganizationInformationAPI(APIClient):
@@ -29,11 +31,11 @@ class OrganizationInformationAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_organization_information(self) -> tuple:
+    def get_organization_information(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -79,7 +81,7 @@ class OrganizationInformationAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_org_info_lite(self) -> tuple:
+    def get_org_info_lite(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 
@@ -125,7 +127,7 @@ class OrganizationInformationAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_subscriptions(self) -> tuple:
+    def get_subscriptions(self) -> APIResult[dict]:
         """
         Retrieves the current organization information configured in the ZIA Admin Portal.
 

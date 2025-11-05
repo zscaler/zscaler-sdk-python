@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.browser_control_settings import BrowserControlSettings
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class BrowserControlSettingsPI(APIClient):
@@ -27,11 +29,11 @@ class BrowserControlSettingsPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_browser_control_settings(self) -> tuple:
+    def get_browser_control_settings(self) -> APIResult[dict]:
         """
         Retrieves the Browser Control status and the list of configured browsers in the Browser Control policy
 
@@ -75,7 +77,7 @@ class BrowserControlSettingsPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_browser_control_settings(self, **kwargs) -> tuple:
+    def update_browser_control_settings(self, **kwargs) -> APIResult[dict]:
         """
         Updates the Browser Control Settings.
 

@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_dictionary import DLPDictionary, DLPPatternValidation
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DLPDictionaryAPI(APIClient):
@@ -27,14 +29,14 @@ class DLPDictionaryAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_dicts(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns a list of all custom and predefined ZIA DLP Dictionaries.
 
@@ -100,8 +102,8 @@ class DLPDictionaryAPI(APIClient):
 
     def list_dicts_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists name and ID dictionary of all custom and predefined DLP dictionaries.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -167,7 +169,7 @@ class DLPDictionaryAPI(APIClient):
 
         return (results, response, None)
 
-    def get_dict(self, dict_id: int) -> tuple:
+    def get_dict(self, dict_id: int) -> APIResult[dict]:
         """
         Returns the DLP Dictionary that matches the specified DLP Dictionary id.
 
@@ -211,7 +213,7 @@ class DLPDictionaryAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> tuple:
+    def add_dict(self, name: str, custom_phrase_match_type: str, dictionary_type: str, **kwargs) -> APIResult[dict]:
         r"""
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
@@ -320,7 +322,7 @@ class DLPDictionaryAPI(APIClient):
 
         return (result, response, None)
 
-    def update_dict(self, dict_id: int, **kwargs) -> tuple:
+    def update_dict(self, dict_id: int, **kwargs) -> APIResult[dict]:
         r"""
         Updates the specified DLP Dictionary.
 
@@ -405,7 +407,7 @@ class DLPDictionaryAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_dict(self, dict_id: str) -> tuple:
+    def delete_dict(self, dict_id: str) -> APIResult[dict]:
         """
         Deletes the DLP Dictionary that matches the specified DLP Dictionary id.
 
@@ -438,7 +440,7 @@ class DLPDictionaryAPI(APIClient):
 
         return (None, response, None)
 
-    def validate_dict(self, pattern: str) -> tuple:
+    def validate_dict(self, pattern: str) -> APIResult[dict]:
         """
         Validates the provided pattern for usage in a DLP Dictionary.
 
@@ -477,7 +479,7 @@ class DLPDictionaryAPI(APIClient):
 
         return (result, response, None)
 
-    def list_dict_predefined_identifiers(self, dict_name: str) -> tuple:
+    def list_dict_predefined_identifiers(self, dict_name: str) -> APIResult[dict]:
         """
         Returns a list of predefined identifiers for a specific DLP dictionary by its name.
 

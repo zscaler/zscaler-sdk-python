@@ -14,10 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.alert_subscriptions import AlertSubscriptions
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AlertSubscriptionsAPI(APIClient):
@@ -27,11 +30,11 @@ class AlertSubscriptionsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_alert_subscriptions(self) -> tuple:
+    def list_alert_subscriptions(self) -> APIResult[List[AlertSubscriptions]]:
         """
         Retrieves a list of all alert subscriptions.
 
@@ -77,7 +80,7 @@ class AlertSubscriptionsAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_alert_subscription(self, subscription_id: int) -> tuple:
+    def get_alert_subscription(self, subscription_id: int) -> APIResult[AlertSubscriptions]:
         """
         Retrieves the alert subscription information based on the specified ID
 
@@ -122,7 +125,7 @@ class AlertSubscriptionsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_alert_subscription(self, **kwargs) -> tuple:
+    def add_alert_subscription(self, **kwargs) -> APIResult[AlertSubscriptions]:
         """
         Adds a new alert subscription.
 
@@ -181,7 +184,7 @@ class AlertSubscriptionsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_alert_subscription(self, subscription_id: int, **kwargs) -> tuple:
+    def update_alert_subscription(self, subscription_id: int, **kwargs) -> APIResult[AlertSubscriptions]:
         """
         Updates an existing alert subscription based on the specified ID
 
@@ -258,7 +261,7 @@ class AlertSubscriptionsAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_alert_subscription(self, subscription_id: int) -> tuple:
+    def delete_alert_subscription(self, subscription_id: int) -> APIResult[None]:
         """
         Deletes the specified Alert Subscription
 

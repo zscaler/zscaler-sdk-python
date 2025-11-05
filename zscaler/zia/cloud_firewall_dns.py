@@ -14,24 +14,26 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_dns_rules import FirewallDNSRules
+from zscaler.types import APIResult
 
 
 class FirewallDNSRulesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_rules(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         List firewall dns rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -105,7 +107,7 @@ class FirewallDNSRulesAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns information for the specified cloud firewall dns filter rule.
 
@@ -155,7 +157,7 @@ class FirewallDNSRulesAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Adds a new cloud firewall dns rule.
 
@@ -257,7 +259,7 @@ class FirewallDNSRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> tuple:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates an existing cloud firewall dns rule.
 
@@ -365,7 +367,7 @@ class FirewallDNSRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> tuple:
+    def delete_rule(self, rule_id: int) -> APIResult[dict]:
         """
         Deletes the specified cloud firewall dns filter rule.
 

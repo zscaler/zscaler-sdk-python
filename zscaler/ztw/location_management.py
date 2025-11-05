@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.location_management import LocationManagement
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class LocationManagementAPI(APIClient):
@@ -27,11 +29,11 @@ class LocationManagementAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params=None) -> tuple:
+    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of locations.
 
@@ -40,19 +42,26 @@ class LocationManagementAPI(APIClient):
 
                 ``[query_params.page]`` {int}: Specifies the page offset.
 
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default
+                    size is 100, but the maximum size is 1000.
 
-                ``[query_params.state]`` {str}: Filter based on geographical state for a location.
+                ``[query_params.state]`` {str}: Filter based on geographical state for
+                    a location.
 
-                ``[query_params.xff_enabled]`` {bool}: Filter based on whether Enforce XFF Forwarding is enabled for a location.
+                ``[query_params.xff_enabled]`` {bool}: Filter based on whether Enforce
+                    XFF Forwarding is enabled for a location.
 
-                ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce Authentication is enabled for a location.
+                ``[query_params.auth_required]`` {bool}: Filter based on whether Enforce
+                    Authentication is enabled for a location.
 
-                ``[query_params.bw_enforced]`` {bool}: Filter based on whether Bandwith Control is enforced for a location.
+                ``[query_params.bw_enforced]`` {bool}: Filter based on whether Bandwith
+                    Control is enforced for a location.
 
-                ``[query_params.partner_id]`` {bool}: Not applicable to Cloud & Branch Connector.
+                ``[query_params.partner_id]`` {bool}: Not applicable to Cloud &
+                    Branch Connector.
 
-                ``[query_params.enforce_aup]`` {bool}: Filter based on whether Acceptable Use Policy (AUP) is enforced for a location.
+                ``[query_params.enforce_aup]`` {bool}: Filter based on whether
+                    Acceptable Use Policy (AUP) is enforced for a location.
 
                 ``[query_params.enable_firewall]`` {bool}: Filter based on whether firewall is enabled for a location.
 
@@ -116,7 +125,7 @@ class LocationManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_location(self, location_id: int) -> tuple:
+    def get_location(self, location_id: int) -> APIResult[dict]:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -160,7 +169,7 @@ class LocationManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_locations_lite(self, query_params=None) -> tuple:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns only the name and ID of all configured locations.
 
@@ -169,21 +178,30 @@ class LocationManagementAPI(APIClient):
 
                 ``[query_params.page]`` {int}: Specifies the page offset.
 
-                ``[query_params.page_size]`` {int}: Specifies the page size. The default size is 100, but the maximum size is 1000.
+                ``[query_params.page_size]`` {int}: Specifies the page size. The default
+                    size is 100, but the maximum size is 1000.
 
-                ``[query_params.search]`` {str}: The search string used to partially match against the location name and port attributes.
+                ``[query_params.search]`` {str}: The search string used to partially match
+                    against the location name and port attributes.
 
-                ``[query_params.group_id]`` {int}: Filter based on location group ID for a location.
+                ``[query_params.group_id]`` {int}: Filter based on location group ID for
+                    a location.
 
-                ``[query_params.partner_id]`` {int}: Not applicable to Cloud & Branch Connector.
+                ``[query_params.partner_id]`` {int}: Not applicable to Cloud &
+                    Branch Connector.
 
-                ``[query_params.version]`` {int}: Not applicable to Cloud & Branch Connector.
+                ``[query_params.version]`` {int}: Not applicable to Cloud &
+                    Branch Connector.
 
-                ``[query_params.include_sub_locations]`` {bool}: If set to true, sub-locations are included in the response.
+                ``[query_params.include_sub_locations]`` {bool}: If set to true,
+                    sub-locations are included in the response.
 
-                ``[query_params.include_parent_locations]`` {bool}: If set to true, parent locations (i.e., locations with sub-locations) are included in the response.
+                ``[query_params.include_parent_locations]`` {bool}: If set to true,
+                    parent locations (i.e., locations with sub-locations) are included
+                    in the response.
 
-                ``[query_params.include_default_location]`` {bool}: If set to true, default location is included in response.
+                ``[query_params.include_default_location]`` {bool}: If set to true,
+                    default location is included in response.
 
         Returns:
             :obj:`Tuple`: A list of configured locations.
@@ -201,7 +219,11 @@ class LocationManagementAPI(APIClient):
 
             Gets a list of all Locations.
 
-            >>> location_list, response, error = ztw.location_management.list_locations_lite(query_params={"search": 'Group01'}):
+            >>> location_list, response, error = (
+            ...     ztw.location_management.list_locations_lite(
+            ...         query_params={"search": 'Group01'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing Locations: {error}")
             ...     return

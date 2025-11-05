@@ -14,20 +14,22 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, zcc_param_mapper
 from zscaler.api_client import APIClient
 from zscaler.zcc.models.secrets_otp import OtpResponse
 from zscaler.zcc.models.secrets_passwords import Passwords
+from zscaler.types import APIResult
 
 
 class SecretsAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def get_otp(self, query_params=None) -> tuple:
+    def get_otp(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the OTP code for the specified device id.
 
@@ -81,7 +83,7 @@ class SecretsAPI(APIClient):
             return None, response, error
 
     @zcc_param_mapper
-    def get_passwords(self, query_params=None) -> tuple:
+    def get_passwords(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Return passwords for the specified username and device OS type.
 

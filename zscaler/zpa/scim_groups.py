@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.scim_groups import SCIMGroup
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class SCIMGroupsAPI(APIClient):
@@ -31,7 +33,7 @@ class SCIMGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint_userconfig = f"/zpa/userconfig/v1/customers/{customer_id}"
 
-    def list_scim_groups(self, idp_id: str, query_params=None) -> tuple:
+    def list_scim_groups(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all configured SCIM groups for the specified IdP.
 
@@ -108,7 +110,7 @@ class SCIMGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_scim_group(self, group_id: str, query_params=None) -> tuple:
+    def get_scim_group(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified SCIM group.
 

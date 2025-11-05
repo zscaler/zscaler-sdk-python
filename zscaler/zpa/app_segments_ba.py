@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.application_segment import ApplicationSegments
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.utils import format_url, add_id_groups
+from zscaler.types import APIResult
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,7 +42,7 @@ class ApplicationSegmentBAAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segments_ba(self, query_params=None) -> tuple:
+    def list_segments_ba(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Enumerates BA application segments in your organization with pagination.
         A subset of application segments can be returned that match a supported
@@ -105,7 +107,7 @@ class ApplicationSegmentBAAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_segment_ba(self, segment_id: str, query_params=None) -> tuple:
+    def get_segment_ba(self, segment_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieve an browser access application segment by its ID.
 
@@ -158,7 +160,7 @@ class ApplicationSegmentBAAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_segment_ba(self, **kwargs) -> tuple:
+    def add_segment_ba(self, **kwargs) -> APIResult[dict]:
         """
         Create a new browser access application segment.
 
@@ -306,7 +308,7 @@ class ApplicationSegmentBAAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_segment_ba(self, segment_id: str, **kwargs) -> tuple:
+    def update_segment_ba(self, segment_id: str, **kwargs) -> APIResult[dict]:
         """
         Update an existing browser access application segment.
 
@@ -484,7 +486,7 @@ class ApplicationSegmentBAAPI(APIClient):
         segment_id: str,
         force_delete: bool = False,
         microtenant_id: str = None
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Deletes the specified Application Segment from ZPA.
 

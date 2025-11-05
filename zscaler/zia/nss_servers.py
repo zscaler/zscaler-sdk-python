@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.nss_servers import Nssservers
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class NssServersAPI(APIClient):
@@ -27,11 +29,11 @@ class NssServersAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_servers(self, query_params=None) -> tuple:
+    def list_nss_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists NSS servers in your organization.
 
@@ -108,7 +110,7 @@ class NssServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_nss_server(self, nss_id: int) -> tuple:
+    def get_nss_server(self, nss_id: int) -> APIResult[dict]:
         """
         Fetches a specific nss servers by ID.
 
@@ -154,7 +156,7 @@ class NssServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_nss_server(self, **kwargs) -> tuple:
+    def add_nss_server(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA NSS server.
 
@@ -216,7 +218,7 @@ class NssServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_nss_server(self, nss_id: int, **kwargs) -> tuple:
+    def update_nss_server(self, nss_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA nss server.
 
@@ -265,7 +267,7 @@ class NssServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_nss_server(self, nss_id: int) -> tuple:
+    def delete_nss_server(self, nss_id: int) -> APIResult[dict]:
         """
         Deletes the specified nss server.
 

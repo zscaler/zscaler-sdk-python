@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.emergency_access import EmergencyAccessUser
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class EmergencyAccessAPI(APIClient):
@@ -31,7 +33,7 @@ class EmergencyAccessAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_users(self, query_params=None, **kwargs) -> tuple:
+    def list_users(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
         """
         Enumerates emergency access in your organization with pagination.
         A subset of emergency access can be returned that match a supported
@@ -90,7 +92,7 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_user(self, user_id: str, query_params=None) -> tuple:
+    def get_user(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on the specified emergency access user.
 
@@ -135,7 +137,7 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_user(self, activate_now=True, **kwargs) -> tuple:
+    def add_user(self, activate_now=True, **kwargs) -> APIResult[dict]:
         """
         Add an emergency access user.
 
@@ -198,7 +200,7 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_user(self, user_id: str, activate_now=True, **kwargs) -> tuple:
+    def update_user(self, user_id: str, activate_now=True, **kwargs) -> APIResult[dict]:
         """
         Updates the specified emergency access user.
 
@@ -266,7 +268,7 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def activate_user(self, user_id: str, send_email: bool = False, **kwargs) -> tuple:
+    def activate_user(self, user_id: str, send_email: bool = False, **kwargs) -> APIResult[dict]:
         """
         Activates the emergency access user.
 
@@ -314,7 +316,7 @@ class EmergencyAccessAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def deactivate_user(self, user_id: str, **kwargs) -> tuple:
+    def deactivate_user(self, user_id: str, **kwargs) -> APIResult[dict]:
         """
         Deactivates the emergency access user.
 

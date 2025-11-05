@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.ip_destination_groups import IPDestinationGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IPDestinationGroupsAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of IP Destination Groups.
 
@@ -57,7 +59,11 @@ class IPDestinationGroupsAPI(APIClient):
 
             Gets a list of all IP destination groups by excluding specific type.
 
-            >>> group_list, response, error = client.ztw.ip_destination_groups.list_ip_destination_groups(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+            >>> group_list, response, error = (
+            ...     client.ztw.ip_destination_groups.list_ip_destination_groups(
+            ...         query_params={"exclude_type": 'DSTN_DOMAIN'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -111,7 +117,9 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ip_destination_groups_lite(self, exclude_type: str = None, query_params=None) -> tuple:
+    def list_ip_destination_groups_lite(
+        self, exclude_type: str = None, query_params: Optional[dict] = None
+    ) -> APIResult[dict]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -141,7 +149,11 @@ class IPDestinationGroupsAPI(APIClient):
 
             Gets a list of all IP destination groups by excluding specific type.
 
-            >>> group_list, response, error = client.ztw.ip_destination_groups.list_ip_destination_groups_lite(query_params={"exclude_type": 'DSTN_DOMAIN'}):
+            >>> group_list, response, error = (
+            ...     client.ztw.ip_destination_groups.list_ip_destination_groups_lite(
+            ...         query_params={"exclude_type": 'DSTN_DOMAIN'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing ip destination groups: {error}")
             ...     return
@@ -207,7 +219,7 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_ip_destination_group(self, **kwargs) -> tuple:
+    def add_ip_destination_group(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new IP Destination Group.
 
@@ -277,7 +289,7 @@ class IPDestinationGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ip_destination_group(self, group_id: int) -> tuple:
+    def delete_ip_destination_group(self, group_id: int) -> APIResult[dict]:
         """
         Deletes the specified IP Destination Group.
 

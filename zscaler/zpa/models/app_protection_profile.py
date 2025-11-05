@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zpa.models import common as common
@@ -24,7 +25,7 @@ class AppProtectionProfile(ZscalerObject):
     A class for AppProtectionProfile objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppProtectionProfile model based on API response.
 
@@ -114,7 +115,7 @@ class AppProtectionProfile(ZscalerObject):
             self.threatlabz_controls = []
             self.websocket_controls = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -152,7 +153,7 @@ class ControlsInfo(ZscalerObject):
     A class for ControlsInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ControlsInfo model based on API response.
 
@@ -170,7 +171,7 @@ class ControlsInfo(ZscalerObject):
             self.control_type = None
             self.count = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -188,7 +189,7 @@ class CustomControls(ZscalerObject):
     A class for CustomControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CustomControls model based on API response.
 
@@ -275,7 +276,7 @@ class CustomControls(ZscalerObject):
             self.type = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -312,7 +313,7 @@ class PredefinedControls(ZscalerObject):
     A class for PredefinedControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PredefinedControls model based on API response.
 
@@ -393,7 +394,7 @@ class PredefinedControls(ZscalerObject):
             self.severity = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -429,7 +430,7 @@ class PredefinedADPControls(ZscalerObject):
     A class for PredefinedADPControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PredefinedADPControls model based on API response.
 
@@ -510,7 +511,7 @@ class PredefinedADPControls(ZscalerObject):
             self.severity = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -546,7 +547,7 @@ class PredefinedAPIControls(ZscalerObject):
     A class for PredefinedAPIControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PredefinedAPIControls model based on API response.
 
@@ -628,7 +629,7 @@ class PredefinedAPIControls(ZscalerObject):
             self.severity = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -664,7 +665,7 @@ class ThreatLabzControls(ZscalerObject):
     A class for ThreatLabzControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the ThreatLabzControls model based on API response.
 
@@ -733,7 +734,7 @@ class ThreatLabzControls(ZscalerObject):
             self.rule_deployment_state = None
             self.last_deployment_time = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -768,7 +769,7 @@ class WebSocketControls(ZscalerObject):
     A class for WebSocketControls objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the WebSocketControls model based on API response.
 
@@ -841,7 +842,7 @@ class WebSocketControls(ZscalerObject):
             self.severity = None
             self.version = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -875,7 +876,7 @@ class InspectionRule(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the InspectionRule model based on API response.
 
@@ -896,7 +897,7 @@ class InspectionRule(ZscalerObject):
             self.type = None
             self.conditions = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """
@@ -916,7 +917,7 @@ class InspectionRuleCondition(ZscalerObject):
     Handles common block attributes shared across multiple resources
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Rules model based on API response.
 
@@ -934,7 +935,7 @@ class InspectionRuleCondition(ZscalerObject):
             self.op = None
             self.rhs = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Returns the object as a dictionary in the format expected for API requests.
         """

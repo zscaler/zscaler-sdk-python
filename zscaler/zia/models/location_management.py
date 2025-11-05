@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -25,7 +26,7 @@ class LocationManagement(ZscalerObject):
     A class representing a Location object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         # print("🚨 Raw config passed into LocationManagement:")
         # import pprint
@@ -114,7 +115,12 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-            self.ports = config["ports"] if "ports" in config else None
+            self.ports = ZscalerCollection.form_list(config["ports"] if "ports" in config else [], str)
+            self.sub_loc_scope_values = ZscalerCollection.form_list(
+                config["subLocScopeValues"] if "subLocScopeValues" in config else [], str)
+            self.sub_loc_acc_ids = ZscalerCollection.form_list(config["subLocAccIds"] if "subLocAccIds" in config else [], str)
+            self.sub_loc_scope_enabled = config["subLocScopeEnabled"] if "subLocScopeEnabled" in config else None
+            self.sub_loc_scope = config["subLocScope"] if "subLocScope" in config else None
             # Handling nested lists and collections
             self.static_location_groups = ZscalerCollection.form_list(
                 config["staticLocationGroups"] if "staticLocationGroups" in config else [], common.CommonIDName
@@ -208,13 +214,17 @@ class LocationManagement(ZscalerObject):
             self.extranet = None
             self.extranet_ip_pool = None
             self.extranet_dns = None
-            self.ports = None
+            self.ports = []
             self.static_location_groups = []
             self.dynamic_location_groups = []
             self.vpn_credentials = []
             self.ip_addresses = []
+            self.sub_loc_scope_enabled = False
+            self.sub_loc_scope = None
+            self.sub_loc_scope_values = []
+            self.sub_loc_acc_ids = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -272,6 +282,10 @@ class LocationManagement(ZscalerObject):
             "extranetDns": self.extranet_dns,
             "defaultExtranetTsPool": self.default_extranet_ts_pool,
             "defaultExtranetDns": self.default_extranet_dns,
+            "subLocScopeEnabled": self.sub_loc_scope_enabled,
+            "subLocScope": self.sub_loc_scope,
+            "subLocScopeValues": self.sub_loc_scope_values,
+            "subLocAccIds": self.sub_loc_acc_ids,
             "staticLocationGroups": [static.request_format() for static in (self.static_location_groups or [])],
             "dynamiclocationGroups": [dyn.request_format() for dyn in (self.dynamic_location_groups or [])],
             "vpnCredentials": [vpn.request_format() for vpn in (self.vpn_credentials or [])],
@@ -285,7 +299,7 @@ class VPNCredentials(ZscalerObject):
     A class representing a VPN Credentials object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
 
         if config:
@@ -303,7 +317,7 @@ class VPNCredentials(ZscalerObject):
             self.comments = None
             self.location = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -324,7 +338,7 @@ class RegionInfo(ZscalerObject):
     A class for RegionInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RegionInfo model based on API response.
 
@@ -366,7 +380,7 @@ class RegionInfo(ZscalerObject):
             self.postal_code = None
             self.continent_code = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zia.models import common
@@ -24,7 +25,7 @@ class RiskProfiles(ZscalerObject):
     A class for RiskProfiles objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RiskProfiles model based on API response.
 
@@ -126,7 +127,7 @@ class RiskProfiles(ZscalerObject):
             self.modified_by = None
             self.custom_tags = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

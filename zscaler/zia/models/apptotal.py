@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class AppTotal(ZscalerObject):
     A class for App Total 3rd-Party App Governance API objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.name = config["name"] if "name" in config else None
@@ -134,7 +135,7 @@ class AppTotal(ZscalerObject):
             self.insights = []
             self.instances = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {
             "name": self.name,
@@ -190,7 +191,7 @@ class AppTotalSearch(ZscalerObject):
     A class for App Total Search 3rd-Party App Governance API objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.count = config["count"] if "count" in config else None
@@ -218,7 +219,7 @@ class AppTotalSearch(ZscalerObject):
             self.current_page = None
             self.data = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         parent_req_format = super().request_format()
         current_obj_format = {"count": self.count, "currentPage": self.current_page, "data": self.data}
         parent_req_format.update(current_obj_format)
@@ -230,7 +231,7 @@ class AppViewAppsResponse(ZscalerObject):
     A class representing a High Risk App object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         if config:
             self.id = config["id"] if "id" in config else None
@@ -247,7 +248,7 @@ class AppViewAppsResponse(ZscalerObject):
             self.created_at = None
             self.spec_map = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         return {
             "id": self.id,
             "name": self.name,

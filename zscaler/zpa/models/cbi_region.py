@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class CBIRegion(ZscalerObject):
     A class representing a Cloud Browser Isolation Region object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CBIRegion object.
 
@@ -35,7 +36,7 @@ class CBIRegion(ZscalerObject):
         self.id = config["id"] if config and "id" in config else None
         self.name = config["name"] if config and "name" in config else None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 

@@ -14,32 +14,36 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.ztw.models.nw_service_groups import NetworkServiceGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class NWServiceGroupsAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_network_svc_groups(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
-        Lists network service groups in your organization with pagination.
-        A subset of network service groups can be returned that match a supported
-        filter expression or query.
+            Lists network service groups in your organization with pagination.
+            A subset of network service groups can be returned that match a supported
+            filter expression or query.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
-                ``[query_params.search]`` {str}: The search string used to match against a group's name or description attributes.
+
+                ``[query_params.search]`` {str}: The search string used to match against
+                    a group's name or description attributes.
 
         Returns:
             tuple: List of Network Service Group resource records.
@@ -57,7 +61,11 @@ class NWServiceGroupsAPI(APIClient):
 
             Gets a list of all network services group.
 
-            >>> group_list, response, error = ztw.nw_service_groups.list_network_svc_groups(query_params={"search": 'Group01'}):
+            >>> group_list, response, error = (
+            ...     ztw.nw_service_groups.list_network_svc_groups(
+            ...         query_params={"search": 'Group01'}
+            ...     )
+            ... ):
             ... if error:
             ...     print(f"Error listing network services group: {error}")
             ...     return

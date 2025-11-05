@@ -14,11 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
 class CBIBanner(ZscalerObject):
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the CBIBanner model based on API response.
 
@@ -39,7 +40,7 @@ class CBIBanner(ZscalerObject):
         self.persist = config["persist"] if config and "persist" in config else None
         self.is_default = config["isDefault"] if config and "isDefault" in config else None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the model data for API requests.
         """

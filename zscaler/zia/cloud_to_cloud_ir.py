@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloud_to_cloud_ir import CloudToCloudIR
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CloudToCloudIRAPI(APIClient):
@@ -27,11 +29,11 @@ class CloudToCloudIRAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_to_cloud_ir(self, query_params=None) -> tuple:
+    def list_cloud_to_cloud_ir(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding.
 
@@ -90,7 +92,7 @@ class CloudToCloudIRAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cloud_to_cloud_ir(self, receiver_id: int) -> tuple:
+    def get_cloud_to_cloud_ir(self, receiver_id: int) -> APIResult[dict]:
         """
         Retrieves information about a DLP Incident Receiver configured for
         Cloud-to-Cloud DLP Incident Forwarding based on the specified ID
@@ -135,7 +137,7 @@ class CloudToCloudIRAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_cloud_to_cloud_ir_lite(self, query_params=None) -> tuple:
+    def list_cloud_to_cloud_ir_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud DLP Incident Forwarding,
         with a subset of information for each Incident Receiver
@@ -197,7 +199,7 @@ class CloudToCloudIRAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_c2c_count(self, query_params=None) -> tuple:
+    def list_c2c_count(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the number of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
 
@@ -253,7 +255,7 @@ class CloudToCloudIRAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def c2c_validate_delete(self, receiver_id: int) -> tuple:
+    def c2c_validate_delete(self, receiver_id: int) -> APIResult[dict]:
         """
         Validates the specified cloud storage configuration e.g. Amazon S3 bucket configuration
         of a Cloud-to-Cloud DLP Incident Receiver by verifying he configuration's current association

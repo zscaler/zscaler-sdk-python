@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.vzen_nodes import VZenNodes
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class VZENNodesAPI(APIClient):
@@ -27,11 +29,11 @@ class VZENNodesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_zen_nodes(self, query_params=None) -> tuple:
+    def list_zen_nodes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves the ZIA Virtual Service Edge for an organization
 
@@ -86,7 +88,7 @@ class VZENNodesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_zen_node(self, node_id: int) -> tuple:
+    def get_zen_node(self, node_id: int) -> APIResult[dict]:
         """
         Fetches a specific Zen Node by ID.
 
@@ -132,7 +134,7 @@ class VZENNodesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_zen_node(self, **kwargs) -> tuple:
+    def add_zen_node(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Virtual Zen Node.
 
@@ -236,7 +238,7 @@ class VZENNodesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_zen_node(self, node_id: int, **kwargs) -> tuple:
+    def update_zen_node(self, node_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Virtual Zen Node.
 
@@ -337,7 +339,7 @@ class VZENNodesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_zen_node(self, node_id: int) -> tuple:
+    def delete_zen_node(self, node_id: int) -> APIResult[dict]:
         """
         Deletes the specified Zen Node.
 

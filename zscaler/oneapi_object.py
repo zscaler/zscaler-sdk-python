@@ -1,3 +1,4 @@
+from typing import Dict, Any, Optional, List
 from zscaler.helpers import to_snake_case
 from zscaler.helpers import convert_keys_to_snake_case
 
@@ -7,21 +8,21 @@ class ZscalerObject:
     Base object for all Zscaler datatypes.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Any] = None) -> None:
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(vars(self))
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> Any:
         if hasattr(self, key):
             return getattr(self, key)
         raise KeyError(f"{key} not found in {self.__class__.__name__}")
 
-    def __contains__(self, key):
+    def __contains__(self, key: str) -> bool:
         return hasattr(self, key)
 
-    def get(self, key, default=None):
+    def get(self, key: str, default: Optional[Any] = None) -> Any:
         """
         Get an attribute value with a default if the attribute doesn't exist.
         Similar to dict.get() method.
@@ -37,15 +38,15 @@ class ZscalerObject:
             return getattr(self, key)
         return default
 
-    def as_dict(self):
-        result = {}
+    def as_dict(self) -> Dict[str, Any]:
+        result: Dict[str, Any] = {}
         for key, val in self.request_format().items():
             if val is None:
                 continue
 
             # If it's a list, convert each item
             if isinstance(val, list):
-                formatted_list = []
+                formatted_list: List[Any] = []
                 for item in val:
                     if isinstance(item, ZscalerObject):
                         formatted_list.append(item.as_dict())
@@ -71,7 +72,7 @@ class ZscalerObject:
 
         return result
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object in a format suitable for API requests.
         The keys are in camelCase as expected by the API.

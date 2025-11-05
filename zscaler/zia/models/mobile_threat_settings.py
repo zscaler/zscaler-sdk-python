@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class MobileAdvancedThreatSettings(ZscalerObject):
     A class for MobileAdvancedThreatSettings objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the MobileAdvancedThreatSettings model based on API response.
 
@@ -72,7 +73,7 @@ class MobileAdvancedThreatSettings(ZscalerObject):
             self.block_apps_communicating_with_ad_websites = None
             self.block_apps_communicating_with_remote_unknown_servers = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

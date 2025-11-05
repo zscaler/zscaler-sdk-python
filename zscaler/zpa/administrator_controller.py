@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.administrator_controller import AdministratorController
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class AdministratorControllerAPI(APIClient):
@@ -31,7 +33,7 @@ class AdministratorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_administrators(self, query_params=None) -> tuple:
+    def list_administrators(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get all administrators in a company/customer.
         A mmaximum of 200 administrators are returned per request.
@@ -89,7 +91,7 @@ class AdministratorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_administrator(self, admin_id: str, query_params=None) -> tuple:
+    def get_administrator(self, admin_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Fetches a specific administrator details by ID.
 
@@ -135,7 +137,7 @@ class AdministratorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_administrator(self, **kwargs) -> tuple:
+    def add_administrator(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new ZPA admministrator.
 
@@ -195,7 +197,7 @@ class AdministratorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_administrator(self, admin_id: str, **kwargs) -> tuple:
+    def update_administrator(self, admin_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing ZPA c.
 
@@ -263,7 +265,7 @@ class AdministratorControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> tuple:
+    def delete_administrator(self, admin_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified Administrator from ZPA.
 

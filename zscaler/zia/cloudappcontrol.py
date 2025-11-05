@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.cloudappcontrol import CloudApplicationControl
 from zscaler.utils import transform_common_id_fields, format_url, reformat_params
+from zscaler.types import APIResult
 
 
 class CloudAppControlAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_available_actions(self, rule_type: str, cloud_apps: list) -> tuple:
+    def list_available_actions(self, rule_type: str, cloud_apps: list) -> APIResult[dict]:
         """
         Retrieves a list of granular actions supported for a specific rule type.
 
@@ -84,8 +86,8 @@ class CloudAppControlAPI(APIClient):
     def list_rules(
         self,
         rule_type: str,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns a list of all Cloud App Control rules for the specified rule type.
 
@@ -138,7 +140,7 @@ class CloudAppControlAPI(APIClient):
 
         return (result, response, None)
 
-    def get_rule(self, rule_type: str, rule_id: str) -> tuple:
+    def get_rule(self, rule_type: str, rule_id: str) -> APIResult[dict]:
         """
         Returns information for the specified Cloud App Control rule under the specified rule type.
 
@@ -185,7 +187,7 @@ class CloudAppControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_rule_type_mapping(self) -> tuple:
+    def get_rule_type_mapping(self) -> APIResult[dict]:
         """
         Gets the backend keys that match the application type string.
 
@@ -225,7 +227,7 @@ class CloudAppControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_rule(self, rule_type: str, **kwargs) -> tuple:
+    def add_rule(self, rule_type: str, **kwargs) -> APIResult[dict]:
         """
         Adds a new cloud app control filter rule.
 
@@ -426,7 +428,7 @@ class CloudAppControlAPI(APIClient):
 
         return (result, response, None)
 
-    def update_rule(self, rule_type: str, rule_id: str, **kwargs) -> tuple:
+    def update_rule(self, rule_type: str, rule_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates a new cloud app control filter rule.
 
@@ -627,7 +629,7 @@ class CloudAppControlAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_type: str, rule_id: int) -> tuple:
+    def delete_rule(self, rule_type: str, rule_id: int) -> APIResult[dict]:
         """
         Deletes the specified cloud app control filter rule.
 
@@ -662,7 +664,7 @@ class CloudAppControlAPI(APIClient):
 
         return (None, response, None)
 
-    def add_duplicate_rule(self, rule_type: str, rule_id: str, name: str, **kwargs) -> tuple:
+    def add_duplicate_rule(self, rule_type: str, rule_id: str, name: str, **kwargs) -> APIResult[dict]:
         """
         Adds a new duplicate cloud app control filter rule.
 

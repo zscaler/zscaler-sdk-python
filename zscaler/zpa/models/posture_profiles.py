@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 
@@ -23,7 +24,7 @@ class PostureProfile(ZscalerObject):
     A class representing a Posture Profile object.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the PostureProfile object with optional fields and nested object handling.
 
@@ -77,7 +78,7 @@ class PostureProfile(ZscalerObject):
             self.posture_type = None
             self.root_cert = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Prepare the object in a format suitable for sending as a request payload.
 

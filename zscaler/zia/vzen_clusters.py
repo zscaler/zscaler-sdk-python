@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.vzen_clusters import VZENClusters
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
+from zscaler.types import APIResult
 
 
 class VZENClustersAPI(APIClient):
@@ -27,11 +29,11 @@ class VZENClustersAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_vzen_clusters(self, query_params=None) -> tuple:
+    def list_vzen_clusters(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of ZIA Virtual Service Edge clusters
 
@@ -86,7 +88,7 @@ class VZENClustersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_vzen_cluster(self, cluster_id: int) -> tuple:
+    def get_vzen_cluster(self, cluster_id: int) -> APIResult[dict]:
         """
         Retrieves the Virtual Service Edge cluster based on the specified ID
 
@@ -132,7 +134,7 @@ class VZENClustersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_vzen_cluster(self, **kwargs) -> tuple:
+    def add_vzen_cluster(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new Virtual Service Edge cluster.
 
@@ -210,7 +212,7 @@ class VZENClustersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_vzen_cluster(self, cluster_id: int, **kwargs) -> tuple:
+    def update_vzen_cluster(self, cluster_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates the Virtual Service Edge cluster based on the specified ID
 
@@ -266,7 +268,7 @@ class VZENClustersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_vzen_cluster(self, cluster_id: int) -> tuple:
+    def delete_vzen_cluster(self, cluster_id: int) -> APIResult[dict]:
         """
         Deletes the Virtual Service Edge cluster based on the specified ID
 

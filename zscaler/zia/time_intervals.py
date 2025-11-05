@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.time_intervals import TimeIntervals
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class TimeIntervalsAPI(APIClient):
@@ -27,11 +29,11 @@ class TimeIntervalsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_time_intervals(self, query_params=None) -> tuple:
+    def list_time_intervals(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Retrieves a list of all configured time intervals.
 
@@ -89,7 +91,7 @@ class TimeIntervalsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_time_intervals(self, interval_id: int) -> tuple:
+    def get_time_intervals(self, interval_id: int) -> APIResult[dict]:
         """
         Fetches a specific Time Intervals by ID.
 
@@ -134,7 +136,7 @@ class TimeIntervalsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_time_intervals(self, **kwargs) -> tuple:
+    def add_time_intervals(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Time Interval.
 
@@ -195,7 +197,7 @@ class TimeIntervalsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_time_intervals(self, interval_id: int, **kwargs) -> tuple:
+    def update_time_intervals(self, interval_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Time Interval.
 
@@ -245,7 +247,7 @@ class TimeIntervalsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_time_intervals(self, interval_id: int) -> tuple:
+    def delete_time_intervals(self, interval_id: int) -> APIResult[dict]:
         """
         Deletes the specified Time Interval.
 

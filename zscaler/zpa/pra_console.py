@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.pra_console import PrivilegedRemoteAccessConsole
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class PRAConsoleAPI(APIClient):
@@ -31,7 +33,7 @@ class PRAConsoleAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_consoles(self, query_params=None) -> tuple:
+    def list_consoles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns a list of all Privileged Remote Access (PRA) consoles.
 
@@ -84,7 +86,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_console(self, console_id: str, query_params=None) -> tuple:
+    def get_console(self, console_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on a specific PRA console.
 
@@ -130,7 +132,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_console_portal(self, portal_id: str, query_params=None) -> tuple:
+    def get_console_portal(self, portal_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns information on a Privileged Remote Consoles for Specified Portal.
 
@@ -174,7 +176,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_console(self, **kwargs) -> tuple:
+    def add_console(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new Privileged Remote Access (PRA) console.
 
@@ -244,7 +246,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_console(self, console_id: str, **kwargs) -> tuple:
+    def update_console(self, console_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified PRA console.
 
@@ -312,7 +314,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_console(self, console_id: str, microtenant_id: str = None) -> tuple:
+    def delete_console(self, console_id: str, microtenant_id: str = None) -> APIResult[dict]:
         """
         Deletes the specified PRA console.
 
@@ -351,7 +353,7 @@ class PRAConsoleAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def add_bulk_console(self, consoles: list, **kwargs) -> tuple:
+    def add_bulk_console(self, consoles: list, **kwargs) -> APIResult[dict]:
         """
         Adds multiple Privileged Remote Access (PRA) consoles in bulk.
 

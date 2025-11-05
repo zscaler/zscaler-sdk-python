@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.role_controller import RoleController
 from zscaler.zpa.models.role_controller import ClassPermissionGroups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class RoleControllerAPI(APIClient):
@@ -32,7 +34,7 @@ class RoleControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_roles(self, query_params=None) -> tuple:
+    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get All configured roles.
 
@@ -83,7 +85,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_role(self, role_id: str, query_params=None) -> tuple:
+    def get_role(self, role_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Gets information on the specified role by ID.
 
@@ -131,7 +133,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_role(self, **kwargs) -> tuple:
+    def add_role(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new role.
 
@@ -221,7 +223,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_role(self, role_id: str, **kwargs) -> tuple:
+    def update_role(self, role_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates the specified role.
 
@@ -320,7 +322,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_role(self, role_id: str, microtenant_id: str = None) -> tuple:
+    def delete_role(self, role_id: str, microtenant_id: str = None) -> APIResult[None]:
         """
         Deletes the specified role.
 
@@ -358,7 +360,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (None, response, error)
 
-    def list_permission_groups(self, query_params=None) -> tuple:
+    def list_permission_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Get All the default permission groups
 

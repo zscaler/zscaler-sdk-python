@@ -14,12 +14,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import List, Optional
+
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.user_management import UserManagement
 from zscaler.zia.models.user_management import Department
 from zscaler.zia.models.user_management import Groups
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class UserManagementAPI(APIClient):
@@ -29,11 +32,11 @@ class UserManagementAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_users(self, query_params=None) -> tuple:
+    def list_users(self, query_params: Optional[dict] = None) -> APIResult[List[UserManagement]]:
         """
         Returns the list of users.
 
@@ -102,7 +105,7 @@ class UserManagementAPI(APIClient):
 
         return (result, response, None)
 
-    def get_user(self, user_id: int) -> tuple:
+    def get_user(self, user_id: int) -> APIResult[UserManagement]:
         """
         Returns the user information for the specified ID or email.
 
@@ -146,7 +149,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_user_references(self, query_params=None) -> tuple:
+    def list_user_references(self, query_params: Optional[dict] = None) -> APIResult[List[UserManagement]]:
         """
         Returns the list of Name-ID pairs for all users in the ZIA Admin Portal
         that can be referenced in user criteria within policies.
@@ -207,7 +210,7 @@ class UserManagementAPI(APIClient):
 
         return (result, response, None)
 
-    def add_user(self, **kwargs) -> tuple:
+    def add_user(self, **kwargs) -> APIResult[UserManagement]:
         """
         Creates a new ZIA user.
 
@@ -282,7 +285,7 @@ class UserManagementAPI(APIClient):
 
         return (result, response, None)
 
-    def update_user(self, user_id: str, **kwargs) -> tuple:
+    def update_user(self, user_id: str, **kwargs) -> APIResult[UserManagement]:
         """
         Updates the details for the specified user.
 
@@ -344,7 +347,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_user(self, user_id: str) -> tuple:
+    def delete_user(self, user_id: str) -> APIResult[None]:
         """
         Deletes the specified user ID.
 
@@ -376,7 +379,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def bulk_delete_users(self, user_ids: list) -> tuple:
+    def bulk_delete_users(self, user_ids: List[int]) -> APIResult[None]:
         """
         Bulk delete ZIA users.
 
@@ -410,7 +413,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (response.get_body(), response, None)
 
-    def list_departments(self, query_params=None) -> tuple:
+    def list_departments(self, query_params: Optional[dict] = None) -> APIResult[List[Department]]:
         """
         Returns the list of departments.
 
@@ -484,7 +487,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_department(self, department_id: str) -> tuple:
+    def get_department(self, department_id: str) -> APIResult[Department]:
         """
         Returns information on the specified department id.
 
@@ -525,7 +528,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_department_lite(self, department_id: str) -> tuple:
+    def get_department_lite(self, department_id: str) -> APIResult[Department]:
         """
         Returns information on the specified department id.
 
@@ -566,7 +569,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_department(self, **kwargs) -> tuple:
+    def add_department(self, **kwargs) -> APIResult[Department]:
         """
         Creates a new ZIA Department.
 
@@ -606,7 +609,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_department(self, department_id: int, **kwargs) -> tuple:
+    def update_department(self, department_id: int, **kwargs) -> APIResult[Department]:
         """
         Updates information for the specified ZIA Department.
 
@@ -641,7 +644,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_department(self, deparment_id: int) -> tuple:
+    def delete_department(self, deparment_id: int) -> APIResult[None]:
         """
         Deletes the specified Department.
 
@@ -678,7 +681,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_groups(self, query_params=None) -> tuple:
+    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[List[Groups]]:
         """
         Returns the list of user groups.
 
@@ -745,7 +748,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group(self, group_id: str) -> tuple:
+    def get_group(self, group_id: str) -> APIResult[Groups]:
         """
         Returns the user group details for a given user group.
 
@@ -789,7 +792,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_group_lite(self, query_params=None) -> tuple:
+    def get_group_lite(self, query_params: Optional[dict] = None) -> APIResult[Groups]:
         """
         Returns the user group ID and Name.
 
@@ -844,7 +847,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_group(self, **kwargs) -> tuple:
+    def add_group(self, **kwargs) -> APIResult[Groups]:
         """
         Creates a new ZIA Group.
 
@@ -884,7 +887,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_group(self, group_id: int, **kwargs) -> tuple:
+    def update_group(self, group_id: int, **kwargs) -> APIResult[Groups]:
         """
         Updates information for the specified ZIA Group.
 
@@ -919,7 +922,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_group(self, group_id: int) -> tuple:
+    def delete_group(self, group_id: int) -> APIResult[None]:
         """
         Deletes the specified Group.
 
@@ -948,7 +951,7 @@ class UserManagementAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_auditors(self, query_params=None) -> tuple:
+    def list_auditors(self, query_params: Optional[dict] = None) -> APIResult[List[UserManagement]]:
         """
         Returns the list of auditor users.
 

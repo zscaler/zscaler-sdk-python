@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zpa.models.cbi_certificate import CBICertificate
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class CBICertificateAPI(APIClient):
@@ -31,7 +33,7 @@ class CBICertificateAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_certificates(self) -> tuple:
+    def list_cbi_certificates(self) -> APIResult[dict]:
         """
         Returns a list of all cloud browser isolation certificates.
 
@@ -71,7 +73,7 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_cbi_certificate(self, certificate_id: str) -> tuple:
+    def get_cbi_certificate(self, certificate_id: str) -> APIResult[dict]:
         """
         Returns information on the specified cloud browser isolation certificate.
 
@@ -111,7 +113,7 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_cbi_certificate(self, **kwargs) -> tuple:
+    def add_cbi_certificate(self, **kwargs) -> APIResult[dict]:
         """
         Adds a new cloud browser isolation certificate.
 
@@ -156,7 +158,7 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> tuple:
+    def update_cbi_certificate(self, certificate_id: str, **kwargs) -> APIResult[dict]:
         """
         Updates an existing cloud browser isolation certificate.
 
@@ -211,7 +213,7 @@ class CBICertificateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_cbi_certificate(self, certificate_id: str) -> tuple:
+    def delete_cbi_certificate(self, certificate_id: str) -> APIResult[dict]:
         """
         Deletes the specified cloud browser isolation certificate.
 

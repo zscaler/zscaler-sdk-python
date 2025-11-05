@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -22,7 +23,7 @@ class AppConnectorController(ZscalerObject):
     A class representing the App Connector Controller.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the AppConnector model based on API response.
 
@@ -123,7 +124,7 @@ class AppConnectorController(ZscalerObject):
             self.zpn_sub_module_upgrade_list = []
             self.assistant_version = {}
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Formats the App Connector data into a dictionary suitable for API requests.
         """

@@ -14,21 +14,23 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url
 from zscaler.zcc.models.admin_user import AdminUser, AdminUserSyncInfo
 from zscaler.zcc.models.admin_roles import AdminRoles
+from zscaler.types import APIResult
 
 
 class AdminUserAPI(APIClient):
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_admin_users(self, query_params=None) -> tuple:
+    def list_admin_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
 
@@ -82,7 +84,7 @@ class AdminUserAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_admin_user_sync_info(self) -> tuple:
+    def get_admin_user_sync_info(self) -> APIResult[dict]:
         """
         Returns admin user sync information Client Connector Portal.
 
@@ -127,7 +129,7 @@ class AdminUserAPI(APIClient):
 
         return result, response, None
 
-    def list_admin_roles(self, query_params=None) -> tuple:
+    def list_admin_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Returns the list admin roles in the Client Connector Portal.
 
@@ -180,7 +182,7 @@ class AdminUserAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def sync_zia_zdx_admin_users(self) -> tuple:
+    def sync_zia_zdx_admin_users(self) -> APIResult[dict]:
         """
         Sync Admin Users Information for ZDX and ZIA Client Connector Portal.
 
@@ -225,7 +227,7 @@ class AdminUserAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def sync_zpa_admin_users(self) -> tuple:
+    def sync_zpa_admin_users(self) -> APIResult[dict]:
         """
         Sync Admin Users Information for ZPA Client Connector Portal.
 

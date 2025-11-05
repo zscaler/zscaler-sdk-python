@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.rule_labels import RuleLabels
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class RuleLabelsAPI(APIClient):
@@ -27,11 +29,11 @@ class RuleLabelsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_labels(self, query_params=None) -> tuple:
+    def list_labels(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists rule labels in your organization with pagination.
         A subset of rule labels  can be returned that match a supported
@@ -91,7 +93,7 @@ class RuleLabelsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_label(self, label_id: int) -> tuple:
+    def get_label(self, label_id: int) -> APIResult[dict]:
         """
         Fetches a specific rule labels by ID.
 
@@ -137,7 +139,7 @@ class RuleLabelsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_label(self, **kwargs) -> tuple:
+    def add_label(self, **kwargs) -> APIResult[dict]:
         """
         Creates a new ZIA Rule Label.
 
@@ -192,7 +194,7 @@ class RuleLabelsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_label(self, label_id: int, **kwargs) -> tuple:
+    def update_label(self, label_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates information for the specified ZIA Rule Label.
 
@@ -238,7 +240,7 @@ class RuleLabelsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_label(self, label_id: int) -> tuple:
+    def delete_label(self, label_id: int) -> APIResult[dict]:
         """
         Deletes the specified Rule Label.
 

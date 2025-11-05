@@ -15,6 +15,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 
 
@@ -23,7 +24,7 @@ class RemoteAssistance(ZscalerObject):
     A class for RemoteAssistance objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the RemoteAssistance model based on API response.
 
@@ -43,7 +44,7 @@ class RemoteAssistance(ZscalerObject):
             self.username_obfuscated = False
             self.device_info_obfuscate = False
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

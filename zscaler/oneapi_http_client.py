@@ -1,3 +1,4 @@
+from typing import Dict, Optional, Any, Tuple, Union
 import requests
 import logging
 import os
@@ -24,77 +25,77 @@ class HTTPClient:
 
     def __init__(
         self,
-        http_config={},
-        zcc_legacy_client: LegacyZCCClientHelper = None,
-        ztw_legacy_client: LegacyZTWClientHelper = None,
-        zdx_legacy_client: LegacyZDXClientHelper = None,
-        zpa_legacy_client: LegacyZPAClientHelper = None,
-        zia_legacy_client: LegacyZIAClientHelper = None,
-        zwa_legacy_client: LegacyZWAClientHelper = None,
-    ):
+        http_config: Dict[str, Any] = {},
+        zcc_legacy_client: Optional[LegacyZCCClientHelper] = None,
+        ztw_legacy_client: Optional[LegacyZTWClientHelper] = None,
+        zdx_legacy_client: Optional[LegacyZDXClientHelper] = None,
+        zpa_legacy_client: Optional[LegacyZPAClientHelper] = None,
+        zia_legacy_client: Optional[LegacyZIAClientHelper] = None,
+        zwa_legacy_client: Optional[LegacyZWAClientHelper] = None,
+    ) -> None:
 
         # Get headers from Request Executor
-        self._default_headers = http_config.get("headers", {})
-        self.zcc_legacy_client = zcc_legacy_client
-        self.ztw_legacy_client = ztw_legacy_client
-        self.zdx_legacy_client = zdx_legacy_client
-        self.zpa_legacy_client = zpa_legacy_client
-        self.zia_legacy_client = zia_legacy_client
-        self.zwa_legacy_client = zwa_legacy_client
+        self._default_headers: Dict[str, str] = http_config.get("headers", {})
+        self.zcc_legacy_client: Optional[LegacyZCCClientHelper] = zcc_legacy_client
+        self.ztw_legacy_client: Optional[LegacyZTWClientHelper] = ztw_legacy_client
+        self.zdx_legacy_client: Optional[LegacyZDXClientHelper] = zdx_legacy_client
+        self.zpa_legacy_client: Optional[LegacyZPAClientHelper] = zpa_legacy_client
+        self.zia_legacy_client: Optional[LegacyZIAClientHelper] = zia_legacy_client
+        self.zwa_legacy_client: Optional[LegacyZWAClientHelper] = zwa_legacy_client
 
         # Determine if legacy clients are enabled
-        self.use_zcc_legacy_client = zcc_legacy_client is not None
-        self.use_ztw_legacy_client = ztw_legacy_client is not None
-        self.use_zdx_legacy_client = zdx_legacy_client is not None
-        self.use_zpa_legacy_client = zpa_legacy_client is not None
-        self.use_zia_legacy_client = zia_legacy_client is not None
-        self.use_zwa_legacy_client = zwa_legacy_client is not None
+        self.use_zcc_legacy_client: bool = zcc_legacy_client is not None
+        self.use_ztw_legacy_client: bool = ztw_legacy_client is not None
+        self.use_zdx_legacy_client: bool = zdx_legacy_client is not None
+        self.use_zpa_legacy_client: bool = zpa_legacy_client is not None
+        self.use_zia_legacy_client: bool = zia_legacy_client is not None
+        self.use_zwa_legacy_client: bool = zwa_legacy_client is not None
 
         # Set timeout for all HTTP requests
-        request_timeout = http_config.get("requestTimeout", None)
-        self._timeout = request_timeout if request_timeout and request_timeout > 0 else None
+        request_timeout: Optional[int] = http_config.get("requestTimeout", None)
+        self._timeout: Optional[int] = request_timeout if request_timeout and request_timeout > 0 else None
 
         if "proxy" in http_config:
-            self._proxy = self._setup_proxy(http_config["proxy"])
+            self._proxy: Optional[str] = self._setup_proxy(http_config["proxy"])
         else:
-            self._proxy = None
+            self._proxy: Optional[str] = None
 
         # Setup SSL context or handle disableHttpsCheck
         if "sslContext" in http_config:
-            self._ssl_context = http_config["sslContext"]  # Use the custom SSL context
+            self._ssl_context: Union[bool, Any] = http_config["sslContext"]  # Use the custom SSL context
         elif "disableHttpsCheck" in http_config and http_config["disableHttpsCheck"]:
-            self._ssl_context = False  # Disable SSL certificate validation if disableHttpsCheck is true
+            self._ssl_context: Union[bool, Any] = False  # Disable SSL certificate validation if disableHttpsCheck is true
         else:
-            self._ssl_context = True  # Enable SSL certificate validation by default
+            self._ssl_context: Union[bool, Any] = True  # Enable SSL certificate validation by default
 
-        self._session = None
+        self._session: Optional[requests.Session] = None
 
-    def _setup_proxy(self, proxy):
+    def _setup_proxy(self, proxy: Optional[Union[Dict[str, Any], str]]) -> Optional[str]:
         return proxy if proxy else None
 
-    def set_session(self, session):
+    def set_session(self, session: requests.Session) -> None:
         """Set Client Session to improve performance by reusing session.
 
         Session should be closed manually or within context manager.
         """
         self._session = session
 
-    def close_session(self):
+    def close_session(self) -> None:
         """Closes the session if one was used."""
         if self._session:
             self._session.close()
 
-    def send_request(self, request):
+    def send_request(self, request: Dict[str, Any]) -> Tuple[Optional[requests.Response], Optional[Exception]]:
         try:
             logger.debug(f"Request: {request}")
 
             # Sanitize the authorization header before logging
-            headers = request.get("headers", {}).copy()
+            headers: Dict[str, str] = request.get("headers", {}).copy()
             if "Authorization" in headers:
                 headers["Authorization"] = "Bearer <TOKEN>"
 
             # Prepare request parameters
-            params = {
+            params: Dict[str, Any] = {
                 "method": request["method"],
                 "url": request["url"],
                 "headers": request.get("headers", {}),
@@ -114,9 +115,10 @@ class HTTPClient:
                 params["params"] = request["params"]
 
             # Use Legacy Client if enabled
+            response: Optional[requests.Response]
             if self.use_zpa_legacy_client:
-                parsed_url = urlparse(request["url"])
-                path = parsed_url.path
+                parsed_url: Any = urlparse(request["url"])
+                path: str = parsed_url.path
                 logger.debug(f"Sending request via ZPA legacy client. Path: {path}")
                 response, legacy_request = self.zpa_legacy_client.send(
                     method=request["method"],
@@ -304,7 +306,7 @@ class HTTPClient:
                 body=not ("/zscsb" in request["url"]),
             )
 
-            start_time = time.time()
+            start_time: float = time.time()
 
             logger.info(f"Received response with status code: {response.status_code}")
 
@@ -331,13 +333,13 @@ class HTTPClient:
             return (None, error)
 
     @staticmethod
-    def format_binary_data(data):
+    def format_binary_data(data: bytes) -> bytes:
         """Formats binary data for multipart uploads."""
         return data  # Requests will handle this directly, no need for aiohttp-specific formatting
 
-    def _setup_proxy(self, proxy):
+    def _setup_proxy(self, proxy: Optional[Union[Dict[str, Any], str]]) -> Optional[str]:
         """Sets up the proxy string from the configuration or environment variables."""
-        proxy_string = ""
+        proxy_string: str = ""
 
         if proxy is None:
             if "HTTP_PROXY" in os.environ:
@@ -346,12 +348,12 @@ class HTTPClient:
                 proxy_string = os.environ["HTTPS_PROXY"]
             return proxy_string if proxy_string != "" else None
 
-        host = proxy["host"]
-        port = int(proxy["port"]) if "port" in proxy else ""
+        host: str = proxy["host"]
+        port: Union[int, str] = int(proxy["port"]) if "port" in proxy else ""
 
         if "username" in proxy and "password" in proxy:
-            username = proxy["username"]
-            password = proxy["password"]
+            username: str = proxy["username"]
+            password: str = proxy["password"]
             proxy_string = f"http://{username}:{password}@{host}"
         else:
             proxy_string = f"http://{host}"

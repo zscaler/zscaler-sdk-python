@@ -1,3 +1,4 @@
+from typing import Dict, Any, Optional
 import os
 import logging
 import yaml
@@ -26,6 +27,7 @@ class ConfigSetter:
             "userAgent": "",
             "customerId": "",
             "microtenantId": "",
+            "partnerId": "",
             "sandboxToken": "",
             "sandboxCloud": "",
             "connectionTimeout": 30,

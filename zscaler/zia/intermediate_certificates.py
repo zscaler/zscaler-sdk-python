@@ -14,11 +14,13 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.intermediate_certificates import IntermediateCACertificate
 from zscaler.zia.models.intermediate_certificates import CertSigningRequest
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class IntermediateCertsAPI(APIClient):
@@ -28,11 +30,11 @@ class IntermediateCertsAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ca_certificates(self, query_params=None) -> tuple:
+    def list_ca_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -67,7 +69,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ca_certificate(self, cert_id: int) -> tuple:
+    def get_ca_certificate(self, cert_id: int) -> APIResult[dict]:
         """
         Fetches a specific intermediate CA certificate with the specified ID.
 
@@ -102,7 +104,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ca_certificates_lite(self, query_params=None) -> tuple:
+    def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -137,7 +139,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_ca_certificate_lite(self, cert_id: int) -> tuple:
+    def get_ca_certificate_lite(self, cert_id: int) -> APIResult[dict]:
         """
         Fetches a specific intermediate CA certificate with the specified ID.
 
@@ -172,7 +174,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ready_to_use(self, query_params=None) -> tuple:
+    def list_ready_to_use(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List of intermediate CA certificates that are ready to use for SSL inspection.
         """
@@ -207,7 +209,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_show_cert(self, cert_id: int) -> tuple:
+    def get_show_cert(self, cert_id: int) -> APIResult[dict]:
         """
         Shows information about the signed intermediate CA certificate with the specified ID.
         This operation is not applicable for the Zscaler root certificate
@@ -243,7 +245,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_show_csr(self, cert_id: int) -> tuple:
+    def get_show_csr(self, cert_id: int) -> APIResult[dict]:
         """
         Shows information about the Certificate Signing Request (CSR) for the specified ID.
         This operation is not applicable for the Zscaler root certificate
@@ -279,7 +281,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def add_ca_certificate(self, **kwargs) -> tuple:
+    def add_ca_certificate(self, **kwargs) -> APIResult[dict]:
         """
         Creates a custom intermediate CA certificate that can be used for SSL inspection.
 
@@ -334,7 +336,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_ca_certificate(self, cert_id: int, **kwargs) -> tuple:
+    def update_ca_certificate(self, cert_id: int, **kwargs) -> APIResult[dict]:
         """
         Updates intermediate CA certificate information for the specified ID.
 
@@ -369,7 +371,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_ca_certificate(self, cert_id: int) -> tuple:
+    def delete_ca_certificate(self, cert_id: int) -> APIResult[dict]:
         """
         Deletes the intermediate CA certificate with the specified ID.
         The default intermediate certificate cannot be deleted.
@@ -399,7 +401,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def download_csr(self, cert_id: int) -> tuple:
+    def download_csr(self, cert_id: int) -> APIResult[dict]:
         """
         Downloads a Certificate Signing Request (CSR) for the specified ID.
         To perform this operation, a CSR must have already been generated.
@@ -435,7 +437,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def download_public_key(self, cert_id: int) -> tuple:
+    def download_public_key(self, cert_id: int) -> APIResult[dict]:
         """
         Downloads the public key in the HSM key pair for the intermediate CA certificate with the specified ID
 
@@ -470,7 +472,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def finalize_cert(self, cert_id: int) -> tuple:
+    def finalize_cert(self, cert_id: int) -> APIResult[dict]:
         """
         Finalizes the intermediate CA certificate with the specified ID.
 
@@ -505,7 +507,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def generate_csr(self, cert_id: int) -> tuple:
+    def generate_csr(self, cert_id: int) -> APIResult[dict]:
         """
         Generates a Certificate Signing Request (CSR) for the custom intermediate CA certificate with the specified ID.
 
@@ -540,7 +542,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def generate_key_pair(self, cert_id: int) -> tuple:
+    def generate_key_pair(self, cert_id: int) -> APIResult[dict]:
         """
         Generates a HSM key pair for the custom intermediate CA certificate with the specified ID.
 
@@ -575,7 +577,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def upload_cert(self, cert_id: int, file_input_stream: str = None, file_path: str = None) -> tuple:
+    def upload_cert(self, cert_id: int, file_input_stream: str = None, file_path: str = None) -> APIResult[dict]:
         """
         Uploads a custom intermediate CA certificate signed by your Certificate Authority (CA) for SSL inspection.
 
@@ -609,27 +611,27 @@ class IntermediateCertsAPI(APIClient):
         # Create multipart form data manually (like Postman does)
         import io
         import uuid
-        
+
         # Generate a random boundary (like Postman does)
         boundary = f"----WebKitFormBoundary{str(uuid.uuid4()).replace('-', '')}"
-        
+
         # Build multipart form data
         form_data = io.BytesIO()
-        
+
         # Add the file part
         form_data.write(f'--{boundary}\r\n'.encode())
         form_data.write(b'Content-Disposition: form-data; name="fileUpload"; filename="certificate.pem"\r\n')
         form_data.write(b'Content-Type: application/octet-stream\r\n\r\n')
         form_data.write(file_content)
         form_data.write(f'\r\n--{boundary}--\r\n'.encode())
-        
+
         headers = {
             'Content-Type': f'multipart/form-data; boundary={boundary}'
         }
 
         request, error = self._request_executor.create_request(
-            http_method, 
-            api_url, 
+            http_method,
+            api_url,
             body=form_data.getvalue(),
             headers=headers,
             use_raw_data_for_body=True
@@ -647,7 +649,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def upload_cert_chain(self, cert_id: int) -> tuple:
+    def upload_cert_chain(self, cert_id: int) -> APIResult[dict]:
         """
         Uploads the intermediate certificate chain (PEM file).
 
@@ -682,7 +684,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def verify_key_attestation(self, cert_id: int) -> tuple:
+    def verify_key_attestation(self, cert_id: int) -> APIResult[dict]:
         """
         Verifies the attestation for the HSM keys generated for the specified ID.
 

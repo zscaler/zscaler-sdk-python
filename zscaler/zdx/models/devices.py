@@ -14,6 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.oneapi_object import ZscalerObject
 from zscaler.oneapi_collection import ZscalerCollection
 from zscaler.zdx.models import common
@@ -24,7 +25,7 @@ class Devices(ZscalerObject):
     A class for Devices objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Devices model based on API response.
 
@@ -43,7 +44,7 @@ class Devices(ZscalerObject):
             self.next_offset = None
             self.devices = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -61,7 +62,7 @@ class DeviceDetail(ZscalerObject):
     A class for Device Detail objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Device Detail model based on API response.
 
@@ -80,7 +81,7 @@ class DeviceDetail(ZscalerObject):
             self.name = None
             self.userid = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -99,7 +100,7 @@ class DeviceModelInfo(ZscalerObject):
     A class for DeviceModelInfo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceModelInfo model based on API response.
 
@@ -142,7 +143,7 @@ class DeviceModelInfo(ZscalerObject):
             self.network = []
             self.software = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -163,7 +164,7 @@ class Hardware(ZscalerObject):
     A class for Hardware objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Hardware model based on API response.
 
@@ -217,7 +218,7 @@ class Hardware(ZscalerObject):
             self.logical_proc = None
             self.num_cores = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -247,7 +248,7 @@ class Network(ZscalerObject):
     A class for Network objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Network model based on API response.
 
@@ -286,7 +287,7 @@ class Network(ZscalerObject):
             self.mac = None
             self.guid = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -311,7 +312,7 @@ class Software(ZscalerObject):
     A class for Software objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Software model based on API response.
 
@@ -347,7 +348,7 @@ class Software(ZscalerObject):
             self.client_conn_ver = None
             self.zdx_ver = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -371,7 +372,7 @@ class DeviceActiveApplications(ZscalerObject):
     A class for DeviceActiveApplications objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceActiveApplications model based on API response.
 
@@ -389,7 +390,7 @@ class DeviceActiveApplications(ZscalerObject):
             self.name = None
             self.score = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -404,7 +405,7 @@ class DeviceAppScoreTrend(ZscalerObject):
     A class for DeviceAppScoreTrend objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceAppScoreTrend model based on API response.
 
@@ -422,7 +423,7 @@ class DeviceAppScoreTrend(ZscalerObject):
             self.metric = None
             self.datapoints = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -440,7 +441,7 @@ class DeviceHealthMetrics(ZscalerObject):
     A class for DeviceHealthMetrics objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceHealthMetrics model based on API response.
 
@@ -460,7 +461,7 @@ class DeviceHealthMetrics(ZscalerObject):
             self.category = None
             self.instances = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -478,7 +479,7 @@ class Instances(ZscalerObject):
     A class for Instances objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Instances model based on API response.
 
@@ -497,7 +498,7 @@ class Instances(ZscalerObject):
             self.category = None
             self.instances = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -514,7 +515,7 @@ class DeviceAppCloudPathProbes(ZscalerObject):
     A class for DeviceAppCloudPathProbes objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceAppCloudPathProbes model based on API response.
 
@@ -534,7 +535,7 @@ class DeviceAppCloudPathProbes(ZscalerObject):
             self.num_probes = None
             self.avg_latencies = ZscalerCollection.form_list([], str)
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -554,7 +555,7 @@ class DeviceAppWebProbes(ZscalerObject):
     A class for DeviceAppWebProbes objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceAppWebProbes model based on API response.
 
@@ -576,7 +577,7 @@ class DeviceAppWebProbes(ZscalerObject):
             self.avg_score = None
             self.avg_pft = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -597,7 +598,7 @@ class DeviceWebProbePageFetch(ZscalerObject):
     A class for DeviceWebProbePageFetch objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceWebProbePageFetch model based on API response.
 
@@ -617,7 +618,7 @@ class DeviceWebProbePageFetch(ZscalerObject):
             self.unit = None
             self.datapoints = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -636,7 +637,7 @@ class DeviceCloudPathProbesMetric(ZscalerObject):
     A class for DeviceCloudPathProbesMetric objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceCloudPathProbesMetric model based on API response.
 
@@ -656,7 +657,7 @@ class DeviceCloudPathProbesMetric(ZscalerObject):
             self.leg_dst = None
             self.stats = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -675,7 +676,7 @@ class DeviceEvents(ZscalerObject):
     A class for DeviceEvents objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceEvents model based on API response.
 
@@ -693,7 +694,7 @@ class DeviceEvents(ZscalerObject):
             self.timestamp = None
             self.events = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -711,7 +712,7 @@ class Events(ZscalerObject):
     A class for Events objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Events model based on API response.
 
@@ -733,7 +734,7 @@ class Events(ZscalerObject):
             self.prev = None
             self.curr = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -754,7 +755,7 @@ class DeviceCloudPathProbesHopData(ZscalerObject):
     A class for DeviceCloudPathProbesHopData objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceCloudPathProbesHopData model based on API response.
 
@@ -774,7 +775,7 @@ class DeviceCloudPathProbesHopData(ZscalerObject):
             self.timestamp = None
             self.cloudpath = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -792,7 +793,7 @@ class CloudPath(ZscalerObject):
     A class for Cloud Path hop data for an application on a specific device objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Cloud Path hop data for an application on a specific device model based on API response.
 
@@ -823,7 +824,7 @@ class CloudPath(ZscalerObject):
             self.tunnel_type = None
             self.hops = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -847,7 +848,7 @@ class Hops(ZscalerObject):
     A class for Cloud Path hop data for an application on a specific device objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Cloud Path hop data for an application on a specific device model based on API response.
 
@@ -877,7 +878,7 @@ class Hops(ZscalerObject):
             self.latency_avg = None
             self.latency_diff = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -902,7 +903,7 @@ class DeviceActiveGeo(ZscalerObject):
     A class for DeviceActiveGeo objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the DeviceActiveGeo model based on API response.
 
@@ -924,7 +925,7 @@ class DeviceActiveGeo(ZscalerObject):
             self.geo_type = None
             self.children = []
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """
@@ -944,7 +945,7 @@ class Children(ZscalerObject):
     A class for Children objects.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Children model based on API response.
 
@@ -962,7 +963,7 @@ class Children(ZscalerObject):
             self.description = None
             self.geo_type = None
 
-    def request_format(self):
+    def request_format(self) -> Dict[str, Any]:
         """
         Return the object as a dictionary in the format expected for API requests.
         """

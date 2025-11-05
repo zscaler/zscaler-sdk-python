@@ -14,12 +14,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.dlp_resources import DLPICAPServer
 from zscaler.zia.models.dlp_resources import DLPIDMProfile
 from zscaler.zia.models.dlp_resources import DLPEDMSchema
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class DLPResourcesAPI(APIClient):
@@ -29,14 +31,14 @@ class DLPResourcesAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
     def list_dlp_icap_servers(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of ZIA DLP ICAP Servers.
 
@@ -109,8 +111,8 @@ class DLPResourcesAPI(APIClient):
 
     def list_dlp_icap_servers_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists name and ID of all ICAP servers.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -185,7 +187,7 @@ class DLPResourcesAPI(APIClient):
     def get_dlp_icap_servers(
         self,
         icap_server_id: int,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Returns the dlp icap server details for a given DLP ICAP Server.
 
@@ -228,8 +230,8 @@ class DLPResourcesAPI(APIClient):
 
     def list_dlp_incident_receiver(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of ZIA DLP Incident Receiver.
 
@@ -302,8 +304,8 @@ class DLPResourcesAPI(APIClient):
 
     def list_dlp_incident_receiver_lite(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Lists name and ID DLP Incident Receiver.
 
@@ -374,7 +376,7 @@ class DLPResourcesAPI(APIClient):
 
         return (results, response, None)
 
-    def get_dlp_incident_receiver(self, receiver_id: int) -> tuple:
+    def get_dlp_incident_receiver(self, receiver_id: int) -> APIResult[dict]:
         """
         Returns the dlp incident receiver details for a given DLP Incident Receiver.
 
@@ -417,8 +419,8 @@ class DLPResourcesAPI(APIClient):
 
     def list_dlp_idm_profiles(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of ZIA DLP IDM Profiles.
 
@@ -472,7 +474,7 @@ class DLPResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def get_dlp_idm_profiles(self, profile_id: int) -> tuple:
+    def get_dlp_idm_profiles(self, profile_id: int) -> APIResult[dict]:
         """
         Returns the dlp idmp profile details for a given DLP IDM Profile.
 
@@ -515,8 +517,8 @@ class DLPResourcesAPI(APIClient):
 
     def list_edm_schemas(
         self,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of ZIA DLP Exact Data Match Schemas.
 
@@ -573,8 +575,8 @@ class DLPResourcesAPI(APIClient):
         schema_name: str = None,
         active_only: bool = None,
         fetch_tokens: bool = None,
-        query_params=None,
-    ) -> tuple:
+        query_params: Optional[dict] = None,
+    ) -> APIResult[dict]:
         """
         Returns the list of active EDM templates (or EDM schemas) and their criteria (or token details), only.
 

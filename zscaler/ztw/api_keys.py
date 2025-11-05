@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.ztw.models.api_keys import ApiKeys
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ProvisioningAPIKeyAPI(APIClient):
@@ -27,11 +29,11 @@ class ProvisioningAPIKeyAPI(APIClient):
 
     _ztw_base_endpoint = "/ztw/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_keys(self, query_params=None) -> tuple:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         List all existing API keys.
 
@@ -83,7 +85,7 @@ class ProvisioningAPIKeyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def regenerate_api_key(self, key_id: str, **kwargs) -> tuple:
+    def regenerate_api_key(self, key_id: str, **kwargs) -> APIResult[dict]:
         """
         Regenerate the specified API key.
 

@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.advanced_threat_settings import AdvancedThreatProtectionSettings
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ATPPolicyAPI(APIClient):
@@ -27,11 +29,11 @@ class ATPPolicyAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def get_atp_settings(self) -> tuple:
+    def get_atp_settings(self) -> APIResult[dict]:
         """
         Retrieves the current advanced settings configured in the ZIA Admin Portal.
 
@@ -77,7 +79,7 @@ class ATPPolicyAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_atp_settings(self, **kwargs) -> tuple:
+    def update_atp_settings(self, **kwargs) -> APIResult[dict]:
         """
         Updates advanced threat protection settings in the ZIA Admin Portal.
 
@@ -173,7 +175,7 @@ class ATPPolicyAPI(APIClient):
 
         return (result, response, None)
 
-    def get_atp_security_exceptions(self) -> tuple:
+    def get_atp_security_exceptions(self) -> APIResult[dict]:
         """
         Retrieves a list of URLs bypassed in ATP security exceptions.
 
@@ -213,7 +215,7 @@ class ATPPolicyAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def update_atp_security_exceptions(self, bypass_urls: list[str]) -> tuple:
+    def update_atp_security_exceptions(self, bypass_urls: list[str]) -> APIResult[dict]:
         """
         Updates the list of bypassed URLs in ATP security exceptions.
 
@@ -262,7 +264,7 @@ class ATPPolicyAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def get_atp_malicious_urls(self) -> tuple:
+    def get_atp_malicious_urls(self) -> APIResult[dict]:
         """
         Retrieves the malicious URLs added to the denylist in the Advanced Threat Protection (ATP) policy
 
@@ -302,7 +304,7 @@ class ATPPolicyAPI(APIClient):
         except Exception as ex:
             return (None, response, ex)
 
-    def add_atp_malicious_urls(self, malicious_urls: list) -> tuple:
+    def add_atp_malicious_urls(self, malicious_urls: list) -> APIResult[dict]:
         """
         Adds the provided malicious URLs to the deny list.
 
@@ -352,7 +354,7 @@ class ATPPolicyAPI(APIClient):
 
         return self.get_atp_malicious_urls()
 
-    def delete_atp_malicious_urls(self, malicious_urls: list) -> tuple:
+    def delete_atp_malicious_urls(self, malicious_urls: list) -> APIResult[dict]:
         """
         Removes the specified malicious URLs from the deny list.
 

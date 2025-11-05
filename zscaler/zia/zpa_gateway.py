@@ -14,10 +14,12 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
+from typing import Dict, List, Optional, Any, Union
 from zscaler.api_client import APIClient
 from zscaler.request_executor import RequestExecutor
 from zscaler.zia.models.zpa_gateway import ZPAGateway
 from zscaler.utils import format_url
+from zscaler.types import APIResult
 
 
 class ZPAGatewayAPI(APIClient):
@@ -27,11 +29,11 @@ class ZPAGatewayAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
-    def __init__(self, request_executor):
+    def __init__(self, request_executor: "RequestExecutor") -> None:
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gateways(self, query_params=None) -> tuple:
+    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[dict]:
         """
         Lists ZPA Gateways in your organization with pagination.
         A subset of ZPA Gateways can be returned that match a supported
@@ -93,7 +95,7 @@ class ZPAGatewayAPI(APIClient):
 
         return (result, response, None)
 
-    def get_gateway(self, gateway_id: int) -> tuple:
+    def get_gateway(self, gateway_id: int) -> APIResult[dict]:
         """
         Returns the zpa gateway details for a given ZPA Gateway.
 
@@ -142,7 +144,7 @@ class ZPAGatewayAPI(APIClient):
         zpa_server_group: dict = None,
         zpa_app_segments: dict = None,
         **kwargs,
-    ) -> tuple:
+    ) -> APIResult[dict]:
         """
         Creates a new ZPA Gateway.
 
@@ -227,7 +229,13 @@ class ZPAGatewayAPI(APIClient):
 
         return (result, response, None)
 
-    def update_gateway(self, gateway_id: str, zpa_server_group: dict = None, zpa_app_segments: dict = None, **kwargs) -> tuple:
+    def update_gateway(
+        self,
+        gateway_id: str,
+        zpa_server_group: dict = None,
+        zpa_app_segments: dict = None,
+        **kwargs
+    ) -> APIResult[dict]:
         """
         Updates information for the specified ZPA Gateway.
 
@@ -314,7 +322,7 @@ class ZPAGatewayAPI(APIClient):
 
         return (result, response, None)
 
-    def delete_gateway(self, gateway_id) -> tuple:
+    def delete_gateway(self, gateway_id) -> APIResult[dict]:
         """
         Deletes the specified ZPA Gateway.
 
