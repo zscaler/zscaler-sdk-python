@@ -378,7 +378,12 @@ class TrafficStaticIPAPI(APIClient):
                     if body_text:
                         error_data = json.loads(body_text)
                         # Create a structured error object if available
-                        structured_error = error_data if isinstance(error_data, dict) else error
+                        # Ensure status code is included in the error dict
+                        if isinstance(error_data, dict):
+                            structured_error = error_data.copy()
+                            structured_error["status"] = 409
+                        else:
+                            structured_error = error
                     else:
                         structured_error = error
                 except (json.JSONDecodeError, ValueError):
