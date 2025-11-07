@@ -1,5 +1,17 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.1 (November 7, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #413](https://github.com/zscaler/zscaler-sdk-python/pull/413) - Ensure legacy service accessors in `oneapi_client.py` raise a clear error when no legacy helper is supplied, preventing `None` from leaking to callers.
+
+* [PR #413](https://github.com/zscaler/zscaler-sdk-python/pull/413) - Added missing `python-jose` dependency to the documentation build so Read the Docs renders SDK pages correctly.
+
 ## 1.9.0 (November 3, 2025)
 
 ### Notes
