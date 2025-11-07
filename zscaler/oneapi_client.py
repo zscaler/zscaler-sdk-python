@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, TypeVar
 import requests
 import logging
 import os
@@ -23,6 +23,8 @@ from zscaler.zdx.legacy import LegacyZDXClientHelper
 from zscaler.zpa.legacy import LegacyZPAClientHelper
 from zscaler.zia.legacy import LegacyZIAClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
+
+TLegacy = TypeVar("TLegacy")
 
 
 class Client:
@@ -208,7 +210,7 @@ class Client:
     @property
     def zcc(self):
         if self.use_legacy_client:
-            return self.zcc_legacy_client
+            return self._require_legacy_client("ZCC", self.zcc_legacy_client)
         if self._zcc is None:
             self._zcc = ZCCService(self)
         return self._zcc
@@ -216,7 +218,7 @@ class Client:
     @property
     def zdx(self):
         if self.use_legacy_client:
-            return self.zdx_legacy_client
+            return self._require_legacy_client("ZDX", self.zdx_legacy_client)
         if self._zdx is None:
             self._zdx = ZDXService(self)
         return self._zdx
@@ -224,7 +226,7 @@ class Client:
     @property
     def zia(self):
         if self.use_legacy_client:
-            return self.zia_legacy_client
+            return self._require_legacy_client("ZIA", self.zia_legacy_client)
         if self._zia is None:
             # Pass RequestExecutor directly
             self._zia = ZIAService(self._request_executor)
@@ -233,7 +235,7 @@ class Client:
     @property
     def zwa(self):
         if self.use_legacy_client:
-            return self.zwa_legacy_client
+            return self._require_legacy_client("ZWA", self.zwa_legacy_client)
         if self._zwa is None:
             self._zwa = ZWAService(self)
         return self._zwa
@@ -241,7 +243,7 @@ class Client:
     @property
     def ztw(self):
         if self.use_legacy_client:
-            return self.ztw_legacy_client
+            return self._require_legacy_client("ZTW", self.ztw_legacy_client)
         if self._ztw is None:
             # Pass RequestExecutor directly
             self._ztw = ZTWService(self._request_executor)
@@ -250,7 +252,7 @@ class Client:
     @property
     def zpa(self):
         if self.use_legacy_client:
-            return self.zpa_legacy_client
+            return self._require_legacy_client("ZPA", self.zpa_legacy_client)
         if self._zpa is None:
             self._zpa = ZPAService(self._request_executor, self._config)
         return self._zpa
@@ -318,6 +320,21 @@ class Client:
 
     def clear_custom_headers(self):
         self._request_executor.clear_custom_headers()
+
+    def _require_legacy_client(self, service_name: str, client: Optional[TLegacy]) -> TLegacy:
+        """
+        Ensure a legacy client instance is available before returning it.
+
+        Raises:
+            RuntimeError: If the legacy client was requested but not provided.
+        """
+        if client is None:
+            raise RuntimeError(
+                f"Legacy {service_name} client requested but no legacy client instance was provided. "
+                "Pass the appropriate legacy helper when constructing the Client or disable "
+                "use_legacy_client."
+            )
+        return client
 
     def get_custom_headers(self):
         return self._request_executor.get_custom_headers()
