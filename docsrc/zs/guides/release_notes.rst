@@ -16,9 +16,9 @@ Notes
 Bug Fixes:
 ----------
 
-(`#412 <https://github.com/zscaler/zscaler-sdk-python/pull/412>`_) - Ensure legacy service accessors in `oneapi_client.py` raise a clear error when no legacy helper is supplied, preventing `None` from leaking to callers.
+(`#413 <https://github.com/zscaler/zscaler-sdk-python/pull/413>`_) - Ensure legacy service accessors in `oneapi_client.py` raise a clear error when no legacy helper is supplied, preventing `None` from leaking to callers.
 
-(`#412 <https://github.com/zscaler/zscaler-sdk-python/pull/412>`_) - Added missing `python-jose` dependency to the documentation build so Read the Docs renders SDK pages correctly.
+(`#413 <https://github.com/zscaler/zscaler-sdk-python/pull/413>`_) - Added missing `python-jose` dependency to the documentation build so Read the Docs renders SDK pages correctly.
 
 ## 1.9.0 (November 3, 2025)
 
