@@ -33,7 +33,7 @@ class FirewallIPSRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[FirewallIPSrules]]:
         """
         List firewall ips rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
