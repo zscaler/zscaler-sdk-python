@@ -17,12 +17,12 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 from typing import List, Optional
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
-from zscaler.zia.models.cloud_firewall_rules import FirewallRule
+from zscaler.zia.models.traffic_capture import TrafficCapture, TrafficCaptureRuleLabels
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.types import APIResult
 
 
-class FirewallPolicyAPI(APIClient):
+class TrafficCaptureAPI(APIClient):
 
     _zia_base_endpoint = "/zia/api/v1"
 
@@ -33,15 +33,20 @@ class FirewallPolicyAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[List[FirewallRule]]:
+    ) -> APIResult[List[TrafficCapture]]:
         """
-        List firewall rules in your organization.
-        If the `search` parameter is provided, the function filters the rules client-side.
+       Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
+
+        See the
+        `Traffic Capture Policy API reference (list rules):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules-get>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             query_params {dict}: Map of query parameters for the request.
                 ``[query_params.rule_name]`` {str}: Filters rules based on rule names using the specified keywords
                 ``[query_params.rule_label]`` {str}: Filters rules based on rule labels using the specified keywords
+                ``[query_params.rule_id]`` {str}: Filter based on the rule label ID
                 ``[query_params.rule_order]`` {str}: Filters rules based on rule order using the specified keywords
                 ``[query_params.rule_description]`` {str}: Filters rules based on descriptions using the specified keywords
                 ``[query_params.rule_action]`` {str}: Filters rules based on rule actions using the specified keywords
@@ -52,25 +57,18 @@ class FirewallPolicyAPI(APIClient):
                 ``[query_params.device]`` {str}: Filters rules based on devices using the specified keywords
                 ``[query_params.device_group]`` {str}: Filters rules based on device groups using the specified keywords
                 ``[query_params.device_trust_level]`` {str}: Filters rules based on device trust levels using keywords
-                ``[query_params.src_ips]`` {str}: Filters rules based on source IP addresses using the specified keywords
-                ``[query_params.dest_addresses]`` {str}: Filters rules based on destination IP using the specified keywords
-                ``[query_params.src_ip_groups]`` {str}: Filters rules based on source IP groups using the specified keywords
-                ``[query_params.dest_ip_groups]`` {str}: Filters rules based on destination groups using the specified keywords
-                ``[query_params.nw_application]`` {str}: Filters rules based on network applications using keywords
-                ``[query_params.nw_services]`` {str}: Filters rules based on network services using the specified keywords
-                ``[query_params.dest_ip_categories]`` {str}: Filters rules based on destination URL categories using keywords
                 ``[query_params.page]`` {str}: Specifies the page offset
                 ``[query_params.page_size]`` {str}: Specifies the page size. Default size is set to 5,000 if not specified.
 
         Returns:
-            tuple: A tuple containing (list of firewall rules instances, Response, error)
+            tuple: A tuple containing (list of traffic capture rules instances, Response, error)
 
         Examples:
-        >>> rules, response, error = zia.zia.cloud_firewall_rules.list_rules()
+        >>> rules, response, error = zia.traffic_capture.list_rules()
         ...    pprint(rule)
 
-        >>> rules, response, error = zia.zia.cloud_firewall_rules.list_rules(
-            query_params={"search": "Block malicious IPs and domains"})
+        >>> rules, response, error = zia.traffic_capture.list_rules(
+            query_params={"group": "Engineering"})
         ...    pprint(rule)
 
         """
@@ -78,7 +76,7 @@ class FirewallPolicyAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallFilteringRules
+            /trafficCaptureRules
         """
         )
 
@@ -98,7 +96,7 @@ class FirewallPolicyAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(FirewallRule(self.form_response_body(item)))
+                result.append(TrafficCapture(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -106,18 +104,18 @@ class FirewallPolicyAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[FirewallRule]:
+    ) -> APIResult[TrafficCapture]:
         """
-        Returns information for the specified firewall filter rule.
+        Retrieves the Traffic Capture policy rule based on the specified rule ID
 
         Args:
-            rule_id (str): The unique identifier for the firewall filter rule.
+            rule_id (str): Specifies the rule ID. This value can be obtained using the GET /trafficCaptureRules request.
 
         Returns:
-            :obj:`Tuple`: The resource record for the firewall filter rule.
+            :obj:`Tuple`: The resource record for the traffic capture rule.
 
         Examples:
-            >>> fetched_rule, _, error = client.zia.cloud_firewall_rules.get_rule('1456549')
+            >>> fetched_rule, _, error = client.zia.traffic_capture.get_rule('1456549')
             >>> if error:
             ...     print(f"Error fetching rule by ID: {error}")
             ...     return
@@ -127,7 +125,7 @@ class FirewallPolicyAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallFilteringRules/{rule_id}
+            /trafficCaptureRules/{rule_id}
             """
         )
         body = {}
@@ -138,13 +136,13 @@ class FirewallPolicyAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, TrafficCapture)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
+            result = TrafficCapture(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
@@ -152,9 +150,14 @@ class FirewallPolicyAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[FirewallRule]:
+    ) -> APIResult[TrafficCapture]:
         """
-        Adds a new firewall filter rule.
+        Adds a new traffic Capture Policy Rule.
+
+        See the
+        `Traffic Capture Policy API reference (add rule):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules-post>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             name (str): Name of the rule, max 31 chars.
@@ -172,11 +175,9 @@ class FirewallPolicyAPI(APIClient):
             dest_addresses (list): Destination IPs for the rule. Accepts IP addresses or CIDR.
             dest_ip_categories (list): IP address categories for the rule.
             dest_countries (list): Destination countries for the rule.
-            predefined (bool): Indicates that the rule is predefined by using a true value
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            enable_full_logging (bool): If True, enables full logging.
+            predefined (bool): Indicates whether this is a predefined rule by using the true value
+            default_rule (bool): Indicates whether this is a default rule by using the true value
             nw_applications (list): Network service applications for the rule.
-            app_services (list): IDs for application services for the rule.
             app_service_groups (list): IDs for app service groups.
             departments (list): IDs for departments the rule applies to.
             dest_ip_groups (list): IDs for destination IP groups.
@@ -193,13 +194,23 @@ class FirewallPolicyAPI(APIClient):
             time_windows (list): IDs for time windows the rule applies to.
             users (list): IDs for users the rule applies to.
 
+            txn_size_limit (str): The maximum size of traffic to capture per
+                connection. Supported values: `NONE`, `UNLIMITED`,
+                `THIRTY_TWO_KB`, `TWO_FIFTY_SIX_KB`, `TWO_MB`, `FOUR_MB`,
+                `THIRTY_TWO_MB`, `SIXTY_FOUR_MB`
+
+            txn_sampling (str): The percentage of connections sampled for
+                capturing each time the rule is triggered. Supported values:
+                `NONE`, `ONE_PERCENT`, `TWO_PERCENT`, `FIVE_PERCENT`,
+                `TEN_PERCENT`, `TWENTY_FIVE_PERCENT`, `HUNDRED_PERCENT`
+
         Returns:
-            :obj:`Tuple`: New firewall filter rule resource record.
+            :obj:`Tuple`: New traffic capturerule resource record.
 
         Examples:
             Add a rule to allow all traffic to Google DNS:
 
-            >>> added_rule, _, error = client.zia.cloud_firewall_rules.add_rule(
+            >>> added_rule, _, error = client.zia.traffic_capture.add_rule(
             ...     name=f"NewRule {random.randint(1000, 10000)}",
             ...     description=f"NewRule {random.randint(1000, 10000)}",
             ...     enabled=True,
@@ -212,7 +223,6 @@ class FirewallPolicyAPI(APIClient):
             ...     exclude_src_countries=True,
             ...     source_countries=['COUNTRY_AD', 'COUNTRY_AE', 'COUNTRY_AF'],
             ...     dest_countries=['COUNTRY_BR', 'COUNTRY_CA', 'COUNTRY_US'],
-            ...     dest_ip_categories=['BOTNET', 'MALWARE_SITE', 'PHISHING', 'SUSPICIOUS_DESTINATION'],
             ...     device_trust_levels=['UNKNOWN_DEVICETRUSTLEVEL', 'LOW_TRUST', 'MEDIUM_TRUST', 'HIGH_TRUST'],
             ... )
             >>> if error:
@@ -224,7 +234,7 @@ class FirewallPolicyAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallFilteringRules
+            /trafficCaptureRules
         """
         )
 
@@ -244,20 +254,25 @@ class FirewallPolicyAPI(APIClient):
         if error:
             return (None, None, error)
 
-        response, error = self._request_executor.execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, TrafficCapture)
 
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
+            result = TrafficCapture(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[FirewallRule]:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[TrafficCapture]:
         """
-        Updates an existing firewall filter rule.
+        Updates an existing traffic capturerule.
+
+        See the
+        `Traffic Capture Policy API reference (update rule):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/{ruleId}-put>`_
+        for further detail on optional keyword parameter structures.
 
         Args:
             rule_id (str): The unique ID for the rule that is being updated.
@@ -272,11 +287,9 @@ class FirewallPolicyAPI(APIClient):
             dest_addresses (list): Destination IPs for the rule. Accepts IP addresses or CIDR.
             dest_ip_categories (list): IP address categories for the rule.
             dest_countries (list): Destination countries for the rule.
-            predefined (bool): Indicates that the rule is predefined by using a true value
-            default_rule (bool): Indicates whether the rule is the Default Cloud IPS Rule or not
-            enable_full_logging (bool): If True, enables full logging.
+            predefined (bool): Indicates whether this is a predefined rule by using the true value
+            default_rule (bool): Indicates whether this is a default rule by using the true value
             nw_applications (list): Network service applications for the rule.
-            app_services (list): IDs for application services for the rule.
             app_service_groups (list): IDs for app service groups.
             departments (list): IDs for departments the rule applies to.
             dest_ip_groups (list): IDs for destination IP groups.
@@ -293,13 +306,23 @@ class FirewallPolicyAPI(APIClient):
             time_windows (list): IDs for time windows the rule applies to.
             users (list): IDs for users the rule applies to.
 
+            txn_size_limit (str): The maximum size of traffic to capture per
+                connection. Supported values: `NONE`, `UNLIMITED`,
+                `THIRTY_TWO_KB`, `TWO_FIFTY_SIX_KB`, `TWO_MB`, `FOUR_MB`,
+                `THIRTY_TWO_MB`, `SIXTY_FOUR_MB`
+
+            txn_sampling (str): The percentage of connections sampled for
+                capturing each time the rule is triggered. Supported values:
+                `NONE`, `ONE_PERCENT`, `TWO_PERCENT`, `FIVE_PERCENT`,
+                `TEN_PERCENT`, `TWENTY_FIVE_PERCENT`, `HUNDRED_PERCENT`
+
         Returns:
-            :obj:`Tuple`: The updated firewall filter rule resource record.
+            :obj:`Tuple`: The updated traffic capturerule resource record.
 
         Examples:
             Update the destination IP addresses for a rule:
 
-            >>>  added_rule, _, error = client.zia.cloud_firewall_rules.update_rule(
+            >>>  added_rule, _, error = client.zia.traffic_capture.update_rule(
             ...     rule_id='12455'
             ...     name=f"NewRule {random.randint(1000, 10000)}",
             ...     description=f"NewRule {random.randint(1000, 10000)}",
@@ -325,7 +348,7 @@ class FirewallPolicyAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallFilteringRules/{rule_id}
+            /trafficCaptureRules/{rule_id}
         """
         )
 
@@ -343,28 +366,33 @@ class FirewallPolicyAPI(APIClient):
             body=body,
         )
 
-        response, error = self._request_executor.execute(request, FirewallRule)
+        response, error = self._request_executor.execute(request, TrafficCapture)
         if error:
             return (None, response, error)
 
         try:
-            result = FirewallRule(self.form_response_body(response.get_body()))
+            result = TrafficCapture(self.form_response_body(response.get_body()))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
 
     def delete_rule(self, rule_id: int) -> APIResult[None]:
         """
-        Deletes the specified firewall filter rule.
+        Deletes the specified traffic capturerule.
+
+        See the
+        `Traffic Capture Policy API reference (delete rule):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/{ruleId}-delete>`_
+        for further detail.
 
         Args:
-            rule_id (str): The unique identifier for the firewall filter rule.
+            rule_id (str): The unique identifier for the traffic capturerule.
 
         Returns:
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> _, _, error = client.zia.cloud_firewall_rules.delete_rule('54528')
+            >>> _, _, error = client.zia.traffic_capture.delete_rule('54528')
             >>> if error:
             ...     print(f"Error deleting rule: {error}")
             ...     return
@@ -374,7 +402,7 @@ class FirewallPolicyAPI(APIClient):
         api_url = format_url(
             f"""
             {self._zia_base_endpoint}
-            /firewallFilteringRules/{rule_id}
+            /trafficCaptureRules/{rule_id}
         """
         )
 
@@ -388,3 +416,168 @@ class FirewallPolicyAPI(APIClient):
         if error:
             return (None, response, error)
         return (None, response, None)
+
+    def list_traffic_capture_rule_order(self) -> APIResult[dict]:
+        """
+        Retrieves the rule order information for the Traffic Capture policy, including the admin rank
+        and rule order mappings and the maximum configured rule order.
+
+        See the
+        `Traffic Capture Policy API reference (rule order):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/order-get>`_
+        for further detail.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing a dictionary with rule order information, the response
+            object, and error if any.
+
+            The dictionary contains:
+                - ``ruleOrderRange`` (dict): Admin rank mapping with the rule order (represented
+                  in a range) where keys are admin ranks and values are rule order strings.
+                - ``maxOrderConfigured`` (int): The maximum rule order assigned to the Traffic
+                  Capture policy rules.
+
+        Examples:
+            >>> rule_order_info, _, error = client.zia.traffic_capture.list_traffic_capture_rule_order()
+            ... if error:
+            ...     print(f"Error getting traffic capture rule order: {error}")
+            ...     return
+            ... print(f"Rule order range: {rule_order_info.get('ruleOrderRange')}")
+            ... print(f"Max order configured: {rule_order_info.get('maxOrderConfigured')}")
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /trafficCaptureRules/order
+        """
+        )
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = self.form_response_body(response.get_body())
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def traffic_capture_rule_count(self) -> APIResult[List[dict]]:
+        """
+        Retrieves the rule count for Traffic Capture policy based on the specified search criteria
+
+        If no search criteria are specified, the total number of Traffic Capture policy rules is retrieved by default.
+
+        See the
+        `Traffic Capture Policy API reference (rule count):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/count-get>`_
+        for further detail.
+
+        Returns:
+            :obj:`Tuple`: A tuple containing a list of dictionaries with configuration
+            count information, the response object, and error if any.
+
+        Examples:
+            >>> counts, _, error = client.zia.traffic_capture.traffic_capture_rule_count()
+            ... if error:
+            ...     print(f"Error getting traffioc capture rule count: {error}")
+            ...     return
+            ... print(f"Found {len(counts)} count records:")
+            ... for count in counts:
+            ...     print(count)
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /trafficCaptureRules/count
+        """
+        )
+
+        request, error = self._request_executor.create_request(http_method, api_url)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(self.form_response_body(item))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    def list_rule_labels(
+        self,
+        query_params: Optional[dict] = None,
+    ) -> APIResult[List[TrafficCapture]]:
+        """
+       Retrieves the list of Traffic Capture policy rules configured in the ZIA Admin Portal
+
+        See the
+        `Traffic Capture Policy API reference (rule labels):
+        <https://help.zscaler.com/zia/traffic-capture-policy#/trafficCaptureRules/ruleLabels-get>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            query_params {dict}: Map of query parameters for the request.
+                ``[query_params.search_by_field]`` (str, optional): Search option based on specific rule fields
+                    Supported values: `RULE_NAME`, `RULE_LABEL`, `RULE_ORDER`, `RULE_DESCRIPTION`, `RULE_ACTION`,
+                        `LOCATION`, `DEPARTMENT`, `GROUP`, `USER`, `DEVICE`
+
+                ``[query_params.search_by_value]`` {str}: Search option based on specified values for rule fields
+                ``[query_params.page]`` {str}: Specifies the page offset
+                ``[query_params.page_size]`` {str}: Specifies the page size. Default size is 1024
+
+        Returns:
+            tuple: A tuple containing (list of traffic capture rule labels instances, Response, error)
+
+        Examples:
+        >>> rules, response, error = zia.traffic_capture.list_rule_labels()
+        ...    pprint(rule)
+
+        >>> rules, response, error = zia.traffic_capture.list_rule_labels(
+            query_params={"search_by_field": "RULE_NAME"})
+        ...    pprint(rule)
+
+        """
+        http_method = "get".upper()
+        api_url = format_url(
+            f"""
+            {self._zia_base_endpoint}
+            /trafficCaptureRules/ruleLabels
+        """
+        )
+
+        query_params = query_params or {}
+
+        body = {}
+        headers = {}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body, headers, params=query_params)
+
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request)
+        if error:
+            return (None, response, error)
+        try:
+            result = []
+            for item in response.get_results():
+                result.append(TrafficCaptureRuleLabels(self.form_response_body(item)))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)

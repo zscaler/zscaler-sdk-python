@@ -33,7 +33,7 @@ class TrafficVPNCredentialAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_vpn_credentials(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_vpn_credentials(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficVPNCredentials]]:
         """
         Returns the list of all configured VPN credentials with optional filtering.
 

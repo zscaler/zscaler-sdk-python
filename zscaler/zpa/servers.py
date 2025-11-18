@@ -34,7 +34,7 @@ class AppServersAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_servers(self, query_params: Optional[dict] = None) -> APIResult[List[AppServers]]:
         """
         Enumerates application servers in your organization with pagination.
         A subset of application servers can be returned that match a supported
@@ -94,7 +94,7 @@ class AppServersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_servers_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_servers_summary(self, query_params: Optional[dict] = None) -> APIResult[List[AppServers]]:
         """
         Retrieves all configured application servers Name and IDs
 

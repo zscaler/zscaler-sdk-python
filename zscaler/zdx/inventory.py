@@ -31,7 +31,7 @@ class InventoryAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_softwares(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_softwares(self, query_params: Optional[dict] = None) -> APIResult[List[DeviceSoftwareInventory]]:
         """
         Returns a list of all software in ZDX.
 
@@ -102,7 +102,7 @@ class InventoryAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_software_keys(self, software_key: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceSoftwareInventory]]:
         """
         Returns a list of all users and devices for the given software name and version.
 

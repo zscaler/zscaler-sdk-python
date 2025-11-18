@@ -38,7 +38,7 @@ class AppConnectorControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_connectors(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_connectors(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorController]]:
         """
         Enumerates app connectors in your organization with pagination.
         A subset of app connectors can be returned that match a supported

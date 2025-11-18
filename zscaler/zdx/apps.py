@@ -35,7 +35,7 @@ class AppsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[List[ActiveApplications]]:
         """
         Returns a list of all active applications configured within the ZDX tenant.
 
@@ -316,7 +316,7 @@ class AppsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_app_users(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_app_users(self, app_id: str, query_params: Optional[dict] = None) -> APIResult[List[ApplicationActiveUsers]]:
         """
         Returns a list of users and devices that were used to access the specified application configured within
         the ZDX tenant.

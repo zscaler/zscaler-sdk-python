@@ -36,7 +36,7 @@ class TroubleshootingAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zdx_base_endpoint = "/zdx/v1"
 
-    def list_deeptraces(self, device_id: str) -> APIResult[dict]:
+    def list_deeptraces(self, device_id: str) -> APIResult[List[DeviceDeepTraces]]:
         """
         Returns a list of all deep traces for a specific device.
 
@@ -238,7 +238,7 @@ class TroubleshootingAPI(APIClient):
         self,
         device_id: str,
         trace_id: str,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DeviceTopProcesses]]:
         """
         Returns a list of all deep traces for a specific device.
 

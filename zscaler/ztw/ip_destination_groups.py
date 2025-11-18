@@ -30,7 +30,7 @@ class IPDestinationGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
         """
         Returns a list of IP Destination Groups.
 
@@ -119,7 +119,7 @@ class IPDestinationGroupsAPI(APIClient):
 
     def list_ip_destination_groups_lite(
         self, exclude_type: str = None, query_params: Optional[dict] = None
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.

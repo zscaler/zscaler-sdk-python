@@ -33,7 +33,7 @@ class ForwardingControlAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[ForwardingControlRule]]:
         """
         Lists forwarding control rules rules in your organization with pagination.
 

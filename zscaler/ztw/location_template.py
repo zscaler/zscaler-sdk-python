@@ -33,7 +33,7 @@ class LocationTemplateAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_location_templates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_location_templates(self, query_params: Optional[dict] = None) -> APIResult[List[LocationTemplate]]:
         """
         List all existing location templates.
 
@@ -104,7 +104,7 @@ class LocationTemplateAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_template_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_template_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationTemplate]]:
         """
         Returns only the name and ID of all configured locations.
 

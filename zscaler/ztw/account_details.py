@@ -32,7 +32,7 @@ class AccountDetailsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_public_account_details(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_public_account_details(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
         """
         Returns a list of public cloud account information.
 
@@ -146,7 +146,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_public_account_details_lite(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
         """
         Returns a subset of public (Cloud Connector) cloud account information.
 
@@ -208,7 +208,7 @@ class AccountDetailsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_public_account_status(self) -> APIResult[dict]:
+    def list_public_account_status(self) -> APIResult[Dict[str, Any]]:
         """
         Returns a List of public (Cloud Connector) cloud account status information (enabled/disabled).
 

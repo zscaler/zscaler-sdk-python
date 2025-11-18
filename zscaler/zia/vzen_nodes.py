@@ -33,7 +33,7 @@ class VZENNodesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_zen_nodes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_zen_nodes(self, query_params: Optional[dict] = None) -> APIResult[List[VZenNodes]]:
         """
         Retrieves the ZIA Virtual Service Edge for an organization
 

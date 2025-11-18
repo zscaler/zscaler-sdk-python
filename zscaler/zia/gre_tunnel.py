@@ -38,7 +38,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gre_tunnels(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_gre_tunnels(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficGRETunnel]]:
         """
         Returns the list of all configured GRE tunnels.
 
@@ -392,7 +392,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return (None, response, None)
 
-    def list_gre_ranges(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_gre_ranges(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
         """
         Returns a list of available GRE tunnel ranges.
 
@@ -442,7 +442,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return (result, response, None)
 
-    def list_vips_recommended(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_vips_recommended(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficGRERecommendedVIP]]:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
@@ -555,7 +555,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
 
         return recommended_vips
 
-    def list_vip_group_by_dc(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_vip_group_by_dc(self, query_params: Optional[dict] = None) -> APIResult[List[GroupByDatacenter]]:
         """
         Returns a list of recommended GRE tunnel (VIPs) grouped by data center.
 
@@ -614,7 +614,7 @@ class TrafficForwardingGRETunnelAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_vips(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_vips(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficVips]]:
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 

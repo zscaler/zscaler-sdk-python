@@ -33,7 +33,7 @@ class BandwidthClassesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_classes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_classes(self, query_params: Optional[dict] = None) -> APIResult[List[BandwidthClasses]]:
         """
         Retrieves a list of bandwidth classes for an organization.
 
@@ -93,7 +93,7 @@ class BandwidthClassesAPI(APIClient):
 
         return (results, response, None)
 
-    def list_classes_lite(self) -> APIResult[dict]:
+    def list_classes_lite(self) -> APIResult[List[BandwidthClasses]]:
         """
         Fetches a specific bandwidth class lite by ID.
 

@@ -33,7 +33,7 @@ class AdminRolesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
         """
         List all existing admin roles.
 

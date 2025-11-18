@@ -33,7 +33,7 @@ class MachineGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_machine_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_machine_groups(self, query_params: Optional[dict] = None) -> APIResult[List[MachineGroup]]:
         """
         Enumerates machine groups in your organization with pagination.
         A subset of machine groups can be returned that match a supported
@@ -90,7 +90,7 @@ class MachineGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_machine_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_machine_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[MachineGroup]]:
         """
         Retrieves all configured machine groups Name and IDs
 

@@ -33,7 +33,7 @@ class CloudConnectorGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_connector_groups(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
         """
         Returns a list of all configured cloud connector groups.
 
@@ -129,7 +129,7 @@ class CloudConnectorGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CloudConnectorGroup]]:
         """
         Retrieves all configured cloud connector groups Name and IDs
 

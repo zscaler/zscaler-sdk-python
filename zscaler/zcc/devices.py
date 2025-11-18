@@ -310,7 +310,7 @@ class DevicesAPI(APIClient):
         return filename
 
     @zcc_param_mapper
-    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[List[Device]]:
         """
         Returns the list of devices enrolled in the Client Connector Portal.
 

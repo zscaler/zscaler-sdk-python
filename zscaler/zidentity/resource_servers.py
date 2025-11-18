@@ -34,7 +34,7 @@ class ResourceServersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_resource_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_resource_servers(self, query_params: Optional[dict] = None) -> APIResult[ResourceServers]:
         """
         Retrieves a paginated list of resource servers with an optional query parameters
         for pagination

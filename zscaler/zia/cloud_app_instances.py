@@ -33,7 +33,7 @@ class CloudApplicationInstancesAPI(APIClient):
     def list_cloud_app_instances(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[CloudApplicationInstances]]:
         """
         Retrieves the list of cloud application instances configured in the ZIA Admin Portal
 

@@ -33,7 +33,7 @@ class TrafficExtranetAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_extranets(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_extranets(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficExtranet]]:
         """
         Lists extranet in your organization with pagination.
         A subset of extranet  can be returned that match a supported

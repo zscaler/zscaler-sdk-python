@@ -34,7 +34,7 @@ class IPRangesAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_ip_ranges(self) -> APIResult[dict]:
+    def list_ip_ranges(self) -> APIResult[List[IpRanges]]:
         """
         Enumerates ip ranges in your organization with pagination.
         A subset of ip ranges can be returned that match a supported

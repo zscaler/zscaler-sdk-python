@@ -36,7 +36,7 @@ class CBIProfileAPI(APIClient):
     def list_isolation_profiles(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[CBIProfile]]:
         """
         Lists isolation profiles in your organization with pagination.
         A subset of isolation profiles  can be returned that match a supported

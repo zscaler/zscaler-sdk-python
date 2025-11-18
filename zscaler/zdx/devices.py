@@ -42,7 +42,7 @@ class DevicesAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_devices(self, query_params: Optional[dict] = None) -> APIResult[List[Devices]]:
         """
         Returns a list of all active devices and its basic details.
         If the time range is not specified, the endpoint defaults to the previous 2 hours.
@@ -453,7 +453,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloudpath_probes(self, device_id: str, app_id: str, query_params: Optional[dict] = None) -> APIResult[List[DeviceAppCloudPathProbes]]:
         """
         Returns a list of all active cloudpath probes for a specific application being used by a device.
 
@@ -801,7 +801,7 @@ class DevicesAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_geolocations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_geolocations(self, query_params: Optional[dict] = None) -> APIResult[List[DeviceActiveGeo]]:
         """
         Returns a list of all active geolocations configured within the ZDX tenant.
 

@@ -89,6 +89,7 @@ from zscaler.zia.vzen_clusters import VZENClustersAPI
 from zscaler.zia.vzen_nodes import VZENNodesAPI
 from zscaler.zia.saas_security_api import SaaSSecurityAPI
 from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
+from zscaler.zia.traffic_capture import TrafficCaptureAPI
 
 
 class ZIAService:
@@ -707,3 +708,12 @@ class ZIAService:
         """
 
         return CloudToCloudIRAPI(self._request_executor)
+
+    @property
+    def traffic_capture(self) -> "TrafficCaptureAPI":
+        """
+        The interface object for the :ref:`ZIA Traffic Capture API interface <zia-traffic_capture>`.
+
+        """
+
+        return TrafficCaptureAPI(self._request_executor)
