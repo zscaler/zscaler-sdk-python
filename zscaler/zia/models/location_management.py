@@ -115,8 +115,12 @@ class LocationManagement(ZscalerObject):
             self.basic_auth_enabled = config["basicAuthEnabled"] if "basicAuthEnabled" in config else False
 
             self.digest_auth_enabled = config["digestAuthEnabled"] if "digestAuthEnabled" in config else False
-            self.ports = ZscalerCollection.form_list(config["ports"] if "ports" in config else [], str)
-            self.sub_loc_scope_values = ZscalerCollection.form_list(config["subLocScopeValues"] if "subLocScopeValues" in config else [], str)
+            self.ports = ZscalerCollection.form_list(
+                config["ports"] if "ports" in config else [], str
+            )
+            self.sub_loc_scope_values = ZscalerCollection.form_list(
+                config["subLocScopeValues"] if "subLocScopeValues" in config else [], str
+            )
             self.sub_loc_acc_ids = ZscalerCollection.form_list(config["subLocAccIds"] if "subLocAccIds" in config else [], str)
             self.sub_loc_scope_enabled = config["subLocScopeEnabled"] if "subLocScopeEnabled" in config else None
             self.sub_loc_scope = config["subLocScope"] if "subLocScope" in config else None
@@ -281,7 +285,7 @@ class LocationManagement(ZscalerObject):
             "extranetDns": self.extranet_dns,
             "defaultExtranetTsPool": self.default_extranet_ts_pool,
             "defaultExtranetDns": self.default_extranet_dns,
-            
+
             "staticLocationGroups": [static.request_format() for static in (self.static_location_groups or [])],
             "dynamiclocationGroups": [dyn.request_format() for dyn in (self.dynamic_location_groups or [])],
             "vpnCredentials": [vpn.request_format() for vpn in (self.vpn_credentials or [])],

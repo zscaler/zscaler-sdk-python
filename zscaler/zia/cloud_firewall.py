@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_destination_groups import IPDestinationGroups
@@ -36,7 +36,9 @@ class FirewallResourcesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
+    def list_ip_destination_groups(
+        self, exclude_type: str = None, query_params: Optional[dict] = None
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Returns a list of IP Destination Groups.
 
@@ -118,7 +120,9 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
+    def list_ipv6_destination_groups(
+        self, exclude_type: str = None, query_params: Optional[dict] = None
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
