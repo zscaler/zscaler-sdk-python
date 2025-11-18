@@ -6,7 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-## 1.9.1 (November 7, 2025)
+1.9.2 (November 7, 2025)
+---------------------------
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes:
+----------
+
+(`#422 <https://github.com/zscaler/zscaler-sdk-python/pull/422>`_) - Fixed type hints for Cloud Firewall list functions.
+
+1.9.1 (November 7, 2025)
+---------------------------
 
 Notes
 -----
@@ -227,7 +240,8 @@ Enhancements
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Fixed context manager deauthentication for ZTW and ZIA services to only trigger on mutations (POST/PUT/DELETE operations). GET-only sessions no longer invoke unnecessary deauthentication, improving performance and reducing API calls.
 
-## 1.8.5 (October 8, 2025)
+1.8.5 (October 8, 2025)
+---------------------------
 
 Notes
 ------

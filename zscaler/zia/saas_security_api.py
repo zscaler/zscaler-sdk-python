@@ -37,7 +37,7 @@ class SaaSSecurityAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_domain_profiles_lite(self) -> APIResult[dict]:
+    def list_domain_profiles_lite(self) -> APIResult[List[DomainProfiles]]:
         """
         Retrieves the domain profile summary
 
@@ -91,7 +91,7 @@ class SaaSSecurityAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_quarantine_tombstone_lite(self) -> APIResult[dict]:
+    def list_quarantine_tombstone_lite(self) -> APIResult[List[QuarantineTombstoneTemplate]]:
         """
         Retrieves the templates for the tombstone file created when a file is quarantined
 
@@ -145,7 +145,7 @@ class SaaSSecurityAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_casb_email_label_lite(self) -> APIResult[dict]:
+    def list_casb_email_label_lite(self) -> APIResult[List[CasbEmailLabel]]:
         """
         Retrieves the email labels generated for the SaaS Security API policies in a user's email account
 
@@ -199,7 +199,7 @@ class SaaSSecurityAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_casb_tenant_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_casb_tenant_lite(self, query_params: Optional[dict] = None) -> APIResult[List[CasbTenant]]:
         """
         Retrieves the email labels generated for the SaaS Security API policies in a user's email account
 
@@ -281,7 +281,7 @@ class SaaSSecurityAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_saas_scan_info(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_saas_scan_info(self, query_params: Optional[dict] = None) -> APIResult[List[SaaSScanInfo]]:
         """
         Retrieves the SaaS Security Scan Configuration information.
 

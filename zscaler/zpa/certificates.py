@@ -35,7 +35,7 @@ class CertificatesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[Certificate]]:
         """
         Fetches a list of all certificates with pagination support.
 
@@ -94,7 +94,7 @@ class CertificatesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_issued_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_issued_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[Certificate]]:
         """
         Fetches a list of all issued certificates with pagination support.
 

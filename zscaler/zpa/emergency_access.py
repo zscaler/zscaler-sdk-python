@@ -33,7 +33,7 @@ class EmergencyAccessAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_users(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def list_users(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[EmergencyAccessUser]]:
         """
         Enumerates emergency access in your organization with pagination.
         A subset of emergency access can be returned that match a supported

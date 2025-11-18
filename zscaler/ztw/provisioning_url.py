@@ -33,7 +33,7 @@ class ProvisioningURLAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_provisioning_url(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_provisioning_url(self, query_params: Optional[dict] = None) -> APIResult[List[ProvisioningURL]]:
         """
         List all provisioning URLs.
 

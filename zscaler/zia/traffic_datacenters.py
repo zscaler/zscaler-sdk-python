@@ -37,7 +37,7 @@ class TrafficDatacentersAPI(APIClient):
     def list_dc_exclusions(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[TrafficDcExclusions]]:
         """
         Retrieves the list of Zscaler data centers (DCs) that are
         currently excluded from service to your organization based
@@ -305,7 +305,7 @@ class TrafficDatacentersAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_datacenters(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_datacenters(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficDatacenters]]:
         """
         Retrieves the list of Zscaler data centers (DCs) that can be excluded from service to your organization
 

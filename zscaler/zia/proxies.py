@@ -34,7 +34,7 @@ class ProxiesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_proxy_gateways(self) -> APIResult[dict]:
+    def list_proxy_gateways(self) -> APIResult[List[ProxyGatways]]:
         """
         Retrieves a list of Proxy Gateways.
 
@@ -80,7 +80,7 @@ class ProxiesAPI(APIClient):
 
         return (result, response, None)
 
-    def list_proxy_gateway_lite(self) -> APIResult[dict]:
+    def list_proxy_gateway_lite(self) -> APIResult[List[ProxyGatways]]:
         """
         Retrieves the name and ID of the proxy.
 
@@ -126,7 +126,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_proxies(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_proxies(self, query_params: Optional[dict] = None) -> APIResult[List[Proxies]]:
         """
         Lists Proxiess in your organization with pagination.
         A subset of Proxiess  can be returned that match a supported
@@ -186,7 +186,7 @@ class ProxiesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_proxies_lite(self) -> APIResult[dict]:
+    def list_proxies_lite(self) -> APIResult[List[Proxies]]:
         """
         Fetches a specific Proxies lite.
 

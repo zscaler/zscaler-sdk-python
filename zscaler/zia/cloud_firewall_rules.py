@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.request_executor import RequestExecutor
 from zscaler.api_client import APIClient
 from zscaler.zia.models.cloud_firewall_rules import FirewallRule
@@ -33,7 +33,7 @@ class FirewallPolicyAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[FirewallRule]]:
         """
         List firewall rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -106,7 +106,7 @@ class FirewallPolicyAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> APIResult[FirewallRule]:
         """
         Returns information for the specified firewall filter rule.
 
@@ -152,7 +152,7 @@ class FirewallPolicyAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> APIResult[FirewallRule]:
         """
         Adds a new firewall filter rule.
 
@@ -255,7 +255,7 @@ class FirewallPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[FirewallRule]:
         """
         Updates an existing firewall filter rule.
 
@@ -353,7 +353,7 @@ class FirewallPolicyAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> APIResult[None]:
         """
         Deletes the specified firewall filter rule.
 

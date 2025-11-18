@@ -36,7 +36,7 @@ class DLPDictionaryAPI(APIClient):
     def list_dicts(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPDictionary]]:
         """
         Returns a list of all custom and predefined ZIA DLP Dictionaries.
 
@@ -103,7 +103,7 @@ class DLPDictionaryAPI(APIClient):
     def list_dicts_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPDictionary]]:
         """
         Lists name and ID dictionary of all custom and predefined DLP dictionaries.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -479,7 +479,7 @@ class DLPDictionaryAPI(APIClient):
 
         return (result, response, None)
 
-    def list_dict_predefined_identifiers(self, dict_name: str) -> APIResult[dict]:
+    def list_dict_predefined_identifiers(self, dict_name: str) -> APIResult[List[Dict[str, Any]]]:
         """
         Returns a list of predefined identifiers for a specific DLP dictionary by its name.
 

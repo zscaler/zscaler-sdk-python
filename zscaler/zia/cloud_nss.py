@@ -34,7 +34,7 @@ class CloudNSSAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_feed(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_nss_feed(self, query_params: Optional[dict] = None) -> APIResult[List[NssFeeds]]:
         """
         Retrieves the cloud NSS feeds configured in the ZIA Admin Portal
 
@@ -551,7 +551,7 @@ class CloudNSSAPI(APIClient):
 
         return (None, response, None)
 
-    def list_feed_output(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_feed_output(self, query_params: Optional[dict] = None) -> APIResult[List[Dict[str, Any]]]:
         """
         Retrieves the default cloud NSS feed output format for different log types
 

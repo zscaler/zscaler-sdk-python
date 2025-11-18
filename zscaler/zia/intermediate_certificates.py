@@ -34,7 +34,7 @@ class IntermediateCertsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ca_certificates(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ca_certificates(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -104,7 +104,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ca_certificates_lite(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates added for SSL inspection.
         """
@@ -174,7 +174,7 @@ class IntermediateCertsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ready_to_use(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ready_to_use(self, query_params: Optional[dict] = None) -> APIResult[List[IntermediateCACertificate]]:
         """
         List of intermediate CA certificates that are ready to use for SSL inspection.
         """

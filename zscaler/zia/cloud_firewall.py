@@ -36,7 +36,7 @@ class FirewallResourcesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ip_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
         """
         Returns a list of IP Destination Groups.
 
@@ -118,7 +118,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ipv6_destination_groups(self, exclude_type: str = None, query_params: Optional[dict] = None) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -206,7 +206,7 @@ class FirewallResourcesAPI(APIClient):
         self,
         exclude_type: str = None,
         query_params: Optional[dict] = None
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IP Destination Groups name and ID  all IP Destination Groups.
         This endpoint retrieves only IPv4 destination address groups.
@@ -300,7 +300,7 @@ class FirewallResourcesAPI(APIClient):
         self,
         exclude_type: str = None,
         query_params: Optional[dict] = None
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPDestinationGroups]]:
         """
         Lists IPv6 Destination Groups name and ID  all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -663,7 +663,7 @@ class FirewallResourcesAPI(APIClient):
     def list_ip_source_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPSourceGroup]]:
         """
         List IP Source Groups in your organization.
 
@@ -731,7 +731,7 @@ class FirewallResourcesAPI(APIClient):
     def list_ipv6_source_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPSourceGroup]]:
         """
         List IPv6 Source Groups in your organization.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -801,7 +801,7 @@ class FirewallResourcesAPI(APIClient):
     def list_ip_source_groups_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPSourceGroup]]:
         """
         Lists IP Source Groups name and ID  all IP Source Groups.
         This endpoint retrieves only IPv4 source address groups.
@@ -876,7 +876,7 @@ class FirewallResourcesAPI(APIClient):
     def list_ipv6_source_groups_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPSourceGroup]]:
         """
         Lists IPv6 Source Groups name and ID all IPv6 Source Groups.
         `Note`: User-defined groups for IPv6 addresses are currently not supported,
@@ -1150,7 +1150,7 @@ class FirewallResourcesAPI(APIClient):
     def list_network_app_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkApplicationGroups]]:
         """
         List Network Application Groups in your organization.
 
@@ -1417,7 +1417,7 @@ class FirewallResourcesAPI(APIClient):
     def list_network_apps(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkApplications]]:
         """
         Lists Network Applications in your organization with pagination.
         A subset of Network Applications can be returned that match a supported
@@ -1533,7 +1533,7 @@ class FirewallResourcesAPI(APIClient):
     def list_network_svc_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkServiceGroups]]:
         """
         Lists network service groups in your organization with pagination.
         A subset of network service groups can be returned that match a supported
@@ -1604,7 +1604,7 @@ class FirewallResourcesAPI(APIClient):
     def list_network_svc_groups_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkServiceGroups]]:
         """
         Lists Network Service Groups name and ID  all network service groups.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -1871,7 +1871,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[List[NetworkServices]]:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported
@@ -1945,7 +1945,7 @@ class FirewallResourcesAPI(APIClient):
     def list_network_services_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkServices]]:
         """
         Lists network services name and ID all network services.
         A subset of network service groups can be returned that match a supported
@@ -2263,7 +2263,7 @@ class FirewallResourcesAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_time_windows(self) -> APIResult[dict]:
+    def list_time_windows(self) -> APIResult[List[TimeWindows]]:
         """
         Returns a list of time intervals used by the Firewall policy or the URL Filtering policy.
 
@@ -2304,7 +2304,7 @@ class FirewallResourcesAPI(APIClient):
 
         return (result, response, None)
 
-    def list_time_windows_lite(self) -> APIResult[dict]:
+    def list_time_windows_lite(self) -> APIResult[List[TimeWindows]]:
         """
         Returns name and ID dictionary of time intervals used by the Firewall policy or the URL Filtering policy.
 

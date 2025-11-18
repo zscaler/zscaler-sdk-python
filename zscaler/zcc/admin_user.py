@@ -30,7 +30,7 @@ class AdminUserAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_admin_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_admin_users(self, query_params: Optional[dict] = None) -> APIResult[List[AdminUser]]:
         """
         Returns the list of Admin Users enrolled in the Client Connector Portal.
 
@@ -129,7 +129,7 @@ class AdminUserAPI(APIClient):
 
         return result, response, None
 
-    def list_admin_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_admin_roles(self, query_params: Optional[dict] = None) -> APIResult[List[AdminRoles]]:
         """
         Returns the list admin roles in the Client Connector Portal.
 

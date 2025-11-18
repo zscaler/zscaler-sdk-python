@@ -1,5 +1,15 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.2 (November 18, 2025)
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+### Bug Fixes:
+
+* [PR #422](https://github.com/zscaler/zscaler-sdk-python/pull/422) - Fixed type hints for Cloud Firewall list functions.
+
 ## 1.9.1 (November 7, 2025)
 
 ### Notes

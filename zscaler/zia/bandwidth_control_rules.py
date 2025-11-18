@@ -33,7 +33,7 @@ class BandwidthControlRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[BandwidthControlRules]]:
         """
         List bandwidth control rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -107,7 +107,7 @@ class BandwidthControlRulesAPI(APIClient):
 
         return (results, response, None)
 
-    def list_rules_lite(self) -> APIResult[dict]:
+    def list_rules_lite(self) -> APIResult[List[BandwidthControlRules]]:
         """
         Fetches a specific bandwidth control rule lite.
 

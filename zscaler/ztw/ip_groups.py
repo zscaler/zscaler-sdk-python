@@ -33,7 +33,7 @@ class IPGroupsAPI(APIClient):
     def list_ip_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPGroups]]:
         """
             List IP Groups in your organization.
 
@@ -104,7 +104,7 @@ class IPGroupsAPI(APIClient):
     def list_ip_groups_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[IPGroups]]:
         """
         Lists IP Groups name and ID  all IP Groups.
         This endpoint retrieves only IPv4 source address groups.
