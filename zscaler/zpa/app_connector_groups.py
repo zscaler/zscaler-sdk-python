@@ -92,7 +92,7 @@ class AppConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_connector_groups_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_connector_groups_summary(self, query_params: Optional[dict] = None) -> APIResult[List[AppConnectorGroup]]:
         """
         Retrieves all configured app connector groups Name and IDs
 

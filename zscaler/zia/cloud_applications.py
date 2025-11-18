@@ -33,7 +33,7 @@ class CloudApplicationsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_app_policy(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_app_policy(self, query_params: Optional[dict] = None) -> APIResult[List[CloudApplicationPolicy]]:
         """
         Return a list of of Predefined and User Defined Cloud Applications associated with the DLP rules,
         Cloud App Control rules, Advanced Settings, Bandwidth Classes, and File Type Control rules.
@@ -108,7 +108,7 @@ class CloudApplicationsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_cloud_app_ssl_policy(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_app_ssl_policy(self, query_params: Optional[dict] = None) -> APIResult[List[CloudApplicationPolicy]]:
         """
         Retrieves a list of Predefined and User Defined Cloud Applications associated with the SSL Inspection rules.
         Retrives AppInfo when groupResults is set to false and retrieves the application count grouped by application

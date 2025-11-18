@@ -34,7 +34,7 @@ class GroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_groups(self, query_params: Optional[dict] = None) -> APIResult[Groups]:
         """
         Retrieves a paginated list of groups with optional query parameters
         for pagination and filtering by group name or dynamic group status.
@@ -311,7 +311,7 @@ class GroupsAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_group_users_details(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_group_users_details(self, group_id: str, query_params: Optional[dict] = None) -> APIResult[Groups]:
         """
         Retrieves the list of users details for a specific group using the group ID.
 

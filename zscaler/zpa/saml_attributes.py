@@ -34,7 +34,7 @@ class SAMLAttributesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_saml_attributes(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_saml_attributes(self, query_params: Optional[dict] = None) -> APIResult[List[SAMLAttribute]]:
         """
         Returns a list of all configured SAML attributes.
 
@@ -85,7 +85,7 @@ class SAMLAttributesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_saml_attributes_by_idp(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_saml_attributes_by_idp(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[List[SAMLAttribute]]:
         """
         Returns a list of all configured SAML attributes for the specified IdP.
 

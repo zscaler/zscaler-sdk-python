@@ -33,7 +33,7 @@ class ProvisioningAPIKeyAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[List[ApiKeys]]:
         """
         List all existing API keys.
 

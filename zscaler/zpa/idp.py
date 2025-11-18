@@ -34,7 +34,7 @@ class IDPControllerAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_idps(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_idps(self, query_params: Optional[dict] = None) -> APIResult[List[IDPController]]:
         """
         Enumerates identity provider in your organization with pagination.
         A subset of identity provider can be returned that match a supported

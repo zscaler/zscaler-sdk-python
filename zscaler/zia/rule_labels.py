@@ -33,7 +33,7 @@ class RuleLabelsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_labels(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_labels(self, query_params: Optional[dict] = None) -> APIResult[List[RuleLabels]]:
         """
         Lists rule labels in your organization with pagination.
         A subset of rule labels  can be returned that match a supported

@@ -34,7 +34,7 @@ class TrafficStaticIPAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_static_ips(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_static_ips(self, query_params: Optional[dict] = None) -> APIResult[List[TrafficStaticIP]]:
         """
         Returns the list of all configured static IPs.
 

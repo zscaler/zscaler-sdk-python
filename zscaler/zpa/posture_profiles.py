@@ -34,7 +34,7 @@ class PostureProfilesAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_posture_profiles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_posture_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[PostureProfile]]:
         """
         Returns a list of all configured posture profiles.
 

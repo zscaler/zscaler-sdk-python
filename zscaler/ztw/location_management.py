@@ -33,7 +33,7 @@ class LocationManagementAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_locations(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
         Returns a list of locations.
 
@@ -169,7 +169,7 @@ class LocationManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_locations_lite(self, query_params: Optional[dict] = None) -> APIResult[List[LocationManagement]]:
         """
         Returns only the name and ID of all configured locations.
 

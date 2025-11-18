@@ -37,7 +37,7 @@ class DeviceManagementAPI(APIClient):
     def list_device_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DeviceGroups]]:
         """
         Returns the list of ZIA Device Groups.
 
@@ -96,7 +96,7 @@ class DeviceManagementAPI(APIClient):
     def list_devices(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[Devices]]:
         """
         Returns the list of Devices.
 
@@ -157,7 +157,7 @@ class DeviceManagementAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_device_lite(self) -> APIResult[dict]:
+    def list_device_lite(self) -> APIResult[List[DeviceGroups]]:
         """
         Returns the list of devices that includes device ID, name, and owner name.
 

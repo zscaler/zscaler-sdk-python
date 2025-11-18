@@ -6,7 +6,20 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
-## 1.9.1 (November 7, 2025)
+1.9.2 (November 7, 2025)
+---------------------------
+
+### Notes
+
+- Python Versions: **v3.8, v3.9, v3.10, v3.11**
+
+Bug Fixes:
+----------
+
+(`#422 <https://github.com/zscaler/zscaler-sdk-python/pull/422>`_) - Fixed type hints for Cloud Firewall list functions.
+
+1.9.1 (November 7, 2025)
+---------------------------
 
 Notes
 -----
@@ -129,8 +142,8 @@ New ZPA Endpoint - OAuth User Code Controller
     - Added `POST /{associationType}/usercodes` Verifies the provided list of user codes for a given component provisioning.
     - Added `POST /{associationType}/usercodes/status` Adds a new Provisioning Key for the specified customer.
 
- ZPA Endpoint - Policy-Set Controller
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+New ZPA Endpoint - Policy-Set Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Added the following new ZPA Endpoints
     - Added `GET /riskScoreValues` Gets values of risk scores for the specified customer.
@@ -227,7 +240,8 @@ Enhancements
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Fixed context manager deauthentication for ZTW and ZIA services to only trigger on mutations (POST/PUT/DELETE operations). GET-only sessions no longer invoke unnecessary deauthentication, improving performance and reducing API calls.
 
-## 1.8.5 (October 8, 2025)
+1.8.5 (October 8, 2025)
+---------------------------
 
 Notes
 ------

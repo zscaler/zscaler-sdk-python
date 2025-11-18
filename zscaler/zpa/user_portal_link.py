@@ -39,7 +39,7 @@ class UserPortalLinkAPI(APIClient):
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
         self._zpa_base_endpoint_v2 = f"/zpa/mgmtconfig/v2/admin/customers/{customer_id}"
 
-    def list_portal_link(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_portal_link(self, query_params: Optional[dict] = None) -> APIResult[List[UserPortalLink]]:
         """
         Enumerates user portal link link in an organization with pagination.
 

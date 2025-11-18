@@ -89,7 +89,7 @@ class AdminUsersAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_admins(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_admins(self, query_params: Optional[dict] = None) -> APIResult[List[AdminUsers]]:
         """
         List all existing admin users.
 

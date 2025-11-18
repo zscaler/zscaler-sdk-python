@@ -33,7 +33,7 @@ class ZPAGatewayAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[List[ZPAGateway]]:
         """
         Lists ZPA Gateways in your organization with pagination.
         A subset of ZPA Gateways can be returned that match a supported

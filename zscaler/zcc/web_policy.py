@@ -30,7 +30,7 @@ class WebPolicyAPI(APIClient):
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
     @zcc_param_mapper
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[WebPolicy]]:
         """
         Returns the list of Web Policy By Company ID in the Client Connector Portal.
 

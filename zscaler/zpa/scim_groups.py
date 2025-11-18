@@ -33,7 +33,7 @@ class SCIMGroupsAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint_userconfig = f"/zpa/userconfig/v1/customers/{customer_id}"
 
-    def list_scim_groups(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_scim_groups(self, idp_id: str, query_params: Optional[dict] = None) -> APIResult[List[SCIMGroup]]:
         """
         Returns a list of all configured SCIM groups for the specified IdP.
 

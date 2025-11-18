@@ -34,7 +34,7 @@ class ServiceEdgeControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_service_edges(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_service_edges(self, query_params: Optional[dict] = None) -> APIResult[List[ServiceEdge]]:
         """
         Enumerates service edges in your organization with pagination.
         A subset of service edges can be returned that match a supported

@@ -31,7 +31,7 @@ class NWServiceAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_network_services(self, query_params: Optional[dict] = None) -> APIResult[List[NetworkServices]]:
         """
         Lists network services in your organization with pagination.
         A subset of network services  can be returned that match a supported

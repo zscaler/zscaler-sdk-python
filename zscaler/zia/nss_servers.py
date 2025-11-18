@@ -33,7 +33,7 @@ class NssServersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_nss_servers(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_nss_servers(self, query_params: Optional[dict] = None) -> APIResult[List[Nssservers]]:
         """
         Lists NSS servers in your organization.
 

@@ -53,7 +53,7 @@ class URLFilteringAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[URLFilteringRule]]:
         """
         Lists url filtering rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.

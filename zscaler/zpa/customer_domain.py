@@ -33,7 +33,7 @@ class CustomerDomainControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}/v2"
 
-    def list_domains(self, type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_domains(self, type: str, query_params: Optional[dict] = None) -> APIResult[CustomerDomainController]:
         """
         Get all customer domains.
 

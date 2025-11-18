@@ -45,7 +45,7 @@ class ShadowITAPI(APIClient):
         """
         return [{"id": str(id)} for id in id_list]
 
-    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_apps(self, query_params: Optional[dict] = None) -> APIResult[List[CloudapplicationsAndTags]]:
         """
         Gets the list of predefined and custom cloud applications
 
@@ -104,7 +104,7 @@ class ShadowITAPI(APIClient):
 
         return (result, response, None)
 
-    def list_custom_tags(self) -> APIResult[dict]:
+    def list_custom_tags(self) -> APIResult[List[CloudapplicationsAndTags]]:
         """
         List all custom tags by name and id.
 

@@ -33,7 +33,7 @@ class ApiKeysAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_api_keys(self, query_params: Optional[dict] = None) -> APIResult[List[ApiKeys]]:
         """
         List all API keys details.
 

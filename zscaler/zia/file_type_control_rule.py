@@ -33,7 +33,7 @@ class FileTypeControlRuleAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[FileTypeControlRules]]:
         """
         Lists file type control rules rules in your organization with pagination.
         A subset of file type control rules rules  can be returned that match a supported

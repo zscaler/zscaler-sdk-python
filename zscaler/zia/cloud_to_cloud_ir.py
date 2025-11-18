@@ -33,7 +33,7 @@ class CloudToCloudIRAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_cloud_to_cloud_ir(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_to_cloud_ir(self, query_params: Optional[dict] = None) -> APIResult[List[CloudToCloudIR]]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding.
 
@@ -137,7 +137,7 @@ class CloudToCloudIRAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_cloud_to_cloud_ir_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_to_cloud_ir_lite(self, query_params: Optional[dict] = None) -> APIResult[List[CloudToCloudIR]]:
         """
         Retrieves the list of DLP Incident Receivers configured for Cloud-to-Cloud DLP Incident Forwarding,
         with a subset of information for each Incident Receiver
@@ -199,7 +199,7 @@ class CloudToCloudIRAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_c2c_count(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_c2c_count(self, query_params: Optional[dict] = None) -> APIResult[int]:
         """
         Retrieves the number of DLP Incident Receivers configured for Cloud-to-Cloud Incident Forwarding
 

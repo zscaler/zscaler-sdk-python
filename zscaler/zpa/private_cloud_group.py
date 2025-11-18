@@ -34,7 +34,7 @@ class PrivateCloudGroupAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cloud_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_cloud_groups(self, query_params: Optional[dict] = None) -> APIResult[List[PrivateCloudGroup]]:
         """
         Enumerates Private Cloud Groups in your organization with pagination.
         A subset of Private Cloud Groups can be returned that match a supported
@@ -374,7 +374,7 @@ class PrivateCloudGroupAPI(APIClient):
 
         return (None, response, None)
 
-    def list_private_cloud_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_private_cloud_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
         """
         Returns the name and ID of the configured Private Cloud Group.
 

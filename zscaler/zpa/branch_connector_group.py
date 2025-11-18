@@ -90,7 +90,7 @@ class BranchConnectorGroupAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_branch_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_branch_connector_group_summary(self, query_params: Optional[dict] = None) -> APIResult[List[CommonIDName]]:
         """
         Retrieves all configured branch connector groups Name and IDs
 

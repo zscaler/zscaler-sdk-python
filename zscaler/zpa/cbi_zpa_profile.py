@@ -34,7 +34,7 @@ class CBIZPAProfileAPI(APIClient):
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_cbi_zpa_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def list_cbi_zpa_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ZPACBIProfile]]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 
@@ -78,7 +78,7 @@ class CBIZPAProfileAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_isolation_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def list_isolation_profiles(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ZPACBIProfile]]:
         """
         Returns a list of all cloud browser isolation ZPA profiles, with options to filter by disabled status and scope.
 

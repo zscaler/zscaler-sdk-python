@@ -30,7 +30,7 @@ class CloudAppControlAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_available_actions(self, rule_type: str, cloud_apps: list) -> APIResult[dict]:
+    def list_available_actions(self, rule_type: str, cloud_apps: list) -> APIResult[List[str]]:
         """
         Retrieves a list of granular actions supported for a specific rule type.
 
@@ -87,7 +87,7 @@ class CloudAppControlAPI(APIClient):
         self,
         rule_type: str,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[CloudApplicationControl]]:
         """
         Returns a list of all Cloud App Control rules for the specified rule type.
 

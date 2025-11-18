@@ -33,7 +33,7 @@ class DLPEngineAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_dlp_engines(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_dlp_engines(self, query_params: Optional[dict] = None) -> APIResult[List[DLPEngine]]:
         """
         Returns a list of all DLP Engines.
 
@@ -102,7 +102,7 @@ class DLPEngineAPI(APIClient):
     def list_dlp_engines_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPEngine]]:
         """
         Lists name and ID Engine of all custom and predefined DLP dictionaries.
         If the `search` parameter is provided, the function filters the rules client-side.

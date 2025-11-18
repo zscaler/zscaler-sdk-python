@@ -31,7 +31,7 @@ class UsersAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_users(self, query_params: Optional[dict] = None) -> APIResult[List[ActiveUsers]]:
         """
         Returns a list of all active users configured within the ZDX tenant.
 

@@ -90,7 +90,7 @@ class LSSConfigControllerAPI(APIClient):
 
         return template
 
-    def list_configs(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_configs(self, query_params: Optional[dict] = None) -> APIResult[List[LSSResourceModel]]:
         """
         Enumerates log receivers in your organization with pagination.
         A subset of log receivers can be returned that match a supported

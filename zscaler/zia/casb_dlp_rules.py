@@ -33,7 +33,7 @@ class CasbdDlpRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[CasbdDlpRules]]:
         """
         Returns a list of all Casb DLP Rules for the specified rule type.
 
@@ -158,7 +158,7 @@ class CasbdDlpRulesAPI(APIClient):
 
     def list_all_rules(
         self,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[CasbdDlpRules]]:
         """
         Returns a list of all Casb DLP Rules.
 

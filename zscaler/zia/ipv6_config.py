@@ -76,7 +76,7 @@ class TrafficIPV6ConfigAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_dns64_prefix(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_dns64_prefix(self, query_params: Optional[dict] = None) -> APIResult[List[IPV6PrefixMask]]:
         """
         Fetches the list of NAT64 prefixes configured as the DNS64 prefix for the organization
 
@@ -133,7 +133,7 @@ class TrafficIPV6ConfigAPI(APIClient):
         except Exception as error:
             return (None, response, error)
 
-    def list_nat64_prefix(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_nat64_prefix(self, query_params: Optional[dict] = None) -> APIResult[List[IPV6PrefixMask]]:
         """
         Fetches the list of NAT64 prefixes configured for the organization
 

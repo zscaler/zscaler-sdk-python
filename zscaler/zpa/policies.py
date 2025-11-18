@@ -434,7 +434,7 @@ class PolicySetControllerAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_rules(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_rules(self, policy_type: str, query_params: Optional[dict] = None) -> APIResult[List[PolicySetControllerV1]]:
         """
         Returns policy rules for a given policy type.
 
@@ -4416,7 +4416,7 @@ class PolicySetControllerAPI(APIClient):
 
     def list_rules_by_appplication_id(
         self, policy_type: str, application_id: str, query_params: Optional[dict] = None
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[PolicySetControllerV2]]:
         """
         Gets paginated policy rules for the specified policy type by application ID
 

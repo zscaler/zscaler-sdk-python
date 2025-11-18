@@ -34,7 +34,7 @@ class RoleControllerAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_roles(self, query_params: Optional[dict] = None) -> APIResult[List[RoleController]]:
         """
         Get All configured roles.
 
@@ -360,7 +360,7 @@ class RoleControllerAPI(APIClient):
             return (None, response, error)
         return (None, response, error)
 
-    def list_permission_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_permission_groups(self, query_params: Optional[dict] = None) -> APIResult[List[ClassPermissionGroups]]:
         """
         Get All the default permission groups
 

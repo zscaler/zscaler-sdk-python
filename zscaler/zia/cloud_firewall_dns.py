@@ -14,7 +14,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import List, Optional
 from zscaler.request_executor import RequestExecutor
 from zscaler.utils import format_url, transform_common_id_fields, reformat_params
 from zscaler.api_client import APIClient
@@ -33,7 +33,7 @@ class FirewallDNSRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[FirewallDNSRules]]:
         """
         List firewall dns rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -107,7 +107,7 @@ class FirewallDNSRulesAPI(APIClient):
     def get_rule(
         self,
         rule_id: int,
-    ) -> APIResult[dict]:
+    ) -> APIResult[FirewallDNSRules]:
         """
         Returns information for the specified cloud firewall dns filter rule.
 
@@ -157,7 +157,7 @@ class FirewallDNSRulesAPI(APIClient):
     def add_rule(
         self,
         **kwargs,
-    ) -> APIResult[dict]:
+    ) -> APIResult[FirewallDNSRules]:
         """
         Adds a new cloud firewall dns rule.
 
@@ -259,7 +259,7 @@ class FirewallDNSRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def update_rule(self, rule_id: int, **kwargs) -> APIResult[dict]:
+    def update_rule(self, rule_id: int, **kwargs) -> APIResult[FirewallDNSRules]:
         """
         Updates an existing cloud firewall dns rule.
 
@@ -367,7 +367,7 @@ class FirewallDNSRulesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def delete_rule(self, rule_id: int) -> APIResult[dict]:
+    def delete_rule(self, rule_id: int) -> APIResult[None]:
         """
         Deletes the specified cloud firewall dns filter rule.
 

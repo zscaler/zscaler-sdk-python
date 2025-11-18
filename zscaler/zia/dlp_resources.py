@@ -38,7 +38,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_icap_servers(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPICAPServer]]:
         """
         Returns the list of ZIA DLP ICAP Servers.
 
@@ -112,7 +112,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_icap_servers_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPICAPServer]]:
         """
         Lists name and ID of all ICAP servers.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -231,7 +231,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_incident_receiver(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPICAPServer]]:
         """
         Returns the list of ZIA DLP Incident Receiver.
 
@@ -305,7 +305,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_incident_receiver_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPICAPServer]]:
         """
         Lists name and ID DLP Incident Receiver.
 
@@ -420,7 +420,7 @@ class DLPResourcesAPI(APIClient):
     def list_dlp_idm_profiles(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPIDMProfile]]:
         """
         Returns the list of ZIA DLP IDM Profiles.
 
@@ -518,7 +518,7 @@ class DLPResourcesAPI(APIClient):
     def list_edm_schemas(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPEDMSchema]]:
         """
         Returns the list of ZIA DLP Exact Data Match Schemas.
 
@@ -576,7 +576,7 @@ class DLPResourcesAPI(APIClient):
         active_only: bool = None,
         fetch_tokens: bool = None,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPEDMSchema]]:
         """
         Returns the list of active EDM templates (or EDM schemas) and their criteria (or token details), only.
 

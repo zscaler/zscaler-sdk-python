@@ -37,7 +37,7 @@ class DedicatedIPGatewaysAPI(APIClient):
     def list_dedicated_ip_gw_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DedicatedIPGateways]]:
         """
         Retrieves a list of dedicated IP gateways
 
