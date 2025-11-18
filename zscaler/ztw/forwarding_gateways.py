@@ -30,7 +30,7 @@ class ForwardingGatewaysAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_gateways(self, query_params: Optional[dict] = None) -> APIResult[List[ForwardingGateways]]:
         """
             Retrieves a list of ZIA gateways and Log and Control gateways.
 
@@ -89,7 +89,7 @@ class ForwardingGatewaysAPI(APIClient):
     def list_gateway_lite(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[ForwardingGateways]]:
         """
             Lists IP Source Groups name and ID  all IP Source Groups.
             This endpoint retrieves only IPv4 source address groups.

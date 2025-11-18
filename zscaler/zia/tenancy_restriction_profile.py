@@ -33,7 +33,7 @@ class TenancyRestrictionProfileAPI(APIClient):
     def list_restriction_profile(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[TenancyRestrictionProfile]]:
         """
         Retrieves all the restricted tenant profiles.
 
@@ -338,7 +338,7 @@ class TenancyRestrictionProfileAPI(APIClient):
         self,
         app_type: str,
         item_type: str,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[Dict[str, Any]]]:
         """
         Retrieves the item count of the specified item type for a given application, excluding any specified profile.
 

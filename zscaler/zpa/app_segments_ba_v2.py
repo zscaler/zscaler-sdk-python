@@ -39,7 +39,7 @@ class AppSegmentsBAV2API(APIClient):
         customer_id = config["client"].get("customerId")
         self._zpa_base_endpoint = f"/zpa/mgmtconfig/v1/admin/customers/{customer_id}"
 
-    def list_segments_ba(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[dict]:
+    def list_segments_ba(self, query_params: Optional[dict] = None, **kwargs) -> APIResult[List[ApplicationSegments]]:
         """
         Enumerates application segment browser access in your organization with pagination.
         A subset of application segment browser access can be returned that match a supported

@@ -34,7 +34,7 @@ class SubCloudsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_sub_clouds(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_sub_clouds(self, query_params: Optional[dict] = None) -> APIResult[List[TenantSubClouds]]:
         """
         Returns the list of all configured Tenant Sub Clouds.
 

@@ -29,7 +29,7 @@ class TrustedNetworksAPI(APIClient):
         self._request_executor: RequestExecutor = request_executor
         self._zcc_base_endpoint = "/zcc/papi/public/v1"
 
-    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_by_company(self, query_params: Optional[dict] = None) -> APIResult[List[TrustedNetworks]]:
         """
         Returns the list of Trusted Networks By Company ID in the Client Connector Portal.
 

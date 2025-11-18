@@ -32,7 +32,7 @@ class AlertsAPI(APIClient):
         self._zdx_base_endpoint = "/zdx/v1"
 
     @zdx_params
-    def list_ongoing(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ongoing(self, query_params: Optional[dict] = None) -> APIResult[List[Alerts]]:
         """
         Returns a list of all ongoing alert rules across an organization in ZDX.
         All ongoing alert rules are returned if the search filter is not specified.
@@ -158,7 +158,7 @@ class AlertsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_historical(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_historical(self, query_params: Optional[dict] = None) -> APIResult[List[Alerts]]:
         """
         Returns a list of alert history rules defined across an organization.
         All alert history rules are returned if the search filter is not specified.
@@ -239,7 +239,7 @@ class AlertsAPI(APIClient):
         return (result, response, None)
 
     @zdx_params
-    def list_affected_devices(self, alert_id, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_affected_devices(self, alert_id, query_params: Optional[dict] = None) -> APIResult[List[AffectedDevices]]:
         """
         Returns a list of all affected devices associated with
         an alert rule in conjunction with provided filters.

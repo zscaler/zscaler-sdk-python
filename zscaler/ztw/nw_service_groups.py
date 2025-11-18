@@ -33,7 +33,7 @@ class NWServiceGroupsAPI(APIClient):
     def list_network_svc_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[NetworkServiceGroups]]:
         """
             Lists network service groups in your organization with pagination.
             A subset of network service groups can be returned that match a supported

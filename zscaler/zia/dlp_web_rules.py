@@ -36,7 +36,7 @@ class DLPWebRuleAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPWebRules]]:
         """
         List dlp web rules in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.
@@ -140,7 +140,7 @@ class DLPWebRuleAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_rules_lite(self, query_params: dict = None) -> APIResult[dict]:
+    def list_rules_lite(self, query_params: dict = None) -> APIResult[List[DLPWebRules]]:
         """
         Lists name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules
 

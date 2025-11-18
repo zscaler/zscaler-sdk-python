@@ -33,7 +33,7 @@ class VZENClustersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_vzen_clusters(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_vzen_clusters(self, query_params: Optional[dict] = None) -> APIResult[List[VZENClusters]]:
         """
         Retrieves a list of ZIA Virtual Service Edge clusters
 

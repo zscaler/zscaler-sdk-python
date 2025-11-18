@@ -35,7 +35,7 @@ class PacFilesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_pac_files(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_pac_files(self, query_params: Optional[dict] = None) -> APIResult[List[PacFiles]]:
         """
         Lists pac files in your organization with pagination.
         A subset of pac files can be returned that match a supported

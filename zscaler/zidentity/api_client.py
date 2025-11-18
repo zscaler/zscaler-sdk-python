@@ -35,7 +35,7 @@ class APIClientAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_api_clients(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_api_clients(self, query_params: Optional[dict] = None) -> APIResult[APIClients]:
         """
         Retrieves a paginated list of API clients
         providing details such as total records, current page offset, and links for pagination navigation

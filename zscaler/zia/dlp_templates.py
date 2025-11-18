@@ -36,7 +36,7 @@ class DLPTemplatesAPI(APIClient):
     def list_dlp_templates(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[DLPTemplates]]:
         """
         Lists DLP Notification Templates. in your organization.
         If the `search` parameter is provided, the function filters the rules client-side.

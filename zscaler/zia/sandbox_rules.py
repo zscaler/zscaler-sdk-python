@@ -33,7 +33,7 @@ class SandboxRulesAPI(APIClient):
     def list_rules(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[SandboxRules]]:
         """
         Lists sandbox rules in your organization with pagination.
         A subset of sandbox rules  can be returned that match a supported

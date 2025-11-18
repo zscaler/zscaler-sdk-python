@@ -33,7 +33,7 @@ class TimeIntervalsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_time_intervals(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_time_intervals(self, query_params: Optional[dict] = None) -> APIResult[List[TimeIntervals]]:
         """
         Retrieves a list of all configured time intervals.
 

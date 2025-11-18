@@ -35,7 +35,7 @@ class ECGroupsAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_ec_groups(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ec_groups(self, query_params: Optional[dict] = None) -> APIResult[List[ECGroup]]:
         """
         List all Cloud & Branch Connector groups.
 
@@ -141,7 +141,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_ec_group_lite(self, query_params: Optional[dict] = None) -> APIResult[List[ECGroup]]:
         """
         Returns the list of a subset of Cloud & Branch Connector group information.
 
@@ -193,7 +193,7 @@ class ECGroupsAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_ec_instance_lite(self) -> APIResult[dict]:
+    def list_ec_instance_lite(self) -> APIResult[CommonIDNameExternalID]:
         """
         Returns the list of a subset of Cloud & Branch Connector instance information.
 

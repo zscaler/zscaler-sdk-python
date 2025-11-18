@@ -36,7 +36,7 @@ class WorkloadGroupsAPI(APIClient):
     def list_groups(
         self,
         query_params: Optional[dict] = None,
-    ) -> APIResult[dict]:
+    ) -> APIResult[List[WorkloadGroups]]:
         """
         Returns the list of workload groups configured in the ZIA Admin Portal.
 

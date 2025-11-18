@@ -34,7 +34,7 @@ class UsersAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_users(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_users(self, query_params: Optional[dict] = None) -> APIResult[Users]:
         """
         Retrieves a list of users with optional query parameters for pagination and filtering
 
@@ -332,7 +332,7 @@ class UsersAPI(APIClient):
             return (None, response, error)
         return (None, response, None)
 
-    def list_user_group_details(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_user_group_details(self, user_id: str, query_params: Optional[dict] = None) -> APIResult[List[UserRecord]]:
         """
         Retrieves a paginated list of groups associated with a specific user ID.
 

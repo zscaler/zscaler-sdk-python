@@ -33,7 +33,7 @@ class RiskProfilesAPI(APIClient):
         super().__init__()
         self._request_executor: RequestExecutor = request_executor
 
-    def list_risk_profiles(self, query_params: Optional[dict] = None) -> APIResult[dict]:
+    def list_risk_profiles(self, query_params: Optional[dict] = None) -> APIResult[List[RiskProfiles]]:
         """
         Retrieves the cloud application risk profile
 
@@ -88,7 +88,7 @@ class RiskProfilesAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def list_risk_profiles_lite(self) -> APIResult[dict]:
+    def list_risk_profiles_lite(self) -> APIResult[List[RiskProfiles]]:
         """
         Retrieves the cloud application risk profile lite
 

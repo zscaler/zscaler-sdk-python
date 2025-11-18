@@ -33,7 +33,7 @@ class CBIProfileAPI(APIClient):
         customer_id = config["client"].get("customerId")
         self._cbi_base_endpoint = f"/zpa/cbiconfig/cbi/api/customers/{customer_id}"
 
-    def list_cbi_profiles(self) -> APIResult[dict]:
+    def list_cbi_profiles(self) -> APIResult[List[CBIProfile]]:
         """
         Returns a list of all cloud browser isolation profile.
 
