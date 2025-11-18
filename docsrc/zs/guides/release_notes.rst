@@ -142,8 +142,8 @@ New ZPA Endpoint - OAuth User Code Controller
     - Added `POST /{associationType}/usercodes` Verifies the provided list of user codes for a given component provisioning.
     - Added `POST /{associationType}/usercodes/status` Adds a new Provisioning Key for the specified customer.
 
- ZPA Endpoint - Policy-Set Controller
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+New ZPA Endpoint - Policy-Set Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 (`#410 <https://github.com/zscaler/zscaler-sdk-python/pull/410>`_) - Added the following new ZPA Endpoints
     - Added `GET /riskScoreValues` Gets values of risk scores for the specified customer.

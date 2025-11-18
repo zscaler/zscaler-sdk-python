@@ -10,6 +10,17 @@
 
 * [PR #422](https://github.com/zscaler/zscaler-sdk-python/pull/422) - Fixed type hints for Cloud Firewall list functions.
 
+### New ZIA Endpoint - Traffic Capture Policy
+
+* [PR #422](https://github.com/zscaler/zscaler-sdk-python/pull/422) - Added the following new ZIA Endpoints
+    - Added `GET /trafficCaptureRules` Retrieves the list of Traffic Capture policy rules
+    - Added `GET /trafficCaptureRules/{ruleId}` Retrieves the Traffic Capture policy rule based on the specified rule ID
+    - Added `PUT /trafficCaptureRules/{ruleId}` Updates information for the Traffic Capture policy rule based on the specified rule ID
+    - Added `DELETE /trafficCaptureRules/{ruleId}` Deletes the Traffic Capture policy rule based on the specified rule ID
+    - Added `GET /trafficCaptureRules/count` Retrieves the rule count for Traffic Capture policy based on the specified search criteria
+    - Added `GET /trafficCaptureRules/order` Retrieves the rule order information for the Traffic Capture policy
+    - Added `GET /trafficCaptureRules/ruleLabels` Retrieves the list of rule labels associated with the Traffic Capture policy rules
+
 ## 1.9.1 (November 7, 2025)
 
 ### Notes

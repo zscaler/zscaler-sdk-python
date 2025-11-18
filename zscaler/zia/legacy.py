@@ -111,6 +111,7 @@ if TYPE_CHECKING:
     from zscaler.zia.browser_control_settings import BrowserControlSettingsPI
     from zscaler.zia.saas_security_api import SaaSSecurityAPI
     from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
+    from zscaler.zia.traffic_capture import TrafficCaptureAPI
 
 
 class LegacyZIAClientHelper:
@@ -1220,6 +1221,17 @@ class LegacyZIAClientHelper:
         from zscaler.zia.cloud_to_cloud_ir import CloudToCloudIRAPI
 
         return CloudToCloudIRAPI(self.request_executor)
+
+    @property
+    def traffic_capture(self) -> "TrafficCaptureAPI":
+        """
+        The interface object for the :ref:`ZIA Traffic Capture API interface <zia-traffic_capture>`.
+
+        """
+
+        from zscaler.zia.traffic_capture import TrafficCaptureAPI
+
+        return TrafficCaptureAPI(self.request_executor)
 
     """
     Misc
