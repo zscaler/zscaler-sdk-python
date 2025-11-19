@@ -48,6 +48,7 @@ class URLCategoriesAPI(APIClient):
 
                 ``[query_params.custom_only]`` {bool}: If set to true, gets information on custom URL categories only.
                 ``[query_params.include_only_url_keyword_counts]`` {bool}: By default this parameter is set to false.
+                ``[query_params.search]`` {str}: Local client-side search filter (not sent to API).
 
         Returns:
             tuple: A tuple containing (list of url categories instances, Response, error)

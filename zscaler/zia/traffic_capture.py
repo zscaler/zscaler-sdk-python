@@ -471,7 +471,7 @@ class TrafficCaptureAPI(APIClient):
             return (None, response, error)
         return (result, response, None)
 
-    def traffic_capture_rule_count(self) -> APIResult[List[dict]]:
+    def traffic_capture_rule_count(self) -> APIResult[List[TrafficCapture]]:
         """
         Retrieves the rule count for Traffic Capture policy based on the specified search criteria
 
@@ -483,17 +483,17 @@ class TrafficCaptureAPI(APIClient):
         for further detail.
 
         Returns:
-            :obj:`Tuple`: A tuple containing a list of dictionaries with configuration
+            :obj:`Tuple`: A tuple containing a list of TrafficCapture instances with configuration
             count information, the response object, and error if any.
 
         Examples:
             >>> counts, _, error = client.zia.traffic_capture.traffic_capture_rule_count()
             ... if error:
-            ...     print(f"Error getting traffioc capture rule count: {error}")
+            ...     print(f"Error getting traffic capture rule count: {error}")
             ...     return
             ... print(f"Found {len(counts)} count records:")
             ... for count in counts:
-            ...     print(count)
+            ...     print(count.as_dict())
         """
         http_method = "get".upper()
         api_url = format_url(
@@ -514,7 +514,7 @@ class TrafficCaptureAPI(APIClient):
         try:
             result = []
             for item in response.get_results():
-                result.append(self.form_response_body(item))
+                result.append(TrafficCapture(self.form_response_body(item)))
         except Exception as error:
             return (None, response, error)
         return (result, response, None)
