@@ -195,6 +195,14 @@ class SSLInspectionAPI(APIClient):
             ...    platforms=['SCAN_IOS', 'SCAN_ANDROID', 'SCAN_MACOS', 'SCAN_WINDOWS', 'NO_CLIENT_CONNECTOR', 'SCAN_LINUX'],
             ...    groups=['95016183']
             ...    users=['95016194']
+            ...     action={
+            ...         "type": "DO_NOT_DECRYPT",
+            ...         "do_not_decrypt_sub_actions": {
+            ...             "bypass_other_policies": True,
+            ...             "block_ssl_traffic_with_no_sni_enabled": True,
+            ...             "min_tls_version": "SERVER_TLS_1_0",
+            ...         },
+            ...     },
             ... )
         """
         http_method = "post".upper()
@@ -277,8 +285,16 @@ class SSLInspectionAPI(APIClient):
             ...    road_warrrior_for_kerberos=True,
             ...    cloud_appliications=['CHATGPT_AI', 'ANDI'],
             ...    platforms=['SCAN_IOS', 'SCAN_ANDROID', 'SCAN_MACOS', 'SCAN_WINDOWS', 'NO_CLIENT_CONNECTOR', 'SCAN_LINUX'],
-            ...    groups=['95016183']
-            ...    users=['95016194']
+            ...    groups=['95016183'],
+            ...    users=['95016194'],
+            ...     action={
+            ...         "type": "DO_NOT_DECRYPT",
+            ...         "do_not_decrypt_sub_actions": {
+            ...             "bypass_other_policies": True,
+            ...             "block_ssl_traffic_with_no_sni_enabled": True,
+            ...             "min_tls_version": "SERVER_TLS_1_0",
+            ...         },
+            ...     },
             ... )
             >>> if error:
             ...     print(f"Error updating rule: {error}")
