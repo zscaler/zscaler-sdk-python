@@ -54,6 +54,7 @@ class ZscalerAPIResponse:
         self._limit = self.validate_page_size(self._params.get("limit"), service_type)
         self._next_offset = None
         self._list = []
+        self._is_flat_list_response = False  # Track if response is a flat list (no pagination metadata)
 
         if all_entries:
             self._params["allEntries"] = True
@@ -160,7 +161,10 @@ class ZscalerAPIResponse:
 
         if isinstance(self._body, list):
             # Handle direct list responses (ZIA, ZPA simple lists, etc.)
+            # A flat list response means the API returned all results in one response
+            # without pagination metadata - pagination should NOT continue
             self._list = self._body
+            self._is_flat_list_response = True  # Mark as flat list - no pagination
             # Check if this is a list of simple types (strings, numbers, etc.) vs dicts
             # If it's a list of simple types, skip the cleaning logic
             if self._body and len(self._body) > 0 and not isinstance(self._body[0], dict):
@@ -315,6 +319,11 @@ class ZscalerAPIResponse:
         return self._list, None
 
     def _has_next(self) -> bool:
+        # If the response was a flat list (no pagination metadata), there are no more pages
+        # This handles ZIA endpoints that return all results in a single response
+        if self._is_flat_list_response:
+            logger.debug("Has next page: False (flat list response - all results returned in single response)")
+            return False
 
         if self._service_type == "ZPA":
             # More pages if current page < total_pages
@@ -332,7 +341,7 @@ class ZscalerAPIResponse:
             logger.debug("Has next page for ZIDENTITY: %s", has_next)
             return has_next
         else:
-            # For ZIA/ZCC:
+            # For ZIA/ZCC with paginated responses (dict with "list" field):
             # - If we're on the first page and got results, try next page
             # - If we're on a subsequent page and the last fetch returned results equal to or greater than limit, try next page
             # - If the last fetch returned fewer results than limit (or 0), we're done
