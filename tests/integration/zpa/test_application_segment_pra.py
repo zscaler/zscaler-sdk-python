@@ -104,14 +104,14 @@ class TestApplicationSegmentPRA:
 
             #
             try:
-                app_segment_name = "ssh_pra.bd-redhat.com"
-                app_segment_description = "ssh_pra.bd-redhat.com"
+                app_segment_name = "ssh_pra_22.bd-redhat.com"
+                app_segment_description = "ssh_pra_22.bd-redhat.com"
 
                 app_segment, _, err = client.zpa.app_segments_pra.add_segment_pra(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["ssh_pra.bd-redhat.com"],
+                    domain_names=["ssh_pra_22.bd-redhat.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["22", "22"],
@@ -121,7 +121,7 @@ class TestApplicationSegmentPRA:
                                 "enabled": True,
                                 "application_port": "22",
                                 "application_protocol": "SSH",
-                                "domain": "ssh_pra.bd-redhat.com",
+                                "domain": "ssh_pra_22.bd-redhat.com",
                             }
                         ]
                     },
@@ -143,7 +143,7 @@ class TestApplicationSegmentPRA:
                         name=app_segment_name,
                         description=updated_description,
                         enabled=True,
-                        domain_names=["ssh_pra.bd-redhat.com"],
+                        domain_names=["ssh_pra_22.bd-redhat.com"],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
                         tcp_port_ranges=["22", "22"],
@@ -153,7 +153,7 @@ class TestApplicationSegmentPRA:
                                     "enabled": True,
                                     "application_port": "22",
                                     "application_protocol": "SSH",
-                                    "domain": "ssh_pra.bd-redhat.com",
+                                    "domain": "ssh_pra_22.bd-redhat.com",
                                 }
                             ]
                         },

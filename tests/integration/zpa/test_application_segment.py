@@ -102,10 +102,10 @@ class TestApplicationSegment:
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["test.example.com"],
+                    domain_names=["example_test2000.example.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["8080", "8080"],  # Adjusted to tuple format
+                    tcp_port_ranges=["9001", "9001"],  # Adjusted to tuple format
                 )
                 assert err is None, f"Creating Application Segment failed: {err}"
                 assert app_segment is not None, "No application segment data returned"
@@ -140,10 +140,10 @@ class TestApplicationSegment:
                         name=updated_name,
                         description="UpdatedDescription " + generate_random_string(),
                         enabled=True,
-                        domain_names=["test.example.com"],
+                        domain_names=["example_test2000.example.com"],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
-                        tcp_port_ranges=["8081", "8081"],
+                        tcp_port_ranges=["9002", "9002"],
                     )
                     assert err is None, f"Error updating Application Segment: {err}"
                     assert updated_app is not None, "No updated ApplicationSegment returned"
