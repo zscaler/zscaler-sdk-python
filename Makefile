@@ -129,7 +129,7 @@ test\:unit:
 
 test\:unit\:coverage:
 	@echo "$(COLOR_ZSCALER)Running unit tests with coverage...$(COLOR_NONE)"
-	poetry run pytest tests/unit --cov=zscaler --cov-report xml --cov-report term --disable-warnings -v
+	poetry run pytest tests/unit --cov=zscaler --cov-report xml --cov-report term --junitxml=junit.xml -o junit_family=legacy --disable-warnings -v
 
 test\:integration\:zcc:
 	@echo "$(COLOR_ZSCALER)Running zcc integration tests...$(COLOR_NONE)"

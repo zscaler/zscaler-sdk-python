@@ -103,17 +103,17 @@ class TestPRAApproval:
 
             try:
                 time.sleep(2)
-                app_segment_name = "example.acme.com"
-                app_segment_description = "example.acme.com"
+                app_segment_name = "example_test100.acme.com"
+                app_segment_description = "example_test100.acme.com"
 
                 app_segment, _, err = client.zpa.application_segment.add_segment(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["example.acme.com"],
+                    domain_names=["example_test100.acme.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["8080", "8080"],
+                    tcp_port_ranges=["9000", "9000"],
                 )
                 assert err is None, f"Error creating application segment: {err}"
                 assert app_segment is not None, "No application segment data returned"

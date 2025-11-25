@@ -6,6 +6,25 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.3 (November 25, 2025)
+---------------------------
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements:
+-------------
+
+(`#426 <https://github.com/zscaler/zscaler-sdk-python/pull/426>`_) - Added official support for Python 3.12.
+
+Bug Fixes:
+----------
+
+(`#426 <https://github.com/zscaler/zscaler-sdk-python/pull/426>`_) - Fixed pagination `has_next()` returning `True` for flat list API responses causing infinite loops.
+(`#426 <https://github.com/zscaler/zscaler-sdk-python/pull/426>`_) - Added missing parameter `type` to ZIA `url_categories`
+
+
 1.9.2 (November 18, 2025)
 ---------------------------
 
