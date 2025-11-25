@@ -121,26 +121,26 @@ class TestApplicationSegmentInspection:
 
             #
             try:
-                app_segment_name = "server1.bd-redhat.com"
-                app_segment_description = "server1.bd-redhat.com"
+                app_segment_name = "server1_inspection.bd-redhat.com"
+                app_segment_description = "server1_inspection.bd-redhat.com"
 
                 app_segment, _, err = client.zpa.app_segments_inspection.add_segment_inspection(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["server1.bd-redhat.com"],
+                    domain_names=["server1_inspection.bd-redhat.com"],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["443", "443"],
+                    tcp_port_ranges=["4443", "4443"],
                     common_apps_dto={
                         "apps_config": [
                             {
                                 "enabled": True,
                                 "app_types": ["INSPECT"],
-                                "application_port": "443",
+                                "application_port": "4443",
                                 "application_protocol": "HTTPS",
                                 "certificate_id": certificate_id,
-                                "domain": "server1.bd-redhat.com",
+                                "domain": "server1_inspection.bd-redhat.com",
                             }
                         ]
                     },
@@ -165,18 +165,18 @@ class TestApplicationSegmentInspection:
                         name=app_segment_name,
                         description=updated_description,
                         enabled=True,
-                        domain_names=["server1.bd-redhat.com"],
+                        domain_names=["server1_inspection.bd-redhat.com"],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
-                        tcp_port_ranges=["443", "443"],
+                        tcp_port_ranges=["4443", "4443"],
                         common_apps_dto={
                             "apps_config": [
                                 {
                                     "enabled": True,
-                                    "application_port": "443",
+                                    "application_port": "4443",
                                     "application_protocol": "HTTPS",
                                     "certificate_id": certificate_id,
-                                    "domain": "server1.bd-redhat.com",
+                                    "domain": "server1_inspection.bd-redhat.com",
                                 }
                             ]
                         },
