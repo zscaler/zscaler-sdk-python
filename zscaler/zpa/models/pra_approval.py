@@ -38,7 +38,7 @@ class PrivilegedRemoteAccessApproval(ZscalerObject):
             self.email_ids = ZscalerCollection.form_list(config["emailIds"] if "emailIds" in config else [], str)
 
             self.applications = ZscalerCollection.form_list(
-                config["applications"] if "applications" in config else [], application_segment.ApplicationSegment
+                config["applications"] if "applications" in config else [], application_segment.ApplicationSegments
             )
 
             if "workingHours" in config:
