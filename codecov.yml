@@ -50,7 +50,3 @@ flags:
       - zscaler/
     carryforward: true
 
-# Test results configuration (for JUnit XML uploads)
-test_analytics:
-  enabled: true
-

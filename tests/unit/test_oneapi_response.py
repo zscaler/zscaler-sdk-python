@@ -607,7 +607,7 @@ def test_has_next_zia_zcc():
         "params": {"page": 1, "limit": 10}
     }
     
-    # Test with results
+    # Test with flat list response - should return False (all data in single response)
     response_body = '[{"id": 1, "name": "test"}]'
     
     response = ZscalerAPIResponse(
@@ -618,11 +618,28 @@ def test_has_next_zia_zcc():
         response_body=response_body
     )
     
-    assert response.has_next() is True
+    # Flat list responses should NOT have pagination
+    assert response._is_flat_list_response is True
+    assert response.has_next() is False
+    
+    # Test with dict response (paginated format) - should support pagination
+    response_body_paginated = '{"list": [{"id": 1, "name": "test"}]}'
+    
+    response_paginated = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="ZIA",
+        res_details=mock_res_details,
+        response_body=response_body_paginated
+    )
+    
+    # Dict responses with "list" field support pagination
+    assert response_paginated._is_flat_list_response is False
+    assert response_paginated.has_next() is True
     
     # Test with no results
-    response._list = []
-    assert response.has_next() is False
+    response_paginated._list = []
+    assert response_paginated.has_next() is False
 
 
 def test_next_zpa():
@@ -722,9 +739,9 @@ def test_next_zidentity():
 
 
 def test_next_zia():
-    """Test next method for ZIA service."""
+    """Test next method for ZIA service with paginated response."""
     mock_request_executor = Mock()
-    mock_request_executor.fire_request.return_value = (None, None, '[{"id": 2, "name": "test2"}]', None)
+    mock_request_executor.fire_request.return_value = (None, None, '{"list": [{"id": 2, "name": "test2"}]}', None)
     
     mock_res_details = Mock()
     mock_res_details.headers = {"Content-Type": "application/json"}
@@ -736,6 +753,42 @@ def test_next_zia():
         "params": {"page": 1, "limit": 10}
     }
     
+    # Use dict response format (paginated) instead of flat list
+    response_body = '{"list": [{"id": 1, "name": "test"}]}'
+    
+    response = ZscalerAPIResponse(
+        request_executor=mock_request_executor,
+        req=req,
+        service_type="ZIA",
+        res_details=mock_res_details,
+        response_body=response_body
+    )
+    
+    # Dict responses support pagination
+    assert response._is_flat_list_response is False
+    
+    results, next_response, error = response.next()
+    
+    assert results == [{"id": 2, "name": "test2"}]
+    assert next_response == response
+    assert error is None
+
+
+def test_next_zia_flat_list_no_pagination():
+    """Test that flat list responses don't support pagination."""
+    mock_request_executor = Mock()
+    
+    mock_res_details = Mock()
+    mock_res_details.headers = {"Content-Type": "application/json"}
+    mock_res_details.status_code = 200
+    
+    req = {
+        "url": "https://api.example.com/test",
+        "headers": {"Authorization": "Bearer token"},
+        "params": {"page": 1, "limit": 10}
+    }
+    
+    # Flat list response - all data returned in single response
     response_body = '[{"id": 1, "name": "test"}]'
     
     response = ZscalerAPIResponse(
@@ -746,11 +799,13 @@ def test_next_zia():
         response_body=response_body
     )
     
-    results, next_response, error = response.next()
+    # Flat list responses should not have pagination
+    assert response._is_flat_list_response is True
+    assert response.has_next() is False
     
-    assert results == [{"id": 2, "name": "test2"}]
-    assert next_response == response
-    assert error is None
+    # Calling next() should raise StopIteration
+    with pytest.raises(StopIteration):
+        response.next()
 
 
 def test_next_no_more_pages():
