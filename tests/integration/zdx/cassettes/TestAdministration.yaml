@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: grant_type=client_credentials&client_id=iq4dlqdklg7a1&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
     headers:
       Accept:
       - application/json
@@ -18,20 +18,19 @@ interactions:
     uri: https://identity.test.zscaler.com/oauth2/v1/token
   response:
     body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+      string: '{"error":"invalid_client"}'
     headers:
       cache-control:
       - no-cache, no-store, max-age=0, must-revalidate
       content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      - 'default-src ''none'' ;connect-src  https://sdc.zslogin.net/;font-src https://fonts.gstatic.com
+        ;img-src data: https://www.zscaler.com https://info.zscaler.com ;script-src
+        ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src ''unsafe-inline''
+        https://fonts.googleapis.com ;frame-src  https://sdc.zslogin.net/ https://sdc-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
       content-type:
       - application/json;charset=UTF-8
       date:
-      - Wed, 26 Nov 2025 20:15:04 GMT
+      - Wed, 26 Nov 2025 23:05:21 GMT
       expires:
       - '0'
       pragma:
@@ -61,150 +60,6 @@ interactions:
       x-xss-protection:
       - '0'
     status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zdx/v1/administration/departments?to=1764188104&from=1764180904
-  response:
-    body:
-      string: '[]'
-    headers:
-      ccid:
-      - zscalerthree.net.24326813
-      content-length:
-      - '2'
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 20:15:06 GMT
-      ratelimit-limit:
-      - '10'
-      ratelimit-remaining:
-      - '9'
-      ratelimit-reset:
-      - '54'
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-api-version:
-      - 2.1.0-2025-10-28T20:38:31Z
-      x-envoy-upstream-service-time:
-      - '2239'
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 46e32228-b15c-9a2e-93c1-23c54402cc6b
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 1000, 1000;w=60, 1000;w=60
-      x-ratelimit-limit-hour:
-      - '60'
-      x-ratelimit-limit-minute:
-      - '10'
-      x-ratelimit-remaining:
-      - '999'
-      x-ratelimit-remaining-hour:
-      - '28'
-      x-ratelimit-remaining-minute:
-      - '9'
-      x-ratelimit-reset:
-      - '55'
-      x-request-id:
-      - f4ee0a33-8ad8-41dc-a688-ed4c3e2097d7
-      x-transaction-id:
-      - 695b5b34-fc9f-4904-ab51-02707dbad610
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zdx/v1/administration/locations?to=1764188107&from=1764180907
-  response:
-    body:
-      string: '[]'
-    headers:
-      ccid:
-      - zscalerthree.net.24326813
-      content-length:
-      - '2'
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 20:15:07 GMT
-      ratelimit-limit:
-      - '10'
-      ratelimit-remaining:
-      - '9'
-      ratelimit-reset:
-      - '53'
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      vary:
-      - Accept-Encoding
-      x-api-version:
-      - 2.1.0-2025-10-28T20:38:31Z
-      x-envoy-upstream-service-time:
-      - '1064'
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - 7c82f115-e736-9500-899c-e63e6e3c9f9f
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 1000, 1000;w=60, 1000;w=60
-      x-ratelimit-limit-hour:
-      - '60'
-      x-ratelimit-limit-minute:
-      - '10'
-      x-ratelimit-remaining:
-      - '998'
-      x-ratelimit-remaining-hour:
-      - '28'
-      x-ratelimit-remaining-minute:
-      - '9'
-      x-ratelimit-reset:
-      - '53'
-      x-request-id:
-      - f00b5a98-a40b-45f5-809d-6871e098bb62
-      x-transaction-id:
-      - 695b5b34-fc9f-4904-ab51-02707dbad610
-    status:
-      code: 200
-      message: OK
+      code: 401
+      message: Unauthorized
 version: 1

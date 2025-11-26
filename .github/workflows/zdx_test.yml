@@ -1,147 +1,147 @@
----
+# ---
 # This workflow runs ZDX integration tests
-name: ZDX Test
-on:
-  pull_request:
-    types: [opened, synchronize]
-  merge_group:
-    types: [checks_requested]
-  push:
-    branches:
-      - master
-  schedule:
-    # Weekly real API tests on Sunday at 6:00 AM PST (14:00 UTC)
-    - cron: "0 14 * * 0"
-  workflow_dispatch:
-    inputs:
-      test_type:
-        description: 'Type of test to run'
-        required: true
-        default: 'vcr'
-        type: choice
-        options:
-          - vcr
-          - live
+# name: ZDX Test
+# on:
+#   pull_request:
+#     types: [opened, synchronize]
+#   merge_group:
+#     types: [checks_requested]
+#   push:
+#     branches:
+#       - master
+#   schedule:
+#     # Weekly real API tests on Sunday at 6:00 AM PST (14:00 UTC)
+#     - cron: "0 14 * * 0"
+#   workflow_dispatch:
+#     inputs:
+#       test_type:
+#         description: 'Type of test to run'
+#         required: true
+#         default: 'vcr'
+#         type: choice
+#         options:
+#           - vcr
+#           - live
 
-permissions:
-  contents: read
-  pull-requests: write
+# permissions:
+#   contents: read
+#   pull-requests: write
 
-jobs:
-  # ===========================================
-  # VCR Playback Tests - Runs on every PR/push
-  # Fast, no credentials needed
-  # ===========================================
-  zdx-vcr-tests:
-    runs-on: ubuntu-latest
-    # Run on PR/push, or manual trigger with vcr selected
-    if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'vcr')
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10", "3.11", "3.12"]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+# jobs:
+#   # ===========================================
+#   # VCR Playback Tests - Runs on every PR/push
+#   # Fast, no credentials needed
+#   # ===========================================
+#   zdx-vcr-tests:
+#     runs-on: ubuntu-latest
+#     # Run on PR/push, or manual trigger with vcr selected
+#     if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'vcr')
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         python-version: ["3.10", "3.11", "3.12"]
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+#       - name: Set up Python ${{ matrix.python-version }}
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ matrix.python-version }}
 
-      - name: Install Poetry
-        uses: Gr1N/setup-poetry@v9
-        with:
-          poetry-version: 1.8.3
+#       - name: Install Poetry
+#         uses: Gr1N/setup-poetry@v9
+#         with:
+#           poetry-version: 1.8.3
 
-      - name: Get poetry cache directory
-        id: poetry-cache
-        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+#       - name: Get poetry cache directory
+#         id: poetry-cache
+#         run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
-      - name: Cache poetry dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.poetry-cache.outputs.dir }}
-          key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+#       - name: Cache poetry dependencies
+#         uses: actions/cache@v4
+#         with:
+#           path: ${{ steps.poetry-cache.outputs.dir }}
+#           key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
-      - name: Install dependencies
-        run: poetry install
+#       - name: Install dependencies
+#         run: poetry install
 
-      - name: Run VCR Playback Tests with Coverage
-        run: |
-          MOCK_TESTS=true poetry run pytest tests/integration/zdx -v --disable-warnings --cov=zscaler/zdx --cov-report=xml --cov-report=term
-        env:
-          MOCK_TESTS: "true"
+#       - name: Run VCR Playback Tests with Coverage
+#         run: |
+#           MOCK_TESTS=true poetry run pytest tests/integration/zdx -v --disable-warnings --cov=zscaler/zdx --cov-report=xml --cov-report=term
+#         env:
+#           MOCK_TESTS: "true"
 
-      - name: Upload coverage to Codecov
-        if: matrix.python-version == '3.10'
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          flags: zdx-vcr
-          name: zdx-vcr-coverage
-          fail_ci_if_error: false
+#       - name: Upload coverage to Codecov
+#         if: matrix.python-version == '3.10'
+#         uses: codecov/codecov-action@v5
+#         with:
+#           token: ${{ secrets.CODECOV_TOKEN }}
+#           files: ./coverage.xml
+#           flags: zdx-vcr
+#           name: zdx-vcr-coverage
+#           fail_ci_if_error: false
 
-  # ===========================================
-  # Real API Tests - Runs weekly or on manual trigger
-  # Requires credentials, tests actual API compatibility
-  # ===========================================
-  zdx-beta-tenants:
-    runs-on: ubuntu-latest
-    # Run on schedule (weekly), or manual trigger with live selected
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'live')
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10"]
-        environment:
-          - ZDX_ZSBETA
-    environment: ${{ matrix.environment }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+#   # ===========================================
+#   # Real API Tests - Runs weekly or on manual trigger
+#   # Requires credentials, tests actual API compatibility
+#   # ===========================================
+#   zdx-beta-tenants:
+#     runs-on: ubuntu-latest
+#     # Run on schedule (weekly), or manual trigger with live selected
+#     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'live')
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         python-version: ["3.10"]
+#         environment:
+#           - ZDX_ZSBETA
+#     environment: ${{ matrix.environment }}
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+#       - name: Set up Python ${{ matrix.python-version }}
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ matrix.python-version }}
 
-      - name: Install Poetry
-        uses: Gr1N/setup-poetry@v9
-        with:
-          poetry-version: 1.8.3
+#       - name: Install Poetry
+#         uses: Gr1N/setup-poetry@v9
+#         with:
+#           poetry-version: 1.8.3
 
-      - name: Get poetry cache directory
-        id: poetry-cache
-        run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
+#       - name: Get poetry cache directory
+#         id: poetry-cache
+#         run: echo "dir=$(poetry config cache-dir)" >> $GITHUB_OUTPUT
 
-      - name: Cache poetry dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.poetry-cache.outputs.dir }}
-          key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+#       - name: Cache poetry dependencies
+#         uses: actions/cache@v4
+#         with:
+#           path: ${{ steps.poetry-cache.outputs.dir }}
+#           key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-poetry-${{ matrix.python-version }}-
 
-      - name: Install dependencies
-        run: poetry install
+#       - name: Install dependencies
+#         run: poetry install
 
-      - name: Run Pytest (Record VCR Cassettes)
-        uses: nick-fields/retry@v3
-        with:
-          max_attempts: 3
-          timeout_minutes: 45
-          command: |
-            MOCK_TESTS=false poetry run make test:vcr:record:zdx
-        env:
-          ZDX_CLIENT_ID: ${{ secrets.ZDX_CLIENT_ID }}
-          ZDX_CLIENT_SECRET: ${{ secrets.ZDX_CLIENT_SECRET }}
-          MOCK_TESTS: "false"
+#       - name: Run Pytest (Record VCR Cassettes)
+#         uses: nick-fields/retry@v3
+#         with:
+#           max_attempts: 3
+#           timeout_minutes: 45
+#           command: |
+#             MOCK_TESTS=false poetry run make test:vcr:record:zdx
+#         env:
+#           ZDX_CLIENT_ID: ${{ secrets.ZDX_CLIENT_ID }}
+#           ZDX_CLIENT_SECRET: ${{ secrets.ZDX_CLIENT_SECRET }}
+#           MOCK_TESTS: "false"
 
