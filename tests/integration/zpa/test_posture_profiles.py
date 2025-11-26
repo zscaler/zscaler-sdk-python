@@ -56,6 +56,7 @@ class TestPostureProfiles:
     Integration Tests for the Posture Profiles.
     """
 
+    @pytest.mark.vcr()
     def test_posture_profile(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

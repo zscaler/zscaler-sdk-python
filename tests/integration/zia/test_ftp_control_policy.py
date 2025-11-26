@@ -28,6 +28,7 @@ class TestFTPControlPolicy:
     Integration Tests for the FTP Control Policy
     """
 
+    @pytest.mark.vcr()
     def test_ftp_control_policy(self, fs):
         client = MockZIAClient(fs)
         errors = []

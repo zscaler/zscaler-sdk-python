@@ -30,6 +30,7 @@ class TestAdministration:
     Integration Tests for the administration
     """
 
+    @pytest.mark.vcr()
     def test_list_departments(self, fs, zdx_client):
         client = zdx_client
         errors = []
@@ -50,6 +51,7 @@ class TestAdministration:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
+    @pytest.mark.vcr()
     def test_list_locations(self, fs, zdx_client):
         client = zdx_client
         errors = []

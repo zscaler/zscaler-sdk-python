@@ -30,6 +30,7 @@ class TestTrafficVPNCredential:
     Integration Tests for the ZIA Traffic VPN Credential.
     """
 
+    @pytest.mark.vcr()
     def test_traffic_vpn_credential(self, fs):
         client = MockZIAClient(fs)
         errors = []

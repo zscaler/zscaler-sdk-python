@@ -1,0 +1,146 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/machineGroup
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"9","list":[{"id":"216196257331291115","modifiedTime":"1726871100","creationTime":"1638488366","modifiedBy":"216196257331281921","name":"BD-MGR01","enabled":true,"description":"BD-MGR01"},{"id":"216196257331374012","modifiedTime":"1726871130","creationTime":"1726871130","modifiedBy":"216196257331281921","name":"BD-MGR02","enabled":true,"description":"BD-MGR02"},{"id":"216196257331374013","modifiedTime":"1726871145","creationTime":"1726871145","modifiedBy":"216196257331281921","name":"BD
+        MGR 03","enabled":true,"description":"BD MGR 03"},{"id":"216196257331374014","modifiedTime":"1726871160","creationTime":"1726871160","modifiedBy":"216196257331281921","name":"BD  MGR  04","enabled":true,"description":"BD  MGR  04"},{"id":"216196257331374015","modifiedTime":"1726871174","creationTime":"1726871174","modifiedBy":"216196257331281921","name":"BD   MGR   05","enabled":true,"description":"BD   MGR   05"},{"id":"216196257331374016","modifiedTime":"1726871189","creationTime":"1726871189","modifiedBy":"216196257331281921","name":"BD    MGR06","enabled":true,"description":"BD    MGR06"},{"id":"216196257331374017","modifiedTime":"1726871203","creationTime":"1726871203","modifiedBy":"216196257331281921","name":"BD  MGR
+        07","enabled":true,"description":"BD  MGR 07"},{"id":"216196257331374018","modifiedTime":"1726871217","creationTime":"1726871217","modifiedBy":"216196257331281921","name":"BD  M
+        GR   08","enabled":true,"description":"BD  M GR   08"},{"id":"216196257331374019","modifiedTime":"1726871230","creationTime":"1726871230","modifiedBy":"216196257331281921","name":"BD   M   GR
+        09","enabled":true,"description":"BD   M   GR 09"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:13 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '39'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3efb56c5-5fad-90ec-bc35-d02369793c85
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4952'
+      x-ratelimit-reset:
+      - '47'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/machineGroup/216196257331291115
+  response:
+    body:
+      string: '{"id":"216196257331291115","modifiedTime":"1726871100","creationTime":"1638488366","modifiedBy":"216196257331281921","name":"BD-MGR01","enabled":true,"description":"BD-MGR01","readOnly":false,"zscalerManaged":false}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:14 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '37'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 92d8e771-d2be-9a22-bea6-2553b98c2683
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4951'
+      x-ratelimit-reset:
+      - '46'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

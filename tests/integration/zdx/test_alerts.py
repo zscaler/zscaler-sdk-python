@@ -30,6 +30,7 @@ class TestAlerts:
     Integration Tests for the alerts
     """
 
+    @pytest.mark.vcr()
     def test_list_ongoing(self, fs, zdx_client):
         client = zdx_client
         errors = []
@@ -49,6 +50,7 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
+    @pytest.mark.vcr()
     def test_list_historical(self, fs, zdx_client):
         client = zdx_client
         errors = []
@@ -68,6 +70,7 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
+    @pytest.mark.vcr()
     def test_get_alert(self, fs, zdx_client):
         client = zdx_client
         errors = []
@@ -104,6 +107,7 @@ class TestAlerts:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
+    @pytest.mark.vcr()
     def test_list_affected_devices(self, fs, zdx_client):
         client = zdx_client
         errors = []

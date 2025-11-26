@@ -30,13 +30,14 @@ class TestMicrotenants:
     Integration Tests for the Microtenants
     """
 
+    @pytest.mark.vcr()
     def test_microtenants(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         microtenant_id = None
 
-        microtenant_name = "tests-microtenant" + generate_random_string()
-        microtenant_description = "tests-microtenant" + generate_random_string()
+        microtenant_name = "tests-micro-" + generate_random_string()
+        microtenant_description = "tests-micro-" + generate_random_string()
 
         # Retrieve available authentication domains
         try:

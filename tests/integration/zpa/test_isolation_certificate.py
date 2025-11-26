@@ -80,12 +80,13 @@ class TestCBICertificates:
 
         return pem, key_pem
 
+    @pytest.mark.vcr()
     def test_cbi_certificate(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         cert_id = None  # Initialize cert_id
 
-        cert_name = "tests-" + generate_random_string()
+        cert_name = "tests-isolcert-" + generate_random_string()
 
         try:
             # Generate a root certificate

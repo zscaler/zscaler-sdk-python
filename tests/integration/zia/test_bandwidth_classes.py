@@ -17,8 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient
-import random
+from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
 
 
 @pytest.fixture
@@ -31,17 +30,21 @@ class TestBandwidthClasses:
     Integration Tests for the Bandwidth Classes
     """
 
+    @pytest.mark.vcr()
     def test_bandwidth_class(self, fs):
         client = MockZIAClient(fs)
         errors = []
         class_id = None
         update_class = None
+        
+        # Use deterministic names for VCR
+        names = TestNameGenerator("bandwidth-class")
 
         try:
             # Test: Add Bandwidth Class
             try:
                 create_class, _, error = client.zia.bandwidth_classes.add_class(
-                    name=f"NewBDW_{random.randint(1000, 10000)}",
+                    name=names.name,
                     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
                     urls=["test1.acme.com", "test2.acme.com"],
                     url_categories=["AI_ML_APPS", "GENERAL_AI_ML"],
@@ -57,7 +60,7 @@ class TestBandwidthClasses:
                 if class_id:
                     update_class, _, error = client.zia.bandwidth_classes.update_class(
                         class_id=class_id,
-                        name=f"NewBDW_{random.randint(1000, 10000)}",
+                        name=names.updated_name,
                         web_applications=["ACADEMICGPT", "AD_CREATIVES"],
                         urls=["test1.acme.com", "test2.acme.com", "test3.acme.com"],
                         url_categories=["AI_ML_APPS", "GENERAL_AI_ML", "PROFESSIONAL_SERVICES"],

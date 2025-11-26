@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/inventory/software
+  response:
+    body:
+      string: '{"code":1001,"message":"Error processing the request"}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '54'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:45 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '3'
+      ratelimit-reset:
+      - '15'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '5969'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0e601891-91c2-9c25-975f-8537b78eb022
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '984'
+      x-ratelimit-remaining-hour:
+      - '22'
+      x-ratelimit-remaining-minute:
+      - '3'
+      x-ratelimit-reset:
+      - '16'
+      x-request-id:
+      - 458b41a7-8d92-4d23-a604-6ba290fc66ad
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 500
+      message: Internal Server Error
+version: 1

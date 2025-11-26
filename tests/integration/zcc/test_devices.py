@@ -79,6 +79,7 @@ class TestDevice:
 
     #         assert not errors, f"Errors occurred during the ZCC device download test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_list_devices(self, fs):
         client = MockZCCClient(fs)
         errors = []

@@ -11,17 +11,20 @@ def fs():
 
 class TestAppConnectorGroup:
     """
-    Integration Tests for the app connector group
+    Integration Tests for the app connector group.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_app_connector_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
         group_id = None  # Initialize group_id
 
-        group_name = "tests-" + generate_random_string()
-        group_description = "tests-" + generate_random_string()
+        group_name = "tests-acg-" + generate_random_string()
+        group_description = "tests-acg-" + generate_random_string()
         group_enabled = True
         latitude = "37.33874"
         longitude = "-121.8852525"

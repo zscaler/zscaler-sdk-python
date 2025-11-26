@@ -30,6 +30,7 @@ class TestDLPDictionary:
     Integration Tests for the DLP dictionary
     """
 
+    @pytest.mark.vcr()
     def test_dlp_dictionary(self, fs):
         client = MockZIAClient(fs)
         errors = []

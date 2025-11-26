@@ -30,6 +30,7 @@ class TestDLPWebRule:
     Integration Tests for the ZIA DLP Web Rule
     """
 
+    @pytest.mark.vcr()
     def test_dlp_web_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []

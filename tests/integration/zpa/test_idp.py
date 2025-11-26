@@ -29,6 +29,7 @@ class TestIdP:
     Integration Tests for the identity provider.
     """
 
+    @pytest.mark.vcr()
     def test_idp(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

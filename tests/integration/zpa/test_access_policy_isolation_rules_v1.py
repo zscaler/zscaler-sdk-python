@@ -30,6 +30,7 @@ class TestAccessPolicyIsolationRuleV1:
     Integration Tests for the Access Policy Rules with SCIM group conditions
     """
 
+    @pytest.mark.vcr()
     def test_access_policy_isolation_rules_v1(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -81,7 +82,7 @@ class TestAccessPolicyIsolationRuleV1:
 
             # Step 4: Create Access Policy Rule
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-apir1-" + generate_random_string()
                 rule_description = "Access rule with SCIM group conditions"
                 created_rule, _, err = client.zpa.policies.add_isolation_rule(
                     name=rule_name,

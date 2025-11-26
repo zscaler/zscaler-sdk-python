@@ -16,6 +16,7 @@
 
 
 import ipaddress
+import os
 import random
 import string
 from datetime import datetime, timedelta
@@ -24,18 +25,49 @@ from typing import List, Tuple
 import pytz
 
 
-# Function to generate a random string
+# Deterministic counters for VCR - used for both recording and playback
+_vcr_string_counter = 0
+_vcr_ip_counter = 0
+_vcr_port_counter = 1000
+
+
 def generate_random_string(length=10):
-    letters = string.ascii_lowercase
-    return "".join(random.choice(letters) for i in range(length))
+    """
+    Generate a deterministic string for testing with VCR.
+    
+    ALWAYS returns deterministic values (counter-based) to ensure
+    recording and playback use the same values.
+    
+    This ensures VCR cassettes capture and replay with matching request data.
+    
+    The format is "vcr{counter:04d}" which generates strings like:
+    vcr0001, vcr0002, etc. (8 characters, fits within default length=10)
+    """
+    global _vcr_string_counter
+    
+    # Always use deterministic strings for VCR consistency
+    # This ensures recording and playback generate identical values
+    _vcr_string_counter += 1
+    # Use short base "vcr" so "vcr0001" (8 chars) fits within default length=10
+    return f"vcr{_vcr_string_counter:04d}"
 
 
-# Function to generate a random IP address from a given subnet
 def generate_random_ip(subnet):
+    """
+    Generate a deterministic IP address from a subnet for VCR testing.
+    
+    ALWAYS returns deterministic IPs (counter-based) to ensure
+    recording and playback use the same values.
+    """
+    global _vcr_ip_counter
+    
     network = ipaddress.ip_network(subnet)
-    # Generate a random IP within the subnet, excluding the network and broadcast addresses
-    random_ip = random.choice(list(network.hosts()))
-    return str(random_ip)
+    hosts = list(network.hosts())
+    
+    # Always use deterministic IPs for VCR consistency
+    _vcr_ip_counter += 1
+    index = _vcr_ip_counter % len(hosts)
+    return str(hosts[index])
 
 
 def generate_random_password(length=12):
@@ -92,8 +124,11 @@ def generate_time_bounds(time_zone: str, format: str = "RFC1123Z") -> Tuple[str,
 
 def generate_random_port_ranges(count: int, range_size: int = 1) -> List[str]:
     """
-    Generate a list of unique, non-overlapping TCP port ranges.
+    Generate a list of unique, non-overlapping TCP port ranges for VCR testing.
     Each range is returned as a string formatted as "start-end".
+
+    ALWAYS returns deterministic port ranges to ensure recording and playback
+    use the same values.
 
     Args:
         count: The number of unique port ranges to generate.
@@ -102,16 +137,24 @@ def generate_random_port_ranges(count: int, range_size: int = 1) -> List[str]:
     Returns:
         A list of port range strings.
     """
-    max_port = 65535
-    selected_ports = set()
+    global _vcr_port_counter
+    
+    # Always use deterministic port ranges for VCR consistency
     port_ranges = []
-
-    while len(port_ranges) < count:
-        start_port = random.randint(1, max_port - range_size + 1)
+    for i in range(count):
+        start_port = _vcr_port_counter
         end_port = start_port + range_size - 1
-
-        if all(p not in selected_ports for p in range(start_port, end_port + 1)):
-            port_ranges.append(f"{start_port}-{end_port}")
-            selected_ports.update(range(start_port, end_port + 1))
-
+        port_ranges.append(f"{start_port}-{end_port}")
+        _vcr_port_counter += range_size + 10  # Leave gaps between ranges
     return port_ranges
+
+
+def reset_vcr_counters():
+    """
+    Reset all VCR deterministic counters.
+    Call this at the start of each test to ensure consistent values.
+    """
+    global _vcr_string_counter, _vcr_ip_counter, _vcr_port_counter
+    _vcr_string_counter = 0
+    _vcr_ip_counter = 0
+    _vcr_port_counter = 1000

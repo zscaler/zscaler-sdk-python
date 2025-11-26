@@ -16,8 +16,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient
-from tests.test_utils import generate_random_ip, generate_random_string
+from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.test_utils import generate_random_ip, generate_random_string, reset_vcr_counters
 import time
 
 
@@ -31,13 +31,20 @@ class TestTrafficStaticIP:
     Integration Tests for the traffic static IP (ZIA)
     """
 
+    @pytest.mark.vcr()
     def test_traffic_static_ip(self, fs):
+        # Reset counters for deterministic values
+        reset_vcr_counters()
+        
         client = MockZIAClient(fs)
         errors = []
 
+        # Use deterministic test name generator
+        names = TestNameGenerator("static-ip")
+        
         randomIP = generate_random_ip("104.239.237.0/24")
-        checkIP = generate_random_ip("104.239.237.0/24")  # ✅ Different IP for validation
-        comment = "tests-" + generate_random_string()
+        checkIP = generate_random_ip("104.239.237.0/24")  # Different IP for validation
+        comment = names.name
         static_ip_id = None
 
         try:

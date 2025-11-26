@@ -30,6 +30,7 @@ class TestAccessPolicyRuleV2:
     Integration Tests for the Access Policy Rules V2
     """
 
+    @pytest.mark.vcr()
     def test_access_policy_rules_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -59,7 +60,7 @@ class TestAccessPolicyRuleV2:
 
             # Step 3: Create access rule with SCIM conditions
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-apr2-" + generate_random_string()
                 rule_description = "Integration test Access Rule V2"
 
                 created_rule, _, err = client.zpa.policies.add_access_rule_v2(

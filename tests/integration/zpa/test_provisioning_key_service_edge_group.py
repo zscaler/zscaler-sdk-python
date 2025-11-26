@@ -30,6 +30,7 @@ class TestServiceEdgeGroupProvisioningKey:
     Integration Tests for the Provisioning Key API
     """
 
+    @pytest.mark.vcr()
     def test_service_edge_provisioning_key(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -43,8 +44,8 @@ class TestServiceEdgeGroupProvisioningKey:
             try:
                 # Create a Service Edge Group
                 created_svc_edge_group, _, err = client.zpa.service_edge_group.add_service_edge_group(
-                    name="tests-" + generate_random_string(),
-                    description="tests-" + generate_random_string(),
+                    name="tests-pkseg-" + generate_random_string(),
+                    description="tests-pkseg-" + generate_random_string(),
                     enabled=True,
                     latitude="37.33874",
                     longitude="-121.8852525",
@@ -81,7 +82,7 @@ class TestServiceEdgeGroupProvisioningKey:
 
             try:
                 # Create a SERVICE_EDGE_GRP Provisioning Key
-                connector_key_name = "tests-" + generate_random_string()
+                connector_key_name = "tests-pkseg-" + generate_random_string()
                 (created_svc_edge_group_key, _, err) = client.zpa.provisioning.add_provisioning_key(
                     key_type=key_type,
                     name=connector_key_name,

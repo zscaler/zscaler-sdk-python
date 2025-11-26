@@ -1,0 +1,866 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/idp
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"3","list":[{"id":"216196257331285825","modifiedTime":"1762447670","creationTime":"1631717728","modifiedBy":"216196257331372702","name":"BD_Okta_Users","certificates":[{"cName":"dev-151399","serialNo":"1739571169880","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDpDCCAoygAwIBAgIGAZUGhYpYMA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQG\nEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNj\nbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxEzARBgNVBAMM\nCmRldi0xNTEzOTkxHDAaBgkqhkiG9w0BCQEWDWluZm9Ab2t0YS5jb20wHhcNMjUw\nMjE0MjIxMTQ5WhcNMzUwMjE0MjIxMjQ5WjCBkjELMAkGA1UEBhMCVVMxEzARBgNV\nBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNhbiBGcmFuY2lzY28xDTALBgNVBAoM\nBE9rdGExFDASBgNVBAsMC1NTT1Byb3ZpZGVyMRMwEQYDVQQDDApkZXYtMTUxMzk5\nMRwwGgYJKoZIhvcNAQkBFg1pbmZvQG9rdGEuY29tMIIBIjANBgkqhkiG9w0BAQEF\nAAOCAQ8AMIIBCgKCAQEA41OEEwgAy19BzXKc23FjIiXqrNQ+p6eG77bn78wTfQ9P\nm74UrkiyShl5ZraBSl5AR/RhpbM+XdtMhnbBCPPmdEObIGe6OMP+EQ181J2vhc2G\nWrJEVtueh9wtxY0VXqVZzqUBo671g2jnTWH29LB8RbnFpGJjiHdbo1FNtBsHblv/\nwQsUjV9mbmBqJEWesNT6Ez0LgRz8uCSEBgdYv+Ameo/uybMf0hTgaF6u28I5YYQc\nZj5g12KheSvHeil26cD+tNf4RjI6SCd+6/yyI63Y/ZsD0Lib4++TcqzTpSOgoSFL\nDhqU2iJofnqgIo2haSLYYoCOAvYpEJ9AbTGAxy5ggQIDAQABMA0GCSqGSIb3DQEB\nCwUAA4IBAQCEmgkOtWkwg1RRpG9AkMx7iSbg3T+3RhubcF9I8YODWGC9rdD+B4Xh\nqoFp8w/TV3tCFoQAxPttgAHR/ZqJDHhjVj4dL7dcbayjC38HTNmyOgOyXNyBi4hB\nM9y2uXQz6YDwUWVw7t4aXxu6seuo9JVLMETpKhk7kQzgJLCiri6+4S0zD+uWuPlD\nz4sfJy8CdhbP9WiPLkxw7gLL8GDijjYT6/rCaO1oRFlEaYOOd6yAbxEGk5UN48v+\n3rc1UmuQBxrH3j42mQsXsc0w1Y7YbYjITVWUZ3b/+uz6wAy2t6r2zDfw8liKW6TT\ntr8C9MvNmeK4a4LXTJjz1MZu5hdScjFt\n-----END
+        CERTIFICATE-----\n","validFromInSec":"1739571109","validToInSec":"2055103969"}],"loginUrl":"https://dev-151399.okta.com/app/zscaler_private_access/exkq367y87gTN4L834x7/sso/saml","idpEntityId":"http://www.okta.com/exkq367y87gTN4L834x7","autoProvision":"0","signSamlRequest":"1","ssoType":["USER"],"domainList":["securitygeek.io"],"useCustomSPMetadata":true,"scimEnabled":true,"enableScimBasedPolicy":true,"disableSamlBasedPolicy":false,"reauthOnUserUpdate":false,"userSpSigningCertId":"0","enableArbitraryAuthDomains":"1","userMetadata":{"spEntityId":"https://config.test.zscaler.com/auth/metadata/216196257331285825","spPostUrl":"https://config.test.zscaler.com/auth/216196257331285825/sso","certificateUrl":"https://config.test.zscaler.com/auth/216196257331285825/certificate","spMetadataUrl":"https://config.test.zscaler.com/auth/216196257331285825/metadata","spBaseUrl":"https://config.test.zscaler.com/auth"},"oneIdentityEnabled":false,"scimServiceProviderEndpoint":"https://config.test.zscaler.com/scim/1/216196257331285825/v2","scimSharedSecretExists":true,"forceAuth":false,"loginHint":true,"enabled":true,"delta":"e2f51b4b65ae89754ea4ed4af926f538","redirectBinding":false},{"id":"216196257331285804","modifiedTime":"1725576090","creationTime":"1631713574","modifiedBy":"72057594037933703","name":"SGIO-Admin-Okta","certificates":[{"cName":"dev-151399","serialNo":"1586495797142","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDpDCCAoygAwIBAgIGAXFihLeWMA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQG\nEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNj\nbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxEzARBgNVBAMM\nCmRldi0xNTEzOTkxHDAaBgkqhkiG9w0BCQEWDWluZm9Ab2t0YS5jb20wHhcNMjAw\nNDEwMDUxNTM3WhcNMzAwNDEwMDUxNjM3WjCBkjELMAkGA1UEBhMCVVMxEzARBgNV\nBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNhbiBGcmFuY2lzY28xDTALBgNVBAoM\nBE9rdGExFDASBgNVBAsMC1NTT1Byb3ZpZGVyMRMwEQYDVQQDDApkZXYtMTUxMzk5\nMRwwGgYJKoZIhvcNAQkBFg1pbmZvQG9rdGEuY29tMIIBIjANBgkqhkiG9w0BAQEF\nAAOCAQ8AMIIBCgKCAQEAmguoqykFMR2rIxbvdNwJG1Xasz38KAYsphtgA1aTq6bz\nXTq7WZwLRkTE2flld2NTggGitJjf+Q76j1bisp3keYZ6clt9jUIM4JnAT+PvQQqN\nJSG5mzP2EuWUGqOtvcdoeH/yA9lTQKsMDLFtD6wiHu3KZz2Q53OSQNvDy9wArXaU\njZBYUL0IIAaEghaRNCb2Aw0wCtCeWoGMpVZ/PIK2Azl6YyzwUrJ+upM/bAw7i6+/\nhQQbv8M7G6Rag8fxT3hg2ka4gMGe1bDNqia93f+NRNbqRN18Sf8Nk8B8bnLGZegQ\nN33rEP4XbePE40eL0Fhmlc+JgI7dUBxACdNAaDgGawIDAQABMA0GCSqGSIb3DQEB\nCwUAA4IBAQCL5HD8RL0xHF0TiFkcN1aKCHb1oRHN4rL8JHLy4jDSLwdPy7FVsE1h\nYx19iI7FCHReHNGXW/3jNpEIYqeE/rTOAD2V1l6TwSNyek1l7cKcrdhxRS63Rqgy\nKgbcGq9zjwecBPyTowaJgKj82kpHwGUb0QIn9M0f0cSGL8mAj5QmB/O4auOObdEN\nc1foreVezUY1XvXU+EGNEBUDA6v9jMRnJXh91K3MYbn/i3cz5leAMEMYHX2LCRyP\nMZ43q0DaKPARPDB0OKP1gZuYJlgXwupwm888MsbdS11opwx2gYvK0+96tpKESPuM\nlGfRAty2sDWJ3RCDqQmLHOgDholCdzQJ\n-----END
+        CERTIFICATE-----\n","validFromInSec":"1586495737","validToInSec":"1902028597"}],"loginUrl":"https://dev-151399.okta.com/app/zscaler_private_access/exk34oyk609msNw0g4x7/sso/saml","idpEntityId":"http://www.okta.com/exk34oyk609msNw0g4x7","migrationDetail":"{\"disabledByZSLogin\":true,\"domains\":[\"securitygeek.io\"]}","autoProvision":"0","signSamlRequest":"1","ssoType":["ADMIN"],"useCustomSPMetadata":true,"scimEnabled":false,"enableScimBasedPolicy":false,"disableSamlBasedPolicy":false,"reauthOnUserUpdate":false,"adminSpSigningCertId":"0","enableArbitraryAuthDomains":"0","adminMetadata":{"spEntityId":"https://config.test.zscaler.com/auth/metadata/216196257331285804","spPostUrl":"https://config.test.zscaler.com/auth/216196257331285804/sso","certificateUrl":"https://config.test.zscaler.com/auth/216196257331285804/certificate","spMetadataUrl":"https://config.test.zscaler.com/auth/216196257331285804/metadata","spBaseUrl":"https://config.test.zscaler.com/auth"},"oneIdentityEnabled":false,"scimServiceProviderEndpoint":"https://config.test.zscaler.com/scim/1/216196257331285804/v2","scimSharedSecretExists":false,"forceAuth":false,"loginHint":true,"enabled":false,"delta":"f0966db58f101c0755645b724878332a","redirectBinding":true},{"id":"216196257331372701","modifiedTime":"1725576090","creationTime":"1725576090","modifiedBy":"72057594037933703","name":"ZSlogin_216196257331281920","certificates":[{"cName":"zslogin.net","serialNo":"13972253400734189870","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIEAzCCAuugAwIBAgIJAMHnanCWgUkuMA0GCSqGSIb3DQEBCwUAMIGXMQswCQYD\nVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTERMA8GA1UEBwwIU2FuIEpvc2Ux\nEDAOBgNVBAoMB1pzY2FsZXIxFDASBgNVBAsMC0VuZ2luZWVyaW5nMRQwEgYDVQQD\nDAt6c2xvZ2luLm5ldDEiMCAGCSqGSIb3DQEJARYTc3VwcG9ydEB6c2NhbGVyLmNv\nbTAeFw0yMzA0MDMxNzQ0MzhaFw0zMzAzMzExNzQ0MzhaMIGXMQswCQYDVQQGEwJV\nUzETMBEGA1UECAwKQ2FsaWZvcm5pYTERMA8GA1UEBwwIU2FuIEpvc2UxEDAOBgNV\nBAoMB1pzY2FsZXIxFDASBgNVBAsMC0VuZ2luZWVyaW5nMRQwEgYDVQQDDAt6c2xv\nZ2luLm5ldDEiMCAGCSqGSIb3DQEJARYTc3VwcG9ydEB6c2NhbGVyLmNvbTCCASIw\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM+ZC+XohHKmW2ukZY6NYVVE78sD\ne6MLoo5agX62nnv1QhKZLaGPfUT1jhvBTAghPJvfB7lEAyH/CGgG5TLSwNGMIUGE\no/img+Lpo94Zs/0lzVuzP8Xlkw49lJFTy1KHr7k3bXgU5Mc8olnagnG3u8ITbS94\nu1rTDxOXiRgnI2yM0TfwjIGeX91jtgv5YqpEVCIk7hAdAvvy1wBcMe2w1+0tCWBq\na5t1pDzxUd6UuZG+xUukfCZc8+t3Ys86Up7Fv+RHyZYJ980jtNUl8XWbaLcD9Fy8\nloVWO+guNaW2P3xAg++TeTfsVVGMChfS3826dNyIvaMEfy6H8R+ArdhthtMCAwEA\nAaNQME4wHQYDVR0OBBYEFEtr4jTJeZWITScz+Lfsc45Fedw+MB8GA1UdIwQYMBaA\nFEtr4jTJeZWITScz+Lfsc45Fedw+MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEL\nBQADggEBAD38lLr4WZ3oki8HUhqgwtb6OMnBBVKleyZKc+HLjcAFSGwCN9mZYrI8\nTOdiqtuI2kV8EfzDCa9JjfMOrGCoPArAX+LDJLTkSGFJjm1SCvn+8TgzwPD0aFhp\nmS7Tw1XAouB/9hufZOf3sbmugWSs6Lt2CKodl/yWa/DaFsrZxqe+dUSbqhdjHOjM\n+qwmVdhodr++sqdhHfa6tkKVPA+q8A/TSm12OI86TTBCwlt2oJKW1eoo3C0VkTgX\nF+Q1SQxHe0v5IrXNWF8Vll+0IsOstxVbq+Ja+Ziz93dOK0YhvYX4Mf3fva1NBFzT\n43JmVRLqGWMr4iCIBXLnTqf5quxKm1U=\n-----END
+        CERTIFICATE-----\n","validFromInSec":"1680543878","validToInSec":"1995903878"}],"loginUrl":"https://identity.test.zscaler.com/sso/saml2/idp/800000000102","idpEntityId":"https://identity.test.zscaler.com","signSamlRequest":"1","ssoType":["ADMIN"],"domainList":["securitygeek.io","securitygeekio.zslogin.net","216196257331281920.zpa-customer.com"],"useCustomSPMetadata":true,"scimEnabled":false,"enableScimBasedPolicy":false,"disableSamlBasedPolicy":false,"reauthOnUserUpdate":false,"adminSpSigningCertId":"0","adminMetadata":{"spEntityId":"https://config.test.zscaler.com/auth/metadata/216196257331281920","spPostUrl":"https://config.test.zscaler.com/auth/216196257331281920/sso","certificateUrl":"https://config.test.zscaler.com/auth/216196257331281920/certificate","spMetadataUrl":"https://config.test.zscaler.com/auth/216196257331281920/metadata","spBaseUrl":"https://config.test.zscaler.com/auth"},"oneIdentityEnabled":true,"scimServiceProviderEndpoint":"https://config.test.zscaler.com/scim/1/216196257331372701/v2","scimSharedSecretExists":false,"forceAuth":false,"loginHint":true,"enabled":true,"delta":"8c22cc050b011bbfdff8144263d1606a"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:19 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '59'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f7b2284e-2d39-9b18-a2f1-1e9d6ca90d38
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4979'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/userconfig/v1/customers/216196257331281920/scimgroup/idpId/216196257331285825
+  response:
+    body:
+      string: '{"totalPages":72,"totalCount":1421,"list":[{"id":3227281,"modifiedTime":1762447792,"creationTime":1762447792,"name":"DL_Security_mslce.O.DO.O&IT.ZP&S.Webauth_SA","idpId":216196257331285825,"idpGroupId":null,"internalId":"4fd82ef9-d4f3-47fe-bdec-962bd81ac19f"},{"id":3070004,"modifiedTime":1749148203,"creationTime":1749148203,"name":"Okta
+        - Engineering, Mobile","idpId":216196257331285825,"idpGroupId":null,"internalId":"acb19cd7-ebc4-43f4-8e49-3dfb0006aebf"},{"id":2958435,"modifiedTime":1748538715,"creationTime":1739574264,"name":"emergency_access_group","idpId":216196257331285825,"idpGroupId":null,"internalId":"c91a630e-9914-41cb-a68e-9880a515954f"},{"id":2958436,"modifiedTime":1739574353,"creationTime":1739574353,"name":"System
+        User","idpId":216196257331285825,"idpGroupId":null,"internalId":"76f8bb78-e08f-413b-a714-49bfd1ada9a0"},{"id":2958434,"modifiedTime":1739574264,"creationTime":1739574264,"name":"Example2","idpId":216196257331285825,"idpGroupId":null,"internalId":"afa61a56-6d76-4a4e-9998-bc58218ee4eb"},{"id":2958433,"modifiedTime":1739574259,"creationTime":1739574259,"name":"DevOps","idpId":216196257331285825,"idpGroupId":null,"internalId":"4615f850-0318-4570-acf1-4c69149e5684"},{"id":2640389,"modifiedTime":1724819316,"creationTime":1724819316,"name":"Dynamic
+        Group Registered Domains","idpId":216196257331285825,"idpGroupId":null,"internalId":"9533f7e1-2937-4d9f-abe3-90f7a66f85d6"},{"id":2640388,"modifiedTime":1724819316,"creationTime":1724819316,"name":"Dynamic
+        Group Guest Domains","idpId":216196257331285825,"idpGroupId":null,"internalId":"e323d7d7-c2f5-4e60-b0b0-44b1d9a4525d"},{"id":2640390,"modifiedTime":1724819316,"creationTime":1724819316,"name":"Zscaler
+        Global Administrators","idpId":216196257331285825,"idpGroupId":null,"internalId":"58c6c2bc-17ce-4e3e-86bc-31240fb265d0"},{"id":2640387,"modifiedTime":1724819315,"creationTime":1724819315,"name":"Zscaler
+        Emergency Access","idpId":216196257331285825,"idpGroupId":null,"internalId":"a69662e1-11e0-4b45-9e54-159cc4972e76"},{"id":2640386,"modifiedTime":1724819314,"creationTime":1724819314,"name":"Dynamic
+        Group Administrators","idpId":216196257331285825,"idpGroupId":null,"internalId":"2b8e1924-b98b-46af-8688-7b9a3ee7ea1f"},{"id":2061762,"modifiedTime":1699368025,"creationTime":1699368025,"name":"Business
+        Unit - October Energy US, Inc.","idpId":216196257331285825,"idpGroupId":null,"internalId":"d7d2ccad-f203-4368-8327-5a7de7e721c4"},{"id":1405938,"modifiedTime":1694213654,"creationTime":1670371850,"name":"ZIA-Admins","idpId":216196257331285825,"idpGroupId":null,"internalId":"3b2190f6-0610-4cb0-adbf-43f3ab657d5f"},{"id":1644131,"modifiedTime":1689616911,"creationTime":1689616911,"name":"FNC2P_Azure_ZTNA_OTPOWER_STANDARD","idpId":216196257331285825,"idpGroupId":null,"internalId":"d4a72d32-52a0-49d4-bc80-6d97a4810f41"},{"id":1644130,"modifiedTime":1689616906,"creationTime":1689616906,"name":"FNC2P_Azure_ZTNA_OTPOWER_DT_KD","idpId":216196257331285825,"idpGroupId":null,"internalId":"64d4e4de-2bd9-4ce1-ad77-1dcbbcf7cdd2"},{"id":1634844,"modifiedTime":1687491341,"creationTime":1687491341,"name":"emergency-group","idpId":216196257331285825,"idpGroupId":null,"internalId":"db9a3b99-60bc-4a95-95c2-5d1a938500cc"},{"id":293476,"modifiedTime":1681432706,"creationTime":1631718377,"name":"Engineering","idpId":216196257331285825,"idpGroupId":null,"internalId":"293476"},{"id":1566944,"modifiedTime":1681431510,"creationTime":1681431510,"name":"Security
+        Incident Assignment","idpId":216196257331285825,"idpGroupId":null,"internalId":"17b13993-2c7a-417e-830b-3ee6bdc03162"},{"id":1404704,"modifiedTime":1680674458,"creationTime":1670366996,"name":"A000","idpId":216196257331285825,"idpGroupId":null,"internalId":"b85b3250-3217-4626-8980-eedc2ec72997"},{"id":1563101,"modifiedTime":1680672468,"creationTime":1680672468,"name":"Container
+        Remediation Owner","idpId":216196257331285825,"idpGroupId":null,"internalId":"7b001a4e-ba89-4d0d-bddf-bf0dcaffa26b"}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 21:17:19 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '129'
+      x-frame-options:
+      - DENY
+      x-http2-stream-id:
+      - '3'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9f01a707-9fa3-9f06-b1e5-cde5e3bd7b78
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4978'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/isolation/profiles
+  response:
+    body:
+      string: '{"totalPages":"1","currentCount":"6","totalCount":"6","list":[{"id":"216196257331370022","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD   SA   Profile","description":"BD   SA   Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"dff035b0-ee81-42dd-ae35-1f988d202745","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/dff035b0-ee81-42dd-ae35-1f988d202745/zpa/render"},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
+        Profile","description":"BD  SA Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"0ed80569-fb12-479e-910f-cbe7cf57e8c4","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0ed80569-fb12-479e-910f-cbe7cf57e8c4/zpa/render"},{"id":"216196257331370023","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD
+        SA Profile","description":"BD SA Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"e72dd090-9ea8-47ca-8ff0-cab348d56c66","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/e72dd090-9ea8-47ca-8ff0-cab348d56c66/zpa/render"},{"id":"216196257331286656","modifiedTime":"1696830629","creationTime":"1632023548","modifiedBy":"216196257331281921","name":"BD_SA_Profile1","description":"BD_SA_Profile1","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"0068dde3-ba14-453c-a481-201c5a3004d1","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0068dde3-ba14-453c-a481-201c5a3004d1/zpa/render"},{"id":"216196257331369954","creationTime":"1696880734","modifiedBy":"216196257331281921","name":"BD_SA_Profile2","description":"BD_SA_Profile2","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"af04f088-c48d-4777-ad81-4f29ed523f81","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/af04f088-c48d-4777-ad81-4f29ed523f81/zpa/render"},{"id":"216196257331390285","creationTime":"1763085582","modifiedBy":"216196257331372705","name":"Example200","description":"Example200","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"233a8c46-093e-4711-9f71-cb81bdfe21ab","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/233a8c46-093e-4711-9f71-cb81bdfe21ab/zpa/render"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '34'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a129cf2d-dbb5-9322-b482-0b430c3500ab
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4977'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/policyType/ISOLATION_POLICY
+  response:
+    body:
+      string: '{"id":"216196257331286609","modifiedTime":"1764165881","creationTime":"1631984706","modifiedBy":"216196257331372705","name":"Isolation_Policy","enabled":true,"description":"Isolation
+        policies.","policyType":"5","sorted":true}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '38'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d9f7414d-12c7-9d86-b66c-264fc6e3e517
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4976'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-apir1-vcr0001", "description": "Access rule with SCIM group
+      conditions", "ruleOrder": null, "action": "ISOLATE", "zpnIsolationProfileId":
+      "216196257331370022", "conditions": [{"operator": "OR", "operands": [{"objectType":
+      "SCIM_GROUP", "lhs": "216196257331285825", "rhs": 3227281}, {"objectType": "SCIM_GROUP",
+      "lhs": "216196257331285825", "rhs": 3070004}]}, {"operator": "OR", "operands":
+      [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '488'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/216196257331286609/rule
+  response:
+    body:
+      string: '{"id":"216196257331394524","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","name":"tests-apir1-vcr0001","description":"Access
+        rule with SCIM group conditions","ruleOrder":"1","priority":"2","policyType":"5","operator":"AND","action":"ISOLATE","disabled":"0","conditions":[{"id":"41632515","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632516","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3227281","name":"BD_Okta_Users"},{"id":"41632517","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3070004","name":"BD_Okta_Users"}]},{"id":"41632518","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632519","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"CLIENT_TYPE","lhs":"id","rhs":"zpn_client_type_exporter"}]}],"defaultRuleName":"Default_Rule","defaultRule":false,"zpnIsolationProfileId":"216196257331370022"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '116'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 14872fa9-78fa-9be4-a9ce-36fd75e89afe
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/policyType/ISOLATION_POLICY
+  response:
+    body:
+      string: '{"id":"216196257331286609","modifiedTime":"1764191840","creationTime":"1631984706","modifiedBy":"216196257331372705","name":"Isolation_Policy","enabled":true,"description":"Isolation
+        policies.","policyType":"5","sorted":true}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '38'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 72beef10-d2e9-9bbf-9d11-661ff3555b1e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/216196257331286609/rule/216196257331394524
+  response:
+    body:
+      string: '{"id":"216196257331394524","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","name":"tests-apir1-vcr0001","description":"Access
+        rule with SCIM group conditions","ruleOrder":"1","priority":"2","policyType":"5","operator":"AND","action":"ISOLATE","disabled":"0","devicePostureFailureNotificationEnabled":false,"policySetId":"216196257331286609","conditions":[{"id":"41632515","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632516","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3227281","idpId":"216196257331285825","idpName":"BD_Okta_Users","conditionId":"41632515"},{"id":"41632517","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3070004","idpId":"216196257331285825","idpName":"BD_Okta_Users","conditionId":"41632515"}],"ruleGid":"216196257331394524"},{"id":"41632518","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632519","modifiedTime":"1764191840","creationTime":"1764191840","modifiedBy":"216196257331372705","objectType":"CLIENT_TYPE","lhs":"id","rhs":"zpn_client_type_exporter","name":"zpn_client_type_exporter","conditionId":"41632518"}],"ruleGid":"216196257331394524"}],"defaultRuleName":"Default_Rule","defaultRule":false,"readOnly":false,"zscalerManaged":false,"zpnIsolationProfileId":"216196257331370022"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '68'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a5bb3170-2914-9795-bcae-661b32f73677
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4973'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/policyType/ISOLATION_POLICY
+  response:
+    body:
+      string: '{"id":"216196257331286609","modifiedTime":"1764191840","creationTime":"1631984706","modifiedBy":"216196257331372705","name":"Isolation_Policy","enabled":true,"description":"Isolation
+        policies.","policyType":"5","sorted":true}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:20 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '38'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f144bfc3-5e12-9fe9-b8df-90509263e272
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4972'
+      x-ratelimit-reset:
+      - '40'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-apir1-vcr0001", "description": "Updated access rule vcr0002",
+      "ruleOrder": null, "action": "ISOLATE", "zpnIsolationProfileId": "216196257331370022",
+      "conditions": [{"operator": "OR", "operands": [{"objectType": "SCIM_GROUP",
+      "lhs": "216196257331285825", "rhs": 3227281}, {"objectType": "SCIM_GROUP", "lhs":
+      "216196257331285825", "rhs": 3070004}]}, {"operator": "OR", "operands": [{"objectType":
+      "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '477'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/216196257331286609/rule/216196257331394524
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:17:21 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '133'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7aad450e-16d2-9757-b297-382a75babd53
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4971'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/rules/policyType/ISOLATION_POLICY
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"2","list":[{"id":"216196257331394524","modifiedTime":"1764191841","creationTime":"1764191840","modifiedBy":"216196257331372705","name":"tests-apir1-vcr0001","description":"Updated
+        access rule vcr0002","ruleOrder":"1","priority":"2","policyType":"5","operator":"AND","action":"ISOLATE","disabled":"0","devicePostureFailureNotificationEnabled":false,"policySetId":"216196257331286609","conditions":[{"id":"41632520","modifiedTime":"1764191841","creationTime":"1764191841","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632521","modifiedTime":"1764191841","creationTime":"1764191841","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3227281","idpId":"216196257331285825","idpName":"BD_Okta_Users","conditionId":"41632520"},{"id":"41632522","modifiedTime":"1764191841","creationTime":"1764191841","modifiedBy":"216196257331372705","objectType":"SCIM_GROUP","lhs":"216196257331285825","rhs":"3070004","idpId":"216196257331285825","idpName":"BD_Okta_Users","conditionId":"41632520"}],"ruleGid":"216196257331394524"},{"id":"41632523","modifiedTime":"1764191841","creationTime":"1764191841","modifiedBy":"216196257331372705","operator":"OR","negated":false,"operands":[{"id":"41632524","modifiedTime":"1764191841","creationTime":"1764191841","modifiedBy":"216196257331372705","objectType":"CLIENT_TYPE","lhs":"id","rhs":"zpn_client_type_exporter","name":"zpn_client_type_exporter","conditionId":"41632523"}],"ruleGid":"216196257331394524"}],"defaultRuleName":"Default_Rule","defaultRule":false,"readOnly":false,"zscalerManaged":false,"zpnIsolationProfileId":"216196257331370022"},{"id":"216196257331286610","modifiedTime":"1726870150","creationTime":"1631984706","modifiedBy":"216196257331372705","name":"Default_Rule","description":"This
+        is the default Isolation Policy rule","ruleOrder":"2","priority":"1","policyType":"5","operator":"AND","action":"BYPASS_ISOLATE","disabled":"0","devicePostureFailureNotificationEnabled":false,"policySetId":"216196257331286609","conditions":[{"id":"714178","modifiedTime":"1631984706","creationTime":"1631984706","modifiedBy":"72057594037928296","operator":"OR","negated":false,"operands":[{"id":"714179","creationTime":"1631984706","modifiedBy":"72057594037928296","objectType":"CLIENT_TYPE","lhs":"id","rhs":"zpn_client_type_exporter","name":"zpn_client_type_exporter","conditionId":"714178"}],"ruleGid":"216196257331286610"}],"defaultRuleName":"Default_Rule","defaultRule":true,"readOnly":false,"zscalerManaged":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:21 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '76'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3e5ffd27-201f-988c-866c-b70448d2ec6c
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4970'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/policyType/ISOLATION_POLICY
+  response:
+    body:
+      string: '{"id":"216196257331286609","modifiedTime":"1764191840","creationTime":"1631984706","modifiedBy":"216196257331372705","name":"Isolation_Policy","enabled":true,"description":"Isolation
+        policies.","policyType":"5","sorted":true}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:21 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '42'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5e6e4092-b925-9cdb-b32e-5b89358bf0f3
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4969'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/policySet/216196257331286609/rule/216196257331394524
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:17:21 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '79'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5745b9b4-24dd-94d2-ab44-efad71b2b3f8
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4968'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

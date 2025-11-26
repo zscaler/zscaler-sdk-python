@@ -30,6 +30,7 @@ class TestBandwidthRules:
     Integration Tests for the ZIA Bandwidth Rules
     """
 
+    @pytest.mark.vcr()
     def test_bandwidth_control_rules(self, fs):
         client = MockZIAClient(fs)
         errors = []

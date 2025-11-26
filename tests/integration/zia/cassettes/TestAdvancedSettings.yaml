@@ -1,0 +1,79 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/advancedSettings
+  response:
+    body:
+      string: '{"authBypassUrlCategories":["NONE"],"domainFrontingBypassUrlCategories":["NONE"],"authBypassUrls":[".newexample2.com","vcr-test-url-1.vcr-test.com",".newexample1.com","vcr-test-url-2.vcr-test.com","vcr-test-url-5.vcr-test.com","vcr-test-url-4.vcr-test.com","vcr-test-url-3.vcr-test.com"],"authBypassApps":[],"kerberosBypassUrlCategories":["ADULT_THEMES","ADULT_SEX_EDUCATION"],"kerberosBypassUrls":["test1.com"],"kerberosBypassApps":[],"basicBypassUrlCategories":["NONE"],"basicBypassApps":["NONE"],"httpRangeHeaderRemoveUrlCategories":["NONE"],"digestAuthBypassUrlCategories":["NONE"],"digestAuthBypassUrls":[],"digestAuthBypassApps":[],"enableDnsResolutionOnTransparentProxy":true,"enableIPv6DnsResolutionOnTransparentProxy":false,"enableIPv6DnsOptimizationOnAllTransparentProxy":false,"enableEvaluatePolicyOnGlobalSSLBypass":true,"dnsResolutionOnTransparentProxyExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyExemptUrls":[],"dnsResolutionOnTransparentProxyExemptApps":["NONE"],"dnsResolutionOnTransparentProxyIPv6ExemptApps":["NONE"],"dnsResolutionOnTransparentProxyUrlCategories":["NONE"],"dnsResolutionOnTransparentProxyIPv6UrlCategories":["NONE"],"dnsResolutionOnTransparentProxyUrls":["test1.com","test2.com"],"dnsResolutionOnTransparentProxyApps":["CHATGPT_AI"],"dnsResolutionOnTransparentProxyIPv6Apps":["NONE"],"blockDomainFrontingApps":["NONE"],"preferSniOverConnHostApps":["NONE"],"enableOffice365":true,"logInternalIp":true,"enforceSurrogateIpForWindowsApp":true,"trackHttpTunnelOnHttpPorts":true,"blockHttpTunnelOnNonHttpPorts":false,"blockDomainFrontingOnHostHeader":false,"zscalerClientConnector1AndPacRoadWarriorInFirewall":true,"cascadeUrlFiltering":true,"enablePolicyForUnauthenticatedTraffic":true,"blockNonCompliantHttpRequestOnHttpPorts":true,"enableAdminRankAccess":true,"uiSessionTimeout":300,"http2NonbrowserTrafficEnabled":false,"ecsForAllEnabled":false,"dynamicUserRiskEnabled":false,"blockConnectHostSniMismatch":false,"preferSniOverConnHost":false,"sipaXffHeaderEnabled":false,"blockNonHttpOnHttpPortEnabled":true,"sniDnsOptimizationBypassUrlCategories":["NONE"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 04:53:07 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3322'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3a60d32d-bb0b-94cd-a2ee-6b3da51b1af4
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '57'
+      x-transaction-id:
+      - be989c62-a108-44f8-b077-59f56ba6f6fe
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

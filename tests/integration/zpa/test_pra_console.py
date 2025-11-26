@@ -30,6 +30,7 @@ class TestAccessPrivilegedConsoleV2:
     Integration Tests for the Privileged Console v2
     """
 
+    @pytest.mark.vcr()
     def test_access_privileged_console_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -47,8 +48,8 @@ class TestAccessPrivilegedConsoleV2:
         try:
             # Create an App Connector Group
             try:
-                app_connector_group_name = "tests-" + generate_random_string()
-                app_connector_group_description = "tests-" + generate_random_string()
+                app_connector_group_name = "tests-pracon-" + generate_random_string()
+                app_connector_group_description = "tests-pracon-" + generate_random_string()
                 created_app_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
@@ -77,7 +78,7 @@ class TestAccessPrivilegedConsoleV2:
 
             # Create a Segment Group
             try:
-                segment_group_name = "tests-" + generate_random_string()
+                segment_group_name = "tests-pracon-" + generate_random_string()
                 created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 segment_group_id = created_segment_group.id
@@ -86,8 +87,8 @@ class TestAccessPrivilegedConsoleV2:
 
             # Create a Server Group
             try:
-                server_group_name = "tests-" + generate_random_string()
-                server_group_description = "tests-" + generate_random_string()
+                server_group_name = "tests-pracon-" + generate_random_string()
+                server_group_description = "tests-pracon-" + generate_random_string()
                 created_server_group, _, err = client.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
@@ -101,14 +102,15 @@ class TestAccessPrivilegedConsoleV2:
 
             # Create an Application Segment
             try:
-                app_segment_name = "rdp_pra01.acme.com"
-                app_segment_description = "rdp_pra01.acme.com"
+                domain_name = "tests-pracon-" + generate_random_string() + ".acme.com"  # Unique domain
+                app_segment_name = domain_name
+                app_segment_description = domain_name
 
                 app_segment, _, err = client.zpa.app_segments_pra.add_segment_pra(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["rdp_pra01.acme.com"],
+                    domain_names=[domain_name],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["3389", "3389"],
@@ -119,7 +121,7 @@ class TestAccessPrivilegedConsoleV2:
                                 "application_port": "3389",
                                 "application_protocol": "RDP",
                                 "connection_security": "ANY",
-                                "domain": "rdp_pra01.acme.com",
+                                "domain": domain_name,
                             }
                         ]
                     },
@@ -132,17 +134,16 @@ class TestAccessPrivilegedConsoleV2:
             except Exception as exc:
                 errors.append(f"Creating PRA Application Segment failed: {exc}")
 
-            # # Use the application segment's *name* to search for it
+            # Use the application segment's *name* to search for it
             try:
-                search_name = "rdp_pra01.acme.com"
                 app_segments, _, err = client.zpa.app_segment_by_type.get_segments_by_type(
-                    application_type="SECURE_REMOTE_ACCESS", query_params={"search": search_name}
+                    application_type="SECURE_REMOTE_ACCESS", query_params={"search": app_segment_name}
                 )
                 assert err is None, f"Failed to get Application Segment by type: {err}"
                 assert isinstance(app_segments, list), "Expected app_segments to be a list"
 
                 if not app_segments:
-                    raise AssertionError(f"No segments found with the specified name: {search_name}")
+                    raise AssertionError(f"No segments found with the specified name: {app_segment_name}")
 
                 # Extract `id` and `appId` from the first segment
                 pra_app_id = app_segments[0].id
@@ -165,10 +166,10 @@ class TestAccessPrivilegedConsoleV2:
             try:
                 # Create a new pra portal using the retrieved certificate_id
                 created_portal, _, err = client.zpa.pra_portal.add_portal(
-                    name="tests-" + generate_random_string(),
-                    description="tests-" + generate_random_string(),
+                    name="tests-pracon-" + generate_random_string(),
+                    description="tests-pracon-" + generate_random_string(),
                     enabled=True,
-                    domain="tests-" + generate_random_string() + "acme.com",
+                    domain="tests-pracon-" + generate_random_string() + "acme.com",
                     certificate_id=certificate_id,  # use the retrieved certificate_id
                     user_notification_enabled=True,
                     user_notification=f"{SDK_PREFIX} Test PRA Portal",
@@ -183,8 +184,8 @@ class TestAccessPrivilegedConsoleV2:
             try:
                 # Create a new pra console using the pra_application_id and portal_id
                 created_console, _, err = client.zpa.pra_console.add_console(
-                    name="tests-" + generate_random_string(),
-                    description="tests-" + generate_random_string(),
+                    name="tests-pracon-" + generate_random_string(),
+                    description="tests-pracon-" + generate_random_string(),
                     enabled=True,
                     pra_application_id=pra_app_id,
                     pra_portal_ids=[portal_id],
@@ -222,7 +223,7 @@ class TestAccessPrivilegedConsoleV2:
                 updated_rule_description = "Updated " + generate_random_string()
                 _, _, err = client.zpa.pra_console.update_console(
                     console_id=console_id,
-                    name="tests-" + generate_random_string(),
+                    name="tests-pracon-" + generate_random_string(),
                     description=updated_rule_description,
                     enabled=True,
                     pra_application_id=pra_app_id,

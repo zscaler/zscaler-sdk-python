@@ -28,6 +28,7 @@ class TestAppProtectionControls:
     Integration Tests for the App Protection Controls
     """
 
+    @pytest.mark.vcr()
     def test_list_control_action_types(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -40,6 +41,7 @@ class TestAppProtectionControls:
 
         assert not errors, f"Errors occurred: {errors}"
 
+    @pytest.mark.vcr()
     def test_list_control_severity_types(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -52,6 +54,7 @@ class TestAppProtectionControls:
 
         assert not errors, f"Errors occurred: {errors}"
 
+    @pytest.mark.vcr()
     def test_list_control_types(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -64,6 +67,7 @@ class TestAppProtectionControls:
 
         assert not errors, f"Errors occurred: {errors}"
 
+    @pytest.mark.vcr()
     def test_list_custom_http_methods(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -76,6 +80,7 @@ class TestAppProtectionControls:
 
         assert not errors, f"Errors occurred: {errors}"
 
+    @pytest.mark.vcr()
     def test_list_predef_control_versions(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -88,6 +93,7 @@ class TestAppProtectionControls:
 
         assert not errors, f"Errors occurred: {errors}"
 
+    @pytest.mark.vcr()
     def test_list_predef_controls(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

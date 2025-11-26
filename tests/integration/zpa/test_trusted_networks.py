@@ -29,6 +29,7 @@ class TestTrustedNetworks:
     Integration Tests for the Trusted Networks
     """
 
+    @pytest.mark.vcr()
     def test_trusted_networks(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

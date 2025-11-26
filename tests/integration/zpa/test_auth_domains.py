@@ -29,6 +29,7 @@ class TestAuthDomains:
     Integration Tests for the Auth Domains.
     """
 
+    @pytest.mark.vcr()
     def test_auth_domains(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

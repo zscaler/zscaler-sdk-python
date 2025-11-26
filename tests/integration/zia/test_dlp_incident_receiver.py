@@ -29,6 +29,7 @@ class TestDLPIncidentReceiver:
     Integration Tests for the DLP Incident Receiver
     """
 
+    @pytest.mark.vcr()
     def test_dlp_incident_receiver(self, fs):
         client = MockZIAClient(fs)
         errors = []

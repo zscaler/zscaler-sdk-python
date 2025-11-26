@@ -30,12 +30,13 @@ class TestApplicationServer:
     Integration Tests for the Application Server
     """
 
+    @pytest.mark.vcr()
     def test_application_server(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        server_name = "tests-" + generate_random_string()
-        server_description = "tests-" + generate_random_string()
+        server_name = "tests-srv-" + generate_random_string()
+        server_description = "tests-srv-" + generate_random_string()
         server_address = "192.168.200.1"
         server_id = None
 
