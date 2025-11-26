@@ -17,8 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient
-import random
+from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
 
 
 @pytest.fixture
@@ -31,16 +30,20 @@ class TestNSSServers:
     Integration Tests for the NSS Servers
     """
 
+    @pytest.mark.vcr()
     def test_nss_servers(self, fs):
         client = MockZIAClient(fs)
         errors = []
         nss_id = None
         update_server = None
+        
+        # Use deterministic names for VCR
+        names = TestNameGenerator("nss-server")
 
         try:
             try:
                 create_server, _, error = client.zia.nss_servers.add_nss_server(
-                    name=f"TestNSSServer_{random.randint(1000, 10000)}",
+                    name=names.name,
                     status="ENABLED",
                     type="NSS_FOR_FIREWALL",
                 )
@@ -54,7 +57,7 @@ class TestNSSServers:
                 if nss_id:
                     update_server, _, error = client.zia.nss_servers.update_nss_server(
                         nss_id=nss_id,
-                        name=f"TestNSSServer_{random.randint(1000, 10000)}",
+                        name=names.updated_name,
                         status="DISABLED",
                         type="NSS_FOR_FIREWALL",
                     )

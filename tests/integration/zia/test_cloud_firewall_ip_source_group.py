@@ -32,6 +32,7 @@ class TestCloudFirewallIPSourceGroup:
     Integration Tests for the Cloud Firewall IP Source Group.
     """
 
+    @pytest.mark.vcr()
     def test_add_ip_source_group(self, fs):
         client = MockZIAClient(fs)
         errors = []

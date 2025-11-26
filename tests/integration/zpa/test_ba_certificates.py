@@ -73,12 +73,13 @@ class TestBACertificates:
 
         return pem + key_pem  # Combine both PEMs into one to simulate merged key and cert
 
+    @pytest.mark.vcr()
     def test_ba_certificate(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
         cert_id = None  # Initialize cert_id
 
-        cert_name = "tests-" + generate_random_string()
+        cert_name = "tests-bacert-" + generate_random_string()
 
         try:
             # # Generate a root certificate

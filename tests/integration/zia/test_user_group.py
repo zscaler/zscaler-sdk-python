@@ -18,7 +18,6 @@
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
-import random
 
 
 @pytest.fixture
@@ -26,70 +25,29 @@ def fs():
     yield
 
 
-# class TestUserGroup:
-#     """
-#     Integration Tests for the User Group
-#     """
+class TestUserGroup:
+    """
+    Integration Tests for the User Group.
 
-#     def test_user_groups(self, fs):
-#         client = MockZIAClient(fs)
-#         errors = []
-#         group_id = None
-#         update_group = None
+    These tests use VCR to record and replay HTTP interactions.
+    """
 
-#         try:
-#             # Test: Add Group
-#             try:
-#                 create_group, _, error = client.zia.user_management.add_group(
-#                     name=f"NewGroup_{random.randint(1000, 10000)}",
-#                     comments=f"NewGroup_{random.randint(1000, 10000)}",
-#                 )
-#                 assert error is None, f"Add Group Error: {error}"
-#                 assert create_group is not None, "Group creation failed."
-#                 group_id = create_group.id
-#             except Exception as e:
-#                 errors.append(f"Exception during add_group: {str(e)}")
+    @pytest.mark.vcr()
+    def test_list_groups(self, fs):
+        """Test listing user groups."""
+        client = MockZIAClient(fs)
 
-#             # Test: Update Group
-#             try:
-#                 if group_id:
-#                     update_group, _, error = client.zia.user_management.update_group(
-#                         group_id=group_id,
-#                         name=f"UpdateGroup_{random.randint(1000, 10000)}",
-#                         comments=f"UpdateGroup_{random.randint(1000, 10000)}",
-#                     )
-#                     assert error is None, f"Update Group Error: {error}"
-#                     assert update_group is not None, "Group update returned None."
-#             except Exception as e:
-#                 errors.append(f"Exception during update_group: {str(e)}")
+        groups, _, error = client.zia.user_management.list_groups()
+        assert error is None, f"List Groups Error: {error}"
+        assert groups is not None, "Groups list is None"
+        assert isinstance(groups, list), "Groups is not a list"
 
-#             # Test: Get Group
-#             try:
-#                 if update_group:
-#                     grp, _, error = client.zia.user_management.get_group(update_group.id)
-#                     assert error is None, f"Get Group Error: {error}"
-#                     assert grp.id == group_id, "Retrieved group ID mismatch."
-#             except Exception as e:
-#                 errors.append(f"Exception during get_group: {str(e)}")
+    @pytest.mark.vcr()
+    def test_list_departments(self, fs):
+        """Test listing departments."""
+        client = MockZIAClient(fs)
 
-#             # Test: List Groups
-#             try:
-#                 if update_group:
-#                     grps, _, error = client.zia.user_management.list_groups(query_params={"search": "A000"})
-#                     assert error is None, f"List Groups Error: {error}"
-#                     assert grps is not None and isinstance(grps, list), "No groups found or invalid format."
-#             except Exception as e:
-#                 errors.append(f"Exception during list_groups: {str(e)}")
-
-#         finally:
-#             # Ensure Group cleanup
-#             try:
-#                 if update_group:
-#                     _, _, error = client.zia.user_management.delete_group(update_group.id)
-#                     assert error is None, f"Delete Group Error: {error}"
-#             except Exception as e:
-#                 errors.append(f"Exception during delete_group: {str(e)}")
-
-#         # Final Assertion
-#         if errors:
-#             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+        departments, _, error = client.zia.user_management.list_departments()
+        assert error is None, f"List Departments Error: {error}"
+        assert departments is not None, "Departments list is None"
+        assert isinstance(departments, list), "Departments is not a list"

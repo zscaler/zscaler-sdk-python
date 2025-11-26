@@ -30,6 +30,7 @@ class TestAppConnectorGroupProvisioningKey:
     Integration Tests for the Provisioning Key API.
     """
 
+    @pytest.mark.vcr()
     def test_connector_group_provisioning_key(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -41,8 +42,8 @@ class TestAppConnectorGroupProvisioningKey:
         try:
             try:
                 # Create an App Connector Group
-                connector_group_name = "tests-" + generate_random_string()
-                connector_description = "tests-" + generate_random_string()
+                connector_group_name = "tests-pkacg-" + generate_random_string()
+                connector_description = "tests-pkacg-" + generate_random_string()
                 created_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                     name=connector_group_name,
                     description=connector_description,
@@ -86,7 +87,7 @@ class TestAppConnectorGroupProvisioningKey:
 
             try:
                 # Create a CONNECTOR_GRP Provisioning Key
-                connector_key_name = "tests-" + generate_random_string()
+                connector_key_name = "tests-pkacg-" + generate_random_string()
                 (created_connector_key, _, err) = client.zpa.provisioning.add_provisioning_key(
                     key_type=key_type,
                     name=connector_key_name,

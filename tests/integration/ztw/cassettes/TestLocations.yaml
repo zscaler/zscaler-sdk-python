@@ -1,0 +1,239 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/ztw/api/v1/location
+  response:
+    body:
+      string: '[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
+        Columbia","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139","subLocScopeEnabled":true,"vpcInfo":{"cloudProvider":"AWS","cloudMeta":{"name":"vpc-096108eb5d9e68d71","id":1}}},{"id":45772677,"name":"nostrud
+        qui dolore","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"authRequired":false,"sslScanEnabled":true,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":true,"ecLocation":false,"bcLocation":false,"ccLocation":true,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":40594054,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":true,"surrogateRefreshTimeInMinutes":79446126,"surrogateRefreshTimeUnit":"HOUR","kerberosAuth":true,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":true,"excludeFromManualGroups":true,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"et
+        Ut ullamco"}]'
+    headers:
+      cache-control:
+      - max-age=10
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; script-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/js/
+        https://www.zscaler.com https://api-js.mixpanel.com https://webapi.zscaler.com
+        'sha256-DaqjjpKf912Jcm2lqfmnG3r0K8QNu/4xLipWHeWpYLY=' 'sha256-GwYZP0VdQlGGGzYC96UErO5mW5PSN3L5izVbiWfGjLk=';
+        img-src 'self' https://www.zscaler.com https://server.arcgisonline.com https://webapi.zscaler.com
+        data:; style-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/css/
+        https://www.zscaler.com https://webapi.zscaler.com 'unsafe-inline'; connect-src
+        'self' https://api-js.mixpanel.com https://webapi.zscaler.com; form-action
+        https:; font-src 'self'; frame-src 'self' https://help.zscaler.com/ https://help.zscalergov.net
+        https://help.zscaler.us https://vars.hotjar.com/;
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:13:21 GMT
+      expires:
+      - Wed, 26 Nov 2025 20:13:31 GMT
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1776'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7d522789-8db3-9093-aa4c-b4b7678ccf9d
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/ztw/api/v1/location/36788941
+  response:
+    body:
+      string: '{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
+        Columbia","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139","vpcInfo":{"cloudProvider":"AWS","cloudMeta":{"name":"vpc-096108eb5d9e68d71","id":1}}}'
+    headers:
+      cache-control:
+      - max-age=10
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; script-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/js/
+        https://www.zscaler.com https://api-js.mixpanel.com https://webapi.zscaler.com
+        'sha256-DaqjjpKf912Jcm2lqfmnG3r0K8QNu/4xLipWHeWpYLY=' 'sha256-GwYZP0VdQlGGGzYC96UErO5mW5PSN3L5izVbiWfGjLk=';
+        img-src 'self' https://www.zscaler.com https://server.arcgisonline.com https://webapi.zscaler.com
+        data:; style-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/css/
+        https://www.zscaler.com https://webapi.zscaler.com 'unsafe-inline'; connect-src
+        'self' https://api-js.mixpanel.com https://webapi.zscaler.com; form-action
+        https:; font-src 'self'; frame-src 'self' https://help.zscaler.com/ https://help.zscalergov.net
+        https://help.zscaler.us https://vars.hotjar.com/;
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:13:23 GMT
+      expires:
+      - Wed, 26 Nov 2025 20:13:33 GMT
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1248'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9629883a-fe7c-9f29-b48e-f066f53b3fdb
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/ztw/api/v1/location/lite
+  response:
+    body:
+      string: '[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"NONE"},{"id":256000110,"name":"Cloud
+        Browser","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"NOT_SPECIFIED","geoOverride":false,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":false,"ipsControl":false,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"NONE"},{"id":45772677,"name":"nostrud
+        qui dolore","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":true,"ecLocation":false,"bcLocation":false,"ccLocation":true,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":true,"kerberosAuth":true,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"NONE"}]'
+    headers:
+      cache-control:
+      - max-age=10
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; script-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/js/
+        https://www.zscaler.com https://api-js.mixpanel.com https://webapi.zscaler.com
+        'sha256-DaqjjpKf912Jcm2lqfmnG3r0K8QNu/4xLipWHeWpYLY=' 'sha256-GwYZP0VdQlGGGzYC96UErO5mW5PSN3L5izVbiWfGjLk=';
+        img-src 'self' https://www.zscaler.com https://server.arcgisonline.com https://webapi.zscaler.com
+        data:; style-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/css/
+        https://www.zscaler.com https://webapi.zscaler.com 'unsafe-inline'; connect-src
+        'self' https://api-js.mixpanel.com https://webapi.zscaler.com; form-action
+        https:; font-src 'self'; frame-src 'self' https://help.zscaler.com/ https://help.zscalergov.net
+        https://help.zscaler.us https://vars.hotjar.com/;
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:13:23 GMT
+      expires:
+      - Wed, 26 Nov 2025 20:13:33 GMT
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '216'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7bc4f738-971e-91c1-8a69-ba0857565397
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -30,6 +30,7 @@ class TestCloudApplicationRules:
     Integration Tests for the ZIA Cloud Application Rules
     """
 
+    @pytest.mark.vcr()
     def test_cloud_application_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -117,6 +118,7 @@ class TestCloudApplicationRules:
 
             errors.extend(cleanup_errors)
 
+    @pytest.mark.vcr()
     def test_list_available_actions(self, fs):
         client = MockZIAClient(fs)
         rule_type = "STREAMING_MEDIA"  # Define the rule type

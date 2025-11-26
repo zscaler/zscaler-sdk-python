@@ -1,0 +1,304 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BRoot
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"6571","modifiedTime":"1648917421","creationTime":"1619672239","modifiedBy":"72057594037929181","cName":"216196257331281920.zpa-customer.com/Root","validFromInEpochSec":"1619585839","validToInEpochSec":"2565752239","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDazCCAlOgAwIBAgIQRVAihOYmqihQSIdhpAAl5TANBgkqhkiG9w0BAQsFADBe\nMRAwDgYDVQQKEwdac2NhbGVyMRcwFQYDVQQLEw5Qcml2YXRlIEFjY2VzczExMC8G\nA1UEAxMoMjE2MTk2MjU3MzMxMjgxOTIwLnpwYS1jdXN0b21lci5jb20vUm9vdDAg\nFw0yMTA0MjgwNDU3MTlaGA8yMDUxMDQyMjA0NTcxOVowXjEQMA4GA1UEChMHWnNj\nYWxlcjEXMBUGA1UECxMOUHJpdmF0ZSBBY2Nlc3MxMTAvBgNVBAMTKDIxNjE5NjI1\nNzMzMTI4MTkyMC56cGEtY3VzdG9tZXIuY29tL1Jvb3QwggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQC75qLDqjpUqBiyXRyxDOch3qPipWrHZ/Hw3E32umGf\ncQuoP1bQZp0yRTLF+bDohUVW6XSuUFI0A06fwuKIqP1eFRZOS3RO6fM6f9ZnvhMD\nYXz0ujqduLlDIfucBU4banZ2CYtBV5zJwevONf1TDZMUHjwH4UEczmamSBAKvgKu\n3p+QBxujWTTw35ja6z8tirZ0mDeia+03+wTpt6+DJZecF7qxhiZjoGHvkH/TgM/G\nElZgM8zvphAhYcKZldZoqFAUChruaAjHCpexoJeFFsz0t1MPizn1uzFZKTTxclLz\ntqe2RJ78AUpgVALdFrrT3qZWmMlcaJzMA5sv8aahcPkjAgMBAAGjIzAhMA8GA1Ud\nEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgEGMA0GCSqGSIb3DQEBCwUAA4IBAQBR\nrIGZyV8znkeEUOI+M51puIeSKjbAWgMVtmbc+Vepqo+9tJNKlA3iVOeHqS0YAGl1\nCq5T0H3OLEbO4aSaWvDgIY6WQU7468fnxNT62ScTtDakXs3YvsX/Js9y+5VKlqT7\npF2z52Qk5chkoMXSw6mJLtOvFoTbxVl5WlqUqwdGpR06yMScVj4l1YY1SsN6UG30\nEN89qETFgbHcmcSM4Krb2ODpnFHwWqFg6kF4jEYwtJbnkXhbVOECXmsEqjzCqToJ\nmjpFIeSBs05BJH2GLdT/J9UM4KJjLzKyaxwRriIRiNnZNQGqN170KkpfniDg7Wto\nZohvGarmmD9NfQ6yt94k\n-----END
+        CERTIFICATE-----\n","issuedTo":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Root","issuedBy":"O=Zscaler,OU=Private
+        Access,CN=216196257331281920.zpa-customer.com/Root","serialNo":"92132815589114252466343698498223875557","name":"Root","allowSigning":true,"privateKeyPresent":true,"clientCertType":"NONE","csr":"-----BEGIN
+        CERTIFICATE REQUEST-----\nMIIC1TCCAb0CAQAwXjEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0\nZSBBY2Nlc3MxMTAvBgNVBAMTKDIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9t\nZXIuY29tL1Jvb3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC75qLD\nqjpUqBiyXRyxDOch3qPipWrHZ/Hw3E32umGfcQuoP1bQZp0yRTLF+bDohUVW6XSu\nUFI0A06fwuKIqP1eFRZOS3RO6fM6f9ZnvhMDYXz0ujqduLlDIfucBU4banZ2CYtB\nV5zJwevONf1TDZMUHjwH4UEczmamSBAKvgKu3p+QBxujWTTw35ja6z8tirZ0mDei\na+03+wTpt6+DJZecF7qxhiZjoGHvkH/TgM/GElZgM8zvphAhYcKZldZoqFAUChru\naAjHCpexoJeFFsz0t1MPizn1uzFZKTTxclLztqe2RJ78AUpgVALdFrrT3qZWmMlc\naJzMA5sv8aahcPkjAgMBAAGgMjAwBgkqhkiG9w0BCQ4xIzAhMA8GA1UdEwEB/wQF\nMAMBAf8wDgYDVR0PAQH/BAQDAgEGMA0GCSqGSIb3DQEBCwUAA4IBAQCRL3nvOcWw\nqRocrVzSj6mFuz+zvBXUD6nrbn9VBJNzgBn6AVbGKNekrIQ6NNPANLf4rhcFPU7V\nTl8h+7P8EG0AzroFRHAV5YS6oxGJuh3W0ksrUdeULRWsR262zZrrgbWyodHrf0Va\n2mf1MnRWhyD5ppCB4MJjkJ3LGp2CiTKkr7Bn1Gsw4PnpZVQFQ19ZTYarJ5dH204F\n2VaQ2gi9a1WrEOBcRdm4M4bOI7uCN6Xs7LMVtq+6z9savp/Vl4HGq22AqfBq54CU\n5HF7dIPpobFhUghVNfTKqDV0yPsmn7npGKs5S1BqOKimPbRsGcVTfc0N5RDcbB3m\noAAqxrooR/wt\n-----END
+        CERTIFICATE REQUEST-----\n","storeInHsm":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:08 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '48'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - eca3c5b4-7870-98a6-a2c4-c5b5b82f37dd
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4975'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BClient
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"6572","modifiedTime":"1648917421","creationTime":"1619672239","modifiedBy":"72057594037929181","cName":"216196257331281920.zpa-customer.com/Client","validFromInEpochSec":"1619585839","validToInEpochSec":"2092712239","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDbDCCAlSgAwIBAgIRAJiUdXYYKWwtCAIXmfIK0nswDQYJKoZIhvcNAQELBQAw\nXjEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0ZSBBY2Nlc3MxMTAv\nBgNVBAMTKDIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9tZXIuY29tL1Jvb3Qw\nHhcNMjEwNDI4MDQ1NzE5WhcNMzYwNDI1MDQ1NzE5WjBgMRAwDgYDVQQKEwdac2Nh\nbGVyMRcwFQYDVQQLEw5Qcml2YXRlIEFjY2VzczEzMDEGA1UEAxMqMjE2MTk2MjU3\nMzMxMjgxOTIwLnpwYS1jdXN0b21lci5jb20vQ2xpZW50MIIBIjANBgkqhkiG9w0B\nAQEFAAOCAQ8AMIIBCgKCAQEA10AS9JHHxSfwJDQ+0yTNH+LAC1oZYhexpDRQq90g\nMtI3kLzDyaQs9jDwd867KI1LMM2NfOsMvNz6UW4oRtmO15abyXeGA7a69t2K4U3H\nU7Stxa0asnY5nCZyRftpyQEIEZDLiH3f1v7zvit5t+130Qh7nRQX2VOiOAlst7oC\ny3UJSb95IJ4QxHBCZ1p1oB9RTclVvXp7/BkBdhzV2uSWf3pRejqfKlkeUn4AJryS\nhczwIDNsmsQJ2xctTkMb8gDLQt5oGEgam5cWtkZ9RkVIw+zFzX8RjLwmZtBwVLAl\n4sa4DmSthbzDosVAE7V3OtA4TqrmkqprihgzbNONYEssTQIDAQABoyMwITAPBgNV\nHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0BAQsFAAOCAQEA\nCLd9X77jnaPt+/KyVYVEmrHoR+iy+gETv7THqN6Fk2xeRM9xfnZCGnjwLcqHS/Z/\nWUYK1yAbLTqLO8LJ/sVjMDEzvSY7q2+tL+CQ5oCUvr24/GDij/WCfbEjLN7G/T5O\nYp2NQChKgyvoGu0krRCTffu/P33nPaQLnEvM4NOjyW5WN0au9IXbNdOAXI7onO1P\nINTjNeH2PJEaLADkIR4ddCYQwFaXGRszYB7yrckP16/x0FACnLE7qj/rq6jk3kti\neu/eYoAaJoPjIMH22i5MktKjZQvu7Mxng1eJR7S8Lp8wmJsmgZv0bx/gvobTpUwM\nbqw2+puGotNc7Y93AvUPsw==\n-----END
+        CERTIFICATE-----\n","issuedTo":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Client","issuedBy":"O=Zscaler,OU=Private
+        Access,CN=216196257331281920.zpa-customer.com/Root","serialNo":"202813497692694888139609788822309229179","name":"Client","allowSigning":true,"parentCertId":"6571","parentCertName":"Root","privateKeyPresent":true,"clientCertType":"ZAPP_CLIENT","csr":"-----BEGIN
+        CERTIFICATE REQUEST-----\nMIIC1zCCAb8CAQAwYDEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0\nZSBBY2Nlc3MxMzAxBgNVBAMTKjIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9t\nZXIuY29tL0NsaWVudDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANdA\nEvSRx8Un8CQ0PtMkzR/iwAtaGWIXsaQ0UKvdIDLSN5C8w8mkLPYw8HfOuyiNSzDN\njXzrDLzc+lFuKEbZjteWm8l3hgO2uvbdiuFNx1O0rcWtGrJ2OZwmckX7ackBCBGQ\ny4h939b+874rebftd9EIe50UF9lTojgJbLe6Ast1CUm/eSCeEMRwQmdadaAfUU3J\nVb16e/wZAXYc1drkln96UXo6nypZHlJ+ACa8koXM8CAzbJrECdsXLU5DG/IAy0Le\naBhIGpuXFrZGfUZFSMPsxc1/EYy8JmbQcFSwJeLGuA5krYW8w6LFQBO1dzrQOE6q\n5pKqa4oYM2zTjWBLLE0CAwEAAaAyMDAGCSqGSIb3DQEJDjEjMCEwDwYDVR0TAQH/\nBAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwDQYJKoZIhvcNAQELBQADggEBAGlFFj2N\nY4xL3WjQD1z3z1s57EUDb7k6Z6DYs185aXInusCVON0RNZPdcwxN+sBe3CMVsqsI\nP4Sn583buBEFaLw5kaQ0fK7UAJ1gL5VbaUHY7FjoVPOzkZfV4UrVnGbId/idVubo\nnlShUEO3L4Wo+wP5LDJQonMOiTAF4/j3SXkPy2qZmVA99jCTrePzo47fPGB9RAVt\nznIiZ7/Oy6hGMUk1RR+XvtIjW6SByf2RYXizsO1SPIug/V0tl06HEdR6FTktfwR2\nW4lyjmY1uRgg2+hHxOvx20tWE/ON51ThzIfq5DDrnukRLNDugeudb/SbjjKDe56p\nVxVADAFRwkyup4g=\n-----END
+        CERTIFICATE REQUEST-----\n","storeInHsm":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:08 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '57'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1e604f45-cff1-9e1b-812b-cd774ddac8ed
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BConnector
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"6573","modifiedTime":"1648917421","creationTime":"1619672239","modifiedBy":"72057594037929181","cName":"216196257331281920.zpa-customer.com/Connector","validFromInEpochSec":"1619585839","validToInEpochSec":"2092712239","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDbjCCAlagAwIBAgIQejTHIB6jsIKtlIvNu68HijANBgkqhkiG9w0BAQsFADBe\nMRAwDgYDVQQKEwdac2NhbGVyMRcwFQYDVQQLEw5Qcml2YXRlIEFjY2VzczExMC8G\nA1UEAxMoMjE2MTk2MjU3MzMxMjgxOTIwLnpwYS1jdXN0b21lci5jb20vUm9vdDAe\nFw0yMTA0MjgwNDU3MTlaFw0zNjA0MjUwNDU3MTlaMGMxEDAOBgNVBAoTB1pzY2Fs\nZXIxFzAVBgNVBAsTDlByaXZhdGUgQWNjZXNzMTYwNAYDVQQDEy0yMTYxOTYyNTcz\nMzEyODE5MjAuenBhLWN1c3RvbWVyLmNvbS9Db25uZWN0b3IwggEiMA0GCSqGSIb3\nDQEBAQUAA4IBDwAwggEKAoIBAQDXwmwG/Yi81Z1fAP9gMUWU4JNnx4mliMXCRcKK\nllyGDApNCZUtGjJAF/idkLkTV1UMHynxqYw+X9p54tn+EZN5drslMUtGcZhHkjyc\n14AwvK9mm7PwNwCYlRnKrsNsNinKSuAUwpd/KUJ2shcVz4WMpFW5ojB8+QqB3B9W\np/b98TY83x+DuELjugKnUOl9T0mt3q18GIy0IWwjZUbqtkxXrPwQZPt5LjjLRTBz\n4uu/eg+NstEERnN1gp3jHuZax0rkgCJ7ymM1UGgtPAoIB8H982+OJns2OHLMfgue\nVAMQBlz5elKMYl8f/ma+lhBuA+3uIIngz+TnoIarMsZWvLu/AgMBAAGjIzAhMA8G\nA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgEGMA0GCSqGSIb3DQEBCwUAA4IB\nAQBjLye0gqikGgeAGAXSzp3GBWcJyXDbAFuxLRFFtzVhaov/PxnxNUXAJDCaxXBq\ntFXfuPgGsVYoeDjL+4RdHhogM8otE/nzA7EZM+1Nc/A1xRsicR7dbMTbaovLa5RQ\nXK+/OgI+v0RC+9cPDaO+NFpTu7ArBHZTgpvRAScE9d7HTqusnwQidmpzvJj33/Tz\n+TeA/TlUVGaYp/IXRC4Z0b5/4FsNx8bN3gLW0iCOqFY3HswNZRgTA9s+cZstOgFX\nwL1uV4bOpb2xr/vrjsJkPOdBGKQG9i39Xz4fTm+GezXWbGZDcI+MB6n+Vb3i0LY3\nFWuZkOMm+d6e6E1Jfad44GYZ\n-----END
+        CERTIFICATE-----\n","issuedTo":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Connector","issuedBy":"O=Zscaler,OU=Private
+        Access,CN=216196257331281920.zpa-customer.com/Root","serialNo":"162439853666698313420144242697601746826","name":"Connector","allowSigning":true,"parentCertId":"6571","parentCertName":"Root","privateKeyPresent":true,"clientCertType":"NONE","csr":"-----BEGIN
+        CERTIFICATE REQUEST-----\nMIIC2jCCAcICAQAwYzEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0\nZSBBY2Nlc3MxNjA0BgNVBAMTLTIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9t\nZXIuY29tL0Nvbm5lY3RvcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nANfCbAb9iLzVnV8A/2AxRZTgk2fHiaWIxcJFwoqWXIYMCk0JlS0aMkAX+J2QuRNX\nVQwfKfGpjD5f2nni2f4Rk3l2uyUxS0ZxmEeSPJzXgDC8r2abs/A3AJiVGcquw2w2\nKcpK4BTCl38pQnayFxXPhYykVbmiMHz5CoHcH1an9v3xNjzfH4O4QuO6AqdQ6X1P\nSa3erXwYjLQhbCNlRuq2TFes/BBk+3kuOMtFMHPi6796D42y0QRGc3WCneMe5lrH\nSuSAInvKYzVQaC08CggHwf3zb44mezY4csx+C55UAxAGXPl6UoxiXx/+Zr6WEG4D\n7e4gieDP5Oeghqsyxla8u78CAwEAAaAyMDAGCSqGSIb3DQEJDjEjMCEwDwYDVR0T\nAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwDQYJKoZIhvcNAQELBQADggEBAEsO\n1/UJSiQvmzB4a/vJlgovxgPB1NAGr7coiZb5BONgr5/wnHhfnb4yj7dIdD4CI4TV\ndGQd04BIGgqFTSDnYC+BFISHbwgQaXrd++khr8OdXtrQnXdf3xdjFf6JNxgLJ1tR\nJRJ/LUTBQiodlurZfflD8mTndA21g8WUMzItOYVUNKZO3D2eelrUJwNugXg0pXO5\nablReu8cRpgDaG3khW/esc0vnJuQRoIwQ09Mu/4sorJUHxvcMhDQRgSpzLXP3UMp\nGEO5Iq4Iii6qhtVNmNPqrvJSFHyzV2uiYZhFjR+IUj+LbPWzaHOJ0rfhPs/ZQPEE\nazgAS6KSIR/SotfamoI=\n-----END
+        CERTIFICATE REQUEST-----\n","storeInHsm":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:08 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '63'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9a284978-9cb4-9261-b6f6-cb0c26d4fc1d
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4973'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/enrollmentCert?search=name%2BEQ%2BService+Edge
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"6574","modifiedTime":"1648917421","creationTime":"1619672239","modifiedBy":"72057594037929181","cName":"216196257331281920.zpa-customer.com/Service
+        Edge","validFromInEpochSec":"1619585839","validToInEpochSec":"2092712239","certificate":"-----BEGIN
+        CERTIFICATE-----\nMIIDcjCCAlqgAwIBAgIRALaaIby3rBVqnGH9inm6iW8wDQYJKoZIhvcNAQELBQAw\nXjEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0ZSBBY2Nlc3MxMTAv\nBgNVBAMTKDIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9tZXIuY29tL1Jvb3Qw\nHhcNMjEwNDI4MDQ1NzE5WhcNMzYwNDI1MDQ1NzE5WjBmMRAwDgYDVQQKEwdac2Nh\nbGVyMRcwFQYDVQQLEw5Qcml2YXRlIEFjY2VzczE5MDcGA1UEAxMwMjE2MTk2MjU3\nMzMxMjgxOTIwLnpwYS1jdXN0b21lci5jb20vU2VydmljZSBFZGdlMIIBIjANBgkq\nhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjuVdNXHFwN21HKYllRtMzkae7237Gauh\ncsi9r/RTXbbCZxwZn74QbRB+l8DP9/6Rpiw6U5/7qJNCij733mLAaKRdQCMX2El6\nvG1HP85cZMTA70vBTZE2iVu0LTY9mYKRpdT0TZGW5cyIcR+we40wxm9ftb6P1K1L\ni1OBkHDaHx+GDhCAE4T+8thf6Zp024WuddkiThcbhABZJ9pLMdBSlvQsGwakjupY\nfs0KbFROdfRTUCHaY8nGgqzGLW1/7VoXZaqPp3DSQwgeeZwn2s82zwnFKfNtUWQP\nPv9oQggDqj4GUhDDa/keBkawALerJPrzHP/2Wp9dcAzWxwzNgqf9/wIDAQABoyMw\nITAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0BAQsF\nAAOCAQEAtnEgyWEblpk4gCoWVT8uX5YRDaIPNPRi1gsFlxgVhgghmoWvN43oCMap\nWgzPft2UxZVGNQbc5CvahL54KaYA6lnKju8Bcfh/DkD5vICfoFSiO/XhCuCgf5BY\ni1uA1udcQiXqUOmorltPh/jAvpRoWdM4fHL7RyUpg4jI5UE+sYF5xp3xVeURBYIA\n4fON8SNP73R53Nc5MGn0Os3IRSsOdZ3vlYbYeRFpChh1wAcPIhfo2qJhEO+t221p\nHO3YY2Zm6hmyQ3eVCrZJOL/SYtGMEnVikUThYNsBTxcM2lqJfg/sUm/54R+yBNZw\niyT4eSRJaUU7qQ/shElO/7wy81A5Hg==\n-----END
+        CERTIFICATE-----\n","issuedTo":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Service
+        Edge","issuedBy":"O=Zscaler,OU=Private Access,CN=216196257331281920.zpa-customer.com/Root","serialNo":"242719793220324318684705481635571337583","name":"Service
+        Edge","allowSigning":true,"parentCertId":"6571","parentCertName":"Root","privateKeyPresent":true,"clientCertType":"NONE","csr":"-----BEGIN
+        CERTIFICATE REQUEST-----\nMIIC3TCCAcUCAQAwZjEQMA4GA1UEChMHWnNjYWxlcjEXMBUGA1UECxMOUHJpdmF0\nZSBBY2Nlc3MxOTA3BgNVBAMTMDIxNjE5NjI1NzMzMTI4MTkyMC56cGEtY3VzdG9t\nZXIuY29tL1NlcnZpY2UgRWRnZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAI7lXTVxxcDdtRymJZUbTM5Gnu9t+xmroXLIva/0U122wmccGZ++EG0QfpfA\nz/f+kaYsOlOf+6iTQoo+995iwGikXUAjF9hJerxtRz/OXGTEwO9LwU2RNolbtC02\nPZmCkaXU9E2RluXMiHEfsHuNMMZvX7W+j9StS4tTgZBw2h8fhg4QgBOE/vLYX+ma\ndNuFrnXZIk4XG4QAWSfaSzHQUpb0LBsGpI7qWH7NCmxUTnX0U1Ah2mPJxoKsxi1t\nf+1aF2Wqj6dw0kMIHnmcJ9rPNs8JxSnzbVFkDz7/aEIIA6o+BlIQw2v5HgZGsAC3\nqyT68xz/9lqfXXAM1scMzYKn/f8CAwEAAaAyMDAGCSqGSIb3DQEJDjEjMCEwDwYD\nVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwDQYJKoZIhvcNAQELBQADggEB\nAGuvhRmZPtDt/ryEE3YTcXcysfpkcUUIL6rhGufa7/Bewy/UDmDUK7MWX22fSPGt\nsInZo74ZvbiW/SGaivr5HAs5HZlslvv3STb5KgVBsmu/FS3OCIAMgBIFFQ6jONzu\nYJswGeQjz8988W8L8hBS3V+DBn1Sdc2b7O+/F4zYTEYLZZyOx7ko6MDAus3RRehk\njnIrNa2Jl3p1feBQFxMUTN7eLNaCIl9apCNtZ3Es7wEzxo7b/rHj42+G2yIDmi1N\nO8heJJWhxnD1aJSDYtG7cg2auz4PzHohq5nSJgaFi4dQBFUNDBJC4mGKKZhhDguG\nr3KcehMSfpQPbVqWaeY5jCw=\n-----END
+        CERTIFICATE REQUEST-----\n","storeInHsm":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:08 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '57'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 375c8761-ea62-98af-b9ce-97c580f22842
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4972'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

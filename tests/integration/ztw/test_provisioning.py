@@ -30,6 +30,7 @@ class TestProvisioningUrl:
     Integration Tests for the ZIA Provisioning URLs
     """
 
+    @pytest.mark.vcr()
     def test_provisioning(self, fs):
         client = MockZTWClient(fs)
         errors = []
@@ -38,25 +39,28 @@ class TestProvisioningUrl:
         try:
             # Test list_provisioning_url function
             try:
-                urls = client.provisioning.list_provisioning_url()
+                urls, _, error = client.ztw.provisioning_url.list_provisioning_url()
+                assert error is None, f"Error listing provisioning urls: {error}"
                 assert isinstance(urls, list), "Expected a list of provisioning urls"
                 assert len(urls) > 0, "Expected at least one provisioning url"
-                provision_id = urls[0].get("id")
+                provision_id = urls[0].id if hasattr(urls[0], 'id') else urls[0].get("id")
                 assert provision_id is not None, "Expected the first provisioning url to have an ID"
             except Exception as exc:
                 errors.append(f"Listing provisioning urls failed: {exc}")
 
-            # Test get_location function using the provision_id from the previous step
+            # Test get_provisioning_url function using the provision_id from the previous step
             if provision_id:
                 try:
-                    provisioning_url_details = client.provisioning.get_provisioning_url(provision_id)
+                    provisioning_url_details, _, error = client.ztw.provisioning_url.get_provisioning_url(provision_id)
+                    assert error is None, f"Error getting provisioning url: {error}"
                     assert provisioning_url_details is not None, "Expected valid provisioning url details"
-                    assert provisioning_url_details.get("id") == provision_id, "Mismatch in provisioning url ID"
+                    detail_id = provisioning_url_details.id if hasattr(provisioning_url_details, 'id') else provisioning_url_details.get("id")
+                    assert detail_id == provision_id, "Mismatch in provisioning url ID"
                 except Exception as exc:
                     errors.append(f"Fetching provisioning url by ID failed: {exc}")
 
         except Exception as exc:
-            errors.append(f"Test Locations suite failed: {exc}")
+            errors.append(f"Test Provisioning suite failed: {exc}")
 
         # Assert that no errors occurred during the test
-        assert len(errors) == 0, f"Errors occurred during locations test: {errors}"
+        assert len(errors) == 0, f"Errors occurred during provisioning test: {errors}"

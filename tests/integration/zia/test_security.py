@@ -27,8 +27,11 @@ def fs():
 class TestSecurityWhitelistBlacklist:
     """
     Integration Tests for the Security Whitelist and Blacklist Workflow.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_security_policy_whitelist_blacklist_workflow(self, fs):
         client = MockZIAClient(fs)
         errors = []

@@ -30,6 +30,7 @@ class TestCloudFirewallNetworkAppGroup:
     Integration Tests for the Cloud Firewall Network Application Group.
     """
 
+    @pytest.mark.vcr()
     def test_cloud_firewall_network_app_group(self, fs):
         client = MockZIAClient(fs)
         errors = []

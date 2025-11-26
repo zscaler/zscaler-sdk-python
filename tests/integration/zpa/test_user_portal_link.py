@@ -30,6 +30,7 @@ class TestUserPortalLink:
     Integration Tests for the User Portal Link
     """
 
+    @pytest.mark.vcr()
     def test_portal_link(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -37,8 +38,9 @@ class TestUserPortalLink:
         portal_id = None
         portal_link_id = None
 
-        portal_name = "tests-" + generate_random_string()
-        portal_description = "tests-" + generate_random_string()
+        portal_name = "tests-uportlnk-" + generate_random_string()
+        portal_description = "tests-uportlnk-" + generate_random_string()
+        ext_label = "tests-uplnk-" + generate_random_string()  # Unique ext_label to avoid duplicates
 
         try:
             # Create the User Portal
@@ -50,7 +52,7 @@ class TestUserPortalLink:
                 user_notification_enabled=True,
                 managed_by_zs=True,
                 domain='securitygeek.io',
-                ext_label='portal01',
+                ext_label=ext_label,
                 ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                 ext_domain="securitygeek.io"
             )

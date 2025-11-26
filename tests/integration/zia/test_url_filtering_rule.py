@@ -30,6 +30,7 @@ class TestURLFilteringRule:
     Integration Tests for the ZIA URL Filtering Rule
     """
 
+    @pytest.mark.vcr()
     def test_url_filtering_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []

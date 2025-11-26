@@ -29,6 +29,7 @@ class TestInventory:
     Integration Tests for the inventory
     """
 
+    @pytest.mark.vcr()
     def test_list_softwares(self, fs, zdx_client):
         client = zdx_client
         errors = []
@@ -48,6 +49,7 @@ class TestInventory:
 
         assert not errors, "Errors occurred:\n{}".format("\n".join(errors))
 
+    @pytest.mark.vcr()
     def test_list_software_keys(self, fs, zdx_client):
         client = zdx_client
         errors = []

@@ -30,6 +30,7 @@ class TestFileTypeControlRules:
     Integration Tests for the ZIA Cloud File Type Control Rules
     """
 
+    @pytest.mark.vcr()
     def test_file_type_control_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []

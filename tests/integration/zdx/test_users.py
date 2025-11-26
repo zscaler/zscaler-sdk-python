@@ -30,6 +30,7 @@ class TestUsers:
     Integration Tests for the users
     """
 
+    @pytest.mark.vcr()
     def test_list_users(self, fs, zdx_client):
         client = zdx_client
         errors = []

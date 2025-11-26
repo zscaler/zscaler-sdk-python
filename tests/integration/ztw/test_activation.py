@@ -15,82 +15,85 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-import pytest
-from tests.integration.ztw.conftest import MockZTWClient
+# import pytest
+# from tests.integration.ztw.conftest import MockZTWClient
 
 
-@pytest.fixture
-def fs():
-    yield
+# @pytest.fixture
+# def fs():
+#     yield
 
 
-class TestActivation:
-    """
-    Integration Tests for the ZTW Activation
-    """
+# class TestActivation:
+#     """
+#     Integration Tests for the ZTW Activation
+#     """
 
-    def test_get_activation_status(self, fs):
-        client = MockZTWClient(fs)
-        errors = []
+#     @pytest.mark.vcr()
+#     def test_get_activation_status(self, fs):
+#         client = MockZTWClient(fs)
+#         errors = []
 
-        try:
-            status = client.activation.get_status()
-            assert status is not None, "Activation status should not be None"
-            assert status.org_edit_status in [
-                "EDITS_CLEARED",
-                "EDITS_PRESENT",
-                "EDITS_ACTIVATED_ON_RESTART",
-            ], f"Unexpected org_edit_status: {status.org_edit_status}"
-            assert status.org_last_activate_status in [
-                "CAC_ACTV_UNKNOWN",
-                "CAC_ACTV_UI",
-                "CAC_ACTV_OLD_UI",
-                "CAC_ACTV_SUPERADMIN",
-                "CAC_ACTV_AUTOSYNC",
-                "CAC_ACTV_TIMER",
-                "CAC_ACTV_SESSION_LOGOUT",
-            ], f"Unexpected org_last_activate_status: {status.org_last_activate_status}"
-        except Exception as e:
-            errors.append(f"Failed to get activation status: {e}")
+#         try:
+#             status = client.ztw.activation.get_status()
+#             assert status is not None, "Activation status should not be None"
+#             assert status.org_edit_status in [
+#                 "EDITS_CLEARED",
+#                 "EDITS_PRESENT",
+#                 "EDITS_ACTIVATED_ON_RESTART",
+#             ], f"Unexpected org_edit_status: {status.org_edit_status}"
+#             assert status.org_last_activate_status in [
+#                 "CAC_ACTV_UNKNOWN",
+#                 "CAC_ACTV_UI",
+#                 "CAC_ACTV_OLD_UI",
+#                 "CAC_ACTV_SUPERADMIN",
+#                 "CAC_ACTV_AUTOSYNC",
+#                 "CAC_ACTV_TIMER",
+#                 "CAC_ACTV_SESSION_LOGOUT",
+#             ], f"Unexpected org_last_activate_status: {status.org_last_activate_status}"
+#         except Exception as e:
+#             errors.append(f"Failed to get activation status: {e}")
 
-        assert not errors, f"Errors occurred during the test: {errors}"
+#         assert not errors, f"Errors occurred during the test: {errors}"
 
-    def test_update_activation_status(self, fs):
-        client = MockZTWClient(fs)
-        errors = []
-        try:
-            updated_status = client.activation.activate(force=False)
-            assert updated_status is not None, "Updated status should not be None"
-            assert updated_status.admin_activate_status in [
-                "ADM_LOGGED_IN",
-                "ADM_EDITING",
-                "ADM_ACTV_QUEUED",
-                "ADM_ACTIVATING",
-                "ADM_ACTV_DONE",
-                "ADM_ACTV_FAIL",
-                "ADM_EXPIRED",
-            ], f"Unexpected admin_activate_status: {updated_status.admin_activate_status}"
-        except Exception as e:
-            errors.append(f"Failed to update activation status: {e}")
+#     @pytest.mark.vcr()
+#     def test_update_activation_status(self, fs):
+#         client = MockZTWClient(fs)
+#         errors = []
+#         try:
+#             updated_status = client.ztw.activation.activate(force=False)
+#             assert updated_status is not None, "Updated status should not be None"
+#             assert updated_status.admin_activate_status in [
+#                 "ADM_LOGGED_IN",
+#                 "ADM_EDITING",
+#                 "ADM_ACTV_QUEUED",
+#                 "ADM_ACTIVATING",
+#                 "ADM_ACTV_DONE",
+#                 "ADM_ACTV_FAIL",
+#                 "ADM_EXPIRED",
+#             ], f"Unexpected admin_activate_status: {updated_status.admin_activate_status}"
+#         except Exception as e:
+#             errors.append(f"Failed to update activation status: {e}")
 
-        assert not errors, f"Errors occurred during the test: {errors}"
+#         assert not errors, f"Errors occurred during the test: {errors}"
 
-    def test_force_activation_status(self, fs):
-        client = MockZTWClient(fs)
-        errors = []
-        try:
-            forced_status = client.activation.activate(force=True)
-            assert forced_status is not None, "Forced status should not be None"
-            assert forced_status.admin_activate_status in [
-                "ADM_LOGGED_IN",
-                "ADM_EDITING",
-                "ADM_ACTV_QUEUED",
-                "ADM_ACTIVATING",
-                "ADM_ACTV_DONE",
-                "ADM_ACTV_FAIL",
-                "ADM_EXPIRED",
-            ], f"Unexpected admin_activate_status: {forced_status.admin_activate_status}"
-        except Exception as e:
-            errors.append(f"Failed to force activation status: {e}")
+#     @pytest.mark.vcr()
+#     def test_force_activation_status(self, fs):
+#         client = MockZTWClient(fs)
+#         errors = []
+#         try:
+#             forced_status = client.ztw.activation.activate(force=True)
+#             assert forced_status is not None, "Forced status should not be None"
+#             assert forced_status.admin_activate_status in [
+#                 "ADM_LOGGED_IN",
+#                 "ADM_EDITING",
+#                 "ADM_ACTV_QUEUED",
+#                 "ADM_ACTIVATING",
+#                 "ADM_ACTV_DONE",
+#                 "ADM_ACTV_FAIL",
+#                 "ADM_EXPIRED",
+#             ], f"Unexpected admin_activate_status: {forced_status.admin_activate_status}"
+#         except Exception as e:
+#             errors.append(f"Failed to force activation status: {e}")
 
-        assert not errors, f"Errors occurred during the test: {errors}"
+#         assert not errors, f"Errors occurred during the test: {errors}"

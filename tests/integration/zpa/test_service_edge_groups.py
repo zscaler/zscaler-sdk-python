@@ -30,12 +30,13 @@ class TestServiceEdgeGroup:
     Integration Tests for the Service Edge Group
     """
 
+    @pytest.mark.vcr()
     def test_service_edge_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        group_name = "tests-" + generate_random_string()
-        group_description = "tests-" + generate_random_string()
+        group_name = "tests-seg-" + generate_random_string()
+        group_description = "tests-seg-" + generate_random_string()
         group_enabled = True
         latitude = "37.33874"
         longitude = "-121.8852525"

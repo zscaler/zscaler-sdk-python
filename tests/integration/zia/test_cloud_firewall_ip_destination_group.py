@@ -30,6 +30,7 @@ class TestCloudFirewallIPDestinationGroup:
     Integration Tests for the Cloud Firewall IP Destination Group.
     """
 
+    @pytest.mark.vcr()
     def test_cloud_firewall_ip_destination_group(self, fs):
         client = MockZIAClient(fs)
         errors = []

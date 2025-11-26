@@ -30,10 +30,11 @@ class TestCBIBanners:
     Integration Tests for the Cloud Browser Isolation Banner
     """
 
+    @pytest.mark.vcr()
     def test_cbi_banner(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
-        banner_name = "tests-" + generate_random_string()
+        banner_name = "tests-isolban-" + generate_random_string()
         banner_id = None
 
         try:

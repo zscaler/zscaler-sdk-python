@@ -1,0 +1,830 @@
+interactions:
+- request:
+    body: '{"name": "tests-praap-vcr0001", "description": "tests-praap-vcr0002", "enabled":
+      true, "latitude": "37.33874", "longitude": "-121.8852525", "location": "San
+      Jose, CA, USA", "upgradeDay": "SUNDAY", "upgradeTimeInSecs": "66600", "overrideVersionProfile":
+      true, "versionProfileName": "Default", "versionProfileId": "0", "dnsQueryType":
+      "IPV4_IPV6", "praEnabled": true, "tcpQuickAckApp": true, "tcpQuickAckAssistant":
+      true, "tcpQuickAckReadAssistant": true}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '453'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/appConnectorGroup
+  response:
+    body:
+      string: '{"id":"216196257331394571","modifiedTime":"1764191897","creationTime":"1764191897","modifiedBy":"216196257331372705","name":"tests-praap-vcr0001","enabled":true,"description":"tests-praap-vcr0002","versionProfileId":"0","overrideVersionProfile":true,"versionProfileName":"Default","upgradeTimeInSecs":"66600","upgradeDay":"SUNDAY","location":"San
+        Jose, CA, USA","latitude":"37.33874","longitude":"-121.8852525","dnsQueryType":"IPV4_IPV6","cityCountry":"San
+        Jose, US","countryCode":"US","tcpQuickAckApp":true,"tcpQuickAckAssistant":true,"tcpQuickAckReadAssistant":true,"praEnabled":true,"useInDrMode":false,"connectorGroupType":"APP","wafDisabled":false,"readOnly":false,"zscalerManaged":false,"lssAppConnectorGroup":false}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:17 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '175'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 545aa166-f6aa-936a-966a-130dfda5f00e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4941'
+      x-ratelimit-reset:
+      - '44'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"name": "tests-praap-vcr0003", "enabled": true}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '48'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup
+  response:
+    body:
+      string: '{"id":"216196257331394572","modifiedTime":"1764191899","creationTime":"1764191899","modifiedBy":"216196257331372705","name":"tests-praap-vcr0003","enabled":true,"configSpace":"DEFAULT","tcpKeepAliveEnabled":"0"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:19 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '75'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 41ad394d-2f22-9676-982b-6bebb8d0baa6
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4940'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"name": "tests-praap-vcr0004", "description": "tests-praap-vcr0005", "dynamicDiscovery":
+      true, "appConnectorGroups": [{"id": "216196257331394571"}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '149'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serverGroup
+  response:
+    body:
+      string: '{"id":"216196257331394573","name":"tests-praap-vcr0004","description":"tests-praap-vcr0005","ipAnchored":false,"configSpace":"DEFAULT","extranetEnabled":false,"dynamicDiscovery":true,"appConnectorGroups":[{"id":"216196257331394571","name":"tests-praap-vcr0001","useInDrMode":false,"connectorGroupType":"APP","wafDisabled":false,"lssAppConnectorGroup":false}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:21 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '95'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - ba6b8e66-bf8b-9fb2-956a-d41c4b28de9b
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4939'
+      x-ratelimit-reset:
+      - '39'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"name": "tests-praap-vcr0006.acme.com", "description": "tests-praap-vcr0006.acme.com",
+      "enabled": true, "domainNames": ["tests-praap-vcr0006.acme.com"], "segmentGroupId":
+      "216196257331394572", "serverGroups": [{"id": "216196257331394573"}], "tcpPortRanges":
+      ["9000", "9000"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '276'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/application
+  response:
+    body:
+      string: '{"id":"216196257331394574","domainNames":["tests-praap-vcr0006.acme.com"],"name":"tests-praap-vcr0006.acme.com","description":"tests-praap-vcr0006.acme.com","serverGroups":[{"id":"216196257331394573","enabled":false,"configSpace":"DEFAULT","extranetEnabled":false,"dynamicDiscovery":false}],"enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["9000","9000"],"doubleEncrypt":false,"configSpace":"DEFAULT","bypassType":"NEVER","healthCheckType":"DEFAULT","icmpAccessType":"NONE","isCnameEnabled":true,"ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","matchStyle":"EXCLUSIVE","isIncompleteDRConfig":false,"adpEnabled":false,"autoAppProtectEnabled":false,"apiProtectionEnabled":false,"fqdnDnsCheck":false,"weightedLoadBalancing":false,"extranetEnabled":false,"segmentGroupId":"216196257331394572"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:23 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '305'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - bbb5933a-8bcb-9e94-9633-027653220698
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4938'
+      x-ratelimit-reset:
+      - '37'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"emailIds": ["carol.kirk@securitygeek.io"], "status": "ACTIVE", "workingHours":
+      {"startTimeCron": "0 0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT", "endTimeCron": "0
+      0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN", "startTime": "09:00", "endTime": "17:00",
+      "days": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"], "timeZone": "America/Vancouver"},
+      "startTime": 1764191896, "endTime": 1795641496, "applications": [{"id": "216196257331394574"}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '427'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/approval
+  response:
+    body:
+      string: '{"id":"18157","modifiedTime":"1764191906","creationTime":"1764191906","modifiedBy":"216196257331372705","startTime":"1764191896","endTime":"1795641496","workingHours":{"startTimeCron":"0
+        0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT","endTimeCron":"0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN","startTime":"09:00","endTime":"17:00","days":["SUN","MON","TUE","WED","THU","FRI","SAT"],"timeZone":"America/Vancouver"},"status":"ACTIVE","emailIds":["carol.kirk@securitygeek.io"],"applications":[{"id":"216196257331394574","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","cnameConfig":"NOFLATTEN","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:26 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '88'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 2b7b1f51-b8a3-9f78-a39c-c4242f7539af
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4937'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/approval
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"1","list":[{"id":"18157","modifiedTime":"1764191906","creationTime":"1764191906","modifiedBy":"216196257331372705","startTime":"1764191896","endTime":"1795641496","workingHours":{"startTimeCron":"0
+        0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT","endTimeCron":"0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN","startTime":"09:00","endTime":"17:00","days":["SUN","MON","TUE","WED","THU","FRI","SAT"],"timeZone":"America/Vancouver"},"status":"ACTIVE","emailIds":["carol.kirk@securitygeek.io"],"applications":[{"id":"216196257331394574","modifiedTime":"1764191903","creationTime":"1764191903","modifiedBy":"216196257331372705","name":"tests-praap-vcr0006.acme.com","domainName":"tests-praap-vcr0006.acme.com","domainNames":["tests-praap-vcr0006.acme.com"],"description":"tests-praap-vcr0006.acme.com","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["9000","9000"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","cnameConfig":"NOFLATTEN","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"9000","to":"9000"}]}]}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:26 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '64'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e7faf506-95ca-9152-b2c7-9f9488ca4cb3
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4936'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/approval/18157
+  response:
+    body:
+      string: '{"id":"18157","modifiedTime":"1764191906","creationTime":"1764191906","modifiedBy":"216196257331372705","startTime":"1764191896","endTime":"1795641496","workingHours":{"startTimeCron":"0
+        0 16 ? * SUN,MON,TUE,WED,THU,FRI,SAT","endTimeCron":"0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN","startTime":"09:00","endTime":"17:00","days":["SUN","MON","TUE","WED","THU","FRI","SAT"],"timeZone":"America/Vancouver"},"status":"ACTIVE","emailIds":["carol.kirk@securitygeek.io"],"applications":[{"id":"216196257331394574","modifiedTime":"1764191903","creationTime":"1764191903","modifiedBy":"216196257331372705","name":"tests-praap-vcr0006.acme.com","domainName":"tests-praap-vcr0006.acme.com","domainNames":["tests-praap-vcr0006.acme.com"],"description":"tests-praap-vcr0006.acme.com","enabled":true,"passiveHealthEnabled":true,"tcpPortRanges":["9000","9000"],"doubleEncrypt":false,"healthCheckType":"DEFAULT","icmpAccessType":"NONE","bypassType":"NEVER","configSpace":"DEFAULT","cnameConfig":"NOFLATTEN","ipAnchored":false,"bypassOnReauth":false,"inspectTrafficWithZia":false,"tcpKeepAlive":"0","useInDrMode":false,"matchStyle":"EXCLUSIVE","selectConnectorCloseToApp":false,"weightedLoadBalancing":false,"extranetEnabled":false,"adpEnabled":false,"apiProtectionEnabled":false,"autoAppProtectEnabled":false,"fqdnDnsCheck":false,"policyStyle":"NONE","tcpPortRange":[{"from":"9000","to":"9000"}]}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:26 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '61'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - de84aa88-3ac7-931c-aa07-51c4b9d6fb6f
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4935'
+      x-ratelimit-reset:
+      - '34'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/approval/18157
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:18:28 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '72'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 66d2ab38-f21c-9fcc-afbf-74d829848f3b
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4934'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/application/216196257331394574?forceDelete=true
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:18:30 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '73'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 75448c9a-463b-9924-bba2-9764a0cfe267
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4933'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/serverGroup/216196257331394573
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:18:33 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '67'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - d18b57be-fa64-99ee-8edb-a4e16e462860
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4932'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/segmentGroup/216196257331394572
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:18:35 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '66'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 69323a70-f7ac-9a02-9251-a3f558a16861
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4931'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/appConnectorGroup/216196257331394571
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:18:37 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '65'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1bbf7a7e-ecf1-93d5-8c07-1ef03df1ed87
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4930'
+      x-ratelimit-reset:
+      - '23'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

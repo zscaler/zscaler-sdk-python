@@ -29,6 +29,7 @@ class TestSamlAttributes:
     Integration Tests for the SAML attributes
     """
 
+    @pytest.mark.vcr()
     def test_saml_attributes_operations(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

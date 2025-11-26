@@ -29,6 +29,7 @@ class TestDLPIcapServer:
     Integration Tests for the DLP ICAP Server
     """
 
+    @pytest.mark.vcr()
     def test_dlp_icap_server(self, fs):
         client = MockZIAClient(fs)
         errors = []

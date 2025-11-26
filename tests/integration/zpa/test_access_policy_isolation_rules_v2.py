@@ -30,6 +30,7 @@ class TestAccessPolicyIsolationRuleV2:
     Integration Tests for the Isolation Policy Rules V2
     """
 
+    @pytest.mark.vcr()
     def test_access_policy_isolation_rules_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -79,7 +80,7 @@ class TestAccessPolicyIsolationRuleV2:
             except Exception as exc:
                 errors.append(f"Listing Isolation profiles failed: {exc}")
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-apir2-" + generate_random_string()
                 rule_description = "Integration test Client Isolation Rule V2"
 
                 created_rule, _, err = client.zpa.policies.add_isolation_rule_v2(

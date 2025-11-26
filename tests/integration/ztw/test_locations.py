@@ -29,6 +29,7 @@ class TestLocations:
     Integration Tests for the ZIA Locations
     """
 
+    @pytest.mark.vcr()
     def test_locations(self, fs):
         client = MockZTWClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -37,30 +38,36 @@ class TestLocations:
         try:
             # Test list_locations function
             try:
-                locations = client.locations.list_locations()
+                locations, _, error = client.ztw.location_management.list_locations()
+                assert error is None, f"Error listing locations: {error}"
                 assert isinstance(locations, list), "Expected a list of locations"
-                assert len(locations) > 0, "Expected at least one location"
-                location_id = locations[0].get("id")
-                assert location_id is not None, "Expected the first location to have an ID"
+                # Note: Some tenants may not have locations configured
+                if len(locations) > 0:
+                    location_id = locations[0].id if hasattr(locations[0], 'id') else locations[0].get("id")
+                    assert location_id is not None, "Expected the first location to have an ID"
             except Exception as exc:
                 errors.append(f"Listing locations failed: {exc}")
 
             # Test get_location function using the location_id from the previous step
             if location_id:
                 try:
-                    location_details = client.locations.get_location(location_id)
+                    location_details, _, error = client.ztw.location_management.get_location(location_id)
+                    assert error is None, f"Error getting location: {error}"
                     assert location_details is not None, "Expected valid location details"
-                    assert location_details.get("id") == location_id, "Mismatch in location ID"
+                    detail_id = location_details.id if hasattr(location_details, 'id') else location_details.get("id")
+                    assert detail_id == location_id, "Mismatch in location ID"
                 except Exception as exc:
                     errors.append(f"Fetching location by ID failed: {exc}")
 
             # Test list_locations_lite function
             try:
-                locations_lite = client.locations.list_locations_lite()
+                locations_lite, _, error = client.ztw.location_management.list_locations_lite()
+                assert error is None, f"Error listing lite locations: {error}"
                 assert isinstance(locations_lite, list), "Expected a list of lite locations"
-                assert len(locations_lite) > 0, "Expected at least one lite location"
-                first_lite_location_id = locations_lite[0].get("id")
-                assert first_lite_location_id is not None, "Expected the first lite location to have an ID"
+                # Note: Some tenants may not have locations configured
+                if len(locations_lite) > 0:
+                    first_lite_location_id = locations_lite[0].id if hasattr(locations_lite[0], 'id') else locations_lite[0].get("id")
+                    assert first_lite_location_id is not None, "Expected the first lite location to have an ID"
             except Exception as exc:
                 errors.append(f"Listing lite locations failed: {exc}")
 

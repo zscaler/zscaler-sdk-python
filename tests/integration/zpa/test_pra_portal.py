@@ -30,6 +30,7 @@ class TestPRAPortal:
     Integration Tests for the PRA Portal.
     """
 
+    @pytest.mark.vcr()
     def test_pra_portal(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -38,8 +39,8 @@ class TestPRAPortal:
 
         SDK_PREFIX = "zscaler_python_sdk"
 
-        portal_name = "tests-" + generate_random_string()
-        portal_description = "tests-" + generate_random_string()
+        portal_name = "tests-praport-" + generate_random_string()
+        portal_description = "tests-praport-" + generate_random_string()
 
         # List all certificates
         try:
@@ -59,7 +60,7 @@ class TestPRAPortal:
                 name=portal_name,
                 description=portal_description,
                 enabled=True,
-                domain="tests-" + generate_random_string() + "acme.com",
+                domain="tests-praport-" + generate_random_string() + "acme.com",
                 certificate_id=certificate_id,
                 user_notification_enabled=True,
                 user_notification=f"{SDK_PREFIX} Test PRA Portal",
@@ -107,7 +108,7 @@ class TestPRAPortal:
                     description=updated_description,
                     enabled=True,
                     certificate_id=certificate_id,
-                    domain="tests-" + generate_random_string() + "acme.com",
+                    domain="tests-praport-" + generate_random_string() + "acme.com",
                     user_notification_enabled=True,
                     user_notification=f"{SDK_PREFIX} Test PRA Portal",
                 )

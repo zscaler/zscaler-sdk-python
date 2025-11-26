@@ -31,6 +31,7 @@ class TestPRAApproval:
     Integration Tests for the PRA Approval.
     """
 
+    @pytest.mark.vcr()
     def test_pra_approval(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -47,8 +48,8 @@ class TestPRAApproval:
         try:
             # Create an App Connector Group
             try:
-                app_connector_group_name = "tests-" + generate_random_string()
-                app_connector_group_description = "tests-" + generate_random_string()
+                app_connector_group_name = "tests-praap-" + generate_random_string()
+                app_connector_group_description = "tests-praap-" + generate_random_string()
                 created_app_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
                     description=app_connector_group_description,
@@ -78,7 +79,7 @@ class TestPRAApproval:
             # Create a Segment Group
             try:
                 time.sleep(2)
-                segment_group_name = "tests-" + generate_random_string()
+                segment_group_name = "tests-praap-" + generate_random_string()
                 created_segment_group, _, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 segment_group_id = created_segment_group.id
@@ -88,8 +89,8 @@ class TestPRAApproval:
             # Create a Server Group
             try:
                 time.sleep(2)
-                server_group_name = "tests-" + generate_random_string()
-                server_group_description = "tests-" + generate_random_string()
+                server_group_name = "tests-praap-" + generate_random_string()
+                server_group_description = "tests-praap-" + generate_random_string()
                 created_server_group, _, err = client.zpa.server_groups.add_group(
                     name=server_group_name,
                     description=server_group_description,
@@ -103,14 +104,15 @@ class TestPRAApproval:
 
             try:
                 time.sleep(2)
-                app_segment_name = "example_test100.acme.com"
-                app_segment_description = "example_test100.acme.com"
+                domain_name = "tests-praap-" + generate_random_string() + ".acme.com"  # Unique domain
+                app_segment_name = domain_name
+                app_segment_description = domain_name
 
                 app_segment, _, err = client.zpa.application_segment.add_segment(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["example_test100.acme.com"],
+                    domain_names=[domain_name],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["9000", "9000"],

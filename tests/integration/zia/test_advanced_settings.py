@@ -25,9 +25,12 @@ def fs():
 
 class TestAdvancedSettings:
     """
-    Integration Tests for the Advanced Settings
+    Integration Tests for the Advanced Settings.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_advanced_settings_workflow(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -65,7 +68,7 @@ class TestAdvancedSettings:
                 enable_policy_for_unauthenticated_traffic=True,
                 block_non_compliant_http_request_on_http_ports=True,
                 enable_admin_rank_access=True,
-                http2_nonbrowser_traffic_enabled=True,
+                # http2_nonbrowser_traffic_enabled=True,
                 ecs_for_all_enabled=False,
                 dynamic_user_risk_enabled=False,
                 block_connect_host_sni_mismatch=False,

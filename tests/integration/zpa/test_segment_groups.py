@@ -27,15 +27,18 @@ def fs():
 
 class TestSegmentGroup:
     """
-    Integration Tests for the Segment Group
+    Integration Tests for the Segment Group.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_segment_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        segment_group_name = "tests-" + generate_random_string()
-        segment_group_description = "tests-" + generate_random_string()
+        segment_group_name = "tests-sg-" + generate_random_string()
+        segment_group_description = "tests-sg-" + generate_random_string()
         group_id = None  # Initialize group_id
 
         try:

@@ -30,6 +30,7 @@ class TestSandboxRules:
     Integration Tests for the ZIA Sandbox Rules
     """
 
+    @pytest.mark.vcr()
     def test_sandbox_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []

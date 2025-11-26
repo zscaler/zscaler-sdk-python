@@ -1,0 +1,493 @@
+interactions:
+- request:
+    body: '{"name": "tests-approtcc-vcr0001", "description": "tests-approtcc-vcr0001",
+      "action": "PASS", "defaultAction": "PASS", "paranoiaLevel": "1", "severity":
+      "CRITICAL", "type": "RESPONSE", "rules": [{"type": "RESPONSE_HEADERS", "conditions":
+      [{"lhs": "SIZE", "op": "GE", "rhs": "1000"}], "names": ["test"]}, {"type": "RESPONSE_BODY",
+      "conditions": [{"lhs": "SIZE", "op": "GE", "rhs": "1000"}]}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '391'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom
+  response:
+    body:
+      string: '{"id":"216196257331394542","modifiedTime":"1764191868","creationTime":"1764191868","modifiedBy":"216196257331372705","name":"tests-approtcc-vcr0001","description":"tests-approtcc-vcr0001","severity":"CRITICAL","controlNumber":"4500001","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","action":"PASS","protocolType":"HTTP","type":"RESPONSE","controlRuleJson":"[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]","rules":[{"type":"RESPONSE_HEADERS","names":["test"],"conditions":[{"lhs":"SIZE","op":"GE","rhs":"1000"}]},{"type":"RESPONSE_BODY","conditions":[{"lhs":"SIZE","op":"GE","rhs":"1000"}]}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:48 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '67'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1cbef287-8645-985e-a6f2-432ae95c733c
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4848'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/216196257331394542
+  response:
+    body:
+      string: '{"id":"216196257331394542","modifiedTime":"1764191868","creationTime":"1764191868","modifiedBy":"216196257331372705","name":"tests-approtcc-vcr0001","description":"tests-approtcc-vcr0001","severity":"CRITICAL","controlNumber":"4500001","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","protocolType":"HTTP","type":"RESPONSE","controlRuleJson":"[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:48 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '39'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7f3895ae-d258-9c2b-a94a-711addf7e130
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4847'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/216196257331394542
+  response:
+    body:
+      string: '{"id":"216196257331394542","modifiedTime":"1764191868","creationTime":"1764191868","modifiedBy":"216196257331372705","name":"tests-approtcc-vcr0001","description":"tests-approtcc-vcr0001","severity":"CRITICAL","controlNumber":"4500001","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","protocolType":"HTTP","type":"RESPONSE","controlRuleJson":"[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:48 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '40'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - be1b351e-160b-938b-8c04-f26af2a3062e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4846'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"action": null, "actionValue": null, "associatedInspectionProfileNames":
+      [], "controlException": null, "controlNumber": "4500001", "controlRuleJson":
+      "[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]",
+      "controlType": null, "creationTime": "1764191868", "defaultAction": "PASS",
+      "defaultActionValue": null, "description": "tests-approtcc-vcr0001", "id": "216196257331394542",
+      "modifiedBy": "216196257331372705", "modifiedTime": "1764191868", "name": "tests-approtcc-vcr0001
+      Updated", "paranoiaLevel": "1", "protocolType": "HTTP", "rules": [], "severity":
+      "CRITICAL", "type": "RESPONSE", "version": "1.0"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '773'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/216196257331394542
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:17:48 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '55'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 50451006-0b4e-9d4e-823d-abe269640853
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4845'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/216196257331394542
+  response:
+    body:
+      string: '{"id":"216196257331394542","modifiedTime":"1764191868","creationTime":"1764191868","modifiedBy":"216196257331372705","name":"tests-approtcc-vcr0001
+        Updated","description":"tests-approtcc-vcr0001","severity":"CRITICAL","controlNumber":"4500001","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","protocolType":"HTTP","type":"RESPONSE","controlRuleJson":"[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:48 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '45'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c59d0dd1-489f-9a1c-9381-c63023160db7
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4844'
+      x-ratelimit-reset:
+      - '12'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom
+  response:
+    body:
+      string: '{"totalPages":"1","currentCount":"2","totalCount":"2","list":[{"id":"216196257331381968","modifiedTime":"1730769864","creationTime":"1730769864","modifiedBy":"216196257331281921","name":"Example_App_Protection_Custom_Control01","description":"Example_App_Protection_Custom_Control01","severity":"CRITICAL","controlNumber":"4500000","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","protocolType":"HTTP","type":"REQUEST","controlRuleJson":"[{\"type\":\"REQUEST_HEADERS\",\"names\":[\"test2\",\"test3\",\"test1\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"EQ\",\"rhs\":\"1000\"},{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"test1\"}]},{\"type\":\"REQUEST_URI\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"EQ\",\"rhs\":\"1000\"},{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"test2\"}]},{\"type\":\"QUERY_STRING\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"EQ\",\"rhs\":\"1000\"},{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"test3\"}]},{\"type\":\"REQUEST_COOKIES\",\"names\":[\"test2\",\"test1\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"EQ\",\"rhs\":\"1000\"},{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"test1\"}]},{\"type\":\"REQUEST_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"EQ\",\"rhs\":\"1000\"},{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"test2\"}]},{\"type\":\"REQUEST_METHOD\",\"conditions\":[{\"lhs\":\"VALUE\",\"op\":\"RX\",\"rhs\":\"GET\"}]}]"},{"id":"216196257331394542","modifiedTime":"1764191868","creationTime":"1764191868","modifiedBy":"216196257331372705","name":"tests-approtcc-vcr0001
+        Updated","description":"tests-approtcc-vcr0001","severity":"CRITICAL","controlNumber":"4500001","version":"1.0","paranoiaLevel":"1","defaultAction":"PASS","protocolType":"HTTP","type":"RESPONSE","controlRuleJson":"[{\"type\":\"RESPONSE_HEADERS\",\"names\":[\"test\"],\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]},{\"type\":\"RESPONSE_BODY\",\"conditions\":[{\"lhs\":\"SIZE\",\"op\":\"GE\",\"rhs\":\"1000\"}]}]"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '43'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f17477c3-170a-9c7d-b48e-5f84694f2850
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4843'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/216196257331394542
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '43'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 2b706409-7ef1-985b-967c-ab282da28108
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4842'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+version: 1

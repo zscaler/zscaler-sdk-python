@@ -1,0 +1,150 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/isolation/profiles
+  response:
+    body:
+      string: '{"totalPages":"1","currentCount":"6","totalCount":"6","list":[{"id":"216196257331370022","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD   SA   Profile","description":"BD   SA   Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"dff035b0-ee81-42dd-ae35-1f988d202745","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/dff035b0-ee81-42dd-ae35-1f988d202745/zpa/render"},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
+        Profile","description":"BD  SA Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"0ed80569-fb12-479e-910f-cbe7cf57e8c4","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0ed80569-fb12-479e-910f-cbe7cf57e8c4/zpa/render"},{"id":"216196257331370023","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD
+        SA Profile","description":"BD SA Profile","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"e72dd090-9ea8-47ca-8ff0-cab348d56c66","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/e72dd090-9ea8-47ca-8ff0-cab348d56c66/zpa/render"},{"id":"216196257331286656","modifiedTime":"1696830629","creationTime":"1632023548","modifiedBy":"216196257331281921","name":"BD_SA_Profile1","description":"BD_SA_Profile1","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"0068dde3-ba14-453c-a481-201c5a3004d1","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0068dde3-ba14-453c-a481-201c5a3004d1/zpa/render"},{"id":"216196257331369954","creationTime":"1696880734","modifiedBy":"216196257331281921","name":"BD_SA_Profile2","description":"BD_SA_Profile2","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"af04f088-c48d-4777-ad81-4f29ed523f81","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/af04f088-c48d-4777-ad81-4f29ed523f81/zpa/render"},{"id":"216196257331390285","creationTime":"1763085582","modifiedBy":"216196257331372705","name":"Example200","description":"Example200","enabled":true,"isolationTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","isolationProfileId":"233a8c46-093e-4711-9f71-cb81bdfe21ab","isolationUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/233a8c46-093e-4711-9f71-cb81bdfe21ab/zpa/render"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:12 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '38'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5ffe2d55-af43-9303-bb7d-561956ca0326
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4959'
+      x-ratelimit-reset:
+      - '48'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/zpaprofiles
+  response:
+    body:
+      string: '[{"id":"216196257331286656","modifiedTime":"1696830629","creationTime":"1632023548","modifiedBy":"216196257331281921","name":"BD_SA_Profile1","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"0068dde3-ba14-453c-a481-201c5a3004d1","description":"BD_SA_Profile1","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0068dde3-ba14-453c-a481-201c5a3004d1/zpa/render","enabled":true},{"id":"216196257331370024","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD  SA
+        Profile","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"0ed80569-fb12-479e-910f-cbe7cf57e8c4","description":"BD  SA
+        Profile","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/0ed80569-fb12-479e-910f-cbe7cf57e8c4/zpa/render","enabled":true},{"id":"216196257331390285","creationTime":"1763085582","modifiedBy":"216196257331372705","name":"Example200","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"233a8c46-093e-4711-9f71-cb81bdfe21ab","description":"Example200","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/233a8c46-093e-4711-9f71-cb81bdfe21ab/zpa/render","enabled":true},{"id":"216196257331369954","creationTime":"1696880734","modifiedBy":"216196257331281921","name":"BD_SA_Profile2","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"af04f088-c48d-4777-ad81-4f29ed523f81","description":"BD_SA_Profile2","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/af04f088-c48d-4777-ad81-4f29ed523f81/zpa/render","enabled":true},{"id":"216196257331370022","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD   SA   Profile","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"dff035b0-ee81-42dd-ae35-1f988d202745","description":"BD   SA   Profile","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/dff035b0-ee81-42dd-ae35-1f988d202745/zpa/render","enabled":true},{"id":"216196257331370023","creationTime":"1697861444","modifiedBy":"216196257331282070","name":"BD
+        SA Profile","cbiTenantId":"ba55848a-36c0-4a09-800f-40660606d5a3","cbiProfileId":"e72dd090-9ea8-47ca-8ff0-cab348d56c66","description":"BD
+        SA Profile","cbiUrl":"https://redirect.isolation.zscaler.com/tenant/americas-se/profile/e72dd090-9ea8-47ca-8ff0-cab348d56c66/zpa/render","enabled":true}]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 21:18:12 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '31'
+      x-frame-options:
+      - DENY
+      x-http2-stream-id:
+      - '5'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c9db4d58-316f-91f8-86d3-f3389f5396e4
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4958'
+      x-ratelimit-reset:
+      - '48'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

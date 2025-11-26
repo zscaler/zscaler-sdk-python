@@ -30,6 +30,7 @@ class TestTrafficGRETunnel:
     Integration Tests for the ZIA Traffic GRE Tunnel.
     """
 
+    @pytest.mark.vcr()
     def test_gre_tunnel_workflow(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -117,6 +118,7 @@ class TestTrafficGRETunnel:
         # Final assertion
         assert len(errors) == 0, f"Errors occurred during GRE Tunnel workflow test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_traffic_list_vips_recommended(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -161,6 +163,7 @@ class TestTrafficGRETunnel:
         # Final assertion
         assert len(errors) == 0, f"Errors occurred during recommended VIP listing test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_traffic_list_vip_group_by_dc(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -205,6 +208,7 @@ class TestTrafficGRETunnel:
         # Final assertion
         assert len(errors) == 0, f"Errors occurred during VIP group by DC test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_traffic_get_closest_diverse_vip_ids(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -247,6 +251,7 @@ class TestTrafficGRETunnel:
         # Final assertion
         assert len(errors) == 0, f"Errors occurred during diverse VIP ID test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_traffic_list_vips(self, fs):
         client = MockZIAClient(fs)
         errors = []

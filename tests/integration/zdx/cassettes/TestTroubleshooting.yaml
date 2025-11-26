@@ -1,0 +1,362 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/devices?to=1764188150&from=1764180950
+  response:
+    body:
+      string: '{"devices":[],"next_offset":null}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '33'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:52 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '3'
+      ratelimit-reset:
+      - '8'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '2231'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b0f288d8-d5b9-9f32-9836-d73d5dd42538
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '983'
+      x-ratelimit-remaining-hour:
+      - '22'
+      x-ratelimit-remaining-minute:
+      - '3'
+      x-ratelimit-reset:
+      - '10'
+      x-request-id:
+      - e217aeb3-d01f-4324-b787-cd5bb8a8d2b5
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/devices?to=1764188153&from=1764180953
+  response:
+    body:
+      string: '{"devices":[],"next_offset":null}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '33'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:54 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '2'
+      ratelimit-reset:
+      - '6'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '1941'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9248997b-231b-9ee7-b8dd-a22a356dc6c6
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '982'
+      x-ratelimit-remaining-hour:
+      - '21'
+      x-ratelimit-remaining-minute:
+      - '2'
+      x-ratelimit-reset:
+      - '7'
+      x-request-id:
+      - 4b91af0b-5eb9-427a-8429-b3df89e4b14f
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/devices?to=1764188155&from=1764180955
+  response:
+    body:
+      string: '{"devices":[],"next_offset":null}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '33'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:55 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '2'
+      ratelimit-reset:
+      - '5'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '1249'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - bdbd59fd-e555-99a5-862e-bd114ff189fe
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '981'
+      x-ratelimit-remaining-hour:
+      - '21'
+      x-ratelimit-remaining-minute:
+      - '2'
+      x-ratelimit-reset:
+      - '5'
+      x-request-id:
+      - 2faac831-10cd-4aea-8c8d-9e966a35a38b
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/devices?to=1764188156&from=1764180956
+  response:
+    body:
+      string: '{"devices":[],"next_offset":null}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '33'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:57 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '2'
+      ratelimit-reset:
+      - '3'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '1433'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - dbe6c9f0-2fa6-9748-8344-df921204ad1b
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '980'
+      x-ratelimit-remaining-hour:
+      - '21'
+      x-ratelimit-remaining-minute:
+      - '2'
+      x-ratelimit-reset:
+      - '4'
+      x-request-id:
+      - 9e8adc68-2dba-4c29-8f15-49eb681ed30b
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zdx/v1/devices?to=1764188158&from=1764180958
+  response:
+    body:
+      string: '{"devices":[],"next_offset":null}'
+    headers:
+      ccid:
+      - zscalerthree.net.24326813
+      content-length:
+      - '33'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:15:58 GMT
+      ratelimit-limit:
+      - '10'
+      ratelimit-remaining:
+      - '2'
+      ratelimit-reset:
+      - '2'
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-api-version:
+      - 2.1.0-2025-10-28T20:38:31Z
+      x-envoy-upstream-service-time:
+      - '1510'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 38b0c65a-7dc5-9e40-8a90-f7e4446683e9
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=60, 1000;w=60
+      x-ratelimit-limit-hour:
+      - '60'
+      x-ratelimit-limit-minute:
+      - '10'
+      x-ratelimit-remaining:
+      - '979'
+      x-ratelimit-remaining-hour:
+      - '21'
+      x-ratelimit-remaining-minute:
+      - '2'
+      x-ratelimit-reset:
+      - '2'
+      x-request-id:
+      - 257355e1-9ea5-4951-af51-f6aa973d5fc3
+      x-transaction-id:
+      - 695b5b34-fc9f-4904-ab51-02707dbad610
+    status:
+      code: 200
+      message: OK
+version: 1

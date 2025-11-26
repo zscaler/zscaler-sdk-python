@@ -30,6 +30,7 @@ class TestLocationTemplate:
     Integration Tests for the ZIA Location Template
     """
 
+    @pytest.mark.vcr()
     def test_location_template(self, fs):
         client = MockZTWClient(fs)
         errors = []
@@ -39,11 +40,11 @@ class TestLocationTemplate:
             # Create Location Template
             try:
                 template_name = generate_random_string()
-                created_location = client.locations.add_location_template(
-                    name="voluptate consectetur",
-                    desc="officia fugiat voluptate proident",
+                created_location, _, error = client.ztw.location_template.add_location_template(
+                    name="tests-ztw-template-" + template_name,
+                    desc="tests-ztw-template-" + template_name,
                     template={
-                        "templatePrefix": "ztw-prefix" + template_name,
+                        "templatePrefix": "ztw-prefix-" + template_name,
                         "xffForwardEnabled": True,
                         "authRequired": True,
                         "cautionEnabled": False,
@@ -56,35 +57,72 @@ class TestLocationTemplate:
                         "dnBandwidth": 10,
                     },
                 )
-                template_id = created_location.get("id", None)
+                assert error is None, f"Error creating location template: {error}"
+                template_id = created_location.id if hasattr(created_location, 'id') else created_location.get("id", None)
                 assert template_id is not None, "Location template creation failed"
             except Exception as exc:
                 errors.append(f"Location template creation failed: {exc}")
 
             try:
-                # Verify the location template by retrieving it
-                retrieved_template = client.locations.get_location_template(template_id)
-                assert retrieved_template["id"] == template_id, "Incorrect location template retrieved"
+                # Verify the location template by listing and finding it
+                # Note: LocationTemplateAPI does not have a get_location_template() method
+                templates, _, error = client.ztw.location_template.list_location_templates()
+                assert error is None, f"Error listing location templates: {error}"
+                retrieved_template = next(
+                    (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
+                    None
+                )
+                assert retrieved_template is not None, f"Could not find template with ID {template_id}"
+                retrieved_id = retrieved_template.id if hasattr(retrieved_template, 'id') else retrieved_template.get("id")
+                assert retrieved_id == template_id, "Incorrect location template retrieved"
             except Exception as exc:
                 errors.append(f"Retrieving Location Template failed: {exc}")
 
             try:
                 # Update the location template
+                # Note: The API requires `name` and `template` to be included in update requests
+                template_name_for_update = "tests-ztw-template-" + template_name
                 updated_description = "Updated integration test location template"
-                client.locations.update_location_template(
+                updated_template, _, error = client.ztw.location_template.update_location_template(
                     template_id,
-                    desc=updated_description,  # Use `desc` instead of `description`
+                    name=template_name_for_update,  # Name is mandatory for updates
+                    desc=updated_description,
+                    template={  # Template details are mandatory for updates
+                        "templatePrefix": "ztw-prefix-" + template_name,
+                        "xffForwardEnabled": True,
+                        "authRequired": True,
+                        "cautionEnabled": False,
+                        "aupEnabled": True,
+                        "aupTimeoutInDays": 30,
+                        "ofwEnabled": True,
+                        "ipsControl": True,
+                        "enforceBandwidthControl": True,
+                        "upBandwidth": 20,  # Changed value to verify update
+                        "dnBandwidth": 20,  # Changed value to verify update
+                    },
                 )
-                updated_location = client.locations.get_location_template(template_id)
-                assert updated_location.get("desc") == updated_description, "Location template update failed"
+                assert error is None, f"Error updating location template: {error}"
+                # Verify the update by listing again
+                templates, _, error = client.ztw.location_template.list_location_templates()
+                assert error is None, f"Error listing location templates after update: {error}"
+                updated_location = next(
+                    (t for t in templates if (t.id if hasattr(t, 'id') else t.get("id")) == template_id),
+                    None
+                )
+                assert updated_location is not None, f"Could not find updated template with ID {template_id}"
+                updated_desc = updated_location.desc if hasattr(updated_location, 'desc') else updated_location.get("desc")
+                assert updated_desc == updated_description, "Location template update failed"
             except Exception as exc:
                 errors.append(f"Updating location template failed: {exc}")
 
             try:
                 # Retrieve the list of all templates
-                locations = client.locations.list_location_templates()
+                locations, _, error = client.ztw.location_template.list_location_templates()
+                assert error is None, f"Error listing location templates: {error}"
                 # Check if the newly created location is in the list of templates
-                found_location = any(location["id"] == template_id for location in locations)
+                found_location = any(
+                    (loc.id if hasattr(loc, 'id') else loc.get("id")) == template_id for loc in locations
+                )
                 assert found_location, "Newly created location template not found in the list of templates."
             except Exception as exc:
                 errors.append(f"Listing location templates failed: {exc}")
@@ -94,8 +132,12 @@ class TestLocationTemplate:
             cleanup_errors = []
             if template_id:
                 try:
-                    delete_status_location = client.locations.delete_location_template(template_id)
-                    assert delete_status_location == 204, "Location template deletion failed"
+                    _, response, error = client.ztw.location_template.delete_location_template(template_id)
+                    assert error is None, f"Error deleting location template: {error}"
+                    # delete_location_template returns (None, response, None) on success
+                    # Check response status code if available
+                    if response and hasattr(response, 'status_code'):
+                        assert response.status_code == 204, f"Location template deletion failed with status {response.status_code}"
                 except Exception as exc:
                     cleanup_errors.append(f"Deleting location failed: {exc}")
 

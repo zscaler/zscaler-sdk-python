@@ -49,4 +49,28 @@ flags:
     paths:
       - zscaler/
     carryforward: true
+  zia-vcr:
+    paths:
+      - zscaler/zia/
+    carryforward: true
+  zpa-vcr:
+    paths:
+      - zscaler/zpa/
+    carryforward: true
+  zcc-vcr:
+    paths:
+      - zscaler/zcc/
+    carryforward: true
+  zdx-vcr:
+    paths:
+      - zscaler/zdx/
+    carryforward: true
+  ztw-vcr:
+    paths:
+      - zscaler/ztw/
+    carryforward: true
+  zidentity-vcr:
+    paths:
+      - zscaler/zidentity/
+    carryforward: true
 

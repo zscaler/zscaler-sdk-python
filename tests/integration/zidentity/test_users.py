@@ -31,6 +31,7 @@ class TestUsers:
     Integration Tests for the Users
     """
 
+    @pytest.mark.vcr()
     def test_users(self, fs):
         client = MockZIdentityClient(fs)
         errors = []

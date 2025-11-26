@@ -30,6 +30,7 @@ class TestCloudFirewallIPSRules:
     Integration Tests for the ZIA Cloud Firewall IPS Rules
     """
 
+    @pytest.mark.vcr()
     def test_firewall_ips_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []
