@@ -107,10 +107,13 @@ class MockZPAClient(ZscalerClient):
         cloud = config.get("cloud", os.getenv("ZSCALER_CLOUD", "PRODUCTION"))
 
         # In VCR playback mode, provide dummy credentials if real ones aren't available
+        # IMPORTANT: Use the same customer ID that was used during cassette recording
+        # to ensure VCR path matching works correctly
         if mock_tests:
             clientId = clientId or "dummy_client_id"
             clientSecret = clientSecret or "dummy_client_secret"
-            customerId = customerId or "dummy_customer_id"
+            # Use the customer ID from recorded cassettes for VCR playback
+            customerId = customerId or "216196257331281920"
             vanityDomain = vanityDomain or "dummy_vanity_domain"
 
         # Extract logging configuration or use defaults
