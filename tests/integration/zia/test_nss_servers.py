@@ -17,7 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ class TestNSSServers:
         update_server = None
         
         # Use deterministic names for VCR
-        names = TestNameGenerator("nss-server")
+        names = NameGenerator("nss-server")
 
         try:
             try:

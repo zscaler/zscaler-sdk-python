@@ -31,7 +31,7 @@ def reset_counters_per_test():
     yield
 
 
-class TestNameGenerator:
+class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
     """

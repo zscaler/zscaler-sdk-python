@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 from tests.test_utils import generate_random_ip, generate_random_string, reset_vcr_counters
 import time
 
@@ -40,7 +40,7 @@ class TestTrafficStaticIP:
         errors = []
 
         # Use deterministic test name generator
-        names = TestNameGenerator("static-ip")
+        names = NameGenerator("static-ip")
         
         randomIP = generate_random_ip("104.239.237.0/24")
         checkIP = generate_random_ip("104.239.237.0/24")  # Different IP for validation

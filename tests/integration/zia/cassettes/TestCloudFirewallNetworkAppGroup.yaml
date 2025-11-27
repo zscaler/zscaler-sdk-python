@@ -1,6 +1,7 @@
 interactions:
 - request:
-    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    body: '{"name": "tests-vcr0001", "description": "tests-vcr0002", "networkApplications":
+      ["APNS", "APPSTORE", "DICT"]}'
     headers:
       Accept:
       - application/json
@@ -9,124 +10,64 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '147'
+      - '110'
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: POST
-    uri: https://identity.test.zscaler.com/oauth2/v1/token
+    uri: https://api.zsapi.net/zia/api/v1/networkApplicationGroups
   response:
     body:
-      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+      string: '{"id":10177033,"name":"tests-vcr0001","networkApplications":["APNS","APPSTORE","DICT"],"description":"tests-vcr0002"}'
     headers:
       cache-control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
       content-security-policy:
-      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
-        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
-        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
-        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
-        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
       content-type:
-      - application/json;charset=UTF-8
+      - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:32 GMT
-      expires:
-      - '0'
-      pragma:
-      - no-cache
+      - Wed, 26 Nov 2025 23:49:17 GMT
       server:
-      - ingress-gateway
+      - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      - max-age=31536000; includeSubDomains;
-      - max-age=31536000; includeSubDomains;
       transfer-encoding:
       - chunked
-      x-content-type-options:
-      - nosniff
-      - nosniff
-      - nosniff
-      x-frame-options:
-      - DENY
-      - SAMEORIGIN
-      - SAMEORIGIN
-      x-ratelimit-limit:
-      - 150, 150;w=1, 100000;w=60, 10000;w=60
-      x-ratelimit-remaining:
-      - '149'
-      x-ratelimit-reset:
-      - '1'
-      x-xss-protection:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/status
-  response:
-    body:
-      string: '{"status":"ACTIVE"}'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      content-disposition:
-      - attachment; filename="api.json"
-      content-length:
-      - '19'
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:46:36 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3665'
+      - '1371'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3c128bd1-cc3f-9750-bf2f-3fd07191467a
+      - 5a7d82f2-e06f-91c8-8378-e525cdc9fbd2
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4999'
+      - '4995'
       x-ratelimit-reset:
-      - '28'
+      - '44'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -151,18 +92,16 @@ interactions:
       - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: POST
-    uri: https://api.zsapi.net/zia/api/v1/status/activate
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/networkApplicationGroups/10177033
   response:
     body:
-      string: '{"status":"ACTIVE"}'
+      string: ''
     headers:
       cache-control:
       - no-store, no-cache
       content-disposition:
       - attachment; filename="api.json"
-      content-length:
-      - '19'
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -174,32 +113,32 @@ interactions:
         ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:37 GMT
+      - Wed, 26 Nov 2025 23:49:18 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '517'
+      - '1282'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 90f53cbb-106d-9fa1-aa61-d5d0662ae7f1
+      - 2f64f4e3-8ab2-9f27-85ef-71e940e5ce79
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4998'
+      - '4994'
       x-ratelimit-reset:
-      - '24'
+      - '43'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -207,6 +146,6 @@ interactions:
       x-zscaler-mode:
       - read-write
     status:
-      code: 200
-      message: OK
+      code: 204
+      message: No Content
 version: 1
