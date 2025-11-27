@@ -6,10 +6,36 @@ Release Notes
 Zscaler Python SDK Changelog
 ----------------------------
 
+1.9.5 (November 26, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+Enhancements:
+-------------
+
+(`#428 <https://github.com/zscaler/zscaler-sdk-python/pull/428>`_) - Added VCR-based integration testing with recorded HTTP cassettes for faster, deterministic test execution.
+
+1.9.4 (November 26, 2025)
+---------------------------
+
+Notes
+-----
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements:
+
+(`#427 <https://github.com/zscaler/zscaler-sdk-python/pull/427>`_) - Added VCR-based integration testing with recorded HTTP cassettes for faster, deterministic test execution.
+
 1.9.3 (November 25, 2025)
 ---------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.9, v3.10, v3.11, v3.12**
 
@@ -28,7 +54,8 @@ Bug Fixes:
 1.9.2 (November 18, 2025)
 ---------------------------
 
-### Notes
+Notes
+-----
 
 - Python Versions: **v3.8, v3.9, v3.10, v3.11**
 

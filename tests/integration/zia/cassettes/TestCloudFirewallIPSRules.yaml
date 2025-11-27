@@ -259,7 +259,7 @@ interactions:
   response:
     body:
       string: '{"accessControl":"READ_WRITE","id":1571782,"name":"tests-vcr0004","order":1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"Integration
-        test firewall rule","lastModifiedTime":1764200934,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"srcIpGroups":[{"id":10177031,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX","COUNTRY_US"],"sourceCountries":[],"destIpGroups":[{"id":10177026,"name":"tests-vcr0001"}],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}'
+        test firewall rule","lastModifiedTime":1764200934,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIpGroups":[{"id":10177031,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX","COUNTRY_US"],"sourceCountries":[],"destIpGroups":[{"id":10177026,"name":"tests-vcr0001"}],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -339,7 +339,7 @@ interactions:
   response:
     body:
       string: '{"id":1571782,"name":"tests-vcr0004","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"Updated
-        integration test firewall rule","lastModifiedTime":1764200943,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}'
+        integration test firewall rule","lastModifiedTime":1764200943,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -417,9 +417,9 @@ interactions:
   response:
     body:
       string: '[{"accessControl":"READ_WRITE","id":184228,"name":"Default Cloud IPS
-        Rule","order":0,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191399599_test_1761418085011-test-1761429740961-test-1761429901739","lastModifiedTime":1761584738,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":[],"resCategories":[],"destCountries":[],"isEunEnabled":false,"eunTemplateId":16,"predefined":true,"defaultRule":false,"enableFullLogging":true},{"accessControl":"READ_WRITE","id":1536551,"name":"Default
-        Cloud IPS Rule_1761584734259","order":-1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191399599_test_1761418085011-test-1761429740961-test-1761429901739","lastModifiedTime":1761584750,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":[],"resCategories":[],"destCountries":[],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":true,"enableFullLogging":true},{"accessControl":"READ_WRITE","id":1571782,"name":"tests-vcr0004","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"Updated
-        integration test firewall rule","lastModifiedTime":1764200943,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":[],"resCategories":[],"destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"sourceCountries":[],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}]'
+        Rule","order":0,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191399599_test_1761418085011-test-1761429740961-test-1761429901739","lastModifiedTime":1761584738,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[],"isEunEnabled":false,"eunTemplateId":16,"predefined":true,"defaultRule":false,"enableFullLogging":true},{"accessControl":"READ_WRITE","id":1536551,"name":"Default
+        Cloud IPS Rule_1761584734259","order":-1,"rank":7,"action":"BLOCK_DROP","capturePCAP":false,"state":"ENABLED","description":"_test_1761191399599_test_1761418085011-test-1761429740961-test-1761429901739","lastModifiedTime":1761584750,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":true,"enableFullLogging":true},{"accessControl":"READ_WRITE","id":1571782,"name":"tests-vcr0004","order":1,"rank":7,"action":"ALLOW","capturePCAP":false,"state":"ENABLED","description":"Updated
+        integration test firewall rule","lastModifiedTime":1764200943,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"sourceCountries":[],"isEunEnabled":false,"eunTemplateId":16,"defaultRule":false,"enableFullLogging":false}]'
     headers:
       cache-control:
       - no-store, no-cache

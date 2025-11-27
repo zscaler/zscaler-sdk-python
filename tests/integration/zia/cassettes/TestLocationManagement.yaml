@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"type": "UFQDN", "preSharedKey":"REDACTED", "fqdn": "tests-vcr0001@securitygeek.io",
+    body: '{"type": "UFQDN", "preSharedKey":"REDACTED", "fqdn": "REDACTED",
       "comments": "Integration test UFQDN credential"}'
     headers:
       Accept:
@@ -19,7 +19,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/vpnCredentials
   response:
     body:
-      string: '{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+      string: '{"id":158933285,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
         test UFQDN credential"}'
     headers:
       cache-control:
@@ -177,7 +177,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/locations/158933286
   response:
     body:
-      string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+      string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
         test UFQDN credential"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
         Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"tests-vcr0003"}'
     headers:
@@ -344,7 +344,7 @@ interactions:
         Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139","subLocScopeEnabled":true},{"id":45772677,"name":"nostrud
         qui dolore","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":true,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":true,"ecLocation":false,"bcLocation":false,"ccLocation":true,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":40594054,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":true,"surrogateRefreshTimeInMinutes":79446126,"surrogateRefreshTimeUnit":"HOUR","kerberosAuth":true,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
         Traffic Group"}],"excludeFromDynamicGroups":true,"excludeFromManualGroups":true,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"et
-        Ut ullamco"},{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+        Ut ullamco"},{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"REDACTED","comments":"Integration
         test UFQDN credential"}],"authRequired":true,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":720,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
         Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Updated
         integration test location management"}]'

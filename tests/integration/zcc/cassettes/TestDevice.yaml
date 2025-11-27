@@ -84,7 +84,7 @@ interactions:
     body:
       string: "[ {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
         \ \"state\" : 1,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8\",\n
-        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"adam.ashcroft@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1759822506\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.88
@@ -97,7 +97,7 @@ interactions:
         \ \"tunnelVersion\" : \"20:1\",\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"4.5.0.33
         (32-bit)\",\n  \"zappArch\" : \"x64\"\n}, {\n  \"companyName\" : \"William
         Guilherme\",\n  \"type\" : 3,\n  \"state\" : 3,\n  \"udid\" : \"VMware-42-1d-29-9b-7c-c5-3f-d2-90-3c-d5-4e-9c-75-6d-d0:19D0764C0D09DF81361B52530353FD5A52A34D68\",\n
-        \ \"macAddress\" : \"00:50:56:9D:F5:23\",\n  \"user\" : \"wguilherme@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:9D:F5:23\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1645213834\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit\",\n  \"agentVersion\" : \"3.6.1.23\",\n
@@ -110,7 +110,7 @@ interactions:
         null,\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"3.0.0.57 (32-bit)\",\n  \"zappArch\"
         : null\n}, {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
         \ \"state\" : 6,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D\",\n
-        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"adam.ashcroft@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1756523021\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.61
@@ -192,7 +192,7 @@ interactions:
     body:
       string: "[ {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
         \ \"state\" : 1,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:92DA6D4B7D0C828275C63C4BCA15A1EDFE5463E8\",\n
-        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"adam.ashcroft@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1759822506\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.88
@@ -205,7 +205,7 @@ interactions:
         \ \"tunnelVersion\" : \"20:1\",\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"4.5.0.33
         (32-bit)\",\n  \"zappArch\" : \"x64\"\n}, {\n  \"companyName\" : \"William
         Guilherme\",\n  \"type\" : 4,\n  \"state\" : 2,\n  \"udid\" : \"053AF529-6506-5BF4-974E-A78C00AA51BD:501\",\n
-        \ \"macAddress\" : \"06:5F:DD:5A:83:66\",\n  \"user\" : \"adam.ashcroft@securitygeek.io\",\n
+        \ \"macAddress\" : \"06:5F:DD:5A:83:66\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"Apple Mac16,7\",\n  \"policyName\" : \"ZTunnel2.0\",\n  \"last_seen_time\"
         : \"1759852321\",\n  \"osVersion\" : \"Version 15.6.1 (Build 24G90) ;arm\",\n
         \ \"agentVersion\" : \"4.5.2.73\",\n  \"registrationState\" : \"Unregistered\",\n
@@ -217,7 +217,7 @@ interactions:
         \ \"vpnState\" : 0,\n  \"upmVersion\" : \"4.4.1.12\",\n  \"zappArch\" : null\n},
         {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n  \"state\"
         : 3,\n  \"udid\" : \"VMware-42-1d-29-9b-7c-c5-3f-d2-90-3c-d5-4e-9c-75-6d-d0:19D0764C0D09DF81361B52530353FD5A52A34D68\",\n
-        \ \"macAddress\" : \"00:50:56:9D:F5:23\",\n  \"user\" : \"wguilherme@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:9D:F5:23\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1645213834\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit\",\n  \"agentVersion\" : \"3.6.1.23\",\n
@@ -230,7 +230,7 @@ interactions:
         null,\n  \"vpnState\" : 0,\n  \"upmVersion\" : \"3.0.0.57 (32-bit)\",\n  \"zappArch\"
         : null\n}, {\n  \"companyName\" : \"William Guilherme\",\n  \"type\" : 3,\n
         \ \"state\" : 6,\n  \"udid\" : \"VMware-42-02-38-a5-5f-9c-86-39-ff-5a-d0-60-5c-35-68-90:D630C3617830C5C0B2DDE986EA7D994324C4EC1D\",\n
-        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"adam.ashcroft@securitygeek.io\",\n
+        \ \"macAddress\" : \"00:50:56:82:34:A2\",\n  \"user\" : \"REDACTED",\n
         \ \"detail\" : \"VMware, Inc. VMware Virtual Platform\",\n  \"policyName\"
         : \"SGIOLab\",\n  \"last_seen_time\" : \"1756523021\",\n  \"osVersion\" :
         \"Microsoft Windows 10 Pro;64 bit;amd64\",\n  \"agentVersion\" : \"4.7.0.61

@@ -16,12 +16,122 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: POST
     uri: https://api.zsapi.net/ztw/api/v1/locationTemplate
   response:
     body:
-      string: '{"id":3332495,"name":"tests-ztw-template-vcr0001","desc":"tests-ztw-template-vcr0001","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":10,"dnBandwidth":10,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true}'
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Thu, 27 Nov 2025 01:19:09 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f814dd6e-c5df-9cb7-ae8e-66fedaced4b2
+      x-oneapi-version:
+      - 109.1.85
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://identity.test.zscaler.com/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
+        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 27 Nov 2025 01:19:09 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-ztw-template-vcr0001", "template": {"templatePrefix": "ztw-prefix-vcr0001",
+      "xffForwardEnabled": true, "authRequired": true, "cautionEnabled": false, "aupEnabled":
+      true, "aupTimeoutInDays": 30, "ofwEnabled": true, "ipsControl": true, "enforceBandwidthControl":
+      true, "upBandwidth": 10, "dnBandwidth": 10}, "desc": "tests-ztw-template-vcr0001"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '359'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/ztw/api/v1/locationTemplate
+  response:
+    body:
+      string: '{"id":3342552,"name":"tests-ztw-template-vcr0001","desc":"tests-ztw-template-vcr0001","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":10,"dnBandwidth":10,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true}'
     headers:
       content-encoding:
       - gzip
@@ -38,7 +148,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:15 GMT
+      - Thu, 27 Nov 2025 01:19:14 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -52,13 +162,13 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '892'
+      - '4652'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 6bbe96fe-dc56-9995-8bb5-6df0016dfbe8
+      - c588786d-0363-912f-a4ab-d91980a6e905
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
@@ -68,7 +178,7 @@ interactions:
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -88,13 +198,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/ztw/api/v1/locationTemplate
   response:
     body:
       string: '[{"id":82273,"name":"Default Location Template","desc":"Created during
-        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639777998},{"id":3332495,"name":"tests-ztw-template-vcr0001","desc":"tests-ztw-template-vcr0001","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":10,"dnBandwidth":10,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"ztw-api@24326813.zscalerthree.net"},"lastModTime":1764187994}]'
+        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639777998},{"id":3342552,"name":"tests-ztw-template-vcr0001","desc":"tests-ztw-template-vcr0001","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":10,"dnBandwidth":10,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"REDACTED"},"lastModTime":1764206354}]'
     headers:
       cache-control:
       - max-age=10
@@ -113,9 +223,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:15 GMT
+      - Thu, 27 Nov 2025 01:19:15 GMT
       expires:
-      - Wed, 26 Nov 2025 20:13:25 GMT
+      - Thu, 27 Nov 2025 01:19:25 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -129,13 +239,13 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '544'
+      - '598'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 4f6a6688-077c-955e-a8e1-63879e3ad7c3
+      - e2729d05-cf92-9c12-a63a-c3472adfb7f2
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
@@ -145,7 +255,7 @@ interactions:
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -169,12 +279,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: PUT
-    uri: https://api.zsapi.net/ztw/api/v1/locationTemplate/3332495
+    uri: https://api.zsapi.net/ztw/api/v1/locationTemplate/3342552
   response:
     body:
-      string: '{"id":3332495,"name":"tests-ztw-template-vcr0001","desc":"Updated integration
+      string: '{"id":3342552,"name":"tests-ztw-template-vcr0001","desc":"Updated integration
         test location template","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":20,"dnBandwidth":20,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":false}'
     headers:
       cache-control:
@@ -194,7 +304,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:17 GMT
+      - Thu, 27 Nov 2025 01:19:17 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -208,23 +318,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1618'
+      - '1860'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 3418b42e-948f-96c7-9b0f-dac6f650f263
+      - 906ada4d-69f6-92ca-aca6-d861bd6d6ec9
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 1000, 1000;w=1
       x-ratelimit-remaining:
-      - '998'
+      - '999'
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -244,14 +354,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/ztw/api/v1/locationTemplate
   response:
     body:
       string: '[{"id":82273,"name":"Default Location Template","desc":"Created during
-        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639777998},{"id":3332495,"name":"tests-ztw-template-vcr0001","desc":"Updated
-        integration test location template","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":20,"dnBandwidth":20,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"ztw-api@24326813.zscalerthree.net"},"lastModTime":1764187996}]'
+        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639777998},{"id":3342552,"name":"tests-ztw-template-vcr0001","desc":"Updated
+        integration test location template","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":20,"dnBandwidth":20,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"REDACTED"},"lastModTime":1764206356}]'
     headers:
       cache-control:
       - max-age=10
@@ -270,9 +380,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:18 GMT
+      - Thu, 27 Nov 2025 01:19:18 GMT
       expires:
-      - Wed, 26 Nov 2025 20:13:28 GMT
+      - Thu, 27 Nov 2025 01:19:28 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -286,13 +396,13 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '531'
+      - '555'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 4ab88d80-c230-9910-a197-2665fdc5ccb4
+      - 18daf94a-3af3-9a10-a36e-c0a6d221bbf3
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
@@ -302,7 +412,7 @@ interactions:
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -322,14 +432,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/ztw/api/v1/locationTemplate
   response:
     body:
       string: '[{"id":82273,"name":"Default Location Template","desc":"Created during
-        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639777998},{"id":3332495,"name":"tests-ztw-template-vcr0001","desc":"Updated
-        integration test location template","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":20,"dnBandwidth":20,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"ztw-api@24326813.zscalerthree.net"},"lastModTime":1764187996}]'
+        company provisioning","template":{"xffForwardEnabled":false,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModTime":1639554322},{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639777998},{"id":3342552,"name":"tests-ztw-template-vcr0001","desc":"Updated
+        integration test location template","template":{"templatePrefix":"ztw-prefix-vcr0001","xffForwardEnabled":true,"authRequired":true,"cautionEnabled":false,"aupEnabled":true,"aupTimeoutInDays":30,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":true,"upBandwidth":20,"dnBandwidth":20,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":true,"lastModUid":{"id":130185934,"name":"REDACTED"},"lastModTime":1764206356}]'
     headers:
       cache-control:
       - max-age=10
@@ -348,9 +458,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:18 GMT
+      - Thu, 27 Nov 2025 01:19:19 GMT
       expires:
-      - Wed, 26 Nov 2025 20:13:28 GMT
+      - Thu, 27 Nov 2025 01:19:29 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -364,13 +474,13 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '552'
+      - '530'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 1c05682a-1777-90f7-8494-23b49dd61845
+      - 6b6d2e6a-c76d-9cce-8dac-b150effbf395
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
@@ -380,7 +490,7 @@ interactions:
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -400,9 +510,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: DELETE
-    uri: https://api.zsapi.net/ztw/api/v1/locationTemplate/3332495
+    uri: https://api.zsapi.net/ztw/api/v1/locationTemplate/3342552
   response:
     body:
       string: ''
@@ -420,7 +530,7 @@ interactions:
         https:; font-src 'self'; frame-src 'self' https://help.zscaler.com/ https://help.zscalergov.net
         https://help.zscaler.us https://vars.hotjar.com/;
       date:
-      - Wed, 26 Nov 2025 20:13:20 GMT
+      - Thu, 27 Nov 2025 01:19:20 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -432,23 +542,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '1204'
+      - '1342'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 988e2d58-5d28-92cf-932e-0d8f7dc383ac
+      - 714a4b01-8361-934c-92dd-c40397ceaa0d
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 1000, 1000;w=1
       x-ratelimit-remaining:
-      - '998'
+      - '999'
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:

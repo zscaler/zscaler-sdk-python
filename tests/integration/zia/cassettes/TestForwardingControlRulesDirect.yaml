@@ -259,7 +259,7 @@ interactions:
   response:
     body:
       string: '{"accessControl":"READ_WRITE","id":1571785,"name":"tests-vcr0004","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Integration
-        test Forwarding Control Rule","lastModifiedTime":1764201037,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"srcIpGroups":[{"id":10177041,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10177036,"name":"tests-vcr0001"}]}'
+        test Forwarding Control Rule","lastModifiedTime":1764201037,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"srcIpGroups":[{"id":10177041,"name":"tests-vcr0003"}],"destIpCategories":[],"resCategories":[],"destCountries":[],"destIpGroups":[{"id":10177036,"name":"tests-vcr0001"}]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -339,7 +339,7 @@ interactions:
   response:
     body:
       string: '{"id":1571785,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
-        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":[]}'
+        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":["ANY"],"resCategories":[],"destCountries":[]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -438,7 +438,7 @@ interactions:
         Traffic from ZPA","type":"FORWARDING","order":-102,"rank":0,"locationGroups":[{"id":157892460,"name":"All
         Extranet Location Group"}],"forwardMethod":"DROP","state":"ENABLED","description":"Automatically
         created Extranet Pool Stray Traffic for ZIA","lastModifiedTime":1763256806,"destIpCategories":[],"resCategories":[],"destCountries":[]},{"accessControl":"READ_WRITE","id":1571785,"name":"updated-vcr0005","type":"FORWARDING","order":1,"rank":7,"forwardMethod":"DIRECT","state":"ENABLED","description":"Updated
-        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"destIpCategories":[],"resCategories":[],"destCountries":[]}]'
+        integration test Forwarding Control Rule","lastModifiedTime":1764201048,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"destIpCategories":[],"resCategories":[],"destCountries":[]}]'
     headers:
       cache-control:
       - no-store, no-cache
