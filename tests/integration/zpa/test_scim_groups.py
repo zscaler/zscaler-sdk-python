@@ -30,6 +30,7 @@ class TestScimGroups:
     Integration Tests for the SCIM Groups
     """
 
+    @pytest.mark.vcr()
     def test_scim_groups(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

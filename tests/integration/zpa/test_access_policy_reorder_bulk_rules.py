@@ -29,6 +29,7 @@ class TestAccessPolicyBulkReorderRule:
     Integration Tests for the Access Policy Bulk Reorder Rules.
     """
 
+    @pytest.mark.vcr()
     def test_bulk_reorder_access_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

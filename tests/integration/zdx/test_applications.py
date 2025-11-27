@@ -30,6 +30,7 @@ class TestApplications:
     Integration Tests for the applications
     """
 
+    @pytest.mark.vcr()
     def test_get_app(self, fs, zdx_client):
         client = zdx_client
         errors = []

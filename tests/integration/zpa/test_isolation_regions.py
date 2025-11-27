@@ -29,6 +29,7 @@ class TestCBIRegions:
     Integration Tests for the CBI Region.
     """
 
+    @pytest.mark.vcr()
     def test_cbi_region(self, fs):
         client = MockZPAClient(fs)  # Client instantiation with fixture as specified
         errors = []  # Initialize an empty list to collect errors

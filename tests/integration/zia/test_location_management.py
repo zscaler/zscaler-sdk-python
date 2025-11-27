@@ -27,9 +27,12 @@ def fs():
 
 class TestLocationManagement:
     """
-    Integration Tests for the ZIA Location Management
+    Integration Tests for the ZIA Location Management.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_location_management_vpn_ufqdn_type(self, fs):
         client = MockZIAClient(fs)
         errors = []

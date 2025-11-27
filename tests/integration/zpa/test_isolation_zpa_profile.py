@@ -29,6 +29,7 @@ class TestZPACBIProfile:
     Integration Tests for the CBI ZPA isolation profile.
     """
 
+    @pytest.mark.vcr()
     def test_isolation_zpa_profile(self, fs):
         client = MockZPAClient(fs)  # Assuming the client instantiation is taken care of elsewhere
         errors = []  # Initialize an empty list to collect errors

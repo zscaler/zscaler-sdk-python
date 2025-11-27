@@ -30,12 +30,13 @@ class TestCBISecurityProfile:
     Integration Tests for the Cloud Browser Isolation Security Profile
     """
 
+    @pytest.mark.vcr()
     def test_cbi_security_profile(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        profile_name = "tests-" + generate_random_string()
-        profile_description = "tests-" + generate_random_string()
+        profile_name = "tests-isolsec-" + generate_random_string()
+        profile_description = "tests-isolsec-" + generate_random_string()
         profile_id = None  # Define profile_id here to ensure it's accessible throughout
 
         try:

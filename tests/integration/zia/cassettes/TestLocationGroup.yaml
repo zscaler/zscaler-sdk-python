@@ -1,0 +1,250 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/locations/groups
+  response:
+    body:
+      string: '[{"id":24326828,"name":"Corporate User Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]},"comments":"Default
+        Location Group - Corporate User Traffic","lastModTime":1619561356,"predefined":true},{"id":24326829,"name":"Server
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["SERVER"]},"comments":"Default
+        Location Group - Server Traffic","lastModTime":1619561356,"predefined":true},{"id":24326830,"name":"Guest
+        Wifi Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]},"comments":"Default
+        Location Group - Guest Wifi","lastModTime":1619561356,"predefined":true},{"id":24326831,"name":"IoT
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["IOT"]},"comments":"Default
+        Location Group - IoT Traffic","lastModTime":1619561356,"predefined":true},{"id":59050241,"name":"Workload
+        Traffic Group","groupType":"DYNAMIC_GROUP","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]},"locations":[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71"},{"id":45772677,"name":"nostrud
+        qui dolore"}],"locationsCount":12,"comments":"Default Location Group - Workload
+        Traffic","lastModTime":1666399620,"predefined":true},{"id":66754704,"name":"SDWAN_CAN","groupType":"STATIC_GROUP","comments":"SDWAN_CAN","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799854},{"id":66754715,"name":"SDWAN_GLOBAL","groupType":"STATIC_GROUP","comments":"SDWAN_GLOBAL","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799863},{"id":66754722,"name":"SDWAN_USA","groupType":"STATIC_GROUP","comments":"SDWAN_USA","lastModUser":{"id":24328827,"name":"William
+        Guilherme"},"lastModTime":1677799872},{"id":157892460,"name":"All Extranet
+        Location Group","groupType":"DYNAMIC_GROUP","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"comments":"Auto-created
+        - All Extranet Locations","lastModUser":{"id":65544,"name":"DEFAULT ADMIN"},"lastModTime":1763256806,"predefined":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:09 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '820'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7c70ad17-ae19-94cc-8bf1-026640705e9a
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '52'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/locations/groups/lite
+  response:
+    body:
+      string: '[{"id":24326827,"name":"Unassigned Locations","dynamicLocationGroupCriteria":{"profiles":["NONE"]}},{"id":24326828,"name":"Corporate
+        User Traffic Group","dynamicLocationGroupCriteria":{"profiles":["CORPORATE"]}},{"id":24326829,"name":"Server
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["SERVER"]}},{"id":24326830,"name":"Guest
+        Wifi Group","dynamicLocationGroupCriteria":{"profiles":["GUESTWIFI"]}},{"id":24326831,"name":"IoT
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["IOT"]}},{"id":59050241,"name":"Workload
+        Traffic Group","dynamicLocationGroupCriteria":{"profiles":["WORKLOAD"]}},{"id":66754704,"name":"SDWAN_CAN"},{"id":66754715,"name":"SDWAN_GLOBAL"},{"id":66754722,"name":"SDWAN_USA"},{"id":157892460,"name":"All
+        Extranet Location Group","extranetLocationGroup":true,"dynamicLocationGroupCriteria":{"profiles":["EXTRANET"]},"predefined":true}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:10 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '237'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a4d552ea-5e69-9de8-ae61-bba5f61b6b77
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '51'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/locations/groups/count
+  response:
+    body:
+      string: '9'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-length:
+      - '1'
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:10 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '219'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 6ab661c1-2708-9798-81d3-38beb7c254b5
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '50'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -26,9 +26,12 @@ def fs():
 
 class TestAdminRole:
     """
-    Integration Tests for the admin roles
+    Integration Tests for the admin roles.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_admin_role_management(self, fs):
         client = MockZIAClient(fs)
         errors = []  # List to collect errors

@@ -1,0 +1,403 @@
+interactions:
+- request:
+    body: '{"name": "tests-vcr0001", "description": "tests-vcr0002", "engineExpression":
+      "((D63.S > 1))", "customDlpEngine": true}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '119'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+  response:
+    body:
+      string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:45 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3165'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 96eef483-25ae-9147-bc44-8528c30ce142
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4974'
+      x-ratelimit-reset:
+      - '18'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+  response:
+    body:
+      string: '{"id":10,"name":"tests-vcr0001","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:46 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '403'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 64ddc3a0-4a98-9c5f-b8bd-dc4e3a57530d
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4973'
+      x-ratelimit-reset:
+      - '15'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0001_Updated", "description": "tests-vcr0002", "engineExpression":
+      "((D63.S > 1))", "customDlpEngine": true}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+  response:
+    body:
+      string: '{"id":10,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"tests-vcr0002"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:49 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3696'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - dce0d76d-011e-9e83-a553-f605cd5b13f8
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4972'
+      x-ratelimit-reset:
+      - '14'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/dlpEngines
+  response:
+    body:
+      string: '[{"id":1,"name":"Credit Cards_1761585101101","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":2,"name":"Credit
+        Cards","engineExpression":"((D63.S > 1))","customDlpEngine":true,"description":"Credit
+        Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":3,"name":"Canada-SSN","engineExpression":"((D50.S
+        > 0))","customDlpEngine":true,"description":"Canada Social Insurance Number"},{"id":4,"name":"Brazil-SSN","engineExpression":"((D36.S
+        > 0))","customDlpEngine":true,"description":"Brazil CPF Number"},{"id":5,"name":"Social
+        Security Numbers","engineExpression":"((D62.S > 3))","customDlpEngine":true,"description":"Social
+        Security Numbers"},{"id":6,"name":"Names and SSNs","engineExpression":"((D42.S
+        > 5) AND (D62.S > 5))","customDlpEngine":true,"description":"Test DLP rule
+        to check for a file with 5 Names and 5 US Social Security Numbers"},{"id":7,"name":"SSN-With-Dashes","engineExpression":"((D62.S
+        > 3))","customDlpEngine":true},{"id":8,"name":"Credit Cards_1761585101101_1761587103205","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":9,"name":"kgRZw","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"Credit Cards_test_1761180092151_test_1761191461189_test_1761418154739-test-1761429819141-test-1761429976541"},{"id":10,"name":"tests-vcr0001_Updated","engineExpression":"((D63.S
+        > 1))","customDlpEngine":true,"description":"tests-vcr0002"},{"id":64,"predefinedEngineName":"CYBER_BULLY_ENG","engineExpression":"(D119.S
+        > 0)","customDlpEngine":false,"description":"Detect self-harm & cyberbullying
+        violations"},{"id":63,"predefinedEngineName":"HIPAA","engineExpression":"(D60.S
+        > 0 AND D62.S > 5)","customDlpEngine":false,"description":"Detect HIPAA violations"},{"id":62,"predefinedEngineName":"GLBA","engineExpression":"(D61.S
+        > 0 AND D62.S > 5)","customDlpEngine":false,"description":"Detect GLBA violations"},{"id":61,"predefinedEngineName":"PCI","engineExpression":"(D63.S
+        > 5 AND D62.S > 5)","customDlpEngine":false,"description":"Detect PCI violations"},{"id":60,"predefinedEngineName":"OFFENSIVE_LANGUAGE","engineExpression":"(D48.S
+        > 0)","customDlpEngine":false,"description":"Detect Offensive language"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:50 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '418'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3d6461b9-1bee-99e4-8602-e7814bff7eaa
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4971'
+      x-ratelimit-reset:
+      - '10'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/dlpEngines/10
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:49:53 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '2516'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 7ef63822-ec10-924c-9d68-fb8109cf4a26
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4970'
+      x-ratelimit-reset:
+      - '10'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

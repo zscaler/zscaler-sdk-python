@@ -1,0 +1,75 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/cbiconfig/cbi/api/customers/216196257331281920/regions
+  response:
+    body:
+      string: '[{"id":"c2e13c06-3e5a-4e24-a34d-309c11ce920f","name":"Frankfurt"},{"id":"72511d2f-b000-4dd8-a8a7-4255f3eb183d","name":"Washington"},{"id":"f40523cd-80fb-4728-ac8a-8682b3fe69aa","name":"Singapore"},{"id":"e680420e-57a7-4a3a-a72e-c92fb5b13505","name":"Portland
+        Oregon"},{"id":"b74be6a3-7d84-4069-a8b6-9291bc268ef9","name":"Sydney"},{"id":"e8bf5e01-e508-4567-b197-a8d9ebae59a5","name":"Mumbai"},{"id":"9953534d-6506-4fb9-9bc3-287ea3af192a","name":"London"},{"id":"cb958946-5cb2-4297-a57b-065836261aa6","name":"Tokyo"},{"id":"bc9cef38-34a9-48ef-aee5-7d86a909b2dc","name":"Ohio"},{"id":"6cf578b5-f180-49a8-8134-f65e5bd8c8cb","name":"Paris"},{"id":"714268d9-5105-4f91-b894-7661d2376fba","name":"Hyderabad"},{"id":"9689a0bb-8c98-4b04-9b54-14ffaeb2bfc8","name":"HongKong"},{"id":"aa865601-9c79-467a-af08-d339f786e29b","name":"UAE"},{"id":"626b4428-eddb-40a6-b724-b49af660e219","name":"Tel
+        Aviv"},{"id":"a71651bf-a4e7-4985-b5c3-979bca2b5330","name":"Cape Town"},{"id":"be5a341b-6ec0-4916-843c-d373e2de891d","name":"Melbourne"},{"id":"de460e10-6c09-447e-99dd-ec9d00d2026f","name":"Sao
+        Paulo"},{"id":"679f18e1-2738-4b45-86b1-2dfffaf576a5","name":"Zurich"},{"id":"43b075de-4086-410a-9794-a4852b7c836b","name":"Osaka"}]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 21:18:13 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '54'
+      x-frame-options:
+      - DENY
+      x-http2-stream-id:
+      - '5'
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - fdd0e580-317f-9b96-ab92-6962d3d952ef
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4957'
+      x-ratelimit-reset:
+      - '48'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -30,6 +30,7 @@ class TestAccessPolicyForwardingRuleV2:
     Integration Tests for the Client Forwarding Policy Rules V2
     """
 
+    @pytest.mark.vcr()
     def test_client_forwarding_policy_rules_v2(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -38,7 +39,7 @@ class TestAccessPolicyForwardingRuleV2:
         try:
             # Step 1: Create rule
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-apfr2-" + generate_random_string()
                 rule_description = "Integration test Client Forwarding Rule V2"
 
                 created_rule, _, err = client.zpa.policies.add_client_forwarding_rule_v2(

@@ -1,0 +1,345 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/users
+  response:
+    body:
+      string: '[{"id":29309057,"name":"adam.ashcroft","email":"adam.ashcroft@securitygeek.io","groups":[{"id":25684250,"name":"Engineering"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":24326816,"name":"DEFAULT
+        ADMIN","email":"admin@24326813.zscalerthree.net","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"Default
+        Administrator","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":117781255,"name":"William
+        Guilherme","email":"admin@securitygeekio.zslogin.net","groups":[],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":123234156,"name":"Admin
+        Test","email":"admin_test@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306493,"name":"Ajith
+        Almond","email":"ajith.almond@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309058,"name":"Albert
+        Amin","email":"albert.amin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309064,"name":"Alison
+        Abbas","email":"alison.abbas@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309111,"name":"Allison
+        Ashley","email":"allison.ashley@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":32458848,"name":"Amazzal
+        Habib","email":"amazzal.elhabib@securitygeek.io","groups":[{"id":24326814,"name":"Service
+        Admin"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309083,"name":"Amber
+        Aesop","email":"amber.aesop@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309154,"name":"Anantha
+        Amos","email":"anantha.amos@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485535,"name":"Andre
+        Austin","email":"andre.austin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309142,"name":"Angela
+        Ahmed","email":"angela.ahmed@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309159,"name":"Anne
+        Allison","email":"anne.allison@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29601726,"name":"ShhkDrDbBCBrpvsHDk3cYT0eT2eYFDcJtHL5P/8NW1c=","email":"api-audit@securitygeek.io","groups":[{"id":24326814,"name":"Service
+        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309113,"name":"Aravinda
+        Arnold","email":"aravinda.arnold@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309136,"name":"Arjuna
+        Allan","email":"arjuna.allan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119208879,"name":"artxngwpbq
+        Smith","email":"artxngwpbq@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306490,"name":"Ayaka
+        Addison","email":"ayaka.addison@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309075,"name":"Azumi
+        Adams","email":"azumi.adams@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485537,"name":"Benjamin
+        Brookfield","email":"benjamin.brookfield@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119237041,"name":"beuiotcrau
+        Smith","email":"beuiotcrau@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":125988070,"name":"boaayabscf
+        Smith","email":"boaayabscf@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309148,"name":"Bobby
+        Brown","email":"bobby.brown@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309068,"name":"Brahma
+        Bradshaw","email":"brahma.bradshaw@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485527,"name":"Brandon
+        Bates","email":"brandon.bates@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309114,"name":"Brenda
+        Bowers","email":"brenda.bowers@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309145,"name":"Brian
+        Boyle","email":"brian.boyle@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309116,"name":"Carla
+        Cohen","email":"carla.cohen@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309147,"name":"Carol
+        Kirk","email":"carol.kirk@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485518,"name":"Catherine
+        Cooke","email":"catherine.cooke@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309106,"name":"Catherine
+        Kay","email":"catherine.kay@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309069,"name":"Charles
+        Keenan","email":"charles.keenan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309158,"name":"Charlie
+        Clifford","email":"charlie.clifford@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309105,"name":"Cheryl
+        Chester","email":"cheryl.chester@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309173,"name":"Chloe
+        Chapman","email":"chloe.chapman@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309123,"name":"Christopher
+        Clements","email":"christopher.clements@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309067,"name":"Courtney
+        Kazin","email":"courtney.kazin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485530,"name":"Cynthia
+        Calder","email":"cynthia.calder@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309065,"name":"Cynthia
+        Kendall","email":"cynthia.kendall@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309090,"name":"Daichi
+        Duncan","email":"daichi.duncan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485528,"name":"Daniel
+        Dixon","email":"daniel.dixon@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309086,"name":"Darrell
+        Donnelly","email":"darrell.donnelly@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309135,"name":"Deanna
+        Dexter","email":"deanna.dexter@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309120,"name":"Deborah
+        Donnelly","email":"deborah.donnelly@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485519,"name":"Deborah
+        Dreyer","email":"deborah.dreyer@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309118,"name":"Denise
+        Drummond","email":"denise.drummond@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485509,"name":"Derrick
+        Davies","email":"derrick.davies@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309143,"name":"Derrick
+        Deacon","email":"derrick.deacon@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309059,"name":"Diana
+        Dodd","email":"diana.dodd@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485536,"name":"Diana
+        Duff","email":"diana.duff@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309150,"name":"Donna
+        Daniel","email":"donna.daniel@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309112,"name":"Douglas
+        Dalby","email":"douglas.dalby@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485515,"name":"Edward
+        England","email":"edward.england@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309117,"name":"Elizabeth
+        Eales","email":"elizabeth.eales@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309130,"name":"Ella
+        Evans","email":"ella.evans@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485523,"name":"Emi
+        Edge","email":"emi.edge@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309125,"name":"Emily
+        Easton","email":"emily.easton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485520,"name":"Emily
+        Edwards","email":"emily.edwards@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"},{"id":62719182,"name":"M321"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":55914107,"name":"Eddie
+        Parra","email":"eparra@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":26348357,"name":"DevOps"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309126,"name":"Eri
+        Easton","email":"eri.easton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309096,"name":"Eric
+        Eaton","email":"eric.eaton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309066,"name":"Erica
+        Emmanuel","email":"erica.emmanuel@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309089,"name":"Erika
+        Ellwood","email":"erika.ellwood@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485531,"name":"Esha
+        England","email":"esha.england@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236896,"name":"evtfwtfovf
+        Smith","email":"evtfwtfovf@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119382233,"name":"eyakarvrhm
+        Smith","email":"eyakarvrhm@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309165,"name":"Frank
+        Fox","email":"frank.fox@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119402505,"name":"fyrxwfaqfx
+        Smith","email":"fyrxwfaqfx@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485516,"name":"Gabriel
+        Guest","email":"gabriel.guest@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309084,"name":"Gary
+        Greig","email":"gary.greig@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236940,"name":"gbybmrrqjx
+        Smith","email":"gbybmrrqjx@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309072,"name":"George
+        George","email":"george.george@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119487330,"name":"gfvtefecez
+        Smith","email":"gfvtefecez@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309062,"name":"Goro
+        Garner","email":"goro.garner@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485526,"name":"Grace
+        Gilbey","email":"grace.gilbey@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309121,"name":"Grace
+        Gribbin","email":"grace.gribbin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309076,"name":"Hisao
+        Hastings","email":"hisao.hastings@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119615503,"name":"hmvsildaxp
+        Smith","email":"hmvsildaxp@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309098,"name":"Holly
+        Hirst","email":"holly.hirst@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119489309,"name":"ifcnzsahbu
+        Smith","email":"ifcnzsahbu@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119474201,"name":"iizrgbcogx
+        Smith","email":"iizrgbcogx@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309055,"name":"Inderjit
+        Iles","email":"inderjit.iles@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119618279,"name":"ireessbbaj
+        Smith","email":"ireessbbaj@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":120515922,"name":"ixsoklhhnd
+        Smith","email":"ixsoklhhnd@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309171,"name":"Jacob
+        Joyce","email":"jacob.joyce@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309127,"name":"Jacqueline
+        Jamieson","email":"jacqueline.jamieson@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309175,"name":"Jaime
+        Jamieson","email":"jaime.jamieson@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":42230602,"name":"Jamie
+        John","email":"jamie_john@securitygeek.io","groups":[{"id":26348357,"name":"DevOps"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309133,"name":"Jared
+        James","email":"jared.james@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236558,"name":"jcxjjknzil
+        Smith","email":"jcxjjknzil@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":140662622,"name":"John
+        Doe","email":"jdoe@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309134,"name":"Jenny
+        Jenkins","email":"jenny.jenkins@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309132,"name":"Jeremiah
+        Jones","email":"jeremiah.jones@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309128,"name":"Jessica
+        Jarvis","email":"jessica.jarvis@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485510,"name":"Jessica
+        Joyce","email":"jessica.joyce@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119530337,"name":"jihawjwtde
+        Smith","email":"jihawjwtde@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119483522,"name":"jmcipijino
+        Smith","email":"jmcipijino@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309155,"name":"Joe
+        Jacques","email":"joe.jacques@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":83108434,"name":"sP8FEJ/XBS/wokdNyupWCA==","email":"john.ashcroft1@securitygeek.io","groups":[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"},{"id":62718389,"name":"A001"}],"department":{"id":68759308,"name":"A000_test_1761418096949-test-1761429754606-test-1761429914836"},"comments":"guest
+        wi-fi user","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:53:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '671'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 889def86-edc4-9db1-bf0f-8c4931994aa8
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4984'
+      x-ratelimit-reset:
+      - '25'
+      x-transaction-id:
+      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/departments
+  response:
+    body:
+      string: '[{"id":68759308,"name":"A000_test_1761418096949-test-1761429754606-test-1761429914836","comments":"vilis_bgYOBk63"},{"id":68759309,"name":"A001","comments":"A001"},{"id":68759310,"name":"A002","comments":"A002"},{"id":68759311,"name":"A003","comments":"A003"},{"id":68759312,"name":"A004","comments":"A004"},{"id":68759313,"name":"A005","comments":"A005"},{"id":68759314,"name":"A006","comments":"A006"},{"id":68759315,"name":"A007","comments":"A007"},{"id":68759316,"name":"A008","comments":"A008"},{"id":68759317,"name":"A009","comments":"A009"},{"id":68759318,"name":"A010","comments":"A010"},{"id":68759319,"name":"A011","comments":"A011"},{"id":68759320,"name":"A012","comments":"A012"},{"id":68759321,"name":"A013","comments":"A013"},{"id":68759322,"name":"A014","comments":"A014"},{"id":68759323,"name":"A015","comments":"A015"},{"id":68759324,"name":"A016","comments":"A016"},{"id":68759325,"name":"A017","comments":"A017"},{"id":68759326,"name":"A018","comments":"A018"},{"id":68759327,"name":"A019","comments":"A019"},{"id":68759328,"name":"A020","comments":"A020"},{"id":68759329,"name":"A021","comments":"A021"},{"id":68759330,"name":"A022","comments":"A022"},{"id":68759331,"name":"A023","comments":"A023"},{"id":68759332,"name":"A024","comments":"A024"},{"id":68759333,"name":"A025","comments":"A025"},{"id":68759334,"name":"A026","comments":"A026"},{"id":68759335,"name":"A027","comments":"A027"},{"id":68759336,"name":"A028","comments":"A028"},{"id":68759337,"name":"A029","comments":"A029"},{"id":68759338,"name":"A030","comments":"A030"},{"id":68759339,"name":"A031","comments":"A031"},{"id":68759340,"name":"A032","comments":"A032"},{"id":68759341,"name":"A033","comments":"A033"},{"id":68759342,"name":"A034","comments":"A034"},{"id":68759343,"name":"A035","comments":"A035"},{"id":68759344,"name":"A036","comments":"A036"},{"id":68759345,"name":"A037","comments":"A037"},{"id":68759346,"name":"A038","comments":"A038"},{"id":68759348,"name":"A039","comments":"A039"},{"id":68759349,"name":"A040","comments":"A040"},{"id":68759350,"name":"A041","comments":"A041"},{"id":68759351,"name":"A042","comments":"A042"},{"id":68759352,"name":"A043","comments":"A043"},{"id":68759353,"name":"A044","comments":"A044"},{"id":68759355,"name":"A045","comments":"A045"},{"id":68759357,"name":"A046","comments":"A046"},{"id":68759359,"name":"A047","comments":"A047"},{"id":68759360,"name":"A048","comments":"A048"},{"id":68759361,"name":"A049","comments":"A049"},{"id":68759362,"name":"A050","comments":"A050"},{"id":68759363,"name":"A051","comments":"A051"},{"id":68759364,"name":"A052","comments":"A052"},{"id":68759365,"name":"A053","comments":"A053"},{"id":68759367,"name":"B000","comments":"B000"},{"id":68759368,"name":"B001","comments":"B001"},{"id":68759369,"name":"B002","comments":"B002"},{"id":68759370,"name":"B003","comments":"B003"},{"id":68759371,"name":"B004","comments":"B004"},{"id":68759372,"name":"B005","comments":"B005"},{"id":68759373,"name":"B006","comments":"B006"},{"id":68759374,"name":"B007","comments":"B007"},{"id":68759376,"name":"B008","comments":"B008"},{"id":68759377,"name":"B009","comments":"B009"},{"id":68759378,"name":"B010","comments":"B010"},{"id":68759379,"name":"B011","comments":"B011"},{"id":68759380,"name":"B012","comments":"B012"},{"id":68759381,"name":"B013","comments":"B013"},{"id":68759382,"name":"B014","comments":"B014"},{"id":68759383,"name":"B015","comments":"B015"},{"id":68759384,"name":"B016","comments":"B016"},{"id":68759385,"name":"B017","comments":"B017"},{"id":68759386,"name":"B018","comments":"B018"},{"id":68759387,"name":"B019","comments":"B019"},{"id":68759388,"name":"B020","comments":"B020"},{"id":68759389,"name":"B021","comments":"B021"},{"id":68759390,"name":"B022","comments":"B022"},{"id":68759391,"name":"B023","comments":"B023"},{"id":68759392,"name":"B024","comments":"B024"},{"id":68759393,"name":"B025","comments":"B025"},{"id":68759394,"name":"B026","comments":"B026"},{"id":68759395,"name":"B027","comments":"B027"},{"id":68759397,"name":"B028","comments":"B028"},{"id":68759398,"name":"B029","comments":"B029"},{"id":68759399,"name":"B030","comments":"B030"},{"id":68759400,"name":"B031","comments":"B031"},{"id":68759401,"name":"B032","comments":"B032"},{"id":68759402,"name":"B033","comments":"B033"},{"id":68759403,"name":"B034","comments":"B034"},{"id":68759404,"name":"B035","comments":"B035"},{"id":68759405,"name":"B036","comments":"B036"},{"id":68759406,"name":"B037","comments":"B037"},{"id":68759408,"name":"B038","comments":"B038"},{"id":68759410,"name":"B039","comments":"B039"},{"id":68759411,"name":"B040","comments":"B040"},{"id":68759412,"name":"B041","comments":"B041"},{"id":68759413,"name":"B042","comments":"B042"},{"id":68759414,"name":"B043","comments":"B043"},{"id":68759415,"name":"B044","comments":"B044"},{"id":68759416,"name":"B045","comments":"B045"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:53:36 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '405'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 58787f4e-b37f-911b-9548-6b9ac162bbb6
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4983'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/groups
+  response:
+    body:
+      string: '[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892","comments":"deporto_A7dxNtrV"},{"id":62718389,"name":"A001"},{"id":62718428,"name":"A002"},{"id":62718420,"name":"A003"},{"id":62718400,"name":"A004"},{"id":62718395,"name":"A005"},{"id":62718419,"name":"A006"},{"id":62718391,"name":"A007"},{"id":62718393,"name":"A008"},{"id":62718437,"name":"A009"},{"id":62718415,"name":"A010"},{"id":62718398,"name":"A011"},{"id":62718421,"name":"A012"},{"id":62718436,"name":"A013"},{"id":62718404,"name":"A014"},{"id":62718411,"name":"A015"},{"id":62718392,"name":"A016"},{"id":62718429,"name":"A017"},{"id":62718426,"name":"A018"},{"id":62718390,"name":"A019"},{"id":62718387,"name":"A020"},{"id":62718382,"name":"A021"},{"id":62718427,"name":"A022"},{"id":62718422,"name":"A023"},{"id":62718397,"name":"A024"},{"id":62718383,"name":"A025"},{"id":62718423,"name":"A026"},{"id":62718403,"name":"A027"},{"id":62718409,"name":"A028"},{"id":62718424,"name":"A029"},{"id":62718412,"name":"A030"},{"id":62718432,"name":"A031"},{"id":62718407,"name":"A032"},{"id":62718386,"name":"A033"},{"id":62718431,"name":"A034"},{"id":62718425,"name":"A035"},{"id":62718417,"name":"A036"},{"id":62718405,"name":"A037"},{"id":62718434,"name":"A038"},{"id":62718396,"name":"A039"},{"id":62718408,"name":"A040"},{"id":62718388,"name":"A041"},{"id":62718394,"name":"A042"},{"id":62718416,"name":"A043"},{"id":62718430,"name":"A044"},{"id":62718410,"name":"A045"},{"id":62718433,"name":"A046"},{"id":62718413,"name":"A047"},{"id":62718418,"name":"A048"},{"id":62718399,"name":"A049"},{"id":62718402,"name":"A050"},{"id":62718438,"name":"AAD"},{"id":62718439,"name":"AAD
+        Zscaler External elastic.5005.com TCP 5005"},{"id":62808820,"name":"AAD Zscaler
+        External ideweiiss9075.infoserve.endress.com TCP 60000"},{"id":62808786,"name":"AAD
+        Zscaler External java-buildserver.infoserve.endress.com TCP 8081"},{"id":62808755,"name":"AAD
+        Zscaler External sapqlication.endress.com HTTP/S"},{"id":62808740,"name":"AAD
+        Zscaler External wdxbj.endress.com HTTP/S"},{"id":70420793,"name":"Analytics
+        Settings Managers"},{"id":70420803,"name":"App Engine Admins"},{"id":70420819,"name":"App
+        Engine Studio Users"},{"id":70420860,"name":"App Owner"},{"id":70420806,"name":"App-Sec
+        Manager"},{"id":70420792,"name":"Application Exception Approver - Level 1"},{"id":70420826,"name":"Application
+        Exception Approver - Level 2"},{"id":70420838,"name":"Application False Positive
+        Approver"},{"id":70420858,"name":"Application Security"},{"id":62718497,"name":"B000"},{"id":62718453,"name":"B001"},{"id":62718463,"name":"B002"},{"id":62718472,"name":"B003"},{"id":62718442,"name":"B004"},{"id":62718441,"name":"B005"},{"id":62718465,"name":"B006"},{"id":62718461,"name":"B007"},{"id":62718454,"name":"B008"},{"id":62718484,"name":"B009"},{"id":62718447,"name":"B010"},{"id":62718490,"name":"B011"},{"id":62718474,"name":"B012"},{"id":62718470,"name":"B013"},{"id":62718450,"name":"B014"},{"id":62718485,"name":"B015"},{"id":62718458,"name":"B016"},{"id":62718457,"name":"B017"},{"id":62718478,"name":"B018"},{"id":62718446,"name":"B019"},{"id":62718462,"name":"B020"},{"id":62718487,"name":"B021"},{"id":62718492,"name":"B022"},{"id":62718488,"name":"B023"},{"id":62718444,"name":"B024"},{"id":62718460,"name":"B025"},{"id":62718473,"name":"B026"},{"id":62718464,"name":"B027"},{"id":62718466,"name":"B028"},{"id":62718482,"name":"B029"},{"id":62718456,"name":"B030"},{"id":62718443,"name":"B031"},{"id":62718451,"name":"B032"},{"id":62718449,"name":"B033"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:53:37 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '423'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c3d789a0-4f39-993a-bf45-5b4817044105
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4982'
+      x-ratelimit-reset:
+      - '24'
+      x-transaction-id:
+      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -31,6 +31,7 @@ class TestGroups:
     Integration Tests for the Group
     """
 
+    @pytest.mark.vcr()
     def test_groups(self, fs):
         client = MockZIdentityClient(fs)
         errors = []

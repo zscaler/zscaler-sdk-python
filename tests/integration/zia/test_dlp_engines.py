@@ -30,6 +30,7 @@ class TestDLPEngines:
     Integration Tests for the DLP Engines
     """
 
+    @pytest.mark.vcr()
     def test_dlp_engines(self, fs):
         client = MockZIAClient(fs)
         errors = []

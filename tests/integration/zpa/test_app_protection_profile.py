@@ -30,11 +30,12 @@ class TestAppProtectionProfile:
     Integration Tests for the App Protection Profile
     """
 
+    @pytest.mark.vcr()
     def test_app_protection_profile(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        profile_name = "tests-" + generate_random_string()
+        profile_name = "tests-approtprof-" + generate_random_string()
         profile_id = None  # Define profile_id here to ensure it's accessible throughout
 
         try:

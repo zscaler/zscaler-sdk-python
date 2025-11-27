@@ -29,6 +29,7 @@ class TestIsolationProfile:
     Integration Tests for the Isolation Profile.
     """
 
+    @pytest.mark.vcr()
     def test_isolation_profile(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

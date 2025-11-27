@@ -30,12 +30,14 @@ class TestUserPortal:
     Integration Tests for the User Portal
     """
 
+    @pytest.mark.vcr()
     def test_user_portal(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        portal_name = "tests-" + generate_random_string()
-        portal_description = "tests-" + generate_random_string()
+        portal_name = "tests-uport-" + generate_random_string()
+        portal_description = "tests-uport-" + generate_random_string()
+        ext_label = "tests-uport-" + generate_random_string()  # Unique ext_label to avoid duplicates
         portal_id = None  # Initialize portal_id
 
         try:
@@ -48,7 +50,7 @@ class TestUserPortal:
                 user_notification_enabled=True,
                 managed_by_zs=True,
                 domain='securitygeek.io',
-                ext_label='portal01',
+                ext_label=ext_label,
                 ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                 ext_domain="securitygeek.io"
             )
@@ -84,7 +86,7 @@ class TestUserPortal:
                     user_notification_enabled=True,
                     managed_by_zs=True,
                     domain='securitygeek.io',
-                    ext_label='portal01',
+                    ext_label=ext_label,
                     ext_domain_name='-securitygeek-io.b.zscalerportal.net',
                     ext_domain="securitygeek.io"                    
                     )

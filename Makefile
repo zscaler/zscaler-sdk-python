@@ -183,6 +183,106 @@ coverage\:zpa:
 coverage\:zidentity:
 	poetry run pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
 
+# ==========================================
+# VCR Testing Commands
+# ==========================================
+# Note: For recording, export credentials first:
+#   export ZSCALER_CLIENT_ID="your_id"
+#   export ZSCALER_CLIENT_SECRET="your_secret"
+#   export ZSCALER_VANITY_DOMAIN="your_domain"
+#   export ZPA_CUSTOMER_ID="your_customer_id"
+#   export ZSCALER_CLOUD="production"
+# ==========================================
+
+# Run all tests with VCR cassettes (no credentials needed)
+test\:vcr:
+	@echo "$(COLOR_ZSCALER)Running tests with VCR cassettes (no credentials needed)...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/ -v --disable-warnings
+
+# Run integration tests with VCR cassettes
+test\:integration\:vcr:
+	@echo "$(COLOR_ZSCALER)Running integration tests with VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration -v --disable-warnings
+
+# Run integration tests with VCR and coverage
+test\:integration\:vcr\:coverage:
+	@echo "$(COLOR_ZSCALER)Running integration tests with VCR cassettes and coverage...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration --cov=zscaler --cov-report xml --cov-report term --disable-warnings -v
+
+# Record new VCR cassettes for all integration tests (requires credentials)
+test\:vcr\:record:
+	@echo "$(COLOR_WARNING)Recording VCR cassettes (requires credentials)...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZIA
+test\:vcr\:record\:zia:
+	@echo "$(COLOR_ZSCALER)Recording ZIA VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zia --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZPA
+test\:vcr\:record\:zpa:
+	@echo "$(COLOR_ZSCALER)Recording ZPA VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zpa --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZCC
+test\:vcr\:record\:zcc:
+	@echo "$(COLOR_ZSCALER)Recording ZCC VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zcc --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZDX
+test\:vcr\:record\:zdx:
+	@echo "$(COLOR_ZSCALER)Recording ZDX VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zdx --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZIdentity
+test\:vcr\:record\:zidentity:
+	@echo "$(COLOR_ZSCALER)Recording ZIdentity VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zidentity --record-mode=rewrite -v --disable-warnings
+
+# Record VCR cassettes for ZTW
+test\:vcr\:record\:ztw:
+	@echo "$(COLOR_ZSCALER)Recording ZTW VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/ztw --record-mode=rewrite -v --disable-warnings
+
+# Playback VCR cassettes for ZIA (no credentials needed)
+test\:vcr\:playback\:zia:
+	@echo "$(COLOR_ZSCALER)Playing back ZIA VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zia -v --disable-warnings
+
+# Playback VCR cassettes for ZPA (no credentials needed)
+test\:vcr\:playback\:zpa:
+	@echo "$(COLOR_ZSCALER)Playing back ZPA VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zpa -v --disable-warnings
+
+# Playback VCR cassettes for ZCC (no credentials needed)
+test\:vcr\:playback\:zcc:
+	@echo "$(COLOR_ZSCALER)Playing back ZCC VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zcc -v --disable-warnings
+
+# Playback VCR cassettes for ZDX (no credentials needed)
+test\:vcr\:playback\:zdx:
+	@echo "$(COLOR_ZSCALER)Playing back ZDX VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zdx -v --disable-warnings
+
+# Playback VCR cassettes for ZIdentity (no credentials needed)
+test\:vcr\:playback\:zidentity:
+	@echo "$(COLOR_ZSCALER)Playing back ZIdentity VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zidentity -v --disable-warnings
+
+# Playback VCR cassettes for ZTW (no credentials needed)
+test\:vcr\:playback\:ztw:
+	@echo "$(COLOR_ZSCALER)Playing back ZTW VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/ztw -v --disable-warnings
+
+# Run integration tests against live API (no VCR)
+test\:integration\:live:
+	@echo "$(COLOR_WARNING)Running LIVE integration tests (requires credentials)...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration --record-mode=none -v --disable-warnings
+
+# ==========================================
+# Sweep Commands
+# ==========================================
+
 sweep\:zia:
 	@echo "$(COLOR_WARNING)WARNING: This will destroy infrastructure. Use only in development accounts.$(COLOR_NONE)"
 	ZIA_SDK_TEST_SWEEP=true python tests/integration/zia/sweep/run_sweep.py --sweep
@@ -224,5 +324,24 @@ else
 	@echo "poetry installation found"
 endif
 	~/.local/bin/poetry install
+
+# ==========================================
+# Security Scanning
+# ==========================================
+
+# Scan VCR cassettes for secrets (default)
+security\:scan:
+	@echo "$(COLOR_ZSCALER)Scanning for secrets in VCR cassettes...$(COLOR_NONE)"
+	./scripts/check-secrets.sh
+
+# Scan entire repository for secrets
+security\:scan\:full:
+	@echo "$(COLOR_ZSCALER)Scanning entire repository for secrets...$(COLOR_NONE)"
+	./scripts/check-secrets.sh --full
+
+# Install secret detection tools
+security\:install:
+	@echo "$(COLOR_ZSCALER)Installing secret detection tools...$(COLOR_NONE)"
+	./scripts/check-secrets.sh --install
 
 .PHONY: clean-pyc clean-build docs clean

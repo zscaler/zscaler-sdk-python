@@ -1147,3 +1147,251 @@ class TestPartnerIdHeader:
             assert headers["x-partner-id"] == "custom-partner-789"
             assert "Custom-Header" in headers
             assert headers["Custom-Header"] == "custom-value"
+
+
+class TestZIAEditLockRetry:
+    """Test ZIA EDIT_LOCK_NOT_AVAILABLE retry functionality."""
+
+    def test_zia_edit_lock_retry_on_409(self):
+        """Test that ZIA 409 EDIT_LOCK_NOT_AVAILABLE triggers retry."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 2},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # First call returns 409 with EDIT_LOCK_NOT_AVAILABLE, second call succeeds
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "EDIT_LOCK_NOT_AVAILABLE"}'
+        
+        mock_response_200 = Mock()
+        mock_response_200.status_code = 200
+        mock_response_200.text = '{"success": true}'
+        
+        mock_http_client.send_request.side_effect = [
+            (mock_response_409, None),
+            (mock_response_200, None)
+        ]
+        executor._http_client = mock_http_client
+        
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zia/api/v1/virtualZenClusters/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zia"
+        }
+        
+        # Mock time.sleep to avoid actual delays
+        with patch('zscaler.request_executor.time.sleep') as mock_sleep:
+            req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Should have retried and succeeded
+        assert error is None
+        assert response.status_code == 200
+        assert mock_http_client.send_request.call_count == 2
+        # Should have slept with exponential backoff (5 seconds for first retry)
+        mock_sleep.assert_called_once_with(5)
+
+    def test_zia_edit_lock_retry_exhausted(self):
+        """Test that ZIA 409 EDIT_LOCK_NOT_AVAILABLE stops retrying after max retries."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 2},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        # All calls return 409 with EDIT_LOCK_NOT_AVAILABLE
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "EDIT_LOCK_NOT_AVAILABLE"}'
+        
+        mock_http_client.send_request.return_value = (mock_response_409, None)
+        executor._http_client = mock_http_client
+        
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zia/api/v1/virtualZenClusters/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zia"
+        }
+        
+        # Mock time.sleep to avoid actual delays
+        with patch('zscaler.request_executor.time.sleep'):
+            req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Should return 409 after exhausting retries
+        assert response.status_code == 409
+        # Should have tried max_retries + 1 times (initial + 2 retries)
+        assert mock_http_client.send_request.call_count == 3
+
+    def test_zia_edit_lock_no_retry_for_other_services(self):
+        """Test that 409 EDIT_LOCK_NOT_AVAILABLE does NOT trigger retry for non-ZIA services."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 2},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "EDIT_LOCK_NOT_AVAILABLE"}'
+        
+        mock_http_client.send_request.return_value = (mock_response_409, None)
+        executor._http_client = mock_http_client
+        
+        # ZPA request (not ZIA)
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zpa/api/v1/apps/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zpa"
+        }
+        
+        req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Should NOT retry for ZPA
+        assert response.status_code == 409
+        assert mock_http_client.send_request.call_count == 1
+
+    def test_zia_edit_lock_no_retry_for_other_409_errors(self):
+        """Test that 409 with different error code does NOT trigger edit lock retry."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 2},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "DUPLICATE_ENTRY"}'  # Different error code
+        
+        mock_http_client.send_request.return_value = (mock_response_409, None)
+        executor._http_client = mock_http_client
+        
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zia/api/v1/virtualZenClusters/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zia"
+        }
+        
+        req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Should NOT retry for different 409 error
+        assert response.status_code == 409
+        assert mock_http_client.send_request.call_count == 1
+
+    def test_zia_edit_lock_exponential_backoff(self):
+        """Test that ZIA edit lock retry uses exponential backoff."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 3},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "EDIT_LOCK_NOT_AVAILABLE"}'
+        
+        mock_response_200 = Mock()
+        mock_response_200.status_code = 200
+        mock_response_200.text = '{"success": true}'
+        
+        # Fail twice, succeed on third retry
+        mock_http_client.send_request.side_effect = [
+            (mock_response_409, None),
+            (mock_response_409, None),
+            (mock_response_200, None)
+        ]
+        executor._http_client = mock_http_client
+        
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zia/api/v1/virtualZenClusters/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zia"
+        }
+        
+        sleep_calls = []
+        with patch('zscaler.request_executor.time.sleep') as mock_sleep:
+            mock_sleep.side_effect = lambda x: sleep_calls.append(x)
+            req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Should have succeeded on third attempt
+        assert error is None
+        assert response.status_code == 200
+        assert mock_http_client.send_request.call_count == 3
+        
+        # Check exponential backoff: 5s, 10s
+        assert len(sleep_calls) == 2
+        assert sleep_calls[0] == 5   # 5 * (2^0) = 5
+        assert sleep_calls[1] == 10  # 5 * (2^1) = 10
+
+    def test_zia_edit_lock_backoff_capped_at_60_seconds(self):
+        """Test that ZIA edit lock backoff is capped at 60 seconds."""
+        config = {
+            "client": {
+                "rateLimit": {"maxRetries": 5},
+                "cache": {"enabled": False}
+            }
+        }
+        
+        cache = NoOpCache()
+        executor = RequestExecutor(config, cache)
+        
+        mock_http_client = Mock()
+        mock_response_409 = Mock()
+        mock_response_409.status_code = 409
+        mock_response_409.text = '{"code": "EDIT_LOCK_NOT_AVAILABLE"}'
+        
+        mock_http_client.send_request.return_value = (mock_response_409, None)
+        executor._http_client = mock_http_client
+        
+        request = {
+            "method": "PUT",
+            "url": "https://api.zsapi.net/zia/api/v1/virtualZenClusters/123",
+            "headers": {"Authorization": "Bearer token"},
+            "params": {},
+            "service_type": "zia"
+        }
+        
+        sleep_calls = []
+        with patch('zscaler.request_executor.time.sleep') as mock_sleep:
+            mock_sleep.side_effect = lambda x: sleep_calls.append(x)
+            req, response, response_body, error = executor.fire_request_helper(request, 0, time.time())
+        
+        # Check that backoff is capped at 60 seconds
+        # Progression: 5, 10, 20, 40, 60 (capped), 60 (capped)
+        for backoff in sleep_calls:
+            assert backoff <= 60

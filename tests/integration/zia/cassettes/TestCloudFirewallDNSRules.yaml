@@ -1,0 +1,424 @@
+interactions:
+- request:
+    body: '{"name": "tests-vcr0001", "description": "Integration test firewall rule",
+      "order": 1, "rank": 7, "action": "REDIR_REQ", "redirectIp": "8.8.8.8", "destCountries":
+      ["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"], "sourceCountries":
+      ["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"], "protocols": ["ANY_RULE"],
+      "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '344'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/firewallDnsRules
+  response:
+    body:
+      string: '{"action":"REDIR_REQ","capturePCAP":false,"id":1571781,"name":"tests-vcr0001","order":1,"rank":7,"description":"Integration
+        test firewall rule","protocols":["ANY_RULE"],"state":"ENABLED","destCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"sourceCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"destIpCategories":["ANY"],"resCategories":["ANY"],"redirectIp":"8.8.8.8","isEunEnabled":false,"eunTemplateId":15,"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:48:00 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '4862'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 1035d82a-74aa-9c13-8554-cd2744fbcf0b
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4972'
+      x-ratelimit-reset:
+      - '5'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/firewallDnsRules/1571781
+  response:
+    body:
+      string: '{"action":"REDIR_REQ","capturePCAP":false,"accessControl":"READ_WRITE","id":1571781,"name":"tests-vcr0001","order":1,"rank":7,"description":"Integration
+        test firewall rule","protocols":["ANY_RULE"],"state":"ENABLED","destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"sourceCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"redirectIp":"8.8.8.8","applications":[],"applicationGroups":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":15,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:48:02 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1920'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b522328c-f013-989d-b42e-493bbc3649f6
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4999'
+      x-ratelimit-reset:
+      - '60'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0001", "description": "Updated integration test firewall
+      dns rule", "order": 1, "rank": 7, "action": "REDIR_REQ", "redirectIp": "8.8.8.8",
+      "destCountries": ["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"], "sourceCountries":
+      ["COUNTRY_CA", "COUNTRY_MX", "COUNTRY_AU", "COUNTRY_GB"], "protocols": ["ANY_RULE"],
+      "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '356'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/firewallDnsRules/1571781
+  response:
+    body:
+      string: '{"action":"REDIR_REQ","capturePCAP":false,"id":1571781,"name":"tests-vcr0001","order":1,"rank":7,"description":"Updated
+        integration test firewall dns rule","protocols":["ANY_RULE"],"state":"ENABLED","destCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"sourceCountries":["COUNTRY_CA","COUNTRY_MX","COUNTRY_AU","COUNTRY_GB"],"destIpCategories":["ANY"],"resCategories":["ANY"],"redirectIp":"8.8.8.8","isEunEnabled":false,"eunTemplateId":15,"lastModifiedTime":1764200889,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:48:10 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '8205'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 4c2b971f-8d03-98ab-9470-73b341c6a49e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4998'
+      x-ratelimit-reset:
+      - '58'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/firewallDnsRules
+  response:
+    body:
+      string: '[{"action":"ALLOW","capturePCAP":false,"accessControl":"READ_WRITE","id":184230,"name":"Default
+        Firewall DNS Rule","order":0,"rank":7,"description":"_test_1761191423063_test_1761418111471-test-1761429771110-test-1761429929854","protocols":["ANY_RULE"],"state":"ENABLED","applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":15,"lastModifiedTime":1761584881,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":true,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":184231,"name":"Unknown
+        DNS Traffic","order":-3,"rank":7,"protocols":["ANY_RULE"],"state":"ENABLED","applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1639208160,"lastModifiedBy":{"id":24328827,"name":"wguilherme@securitygeek.io"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":true,"defaultRule":true},{"action":"ALLOW","capturePCAP":false,"accessControl":"READ_WRITE","id":184233,"name":"Office
+        365 One Click Rule","order":11,"rank":7,"protocols":["ANY_RULE"],"state":"DISABLED","destIpCategories":["OFFICE_365"],"resCategories":["OFFICE_365"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":202850,"name":"Block
+        DNS Tunnels","order":14,"rank":7,"protocols":["ANY_RULE"],"state":"ENABLED","destIpCategories":["OTHER_MISCELLANEOUS","PHISHING","BOTNET","MALWARE_SITE","MISCELLANEOUS_OR_UNKNOWN","NEWLY_REG_DOMAINS","NON_CATEGORIZABLE"],"applications":["HOFF","MAILSHELL","KR0","DNSTUN_MALICIOUS","DNSTUN_UNKNOWN","DNSTUN_SOCIAL","DNSTUN_IM","DNSTUN_P2P","DNSTUN_STREAMING","DNSTUN_WEBSEARCH","DNSTUN_MALWARE","DNSTUN_IMAGEHOST","DNSTUN_ENTERPRISE","DNSTUN_BUSINESS","DNSTUN_MAPPSTORE","DNSTUN_GAMING","DNSTUN_NETMGMT","DNSTUN_AUTH","DNSTUN_TUNNELING","DNSTUN_FILESERVER_TRANSFER","DNSTUN_DATABASE","DNSTUN_CONFERENCE","DNSTUN_REMOTE","DNSTUN_MOBILE","TGIN"],"applicationGroups":[{"id":798502,"name":"All
+        DNS Tunnels"}],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"REDIR_ZPA","capturePCAP":false,"accessControl":"READ_WRITE","id":241780,"name":"ZPA
+        Resolver for Road Warrior","order":11,"rank":7,"description":"Redirect Road
+        Warrior Traffic to ZPA","locations":[{"id":-3,"name":"LOC_DEFAULT","isNameL10nTag":true}],"protocols":["ANY_RULE"],"state":"DISABLED","applications":[],"dnsRuleRequestTypes":[],"zpaIpGroup":{"id":1003546,"name":"ZPA
+        IP Pool for Road Warrior traffic"},"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"REDIR_ZPA","capturePCAP":false,"accessControl":"READ_WRITE","id":241781,"name":"ZPA
+        Resolver for Locations","order":11,"rank":7,"description":"Redirect Location
+        Traffic to ZPA","protocols":["ANY_RULE"],"state":"DISABLED","applications":[],"dnsRuleRequestTypes":[],"zpaIpGroup":{"id":1003559,"name":"ZPA
+        IP Pool for Location traffic"},"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":418832,"name":"Block
+        Gaming DNS","order":15,"rank":7,"description":"Block Gaming DNS","protocols":["ANY_RULE"],"state":"ENABLED","destIpCategories":["OTHER_GAMES","SOCIAL_NETWORKING_GAMES"],"resCategories":["OTHER_GAMES","SOCIAL_NETWORKING_GAMES"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":418834,"name":"Block
+        FileSharing DNS","order":16,"rank":7,"description":"Block FileSharing DNS","protocols":["ANY_RULE"],"state":"ENABLED","destIpCategories":["COPYRIGHT_INFRINGEMENT","P2P_COMMUNICATION"],"resCategories":["COPYRIGHT_INFRINGEMENT","P2P_COMMUNICATION"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"REDIR_RES","capturePCAP":false,"accessControl":"READ_WRITE","id":418837,"name":"Redirect_DoH_Traffic","order":13,"rank":7,"protocols":["DOHTTPS_RULE"],"state":"DISABLED","destIpCategories":["GAMBLING","ANONYMIZER"],"resCategories":["GAMBLING","ANONYMIZER"],"redirectIp":"1.1.1.1","applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"ALLOW","capturePCAP":false,"accessControl":"READ_WRITE","id":449522,"name":"UCaaS
+        One Click Rule","order":12,"rank":7,"protocols":["ANY_RULE"],"state":"DISABLED","applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"REDIR_ZPA","capturePCAP":false,"accessControl":"READ_WRITE","id":802933,"name":"Fallback
+        ZPA Resolver for Road Warrior","order":-5,"rank":7,"description":"Fallback
+        ZPA Resolver for Road Warrior Traffic","locations":[{"id":-3,"name":"LOC_DEFAULT","isNameL10nTag":true}],"protocols":[],"state":"DISABLED","applications":[],"dnsRuleRequestTypes":[],"zpaIpGroup":{"id":2468834,"name":"Fallback
+        ZPA IP Pool for Road Warrior traffic"},"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1696730204,"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":true,"defaultRule":true},{"action":"REDIR_ZPA","capturePCAP":false,"accessControl":"READ_WRITE","id":802934,"name":"Fallback
+        ZPA Resolver for Locations","order":-4,"rank":7,"description":"Fallback ZPA
+        Resolver for Location Traffic","protocols":["ANY_RULE"],"state":"DISABLED","applications":[],"dnsRuleRequestTypes":[],"zpaIpGroup":{"id":2468836,"name":"Fallback
+        ZPA IP Pool for Location traffic"},"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1696730204,"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":true,"defaultRule":true},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019179,"name":"Risky
+        DNS categories","order":9,"rank":7,"description":"Risky DNS categories","protocols":["ANY_RULE"],"state":"DISABLED","destIpCategories":["OTHER_ADULT_MATERIAL","ADULT_THEMES","LINGERIE_BIKINI","NUDITY","PORNOGRAPHY","SEXUALITY","ADULT_SEX_EDUCATION","K_12_SEX_EDUCATION","OTHER_ILLEGAL_OR_QUESTIONABLE","COMPUTER_HACKING","QUESTIONABLE","PROFANITY","ANONYMIZER","MILITANCY_HATE_AND_EXTREMISM","VIOLENCE","WEAPONS_AND_BOMBS","SOCIAL_ADULT"],"resCategories":["OTHER_ADULT_MATERIAL","ADULT_THEMES","LINGERIE_BIKINI","NUDITY","PORNOGRAPHY","SEXUALITY","ADULT_SEX_EDUCATION","K_12_SEX_EDUCATION","OTHER_ILLEGAL_OR_QUESTIONABLE","COMPUTER_HACKING","QUESTIONABLE","PROFANITY","ANONYMIZER","MILITANCY_HATE_AND_EXTREMISM","VIOLENCE","WEAPONS_AND_BOMBS","SOCIAL_ADULT"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019180,"name":"Risky
+        DNS tunnels","order":10,"rank":7,"description":"Risky DNS tunnels","protocols":["ANY_RULE"],"state":"DISABLED","applications":["RACKSPACE","MCAFEE","SOPHOS","ESET","CYMRU","DEVICESCAPE","ZVELO","MODSECURITY","SPOTIFYWLAN","IPASS","OBJECTIVEFS","DNSTUN_GOOD","BOSTON","THOUGHTCATALOG","WINDOWSCENTRAL","FLYINGMAG","XDADEV","RVBDCC","CCM","IMRWORLDWIDE","GOOGLE_DNSTUN","MYL","ARENADAEMON","QY","TEL","OTSUKA","SENDERBASE","NTTDATA","IPV6TEST","SENSIC","RADIX","INSAGS","SODEXO","VIRTUSA","SONICWALL","RYDER","DXC","COSTAIN","TAKEDAPHARMA","MRSHMC","INFOSYSBPM","USL","AMAZONVIDEO","HONDA","BRIGHTSPCACE","CSWG","SALESFORCE_DNSTUN","INTECH","SECURESERVER","FRANCETELECOM","CAMPINA","TQ","MATTEL","NESSUS","RANDSTAD","KCTEST","HOEFLIGER","KLATENCOR","UNISYS","IDEXXI","HITACHI","MARLABS","KELLYSERVICES","IRCO","DDSTUDIOS","MICRON","PARADIGMGEO","MICROSOFT_DNSTUN","GROUPSERVICES","OPENDNS_DNSTUN","GMX_DNSTUN","DISNEY"],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019181,"name":"High
+        risk DNS categories","order":7,"rank":7,"description":"High risk DNS categories","protocols":["ANY_RULE"],"state":"DISABLED","destIpCategories":["OTHER_SECURITY","NEWLY_REG_DOMAINS","NEWLY_REVIVED_DOMAINS"],"resCategories":["OTHER_SECURITY","NEWLY_REG_DOMAINS","NEWLY_REVIVED_DOMAINS"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019182,"name":"High
+        risk DNS tunnels","order":8,"rank":7,"description":"High risk DNS tunnels","protocols":["ANY_RULE"],"state":"DISABLED","applications":["DNSTUN_UNKNOWN","DNSTUN_SOCIAL","DNSTUN_IM","DNSTUN_P2P","DNSTUN_STREAMING","DNSTUN_WEBSEARCH","DNSTUN_MALWARE","DNSTUN_IMAGEHOST","DNSTUN_ENTERPRISE","DNSTUN_BUSINESS","DNSTUN_MAPPSTORE","DNSTUN_GAMING","DNSTUN_NETMGMT","DNSTUN_AUTH","DNSTUN_TUNNELING","DNSTUN_FILESERVER_TRANSFER","DNSTUN_DATABASE","DNSTUN_CONFERENCE","DNSTUN_REMOTE","DNSTUN_MOBILE","DNSTUN_ADS"],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019183,"name":"Critical
+        risk DNS categories","order":5,"rank":7,"description":"Critical risk DNS categories","protocols":["ANY_RULE"],"state":"DISABLED","destIpCategories":["PHISHING","BOTNET","MALWARE_SITE","ADSPYWARE_SITES","DGA"],"resCategories":["PHISHING","BOTNET","MALWARE_SITE","ADSPYWARE_SITES","DGA"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"BLOCK","capturePCAP":false,"accessControl":"READ_WRITE","id":1019184,"name":"Critical
+        risk DNS tunnels","order":6,"rank":7,"description":"Critical risk DNS tunnels","protocols":["ANY_RULE"],"state":"DISABLED","applications":["HOFF","MAILSHELL","KR0","DNSTUN_MALICIOUS","BAIDUYUNDNS","TGIN","TOADTEXTURE","TRUCKINSURANCE","GENESISMISSIONARYBAPTISTCHURCH","LEARNZOLASUITE","THREEMINUTEWEBSITE","SONGMOUNTAINFINEART","WEAVERPUBLISHING"],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1764200877,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"predefined":true,"defaultDnsRuleNameUsed":false,"defaultRule":false},{"action":"ALLOW","capturePCAP":false,"accessControl":"READ_WRITE","id":1536554,"name":"Default
+        Firewall DNS Rule_1761584876974","order":-1,"rank":7,"description":"_test_1761191423063_test_1761418111471-test-1761429771110-test-1761429929854","protocols":["ANY_RULE"],"state":"ENABLED","applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":15,"lastModifiedTime":1761584895,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":true},{"action":"REDIR_ZPA","capturePCAP":false,"accessControl":"READ_WRITE","id":1558000,"name":"ZPA
+        Resolver for Extranet Locations","order":-101,"rank":0,"description":"Redirect
+        Extranet Location Traffic to ZPA","locationGroups":[{"id":157892460,"name":"All
+        Extranet Location Group"}],"protocols":["ANY_RULE"],"state":"ENABLED","applications":[],"dnsRuleRequestTypes":[],"zpaIpGroup":{"id":10130737,"name":"ZPA
+        IP Pool for Extranet Location traffic"},"isEunEnabled":false,"eunTemplateId":0,"lastModifiedTime":1763256806,"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":true,"defaultRule":true},{"action":"REDIR_REQ","capturePCAP":false,"accessControl":"READ_WRITE","id":1571781,"name":"tests-vcr0001","order":1,"rank":7,"description":"Updated
+        integration test firewall dns rule","protocols":["ANY_RULE"],"state":"ENABLED","destCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"sourceCountries":["COUNTRY_AU","COUNTRY_CA","COUNTRY_GB","COUNTRY_MX"],"applications":[],"dnsRuleRequestTypes":[],"isEunEnabled":false,"eunTemplateId":15,"lastModifiedTime":1764200889,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"isWebEUNEnabled":false,"defaultDnsRuleNameUsed":false,"defaultRule":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:48:13 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '2606'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 007d5458-6463-96b6-b7b6-097b10f561e5
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '50'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/firewallDnsRules/1571781
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:48:17 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3823'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c65d2922-4e30-9c4b-90fd-bec5628e7922
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '47'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

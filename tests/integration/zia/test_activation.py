@@ -25,9 +25,12 @@ def fs():
 
 class TestActivation:
     """
-    Integration Tests for the ZIA Activation
+    Integration Tests for the ZIA Activation.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
+    @pytest.mark.vcr()
     def test_activation(self, fs):
         client = MockZIAClient(fs)
         errors = []

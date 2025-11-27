@@ -1,0 +1,192 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://identity.test.zscaler.com/admin/api/v1/resource-servers
+  response:
+    body:
+      string: '{"pageOffset":0,"pageSize":100,"results_total":2,"records":[{"id":"jhlm4bhr7g7j2","name":"Zscaler
+        APIs","displayName":"Zscaler APIs","description":"Zscaler APIs endpoint","primaryAud":"https://api.zscaler.com","defaultApi":true,"serviceScopes":[{"service":{"id":"hhlm4bhr9g7ja","name":"ZIAM","displayName":"ZIdentity
+        Administration"},"scopes":[{"id":"hhlm4bhr9g7ja::9hl7h09lvg6kc","name":"Role:CXO
+        Insight User"},{"id":"hhlm4bhr9g7ja::9h727vp4t02tc","name":"Role:Super Admin"},{"id":"hhlm4bhr9g7ja::9hivdvq44060o","name":"Role:Users
+        Admin"},{"id":"hhlm4bhr9g7ja::9h727vpadg2td","name":"Role:View Only Admin"}]},{"service":{"id":"hhlm4bhmag7iq","name":"ZCC","displayName":"Zscaler
+        Client Connector","cloudName":"zscalerthree.net","orgName":"Security Geek
+        IO"},"scopes":[{"id":"hhlm4bhmag7iq::hq6ja786l06bl","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhmag7iq::hplm4bkrmg7k2","name":"Role:Read
+        Only"},{"id":"hhlm4bhmag7iq::hplm4bkrm07jj","name":"Role:Super Admin"}]},{"service":{"id":"hhlm4bhma07ip","name":"CLOUD_CONNECTOR","displayName":"Zscaler
+        Cloud and Branch Connector","cloudName":"zscalerthree.net","orgName":"William
+        Guilherme"},"scopes":[{"id":"hhlm4bhma07ip::hplm4bko6g7jn","name":"Role:Branch
+        and Cloud Connector API"},{"id":"hhlm4bhma07ip::hplm4bko3g7jm","name":"Role:Branch
+        and Cloud Connector OAuth CCA role"},{"id":"hhlm4bhma07ip::hpsuf7r5r07oi","name":"Role:Cloud
+        Connector OAuth ZT Gateway role"},{"id":"hhlm4bhma07ip::hplm4bko9g7k1","name":"Role:Read-only
+        Admin"},{"id":"hhlm4bhma07ip::hplm4bko607js","name":"Role:Super Admin"},{"id":"hhlm4bhma07ip::hprgr7n0mg6e8","name":"Role:ZTW
+        Zidentity Token role"}]},{"service":{"id":"hhlm4bhmbg7ir","name":"ZDX","displayName":"Zscaler
+        Digital Experience","cloudName":"zscalerthree.net","orgName":"William Guilherme"},"scopes":[{"id":"hhlm4bhmbg7ir::hq6ja787d06jg","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhmbg7ir::hplm4bko4g7e7","name":"Role:ZDX_Admin_Role"},{"id":"hhlm4bhmbg7ir::hplm4bko807ji","name":"Role:ZDX
+        Read-only Admin"},{"id":"hhlm4bhmbg7ir::hplm4bko4g7jf","name":"Role:ZDX Service
+        Desk Tier 1"},{"id":"hhlm4bhmbg7ir::hplm4bko707jp","name":"Role:ZDX Super
+        Admin"}]},{"service":{"id":"hhlm4bhlqg7ev","name":"ZIA","displayName":"Zscaler
+        Internet Access","cloudName":"zscalerthree.net","orgName":"William Guilherme"},"scopes":[{"id":"hhlm4bhlqg7ev::hpokm6mtfg63f","name":"Role:API_Role01"},{"id":"hhlm4bhlqg7ev::hq6ja787eg6jh","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhlqg7ev::hplm4bko5g66f","name":"Role:Firewall-Admin-API-Role"}]},{"service":{"id":"hhlm4bhlrg7io","name":"ZPA","displayName":"Zscaler
+        Private Access","cloudName":"prod.zpath.net","orgName":"Security Geek IO"},"scopes":[{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hplm4bij007jo","name":"Scope:Default:
+        Role:API Full Access"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq6ja78df06jk","name":"Scope:Default:
+        Role:API_Role_READONLY"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o207r1","name":"Scope:Default:
+        Role:aSgMqs"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o5g7jg","name":"Scope:Default:
+        Role:fxfoP"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o307r2","name":"Scope:Default:
+        Role:ITBM"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o4g7r3","name":"Scope:Default:
+        Role:Q"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq7unjcpag785","name":"Scope:Default:
+        Role:Rz"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq7unjcp8g784","name":"Scope:Default:
+        Role:yNPIu"}]}]}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-length:
+      - '3373'
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src wss://*.userpilot.io *.userpilot.io https://securitygeekio-admin.zslogin.net;font-src
+        https://fonts.gstatic.com https://securitygeekio-admin.zslogin.net/iam/;img-src
+        data: https://www.zscaler.com https://info.zscaler.com https://securitygeekio-admin.zslogin.net/iam/;script-src
+        ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com *.userpilot.io https://securitygeekio-admin.zslogin.net/iam/;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com *.userpilot.io https://securitygeekio-admin.zslogin.net/iam/;frame-src
+        ''self'' https://help.zscaler.com https://help.zscaler.us ;frame-ancestors  https://securitygeekio.zslogin.net/;upgrade-insecure-requests'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 06:25:28 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '148'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://identity.test.zscaler.com/admin/api/v1/resource-servers/jhlm4bhr7g7j2
+  response:
+    body:
+      string: '{"id":"jhlm4bhr7g7j2","name":"Zscaler APIs","displayName":"Zscaler
+        APIs","description":"Zscaler APIs endpoint","primaryAud":"https://api.zscaler.com","defaultApi":true,"serviceScopes":[{"service":{"id":"hhlm4bhr9g7ja","name":"ZIAM","displayName":"ZIdentity
+        Administration"},"scopes":[{"id":"hhlm4bhr9g7ja::9hl7h09lvg6kc","name":"Role:CXO
+        Insight User"},{"id":"hhlm4bhr9g7ja::9h727vp4t02tc","name":"Role:Super Admin"},{"id":"hhlm4bhr9g7ja::9hivdvq44060o","name":"Role:Users
+        Admin"},{"id":"hhlm4bhr9g7ja::9h727vpadg2td","name":"Role:View Only Admin"}]},{"service":{"id":"hhlm4bhmag7iq","name":"ZCC","displayName":"Zscaler
+        Client Connector","cloudName":"zscalerthree.net","orgName":"Security Geek
+        IO"},"scopes":[{"id":"hhlm4bhmag7iq::hq6ja786l06bl","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhmag7iq::hplm4bkrmg7k2","name":"Role:Read
+        Only"},{"id":"hhlm4bhmag7iq::hplm4bkrm07jj","name":"Role:Super Admin"}]},{"service":{"id":"hhlm4bhma07ip","name":"CLOUD_CONNECTOR","displayName":"Zscaler
+        Cloud and Branch Connector","cloudName":"zscalerthree.net","orgName":"William
+        Guilherme"},"scopes":[{"id":"hhlm4bhma07ip::hplm4bko6g7jn","name":"Role:Branch
+        and Cloud Connector API"},{"id":"hhlm4bhma07ip::hplm4bko3g7jm","name":"Role:Branch
+        and Cloud Connector OAuth CCA role"},{"id":"hhlm4bhma07ip::hpsuf7r5r07oi","name":"Role:Cloud
+        Connector OAuth ZT Gateway role"},{"id":"hhlm4bhma07ip::hplm4bko9g7k1","name":"Role:Read-only
+        Admin"},{"id":"hhlm4bhma07ip::hplm4bko607js","name":"Role:Super Admin"},{"id":"hhlm4bhma07ip::hprgr7n0mg6e8","name":"Role:ZTW
+        Zidentity Token role"}]},{"service":{"id":"hhlm4bhmbg7ir","name":"ZDX","displayName":"Zscaler
+        Digital Experience","cloudName":"zscalerthree.net","orgName":"William Guilherme"},"scopes":[{"id":"hhlm4bhmbg7ir::hq6ja787d06jg","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhmbg7ir::hplm4bko4g7e7","name":"Role:ZDX_Admin_Role"},{"id":"hhlm4bhmbg7ir::hplm4bko807ji","name":"Role:ZDX
+        Read-only Admin"},{"id":"hhlm4bhmbg7ir::hplm4bko4g7jf","name":"Role:ZDX Service
+        Desk Tier 1"},{"id":"hhlm4bhmbg7ir::hplm4bko707jp","name":"Role:ZDX Super
+        Admin"}]},{"service":{"id":"hhlm4bhlqg7ev","name":"ZIA","displayName":"Zscaler
+        Internet Access","cloudName":"zscalerthree.net","orgName":"William Guilherme"},"scopes":[{"id":"hhlm4bhlqg7ev::hpokm6mtfg63f","name":"Role:API_Role01"},{"id":"hhlm4bhlqg7ev::hq6ja787eg6jh","name":"Role:API_Role_READONLY"},{"id":"hhlm4bhlqg7ev::hplm4bko5g66f","name":"Role:Firewall-Admin-API-Role"}]},{"service":{"id":"hhlm4bhlrg7io","name":"ZPA","displayName":"Zscaler
+        Private Access","cloudName":"prod.zpath.net","orgName":"Security Geek IO"},"scopes":[{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hplm4bij007jo","name":"Scope:Default:
+        Role:API Full Access"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq6ja78df06jk","name":"Scope:Default:
+        Role:API_Role_READONLY"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o207r1","name":"Scope:Default:
+        Role:aSgMqs"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o5g7jg","name":"Scope:Default:
+        Role:fxfoP"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o307r2","name":"Scope:Default:
+        Role:ITBM"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq80sh3o4g7r3","name":"Scope:Default:
+        Role:Q"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq7unjcpag785","name":"Scope:Default:
+        Role:Rz"},{"id":"hhlm4bhlrg7io:mplm4biidg7jg:hq7unjcp8g784","name":"Scope:Default:
+        Role:yNPIu"}]}]}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-length:
+      - '3311'
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src wss://*.userpilot.io *.userpilot.io https://securitygeekio-admin.zslogin.net;font-src
+        https://fonts.gstatic.com https://securitygeekio-admin.zslogin.net/iam/;img-src
+        data: https://www.zscaler.com https://info.zscaler.com https://securitygeekio-admin.zslogin.net/iam/;script-src
+        ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com *.userpilot.io https://securitygeekio-admin.zslogin.net/iam/;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com *.userpilot.io https://securitygeekio-admin.zslogin.net/iam/;frame-src
+        ''self'' https://help.zscaler.com https://help.zscaler.us ;frame-ancestors  https://securitygeekio.zslogin.net/;upgrade-insecure-requests'
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 06:25:29 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      referrer-policy:
+      - no-referrer
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 10000;w=60, 10000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

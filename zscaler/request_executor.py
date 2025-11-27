@@ -608,7 +608,31 @@ class RequestExecutor:
                 return request, response, response.text, Exception(
                     "401 Unauthorized - token refresh attempts exhausted or OAuth not available.")
 
-        # Handle “retryable” statuses such as 429, 503, etc.
+        # ZIA-specific: Handle EDIT_LOCK_NOT_AVAILABLE (409 Conflict)
+        # This error occurs when another admin session holds the edit lock
+        # Retry with exponential backoff to wait for the lock to be released
+        if response.status_code == 409 and request.get("service_type") == "zia":
+            if attempts < max_retries:
+                try:
+                    response_body = response.text
+                    if response_body and "EDIT_LOCK_NOT_AVAILABLE" in response_body:
+                        # Calculate backoff with exponential delay: 5s, 10s, 20s, etc.
+                        backoff_seconds = 5 * (2 ** attempts)
+                        # Cap at 60 seconds max backoff
+                        backoff_seconds = min(backoff_seconds, 60)
+                        
+                        logger.warning(
+                            f"ZIA edit lock not available (attempt {attempts + 1}/{max_retries + 1}). "
+                            f"Another admin session may be holding the lock. "
+                            f"Retrying in {backoff_seconds} seconds..."
+                        )
+                        time.sleep(backoff_seconds)
+                        attempts += 1
+                        return self.fire_request_helper(request, attempts, request_start_time)
+                except Exception as parse_error:
+                    logger.debug(f"Could not parse 409 response body: {parse_error}")
+
+        # Handle "retryable" statuses such as 429, 503, etc.
         if attempts < max_retries and self.is_retryable_status(response.status_code):
             backoff_seconds = self.get_retry_after(response.headers, logger)
             if backoff_seconds is None:

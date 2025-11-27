@@ -77,7 +77,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 #         try:
 #             # Create a Forwarding Policy Rule
-#             rule_name = "tests-" + generate_random_string()
+#             rule_name = "tests-apcr-" + generate_random_string()
 #             rule_description = "updated-" + generate_random_string()
 #             created_rule, _, err = client.zpa.policies.add_capabilities_rule_v2(
 #                 name=rule_name,

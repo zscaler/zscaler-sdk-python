@@ -1,0 +1,395 @@
+interactions:
+- request:
+    body: '{"name": "tests-vcr0001", "description": "Integration test file type control
+      rule", "order": 1, "rank": 7, "filteringAction": "ALLOW", "operation": "DOWNLOAD",
+      "urlCategories": ["OTHER_ADULT_MATERIAL"], "protocols": ["FOHTTP_RULE", "FTP_RULE",
+      "HTTPS_RULE", "HTTP_RULE"], "deviceTrustLevels": ["UNKNOWN_DEVICETRUSTLEVEL",
+      "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"], "fileTypes": ["FTCATEGORY_ALZ",
+      "FTCATEGORY_P7Z", "FTCATEGORY_B64"], "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '454'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules
+  response:
+    body:
+      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
+        test file type control rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_P7Z","FTCATEGORY_B64"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"name":"tests-vcr0001"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:50:16 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '5806'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 816be933-7e06-9f8f-8941-7c3a56618557
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4997'
+      x-ratelimit-reset:
+      - '49'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+  response:
+    body:
+      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Integration
+        test file type control rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_B64","FTCATEGORY_P7Z"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1764201014,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:50:17 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '985'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - ac11f3ad-aeff-99e1-868e-a2e7cd08c0e7
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4996'
+      x-ratelimit-reset:
+      - '43'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0001", "description": "Updated integration test File
+      Type Control Rule", "order": 1, "rank": 7, "filteringAction": "ALLOW", "operation":
+      "DOWNLOAD", "urlCategories": ["OTHER_ADULT_MATERIAL"], "protocols": ["FOHTTP_RULE",
+      "FTP_RULE", "HTTPS_RULE", "HTTP_RULE"], "deviceTrustLevels": ["UNKNOWN_DEVICETRUSTLEVEL",
+      "LOW_TRUST", "MEDIUM_TRUST", "HIGH_TRUST"], "fileTypes": ["FTCATEGORY_ALZ",
+      "FTCATEGORY_P7Z", "FTCATEGORY_B64"], "state": "ENABLED"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '462'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+  response:
+    body:
+      string: '{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
+        integration test File Type Control Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_P7Z","FTCATEGORY_B64"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"name":"tests-vcr0001"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:50:23 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '5677'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 51764690-ced5-9250-88c3-6b21a34ba348
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4995'
+      x-ratelimit-reset:
+      - '42'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules
+  response:
+    body:
+      string: '[{"id":1571784,"protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"description":"Updated
+        integration test File Type Control Rule","browserEunTemplateId":0,"urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_ALZ","FTCATEGORY_B64","FTCATEGORY_P7Z"],"fileTypeCategories":[{"id":247,"name":"FTCATEGORY_ALZ","parent":"ARCHIVES"},{"id":257,"name":"FTCATEGORY_B64","parent":"ARCHIVES"},{"id":53,"name":"FTCATEGORY_P7Z","parent":"ARCHIVES"}],"deviceTrustLevels":["UNKNOWN_DEVICETRUSTLEVEL","LOW_TRUST","MEDIUM_TRUST","HIGH_TRUST"],"minSize":0,"maxSize":409600,"filteringAction":"ALLOW","capturePCAP":false,"operation":"DOWNLOAD","activeContent":false,"unscannable":false,"passwordProtected":false,"state":"ENABLED","rank":7,"lastModifiedTime":1764201021,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","name":"tests-vcr0001","cloudApplications":[]}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:50:25 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1265'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 882bf956-16a1-921e-a7a9-3046d257cc5e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4994'
+      x-ratelimit-reset:
+      - '37'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/fileTypeRules/1571784
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:50:28 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3170'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 574aaf47-7db2-98c1-9a1b-01c17d6a2470
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4993'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

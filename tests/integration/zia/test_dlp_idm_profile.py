@@ -29,6 +29,7 @@ class TestDLPIDMProfile:
     Integration Tests for the DLP IDM Profile
     """
 
+    @pytest.mark.vcr()
     def test_dlp_idm_profile(self, fs):
         client = MockZIAClient(fs)
         errors = []

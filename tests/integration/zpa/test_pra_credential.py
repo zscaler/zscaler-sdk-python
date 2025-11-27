@@ -30,13 +30,14 @@ class TestPRACredential:
     Integration Tests for the PRA Credential.
     """
 
+    @pytest.mark.vcr()
     def test_pra_credential(self, fs):
         client = MockZPAClient(fs)
         errors = []
         credential_id = None
 
-        credential_name = "John Doe " + generate_random_string()
-        credential_description = "tests-" + generate_random_string()
+        credential_name = "John-pracred-" + generate_random_string()
+        credential_description = "tests-pracred-" + generate_random_string()
         password = generate_random_password()
         user_domain = "securitygeek.io"
 
@@ -78,7 +79,7 @@ class TestPRACredential:
                 updated_description = "Updated " + generate_random_string()
                 _, _, err = client.zpa.pra_credential.update_credential(
                     credential_id=credential_id,
-                    name="John Doe " + generate_random_string(),
+                    name="John-pracred-" + generate_random_string(),
                     description=updated_description,
                     credential_type="PASSWORD",  # FIX: remains PASSWORD
                     user_domain=user_domain,

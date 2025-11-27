@@ -29,6 +29,7 @@ class TestMachineGroups:
     Integration Tests for the Machine Groups.
     """
 
+    @pytest.mark.vcr()
     def test_machine_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

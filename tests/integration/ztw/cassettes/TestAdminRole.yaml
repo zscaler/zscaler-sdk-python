@@ -1,0 +1,143 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://identity.test.zscaler.com/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
+        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Wed, 26 Nov 2025 20:13:10 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/ztw/api/v1/adminRoles
+  response:
+    body:
+      string: '[{"id":16712,"rank":0,"name":"Super Admin","policyAccess":"NONE","alertingAccess":"READ_WRITE","dashboardAccess":"NONE","reportAccess":"NONE","analysisAccess":"NONE","usernameAccess":"NONE","deviceInfoAccess":"READ_ONLY","adminAcctAccess":"READ_WRITE","featurePermissions":{"EDGE_CONNECTOR_PUBLIC_CLOUD_CONFIG_MANAGEMENT":"READ_WRITE","EDGE_CONNECTOR_NSS_CONFIGURATION":"READ_WRITE","EDGE_CONNECTOR_TEMPLATE":"READ_WRITE","REMOTE_ASSISTANCE_MANAGEMENT":"READ_WRITE","EDGE_CONNECTOR_CLOUD_PROVISIONING":"READ_WRITE","EDGE_CONNECTOR_DASHBOARD":"READ_ONLY","APIKEY_MANAGEMENT":"READ_WRITE","EDGE_CONNECTOR_LOCATION_MANAGEMENT":"READ_WRITE","EDGE_CONNECTOR_ADMIN_MANAGEMENT":"READ_WRITE","EDGE_CONNECTOR_FORWARDING":"READ_WRITE"},"extFeaturePermissions":{},"isNonEditable":true,"logsLimit":"UNRESTRICTED","roleType":"EDGE_CONNECTOR_ADMIN","reportTimeDuration":-1},{"id":16713,"rank":7,"name":"Read-only
+        Admin","policyAccess":"NONE","alertingAccess":"NONE","dashboardAccess":"NONE","reportAccess":"NONE","analysisAccess":"NONE","usernameAccess":"NONE","deviceInfoAccess":"READ_ONLY","adminAcctAccess":"READ_ONLY","featurePermissions":{"EDGE_CONNECTOR_PUBLIC_CLOUD_CONFIG_MANAGEMENT":"READ_ONLY","EDGE_CONNECTOR_TEMPLATE":"READ_ONLY","REMOTE_ASSISTANCE_MANAGEMENT":"READ_ONLY","EDGE_CONNECTOR_CLOUD_PROVISIONING":"READ_ONLY","EDGE_CONNECTOR_DASHBOARD":"READ_ONLY","APIKEY_MANAGEMENT":"READ_ONLY","EDGE_CONNECTOR_LOCATION_MANAGEMENT":"READ_ONLY","EDGE_CONNECTOR_ADMIN_MANAGEMENT":"READ_ONLY","EDGE_CONNECTOR_FORWARDING":"READ_ONLY"},"extFeaturePermissions":{},"logsLimit":"UNRESTRICTED","roleType":"EDGE_CONNECTOR_ADMIN","reportTimeDuration":-1}]'
+    headers:
+      cache-control:
+      - max-age=10
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; script-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/js/
+        https://www.zscaler.com https://api-js.mixpanel.com https://webapi.zscaler.com
+        'sha256-DaqjjpKf912Jcm2lqfmnG3r0K8QNu/4xLipWHeWpYLY=' 'sha256-GwYZP0VdQlGGGzYC96UErO5mW5PSN3L5izVbiWfGjLk=';
+        img-src 'self' https://www.zscaler.com https://server.arcgisonline.com https://webapi.zscaler.com
+        data:; style-src https://connector.zscalerthree.net/ https://connector.zscalerthree.net/css/
+        https://www.zscaler.com https://webapi.zscaler.com 'unsafe-inline'; connect-src
+        'self' https://api-js.mixpanel.com https://webapi.zscaler.com; form-action
+        https:; font-src 'self'; frame-src 'self' https://help.zscaler.com/ https://help.zscalergov.net
+        https://help.zscaler.us https://vars.hotjar.com/;
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 20:13:14 GMT
+      expires:
+      - Wed, 26 Nov 2025 20:13:24 GMT
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3060'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - dbbb6a16-f9f5-9e9b-9a75-e4b8995aad3f
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
