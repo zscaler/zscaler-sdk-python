@@ -205,6 +205,9 @@ def before_record_response(response):
             body = re.sub(rb'"privateKey"\s*:\s*"[^"]*"', b'"privateKey":"REDACTED"', body)
             body = re.sub(rb'"private_key"\s*:\s*"[^"]*"', b'"private_key":"REDACTED"', body)
 
+            # Redact any email-like values (anything with @ in a quoted string)
+            body = re.sub(rb'"[^"]*@[^"]*"', b'"REDACTED"', body)
+
             for service, pattern in URL_PATTERNS_BYTES.items():
                 test_url = pattern_to_test_url_bytes.get(service, TEST_URLS_BYTES["base"])
                 body = re.sub(pattern, test_url, body)
@@ -226,6 +229,9 @@ def before_record_response(response):
             body = re.sub(r'-----BEGIN[A-Z ]*PRIVATE KEY-----[^-]+-----END[A-Z ]*PRIVATE KEY-----', '-----BEGIN PRIVATE KEY-----REDACTED-----END PRIVATE KEY-----', body)
             body = re.sub(r'"privateKey"\s*:\s*"[^"]*"', '"privateKey":"REDACTED"', body)
             body = re.sub(r'"private_key"\s*:\s*"[^"]*"', '"private_key":"REDACTED"', body)
+
+            # Redact any email-like values (anything with @ in a quoted string)
+            body = re.sub(r'"[^"]*@[^"]*"', '"REDACTED"', body)
 
             pattern_to_test_url = {
                 "zia": TEST_URLS["zia"],

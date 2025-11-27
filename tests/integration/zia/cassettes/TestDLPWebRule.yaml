@@ -98,7 +98,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/webDlpRules/1571783
   response:
     body:
-      string: '{"accessControl":"READ_WRITE","id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"rank":0,"description":"tests-vcr0002","fileTypes":[],"fileTypeCategories":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"lastModifiedTime":1764200999,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"receiver":{},"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH","subRules":[],"sourceIpGroups":[],"eunTemplateId":0,"ucTemplateId":0}'
+      string: '{"accessControl":"READ_WRITE","id":1571783,"order":1,"protocols":["FTP_RULE","HTTPS_RULE","HTTP_RULE"],"rank":0,"description":"tests-vcr0002","fileTypes":[],"fileTypeCategories":[],"cloudApplications":["WINDOWS_LIVE_HOTMAIL"],"minSize":0,"action":"BLOCK","state":"ENABLED","matchOnly":false,"lastModifiedTime":1764200999,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"receiver":{},"withoutContentInspection":false,"inspectHttpGetEnabled":false,"name":"tests-vcr0001","userRiskScoreLevels":["LOW","MEDIUM","HIGH","CRITICAL"],"dlpDownloadScanEnabled":false,"zccNotificationsEnabled":false,"severity":"RULE_SEVERITY_HIGH","subRules":[],"sourceIpGroups":[],"eunTemplateId":0,"ucTemplateId":0}'
     headers:
       cache-control:
       - no-store, no-cache
