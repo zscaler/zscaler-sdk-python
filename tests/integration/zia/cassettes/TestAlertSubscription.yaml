@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"description": "Test Alert Subscription", "email": "alert@acme.com", "pt0Severities":
+    body: '{"description": "Test Alert Subscription", "email": "REDACTED", "pt0Severities":
       ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities": ["CRITICAL",
       "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL", "MAJOR",
       "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR", "INFO",
@@ -23,7 +23,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions
   response:
     body:
-      string: '{"id":4428,"description":"Test Alert Subscription","email":"alert@acme.com","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+      string: '{"id":4428,"description":"Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -82,7 +82,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"description": "Updated Test Alert Subscription", "email": "alert@acme.com",
+    body: '{"description": "Updated Test Alert Subscription", "email": "REDACTED",
       "pt0Severities": ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "secureSeverities":
       ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"], "manageSeverities": ["CRITICAL",
       "MAJOR", "INFO", "MINOR", "DEBUG"], "complySeverities": ["CRITICAL", "MAJOR",
@@ -105,7 +105,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions/4428
   response:
     body:
-      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"alert@acme.com","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
+      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"secureSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"complySeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","INFO","MINOR","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -182,7 +182,7 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions/4428
   response:
     body:
-      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"alert@acme.com","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}'
+      string: '{"id":4428,"description":"Updated Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -259,8 +259,8 @@ interactions:
     uri: https://api.zsapi.net/zia/api/v1/alertSubscriptions
   response:
     body:
-      string: '[{"id":4206,"description":"testAcc_Alert_Subscription","email":"udybrzjehv@acme.com","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]},{"id":4428,"description":"Updated
-        Test Alert Subscription","email":"alert@acme.com","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}]'
+      string: '[{"id":4206,"description":"testAcc_Alert_Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]},{"id":4428,"description":"Updated
+        Test Alert Subscription","email":"REDACTED","pt0Severities":["CRITICAL"],"secureSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"manageSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"complySeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"],"systemSeverities":["CRITICAL","MAJOR","MINOR","INFO","DEBUG"]}]'
     headers:
       cache-control:
       - no-store, no-cache

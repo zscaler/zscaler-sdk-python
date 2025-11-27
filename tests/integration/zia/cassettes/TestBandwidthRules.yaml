@@ -166,7 +166,7 @@ interactions:
   response:
     body:
       string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
-        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false}'
+        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -244,7 +244,7 @@ interactions:
   response:
     body:
       string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Integration
-        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false}'
+        test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -327,7 +327,7 @@ interactions:
   response:
     body:
       string: '{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
-        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false}'
+        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -406,23 +406,23 @@ interactions:
     body:
       string: '[{"id":184217,"name":"Default Bandwidth Control","order":2147483647,"state":"ENABLED","description":"Default
         Bandwidth Rule","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"rank":7,"lastModifiedTime":1619561362,"accessControl":"READ_WRITE","defaultRule":true},{"id":184219,"name":"Streaming
-        Media Bandwidth","order":7,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"bandwidthClasses":[{"id":5,"name":"BANDWIDTH_CAT_MEDIA","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":184220,"name":"Large
-        File Bandwidth","order":8,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":10,"bandwidthClasses":[{"id":2,"name":"BANDWIDTH_CAT_LARGE_FILE","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192486,"name":"Office
+        Media Bandwidth","order":7,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":0,"bandwidthClasses":[{"id":5,"name":"BANDWIDTH_CAT_MEDIA","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":184220,"name":"Large
+        File Bandwidth","order":8,"state":"DISABLED","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":10,"bandwidthClasses":[{"id":2,"name":"BANDWIDTH_CAT_LARGE_FILE","isNameL10nTag":true}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192486,"name":"Office
         365","order":2,"state":"DISABLED","description":"Ensure business critical
         Office applications always get a minimum of 40% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":100,"minBandwidth":40,"bandwidthClasses":[{"id":11,"name":"Office
-        Applications"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192487,"name":"Productivity
+        Applications"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192487,"name":"Productivity
         Applications","order":3,"state":"DISABLED","description":"Ensure business
-        productivity applications always get a minimum of 25% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":85,"minBandwidth":25,"bandwidthClasses":[{"id":12,"name":"Productivity"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192488,"name":"Streaming
+        productivity applications always get a minimum of 25% of the available bandwidth.","protocols":["ANY_RULE"],"maxBandwidth":85,"minBandwidth":25,"bandwidthClasses":[{"id":12,"name":"Productivity"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192488,"name":"Streaming
         Video - Office Hours","order":4,"state":"DISABLED","timeWindows":[{"id":552,"name":"Work
         hours_test_1761418071930-test-1761429728452-test-1761429889328"}],"description":"Limit
         streaming video traffic to 10% during office hours.","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":10,"minBandwidth":0,"bandwidthClasses":[{"id":14,"name":"Streaming
-        Video"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192489,"name":"Streaming
+        Video"}],"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192489,"name":"Streaming
         Video - After Hours","order":5,"state":"DISABLED","timeWindows":[{"id":554,"name":"Off
         hours"}],"description":"Allow more bandwidth for streaming video outside of
-        office hours","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":40,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192490,"name":"Social
+        office hours","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":40,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":192490,"name":"Social
         Media","order":6,"state":"DISABLED","description":"Limit social media bandwidth
-        to 5%","protocols":["ANY_RULE"],"maxBandwidth":5,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false},{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
-        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","defaultRule":false}]'
+        to 5%","protocols":["ANY_RULE"],"maxBandwidth":5,"minBandwidth":0,"rank":7,"lastModifiedTime":1764201818,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false},{"id":1571789,"name":"tests-bdwrule-vcr0002","order":1,"state":"ENABLED","description":"Updated
+        integration test Bandwidth Rule","protocols":["WEBSOCKETSSL_RULE","WEBSOCKET_RULE","DOHTTPS_RULE","TUNNELSSL_RULE","HTTP_PROXY","FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE","SSL_RULE","TUNNEL_RULE"],"maxBandwidth":100,"minBandwidth":20,"bandwidthClasses":[{"id":16,"name":"tests-bdwrule-vcr0001"}],"rank":7,"lastModifiedTime":1764201834,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","defaultRule":false}]'
     headers:
       cache-control:
       - no-store, no-cache
