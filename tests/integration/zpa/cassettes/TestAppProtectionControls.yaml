@@ -1,0 +1,352 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/actionTypes
+  response:
+    body:
+      string: '["PASS","BLOCK","REDIRECT","ALLOW"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '32'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 2faa471e-1846-9e79-9a1e-870bca54fc96
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4841'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/severityTypes
+  response:
+    body:
+      string: '["CRITICAL","ERROR","WARNING","INFO"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '31'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 0ea9c494-8f0c-9ff7-a02b-1c78346e1009
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4840'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/controlTypes
+  response:
+    body:
+      string: '["WEBSOCKET_PREDEFINED","WEBSOCKET_CUSTOM","THREATLABZ","CUSTOM","PREDEFINED","API_PREDEFINED","ADP_PREDEFINED"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '33'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 784ad2a1-120a-9cbd-998e-74ee43992b9e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4839'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/custom/httpMethods
+  response:
+    body:
+      string: '["GET","HEAD","POST","OPTIONS","PUT","PATCH","DELETE","CHECKOUT","COPY","LOCK","MERGE","MKACTIVITY","MKCOL","MOVE","PROPFIND","PROPPATCH","UNLOCK","TRACE","CONNECT"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:49 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '42'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - dad6720c-736b-9e88-9f8c-235b0a603712
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4838'
+      x-ratelimit-reset:
+      - '11'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/inspectionControls/predefined/versions
+  response:
+    body:
+      string: '["OWASP_CRS/4.8.0","OWASP_CRS/3.3.5","OWASP_CRS/3.3.0"]'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:17:50 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '36'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 8ceb45bc-f88c-982b-8ec8-ee2e0d84bafa
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4837'
+      x-ratelimit-reset:
+      - '10'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

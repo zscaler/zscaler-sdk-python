@@ -15,9 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-import random
-import string
-from tests.integration.zia.conftest import MockZIAClient
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -30,16 +28,13 @@ class TestExemptedUrls:
     Integration Test for Authentication Settings Exempted URLs Workflow.
     """
 
-    def generate_random_urls(self, count=5, domain="example.com"):
-        """Generate a list of random test URLs."""
-        return [f"{''.join(random.choices(string.ascii_lowercase, k=8))}.{domain}" for _ in range(count)]
-
+    @pytest.mark.vcr()
     def test_exempted_urls_workflow(self, fs):
         client = MockZIAClient(fs)
         errors = []
 
-        # Use valid format to ensure ZIA accepts them
-        test_urls = self.generate_random_urls(count=5, domain="test.com")
+        # Use deterministic URLs for VCR testing
+        test_urls = NameGenerator.generate_urls(count=5, domain="vcr-test.com")
 
         try:
             # Step 1: Add URLs to the exempt list

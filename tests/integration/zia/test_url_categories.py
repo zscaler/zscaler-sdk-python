@@ -15,10 +15,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-from box import Box, BoxList
 
 from tests.integration.zia.conftest import MockZIAClient
-from tests.test_utils import generate_random_string
 
 
 @pytest.fixture
@@ -28,7 +26,9 @@ def fs():
 
 class TestURLCategories:
     """
-    Integration Tests for the URL Categories
+    Integration Tests for the URL Categories.
+
+    These tests use VCR to record and replay HTTP interactions.
     """
 
     # def test_url_categories(self, fs):
@@ -237,7 +237,9 @@ class TestURLCategories:
     #     # Final assertion
     #     assert len(errors) == 0, f"Errors occurred during URL lookup test:\n{chr(10).join(errors)}"
 
+    @pytest.mark.vcr()
     def test_get_quota(self, fs):
+        """Test retrieving URL category quota."""
         client = MockZIAClient(fs)
         errors = []
 
@@ -246,7 +248,7 @@ class TestURLCategories:
 
             assert isinstance(quota_info, dict), "Quota information should be a dictionary"
 
-            # ✅ Validate expected keys from real API response
+            # Validate expected keys from real API response
             assert "remainingUrlsQuota" in quota_info, "Missing 'remainingUrlsQuota' in quota data"
             assert "uniqueUrlsProvisioned" in quota_info, "Missing 'uniqueUrlsProvisioned' in quota data"
 
@@ -254,3 +256,14 @@ class TestURLCategories:
             errors.append(f"Getting URL category quota failed: {exc}")
 
         assert len(errors) == 0, f"Errors occurred during quota retrieval test:\n{chr(10).join(errors)}"
+
+    @pytest.mark.vcr()
+    def test_list_categories(self, fs):
+        """Test listing URL categories."""
+        client = MockZIAClient(fs)
+
+        categories, _, error = client.zia.url_categories.list_categories()
+        assert error is None, f"Error listing categories: {error}"
+        assert categories is not None, "Categories list is None"
+        assert isinstance(categories, list), "Categories is not a list"
+        assert len(categories) > 0, "Expected at least one category"

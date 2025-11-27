@@ -30,6 +30,7 @@ class TestApplicationSegmentPRA:
     Integration Tests for the Applications Segment PRA
     """
 
+    @pytest.mark.vcr()
     def test_application_segment_pra(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -42,8 +43,8 @@ class TestApplicationSegmentPRA:
 
         try:
             try:
-                app_connector_group_name = "tests-" + generate_random_string()
-                app_connector_group_description = "tests-" + generate_random_string()
+                app_connector_group_name = "tests-apspra-" + generate_random_string()
+                app_connector_group_description = "tests-apspra-" + generate_random_string()
 
                 created_app_connector_group, resp, err = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
@@ -72,7 +73,7 @@ class TestApplicationSegmentPRA:
                 errors.append(f"App Connector Group creation failed: {exc}")
 
             try:
-                segment_group_name = "tests-" + generate_random_string()
+                segment_group_name = "tests-apspra-" + generate_random_string()
                 created_segment_group, resp, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 assert created_segment_group is not None, "No segment group data returned"
@@ -85,8 +86,8 @@ class TestApplicationSegmentPRA:
             # 4) Create a Server Group
             #
             try:
-                server_group_name = "tests-" + generate_random_string()
-                server_group_description = "tests-" + generate_random_string()
+                server_group_name = "tests-apspra-" + generate_random_string()
+                server_group_description = "tests-apspra-" + generate_random_string()
 
                 created_server_group, resp, err = client.zpa.server_groups.add_group(
                     name=server_group_name,
@@ -104,24 +105,25 @@ class TestApplicationSegmentPRA:
 
             #
             try:
-                app_segment_name = "ssh_pra_22.bd-redhat.com"
-                app_segment_description = "ssh_pra_22.bd-redhat.com"
+                domain_name = "tests-pra-" + generate_random_string() + ".bd-redhat.com"  # Unique domain
+                app_segment_name = domain_name
+                app_segment_description = domain_name
 
                 app_segment, _, err = client.zpa.app_segments_pra.add_segment_pra(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["ssh_pra_22.bd-redhat.com"],
+                    domain_names=[domain_name],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
-                    tcp_port_ranges=["22", "22"],
+                    tcp_port_ranges=["2222", "2222"],
                     common_apps_dto={
                         "apps_config": [
                             {
                                 "enabled": True,
-                                "application_port": "22",
+                                "application_port": "2222",
                                 "application_protocol": "SSH",
-                                "domain": "ssh_pra_22.bd-redhat.com",
+                                "domain": domain_name,
                             }
                         ]
                     },
@@ -143,17 +145,17 @@ class TestApplicationSegmentPRA:
                         name=app_segment_name,
                         description=updated_description,
                         enabled=True,
-                        domain_names=["ssh_pra_22.bd-redhat.com"],
+                        domain_names=[domain_name],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
-                        tcp_port_ranges=["22", "22"],
+                        tcp_port_ranges=["2222", "2222"],
                         common_apps_dto={
                             "apps_config": [
                                 {
                                     "enabled": True,
-                                    "application_port": "22",
+                                    "application_port": "2222",
                                     "application_protocol": "SSH",
-                                    "domain": "ssh_pra_22.bd-redhat.com",
+                                    "domain": domain_name,
                                 }
                             ]
                         },

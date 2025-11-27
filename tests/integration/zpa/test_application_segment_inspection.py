@@ -31,6 +31,7 @@ class TestApplicationSegmentInspection:
     Integration Tests for the Applications Segment Inspection
     """
 
+    @pytest.mark.vcr()
     def test_application_segment_inspection(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -44,8 +45,8 @@ class TestApplicationSegmentInspection:
         try:
 
             try:
-                app_connector_group_name = "tests-" + generate_random_string()
-                app_connector_group_description = "tests-" + generate_random_string()
+                app_connector_group_name = "tests-apsinsp-" + generate_random_string()
+                app_connector_group_description = "tests-apsinsp-" + generate_random_string()
 
                 created_app_connector_group, resp, err = client.zpa.app_connector_groups.add_connector_group(
                     name=app_connector_group_name,
@@ -77,7 +78,7 @@ class TestApplicationSegmentInspection:
             # 3) Create a Segment Group
             #
             try:
-                segment_group_name = "tests-" + generate_random_string()
+                segment_group_name = "tests-apsinsp-" + generate_random_string()
                 created_segment_group, resp, err = client.zpa.segment_groups.add_group(name=segment_group_name, enabled=True)
                 assert err is None, f"Error during segment group creation: {err}"
                 assert created_segment_group is not None, "No segment group data returned"
@@ -90,8 +91,8 @@ class TestApplicationSegmentInspection:
             # 4) Create a Server Group
             #
             try:
-                server_group_name = "tests-" + generate_random_string()
-                server_group_description = "tests-" + generate_random_string()
+                server_group_name = "tests-apsinsp-" + generate_random_string()
+                server_group_description = "tests-apsinsp-" + generate_random_string()
 
                 created_server_group, _, err = client.zpa.server_groups.add_group(
                     name=server_group_name,
@@ -121,14 +122,15 @@ class TestApplicationSegmentInspection:
 
             #
             try:
-                app_segment_name = "server1_inspection.bd-redhat.com"
-                app_segment_description = "server1_inspection.bd-redhat.com"
+                domain_name = "tests-insp-" + generate_random_string() + ".bd-redhat.com"  # Unique domain
+                app_segment_name = domain_name
+                app_segment_description = domain_name
 
                 app_segment, _, err = client.zpa.app_segments_inspection.add_segment_inspection(
                     name=app_segment_name,
                     description=app_segment_description,
                     enabled=True,
-                    domain_names=["server1_inspection.bd-redhat.com"],
+                    domain_names=[domain_name],
                     segment_group_id=segment_group_id,
                     server_group_ids=[server_group_id],
                     tcp_port_ranges=["4443", "4443"],
@@ -140,7 +142,7 @@ class TestApplicationSegmentInspection:
                                 "application_port": "4443",
                                 "application_protocol": "HTTPS",
                                 "certificate_id": certificate_id,
-                                "domain": "server1_inspection.bd-redhat.com",
+                                "domain": domain_name,
                             }
                         ]
                     },
@@ -165,7 +167,7 @@ class TestApplicationSegmentInspection:
                         name=app_segment_name,
                         description=updated_description,
                         enabled=True,
-                        domain_names=["server1_inspection.bd-redhat.com"],
+                        domain_names=[domain_name],
                         segment_group_id=segment_group_id,
                         server_group_ids=[server_group_id],
                         tcp_port_ranges=["4443", "4443"],
@@ -176,7 +178,7 @@ class TestApplicationSegmentInspection:
                                     "application_port": "4443",
                                     "application_protocol": "HTTPS",
                                     "certificate_id": certificate_id,
-                                    "domain": "server1_inspection.bd-redhat.com",
+                                    "domain": domain_name,
                                 }
                             ]
                         },

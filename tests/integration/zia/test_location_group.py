@@ -29,6 +29,7 @@ class TestLocationGroup:
     Integration Tests for the Location Group.
     """
 
+    @pytest.mark.vcr()
     def test_location_group(self, fs):
         client = MockZIAClient(fs)
         errors = []

@@ -29,6 +29,7 @@ class TestScimAttributes:
     Integration Tests for the SCIM attributes.
     """
 
+    @pytest.mark.vcr()
     def test_scim_attributes_operations(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

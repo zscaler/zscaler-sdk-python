@@ -30,11 +30,12 @@ class TestAppProtectionCustomControl:
     Integration Tests for the App Protection Custom Control
     """
 
+    @pytest.mark.vcr()
     def test_app_protection_custom_control(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
 
-        control_name = "tests-" + generate_random_string()
+        control_name = "tests-approtcc-" + generate_random_string()
         control_id = None  # Define control_id here to ensure it's accessible throughout
 
         try:

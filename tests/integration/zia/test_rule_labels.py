@@ -18,7 +18,6 @@
 import pytest
 
 from tests.integration.zia.conftest import MockZIAClient
-import random
 
 
 @pytest.fixture
@@ -28,20 +27,26 @@ def fs():
 
 class TestRuleLabels:
     """
-    Integration Tests for the Rule Label
+    Integration Tests for the Rule Label.
+
+    These tests use VCR to record and replay HTTP interactions.
+    - First run with MOCK_TESTS=false records cassettes
+    - Subsequent runs use recorded cassettes (no API calls)
     """
 
-    def test_rule_labels(self, fs):
+    @pytest.mark.vcr()
+    def test_rule_labels_lifecycle(self, fs):
+        """Test complete rule label CRUD lifecycle."""
         client = MockZIAClient(fs)
         errors = []
         label_id = None
         update_label = None
 
         try:
-            # Test: Add Rule Label
+            # Test: Add Rule Label (deterministic name for VCR)
             try:
                 create_label, _, error = client.zia.rule_labels.add_label(
-                    name=f"TestLabel_{random.randint(1000, 10000)}", description="Test Description"
+                    name="TestLabel_VCR_Integration", description="Test Description for VCR"
                 )
                 assert error is None, f"Add Label Error: {error}"
                 assert create_label is not None, "Label creation failed."
@@ -54,8 +59,8 @@ class TestRuleLabels:
                 if label_id:
                     update_label, _, error = client.zia.rule_labels.update_label(
                         label_id=label_id,
-                        name=f"UpdatedLabel_{random.randint(1000, 10000)}",
-                        description="Updated Description",
+                        name="UpdatedLabel_VCR_Integration",
+                        description="Updated Description for VCR",
                     )
                     assert error is None, f"Update Label Error: {error}"
                     assert update_label is not None, "Label update returned None."
@@ -92,3 +97,13 @@ class TestRuleLabels:
         # Final Assertion
         if errors:
             raise AssertionError(f"Integration Test Errors:\n{chr(10).join(errors)}")
+
+    @pytest.mark.vcr()
+    def test_list_rule_labels(self, fs):
+        """Test listing rule labels."""
+        client = MockZIAClient(fs)
+
+        labels, _, error = client.zia.rule_labels.list_labels()
+        assert error is None, f"List Labels Error: {error}"
+        assert labels is not None, "Labels list is None"
+        assert isinstance(labels, list), "Labels is not a list"

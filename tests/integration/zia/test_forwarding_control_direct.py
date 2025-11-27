@@ -30,6 +30,7 @@ class TestForwardingControlRulesDirect:
     Integration Tests for the ZIA Forwarding Control Rules
     """
 
+    @pytest.mark.vcr()
     def test_forwarding_control_direct(self, fs):
         client = MockZIAClient(fs)
         errors = []

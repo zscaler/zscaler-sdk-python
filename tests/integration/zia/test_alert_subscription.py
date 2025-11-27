@@ -17,8 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient
-import random
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -31,22 +30,26 @@ class TestAlertSubscription:
     Integration Tests for the Alert Subscription
     """
 
+    @pytest.mark.vcr()
     def test_alert_subscription(self, fs):
         client = MockZIAClient(fs)
         errors = []
         subscription_id = None
         update_subscription = None
+        
+        # Use deterministic names for VCR
+        names = NameGenerator("alert-subscription")
 
         try:
             try:
                 create_alert, _, error = client.zia.alert_subscriptions.add_alert_subscription(
-                    description =f"AddedAlertSubscription_{random.randint(1000, 10000)}",
-                    email = 'alert@acme.com',
-                    pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                    secure_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                    manage_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                    comply_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                    system_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                    description=names.description,
+                    email='alert@acme.com',
+                    pt0_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                    secure_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                    manage_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                    comply_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                    system_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                 )
                 assert error is None, f"Add Alert Subscription Error: {error}"
                 assert create_alert is not None, "Subscription creation failed."
@@ -58,13 +61,13 @@ class TestAlertSubscription:
                 if subscription_id:
                     update_subscription, _, error = client.zia.alert_subscriptions.update_alert_subscription(
                         subscription_id=subscription_id,
-                        description =f"UpdateAlertSubscription_{random.randint(1000, 10000)}",
-                        email = 'alert@acme.com',
-                        pt0_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                        secure_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                        manage_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                        comply_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
-                        system_severities = ["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                        description=names.updated_description,
+                        email='alert@acme.com',
+                        pt0_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                        secure_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                        manage_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                        comply_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
+                        system_severities=["CRITICAL", "MAJOR", "INFO", "MINOR", "DEBUG"],
                     )
                     assert error is None, f"Update Alert Subscription Error: {error}"
                     assert update_subscription is not None, "Subscription update returned None."

@@ -29,6 +29,7 @@ class TestEnrolmentCertificate:
     Integration Tests for the enrolment certificates.
     """
 
+    @pytest.mark.vcr()
     def test_enrolment_certificate(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors

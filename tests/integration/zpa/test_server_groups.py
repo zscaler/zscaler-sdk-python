@@ -30,6 +30,7 @@ class TestServerGroup:
     Integration Tests for the Server Group
     """
 
+    @pytest.mark.vcr()
     def test_server_group(self, fs):
         client = MockZPAClient(fs)
         errors = []  # Initialize an empty list to collect errors
@@ -37,8 +38,8 @@ class TestServerGroup:
         connector_group_id = None
         server_group_id = None
 
-        group_name = "tests-" + generate_random_string()
-        group_description = "tests-" + generate_random_string()
+        group_name = "tests-srvg-" + generate_random_string()
+        group_description = "tests-srvg-" + generate_random_string()
 
         try:
             # Create the App Connector Group

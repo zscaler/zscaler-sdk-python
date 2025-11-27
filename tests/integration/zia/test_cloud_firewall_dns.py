@@ -30,6 +30,7 @@ class TestCloudFirewallDNSRules:
     Integration Tests for the ZIA Cloud Firewall DNS Rules
     """
 
+    @pytest.mark.vcr()
     def test_firewall_dns_rule(self, fs):
         client = MockZIAClient(fs)
         errors = []

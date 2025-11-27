@@ -30,6 +30,7 @@ class TestBandwidthRules:
     Integration Tests for the ZIA Bandwidth Rules
     """
 
+    @pytest.mark.vcr()
     def test_bandwidth_control_rules(self, fs):
         client = MockZIAClient(fs)
         errors = []
@@ -38,10 +39,11 @@ class TestBandwidthRules:
 
         try:
 
-            # Step 1: Create a Bandwidth Class
+            # Step 1: Create a Bandwidth Class (use unique prefix to avoid collision with test_bandwidth_classes.py)
             try:
+                bdw_class_name = "tests-bdwrule-" + generate_random_string()
                 created_bdw_class, _, error = client.zia.bandwidth_classes.add_class(
-                    name="tests-" + generate_random_string(),
+                    name=bdw_class_name,
                     web_applications=["ACADEMICGPT", "AD_CREATIVES"],
                     urls=["test1.acme.com", "test2.acme.com"],
                     url_categories=["AI_ML_APPS", "GENERAL_AI_ML", "PROFESSIONAL_SERVICES"],
@@ -54,9 +56,9 @@ class TestBandwidthRules:
             except Exception as exc:
                 errors.append(f"Bandwidth Class creation failed: {exc}")
 
-            # Step 3: Create a Bandwidth Rule
+            # Step 3: Create a Bandwidth Rule (use unique prefix)
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-bdwrule-" + generate_random_string()
                 created_rule, _, error = client.zia.bandwidth_control_rules.add_rule(
                     name=rule_name,
                     description="Integration test Bandwidth Rule",
@@ -141,23 +143,21 @@ class TestBandwidthRules:
 
         finally:
             cleanup_errors = []
-            try:
-                if rule_id:
-                    # Delete the Bandwidth Rule
+            # Delete the Bandwidth Rule first (it depends on the class)
+            if rule_id:
+                try:
                     _, _, error = client.zia.bandwidth_control_rules.delete_rule(rule_id)
                     assert error is None, f"Error deleting Bandwidth Rule: {error}"
-            except Exception as exc:
-                cleanup_errors.append(f"Deleting Bandwidth Rule failed: {exc}")
+                except Exception as exc:
+                    cleanup_errors.append(f"Deleting Bandwidth Rule failed: {exc}")
 
-                if class_id:
-                    # Delete the Bandwidth Class
+            # Delete the Bandwidth Class after the rule is deleted
+            if class_id:
+                try:
                     _, _, error = client.zia.bandwidth_classes.delete_class(class_id)
-                    # No assertion needed here if deletion returns status code in a different manner; adjust as needed.
-                    # For consistency, you may check error is None.
                     assert error is None, f"Error deleting Bandwidth Class: {error}"
-            except Exception as exc:
-                cleanup_errors.append(f"Deleting Bandwidth Class failed: {exc}")
-
+                except Exception as exc:
+                    cleanup_errors.append(f"Deleting Bandwidth Class failed: {exc}")
 
             errors.extend(cleanup_errors)
 

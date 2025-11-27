@@ -29,6 +29,7 @@ class TestResourceServers:
     Integration Tests for the Resource Servers.
     """
 
+    @pytest.mark.vcr()
     def test_resource_servers(self, fs):
         client = MockZIdentityClient(fs)
         errors = []  # Initialize an empty list to collect errors

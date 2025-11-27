@@ -1,0 +1,163 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v2/admin/customers/216196257331281920/network
+  response:
+    body:
+      string: '{"totalPages":"1","totalCount":"20","list":[{"id":"216196257331372849","modifiedTime":"1726180958","creationTime":"1726180958","modifiedBy":"72057594037928115","name":"BDTrustedNetwork
+        (zscalerthree.net)","networkId":"01b54e90-39c1-43e1-a484-6d5c33c65195","zscalerCloud":"zscalerthree"},{"id":"216196257331369930","modifiedTime":"1696823868","creationTime":"1696823868","modifiedBy":"72057594037928115","name":"BDTrustedNetwork01
+        (zscalerthree.net)","networkId":"928c092b-3fe1-49bb-b01f-0618e4f38468","zscalerCloud":"zscalerthree"},{"id":"216196257331372841","modifiedTime":"1726180714","creationTime":"1726180714","modifiedBy":"72057594037928115","name":"BD
+        TrustedNetwork01 (zscalerthree.net)","networkId":"b2f1cfd0-915a-46c1-925c-c3a65ada29e5","zscalerCloud":"zscalerthree"},{"id":"216196257331372843","modifiedTime":"1726180775","creationTime":"1726180775","modifiedBy":"72057594037928115","name":"BD    TrustedNetwork01
+        (zscalerthree.net)","networkId":"98a68cc0-8796-455a-93cd-7c09b2811a58","zscalerCloud":"zscalerthree"},{"id":"216196257331372846","modifiedTime":"1726180841","creationTime":"1726180841","modifiedBy":"72057594037928115","name":"BD   Trusted   Network
+        01 (zscalerthree.net)","networkId":"8c021180-6515-4473-b32b-1273245b0c8d","zscalerCloud":"zscalerthree"},{"id":"216196257331372844","modifiedTime":"1726180793","creationTime":"1726180793","modifiedBy":"72057594037928115","name":"BD   TrustedNetwork   01
+        (zscalerthree.net)","networkId":"c60e58b0-753f-4a2a-9c1e-c833ae3854a4","zscalerCloud":"zscalerthree"},{"id":"216196257331372847","modifiedTime":"1726180859","creationTime":"1726180859","modifiedBy":"72057594037928115","name":"BD  Trusted
+        Network   01 (zscalerthree.net)","networkId":"d9b758b7-9d94-4379-9ee3-9ccaf9c27a4b","zscalerCloud":"zscalerthree"},{"id":"216196257331372842","modifiedTime":"1726180746","creationTime":"1726180746","modifiedBy":"72057594037928115","name":"BD  TrustedNetwork
+        01 (zscalerthree.net)","networkId":"f66b91be-0659-4310-b0d2-643415e4da81","zscalerCloud":"zscalerthree"},{"id":"216196257331372845","modifiedTime":"1726180811","creationTime":"1726180811","modifiedBy":"72057594037928115","name":"BD  TrustedNetwork  01
+        (zscalerthree.net)","networkId":"e09e8ace-bbc9-40a7-bb67-a189f8dba07a","zscalerCloud":"zscalerthree"},{"id":"216196257331372839","modifiedTime":"1726180677","creationTime":"1726180677","modifiedBy":"72057594037928115","name":"BD
+        Trusted Network 01 (zscalerthree.net)","networkId":"7826367a-3014-4509-afcf-498fc91f1be3","zscalerCloud":"zscalerthree"},{"id":"216196257331372840","modifiedTime":"1726180690","creationTime":"1726180690","modifiedBy":"72057594037928115","name":"BD
+        TrustedNetwork 01 (zscalerthree.net)","networkId":"9aee2327-20e8-4b8f-ac06-05e369379982","zscalerCloud":"zscalerthree"},{"id":"216196257331372836","modifiedTime":"1726180605","creationTime":"1726180605","modifiedBy":"72057594037928115","name":"BD-TrustedNetwork01
+        (zscalerthree.net)","networkId":"ca624ef9-703b-45ed-8c6c-6b6217f2b355","zscalerCloud":"zscalerthree"},{"id":"216196257331369931","modifiedTime":"1696823882","creationTime":"1696823882","modifiedBy":"72057594037928115","name":"BDTrustedNetwork02
+        (zscalerthree.net)","networkId":"3c3e55e7-cfe1-4abf-974f-276ac586309b","zscalerCloud":"zscalerthree"},{"id":"216196257331372837","modifiedTime":"1726180623","creationTime":"1726180623","modifiedBy":"72057594037928115","name":"BD-TrustedNetwork02
+        (zscalerthree.net)","networkId":"4133a645-051d-43ae-a700-5da9825eafd9","zscalerCloud":"zscalerthree"},{"id":"216196257331372848","modifiedTime":"1726180941","creationTime":"1726180941","modifiedBy":"72057594037928115","name":"BDTrustedNetwork03
+        (zscalerthree.net)","networkId":"f13c5571-7f9a-457f-bc96-ca8e907a9fa1","zscalerCloud":"zscalerthree"},{"id":"216196257331372838","modifiedTime":"1726180664","creationTime":"1726180664","modifiedBy":"72057594037928115","name":"BD-TrustedNetwork03
+        (zscalerthree.net)","networkId":"d7d90482-7d0d-4eef-b1c1-e1c5d6eb21db","zscalerCloud":"zscalerthree"},{"id":"216196257331382971","modifiedTime":"1742711231","creationTime":"1742711231","modifiedBy":"72057594037928115","name":"BDTrustedNetwork_Dev100_Update
+        (zscalerthree.net)","networkId":"f52ad818-3a29-4100-a2aa-a752104ceabe","zscalerCloud":"zscalerthree"},{"id":"216196257331383018","modifiedTime":"1747077805","creationTime":"1747077805","modifiedBy":"72057594037928115","name":"NewTrustedNetwork
+        7522 (zscalerthree.net)","networkId":"e235a139-aa32-4f4b-904b-7daf0006d1b4","zscalerCloud":"zscalerthree"},{"id":"216196257331382999","modifiedTime":"1745906093","creationTime":"1745906093","modifiedBy":"72057594037928115","name":"OttawaNW
+        (zscalerthree.net)","networkId":"652485b4-6b99-4534-8368-6933bf4201cc","zscalerCloud":"zscalerthree"},{"id":"216196257331382998","modifiedTime":"1745906077","creationTime":"1745906077","modifiedBy":"72057594037928115","name":"OttawaNW2
+        (zscalerthree.net)","networkId":"1b102695-7f9c-4d48-a193-b9353303bfd3","zscalerCloud":"zscalerthree"}]}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:52 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '39'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c2dda983-e30f-9f61-ba75-652c7653288a
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4848'
+      x-ratelimit-reset:
+      - '8'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zpa/mgmtconfig/v1/admin/customers/216196257331281920/network/216196257331372849
+  response:
+    body:
+      string: '{"id":"216196257331372849","modifiedTime":"1726180958","creationTime":"1726180958","modifiedBy":"72057594037928115","name":"BDTrustedNetwork
+        (zscalerthree.net)","networkId":"01b54e90-39c1-43e1-a484-6d5c33c65195","zscalerCloud":"zscalerthree"}'
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; upgrade-insecure-requests
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Wed, 26 Nov 2025 21:18:53 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '40'
+      x-frame-options:
+      - DENY
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - b04e8aa3-0b68-98d7-8f65-9c07b042a58e
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4847'
+      x-ratelimit-reset:
+      - '7'
+      x-transaction-id:
+      - e26fb582-cab3-4dd8-ba10-7ad0a92ba93c
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

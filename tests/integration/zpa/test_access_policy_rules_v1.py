@@ -30,6 +30,7 @@ class TestAccessPolicyRule:
     Integration Tests for the Access Policy Rules with SCIM group conditions
     """
 
+    @pytest.mark.vcr()
     def test_access_policy_rules(self, fs):
         client = MockZPAClient(fs)
         errors = []
@@ -42,7 +43,7 @@ class TestAccessPolicyRule:
             # Step 1: Create App Connector Group
             try:
                 created_connector_group, _, err = client.zpa.app_connector_groups.add_connector_group(
-                    name="tests-" + generate_random_string(),
+                    name="tests-apr1-" + generate_random_string(),
                     description="Test Connector Group",
                     enabled=True,
                     latitude="37.33874",
@@ -85,7 +86,7 @@ class TestAccessPolicyRule:
 
             # Step 4: Create Access Policy Rule
             try:
-                rule_name = "tests-" + generate_random_string()
+                rule_name = "tests-apr1-" + generate_random_string()
                 rule_description = "Access rule with SCIM group conditions"
                 created_rule, _, err = client.zpa.policies.add_access_rule(
                     name=rule_name,

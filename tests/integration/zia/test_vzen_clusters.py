@@ -17,8 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient
-import random
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -31,16 +30,20 @@ class TestVZENClusters:
     Integration Tests for the Virtual Service Edge
     """
 
+    @pytest.mark.vcr()
     def test_vzen_clusters(self, fs):
         client = MockZIAClient(fs)
         errors = []
         cluster_id = None
         update_cluster = None
+        
+        # Use deterministic names for VCR
+        names = NameGenerator("vzen-cluster")
 
         try:
             try:
                 create_cluster, _, error = client.zia.vzen_clusters.add_vzen_cluster(
-                    name=f"testsAddVZEN{random.randint(1000, 10000)}", 
+                    name=names.name, 
                     enabled=True,
                     type='VIP',
                     ip_address='192.168.90.7',
@@ -58,7 +61,7 @@ class TestVZENClusters:
                 if cluster_id:
                     update_cluster, _, error = client.zia.vzen_clusters.update_vzen_cluster(
                         cluster_id=cluster_id,
-                        name=f"testsUpdateVZEN{random.randint(1000, 10000)}",
+                        name=names.updated_name,
                         enabled=True,
                         type='VIP',
                         ip_address='192.168.90.7',
