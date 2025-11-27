@@ -13,12 +13,119 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/zia/api/v1/idmprofile
   response:
     body:
-      string: '[{"profileId":13,"profileName":"BD_IDM_TEMPLATE01","profileType":"LOCAL","port":0,"scheduleType":"NONE","scheduleDay":0,"scheduleTime":0,"scheduleDisabled":false,"uploadStatus":"IDM_PROF_UPLOAD_COMPLETED","version":1,"idmClient":{"id":62109,"name":"ZS_DLP_IDX01"},"volumeOfDocuments":153025,"numDocuments":1,"lastModifiedTime":1702089862,"modifiedBy":{"id":24326816,"name":"admin@24326813.zscalerthree.net"}}]'
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Thu, 27 Nov 2025 01:14:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9c46b01e-bcef-9e8d-8d50-c06484b9d5a1
+      x-oneapi-version:
+      - 109.1.85
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://identity.test.zscaler.com/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
+        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 27 Nov 2025 01:14:34 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/idmprofile
+  response:
+    body:
+      string: '[{"profileId":13,"profileName":"BD_IDM_TEMPLATE01","profileType":"LOCAL","port":0,"scheduleType":"NONE","scheduleDay":0,"scheduleTime":0,"scheduleDisabled":false,"uploadStatus":"IDM_PROF_UPLOAD_COMPLETED","version":1,"idmClient":{"id":62109,"name":"ZS_DLP_IDX01"},"volumeOfDocuments":153025,"numDocuments":1,"lastModifiedTime":1702089862,"modifiedBy":{"id":24326816,"name":"REDACTED"}}]'
     headers:
       cache-control:
       - no-store, no-cache
@@ -40,7 +147,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:54 GMT
+      - Thu, 27 Nov 2025 01:14:37 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -52,23 +159,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '236'
+      - '3134'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 65936393-3bcd-9649-b56a-5670a89cd530
+      - f8f93207-2c15-9fea-b8ce-60e4db25344d
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4967'
+      - '4999'
       x-ratelimit-reset:
-      - '7'
+      - '26'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 01c6bf78-78f0-4394-b9ae-389abf074bea
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -90,12 +197,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/zia/api/v1/idmprofile/13
   response:
     body:
-      string: '{"profileId":13,"profileName":"BD_IDM_TEMPLATE01","profileType":"LOCAL","port":0,"scheduleType":"NONE","scheduleDay":0,"scheduleTime":0,"scheduleDisabled":false,"uploadStatus":"IDM_PROF_UPLOAD_COMPLETED","version":1,"idmClient":{"id":62109,"name":"ZS_DLP_IDX01"},"volumeOfDocuments":153025,"numDocuments":1,"lastModifiedTime":1702089862,"modifiedBy":{"id":24326816,"name":"admin@24326813.zscalerthree.net"}}'
+      string: '{"profileId":13,"profileName":"BD_IDM_TEMPLATE01","profileType":"LOCAL","port":0,"scheduleType":"NONE","scheduleDay":0,"scheduleTime":0,"scheduleDisabled":false,"uploadStatus":"IDM_PROF_UPLOAD_COMPLETED","version":1,"idmClient":{"id":62109,"name":"ZS_DLP_IDX01"},"volumeOfDocuments":153025,"numDocuments":1,"lastModifiedTime":1702089862,"modifiedBy":{"id":24326816,"name":"REDACTED"}}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -117,7 +224,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:49:54 GMT
+      - Thu, 27 Nov 2025 01:14:41 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -129,23 +236,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '280'
+      - '3411'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 5d40ac03-3417-9b21-9807-c6cfe8253eff
+      - a6394c3b-e717-9044-98b0-b9b169ab1e90
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4966'
+      - '4998'
       x-ratelimit-reset:
-      - '6'
+      - '23'
       x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      - 01c6bf78-78f0-4394-b9ae-389abf074bea
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/ztw/api/v1/provUrl
   response:
     body:
-      string: '[{"id":82522,"name":"AWS-CAN","desc":"AWS Canada","provUrl":"connector.zscalerthree.net/api/v1/provUrl?name=AWS-CAN","provUrlType":"CLOUD","provUrlData":{"zsCloudDomain":"zscalerthree.net","orgId":24326813,"configServer":"ecservice.zscalerthree.net","registrationServer":"ecservice.zscalerthree.net","apiServer":"connector.zscalerthree.net","pacServer":"pac.zscalerthree.net","locationTemplate":{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":false,"lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639777998},"cloudProviderType":"AWS","formFactor":"SMALL","cellEdgeDeploy":false},"status":"DEPLOYED","lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639778142}]'
+      string: '[{"id":82522,"name":"AWS-CAN","desc":"AWS Canada","provUrl":"connector.zscalerthree.net/api/v1/provUrl?name=AWS-CAN","provUrlType":"CLOUD","provUrlData":{"zsCloudDomain":"zscalerthree.net","orgId":24326813,"configServer":"ecservice.zscalerthree.net","registrationServer":"ecservice.zscalerthree.net","apiServer":"connector.zscalerthree.net","pacServer":"pac.zscalerthree.net","locationTemplate":{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":false,"lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639777998},"cloudProviderType":"AWS","formFactor":"SMALL","cellEdgeDeploy":false},"status":"DEPLOYED","lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639778142}]'
     headers:
       cache-control:
       - max-age=10
@@ -37,9 +37,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:24 GMT
+      - Thu, 27 Nov 2025 01:19:21 GMT
       expires:
-      - Wed, 26 Nov 2025 20:13:34 GMT
+      - Thu, 27 Nov 2025 01:19:31 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -53,23 +53,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '400'
+      - '425'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 20744462-5910-9d65-b016-7b935a259eee
+      - 2e09f755-4cc3-9867-bcd9-bebff63403ec
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 1000, 1000;w=1
       x-ratelimit-remaining:
-      - '998'
+      - '999'
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:
@@ -89,12 +89,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/ztw/api/v1/provUrl/82522
   response:
     body:
-      string: '{"id":82522,"name":"AWS-CAN","desc":"AWS Canada","provUrl":"connector.zscalerthree.net/api/v1/provUrl?name=AWS-CAN","provUrlType":"CLOUD","provUrlData":{"zsCloudDomain":"zscalerthree.net","orgId":24326813,"configServer":"ecservice.zscalerthree.net","registrationServer":"ecservice.zscalerthree.net","apiServer":"connector.zscalerthree.net","pacServer":"pac.zscalerthree.net","locationTemplate":{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":false,"lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639777998},"cloudProviderType":"AWS","formFactor":"SMALL","cellEdgeDeploy":false},"status":"DEPLOYED","lastModUid":{"id":36599332,"name":"bac-admin@24326813.zscalerthree.net"},"lastModTime":1639778142}'
+      string: '{"id":82522,"name":"AWS-CAN","desc":"AWS Canada","provUrl":"connector.zscalerthree.net/api/v1/provUrl?name=AWS-CAN","provUrlType":"CLOUD","provUrlData":{"zsCloudDomain":"zscalerthree.net","orgId":24326813,"configServer":"ecservice.zscalerthree.net","registrationServer":"ecservice.zscalerthree.net","apiServer":"connector.zscalerthree.net","pacServer":"pac.zscalerthree.net","locationTemplate":{"id":82521,"name":"aws-ca-central-1","template":{"templatePrefix":"AWS-CAN","xffForwardEnabled":true,"authRequired":false,"cautionEnabled":false,"aupEnabled":false,"aupTimeoutInDays":0,"ofwEnabled":true,"ipsControl":true,"enforceBandwidthControl":false,"upBandwidth":0,"dnBandwidth":0,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"surrogateIP":false},"editable":false,"lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639777998},"cloudProviderType":"AWS","formFactor":"SMALL","cellEdgeDeploy":false},"status":"DEPLOYED","lastModUid":{"id":36599332,"name":"REDACTED"},"lastModTime":1639778142}'
     headers:
       cache-control:
       - max-age=10
@@ -113,9 +113,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 20:13:24 GMT
+      - Thu, 27 Nov 2025 01:19:21 GMT
       expires:
-      - Wed, 26 Nov 2025 20:13:34 GMT
+      - Thu, 27 Nov 2025 01:19:31 GMT
       referrer-policy:
       - no-referrer
       server:
@@ -129,13 +129,13 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '366'
+      - '405'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 70662593-8a31-9a12-89c4-167499b44734
+      - 2eabb8ad-dfe6-9f38-947c-a514b7f54d74
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
@@ -145,7 +145,7 @@ interactions:
       x-ratelimit-reset:
       - '1'
       x-transaction-id:
-      - 2c21dfab-5d28-48d0-b107-ae13bb85bfa1
+      - 4216b9eb-a431-4871-aad8-1967e34821b9
       x-xss-protection:
       - 1; mode=block
     status:

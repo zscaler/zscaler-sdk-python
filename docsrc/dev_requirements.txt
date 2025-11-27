@@ -6,7 +6,7 @@ requests==2.32.3
 responses==0.25.8
 sphinx==7.4.7
 toml==0.10.2
-urllib3<2
+urllib3>=2.5.0
 pytz
 sphinx_rtd_theme
 mistune==3.1.3

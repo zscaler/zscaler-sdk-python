@@ -13,113 +13,218 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/zia/api/v1/users
   response:
     body:
-      string: '[{"id":29309057,"name":"adam.ashcroft","email":"adam.ashcroft@securitygeek.io","groups":[{"id":25684250,"name":"Engineering"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":24326816,"name":"DEFAULT
-        ADMIN","email":"admin@24326813.zscalerthree.net","groups":[{"id":24326814,"name":"Service
-        Admin"}],"department":{"id":24326815,"name":"Service Admin"},"comments":"Default
-        Administrator","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":117781255,"name":"William
-        Guilherme","email":"admin@securitygeekio.zslogin.net","groups":[],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":123234156,"name":"Admin
-        Test","email":"admin_test@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306493,"name":"Ajith
-        Almond","email":"ajith.almond@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309058,"name":"Albert
-        Amin","email":"albert.amin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309064,"name":"Alison
-        Abbas","email":"alison.abbas@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309111,"name":"Allison
-        Ashley","email":"allison.ashley@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":32458848,"name":"Amazzal
-        Habib","email":"amazzal.elhabib@securitygeek.io","groups":[{"id":24326814,"name":"Service
-        Admin"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309083,"name":"Amber
-        Aesop","email":"amber.aesop@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309154,"name":"Anantha
-        Amos","email":"anantha.amos@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485535,"name":"Andre
-        Austin","email":"andre.austin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309142,"name":"Angela
-        Ahmed","email":"angela.ahmed@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309159,"name":"Anne
-        Allison","email":"anne.allison@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29601726,"name":"ShhkDrDbBCBrpvsHDk3cYT0eT2eYFDcJtHL5P/8NW1c=","email":"api-audit@securitygeek.io","groups":[{"id":24326814,"name":"Service
+      string: "{\n \"detail\": \"unauthorized\",\n \"type\": \"\",\n \"title\": \"\",\n
+        \"status\": \"\"\n}"
+    headers:
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+      date:
+      - Thu, 27 Nov 2025 01:14:57 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-oneapi-api-category:
+      - public
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f79c65db-dab5-9b74-8e45-f49f07b78268
+      x-oneapi-version:
+      - 109.1.85
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=client_credentials&client_id=ipm2ol7odg7hp&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://identity.test.zscaler.com/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":83999}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://securitygeekio.zslogin.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://securitygeekio.zslogin.net/
+        https://securitygeekio-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Thu, 27 Nov 2025 01:14:58 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/users
+  response:
+    body:
+      string: '[{"id":29309057,"name":"adam.ashcroft","email":"REDACTED","groups":[{"id":25684250,"name":"Engineering"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":24326816,"name":"DEFAULT
+        ADMIN","email":"REDACTED","groups":[{"id":24326814,"name":"Service Admin"}],"department":{"id":24326815,"name":"Service
+        Admin"},"comments":"Default Administrator","adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":117781255,"name":"William
+        Guilherme","email":"REDACTED","groups":[],"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":123234156,"name":"Admin
+        Test","email":"REDACTED","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306493,"name":"Ajith
+        Almond","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309058,"name":"Albert
+        Amin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309064,"name":"Alison
+        Abbas","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309111,"name":"Allison
+        Ashley","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":32458848,"name":"Amazzal
+        Habib","email":"REDACTED","groups":[{"id":24326814,"name":"Service Admin"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":true,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309083,"name":"Amber
+        Aesop","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309154,"name":"Anantha
+        Amos","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485535,"name":"Andre
+        Austin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309142,"name":"Angela
+        Ahmed","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309159,"name":"Anne
+        Allison","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29601726,"name":"ShhkDrDbBCBrpvsHDk3cYT0eT2eYFDcJtHL5P/8NW1c=","email":"REDACTED","groups":[{"id":24326814,"name":"Service
         Admin"}],"department":{"id":24326815,"name":"Service Admin"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309113,"name":"Aravinda
-        Arnold","email":"aravinda.arnold@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309136,"name":"Arjuna
-        Allan","email":"arjuna.allan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119208879,"name":"artxngwpbq
-        Smith","email":"artxngwpbq@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306490,"name":"Ayaka
-        Addison","email":"ayaka.addison@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309075,"name":"Azumi
-        Adams","email":"azumi.adams@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485537,"name":"Benjamin
-        Brookfield","email":"benjamin.brookfield@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119237041,"name":"beuiotcrau
-        Smith","email":"beuiotcrau@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":125988070,"name":"boaayabscf
-        Smith","email":"boaayabscf@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309148,"name":"Bobby
-        Brown","email":"bobby.brown@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309068,"name":"Brahma
-        Bradshaw","email":"brahma.bradshaw@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485527,"name":"Brandon
-        Bates","email":"brandon.bates@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309114,"name":"Brenda
-        Bowers","email":"brenda.bowers@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309145,"name":"Brian
-        Boyle","email":"brian.boyle@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309116,"name":"Carla
-        Cohen","email":"carla.cohen@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309147,"name":"Carol
-        Kirk","email":"carol.kirk@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485518,"name":"Catherine
-        Cooke","email":"catherine.cooke@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309106,"name":"Catherine
-        Kay","email":"catherine.kay@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309069,"name":"Charles
-        Keenan","email":"charles.keenan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309158,"name":"Charlie
-        Clifford","email":"charlie.clifford@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309105,"name":"Cheryl
-        Chester","email":"cheryl.chester@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309173,"name":"Chloe
-        Chapman","email":"chloe.chapman@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309123,"name":"Christopher
-        Clements","email":"christopher.clements@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309067,"name":"Courtney
-        Kazin","email":"courtney.kazin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485530,"name":"Cynthia
-        Calder","email":"cynthia.calder@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309065,"name":"Cynthia
-        Kendall","email":"cynthia.kendall@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309090,"name":"Daichi
-        Duncan","email":"daichi.duncan@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485528,"name":"Daniel
-        Dixon","email":"daniel.dixon@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309086,"name":"Darrell
-        Donnelly","email":"darrell.donnelly@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309135,"name":"Deanna
-        Dexter","email":"deanna.dexter@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309120,"name":"Deborah
-        Donnelly","email":"deborah.donnelly@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485519,"name":"Deborah
-        Dreyer","email":"deborah.dreyer@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309118,"name":"Denise
-        Drummond","email":"denise.drummond@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485509,"name":"Derrick
-        Davies","email":"derrick.davies@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309143,"name":"Derrick
-        Deacon","email":"derrick.deacon@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309059,"name":"Diana
-        Dodd","email":"diana.dodd@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485536,"name":"Diana
-        Duff","email":"diana.duff@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309150,"name":"Donna
-        Daniel","email":"donna.daniel@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309112,"name":"Douglas
-        Dalby","email":"douglas.dalby@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485515,"name":"Edward
-        England","email":"edward.england@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309117,"name":"Elizabeth
-        Eales","email":"elizabeth.eales@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309130,"name":"Ella
-        Evans","email":"ella.evans@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485523,"name":"Emi
-        Edge","email":"emi.edge@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309125,"name":"Emily
-        Easton","email":"emily.easton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485520,"name":"Emily
-        Edwards","email":"emily.edwards@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"},{"id":62719182,"name":"M321"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":55914107,"name":"Eddie
-        Parra","email":"eparra@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":26348357,"name":"DevOps"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309126,"name":"Eri
-        Easton","email":"eri.easton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309096,"name":"Eric
-        Eaton","email":"eric.eaton@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309066,"name":"Erica
-        Emmanuel","email":"erica.emmanuel@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309089,"name":"Erika
-        Ellwood","email":"erika.ellwood@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485531,"name":"Esha
-        England","email":"esha.england@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236896,"name":"evtfwtfovf
-        Smith","email":"evtfwtfovf@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119382233,"name":"eyakarvrhm
-        Smith","email":"eyakarvrhm@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309165,"name":"Frank
-        Fox","email":"frank.fox@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119402505,"name":"fyrxwfaqfx
-        Smith","email":"fyrxwfaqfx@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485516,"name":"Gabriel
-        Guest","email":"gabriel.guest@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309084,"name":"Gary
-        Greig","email":"gary.greig@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236940,"name":"gbybmrrqjx
-        Smith","email":"gbybmrrqjx@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309072,"name":"George
-        George","email":"george.george@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119487330,"name":"gfvtefecez
-        Smith","email":"gfvtefecez@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309062,"name":"Goro
-        Garner","email":"goro.garner@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485526,"name":"Grace
-        Gilbey","email":"grace.gilbey@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309121,"name":"Grace
-        Gribbin","email":"grace.gribbin@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309076,"name":"Hisao
-        Hastings","email":"hisao.hastings@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119615503,"name":"hmvsildaxp
-        Smith","email":"hmvsildaxp@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309098,"name":"Holly
-        Hirst","email":"holly.hirst@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119489309,"name":"ifcnzsahbu
-        Smith","email":"ifcnzsahbu@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119474201,"name":"iizrgbcogx
-        Smith","email":"iizrgbcogx@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309055,"name":"Inderjit
-        Iles","email":"inderjit.iles@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119618279,"name":"ireessbbaj
-        Smith","email":"ireessbbaj@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":120515922,"name":"ixsoklhhnd
-        Smith","email":"ixsoklhhnd@securitygeek.io","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309171,"name":"Jacob
-        Joyce","email":"jacob.joyce@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309127,"name":"Jacqueline
-        Jamieson","email":"jacqueline.jamieson@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309175,"name":"Jaime
-        Jamieson","email":"jaime.jamieson@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":42230602,"name":"Jamie
-        John","email":"jamie_john@securitygeek.io","groups":[{"id":26348357,"name":"DevOps"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309133,"name":"Jared
-        James","email":"jared.james@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236558,"name":"jcxjjknzil
-        Smith","email":"jcxjjknzil@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":140662622,"name":"John
-        Doe","email":"jdoe@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309134,"name":"Jenny
-        Jenkins","email":"jenny.jenkins@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309132,"name":"Jeremiah
-        Jones","email":"jeremiah.jones@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309128,"name":"Jessica
-        Jarvis","email":"jessica.jarvis@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485510,"name":"Jessica
-        Joyce","email":"jessica.joyce@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119530337,"name":"jihawjwtde
-        Smith","email":"jihawjwtde@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119483522,"name":"jmcipijino
-        Smith","email":"jmcipijino@securitygeek.io","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309155,"name":"Joe
-        Jacques","email":"joe.jacques@securitygeek.io","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":83108434,"name":"sP8FEJ/XBS/wokdNyupWCA==","email":"john.ashcroft1@securitygeek.io","groups":[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"},{"id":62718389,"name":"A001"}],"department":{"id":68759308,"name":"A000_test_1761418096949-test-1761429754606-test-1761429914836"},"comments":"guest
+        Arnold","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309136,"name":"Arjuna
+        Allan","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119208879,"name":"artxngwpbq
+        Smith","email":"REDACTED","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29306490,"name":"Ayaka
+        Addison","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":24392492,"name":"Marketing"}],"department":{"id":25658563,"name":"Marketing"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309075,"name":"Azumi
+        Adams","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485537,"name":"Benjamin
+        Brookfield","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119237041,"name":"beuiotcrau
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":125988070,"name":"boaayabscf
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309148,"name":"Bobby
+        Brown","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309068,"name":"Brahma
+        Bradshaw","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485527,"name":"Brandon
+        Bates","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309114,"name":"Brenda
+        Bowers","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309145,"name":"Brian
+        Boyle","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309116,"name":"Carla
+        Cohen","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309147,"name":"Carol
+        Kirk","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485518,"name":"Catherine
+        Cooke","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309106,"name":"Catherine
+        Kay","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309069,"name":"Charles
+        Keenan","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309158,"name":"Charlie
+        Clifford","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309105,"name":"Cheryl
+        Chester","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309173,"name":"Chloe
+        Chapman","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309123,"name":"Christopher
+        Clements","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309067,"name":"Courtney
+        Kazin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485530,"name":"Cynthia
+        Calder","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309065,"name":"Cynthia
+        Kendall","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309090,"name":"Daichi
+        Duncan","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485528,"name":"Daniel
+        Dixon","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309086,"name":"Darrell
+        Donnelly","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309135,"name":"Deanna
+        Dexter","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309120,"name":"Deborah
+        Donnelly","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485519,"name":"Deborah
+        Dreyer","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309118,"name":"Denise
+        Drummond","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485509,"name":"Derrick
+        Davies","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309143,"name":"Derrick
+        Deacon","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309059,"name":"Diana
+        Dodd","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485536,"name":"Diana
+        Duff","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"disabled":true,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309150,"name":"Donna
+        Daniel","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309112,"name":"Douglas
+        Dalby","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485515,"name":"Edward
+        England","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309117,"name":"Elizabeth
+        Eales","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309130,"name":"Ella
+        Evans","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485523,"name":"Emi
+        Edge","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309125,"name":"Emily
+        Easton","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485520,"name":"Emily
+        Edwards","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"},{"id":62719182,"name":"M321"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":55914107,"name":"Eddie
+        Parra","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":26348357,"name":"DevOps"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309126,"name":"Eri
+        Easton","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309096,"name":"Eric
+        Eaton","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309066,"name":"Erica
+        Emmanuel","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309089,"name":"Erika
+        Ellwood","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485531,"name":"Esha
+        England","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236896,"name":"evtfwtfovf
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119382233,"name":"eyakarvrhm
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309165,"name":"Frank
+        Fox","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119402505,"name":"fyrxwfaqfx
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485516,"name":"Gabriel
+        Guest","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309084,"name":"Gary
+        Greig","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236940,"name":"gbybmrrqjx
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309072,"name":"George
+        George","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119487330,"name":"gfvtefecez
+        Smith","email":"REDACTED","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309062,"name":"Goro
+        Garner","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485526,"name":"Grace
+        Gilbey","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684251,"name":"Sales"}],"department":{"id":25684247,"name":"Sales"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309121,"name":"Grace
+        Gribbin","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309076,"name":"Hisao
+        Hastings","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119615503,"name":"hmvsildaxp
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309098,"name":"Holly
+        Hirst","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119489309,"name":"ifcnzsahbu
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119474201,"name":"iizrgbcogx
+        Smith","email":"REDACTED","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309055,"name":"Inderjit
+        Iles","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119618279,"name":"ireessbbaj
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":120515922,"name":"ixsoklhhnd
+        Smith","email":"REDACTED","groups":[],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309171,"name":"Jacob
+        Joyce","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309127,"name":"Jacqueline
+        Jamieson","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309175,"name":"Jaime
+        Jamieson","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":42230602,"name":"Jamie
+        John","email":"REDACTED","groups":[{"id":26348357,"name":"DevOps"},{"id":26231231,"name":"Normal_Internet"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309133,"name":"Jared
+        James","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119236558,"name":"jcxjjknzil
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":140662622,"name":"John
+        Doe","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309134,"name":"Jenny
+        Jenkins","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"},{"id":62719182,"name":"M321"},{"id":62719922,"name":"Y110"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309132,"name":"Jeremiah
+        Jones","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25652204,"name":"Finance"}],"department":{"id":25658545,"name":"Finance"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309128,"name":"Jessica
+        Jarvis","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29485510,"name":"Jessica
+        Joyce","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":34777535,"name":"Executives"}],"department":{"id":29485508,"name":"Executives"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119530337,"name":"jihawjwtde
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":119483522,"name":"jmcipijino
+        Smith","email":"REDACTED","groups":[{"id":107462213,"name":"emergency_access_group"}],"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":29309155,"name":"Joe
+        Jacques","email":"REDACTED","groups":[{"id":26231231,"name":"Normal_Internet"},{"id":25684250,"name":"Engineering"}],"department":{"id":25684245,"name":"Engineering"},"adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false},{"id":83108434,"name":"sP8FEJ/XBS/wokdNyupWCA==","email":"REDACTED","groups":[{"id":62718414,"name":"A000_test_1761418099964-test-1761429757931-test-1761429917892"},{"id":62718389,"name":"A001"}],"department":{"id":68759308,"name":"A000_test_1761418096949-test-1761429754606-test-1761429914836"},"comments":"guest
         wi-fi user","adminUser":false,"isNonEditable":false,"pwdLastModifiedTime":0,"deleted":false,"pilotUser":false}]'
     headers:
       cache-control:
@@ -142,7 +247,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:36 GMT
+      - Thu, 27 Nov 2025 01:15:02 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -154,23 +259,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '671'
+      - '3812'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 889def86-edc4-9db1-bf0f-8c4931994aa8
+      - a49b9ad3-8fa3-9a4e-92c3-36dead8a1edc
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4984'
+      - '4997'
       x-ratelimit-reset:
-      - '25'
+      - '2'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 14aeae1c-3609-4931-8c10-376c8d788d31
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -192,7 +297,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/zia/api/v1/departments
   response:
@@ -219,7 +324,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:36 GMT
+      - Thu, 27 Nov 2025 01:15:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -231,23 +336,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '405'
+      - '2795'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 58787f4e-b37f-911b-9548-6b9ac162bbb6
+      - 599d8e3e-3169-9691-a474-f1794b270329
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4983'
+      - '4999'
       x-ratelimit-reset:
-      - '24'
+      - '58'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 14aeae1c-3609-4931-8c10-376c8d788d31
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:
@@ -269,7 +374,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+      - zscaler-sdk-python/1.9.4 python/3.11.8 Darwin/24.6.0
     method: GET
     uri: https://api.zsapi.net/zia/api/v1/groups
   response:
@@ -306,7 +411,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:53:37 GMT
+      - Thu, 27 Nov 2025 01:15:05 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -318,23 +423,23 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '423'
+      - '340'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c3d789a0-4f39-993a-bf45-5b4817044105
+      - 4c24614c-434a-96ce-8a8a-8d6a6e082f5a
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4982'
+      - '4998'
       x-ratelimit-reset:
-      - '24'
+      - '55'
       x-transaction-id:
-      - 3da1ff33-38d1-45bf-a55b-c06a17433c25
+      - 14aeae1c-3609-4931-8c10-376c8d788d31
       x-xss-protection:
       - 1; mode=block
       x-zscaler-mode:

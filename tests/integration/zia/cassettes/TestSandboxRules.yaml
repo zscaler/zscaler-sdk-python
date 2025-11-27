@@ -103,7 +103,7 @@ interactions:
   response:
     body:
       string: '{"id":1571786,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Integration
-        test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201124,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","baRuleAction":"BLOCK","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":40}'
+        test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201124,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"BLOCK","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":40}'
     headers:
       cache-control:
       - no-store, no-cache
@@ -187,7 +187,7 @@ interactions:
   response:
     body:
       string: '{"id":1571786,"name":"tests-vcr0001","protocols":["FOHTTP_RULE","FTP_RULE","HTTPS_RULE","HTTP_RULE"],"order":1,"baPolicyCategories":["ADWARE_BLOCK","BOTMAL_BLOCK","ANONYP2P_BLOCK","RANSOMWARE_BLOCK"],"description":"Updated
-        integration test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201130,"lastModifiedBy":{"id":117810311,"name":"oauth-ipm2ol7odg7hp$@24326813.zscalerthree.net"},"accessControl":"READ_WRITE","baRuleAction":"ALLOW","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":45}'
+        integration test Sandbox Rule","urlCategories":["OTHER_ADULT_MATERIAL"],"fileTypes":["FTCATEGORY_BZIP2","FTCATEGORY_P7Z"],"cbiProfileId":0,"state":"ENABLED","rank":7,"lastModifiedTime":1764201130,"lastModifiedBy":{"id":117810311,"name":"REDACTED"},"accessControl":"READ_WRITE","baRuleAction":"ALLOW","firstTimeEnable":true,"firstTimeOperation":"ALLOW_SCAN","mlActionEnabled":true,"defaultRule":false,"byThreatScore":45}'
     headers:
       cache-control:
       - no-store, no-cache
