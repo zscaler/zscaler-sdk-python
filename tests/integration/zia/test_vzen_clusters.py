@@ -17,7 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ class TestVZENClusters:
         update_cluster = None
         
         # Use deterministic names for VCR
-        names = TestNameGenerator("vzen-cluster")
+        names = NameGenerator("vzen-cluster")
 
         try:
             try:

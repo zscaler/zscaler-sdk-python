@@ -1,0 +1,550 @@
+interactions:
+- request:
+    body: '{"type": "UFQDN", "preSharedKey":"REDACTED", "fqdn": "tests-vcr0001@securitygeek.io",
+      "comments": "Integration test UFQDN credential"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '142'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/vpnCredentials
+  response:
+    body:
+      string: '{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+        test UFQDN credential"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:11 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1142'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - e1cc1b57-592a-9d02-b14f-0d0d95b5a358
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4992'
+      x-ratelimit-reset:
+      - '50'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0003", "description": "tests-vcr0003", "country": "UNITED_STATES",
+      "tz": "UNITED_STATES_AMERICA_LOS_ANGELES", "ofwEnabled": true, "ipsControl":
+      true, "profile": "SERVER", "vpnCredentials": [{"id": 158933285, "type": "UFQDN"}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '245'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/locations
+  response:
+    body:
+      string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"vpnCredentials":[{"id":158933285,"type":"UFQDN"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"tests-vcr0003"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:17 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '5993'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 70b9e1f3-8998-969b-9220-5771f433e5fa
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4991'
+      x-ratelimit-reset:
+      - '49'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+  response:
+    body:
+      string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"UNITED_STATES","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+        test UFQDN credential"}],"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":false,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"tests-vcr0003"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:18 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '995'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 78783247-a41c-9df6-b25f-d55799a1afc7
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4990'
+      x-ratelimit-reset:
+      - '43'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-vcr0003", "description": "Updated integration test location
+      management", "tz": "UNITED_STATES_AMERICA_LOS_ANGELES", "authRequired": true,
+      "idleTimeInMinutes": "720", "displayTimeUnit": "MINUTE", "surrogateIP": true,
+      "xffForwardEnabled": true, "ofwEnabled": true, "ipsControl": true, "profile":
+      "SERVER", "vpnCredentials": [{"id": 158933285, "type": "UFQDN"}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '375'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+  response:
+    body:
+      string: '{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"vpnCredentials":[{"id":158933285,"type":"UFQDN"}],"authRequired":true,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":720,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":false,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Updated
+        integration test location management"}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:25 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '6408'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 3b00e707-7da4-9d14-8945-5c44750fbeec
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4989'
+      x-ratelimit-reset:
+      - '41'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/locations
+  response:
+    body:
+      string: '[{"id":36788941,"name":"AWS-CAN-ca-central-1-vpc-096108eb5d9e68d71","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"CANADA","state":"British
+        Columbia","language":"NONE","tz":"CANADA_AMERICA_VANCOUVER","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":true,"bcLocation":false,"ccLocation":true,"surrogateIP":false,"cookiesAndProxy":false,"idleTimeInMinutes":0,"surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"163.29.63.139","subLocScopeEnabled":true},{"id":45772677,"name":"nostrud
+        qui dolore","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"GMT","geoOverride":false,"latitude":0.0,"longitude":0.0,"authRequired":false,"sslScanEnabled":true,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":true,"ecLocation":false,"bcLocation":false,"ccLocation":true,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":40594054,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":true,"surrogateRefreshTimeInMinutes":79446126,"surrogateRefreshTimeUnit":"HOUR","kerberosAuth":true,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":true,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":59050241,"name":"Workload
+        Traffic Group"}],"excludeFromDynamicGroups":true,"excludeFromManualGroups":true,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"WORKLOAD","description":"et
+        Ut ullamco"},{"id":158933286,"name":"tests-vcr0003","nonEditable":false,"parentId":0,"upBandwidth":0,"dnBandwidth":0,"country":"NONE","language":"NONE","tz":"UNITED_STATES_AMERICA_LOS_ANGELES","geoOverride":false,"latitude":0.0,"longitude":0.0,"vpnCredentials":[{"id":158933285,"type":"UFQDN","fqdn":"tests-vcr0001@securitygeek.io","comments":"Integration
+        test UFQDN credential"}],"authRequired":true,"sslScanEnabled":false,"zappSslScanEnabled":false,"xffForwardEnabled":true,"otherSubLocation":false,"ecLocation":false,"bcLocation":false,"ccLocation":false,"surrogateIP":true,"cookiesAndProxy":false,"idleTimeInMinutes":720,"displayTimeUnit":"MINUTE","surrogateIPEnforcedForKnownBrowsers":false,"surrogateRefreshTimeInMinutes":0,"kerberosAuth":false,"jwtAuth":false,"digestAuthEnabled":false,"ofwEnabled":true,"ipsControl":true,"aupEnabled":false,"cautionEnabled":false,"aupBlockInternetUntilAccepted":false,"aupForceSslInspection":false,"iotDiscoveryEnabled":false,"iotEnforcePolicySet":false,"aupTimeoutInDays":0,"childCount":0,"matchInChild":false,"staticLocationGroups":[],"dynamiclocationGroups":[{"id":24326829,"name":"Server
+        Traffic Group"}],"excludeFromDynamicGroups":false,"excludeFromManualGroups":false,"extranet":{"id":0},"extranetIpPool":{"id":0},"extranetDns":{"id":0},"defaultExtranetTsPool":false,"defaultExtranetDns":false,"profile":"SERVER","description":"Updated
+        integration test location management"}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:51:27 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1676'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 70747fb6-5bcd-971b-ba06-5ae1846069aa
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '35'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/locations/158933286
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:51:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '5359'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 04a3a5ac-a2fa-9d38-b75e-d9ad0378e8b5
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4987'
+      x-ratelimit-reset:
+      - '33'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/vpnCredentials/158933285
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:51:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '991'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 5438389c-2de0-9937-95cc-0c292a5fe249
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4986'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

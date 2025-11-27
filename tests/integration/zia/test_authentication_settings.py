@@ -15,7 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 
 import pytest
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ class TestExemptedUrls:
         errors = []
 
         # Use deterministic URLs for VCR testing
-        test_urls = TestNameGenerator.generate_urls(count=5, domain="vcr-test.com")
+        test_urls = NameGenerator.generate_urls(count=5, domain="vcr-test.com")
 
         try:
             # Step 1: Add URLs to the exempt list

@@ -1,0 +1,386 @@
+interactions:
+- request:
+    body: '{"name": "tests-vcr0001", "description": "tests-vcr0002", "destTcpPorts":
+      [{"start": 389}, {"start": 636}, {"start": 3268, "end": 3269}], "destUdpPorts":
+      [{"start": 389}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '171'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/networkServices
+  response:
+    body:
+      string: '{"id":10177035,"name":"tests-vcr0001","destTcpPorts":[{"start":389},{"start":636},{"start":3268,"end":3269}],"destUdpPorts":[{"start":389}],"type":"CUSTOM","description":"tests-vcr0002","isNameL10nTag":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1499'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 2ddfe1e4-42f2-97ec-8566-0db4a653cf83
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4984'
+      x-ratelimit-reset:
+      - '32'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/networkServices/10177035
+  response:
+    body:
+      string: '{"id":10177035,"name":"tests-vcr0001","srcTcpPorts":[],"destTcpPorts":[{"start":389},{"start":636},{"start":3268,"end":3269}],"srcUdpPorts":[],"destUdpPorts":[{"start":389}],"type":"CUSTOM","description":"tests-vcr0002","creatorContext":"ZIA","isNameL10nTag":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:30 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '385'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - a63babc6-5a42-9e8e-966f-b6a67702bb41
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4983'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "updated-vcr0003", "description": "updated-vcr0004", "destTcpPorts":
+      [{"start": 389}, {"start": 636}, {"start": 3268, "end": 3269}], "destUdpPorts":
+      [{"start": 389}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '175'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/networkServices/10177035
+  response:
+    body:
+      string: '{"id":10177035,"name":"updated-vcr0003","srcTcpPorts":[],"destTcpPorts":[{"start":389},{"start":636},{"start":3268,"end":3269}],"srcUdpPorts":[],"destUdpPorts":[{"start":389}],"type":"CUSTOM","description":"updated-vcr0004","creatorContext":"ZIA","isNameL10nTag":false}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1898'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - c38ec90f-8cfd-9393-ac07-3d75161c1e9f
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4982'
+      x-ratelimit-reset:
+      - '30'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://api.zsapi.net/zia/api/v1/networkServices
+  response:
+    body:
+      string: '[{"id":773995,"name":"ICMP_ANY","tag":"ICMP_ANY","type":"STANDARD","description":"ICMP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":773997,"name":"UDP_ANY","tag":"UDP_ANY","srcUdpPorts":[],"destUdpPorts":[],"type":"STANDARD","description":"UDP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":773999,"name":"TCP_ANY","tag":"TCP_ANY","srcTcpPorts":[],"destTcpPorts":[],"type":"STANDARD","description":"TCP_ANY_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774003,"name":"DNS","tag":"DNS","srcTcpPorts":[],"destTcpPorts":[{"start":53}],"srcUdpPorts":[],"destUdpPorts":[{"start":53}],"type":"PREDEFINED","description":"DNS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774005,"name":"NETBIOS","tag":"NETBIOS","srcTcpPorts":[],"destTcpPorts":[{"start":139},{"start":137}],"srcUdpPorts":[],"destUdpPorts":[{"start":137,"end":138}],"type":"PREDEFINED","description":"NETBIOS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774007,"name":"FTP","tag":"FTP","srcTcpPorts":[],"destTcpPorts":[{"start":21}],"type":"PREDEFINED","description":"FTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774009,"name":"GNUTELLA","tag":"GNUTELLA","srcTcpPorts":[],"destTcpPorts":[{"start":6346,"end":6347}],"srcUdpPorts":[],"destUdpPorts":[{"start":6346,"end":6347}],"type":"PREDEFINED","description":"GNUTELLA_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774011,"name":"H_323","tag":"H_323","srcTcpPorts":[],"destTcpPorts":[{"start":1731},{"start":389},{"start":522},{"start":1503},{"start":1720}],"srcUdpPorts":[],"destUdpPorts":[{"start":1719}],"type":"PREDEFINED","description":"H_323_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774013,"name":"HTTP","tag":"HTTP","srcTcpPorts":[],"destTcpPorts":[{"start":80}],"type":"PREDEFINED","description":"HTTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774015,"name":"HTTPS","tag":"HTTPS","srcTcpPorts":[],"destTcpPorts":[{"start":443}],"type":"PREDEFINED","description":"HTTPS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774017,"name":"IKE","tag":"IKE","srcTcpPorts":[],"destTcpPorts":[{"start":500}],"srcUdpPorts":[],"destUdpPorts":[{"start":500}],"type":"PREDEFINED","description":"IKE_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774019,"name":"IMAP","tag":"IMAP","srcTcpPorts":[],"destTcpPorts":[{"start":143},{"start":220},{"start":993}],"srcUdpPorts":[],"destUdpPorts":[{"start":220}],"type":"PREDEFINED","description":"IMAP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774021,"name":"ILS","tag":"ILS","srcTcpPorts":[],"destTcpPorts":[{"start":389},{"start":1002},{"start":636},{"start":522}],"type":"PREDEFINED","description":"ILS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774023,"name":"IKE_NAT","tag":"IKE_NAT","srcUdpPorts":[],"destUdpPorts":[{"start":4500}],"type":"PREDEFINED","description":"IKE_NAT_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774025,"name":"IRC","tag":"IRC","srcTcpPorts":[],"destTcpPorts":[{"start":6660,"end":6669}],"type":"PREDEFINED","description":"IRC_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774027,"name":"LDAP","tag":"LDAP","srcTcpPorts":[],"destTcpPorts":[{"start":389}],"type":"PREDEFINED","description":"LDAP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774029,"name":"QUIC","tag":"QUIC","srcUdpPorts":[],"destUdpPorts":[{"start":443}],"type":"PREDEFINED","description":"QUIC_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774031,"name":"TDS","tag":"TDS","srcTcpPorts":[],"destTcpPorts":[{"start":1433}],"type":"PREDEFINED","description":"TDS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774033,"name":"NETMEETING","tag":"NETMEETING","srcTcpPorts":[],"destTcpPorts":[{"start":1503},{"start":1731},{"start":1720},{"start":522},{"start":389}],"srcUdpPorts":[],"destUdpPorts":[{"start":1719}],"type":"PREDEFINED","description":"NETMEETING_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774035,"name":"NFS","tag":"NFS","srcTcpPorts":[],"destTcpPorts":[{"start":111},{"start":2049}],"srcUdpPorts":[],"destUdpPorts":[{"start":111},{"start":2049}],"type":"PREDEFINED","description":"NFS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774037,"name":"NTP","tag":"NTP","srcUdpPorts":[],"destUdpPorts":[{"start":123}],"type":"PREDEFINED","description":"NTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774039,"name":"SIP","tag":"SIP","srcTcpPorts":[],"destTcpPorts":[{"start":5060}],"srcUdpPorts":[],"destUdpPorts":[{"start":5060}],"type":"PREDEFINED","description":"SIP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774041,"name":"SNMP","tag":"SNMP","srcTcpPorts":[],"destTcpPorts":[{"start":161,"end":162}],"srcUdpPorts":[],"destUdpPorts":[{"start":161,"end":162}],"type":"PREDEFINED","description":"SNMP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774043,"name":"SMB","tag":"SMB","srcTcpPorts":[],"destTcpPorts":[{"start":445}],"type":"PREDEFINED","description":"SMB_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774045,"name":"SMTP","tag":"SMTP","srcTcpPorts":[],"destTcpPorts":[{"start":25}],"type":"PREDEFINED","description":"SMTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774047,"name":"SSH","tag":"SSH","srcTcpPorts":[],"destTcpPorts":[{"start":22}],"type":"PREDEFINED","description":"SSH_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774049,"name":"SYSLOG","tag":"SYSLOG","srcUdpPorts":[],"destUdpPorts":[{"start":514}],"type":"PREDEFINED","description":"SYSLOG_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774051,"name":"TELNET","tag":"TELNET","srcTcpPorts":[],"destTcpPorts":[{"start":23}],"type":"PREDEFINED","description":"TELNET_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774053,"name":"TRACEROUTE","tag":"TRACEROUTE","srcUdpPorts":[],"destUdpPorts":[{"start":33400,"end":34000}],"type":"PREDEFINED","description":"TRACEROUTE_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774055,"name":"POP3","tag":"POP3","srcTcpPorts":[],"destTcpPorts":[{"start":110},{"start":109},{"start":995}],"type":"PREDEFINED","description":"POP3_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774057,"name":"PPTP","tag":"PPTP","srcTcpPorts":[],"destTcpPorts":[{"start":1723}],"type":"PREDEFINED","description":"PPTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774059,"name":"RADIUS","tag":"RADIUS","srcUdpPorts":[],"destUdpPorts":[{"start":1812,"end":1813}],"type":"PREDEFINED","description":"RADIUS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774061,"name":"REAL_MEDIA","tag":"REAL_MEDIA","srcTcpPorts":[],"destTcpPorts":[{"start":7070}],"type":"PREDEFINED","description":"REAL_MEDIA_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774063,"name":"RTSP","tag":"RTSP","srcTcpPorts":[],"destTcpPorts":[{"start":554}],"srcUdpPorts":[],"destUdpPorts":[{"start":554}],"type":"PREDEFINED","description":"RTSP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774065,"name":"VNC","tag":"VNC","srcTcpPorts":[],"destTcpPorts":[{"start":5900},{"start":5800}],"type":"PREDEFINED","description":"VNC_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774067,"name":"WHOIS","tag":"WHOIS","srcTcpPorts":[],"destTcpPorts":[{"start":43}],"type":"PREDEFINED","description":"WHOIS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774069,"name":"KERBEROS_SEC","tag":"KERBEROS_SEC","srcTcpPorts":[],"destTcpPorts":[{"start":88}],"srcUdpPorts":[],"destUdpPorts":[{"start":88}],"type":"PREDEFINED","description":"KERBEROS_SEC_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774071,"name":"TACACS","tag":"TACACS","srcTcpPorts":[],"destTcpPorts":[{"start":49}],"srcUdpPorts":[],"destUdpPorts":[{"start":49}],"type":"PREDEFINED","description":"TACACS_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774073,"name":"SNMPTRAP","tag":"SNMPTRAP","srcTcpPorts":[],"destTcpPorts":[{"start":154}],"srcUdpPorts":[],"destUdpPorts":[{"start":154}],"type":"PREDEFINED","description":"SNMPTRAP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774075,"name":"NMAP","tag":"NMAP","srcTcpPorts":[],"destTcpPorts":[{"start":678}],"srcUdpPorts":[],"destUdpPorts":[{"start":678}],"type":"PREDEFINED","description":"NMAP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774077,"name":"RSYNC","tag":"RSYNC","srcTcpPorts":[],"destTcpPorts":[{"start":873}],"srcUdpPorts":[],"destUdpPorts":[{"start":873}],"type":"PREDEFINED","description":"RSYNC_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774079,"name":"L2TP","tag":"L2TP","srcUdpPorts":[],"destUdpPorts":[{"start":1701}],"type":"PREDEFINED","description":"L2TP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774081,"name":"HTTP_PROXY","tag":"HTTP_PROXY","srcTcpPorts":[],"destTcpPorts":[{"start":8080},{"start":3128}],"type":"PREDEFINED","description":"HTTP_PROXY_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774083,"name":"PC_ANYWHERE","tag":"PC_ANYWHERE","srcTcpPorts":[],"destTcpPorts":[{"start":5631}],"srcUdpPorts":[],"destUdpPorts":[{"start":5632},{"start":22}],"type":"PREDEFINED","description":"PC_ANYWHERE_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774085,"name":"MSN","tag":"MSN","srcTcpPorts":[],"destTcpPorts":[{"start":1863}],"type":"PREDEFINED","description":"MSN_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774087,"name":"ECHO","tag":"ECHO","srcTcpPorts":[],"destTcpPorts":[{"start":7}],"srcUdpPorts":[],"destUdpPorts":[{"start":7}],"type":"PREDEFINED","description":"ECHO_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774089,"name":"AIM","tag":"AIM","srcTcpPorts":[],"destTcpPorts":[{"start":5190}],"type":"PREDEFINED","description":"AIM_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774091,"name":"IDENT","tag":"IDENT","srcTcpPorts":[],"destTcpPorts":[{"start":113}],"type":"PREDEFINED","description":"IDENT_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774093,"name":"YMSG","tag":"YMSG","srcTcpPorts":[],"destTcpPorts":[{"start":5050}],"type":"PREDEFINED","description":"YMSG_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774095,"name":"SCCP","tag":"SCCP","srcTcpPorts":[],"destTcpPorts":[{"start":2000}],"type":"PREDEFINED","description":"SCCP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774097,"name":"MGCP_UA","tag":"MGCP_UA","srcUdpPorts":[],"destUdpPorts":[{"start":2427}],"type":"PREDEFINED","description":"MGCP_UA_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774099,"name":"MGCP_CA","tag":"MGCP_CA","srcUdpPorts":[],"destUdpPorts":[{"start":2727}],"type":"PREDEFINED","description":"MGCP_CA_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774101,"name":"VDO_LIVE","tag":"VDO_LIVE","srcTcpPorts":[],"destTcpPorts":[{"start":7000,"end":7010}],"type":"PREDEFINED","description":"VDO_LIVE_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774103,"name":"OPENVPN","tag":"OPENVPN","srcUdpPorts":[],"destUdpPorts":[{"start":1194}],"type":"PREDEFINED","description":"OPENVPN_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774105,"name":"TFTP","tag":"TFTP","srcTcpPorts":[],"destTcpPorts":[{"start":69}],"srcUdpPorts":[],"destUdpPorts":[{"start":69}],"type":"PREDEFINED","description":"TFTP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774107,"name":"FTPS_IMPLICIT","tag":"FTPS_IMPLICIT","srcTcpPorts":[],"destTcpPorts":[{"start":990}],"srcUdpPorts":[],"destUdpPorts":[{"start":990}],"type":"PREDEFINED","description":"FTPS_IMPLICIT_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774109,"name":"ZSCALER_PROXY_NW_SERVICES","tag":"ZSCALER_PROXY_NW_SERVICES","srcTcpPorts":[],"destTcpPorts":[{"start":80},{"start":443},{"start":8080},{"start":8800},{"start":9400},{"start":9443},{"start":9480},{"start":21}],"type":"PREDEFINED","description":"ZSCALER_PROXY_NW_SERVICES_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774111,"name":"GRE_PROTOCOL","tag":"GRE_PROTOCOL","type":"STANDARD","description":"GRE_PROTOCOL_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":774113,"name":"ESP_PROTOCOL","tag":"ESP_PROTOCOL","type":"STANDARD","description":"ESP_PROTOCOL_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":1471404,"name":"DHCP","tag":"DHCP","srcTcpPorts":[],"destTcpPorts":[{"start":67,"end":68}],"srcUdpPorts":[],"destUdpPorts":[{"start":67,"end":68}],"type":"PREDEFINED","description":"DHCP_DESC","creatorContext":"ZIA","isNameL10nTag":true},{"id":1705503,"name":"SNPP","srcTcpPorts":[],"destTcpPorts":[{"start":444}],"type":"CUSTOM","creatorContext":"ZIA","isNameL10nTag":false},{"id":9909406,"name":"example","srcTcpPorts":[{"start":5000},{"start":5001},{"start":5002,"end":5005}],"destTcpPorts":[{"start":5000},{"start":5001},{"start":5003,"end":5005}],"type":"CUSTOM","description":"example","creatorContext":"EC","isNameL10nTag":false},{"id":9919200,"name":"ggnnxziulv","srcTcpPorts":[{"start":5000},{"start":5001},{"start":5002,"end":5005}],"destTcpPorts":[{"start":5000},{"start":5001},{"start":5003,"end":5005}],"type":"CUSTOM","description":"this
+        is an acceptance test","creatorContext":"EC","isNameL10nTag":false},{"id":10177035,"name":"updated-vcr0003","srcTcpPorts":[],"destTcpPorts":[{"start":389},{"start":636},{"start":3268,"end":3269}],"srcUdpPorts":[],"destUdpPorts":[{"start":389}],"type":"CUSTOM","description":"updated-vcr0004","creatorContext":"ZIA","isNameL10nTag":false}]'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:49:33 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding, Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '478'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 323602d2-7791-9eba-9e5b-880979efcfaa
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4981'
+      x-ratelimit-reset:
+      - '28'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/networkServices/10177035
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      date:
+      - Wed, 26 Nov 2025 23:49:35 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '1676'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 9afef174-3322-9765-b73d-d456fbfaaf33
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4980'
+      x-ratelimit-reset:
+      - '27'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 204
+      message: No Content
+version: 1

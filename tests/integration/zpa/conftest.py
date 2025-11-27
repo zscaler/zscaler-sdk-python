@@ -36,7 +36,7 @@ def reset_counters_per_test():
     yield
 
 
-class TestNameGenerator:
+class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
     
@@ -44,7 +44,7 @@ class TestNameGenerator:
     provides consistent, predictable names that work with recorded cassettes.
     
     Usage:
-        names = TestNameGenerator("app_segment")
+        names = NameGenerator("app_segment")
         name = names.name       # "tests-app-segment"
         desc = names.description  # "Test App Segment"
         updated_name = names.updated_name  # "tests-app-segment-updated"

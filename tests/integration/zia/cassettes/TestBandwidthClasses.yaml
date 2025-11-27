@@ -1,6 +1,8 @@
 interactions:
 - request:
-    body: '{}'
+    body: '{"name": "tests-bandwidth-class", "webApplications": ["ACADEMICGPT", "AD_CREATIVES"],
+      "urls": ["test1.acme.com", "test2.acme.com"], "urlCategories": ["AI_ML_APPS",
+      "GENERAL_AI_ML"]}'
     headers:
       Accept:
       - application/json
@@ -9,22 +11,19 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '2'
+      - '181'
       Content-Type:
       - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite
+    method: POST
+    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses
   response:
     body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML"]}'
     headers:
       cache-control:
       - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
       content-disposition:
       - attachment; filename="api.json"
       content-encoding:
@@ -43,7 +42,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:40 GMT
+      - Wed, 26 Nov 2025 23:47:28 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -55,21 +54,100 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '3099'
+      - '2386'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - 34c8da53-fe89-9972-aa9f-f14773676667
+      - a75ab1d4-02dd-97d5-9141-75adef2d68ac
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4997'
+      - '4989'
       x-ratelimit-reset:
-      - '23'
+      - '34'
+      x-transaction-id:
+      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
+      x-xss-protection:
+      - 1; mode=block
+      x-zscaler-mode:
+      - read-write
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "tests-bandwidth-class-updated", "webApplications": ["ACADEMICGPT",
+      "AD_CREATIVES"], "urls": ["test1.acme.com", "test2.acme.com", "test3.acme.com"],
+      "urlCategories": ["AI_ML_APPS", "GENERAL_AI_ML", "PROFESSIONAL_SERVICES"]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '232'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
+    method: PUT
+    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses/17
+  response:
+    body:
+      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["AI_ML_APPS","GENERAL_AI_ML","PROFESSIONAL_SERVICES"]}'
+    headers:
+      cache-control:
+      - no-store, no-cache
+      content-disposition:
+      - attachment; filename="api.json"
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
+        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
+        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
+        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
+        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
+        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
+        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
+        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
+        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
+        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
+      content-type:
+      - application/json
+      date:
+      - Wed, 26 Nov 2025 23:47:32 GMT
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '3986'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 341d403e-ed7b-90d5-b8e2-711a71d94c14
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 5000, 5000;w=60
+      x-ratelimit-remaining:
+      - '4988'
+      x-ratelimit-reset:
+      - '32'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -95,16 +173,13 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite
+    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses/17
   response:
     body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+      string: '{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test2.acme.com","test3.acme.com","test1.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]}'
     headers:
       cache-control:
       - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
       content-disposition:
       - attachment; filename="api.json"
       content-encoding:
@@ -123,7 +198,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:40 GMT
+      - Wed, 26 Nov 2025 23:47:33 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -135,21 +210,21 @@ interactions:
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '359'
+      - '619'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - fee5ed30-f3b2-952c-9f08-81816072ffdb
+      - 0aff10ba-71b6-9e37-939c-88a784cf053d
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4996'
+      - '4987'
       x-ratelimit-reset:
-      - '20'
+      - '28'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -175,16 +250,17 @@ interactions:
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
     method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includeAuditorRole=True
+    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses
   response:
     body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":18999,"rank":7,"name":"Auditor","isAuditor":true,"roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+      string: '[{"id":2,"isNameL10nTag":true,"name":"LARGE_FILE","type":"BANDWIDTH_CAT_LARGE_FILE","fileSize":"FILE_1GB"},{"id":6,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_WEBCONF","type":"BANDWIDTH_CAT_WEBCONF","applications":["CONNECT","INTERCALL"]},{"id":11,"isNameL10nTag":true,"name":"Office
+        Applications","webApplications":["WINDOWS_LIVE_HOTMAIL","YAMMER","SHAREPOINTONLINE","OTHER_OFFICE365","ONEDRIVE","ONEDRIVE_PERSONAL"]},{"id":12,"isNameL10nTag":true,"name":"Productivity","webApplications":["GOTOMEETING","GOTOWEBINAR","SALESFORCE","GOOGLEANALYTICS","GOOGLEBUSINESSAPPS","EVERNOTE","TWILIO","ZOHOCRM","SUGARCRM","SLIDESHARE","ECHOSIGN","DOCUSIGN","ARIBA","DOCSTOC","GITHUB"],"urlCategories":["OTHER_BUSINESS_AND_ECONOMY","CORPORATE_MARKETING","FINANCE","PROFESSIONAL_SERVICES","WEB_SEARCH","INTERNET_SERVICES"]},{"id":13,"isNameL10nTag":true,"name":"Social
+        Media","webApplications":["MYSPACE","CRAIGSLIST","FACEBOOK","LINKEDIN","BEBO","XING","FRIENDSTER","HI5","YAHOO_GROUPS","GOOGLE_GROUPS","BLOGSPOT","LIVEJOURNAL","WORDPRESS","SLASHDOT","DIGG","TWITTER","MIXI","CHANNELTWO","GOOGLE_PLUS","PINTEREST","VKONTAKTE","REDDIT","FOURSQUARE","FLICKR","INSTAGRAM","TUENTI","FLORESTAALD","TYPEPAD","TUMBLR"]},{"id":14,"isNameL10nTag":true,"name":"Streaming
+        Video","webApplications":["YOUTUBE","GOOGLE_STREAMING","METACAFE","DAILYMOTION","VEOH","AOL_VIDEO","REVVER","HULU","MEGAVIDEO","SNAGFILMS","PANDORA_RADIO","VIMEO","IPLAYER","TVCOM","LASTFM","NETFLIX","SPOTIFY","YOUKU","BBCIPLAYER","DEEZER","TWITCHTV","SLINGTV","RADIONOMY","MUSICME","MYVIDEODE","CLIPFISHDE","VIDEOMAILRU","VISIONRAMBLERRU","SMOTRICOM","VIDEOYANDEXRU","ZIDDU","ONEDRIVE","SYNCPLICITY","YANDEXDISK","OPENDRIVE","WETRANSFER","SHAREFILE","ONEHUB","SCREENCAST","RUSFOLDER","SUGARSYNC","WIKISEND","SENDTHISFILE","MYFILES","UPLOADED","GPHOTOS","ONEDRIVE_PERSONAL"]},{"id":15,"isNameL10nTag":true,"name":"Business
+        and Economy","urlCategories":["OTHER_BUSINESS_AND_ECONOMY"]},{"id":16,"isNameL10nTag":true,"name":"tests-vcr0001","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test2.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":17,"isNameL10nTag":true,"name":"tests-bandwidth-class-updated","webApplications":["ACADEMICGPT","AD_CREATIVES"],"urls":["test1.acme.com","test3.acme.com","test2.acme.com"],"urlCategories":["PROFESSIONAL_SERVICES","AI_ML_APPS","GENERAL_AI_ML"]},{"id":7,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_VOIP","type":"BANDWIDTH_CAT_VOIP","applications":["SKYPE"]},{"id":1,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_GENERAL_SURFING","type":"BANDWIDTH_CAT_GENERAL_SURFING"},{"id":3,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_SALES","type":"BANDWIDTH_CAT_SALES"},{"id":4,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FINANCE","urls":[".netsuite.com"],"type":"BANDWIDTH_CAT_FINANCE"},{"id":5,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_MEDIA","urls":[".metacafe.com",".hulu.com",".dailymotion.com",".shoutcast.com",".youtube.com"],"type":"BANDWIDTH_CAT_MEDIA"},{"id":8,"isNameL10nTag":true,"name":"BANDWIDTH_CAT_FSHARE","urls":[".dropbox.com",".box.net"],"type":"BANDWIDTH_CAT_FSHARE"}]'
     headers:
       cache-control:
       - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
       content-disposition:
       - attachment; filename="api.json"
       content-encoding:
@@ -203,7 +279,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:41 GMT
+      - Wed, 26 Nov 2025 23:47:34 GMT
       server:
       - Zscaler
       strict-transport-security:
@@ -211,25 +287,25 @@ interactions:
       transfer-encoding:
       - chunked
       vary:
-      - Accept-Encoding
+      - accept-encoding, Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '382'
+      - '1048'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - c0256f95-375a-9011-83e2-18c2494d2865
+      - d02b6eba-9c77-955a-99fa-5a207442c8d4
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4995'
+      - '4986'
       x-ratelimit-reset:
-      - '19'
+      - '27'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -254,21 +330,16 @@ interactions:
       - application/json
       User-Agent:
       - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includePartnerRole=True
+    method: DELETE
+    uri: https://api.zsapi.net/zia/api/v1/bandwidthClasses/17
   response:
     body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
+      string: ''
     headers:
       cache-control:
       - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
       content-disposition:
       - attachment; filename="api.json"
-      content-encoding:
-      - gzip
       content-security-policy:
       - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
         https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
@@ -280,36 +351,32 @@ interactions:
         ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
         wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
         https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
       date:
-      - Wed, 26 Nov 2025 23:46:41 GMT
+      - Wed, 26 Nov 2025 23:47:36 GMT
       server:
       - Zscaler
       strict-transport-security:
       - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
       vary:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
       x-envoy-upstream-service-time:
-      - '261'
+      - '2060'
       x-frame-options:
       - SAMEORIGIN
       x-oneapi-host:
       - https://apiusw2.zsapi.net
       x-oneapi-request-id:
-      - da346c9c-5f97-92cf-99be-29cd7158e82c
+      - e403fac8-caa9-93c5-8965-17a6c0babf64
       x-oneapi-version:
       - 109.1.85
       x-ratelimit-limit:
       - 5000, 5000;w=60
       x-ratelimit-remaining:
-      - '4994'
+      - '4985'
       x-ratelimit-reset:
-      - '19'
+      - '26'
       x-transaction-id:
       - d12cf6fb-c5cd-4dc2-a132-8157d492d761
       x-xss-protection:
@@ -317,86 +384,6 @@ interactions:
       x-zscaler-mode:
       - read-write
     status:
-      code: 200
-      message: OK
-- request:
-    body: '{}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - zscaler-sdk-python/1.9.3 python/3.11.8 Darwin/24.6.0
-    method: GET
-    uri: https://api.zsapi.net/zia/api/v1/adminRoles/lite?includeApiRole=True
-  response:
-    body:
-      string: '[{"id":11521,"rank":7,"name":"Super Admin","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":11522,"rank":7,"name":"Executive
-        Insights App","roleType":"EXEC_INSIGHT","reportTimeDuration":-1},{"id":12404,"rank":7,"name":"Engineering_Role","roleType":"EXEC_INSIGHT_AND_ORG_ADMIN","reportTimeDuration":-1},{"id":18740,"rank":7,"name":"SDWAN-SilverPeak","roleType":"SDWAN","reportTimeDuration":-1},{"id":18756,"rank":7,"name":"SDWAN-VeloCloud","roleType":"SDWAN","reportTimeDuration":-1},{"id":36357,"rank":7,"name":"Firewall-Admin-API-Role","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":51987,"rank":7,"name":"Role_Test_OneAPI","roleType":"ORG_ADMIN","reportTimeDuration":-1},{"id":51988,"rank":7,"name":"API_Role01","roleType":"PUBLIC_API","reportTimeDuration":-1},{"id":72345,"rank":7,"name":"API_Role_READONLY","roleType":"PUBLIC_API","reportTimeDuration":-1}]'
-    headers:
-      cache-control:
-      - no-store, no-cache
-      cache-status:
-      - EdgeCache; fwd=miss; detail=shadow-mode
-      content-disposition:
-      - attachment; filename="api.json"
-      content-encoding:
-      - gzip
-      content-security-policy:
-      - 'default-src ''none''; img-src ''self'' data: https://www.zscaler.com https://www.zscaler.fr
-        https://a.tile.openstreetmap.org                 https://b.tile.openstreetmap.org
-        https://c.tile.openstreetmap.org                 https://webapi.zscaler.com
-        https://cdn.zscaler.com https://server.arcgisonline.com                 https://fast.wistia.com
-        https://cms.zscaler.com; script-src ''self'' ''unsafe-eval'' https://*.userpilot.io
-        https://webapi.zscaler.com/                 https://www.zscaler.com/api/admin-ui-messages/
-        https://webapi.zscaler.com/                 https://fast.wistia.com; style-src
-        ''unsafe-inline'' https:; font-src ''self''; connect-src ''self'' https://*.userpilot.io
-        wss://analytex-us.userpilot.io; frame-src ''self'' https://help.zscaler.com/
-        https://help.zscalergov.net https://help.zscaler.us; manifest-src ''self'''
-      content-type:
-      - application/json
-      date:
-      - Wed, 26 Nov 2025 23:46:42 GMT
-      server:
-      - Zscaler
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-envoy-upstream-service-time:
-      - '293'
-      x-frame-options:
-      - SAMEORIGIN
-      x-oneapi-host:
-      - https://apiusw2.zsapi.net
-      x-oneapi-request-id:
-      - be565f09-dc52-9b9c-b5b3-3273c27a24cc
-      x-oneapi-version:
-      - 109.1.85
-      x-ratelimit-limit:
-      - 5000, 5000;w=60
-      x-ratelimit-remaining:
-      - '4993'
-      x-ratelimit-reset:
-      - '19'
-      x-transaction-id:
-      - d12cf6fb-c5cd-4dc2-a132-8157d492d761
-      x-xss-protection:
-      - 1; mode=block
-      x-zscaler-mode:
-      - read-write
-    status:
-      code: 200
-      message: OK
+      code: 204
+      message: No Content
 version: 1

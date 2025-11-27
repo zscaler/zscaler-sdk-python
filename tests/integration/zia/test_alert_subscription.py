@@ -17,7 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ class TestAlertSubscription:
         update_subscription = None
         
         # Use deterministic names for VCR
-        names = TestNameGenerator("alert-subscription")
+        names = NameGenerator("alert-subscription")
 
         try:
             try:

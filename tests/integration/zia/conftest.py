@@ -37,7 +37,7 @@ def reset_counters_per_test():
     yield
 
 
-class TestNameGenerator:
+class NameGenerator:
     """
     Generates deterministic test names for VCR-based testing.
     
@@ -45,7 +45,7 @@ class TestNameGenerator:
     provides consistent, predictable names that work with recorded cassettes.
     
     Usage:
-        names = TestNameGenerator("rule_labels")
+        names = NameGenerator("rule_labels")
         name = names.name       # "tests-rule-labels"
         desc = names.description  # "Test Rule Labels"
         updated_name = names.updated_name  # "tests-rule-labels-updated"
@@ -84,10 +84,10 @@ class TestNameGenerator:
         readable = self.resource_type.replace("-", " ").title()
         return f"Updated Test {readable}{self.suffix}"
     
-    def with_suffix(self, suffix: str) -> "TestNameGenerator":
+    def with_suffix(self, suffix: str) -> "NameGenerator":
         """Returns a new generator with an additional suffix."""
         new_suffix = f"{self.suffix.lstrip('-')}-{suffix}" if self.suffix else suffix
-        return TestNameGenerator(self.resource_type, new_suffix)
+        return NameGenerator(self.resource_type, new_suffix)
     
     @staticmethod
     def generate_urls(count: int = 5, domain: str = "vcr-test.com") -> list:

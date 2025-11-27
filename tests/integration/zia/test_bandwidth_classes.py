@@ -17,7 +17,7 @@
 
 import pytest
 
-from tests.integration.zia.conftest import MockZIAClient, TestNameGenerator
+from tests.integration.zia.conftest import MockZIAClient, NameGenerator
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ class TestBandwidthClasses:
         update_class = None
         
         # Use deterministic names for VCR
-        names = TestNameGenerator("bandwidth-class")
+        names = NameGenerator("bandwidth-class")
 
         try:
             # Test: Add Bandwidth Class
