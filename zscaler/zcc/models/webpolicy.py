@@ -309,6 +309,7 @@ class PolicyExtension(ZscalerObject):
         super().__init__(config)
 
         if config:
+            self.id = config["id"] if "id" in config else None
             self.source_port_based_bypasses = config["sourcePortBasedBypasses"] \
                 if "sourcePortBasedBypasses" in config else None
             self.vpn_gateways = config["vpnGateways"] \
@@ -439,6 +440,7 @@ class PolicyExtension(ZscalerObject):
                 if "enableFlowBasedTunnel" in config else None
 
         else:
+            self.id = None
             self.source_port_based_bypasses = None
             self.vpn_gateways = None
             self.packet_tunnel_exclude_list = None
@@ -484,7 +486,7 @@ class PolicyExtension(ZscalerObject):
             self.update_dns_search_order = None
             self.truncate_large_udpdns_response = None
             self.prioritize_dns_exclusions = None
-            self.purge_kerberos_preferred_d_c_cache = None
+            self.purge_kerberos_preferred_dc_cache = None
             self.delete_dhcp_option121_routes = None
             self.generate_cli_password_contract = None
             self.zdx_lite_config_obj = None
@@ -554,7 +556,7 @@ class PolicyExtension(ZscalerObject):
             "updateDnsSearchOrder": self.update_dns_search_order,
             "truncateLargeUDPDNSResponse": self.truncate_large_udpdns_response,
             "prioritizeDnsExclusions": self.prioritize_dns_exclusions,
-            "purgeKerberosPreferredDCCache": self.purge_kerberos_preferred_d_c_cache,
+            "purgeKerberosPreferredDCCache": self.purge_kerberos_preferred_dc_cache,
             "deleteDHCPOption121Routes": self.delete_dhcp_option121_routes,
             "generateCliPasswordContract": self.generate_cli_password_contract,
             "zdxLiteConfigObj": self.zdx_lite_config_obj,

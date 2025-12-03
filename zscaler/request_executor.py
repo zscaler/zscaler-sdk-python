@@ -180,6 +180,8 @@ class RequestExecutor:
             return "zidentity"
         elif "/admin" in url:
             return "admin"
+        elif "/easm/easm-ui/v1" in url:
+            return "zeasm"
         if self.use_legacy_client:
             url = self.remove_oneapi_endpoint_prefix(url)
             # Recheck for service type after removing the prefix
@@ -197,7 +199,6 @@ class RequestExecutor:
                 return "zpa"
             elif "/admin/api/v1" in url:
                 return "zidentity"
-
         raise ValueError(f"Unsupported service: {url}")
 
     def remove_oneapi_endpoint_prefix(self, endpoint: str) -> str:
@@ -313,6 +314,10 @@ class RequestExecutor:
         # Special handling for ZDX endpoints - keep snake_case format
         if "/zdx/" in endpoint:
             return body  # Do not convert ZDX requests to camelCase
+
+        # Special handling for ZEASM endpoints - keep snake_case format
+        if "/easm/" in endpoint:
+            return body  # Do not convert ZEASM requests to camelCase
 
         # Special handling for ZCC service - use selective conversion
         if "/zcc/" in endpoint and body:
