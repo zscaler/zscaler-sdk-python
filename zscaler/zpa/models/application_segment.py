@@ -32,6 +32,9 @@ class ApplicationSegments(ZscalerObject):
             self.id = config["id"] if "id" in config else None
             self.name = config["name"] if "name" in config else None
             self.description = config["description"] if "description" in config else None
+            self.creation_time = config["creationTime"] if "creationTime" in config else None
+            self.modified_time = config["modifiedTime"] if "modifiedTime" in config else None
+            self.modified_by = config["modifiedBy"] if "modifiedBy" in config else None
             self.segment_group_id = config["segmentGroupId"] if "segmentGroupId" in config else None
             self.segment_group_name = config["segmentGroupName"] if "segmentGroupName" in config else None
             self.enabled = config["enabled"] if "enabled" in config else True
@@ -153,6 +156,9 @@ class ApplicationSegments(ZscalerObject):
             self.id = None
             self.name = None
             self.description = None
+            self.creation_time = None
+            self.modified_time = None
+            self.modified_by = None
             self.domain_names = []
             self.server_groups = []
             self.pra_apps = []
@@ -201,6 +207,9 @@ class ApplicationSegments(ZscalerObject):
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "creationTime": self.creation_time,
+            "modifiedTime": self.modified_time,
+            "modifiedBy": self.modified_by,
             "domainNames": self.domain_names,
             "serverGroups": self.server_groups,
             "enabled": self.enabled,

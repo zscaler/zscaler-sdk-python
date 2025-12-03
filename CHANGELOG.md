@@ -1,5 +1,22 @@
 # Zscaler Python SDK Changelog
 
+## 1.9.6 (December 2, 2025)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11, v3.12**
+
+### Enhancements:
+
+* [PR #433](https://github.com/zscaler/zscaler-sdk-python/pull/433) - Added External Attach Surface Management(EASM) Endpoints
+
+### Bug Fixes:
+
+* [PR #433](https://github.com/zscaler/zscaler-sdk-python/pull/433) - Fixed missing `creation_time`, `modified_time`, `modified_by` attributes in ZPA `ApplicationSegments` model.
+* [PR #433](https://github.com/zscaler/zscaler-sdk-python/pull/433) - Fixed missing `id` attribute in ZCC `PolicyExtension` model causing `AttributeError`.
+* [PR #433](https://github.com/zscaler/zscaler-sdk-python/pull/433) - Fixed ZCC camelCase edge cases in `helpers.py` for attributes like `truncateLargeUDPDNSResponse`, `enforceSplitDNS`, `packetTunnelExcludeListForIPv6`.
+* [PR #433](https://github.com/zscaler/zscaler-sdk-python/pull/433) - Added `device_type` parameter mapping support in ZCC `zcc_param_mapper`.
+
 ## 1.9.5 (November 26, 2025)
 
 ### Notes

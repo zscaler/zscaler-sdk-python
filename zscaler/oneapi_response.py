@@ -193,6 +193,12 @@ class ZscalerAPIResponse:
             self._results_total = self._body.get("results_total")
             self._page_offset = self._body.get("pageOffset")
             self._page_size = self._body.get("pageSize")
+        elif self._service_type == "zeasm":
+            # ZEASM uses "results" field for paginated responses
+            self._list = self._body.get("results", [])
+            self._total_results = self._body.get("total_results", 0)
+            self._next_page = self._body.get("next_page")
+            self._prev_page = self._body.get("prev_page")
         elif self._service_type == "ZCC":
             # ZCC can return either a single object or a list of objects
             if isinstance(self._body, dict):

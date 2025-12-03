@@ -117,6 +117,10 @@ lint\:zwa:
 	poetry run flake8 zscaler/zwa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 	poetry run flake8 zscaler/zwa --count --select=E9,F63,F7,F82 --show-source --statistics
 
+lint\:zeasm:
+	poetry run flake8 zscaler/zeasm --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	poetry run flake8 zscaler/zeasm --count --select=E9,F63,F7,F82 --show-source --statistics
+
 format:
 	poetry run black .
 
@@ -159,6 +163,10 @@ test\:integration\:zwa:
 	@echo "$(COLOR_ZSCALER)Running zwa integration tests...$(COLOR_NONE)"
 	poetry run pytest tests/integration/zwa --disable-warnings
 
+test\:integration\:zeasm:
+	@echo "$(COLOR_ZSCALER)Running zeasm integration tests...$(COLOR_NONE)"
+	poetry run pytest tests/integration/zeasm --disable-warnings
+
 test-simple:
 	poetry run pytest --disable-warnings
 
@@ -183,6 +191,8 @@ coverage\:zpa:
 coverage\:zidentity:
 	poetry run pytest tests/integration/zidentity --cov=zscaler/zidentity --cov-report xml --cov-report term 
 
+coverage\:zeasm:
+	poetry run pytest tests/integration/zeasm --cov=zscaler/zeasm --cov-report xml --cov-report term
 # ==========================================
 # VCR Testing Commands
 # ==========================================
@@ -244,6 +254,11 @@ test\:vcr\:record\:ztw:
 	@echo "$(COLOR_ZSCALER)Recording ZTW VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=false poetry run pytest tests/integration/ztw --record-mode=rewrite -v --disable-warnings
 
+# Record VCR cassettes for ZEASM
+test\:vcr\:record\:zeasm:
+	@echo "$(COLOR_ZSCALER)Recording ZEASM VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=false poetry run pytest tests/integration/zeasm --record-mode=rewrite -v --disable-warnings
+
 # Playback VCR cassettes for ZIA (no credentials needed)
 test\:vcr\:playback\:zia:
 	@echo "$(COLOR_ZSCALER)Playing back ZIA VCR cassettes...$(COLOR_NONE)"
@@ -273,6 +288,11 @@ test\:vcr\:playback\:zidentity:
 test\:vcr\:playback\:ztw:
 	@echo "$(COLOR_ZSCALER)Playing back ZTW VCR cassettes...$(COLOR_NONE)"
 	MOCK_TESTS=true poetry run pytest tests/integration/ztw -v --disable-warnings
+
+# Playback VCR cassettes for ZEASM (no credentials needed)
+test\:vcr\:playback\:zeasm:
+	@echo "$(COLOR_ZSCALER)Playing back ZEASM VCR cassettes...$(COLOR_NONE)"
+	MOCK_TESTS=true poetry run pytest tests/integration/zeasm -v --disable-warnings
 
 # Run integration tests against live API (no VCR)
 test\:integration\:live:

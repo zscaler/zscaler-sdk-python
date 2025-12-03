@@ -1,0 +1,75 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations
+  response:
+    body:
+      string: '{"results":[{"id":"3f61a446-1a0d-11f0-94e8-8a5f4d45e80c","name":"AssuredPartners"}],"total_results":1}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:11 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '18'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 908f991a-fdf8-93c5-aed4-c0804971fa62
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1
