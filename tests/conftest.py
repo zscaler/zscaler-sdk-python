@@ -54,6 +54,7 @@ TEST_URLS = {
     "zcc": "https://mobile.test.zscaler.com",
     "zdx": "https://zdx.test.zscaler.com",
     "zidentity": "https://identity.test.zscaler.com",
+    "zeasm": "https://easm.test.zscaler.com",
 }
 
 # Regex patterns for Zscaler service URLs (string version)
@@ -65,6 +66,7 @@ URL_PATTERNS = {
     "zcc": r"https://api-mobile\.zscaler\.net",
     "zdx": r"https://api\.zdxcloud\.net",
     "zidentity": r"https://[a-z0-9-]+\.zslogin\.net",
+    "zeasm": r"https://api\.zsapi\.net",
 }
 
 # Binary versions for response body sanitization
@@ -117,6 +119,7 @@ def before_record_request(request):
         "zcc": TEST_URLS["zcc"],
         "zdx": TEST_URLS["zdx"],
         "zidentity": TEST_URLS["zidentity"],
+        "zeasm": TEST_URLS["zeasm"],
     }
 
     for service, pattern in URL_PATTERNS.items():
@@ -183,6 +186,7 @@ def before_record_response(response):
             "zcc": TEST_URLS_BYTES["zcc"],
             "zdx": TEST_URLS_BYTES["zdx"],
             "zidentity": TEST_URLS_BYTES["zidentity"],
+            "zeasm": TEST_URLS_BYTES["zeasm"],
         }
 
         # Handle bytes body
@@ -241,6 +245,7 @@ def before_record_response(response):
                 "zcc": TEST_URLS["zcc"],
                 "zdx": TEST_URLS["zdx"],
                 "zidentity": TEST_URLS["zidentity"],
+                "zeasm": TEST_URLS["zeasm"],
             }
             for service, pattern in URL_PATTERNS.items():
                 test_url = pattern_to_test_url.get(service, TEST_URLS["base"])
