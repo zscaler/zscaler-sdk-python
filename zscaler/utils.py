@@ -841,6 +841,23 @@ def zcc_param_mapper(func):
             else:
                 mapped_params["osTypes"] = ",".join(mapped)
 
+        # Handle device_type (uses same mapping as os_type)
+        raw_device_type = (
+            query_params.get("device_type") or
+            body.get("device_type")
+        )
+
+        if raw_device_type:
+            raw_device_type = [raw_device_type] if isinstance(raw_device_type, str) else raw_device_type
+            mapped = [
+                str(zcc_param_map["os"].get(dt.lower()) if isinstance(dt, str) else dt)
+                for dt in raw_device_type
+                if (isinstance(dt, str) and zcc_param_map["os"].get(dt.lower())) or isinstance(dt, int)
+            ]
+            if not mapped:
+                raise ValueError("Invalid `device_type` provided. Valid options: ios, android, windows, macos, linux.")
+            mapped_params["deviceType"] = ",".join(mapped)
+
         raw_reg = (
             query_params.get("registration_type") or
             query_params.get("registration_types") or
@@ -907,9 +924,10 @@ def zcc_param_mapper(func):
         # Clean aliases
         for key in [
             "os_type", "os_types",
+            "device_type",
             "registration_type", "registration_types",
             "start_date", "startDate",
-            "end_date", "endDate", 
+            "end_date", "endDate",
             "time_zone", "Time-Zone",
         ]:
             query_params.pop(key, None)

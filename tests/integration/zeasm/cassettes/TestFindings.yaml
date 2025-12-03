@@ -1,0 +1,497 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=102q7dt7r3807p4&client_secret=REDACTED&audience=https%3A%2F%2Fapi.zscaler.com
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '157'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: POST
+    uri: https://identity.test.zscaler.com/oauth2/v1/token
+  response:
+    body:
+      string: '{"access_token":"REDACTED_TOKEN","token_type":"Bearer","expires_in":11999}'
+    headers:
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      content-security-policy:
+      - 'default-src ''none'' ;connect-src  https://easm-bp-demo.zslogin.net/;font-src
+        https://fonts.gstatic.com ;img-src data: https://www.zscaler.com https://info.zscaler.com
+        ;script-src ''unsafe-inline'' ''unsafe-eval'' https://www.zscaler.com ;style-src
+        ''unsafe-inline'' https://fonts.googleapis.com ;frame-src  https://easm-bp-demo.zslogin.net/
+        https://easm-bp-demo-admin.zslogin.net/;frame-ancestors  ;upgrade-insecure-requests'
+      content-type:
+      - application/json;charset=UTF-8
+      date:
+      - Tue, 02 Dec 2025 23:06:39 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - ingress-gateway
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains;
+      - max-age=31536000; includeSubDomains;
+      transfer-encoding:
+      - chunked
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - DENY
+      - SAMEORIGIN
+      - SAMEORIGIN
+      x-ratelimit-limit:
+      - 150, 150;w=1, 100000;w=60, 10000;w=60
+      x-ratelimit-remaining:
+      - '149'
+      x-ratelimit-reset:
+      - '1'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations
+  response:
+    body:
+      string: '{"results":[{"id":"3f61a446-1a0d-11f0-94e8-8a5f4d45e80c","name":"AssuredPartners"}],"total_results":1}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:06:40 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '653'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 06cfb1ba-0b45-90e0-84b5-42b0b560e278
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/findings
+  response:
+    body:
+      string: '{"results":[{"id":"8abfc6a2b3058cb75de44c4c65ca4641","name":"HTTP Missing
+        Common Security Header - Set-Cookie","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"af65bd98ffbcf113521c878c48c088e0","name":"HTTP
+        Missing Common Security Header - Cross-Origin-Embedder-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"e31f6e826b45823a02279493a8a697ab","name":"HTTP
+        Missing Common Security Header - Cross-Origin-Opener-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"cb2baf9f357637f0afe03d01ce899bf1","name":"HTTP
+        Missing Common Security Header - Permissions-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"e426677275ef161a5da7bdd592c6b1f0","name":"HTTP
+        Missing Common Security Header - Strict-Transport-Security","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"85a7d45a3cfe8b01e98c31c39794a443","name":"HTTP
+        Missing Common Security Header - X-Xss-Protection","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"fdb9d658870d77fec5af93b12ee7f464","name":"CVE-2008-4301","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"75","risk_level":"High","type":"CVE","scan_type":"WEB","first_seen":"2025-06-17T15:25:55.997949Z","last_seen":"2025-06-17T15:25:55.997949Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"cce3a0eb548db615b12dde91d91929b8","name":"CVE-2008-4300","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"37","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-06-17T15:25:55.997949Z","last_seen":"2025-06-17T15:25:55.997949Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"8ef65f99da711b6f0693546a9c96dc7b","name":"CVE-2014-4078","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"38","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-06-17T15:25:55.997949Z","last_seen":"2025-06-17T15:25:55.997949Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"632d3e9b4c650cc41fa1bd8cc4cd7ef0","name":"CVE-2022-31628","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"37","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"4a844c498bd0a88da7748026673ac550","name":"HTTP
+        Missing Common Security Header - Cross-Origin-Embedder-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"fe98f05b971d3c6a6a7dd6669f455783","name":"HTTP
+        Missing Common Security Header - Cross-Origin-Opener-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"6d5f802d85eeeb20cdf94504a629e0b7","name":"HTTP
+        Missing Common Security Header - Permissions-Policy","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"0ed05ad4477881226c4357fe6c053144","name":"HTTP
+        Missing Common Security Header - Set-Cookie","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"a10901e020064b41144af7fe5584b377","name":"HTTP
+        Missing Common Security Header - Strict-Transport-Security","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"4581ec4ac5a430ae01a4d64b6a1ccbe2","name":"HTTP
+        Missing Common Security Header - X-Xss-Protection","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_COMMON_SECURITY_HEADER_MISSING","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"29afacad56809fb07e67ffb6994efdc2","name":"HTTP
+        Using Insecure Header - Server","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"30","risk_level":"Low","type":"HTTP_USING_INSECURE_HEADER","scan_type":"WEB","first_seen":"2025-04-16T19:25:01.766003Z","last_seen":"2025-12-02T15:25:55.79737Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED"},{"id":"bf72c3caa33fc6d00db24f2b2b2b1e84","name":"CVE-2022-31629","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"49","risk_level":"Medium","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"7be3c1b5a59555c4c3db2e420ddb9d41","name":"CVE-2017-8923","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"66","risk_level":"Medium","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"fc87f240fe7dd62ddc4d13347b15382c","name":"CVE-2007-4596","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"52","risk_level":"Medium","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"b3080be7920146ab06e4701d4204edb1","name":"CVE-2022-4900","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"37","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"fbbd8beb72b5d6e01dbe0968bbdd0433","name":"CVE-2024-5458","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"35","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"fc3dffe103ec2ded3a9ad3c38f932cdb","name":"CVE-2007-2728","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"34","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"3d7a623b85fcc7f850b09c38cacc7b1d","name":"CVE-2022-37454","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"66","risk_level":"Medium","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"bb4581b246d55b6e9670f71aaa5cfd00","name":"CVE-2007-3205","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"https://firstbenefitadmin.com","impacted_asset_id":"0008350fb625c62247d71c4d692de8ff","risk_score":"33","risk_level":"Low","type":"CVE","scan_type":"WEB","first_seen":"2025-07-01T15:33:31.456376Z","last_seen":"2025-07-01T15:33:31.456376Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"b401f317146751b5ea79ac464d1a008e","name":"VNC
+        Service Exposed","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"73","risk_level":"High","type":"SENSITIVE_SERVICE_EXPOSED_TO_INTERNET","scan_type":"NETWORK","first_seen":"2025-05-13T15:24:14.599113Z","last_seen":"2025-11-25T15:24:21.07729Z","category":"EXPOSURE","status":"NOT_VERIFIED"},{"id":"759890ce84817497d0247782e3dba3a2","name":"Unknown
+        Open Port - 5800","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"15","risk_level":"Low","type":"UNKNOWN_OPEN_PORT","scan_type":"NETWORK","first_seen":"2025-05-13T15:26:11.65897Z","last_seen":"2025-11-25T15:27:26.183818Z","category":"EXPOSURE","status":"NOT_VERIFIED"},{"id":"5be5a0b4bbe439ad43656e0517cdc565","name":"CVE-2022-0396","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"35","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"87006388e640ee18d252f18ee112ece0","name":"CVE-2022-3736","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"c7dc3550af1350a9b7c0f92ad797a401","name":"CVE-2022-3924","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"c9769fb49c9fa538680fe922c4b45298","name":"CVE-2021-25220","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"45","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"92b0442bf127a6d5d81522cf93d2daab","name":"CVE-2022-2795","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"35","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"3f8259e8f608f7d34c4211169c40c000","name":"CVE-2022-3080","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ceb40bf781d2cec2c23dd37cb22f1213","name":"CVE-2022-3094","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"d4806cdf318df35a0e18740624b3be3b","name":"CVE-2022-38177","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"53fe86bf1c5e1c3d59346c67a4870d18","name":"CVE-2022-38178","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"b598b77af177d10e3537acda645f2d25","name":"CVE-2023-2828","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"1279d29ae23479bc495729483ca8dcce","name":"CVE-2023-2829","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"551a6a4de7dce60e34ac5951453f9165","name":"CVE-2023-50387","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"62","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"de8f9ae2d44a411b26855c2769ff06e1","name":"CVE-2023-5679","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ade6af7b2918c9da901487b650bd5779","name":"CVE-2023-6516","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"687e4f80c558dc270cf4e1409ea56bed","name":"CVE-2023-3341","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"fd72fe50e2590433c98fa4d0535b7250","name":"CVE-2023-4408","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"328743759e730167465c852bf7841cb4","name":"CVE-2023-5517","country":null,"profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"www.biglowins.com","impacted_asset_id":"000bf4155395cc47ebed5bdb42957d26","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-10-14T15:24:20.986301Z","last_seen":"2025-10-14T15:24:20.986301Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"bf622d63ed16c3dd41273db2bd905e91","name":"CVE-2019-2614","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"29","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"9391434cc752caa6d0a4ebffec107ff0","name":"CVE-2018-1283","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"36","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"4b4ed4d610487b403724d4fd82525774","name":"CVE-2020-1934","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"46","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"8f16bdf0a92b3a9f5f0cca291d262200","name":"CVE-2021-44790","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"90","risk_level":"Critical","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"653ce984e67dd60c0d76ea3497c02575","name":"CVE-2017-7679","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"80","risk_level":"High","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"08fb3db34d3d3e07d3442fc1fd2eb7af","name":"CVE-2013-1521","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ce77b3a8ff9e9059185ad6125f4239ab","name":"CVE-2006-20001","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"1f8bd44fef8fc14b19029a0045ee5fa4","name":"CVE-2022-23943","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"83","risk_level":"High","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"c9fb46395feb0cf1b20ff1b794b90d45","name":"CVE-2022-31813","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"65","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"47f3231613495cebaa2fbeaf0e67769f","name":"CVE-2024-38473","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"77","risk_level":"High","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ebff8a7446fd7e090d0e336a8d97305e","name":"CVE-2012-3163","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"60","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"665a83106fe45b8be10bede059966592","name":"CVE-2014-6520","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"b837f14d5d0bf96adb3cd16528f9dae1","name":"CVE-2021-46659","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"37","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"53c805163045edbde4b470648223c877","name":"CVE-2017-3651","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"29","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"80cb627a9848095905d26c4cfeb9b47b","name":"CVE-2017-3318","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"e41cbd9ded0ad45ce38d132db6e4d895","name":"CVE-2013-2376","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"f412c8e0ffcdf7f5ab9f74a6a1a072a0","name":"CVE-2015-0432","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"51a4976a2849be781f3bca63d8b26bbb","name":"CVE-2014-0420","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"19","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"cb5eabd699e5ff29ffd16d5adb0865d9","name":"CVE-2013-2389","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"870e3548c4127660c9145bdd7a9af3c0","name":"CVE-2024-38475","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"96","risk_level":"Critical","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"18402b337f5d36db4a4d53854bdf7404","name":"CVE-2022-27449","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"80632693654cf2478a99a2272c541e5c","name":"CVE-2014-0393","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"22","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"c5ddd7a79c07d4a1c9fffa4ced6ac90c","name":"CVE-2013-1506","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"19","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ca6df832efc9b4ecd6168f0d17042fc1","name":"CVE-2013-2375","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"20648df1df0aa19985c3cdda60bfe3fb","name":"CVE-2012-1705","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"7922607cb458e4c49ac4a0ecd5f193be","name":"CVE-2016-3492","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"44","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"d8b4f327ddf86705a221177d3e64df21","name":"CVE-2018-3081","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"33","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"bcf665e419769e635b795af646b8f2b8","name":"CVE-2005-0004","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"31","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"5e2d3e5996d1043a1e327026c80fab3d","name":"CVE-2016-5584","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"30","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"dfbbbb430f02cc81d51512c1ceda0455","name":"CVE-2013-1532","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"90a4a825d909a2ceae7ce95c54478a10","name":"CVE-2018-2771","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"29","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"69ffcb2390f93ed80c1946e94b06a291","name":"CVE-2024-38474","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"65","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"7a4a073d6785c3c995e5e04463ddaecf","name":"CVE-2020-1927","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"44","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"0def65fd66f11d9c3f3bf0e6952f2c7d","name":"CVE-2024-24795","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"42","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"a56eec01083dabd630ffe948ba81273b","name":"VNC
+        Service Exposed","country":"United States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"73","risk_level":"High","type":"SENSITIVE_SERVICE_EXPOSED_TO_INTERNET","scan_type":"NETWORK","first_seen":"2025-09-02T15:27:59.712887Z","last_seen":"2025-09-02T15:27:59.712887Z","category":"EXPOSURE","status":"NOT_VERIFIED"},{"id":"44cb69ce290c0df5a39397400f6782b3","name":"CVE-2022-22721","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"68","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"5df2be0fdf79a1299ac0974311ff7544","name":"CVE-2018-1303","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"55","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"e17cf1fc8449a78cc7396b2b6d105d81","name":"CVE-2020-35452","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"0f5b9f7c3aaea356335dc8088c52bd06","name":"CVE-2013-1555","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"27","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"0b4fdf805914db5a22022d42634cb471","name":"CVE-2015-4861","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"23","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"9c836d8d1ee780b6829b8f47b5dd135e","name":"CVE-2015-0505","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"23","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"91ea5234157b9740ee756e4eff525631","name":"CVE-2019-2805","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ee98bda136815fc5e7e4ad3671a23281","name":"CVE-2017-3238","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"45","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"9aa2da14e7543252022ec989a4fa9e38","name":"CVE-2012-5060","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"45","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"101b801a825ae7d2ddcba08ed8b857f3","name":"CVE-2018-2817","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"41834e6b9b035b4701214c52bd5d00b6","name":"CVE-2019-2455","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"d309c8cf140e6abde576223711200059","name":"CVE-2017-3600","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"44","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"6afc39a484e5469d477f7f40d405a926","name":"CVE-2017-3653","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"21","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"dac77c999c87ba5a89aeea0bf2087812","name":"CVE-2021-2144","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"49","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"f5441b0d933b724d1610b2280a41c943","name":"CVE-2018-3174","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"35","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"150b791d913e010dfcf408f928a14456","name":"CVE-2015-3183","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"44","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"ad2d71e097896286a1bf2a780ef12563","name":"CVE-2022-30556","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"733808663ac177ac24934c67d50a053b","name":"CVE-2021-39275","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"78","risk_level":"High","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"b15c276d8b44c0076881343193a2f1f0","name":"CVE-2023-31122","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"50","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-08-05T15:25:53.540213Z","last_seen":"2025-08-05T15:25:53.540213Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"4c50208652d52de99aff2735e1bcab5a","name":"CVE-2019-2529","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"43","risk_level":"Medium","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"},{"id":"50b28f9d101bde90068acd4a7da06871","name":"CVE-2019-2737","country":"United
+        States","profile_id":"95b8762a-1a0d-11f0-94e8-8a5f4d45e80c","is_stale":true,"impacted_asset_name":"69.164.209.212","impacted_asset_id":"001523ede07ce6f5ba9e73319195faf7","risk_score":"33","risk_level":"Low","type":"CVE","scan_type":"NETWORK","first_seen":"2025-07-01T15:32:57.832083Z","last_seen":"2025-10-14T15:26:24.781849Z","category":"VULNERABILITY","status":"NOT_VERIFIED"}],"total_results":79472,"next_link":"/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/findings?offset=20","prev_link":""}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:08 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '28463'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - f05416cc-1442-9ba6-893d-8e09dfc5c8ec
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/findings/8abfc6a2b3058cb75de44c4c65ca4641/details
+  response:
+    body:
+      string: '{"country":null,"impacted_asset_name":"https://hettleandrews.co.uk","impacted_asset_id":"0005335d676ab2036cd0d7ec13fb8e75","risk_score":"30","risk_level":"Low","type":"","scan_type":"WEB","first_seen":"2025-04-15T17:17:30.447885Z","last_seen":"2025-12-02T15:26:30.764608Z","category":"MISCONFIGURATION","status":"NOT_VERIFIED","description":"Website
+        detected as missing common security HTTP headers, ensure using these headers
+        to best protect the website"}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:09 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '21'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - be3264ce-71fd-9128-82ac-68472180e5ee
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/findings/8abfc6a2b3058cb75de44c4c65ca4641/evidence
+  response:
+    body:
+      string: '{"content":"{\"actual_result\":\"\",\"header\":\"Set-Cookie\"}"}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-length:
+      - '65'
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:09 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '153'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 611ec71e-ab9d-929b-abdb-cd0e14243986
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '998'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - zscaler-sdk-python/1.9.6 python/3.11.8 Darwin/24.6.0
+    method: GET
+    uri: https://easm.test.zscaler.com/easm/easm-ui/v1/organizations/3f61a446-1a0d-11f0-94e8-8a5f4d45e80c/findings/8abfc6a2b3058cb75de44c4c65ca4641/scan-output
+  response:
+    body:
+      string: '{"content":"{\"request\":{\"method\":\"GET\",\"url\":\"https://hettleandrews.co.uk\"},\"status\":\"301
+        Moved Permanently\",\"status_code\":301,\"content_length\":0,\"headers\":{\"Content-Length\":[\"0\"],\"Location\":[\"https://www.assuredpartners.co.uk/locations/birmingham/\"]},\"body\":null}","source_type":"HTTP"}
+
+        '
+    headers:
+      cache-control:
+      - no-store
+      content-encoding:
+      - gzip
+      content-security-policy:
+      - default-src 'none'; connect-src *.zscaler.com; frame-src *.zscaler.com; img-src
+        'self' *.zscaler.com data:; script-src 'self'; style-src 'self'; object-src
+        'none'; font-src 'self'; upgrade-insecure-requests
+      content-type:
+      - application/json
+      date:
+      - Tue, 02 Dec 2025 23:07:10 GMT
+      permissions-policy:
+      - accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(),
+        microphone=(), payment=(), usb=()
+      referrer-policy:
+      - no-referrer
+      server:
+      - Zscaler
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '37'
+      x-frame-options:
+      - SAMEORIGIN
+      x-oneapi-host:
+      - https://apiusw2.zsapi.net
+      x-oneapi-request-id:
+      - 11af4692-7d04-99d6-8507-314ff1ed74c4
+      x-oneapi-version:
+      - 109.1.85
+      x-ratelimit-limit:
+      - 1000, 1000;w=1
+      x-ratelimit-remaining:
+      - '999'
+      x-ratelimit-reset:
+      - '1'
+      x-transaction-id:
+      - ad7ffeaf-bdcd-49c0-9ea4-d8cfd6daa58e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

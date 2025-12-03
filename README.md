@@ -37,6 +37,7 @@ used in your server-side code to interact with the Zscaler API platform across m
 * [ZIdentity](https://help.zscaler.com/zidentity/getting-started-zidentity-api)
 * [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
+* [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
 
 This SDK is designed to support the new Zscaler API framework [OneAPI](https://help.zscaler.com/oneapi/understanding-oneapi)
 via a single OAuth2 HTTP client. The SDK is also backwards compatible with the previous
@@ -55,7 +56,7 @@ This library uses semantic versioning and updates are posted in ([release notes]
 The latest release can always be found on the ([releases page](github-releases))
 
 > Requires Python version 3.8.0 or higher.
-Zscaler SDK for Python is compatible with Python 3.8 _(until [June 2023](https://devguide.python.org/versions/))_, 3.8, 3.9, 3.10, and 3.11.
+Zscaler SDK for Python is compatible with Python 3.8 _(until [June 2023](https://devguide.python.org/versions/))_, 3.9, 3.10, 3.11, and 3.12
 
 ## Need help?
 
@@ -180,6 +181,7 @@ In most cases, you won't need to build the SDK from source. If you want to build
 * [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
 * [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
 * [ZWA API](https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api)
+* [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
 
 ## Usage guide
 
@@ -207,6 +209,7 @@ As of the publication of SDK version => 1.7.x, OneAPI is available for programma
 * [ZDX API](https://help.zscaler.com/zdx/understanding-zdx-api)
 * [ZCC API](https://help.zscaler.com/client-connector/getting-started-client-connector-api)
 * [ZTW API](https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api)
+* [EASM API](https://hhttps://help.zscaler.com/easm/easm-api/api-developer-reference-guide/reference-guide)
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and Zscaler Digital Experience (ZDX) are supported only via the legacy authentication method described in this README.
 
@@ -1531,8 +1534,7 @@ Contributors
 - Eddie Parra - [eparra](https://github.com/eparra)
 - Paul Abbot - [abbottp](https://github.com/abbottp)
 
-Thank you to [Mitch Kelly](https://github.com/mitchos/pyZscaler), creator of the [PyZscaler](https://github.com/mitchos/pyZscaler) SDK,
-which this SDK was inspired on.
+Thank you to [Mitch Kelly](https://github.com/mitchos/pyZscaler), creator of the [PyZscaler](https://github.com/mitchos/pyZscaler) SDK, which this SDK was inspired on.
 
 ## MIT License
 

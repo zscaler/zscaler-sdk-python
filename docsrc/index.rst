@@ -13,6 +13,7 @@
    zs/zpa/index
    zs/zwa/index
    zs/zidentity/index
+   zs/zeasm/index
    zs/guides/index
 
 Official Python SDK for the Zscaler Products
@@ -57,6 +58,7 @@ across multiple products such as:
 - `ZTW API <https://help.zscaler.com/cloud-branch-connector/getting-started-cloud-branch-connector-api>`__
 - `ZWA API <https://help.zscaler.com/workflow-automation/getting-started-workflow-automation-api>`__
 - `Zidentity API <https://help.zscaler.com/zidentity/understanding-zidentity-apis>`__
+- `EASM API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 
 This SDK is designed to support the new Zscaler API framework
 `OneAPI <https://help.zscaler.com/oneapi/understanding-oneapi>`__ via a
@@ -162,6 +164,9 @@ You'll also need
 -  `Zidentity
    API <https://help.zscaler.com/zidentity/understanding-zidentity-apis>`__
 
+-  `EASM
+   API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
+
 Usage guide
 -----------
 
@@ -217,6 +222,8 @@ programmatic interaction with the following products:
    API <https://help.zscaler.com/cloud-branch-connector/zscaler-cloud-branch-connector-api/api-developer-reference-guide/reference-guide>`__
 -  `ZIdentity
    API <https://help.zscaler.com/zidentity/api-clients>`__
+-  `EASM
+   API <https://help.zscaler.com/easm/easm-api/api-developer-reference-guide>`__
 
 **NOTE** All other products such as Zscaler Cloud Connector (ZTW) and
 Zscaler Digital Experience (ZDX) are supported only via the legacy

@@ -17,6 +17,7 @@ from zscaler.zia.zia_service import ZIAService
 from zscaler.zpa.zpa_service import ZPAService
 from zscaler.zwa.zwa_service import ZWAService
 from zscaler.zidentity.zidentity_service import ZIdentityService
+from zscaler.zeasm.zeasm_service import ZEASMService
 from zscaler.zcc.legacy import LegacyZCCClientHelper
 from zscaler.ztw.legacy import LegacyZTWClientHelper
 from zscaler.zdx.legacy import LegacyZDXClientHelper
@@ -192,6 +193,7 @@ class Client:
         self._zpa = None
         self._zdx = None
         self._zidentity = None
+        self._zeasm= None
         # self.logger.debug("Client initialized successfully.")
 
     def authenticate(self):
@@ -262,6 +264,12 @@ class Client:
         if self._zidentity is None:
             self._zidentity = ZIdentityService(self._request_executor)
         return self._zidentity
+    
+    @property
+    def zeasm(self):
+        if self._zeasm is None:
+            self._zeasm = ZEASMService(self._request_executor)
+        return self._zeasm
 
     def __enter__(self):
         """
