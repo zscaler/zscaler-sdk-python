@@ -73,4 +73,11 @@ flags:
     paths:
       - zscaler/zidentity/
     carryforward: true
+  zeasm-vcr:
+    paths:
+      - zscaler/zeasm/
+    carryforward: true
 
+# Codecov AI Configuration
+ai_pr_review:
+  enabled: true
